@@ -18,8 +18,10 @@ $pdepend->addDirectory($dir);
 
 $packages = $pdepend->analyze();
 
-$renderer = new PHP_Depend_Renderer_GdChartRenderer('/home/manu/foo.png');
+$cwd = getcwd();
+
+$renderer = new PHP_Depend_Renderer_GdChartRenderer($cwd . '/php_depend.png');
 $renderer->render($packages);
 
-$renderer = new PHP_Depend_Renderer_XMLRenderer();
+$renderer = new PHP_Depend_Renderer_XMLRenderer($cwd . '/php_depend.xml');
 $renderer->render($packages);
