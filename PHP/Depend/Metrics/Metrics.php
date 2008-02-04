@@ -1,5 +1,5 @@
 <?php
-class PHP_Depend_Metrics_PackageMetrics
+class PHP_Depend_Metrics_Metrics
 {
     protected $name = '';
     
