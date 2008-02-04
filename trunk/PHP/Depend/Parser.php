@@ -177,9 +177,7 @@ class PHP_Depend_Parser
         $dependencies = array();
         
         while (($token = $this->tokenizer->next()) !== null) {
-if ($this->className==='mxpControllerCommandManager') {
-    var_dump($token);
-}
+
             switch ($token[0]) {
                 case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN:
                     ++$parenthesis;
