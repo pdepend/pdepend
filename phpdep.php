@@ -1,4 +1,6 @@
 <?php
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Renderer/GdChartRenderer.php';
 require_once 'PHP/Depend/Renderer/XMLRenderer.php';
