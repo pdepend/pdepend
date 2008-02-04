@@ -64,7 +64,14 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     {
         $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
     }
-
+    
+    /**
+     * Builds a new package instance.
+     *
+     * @param string $name The class name.
+     * 
+     * @return PHP_Depend_Code_Class The created class object.
+     */
     public function buildClass($name)
     {
         if (!isset($this->classes[$name])) {
@@ -76,17 +83,24 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     }
     
     /**
-     * Enter description here...
+     * Builds a new method instance.
      *
-     * @param unknown_type $name
+     * @param string $name The method name.
      * 
-     * @return PHP_Depend_Code_Method
+     * @return PHP_Depend_Code_Method The created class method object.
      */
     public function buildMethod($name)
     {
         return new PHP_Depend_Code_Method($name);
     }
     
+    /**
+     * Builds a new package instance.
+     *
+     * @param string $name The package name.
+     * 
+     * @return PHP_Depend_Code_Package The created package object.
+     */
     public function buildPackage($name)
     {
         if (!isset($this->packages[$name])) {
@@ -95,6 +109,13 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
         return $this->packages[$name];
     }
     
+    /**
+     * Builds a new function instance.
+     *
+     * @param string $name The function name.
+     * 
+     * @return PHP_Depend_Code_Function The function instance
+     */
     public function buildFunction($name)
     {
         return new PHP_Depend_Code_Function($name);
