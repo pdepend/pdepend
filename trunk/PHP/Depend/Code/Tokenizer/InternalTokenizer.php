@@ -103,7 +103,9 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
     protected static $ignoreMap = array(
         'null'    =>  true,
         'array'   =>  true,
-        'parent'  =>  true
+        'parent'  =>  true,
+        'true'    =>  true,
+        'false'   =>  true
     );
     
     /**
