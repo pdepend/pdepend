@@ -48,22 +48,50 @@
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/PackageMetrics.php';
 
+/**
+ * This visitor generates the metrics for the analyzed packages.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVisitor
 {
+    /**
+     * The package data.
+     *
+     * @type array<array>
+     * @var array(string=>array) $data
+     */
     protected $data = array();
     
-    private $_metrics = null;
+    /**
+     * The generated project metrics.
+     *
+     * @type array<PHP_Depend_Metrics_PackageMetrics>
+     * @var array(string=>PHP_Depend_Metrics_PackageMetrics) $metrics
+     */
+    protected $metrics = null;
     
+    /**
+     * Returns the generated project metrics.
+     *
+     * @return array(string=>PHP_Depend_Metrics_PackageMetrics)
+     */
     public function getPackageMetrics()
     {
-        if ($this->_metrics !== null) {
-            return $this->_metrics;
+        if ($this->metrics !== null) {
+            return ArrayIterator($this->metrics);
         }
 
-        $this->_metrics = array();
+        $this->metrics = array();
         
         foreach ($this->data as $pkg => $data) {
-            $this->_metrics[$pkg] = new PHP_Depend_Metrics_PackageMetrics(
+            $this->metrics[$pkg] = new PHP_Depend_Metrics_PackageMetrics(
                 $pkg, 
                 $data['cc'],
                 $data['ac'],
@@ -72,14 +100,28 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
             );
         }
         
-        return new ArrayIterator($this->_metrics);
+        return new ArrayIterator($this->metrics);
     }
     
+    /**
+     * Visits a function node. 
+     *
+     * @param PHP_Depend_Code_Function $function The current function node.
+     * 
+     * @return void
+     */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
-        
+        // TODO: Implement functions
     }
     
+    /**
+     * Visits a method node. 
+     *
+     * @param PHP_Depend_Code_Class $method The method class node.
+     * 
+     * @return void
+     */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $pkgName = $method->getClass()->getPackage()->getName();
@@ -102,6 +144,13 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         }
     }
     
+    /**
+     * Visits a package node. 
+     *
+     * @param PHP_Depend_Code_Class $package The package class node.
+     * 
+     * @return void
+     */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         foreach ($package->getClasses() as $class) {
@@ -109,6 +158,13 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         }
     }
     
+    /**
+     * Visits a class node. 
+     *
+     * @param PHP_Depend_Code_Class $class The current class node.
+     * 
+     * @return void
+     */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $pkgName = $class->getPackage()->getName();
@@ -143,6 +199,13 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         }   
     }
     
+    /**
+     * Initializes the a data record for the given package object.
+     *
+     * @param PHP_Depend_Code_Package $package The context package object.
+     * 
+     * @return void
+     */
     protected function initPackage(PHP_Depend_Code_Package $package)
     {
         $name = $package->getName();
