@@ -130,14 +130,14 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
             $cc = $pkg->appendChild($dom->createElement('ConcreteClasses'));
             foreach ($metric->getConcreteClasses() as $class) {
                 $c = $cc->appendChild($dom->createElement('Class'));
-                // TODO: Source file
+                $c->setAttribute('sourceFile', $class->getSourceFile());
                 $c->appendChild($dom->createTextNode($class->getName()));
             }
             
             $ac = $pkg->appendChild($dom->createElement('AbstractClasses'));
             foreach ($metric->getAbstractClasses() as $class) {
                 $c = $cc->appendChild($dom->createElement('Class'));
-                // TODO: Source file
+                $c->setAttribute('sourceFile', $class->getSourceFile());
                 $c->appendChild($dom->createTextNode($class->getName()));
             }
             
@@ -147,7 +147,7 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
                 $p->appendChild($dom->createTextNode($dep->getName()));
             }
             
-            $ce = $pkg->appendChild($dom->createElement('UserBy'));
+            $ce = $pkg->appendChild($dom->createElement('UsedBy'));
             foreach ($metric->getAfferents() as $dep) {
                 $p = $ce->appendChild($dom->createElement('Package'));
                 $p->appendChild($dom->createTextNode($dep->getName()));
