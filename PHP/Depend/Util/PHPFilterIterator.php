@@ -45,8 +45,24 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+/**
+ * Simple utility filter iterator for php source files.
+ * 
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Util_PHPFilterIterator extends FilterIterator
 {
+    /**
+     * Returns <b>true</b> if the file name ends with '.php'.
+     *
+     * @return boolean
+     */
     public function accept() 
     {
         return ( substr($this->getInnerIterator()->current(), -4, 4) === '.php' );

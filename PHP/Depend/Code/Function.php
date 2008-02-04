@@ -47,44 +47,122 @@
 
 require_once 'PHP/Depend/Code/Node.php';
 
+/**
+ * Represents a php function node.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Code_Function implements PHP_Depend_Code_Node
 {
+    /**
+     * The function name.
+     *
+     * @type string
+     * @var string $name
+     */
     protected $name = null;
     
+    /**
+     * The parent package for this function.
+     *
+     * @type PHP_Depend_Code_Package
+     * @var PHP_Depend_Code_Package $package
+     */
     protected $package = null;
     
+    /**
+     * List of {@link PHP_Depend_Code_Class} objects this function depends on.
+     *
+     * @type array<PHP_Depend_Code_Class>
+     * @var array(PHP_Depend_Code_Class) $dependencies
+     */
     protected $dependencies = array();
     
+    /**
+     * Constructs a new function for the given <b>$name</b>.
+     *
+     * @param string $name The function name.
+     */
     public function __construct($name)
     {
         $this->name = $name;
     }
     
+    /**
+     * Return the function name.
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
     
+    /**
+     * Returns all {@link PHP_Depend_Code_Class} objects this function depends on.
+     *
+     * @return Iterator
+     */
     public function getDependencies()
     {
         return new ArrayIterator($this->dependencies);
     }
     
+    /**
+     * Adds the given {@link PHP_Depend_Code_Class} object as dependency.
+     *
+     * @param PHP_Depend_Code_Class $class A class this function depends on.
+     * 
+     * @return void
+     */
     public function addDependency(PHP_Depend_Code_Class $class)
     {
         $this->dependencies[] = $class;
     }
     
+    /**
+     * Removes the given {@link PHP_Depend_Code_Class} object from the dependency
+     * list.
+     *
+     * @param PHP_Depend_Code_Class $class A class to remove.
+     * 
+     * @return void
+     */
     public function removeDependency(PHP_Depend_Code_Class $class)
     {
-        $this->dependencies = array_diff($this->dependencies, array($class));
+        foreach ($this->dependencies as $idx => $dep) {
+            if ($dep === $class) {
+                // Remove from internal list
+                unset($this->dependencies[$idx]);
+                // Stop processing
+                break;
+            }
+        }
     }
     
+    /**
+     * Returns the parent package for this function.
+     *
+     * @return PHP_Depend_Code_Package
+     */
     public function getPackage()
     {
         return $this->package;
     }
     
+    /**
+     * Sets the parent package for this function.
+     *
+     * @param PHP_Depend_Code_Package $package The parent package.
+     * 
+     * @return void
+     */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
         $this->package = $package;

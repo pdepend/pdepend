@@ -47,43 +47,118 @@
 
 require_once 'PHP/Depend/Code/Node.php';
 
+/**
+ * Represents a php class node.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
 {
+    /**
+     * The name for this class.
+     *
+     * @type string
+     * @var string $name
+     */
     protected $name = '';
     
+    /**
+     * The parent package for this class.
+     *
+     * @type PHP_Depend_Code_Package
+     * @var PHP_Depend_Code_Package $package
+     */
     protected $package = null;
     
+    /**
+     * Marks this class as abstract.
+     *
+     * @type boolean
+     * @var boolean $abstract
+     */
     protected $abstract = false;
     
+    /**
+     * List of {@link PHP_Depend_Code_Method} objects in this class.
+     *
+     * @type array<PHP_Depend_Code_Method>
+     * @var array(PHP_Depend_Code_Method) $methods
+     */
     protected $methods = array();
     
+    /**
+     * List of {@link PHP_Depend_Code_Class} objects this class depends on.
+     *
+     * @type array<PHP_Depend_Code_Class>
+     * @var array(PHP_Depend_Code_Class) $dependencies
+     */
     protected $dependencies = array();
     
+    /**
+     * Constructs a new class for the given <b>$name</b>.
+     *
+     * @param string $name The class name.
+     */
     public function __construct($name)
     {
         $this->name = $name;
     }
     
+    /**
+     * Returns the class name.
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
     
+    /**
+     * Returns <b>true</b> if this is an abstract class or an interface.
+     *
+     * @return boolean
+     */
     public function isAbstract()
     {
         return $this->abstract;
     }
     
+    /**
+     * Marks this as an abstract class or interface.
+     *
+     * @param boolean $abstract Set this to <b>true</b> for an abstract class.
+     * 
+     * @return void
+     */
     public function setAbstract($abstract)
     {
         $this->abstract = $abstract;
     }
     
+    /**
+     * Returns all {@link PHP_Depend_Code_Method} object in this class.
+     *
+     * @return Iterator
+     */
     public function getMethods()
     {
         return new ArrayIterator($this->methods);
     }
     
+    /**
+     * Adds the given method to this class.
+     *
+     * @param PHP_Depend_Code_Method $method A new class method.
+     * 
+     * @return void
+     */
     public function addMethod(PHP_Depend_Code_Method $method)
     {
         if ($method->getClass() !== null) {
@@ -95,6 +170,13 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
         $this->methods[] = $method;
     }
     
+    /**
+     * Removes the given method from this class.
+     *
+     * @param PHP_Depend_Code_Method $method The method to remove.
+     * 
+     * @return void
+     */
     public function removeMethod(PHP_Depend_Code_Method $method)
     {
         foreach ($this->methods as $idx => $m) {
@@ -108,26 +190,65 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
         }
     }
     
+    /**
+     * Returns all {@link PHP_Depend_Code_Class} objects this class depends on.
+     *
+     * @return Iterator
+     */
     public function getDependencies()
     {
         return new ArrayIterator($this->dependencies);
     }
     
+    /**
+     * Adds the given {@link PHP_Depend_Code_Class} object as dependency.
+     *
+     * @param PHP_Depend_Code_Class $class A class this function depends on.
+     * 
+     * @return void
+     */
     public function addDependency(PHP_Depend_Code_Class $class)
     {
         $this->dependencies[] = $class;
     }
     
+    /**
+     * Removes the given {@link PHP_Depend_Code_Class} object from the dependency
+     * list.
+     *
+     * @param PHP_Depend_Code_Class $class A class to remove.
+     * 
+     * @return void
+     */
     public function removeDependency(PHP_Depend_Code_Class $class)
     {
-        $this->dependencies = array_diff($this->dependencies, array($class));
+        foreach ($this->dependencies as $idx => $dep) {
+            if ($dep === $class) {
+                // Remove from internal list
+                unset($this->dependencies[$idx]);
+                // Stop processing
+                break;
+            }
+        }
     }
     
+    /**
+     * Returns the parent package for this class.
+     *
+     * @return PHP_Depend_Code_Package
+     */
     public function getPackage()
     {
         return $this->package;
     }
     
+    /**
+     * Sets the parent package for this class.
+     *
+     * @param PHP_Depend_Code_Package $package The parent package.
+     * 
+     * @return void
+     */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
         $this->package = $package;

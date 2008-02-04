@@ -47,12 +47,53 @@
 
 require_once 'PHP/Depend/Renderer.php';
 
+/**
+ * Generates an xml document with the aggregated metrics. The format is borrowed
+ * from <a href="http://clarkware.com/software/JDepend.html">JDepend</a>.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
+
 class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
 {
+    /**
+     * The output file.
+     *
+     * @type string
+     * @var string $fileName
+     */
+    protected $fileName = null;
+    
+    /**
+     * Constructs a new xml renderer. 
+     * 
+     * The optional <b>$fileName</b> parameter points to the xml out file. If this
+     * parameter is not given the renderer outputs to stdout
+     *
+     * @param string $fileName The output file.
+     */
+    public function __construct($fileName = null)
+    {
+        $this->fileName = $fileName;
+    }
+
+    /**
+     * Generates the package xml metrics.
+     *
+     * @param Iterator $metrics The aggregated metrics.
+     * 
+     * @return void
+     */
     public function render(Iterator $metrics)
     {
-        
         $dom = new DOMDocument('1.0', 'UTF-8');
+        
         $dom->formatOutput = true;
         
         $root = $dom->appendChild($dom->createElement('PHPDepend'));
@@ -113,6 +154,10 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
             }
         }
         
-        echo $dom->saveXML();
+        if ($this->fileName === null) {
+            echo $dom->saveXML();
+        } else {
+            $dom->save($this->fileName);
+        }
     }
 }
