@@ -66,8 +66,20 @@ require_once 'PHP/Depend/Util/PHPFilterIterator.php';
  */
 class PHP_Depend
 {
+    /**
+     * List of source directories.
+     *
+     * @type array<string>
+     * @var array(string) $directories
+     */
     protected $directories = array();
     
+    /**
+     * Generated {@link PHP_Depend_Metrics_PackageMetrics} objects.
+     *
+     * @type Iterator
+     * @var Iterator $packages
+     */
     protected $packages = null;
 
     /**
