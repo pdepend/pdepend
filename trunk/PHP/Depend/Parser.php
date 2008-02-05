@@ -143,10 +143,11 @@ class PHP_Depend_Parser
                     
                 $this->className = $token[1];
                     
-                $class = $this->builder->buildClass($this->className, $this->tokenizer->getSourceFile());
+                $class = $this->builder->buildClass($this->className);
+                $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setAbstract($this->abstract);
                 foreach ($this->parseClassSignature() as $dependency) {
-                    $class->addDependency($this->builder->buildClass($dependency, $this->tokenizer->getSourceFile()));
+                    $class->addDependency($this->builder->buildClass($dependency));
                 }
                 $this->builder->buildPackage($this->package)->addClass($class);
 
@@ -258,11 +259,11 @@ class PHP_Depend_Parser
             $this->builder->buildPackage($this->package)->addFunction($function); 
         } else {
             $function = $this->builder->buildMethod($token[1]);
-            $this->builder->buildClass($this->className, $this->tokenizer->getSourceFile())->addMethod($function);
+            $this->builder->buildClass($this->className)->addMethod($function);
         }
 
         foreach ($dependencies as $dependency) {
-            $function->addDependency($this->builder->buildClass($dependency, $this->tokenizer->getSourceFile()));
+            $function->addDependency($this->builder->buildClass($dependency));
         }
     }
 
