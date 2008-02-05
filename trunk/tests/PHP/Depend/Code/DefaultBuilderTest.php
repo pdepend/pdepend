@@ -95,10 +95,7 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $this->assertNotNull($class2->getPackage());
         
         $this->assertSame($class1->getPackage(), $class2->getPackage());
-        $this->assertEquals(
-            PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE, 
-            $class1->getPackage()->getName()
-        );
+        $this->assertEquals(PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE, $class1->getPackage()->getName());
     }
     
     /**
@@ -190,9 +187,6 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $this->assertNotNull($function2->getPackage());
         
         $this->assertSame($function1->getPackage(), $function2->getPackage());
-        $this->assertEquals(
-            PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE, 
-            $function1->getPackage()->getName()
-        );
+        $this->assertEquals(PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE, $function1->getPackage()->getName());
     }
 }
