@@ -53,7 +53,7 @@ require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Package.php';
 
 /**
- * Abstract test case implementation for the PHP_Depend package.
+ * Test case implementation for the PHP_Depend_Code_Package class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
