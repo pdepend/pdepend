@@ -107,11 +107,11 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_Node
     /**
      * Returns all {@link PHP_Depend_Code_Class} objects this function depends on.
      *
-     * @return Iterator
+     * @return PHP_Depend_Code_NodeIterator
      */
     public function getDependencies()
     {
-        return new ArrayIterator($this->dependencies);
+        return new PHP_Depend_Code_NodeIterator($this->dependencies);
     }
     
     /**
