@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
  * Represents a php package node.
@@ -108,11 +109,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     /**
      * Returns all {@link PHP_Depend_Code_Class} objects in this package.
      *
-     * @return Iterator
+     * @return PHP_Depend_Code_NodeIterator
      */
     public function getClasses()
     {
-        return new ArrayIterator($this->classes);
+        return new PHP_Depend_Code_NodeIterator($this->classes);
     }
     
     /**
@@ -124,7 +125,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
      */
     public function addClass(PHP_Depend_Code_Class $class)
     {
-        if ($class->getPackage()) {
+        if ($class->getPackage() !== null) {
             $class->getPackage()->removeClass($class);
         }
         
@@ -143,25 +144,22 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
      */
     public function removeClass(PHP_Depend_Code_Class $class)
     {
-        // Remove this package
-        $class->setPackage(null);
-        // Remove class from internal list
-        foreach ($this->classes as $i => $c) {
-            if ($c === $class) {
-                unset($this->classes[$i]);
-                break;
-            }
+        if (($i = array_search($class, $this->classes, true)) !== false) {
+            // Remove class from internal list
+            unset($this->classes[$i]);
+            // Remove this as parent
+            $class->setPackage(null);
         }
     }
     
     /**
      * Returns all {@link PHP_Depend_Code_Function} objects in this package.
      *
-     * @return Iterator
+     * @return PHP_Depend_Code_NodeIterator
      */
     public function getFunctions()
     {
-        return new ArrayIterator($this->functions);
+        return new PHP_Depend_Code_NodeIterator($this->functions);
     }
     
     /**
@@ -173,6 +171,13 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
      */
     public function addFunction(PHP_Depend_Code_Function $function)
     {
+        if ($function->getPackage() !== null) {
+            $function->getPackage()->removeFunction($function);
+        }
+        
+        // Set this as function package
+        $function->setPackage($this);
+        // Append function to internal list
         $this->functions[] = $function;
     }
     
@@ -185,15 +190,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
      */
     public function removeFunction(PHP_Depend_Code_Function $function)
     {
-        foreach ($this->functions as $i => $f) {
-            if ($f === $function) {
-                // Remove function from internal list
-                unset($this->functions[$i]);
-                // Remove this as parent
-                $function->setPackage(null);
-                
-                break;
-            }
+        if (($i = array_search($function, $this->functions, true)) !== false) {
+            // Remove function from internal list
+            unset($this->functions[$i]);
+            // Remove this as parent
+            $function->setPackage(null);
         }
     }
     
