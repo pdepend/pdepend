@@ -45,24 +45,16 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
-{
-    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_AllTests::main' );
-}
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/ClassTest.php';
-require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
-require_once dirname(__FILE__) . '/MethodTest.php';
-require_once dirname(__FILE__) . '/NodeIteratorTest.php';
-require_once dirname(__FILE__) . '/PackageTest.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Function.php';
+require_once 'PHP/Depend/Code/Method.php';
+require_once 'PHP/Depend/Code/Package.php';
 
 /**
- * Main test suite for the PHP_Depend_Code package.
+ * Test case the node iterator.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -72,38 +64,62 @@ require_once dirname(__FILE__) . '/PackageTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_AllTests
+class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests the ctor with an invalid input array which must result in an exception.
      *
      * @return void
      */
-    public static function main()
+    public function testCreateIteratorWithInvalidInputFail()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $this->setExpectedException('RuntimeException');
+        
+        $nodes = array(
+            new PHP_Depend_Code_Class('clazz1', 'clazz1.php'),
+            new PHP_Depend_Code_Package('pkg'),
+            new stdClass(),
+            new PHP_Depend_Code_Class('clazz2', 'clazz2.php'),
+        );
+        
+        new PHP_Depend_Code_NodeIterator($nodes);
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Tests the ctor with an valid input array of {@link PHP_Depend_Code_Node}
+     * objects.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testCreateIteratorWidthValidInput()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
-        $suite->addTestSuite('PHP_Depend_Code_ClassTest');
-        $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
-        $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
-        $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
-        $suite->addTestSuite('PHP_Depend_Code_MethodTest');
-        $suite->addTestSuite('PHP_Depend_Code_NodeIteratorTest');
-        $suite->addTestSuite('PHP_Depend_Code_PackageTest');
-
-        return $suite;
+        $nodes = array(
+            new PHP_Depend_Code_Class('clazz', 'clazz.php'),
+            new PHP_Depend_Code_Package('pkg'),
+            new PHP_Depend_Code_Method('method'),
+            new PHP_Depend_Code_Function('func'),
+        );
+        
+        $it = new PHP_Depend_Code_NodeIterator($nodes);
+        
+        $this->assertEquals(4, $it->count());
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_AllTests::main') {
-    PHP_Depend_Code_AllTests::main();
+    
+    public function testNodeIteratorLoopWithKey()
+    {
+        $names = array('clazz', 'pkg', 'method', 'func');
+        $nodes = array(
+            new PHP_Depend_Code_Class('clazz', 'clazz.php'),
+            new PHP_Depend_Code_Package('pkg'),
+            new PHP_Depend_Code_Method('method'),
+            new PHP_Depend_Code_Function('func'),
+        );
+        
+        $it = new PHP_Depend_Code_NodeIterator($nodes);
+        
+        for ($i = 0, $it->rewind(); $it->valid(); ++$i, $it->next()) {
+            $this->assertSame($nodes[$i], $it->current());
+            $this->assertEquals($names[$i], $it->key());
+        }
+    }
 }
