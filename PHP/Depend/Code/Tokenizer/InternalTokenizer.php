@@ -202,22 +202,23 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         $tokens = token_get_all($source);
         
         foreach ($tokens as $token) {
+            $newToken = null;
             if (is_string($token)) {
-                if (!isset(self::$literalMap[$token])) {
-                    continue;
+                if (isset(self::$literalMap[$token])) {
+                    $newToken = array(self::$literalMap[$token], $token);
                 }
-                $token = array(self::$literalMap[$token], $token);
             } else {
                 $value = strtolower($token[1]);
-                if (isset(self::$ignoreMap[$value]) 
-                || !isset(self::$tokenMap[$token[0]])) {
+                if (!isset(self::$ignoreMap[$value]) 
+                  && isset(self::$tokenMap[$token[0]])) {
                     
-                    continue;
+                    $newToken = array(self::$tokenMap[$token[0]], $token[1]);
                 }
-                $token = array(self::$tokenMap[$token[0]], $token[1]);
             }
             
-            $this->tokens[] = $token;
+            if ($newToken !== null) {
+                $this->tokens[] = $newToken;
+            }
         }
         
         $this->count = count($this->tokens);
