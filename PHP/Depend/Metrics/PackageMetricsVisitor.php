@@ -72,8 +72,8 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     /**
      * The generated project metrics.
      *
-     * @type array<PHP_Depend_Metrics_PackageMetrics>
-     * @var array(string=>PHP_Depend_Metrics_PackageMetrics) $metrics
+     * @type ArrayIterator
+     * @var ArrayIterator $metrics
      */
     protected $metrics = null;
     
@@ -85,13 +85,12 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     public function getPackageMetrics()
     {
         if ($this->metrics !== null) {
-            return ArrayIterator($this->metrics);
+            return $this->metrics;
         }
 
-        $this->metrics = array();
-        
+        $metrics = array();
         foreach ($this->data as $pkg => $data) {
-            $this->metrics[$pkg] = new PHP_Depend_Metrics_PackageMetrics(
+            $metrics[$pkg] = new PHP_Depend_Metrics_PackageMetrics(
                 $pkg, 
                 $data['cc'],
                 $data['ac'],
@@ -99,8 +98,9 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
                 $data['ce']
             );
         }
+        $this->metrics = new ArrayIterator($metrics);
         
-        return new ArrayIterator($this->metrics);
+        return $this->metrics;
     }
     
     /**
@@ -129,17 +129,15 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         foreach ($method->getDependencies() as $dep) {
             $depPkgName = $dep->getPackage()->getName();
             
-            if ($dep->getPackage() === $method->getClass()->getPackage()) {
-                continue;
-            }
+            if ($dep->getPackage() !== $method->getClass()->getPackage()) {
+                $this->initPackage($dep->getPackage());
             
-            $this->initPackage($dep->getPackage());
-            
-            if (!in_array($dep->getPackage(), $this->data[$pkgName]['ce'], true)) {
-                $this->data[$pkgName]['ce'][] = $dep->getPackage();
-            }
-            if (!in_array($method->getClass()->getPackage(), $this->data[$depPkgName]['ca'], true)) {
-                $this->data[$depPkgName]['ca'][] = $method->getClass()->getPackage();
+                if (!in_array($dep->getPackage(), $this->data[$pkgName]['ce'], true)) {
+                    $this->data[$pkgName]['ce'][] = $dep->getPackage();
+                }
+                if (!in_array($method->getClass()->getPackage(), $this->data[$depPkgName]['ca'], true)) {
+                    $this->data[$depPkgName]['ca'][] = $method->getClass()->getPackage();
+                }
             }
         }
     }
@@ -155,6 +153,10 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     {
         foreach ($package->getClasses() as $class) {
             $class->accept($this);
+        }
+        
+        foreach ($package->getFunctions() as $function) {
+            $function->accept($this);
         }
     }
     
@@ -180,23 +182,22 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         foreach ($class->getDependencies() as $dep) {
             $depPkgName = $dep->getPackage()->getName();
             
-            if ($dep->getPackage() === $class->getPackage()) {
-                continue;
-            }
-            
-            $this->initPackage($dep->getPackage());
-            
-            if (!in_array($dep->getPackage(), $this->data[$pkgName]['ce'], true)) {
-                $this->data[$pkgName]['ce'][] = $dep->getPackage();
-            }
-            if (!in_array($class->getPackage(), $this->data[$depPkgName]['ca'], true)) {
-                $this->data[$depPkgName]['ca'][] = $class->getPackage();
+            if ($dep->getPackage() !== $class->getPackage()) {
+           
+                $this->initPackage($dep->getPackage());
+                
+                if (!in_array($dep->getPackage(), $this->data[$pkgName]['ce'], true)) {
+                    $this->data[$pkgName]['ce'][] = $dep->getPackage();
+                }
+                if (!in_array($class->getPackage(), $this->data[$depPkgName]['ca'], true)) {
+                    $this->data[$depPkgName]['ca'][] = $class->getPackage();
+                }
             }
         }
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
-        }   
+        }
     }
     
     /**
