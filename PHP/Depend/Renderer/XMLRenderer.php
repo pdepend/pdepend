@@ -100,57 +100,56 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
         $pkgs = $root->appendChild($dom->createElement('Packages'));
         
         foreach ($metrics as $metric) {
-            if ($metric->getName() === PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
-                continue;
-            }
+            if ($metric->getName() !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
             
-            $pkg = $pkgs->appendChild($dom->createElement('Package'));
-            $pkg->setAttribute('name', $metric->getName());
+                $pkg = $pkgs->appendChild($dom->createElement('Package'));
+                $pkg->setAttribute('name', $metric->getName());
             
-            $stats = $pkg->appendChild($dom->createElement('Stats'));
+                $stats = $pkg->appendChild($dom->createElement('Stats'));
             
-            $stats->appendChild($dom->createElement('TotalClasses'))
-                  ->appendChild($dom->createTextNode($metric->getTotalClassCount()));
-            $stats->appendChild($dom->createElement('ConcreteClasses'))
-                  ->appendChild($dom->createTextNode($metric->getConcreteClassCount()));
-            $stats->appendChild($dom->createElement('AbstractClasses'))
-                  ->appendChild($dom->createTextNode($metric->getAbstractClassCount()));
-            $stats->appendChild($dom->createElement('Ca'))
-                  ->appendChild($dom->createTextNode($metric->afferentCoupling()));
-            $stats->appendChild($dom->createElement('Ce'))
-                  ->appendChild($dom->createTextNode($metric->efferentCoupling()));
-            $stats->appendChild($dom->createElement('A'))
-                  ->appendChild($dom->createTextNode($metric->abstractness()));
-            $stats->appendChild($dom->createElement('I'))
-                  ->appendChild($dom->createTextNode($metric->instability()));
-            $stats->appendChild($dom->createElement('D'))
-                  ->appendChild($dom->createTextNode($metric->distance()));
-            // TODO: V
+                $stats->appendChild($dom->createElement('TotalClasses'))
+                      ->appendChild($dom->createTextNode($metric->getTotalClassCount()));
+                $stats->appendChild($dom->createElement('ConcreteClasses'))
+                      ->appendChild($dom->createTextNode($metric->getConcreteClassCount()));
+                $stats->appendChild($dom->createElement('AbstractClasses'))
+                      ->appendChild($dom->createTextNode($metric->getAbstractClassCount()));
+                $stats->appendChild($dom->createElement('Ca'))
+                      ->appendChild($dom->createTextNode($metric->afferentCoupling()));
+                $stats->appendChild($dom->createElement('Ce'))
+                      ->appendChild($dom->createTextNode($metric->efferentCoupling()));
+                $stats->appendChild($dom->createElement('A'))
+                      ->appendChild($dom->createTextNode($metric->abstractness()));
+                $stats->appendChild($dom->createElement('I'))
+                      ->appendChild($dom->createTextNode($metric->instability()));
+                $stats->appendChild($dom->createElement('D'))
+                      ->appendChild($dom->createTextNode($metric->distance()));
+                // TODO: V
             
-            $cc = $pkg->appendChild($dom->createElement('ConcreteClasses'));
-            foreach ($metric->getConcreteClasses() as $class) {
-                $c = $cc->appendChild($dom->createElement('Class'));
-                $c->setAttribute('sourceFile', $class->getSourceFile());
-                $c->appendChild($dom->createTextNode($class->getName()));
-            }
+                $cc = $pkg->appendChild($dom->createElement('ConcreteClasses'));
+                foreach ($metric->getConcreteClasses() as $class) {
+                    $c = $cc->appendChild($dom->createElement('Class'));
+                    $c->setAttribute('sourceFile', $class->getSourceFile());
+                    $c->appendChild($dom->createTextNode($class->getName()));
+                }
             
-            $ac = $pkg->appendChild($dom->createElement('AbstractClasses'));
-            foreach ($metric->getAbstractClasses() as $class) {
-                $c = $cc->appendChild($dom->createElement('Class'));
-                $c->setAttribute('sourceFile', $class->getSourceFile());
-                $c->appendChild($dom->createTextNode($class->getName()));
-            }
+                $ac = $pkg->appendChild($dom->createElement('AbstractClasses'));
+                foreach ($metric->getAbstractClasses() as $class) {
+                    $c = $cc->appendChild($dom->createElement('Class'));
+                    $c->setAttribute('sourceFile', $class->getSourceFile());
+                    $c->appendChild($dom->createTextNode($class->getName()));
+                }
             
-            $ce = $pkg->appendChild($dom->createElement('DependsUpon'));
-            foreach ($metric->getEfferents() as $dep) {
-                $p = $ce->appendChild($dom->createElement('Package'));
-                $p->appendChild($dom->createTextNode($dep->getName()));
-            }
+                $ce = $pkg->appendChild($dom->createElement('DependsUpon'));
+                foreach ($metric->getEfferents() as $dep) {
+                    $p = $ce->appendChild($dom->createElement('Package'));
+                    $p->appendChild($dom->createTextNode($dep->getName()));
+                }
             
-            $ce = $pkg->appendChild($dom->createElement('UsedBy'));
-            foreach ($metric->getAfferents() as $dep) {
-                $p = $ce->appendChild($dom->createElement('Package'));
-                $p->appendChild($dom->createTextNode($dep->getName()));
+                $ce = $pkg->appendChild($dom->createElement('UsedBy'));
+                foreach ($metric->getAfferents() as $dep) {
+                    $p = $ce->appendChild($dom->createElement('Package'));
+                    $p->appendChild($dom->createTextNode($dep->getName()));
+                }
             }
         }
         
