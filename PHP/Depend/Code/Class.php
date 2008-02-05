@@ -242,13 +242,9 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
      */
     public function removeDependency(PHP_Depend_Code_Class $class)
     {
-        foreach ($this->dependencies as $idx => $dep) {
-            if ($dep === $class) {
-                // Remove from internal list
-                unset($this->dependencies[$idx]);
-                // Stop processing
-                break;
-            }
+        if (($i = array_search($class, $this->dependencies, true)) !== false) {
+            // Remove from internal list
+            unset($this->dependencies[$idx]);
         }
     }
     
