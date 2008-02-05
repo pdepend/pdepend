@@ -67,7 +67,7 @@ class PHP_Depend_Renderer_XMLRendererTest extends PHP_Depend_Renderer_AbstractRe
      *
      * @return void
      */
-    public function testRenderXML()
+    public function testRenderXMLFile()
     {
         $output   = tempnam(sys_get_temp_dir(), 'php_depend');
         $renderer = new PHP_Depend_Renderer_XMLRenderer($output);
@@ -77,5 +77,23 @@ class PHP_Depend_Renderer_XMLRendererTest extends PHP_Depend_Renderer_AbstractRe
         
         // Unlink temp file
         @unlink($output);
+    }
+    /**
+     * Tests the xml renderer output against a reference xml document. 
+     *
+     * @return void
+     */
+    public function testRenderXMLString()
+    {
+        $renderer = new PHP_Depend_Renderer_XMLRenderer();
+        
+        ob_start();
+        $renderer->render($this->metrics);
+        $result = ob_get_contents();
+        ob_end_clean();
+        
+        $expected = file_get_contents(dirname(__FILE__) . '/ref.xml');
+        
+        $this->assertXmlStringEqualsXmlString($expected, $result);
     }
 }
