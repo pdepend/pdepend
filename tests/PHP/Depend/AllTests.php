@@ -53,6 +53,7 @@ if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once dirname(__FILE__) . '/AbstractTest.php';
 require_once dirname(__FILE__) . '/Code/AllTests.php';
 
 /**
