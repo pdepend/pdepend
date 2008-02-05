@@ -62,11 +62,15 @@ require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
  */
 class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * Tests the tokenizer with a source file that contains only classes.
+     *
+     * @return void
+     */
     public function testInternalTokenizerWithClasses()
     {
-        $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer(
-            dirname(__FILE__) . '/code/classes.php'
-        );
+        $sourceFile = dirname(__FILE__) . '/code/classes.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
             PHP_Depend_Code_Tokenizer::T_DOC_COMMENT,
@@ -96,17 +100,24 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE
         );
         
+        $this->assertEquals($sourceFile, $tokenizer->getSourceFile());
+        
         foreach ($tokens as $token) {
             $t = $tokenizer->next();
             $this->assertEquals($token, $t[0]);
         }
     }
-    
+ 
+    /**
+     * Tests the tokenizer with a source file that contains mixed content of
+     * classes and functions.
+     *
+     * @return void
+     */   
     public function testInternalTokenizerWithMixedContent()
     {
-        $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer(
-            dirname(__FILE__) . '/code/func_class.php'
-        );
+        $sourceFile = dirname(__FILE__) . '/code/func_class.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
             PHP_Depend_Code_Tokenizer::T_FUNCTION,
@@ -127,9 +138,51 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE,
         );
         
-        foreach ($tokens as $token) {
-            $t = $tokenizer->next();
-            $this->assertEquals($token, $t[0]);
+        $this->assertEquals($sourceFile, $tokenizer->getSourceFile());
+        
+        while (($token = $tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
+            $this->assertEquals(array_shift($tokens), $token[0]);
+        }
+    }
+    
+    /**
+     * Tests the tokenizer with a combination of procedural code and functions.
+     *
+     * @return void
+     */
+    public function testInternalTokenizerWithProceduralCodeAndFunction()
+    {
+        $sourceFile = dirname(__FILE__) . '/code/func_code.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        
+        $tokens = array(
+            PHP_Depend_Code_Tokenizer::T_FUNCTION,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
+            PHP_Depend_Code_Tokenizer::T_NEW,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_SEMICOLON,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_SEMICOLON,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_SEMICOLON,
+        );
+        
+        $this->assertEquals($sourceFile, $tokenizer->getSourceFile());
+        
+        while ($tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_EOF) {
+            $token = $tokenizer->next();
+            $this->assertEquals(array_shift($tokens), $token[0]);
         }
     }
 }
