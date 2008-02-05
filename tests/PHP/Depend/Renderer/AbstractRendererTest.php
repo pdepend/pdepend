@@ -45,22 +45,15 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
-{
-    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_AllTests::main' );
-}
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/AbstractTest.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/Code/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
-require_once dirname(__FILE__) . '/Util/AllTests.php';
+require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Metrics/PackageMetricsVisitor.php';
+require_once 'PHP/Depend/Util/PHPFilterIterator.php';
 
 /**
- * Main test suite for the PHP_Depend package.
+ * Abstract base class for renderers.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -70,35 +63,42 @@ require_once dirname(__FILE__) . '/Util/AllTests.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_AllTests
+abstract class PHP_Depend_Renderer_AbstractRendererTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * The generated metrics.
+     *
+     * @type Iterator
+     * @var Iterator $metrics
+     */
+    protected $metrics = null;
+    
+    /**
+     * Sets up the test metrics.
      *
      * @return void
      */
-    public static function main()
+    protected function setUp()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        parent::setUp();
+        
+        $source = dirname(__FILE__) . '/../code/code-5.2.x';
+        $files  = new PHP_Depend_Util_PHPFilterIterator(new DirectoryIterator($source));
+        
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        foreach ($files as $file) {
+            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file->getRealPath());
+            
+            $parser = new PHP_Depend_Parser($tokenizer, $builder);
+            $parser->parse();
+        }
+        
+        $visitor = new PHP_Depend_Metrics_PackageMetricsVisitor();
+        foreach ($builder->getPackages() as $package) {
+            $package->accept($visitor);
+        }
+        
+        $this->metrics = $visitor->getPackageMetrics();
     }
-    
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
-        $suite->addTestSuite('PHP_Depend_ParserTest');
-        $suite->addTest(PHP_Depend_Code_AllTests::suite());
-        $suite->addTest(PHP_Depend_Renderer_AllTests::suite());
-        $suite->addTest(PHP_Depend_Util_AllTests::suite());
-
-        return $suite;
-    }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_AllTests::main') {
-    PHP_Depend_AllTests::main();
 }
