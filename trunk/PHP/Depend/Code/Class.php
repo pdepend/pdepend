@@ -200,14 +200,11 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
      */
     public function removeMethod(PHP_Depend_Code_Method $method)
     {
-        foreach ($this->methods as $idx => $m) {
-            if ($m === $method) {
-                // Remove this as owner
-                $method->setClass(null);
-                // Remove from internal list
-                unset($this->methods[$idx]);
-                break;
-            }
+        if (($i = array_search($method, $this->methods, true)) !== false) {
+            // Remove this as owner
+            $method->setClass(null);
+            // Remove from internal list
+            unset($this->methods[$i]);
         }
     }
     
