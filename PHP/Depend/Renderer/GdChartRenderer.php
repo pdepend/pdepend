@@ -127,29 +127,28 @@ class PHP_Depend_Renderer_GdChartRenderer implements PHP_Depend_Renderer
         imageline($im, $size, $size, (12 * $size), (12 * $size), $red);
 
         foreach ($metrics as $metric) {
-            if ($metric->getName() === PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
-                continue;
-            }
+            if ($metric->getName() !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
             
-            $sum      = ($metric->getConcreteClassCount() + $metric->getAbstractClassCount());
-            $diameter = (sqrt($sum) * $size) / sqrt($size);
+                $sum      = ($metric->getConcreteClassCount() + $metric->getAbstractClassCount());
+                $diameter = (sqrt($sum) * $size) / sqrt($size);
 
-            $A = $metric->abstractness();
-            $I = $metric->instability();
+                $A = $metric->abstractness();
+                $I = $metric->instability();
 
-            $offsetX = $size + ceil($A * (10 * $size)) + ($size / 2);
-            $offsetY = $size + ceil(10.5 * $size) + ($I * (-10 * $size));
+                $offsetX = $size + ceil($A * (10 * $size)) + ($size / 2);
+                $offsetY = $size + ceil(10.5 * $size) + ($I * (-10 * $size));
 
-            if ($metric->distance() < $bias) {
-                $color = $green;
-            } else {
-                $color = $orange;
+                if ($metric->distance() < $bias) {
+                    $color = $green;
+                } else {
+                    $color = $orange;
+                }
+
+                imagefilledarc($im, $offsetX, $offsetY, $diameter, $diameter, 0, 0, $color, IMG_ARC_PIE);
+                imagearc($im, $offsetX, $offsetY, $diameter, $diameter, 0, 0, $dgray);
+
+                imagestring($im, 2, $offsetX + ceil($diameter / 2), $offsetY - $diameter, $metric->getName(), $dgray);
             }
-
-            imagefilledarc($im, $offsetX, $offsetY, $diameter, $diameter, 0, 0, $color, IMG_ARC_PIE);
-            imagearc($im, $offsetX, $offsetY, $diameter, $diameter, 0, 0, $dgray);
-
-            imagestring($im, 2, $offsetX + ceil($diameter / 2), $offsetY - $diameter, $metric->getName(), $dgray);
         }
 
         imagepng($im, $this->fileName);
