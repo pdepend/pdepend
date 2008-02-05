@@ -54,6 +54,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/ClassTest.php';
+require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
 require_once dirname(__FILE__) . '/MethodTest.php';
@@ -91,6 +92,7 @@ class PHP_Depend_Code_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
+        $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
         $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
         $suite->addTestSuite('PHP_Depend_Code_MethodTest');
