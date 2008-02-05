@@ -7,7 +7,7 @@
                         http://pear.php.net/dtd/package-2.0
                         http://pear.php.net/dtd/package-2.0.xsd">
   <name>PHP_Depend</name>
-  <channel>pear.php.net</channel>
+  <channel>pear.xplib.de</channel>
   <summary>PHP_Depend design quality metrics for PHP packages</summary>
   <description>PHP_Depend is an adaption of the Java design quality metrics 
 software JDepend.

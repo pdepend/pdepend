@@ -71,7 +71,7 @@ interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
      * 
      * @return PHP_Depend_Code_Class The created class object.
      */
-    function buildClass($name, $sourceFile);
+    function buildClass($name, $sourceFile = null);
     
     /**
      * Builds a new package instance.
