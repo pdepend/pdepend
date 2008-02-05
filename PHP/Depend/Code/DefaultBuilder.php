@@ -106,12 +106,15 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      * 
      * @return PHP_Depend_Code_Class The created class object.
      */
-    public function buildClass($name, $sourceFile)
+    public function buildClass($name, $sourceFile = null)
     {
         if (!isset($this->classes[$name])) {
             $this->classes[$name] = new PHP_Depend_Code_Class($name, $sourceFile);
             
             $this->defaultPackage->addClass($this->classes[$name]);
+        }
+        if ($sourceFile !== null) {
+            $this->classes[$name]->setSourceFile($sourceFile);
         }
         return $this->classes[$name];
     }
