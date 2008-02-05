@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
 require_once dirname(__FILE__) . '/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Class.php';
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Code/Package.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_ClassTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
 {
     /**
      * Tests the ctor with and the {@link PHP_Depend_Code_Class::getName()} and
@@ -151,69 +151,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that a new {@link PHP_Depend_Code_Class} instance returns an empty
-     * {@link PHP_Depend_Code_NodeIterator} for dependencies.
-     *
-     * @return void
-     */
-    public function testGetDependencyNodeIterator()
-    {
-        $class        = new PHP_Depend_Code_Class('clazz', 'clazz.php');
-        $dependencies = $class->getDependencies();
-        $methods = $class->getMethods();
-        
-        $this->assertType('PHP_Depend_Code_NodeIterator', $dependencies);
-        $this->assertEquals(0, $dependencies->count());
-    }
-    
-    /**
-     * Tests that the add {@link PHP_Depend_Code_Class::addDependency()} adds
-     * a new depended object to the internal list, but it should accept each
-     * type only once.
-     * 
-     * @return void
-     *
-     */
-    public function testAddDependency()
-    {
-        $class = new PHP_Depend_Code_Class('clazz', 'clazz.php');
-        $dep0  = new PHP_Depend_Code_Class('dep0', 'dep0.php');
-        $dep1  = new PHP_Depend_Code_Class('dep1', 'dep1.php');
-        
-        $this->assertEquals(0, $class->getDependencies()->count());
-        $class->addDependency($dep0);
-        $this->assertEquals(1, $class->getDependencies()->count());
-        $class->addDependency($dep0);
-        $this->assertEquals(1, $class->getDependencies()->count());
-        $class->addDependency($dep1);
-        $this->assertEquals(2, $class->getDependencies()->count());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Depend_Code_Class::removeDependency()} method
-     * works as expected.
-     *
-     * @return void
-     */
-    public function testRemoveDependency()
-    {
-        $class = new PHP_Depend_Code_Class('clazz', 'clazz.php');
-        $dep0  = new PHP_Depend_Code_Class('dep0', 'dep0.php');
-        $dep1  = new PHP_Depend_Code_Class('dep1', 'dep1.php');
-        
-        $this->assertEquals(0, $class->getDependencies()->count());
-        $class->addDependency($dep0);
-        $this->assertEquals(1, $class->getDependencies()->count());
-        $class->addDependency($dep1);
-        $this->assertEquals(2, $class->getDependencies()->count());
-        
-        $class->removeDependency($dep1);
-        $this->assertEquals(1, $class->getDependencies()->count());
-        $class->removeDependency($dep0);
-        $this->assertEquals(0, $class->getDependencies()->count());
-    }
-    
-    /**
      * Tests that the {@link PHP_Depend_Code_Class::getPackage()} returns as
      * default value <b>null</b> and that the package could be set and unset.
      *
@@ -245,5 +182,15 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_AbstractTest
         $class->accept($visitor);
         $this->assertSame($class, $visitor->class);
         
+    }
+    
+    /**
+     * Generates a node instance that can handle dependencies.
+     *
+     * @return PHP_Depend_Code_DependencyNode
+     */
+    protected function createDependencyNode()
+    {
+        return new PHP_Depend_Code_Class('clazz', 'clazz.php');
     }
 }
