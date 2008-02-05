@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
  * Represents a php class node.
@@ -165,11 +166,11 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
     /**
      * Returns all {@link PHP_Depend_Code_Method} object in this class.
      *
-     * @return Iterator
+     * @return PHP_Depend_Code_NodeIterator
      */
     public function getMethods()
     {
-        return new ArrayIterator($this->methods);
+        return new PHP_Depend_Code_NodeIterator($this->methods);
     }
     
     /**
