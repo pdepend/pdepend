@@ -47,6 +47,7 @@
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/NodeBuilder.php'; 
+require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
@@ -151,14 +152,19 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      */
     public function buildFunction($name)
     {
-        return new PHP_Depend_Code_Function($name);
+        // Create new function
+        $function = new PHP_Depend_Code_Function($name);
+        // Add to default package
+        $this->defaultPackage->addFunction($function);
+        
+        return $function;
     }
     
     /**
      * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
      * objects.
      *
-     * @return Iterator
+     * @return PHP_Depend_Code_NodeIterator
      */
     public function getIterator()
     {
@@ -169,10 +175,10 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
      * objects.
      *
-     * @return Iterator
+     * @return PHP_Depend_Code_NodeIterator
      */
     public function getPackages()
     {
-        return new ArrayIterator($this->packages);
+        return new PHP_Depend_Code_NodeIterator($this->packages);
     }
 }
