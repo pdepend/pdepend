@@ -142,6 +142,18 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
     }
     
     /**
+     * Sets the source file for this class.
+     * 
+     * @param string $sourceFile The class source file.
+     *
+     * @return void
+     */
+    public function setSourceFile($sourceFile)
+    {
+        $this->sourceFile = $sourceFile;
+    }
+    
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean

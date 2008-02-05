@@ -62,10 +62,10 @@
       </Stats>
       <ConcreteClasses>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Foo</Class>
-        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package2.php">pkg1Foobar</Class>
+        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Foobar</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Barfoo</Class>
-        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package2.php">pkg1FooI</Class>
-        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package2.php">pkg1Bar</Class>
+        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1FooI</Class>
+        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Bar</Class>
       </ConcreteClasses>
       <AbstractClasses/>
       <DependsUpon>
