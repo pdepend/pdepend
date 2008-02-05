@@ -12,10 +12,10 @@
         <I>0.5</I>
         <D>0.5</D>
       </Stats>
-      <ConcreteClasses>
+      <ConcreteClasses/>
+      <AbstractClasses>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package3.php">pkg3FooI</Class>
-      </ConcreteClasses>
-      <AbstractClasses/>
+      </AbstractClasses>
       <DependsUpon>
         <Package>global</Package>
       </DependsUpon>
@@ -37,10 +37,11 @@
       <ConcreteClasses>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package2.php">pkg2Foobar</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package2.php">pkg2Barfoo</Class>
+      </ConcreteClasses>
+      <AbstractClasses>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package2.php">pkg2FooI</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package2.php">pkg2Bar</Class>
-      </ConcreteClasses>
-      <AbstractClasses/>
+      </AbstractClasses>
       <DependsUpon>
         <Package>package1</Package>
         <Package>global</Package>
@@ -64,10 +65,11 @@
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Foo</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Foobar</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Barfoo</Class>
+      </ConcreteClasses>
+      <AbstractClasses>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1FooI</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/code/code-5.2.x/package1.php">pkg1Bar</Class>
-      </ConcreteClasses>
-      <AbstractClasses/>
+      </AbstractClasses>
       <DependsUpon>
         <Package>package2</Package>
         <Package>package3</Package>
