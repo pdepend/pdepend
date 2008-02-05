@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Code/Method.php';
 
 /**
  * Represents a php method node.
