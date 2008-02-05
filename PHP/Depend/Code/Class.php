@@ -244,7 +244,7 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
     {
         if (($i = array_search($class, $this->dependencies, true)) !== false) {
             // Remove from internal list
-            unset($this->dependencies[$idx]);
+            unset($this->dependencies[$i]);
         }
     }
     
