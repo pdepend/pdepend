@@ -47,20 +47,17 @@
 
 if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
 {
-    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_AllTests::main' );
+    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_Renderer_AllTests::main' );
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/Code/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
-require_once dirname(__FILE__) . '/Util/AllTests.php';
+require_once dirname(__FILE__) . '/GdChartRendererTest.php';
+require_once dirname(__FILE__) . '/XMLRendererTest.php';
 
 /**
- * Main test suite for the PHP_Depend package.
+ * Main test suite for the PHP_Depend_Renderer package.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -70,7 +67,7 @@ require_once dirname(__FILE__) . '/Util/AllTests.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_AllTests
+class PHP_Depend_Renderer_AllTests
 {
     /**
      * Test suite main method.
@@ -89,16 +86,14 @@ class PHP_Depend_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
-        $suite->addTestSuite('PHP_Depend_ParserTest');
-        $suite->addTest(PHP_Depend_Code_AllTests::suite());
-        $suite->addTest(PHP_Depend_Renderer_AllTests::suite());
-        $suite->addTest(PHP_Depend_Util_AllTests::suite());
-
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Renderer - AllTests');
+        $suite->addTestSuite('PHP_Depend_Renderer_GdChartRendererTest');
+        $suite->addTestSuite('PHP_Depend_Renderer_XMLRendererTest');
+        
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_AllTests::main') {
-    PHP_Depend_AllTests::main();
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Renderer_AllTests::main') {
+    PHP_Depend_Renderer_AllTests::main();
 }

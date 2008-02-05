@@ -45,22 +45,12 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
-{
-    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_AllTests::main' );
-}
+require_once dirname(__FILE__) . '/AbstractRendererTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/AbstractTest.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/Code/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
-require_once dirname(__FILE__) . '/Util/AllTests.php';
+require_once 'PHP/Depend/Renderer/XMLRenderer.php';
 
 /**
- * Main test suite for the PHP_Depend package.
+ * Tests the xml output render.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -70,35 +60,22 @@ require_once dirname(__FILE__) . '/Util/AllTests.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_AllTests
+class PHP_Depend_Renderer_XMLRendererTest extends PHP_Depend_Renderer_AbstractRendererTest
 {
     /**
-     * Test suite main method.
+     * Tests the xml renderer output against a reference xml document. 
      *
      * @return void
      */
-    public static function main()
+    public function testRenderXML()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $output   = tempnam(sys_get_temp_dir(), 'php_depend');
+        $renderer = new PHP_Depend_Renderer_XMLRenderer($output);
+        $renderer->render($this->metrics);
+        
+        $this->assertXmlFileEqualsXmlFile(dirname(__FILE__) . '/ref.xml', $output);
+        
+        // Unlink temp file
+        @unlink($output);
     }
-    
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
-        $suite->addTestSuite('PHP_Depend_ParserTest');
-        $suite->addTest(PHP_Depend_Code_AllTests::suite());
-        $suite->addTest(PHP_Depend_Renderer_AllTests::suite());
-        $suite->addTest(PHP_Depend_Util_AllTests::suite());
-
-        return $suite;
-    }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_AllTests::main') {
-    PHP_Depend_AllTests::main();
 }
