@@ -245,15 +245,15 @@ software JDepend.
       </os>
     </installconditions>
     <filelist>
-      <install as="phpdep" name="phpdep.php" />
-      <install as="phpdep.bat" name="phpdep.bat" />
+      <install as="pdepend" name="pdepend.php" />
+      <install as="pdepend.bat" name="pdepend.bat" />
     </filelist>
   </phprelease>
 
   <phprelease>
     <filelist>
-      <install as="phpdep" name="phpdep.php" />
-      <ignore name="phpdep.bat" />
+      <install as="pdepend" name="pdepend.php" />
+      <ignore name="pdepend.bat" />
     </filelist>
   </phprelease>
 
