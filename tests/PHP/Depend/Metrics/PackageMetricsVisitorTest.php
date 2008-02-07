@@ -79,7 +79,7 @@ class PHP_Depend_Metrics_PackageMetricsVisitorTest extends PHP_Depend_AbstractTe
     {
         parent::setUp();
         
-        $sourceFile    = dirname(__FILE__) . '/../code/mixed_code.php';
+        $sourceFile    = dirname(__FILE__) . '/../data/mixed_code.php';
         $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $this->builder = new PHP_Depend_Code_DefaultBuilder();
         $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
