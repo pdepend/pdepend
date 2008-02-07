@@ -18,9 +18,9 @@ software JDepend.
     <email>mapi@manuel-pichler.de</email>
     <active>yes</active>
   </lead>
-  <date>2008-02-06</date>
+  <date>2008-02-07</date>
   <version>
-    <release>0.1.0</release>
+    <release>0.1.1</release>
     <api>0.1.0</api>
   </version>
   <stability>
@@ -29,7 +29,7 @@ software JDepend.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Initial release.
+- Checkout and test cases fixed for windows users. 
   </notes>
   <contents>
     <dir name="/">
@@ -221,7 +221,7 @@ software JDepend.
   <dependencies>
     <required>
       <php>
-        <min>5.2.5</min>
+        <min>5.2.2</min>
       </php>
       <pearinstaller>
         <min>1.6.0</min>
@@ -257,4 +257,27 @@ software JDepend.
     </filelist>
   </phprelease>
 
+  <changelog>
+    <release>
+      <lead>
+        <name>Manuel Pichler</name>
+        <user>mapi</user>
+        <email>mapi@manuel-pichler.de</email>
+        <active>yes</active>
+      </lead>
+      <date>2008-02-06</date>
+      <version>
+        <release>0.1.0</release>
+        <api>0.1.0</api>
+      </version>
+      <stability>
+        <release>alpha</release>
+        <api>alpha</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Initial release.
+      </notes>
+    </release>
+  </changelog>
 </package>
