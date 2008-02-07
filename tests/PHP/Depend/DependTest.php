@@ -84,7 +84,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAddDirectory()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
     }
     
     /**
@@ -95,7 +95,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAnalyze()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         
         $metrics = $pdepend->analyze();
         
@@ -125,7 +125,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testCountClasses()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->analyze();
         
         $this->assertEquals(10, $pdepend->countClasses());
@@ -142,7 +142,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $this->setExpectedException('RuntimeException', 'countClasses() doesn\'t work before the source was analyzed.');
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->countClasses();
     }
     
@@ -155,7 +155,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testCountPackages()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->analyze();
         
         $this->assertEquals(4, $pdepend->countPackages());
@@ -172,7 +172,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $this->setExpectedException('RuntimeException', 'countPackages() doesn\'t work before the source was analyzed.');
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->countPackages();
     }
     
@@ -185,7 +185,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testGetPackage()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->analyze();
         
         $this->assertType('PHP_Depend_Metrics_PackageMetrics', $pdepend->getPackage('package1'));
@@ -205,7 +205,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $this->setExpectedException('RuntimeException', 'getPackage() doesn\'t work before the source was analyzed.');
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->getPackage('package1');
     }
     
@@ -220,7 +220,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $this->setExpectedException('OutOfBoundsException', 'Unknown package "package0".');
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->analyze();
         $pdepend->getPackage('package0');
     }
@@ -235,7 +235,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testGetPackages()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         
         $metrics0 = $pdepend->analyze();
         $metrics1 = $pdepend->getPackages();
@@ -257,7 +257,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $this->setExpectedException('RuntimeException', 'getPackages() doesn\'t work before the source was analyzed.');
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/code/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->getPackages();
     }
 }
