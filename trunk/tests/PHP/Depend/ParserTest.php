@@ -71,7 +71,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParseMixedCode()
     {
-        $sourceFile = dirname(__FILE__) . '/code/mixed_code.php';
+        $sourceFile = dirname(__FILE__) . '/data/mixed_code.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -116,7 +116,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException('RuntimeException', 'Invalid state, unclosed class body.');
         
-        $sourceFile = dirname(__FILE__) . '/code/not_closed_class.txt';
+        $sourceFile = dirname(__FILE__) . '/data/not_closed_class.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -134,7 +134,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException('RuntimeException', 'Invalid state, unclosed function body.');
         
-        $sourceFile = dirname(__FILE__) . '/code/not_closed_function.txt';
+        $sourceFile = dirname(__FILE__) . '/data/not_closed_function.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -152,7 +152,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException('RuntimeException', 'Invalid function signature.');
         
-        $sourceFile = dirname(__FILE__) . '/code/invalid_function1.txt';
+        $sourceFile = dirname(__FILE__) . '/data/invalid_function1.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -170,7 +170,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException('RuntimeException', 'Invalid function signature.');
         
-        $sourceFile = dirname(__FILE__) . '/code/invalid_function2.txt';
+        $sourceFile = dirname(__FILE__) . '/data/invalid_function2.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
