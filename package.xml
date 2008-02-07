@@ -110,7 +110,7 @@ software JDepend.
       <dir name="tests">
         <dir name="PHP">
           <dir name="Depend">
-            <dir name="code">
+            <dir name="data">
               <dir name="code-5.2.x">
                 <file name="package1.php" role="test" />
                 <file name="package2.php" role="test" />
