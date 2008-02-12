@@ -107,7 +107,8 @@ class PHP_Depend_Parser
      * @param PHP_Depend_Code_Tokenizer   $tokenizer The used code tokenizer.
      * @param PHP_Depend_Code_NodeBuilder $builder   The used node builder.
      */
-    public function __construct(PHP_Depend_Code_Tokenizer $tokenizer, PHP_Depend_Code_NodeBuilder $builder)
+    public function __construct(PHP_Depend_Code_Tokenizer $tokenizer, 
+                                PHP_Depend_Code_NodeBuilder $builder)
     {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
