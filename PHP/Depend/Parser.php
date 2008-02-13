@@ -67,7 +67,7 @@ class PHP_Depend_Parser
      * @type string
      * @var string $package
      */
-    protected $package = '';
+    protected $package = null;
     
     /**
      * Marks the current class as abstract.
@@ -143,7 +143,7 @@ class PHP_Depend_Parser
                 $token = $this->tokenizer->next();
                     
                 $this->className = $token[1];
-                    
+
                 $class = $this->builder->buildClass($this->className);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setAbstract($this->abstract);
@@ -173,7 +173,7 @@ class PHP_Depend_Parser
      */
     protected function reset()
     {
-        $this->package   = null;
+        $this->package   = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
         $this->abstract  = false;
         $this->className = null;
     }
