@@ -50,6 +50,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/PackageMetricsVisitor.php';
+require_once 'PHP/Depend/Util/ExtensionFilter.php';
 require_once 'PHP/Depend/Util/PHPFilterIterator.php';
 
 /**
@@ -83,7 +84,10 @@ abstract class PHP_Depend_Renderer_AbstractRendererTest extends PHP_Depend_Abstr
         parent::setUp();
         
         $source = dirname(__FILE__) . '/../data/code-5.2.x';
-        $files  = new PHP_Depend_Util_PHPFilterIterator(new DirectoryIterator($source));
+        $files  = new PHP_Depend_Util_PHPFilterIterator(
+            new DirectoryIterator($source),
+            new PHP_Depend_Util_ExtensionFilter(array('php'))
+        );
         
         $builder = new PHP_Depend_Code_DefaultBuilder();
         

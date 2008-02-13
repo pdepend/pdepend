@@ -105,7 +105,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         'array'   =>  true,
         'parent'  =>  true,
         'true'    =>  true,
-        'false'   =>  true
+        'false'   =>  true,
     );
     
     /**
