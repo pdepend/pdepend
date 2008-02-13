@@ -45,20 +45,12 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Util_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/CompositeFilterTest.php';
-require_once dirname(__FILE__) . '/ExcludePathFilterTest.php';
-require_once dirname(__FILE__) . '/FileExtensionFilterTest.php';
-require_once dirname(__FILE__) . '/PHPFilterIteratorTest.php';
+require_once 'PHP/Depend/Util/ExtensionFilter.php';
 
 /**
- * Main test suite for the PHP_Depend_Util package.
+ * Test case for the file extension filter.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -68,35 +60,64 @@ require_once dirname(__FILE__) . '/PHPFilterIteratorTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_AllTests
+class PHP_Depend_Util_FileExtensionFilterTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
-     *
+     * Tests the extension filter for simple *.txt.
+     * 
      * @return void
      */
-    public static function main()
+    public function testExtensionFilterWithTxtExtension()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $it     = new DirectoryIterator(dirname(__FILE__) . '/../data');
+        $filter = new PHP_Depend_Util_ExtensionFilter(array('txt'));
+        
+        $result = array();
+        foreach ($it as $file) {
+            if ($filter->accept($file)) {
+                $result[] = $file->getFilename();
+            }
+        }
+        
+        sort($result);
+        
+        $expected = array(
+            'invalid_class_with_code.txt',
+            'invalid_function1.txt',
+            'invalid_function2.txt',
+            'not_closed_class.txt',
+            'not_closed_function.txt'
+        );
+        
+        $this->assertEquals($expected, $result);
     }
     
     /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
+     * Tests the extension filter with multiple allowed file extensions.
+     * 
+     * @return void
      */
-    public static function suite()
+    public function testExtensionFilterWithMultipleExtensions()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util - AllTests');
-        $suite->addTestSuite('PHP_Depend_Util_CompositeFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_ExcludePathFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_FileExtensionFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_PHPFilterIteratorTest');
+        $it     = new DirectoryIterator(dirname(__FILE__) . '/../data');
+        $filter = new PHP_Depend_Util_ExtensionFilter(array('txt', 'inc'));
         
-        return $suite;
+        $result = array();
+        foreach ($it as $file) {
+            if ($filter->accept($file)) {
+                $result[] = $file->getFilename();
+            }
+        }
+        
+        sort($result);
+        
+        $expected = array(
+            'function.inc',
+            'invalid_class_with_code.txt',
+            'invalid_function1.txt',
+            'invalid_function2.txt',
+            'not_closed_class.txt',
+            'not_closed_function.txt'
+        );
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Util_AllTests::main') {
-    PHP_Depend_Util_AllTests::main();
 }

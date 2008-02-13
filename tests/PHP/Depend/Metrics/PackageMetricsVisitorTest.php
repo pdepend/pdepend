@@ -47,7 +47,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Metrics/PackageMetricsVisitorTest.php';
+require_once 'PHP/Depend/Metrics/PackageMetricsVisitor.php';
 
 /**
  * Tests the for the package metrics visitor.

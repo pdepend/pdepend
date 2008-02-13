@@ -1,6 +1,4 @@
 <?php
-namespace package3;
-
 /**
  * @package package3
  */
