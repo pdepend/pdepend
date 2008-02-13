@@ -48,6 +48,7 @@
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Util/CompositeFilter.php';
 require_once 'PHP/Depend/Util/PHPFilterIterator.php';
 
 /**
@@ -75,12 +76,28 @@ class PHP_Depend
     protected $directories = array();
     
     /**
+     * A composite filter for input files.
+     *
+     * @type PHP_Depend_Util_CompositeFilter
+     * @var PHP_Depend_Util_CompositeFilter $filter
+     */
+    protected $filter = null;
+    
+    /**
      * Generated {@link PHP_Depend_Metrics_PackageMetrics} objects.
      *
      * @type Iterator
      * @var Iterator $packages
      */
     protected $packages = null;
+    
+    /**
+     * Constructs a new php depend facade.
+     */
+    public function __construct()
+    {
+        $this->filter = new PHP_Depend_Util_CompositeFilter();
+    }
 
     /**
      * Adds the specified directory to the list of directories to be analyzed.
@@ -101,6 +118,18 @@ class PHP_Depend
     }
     
     /**
+     * Adds a new input/file filter.
+     *
+     * @param PHP_Depend_Util_FileFilter $filter New input/file filter instance.
+     * 
+     * @return void
+     */
+    public function addFilter(PHP_Depend_Util_FileFilter $filter)
+    {
+        $this->filter->append($filter);
+    }
+    
+    /**
      * Analyzes the registered directories and returns the collection of 
      * analyzed packages.
      *
@@ -114,7 +143,7 @@ class PHP_Depend
             $iterator->append(new PHP_Depend_Util_PHPFilterIterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($directory)
-                )
+                ), $this->filter
             ));
         }
         

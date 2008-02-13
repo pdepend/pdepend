@@ -45,6 +45,8 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Util/FileFilter.php';
+
 /**
  * Simple utility filter iterator for php source files.
  * 
@@ -58,6 +60,15 @@
  */
 class PHP_Depend_Util_PHPFilterIterator extends FilterIterator
 {
+    protected $filter = null;
+    
+    public function __construct(Iterator $it, PHP_Depend_Util_FileFilter $filter)
+    {
+        parent::__construct($it);
+        
+        $this->filter = $filter;
+    }
+    
     /**
      * Returns <b>true</b> if the file name ends with '.php'.
      *
@@ -65,6 +76,6 @@ class PHP_Depend_Util_PHPFilterIterator extends FilterIterator
      */
     public function accept() 
     {
-        return ( substr($this->getInnerIterator()->current(), -4, 4) === '.php' );
+        return $this->filter->accept($this->getInnerIterator()->current());
     }
 }

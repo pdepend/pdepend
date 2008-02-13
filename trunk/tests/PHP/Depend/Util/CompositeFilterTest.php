@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * This file is part of PHP_Depend.
@@ -46,49 +45,47 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-// PEAR/svn workaround
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
-}
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/DummyFilter.php';
 
-if (count($GLOBALS['argv']) < 2) {
-    echo "Usage phpdep.php <source-dir> [<output-dir>]\n";
-    exit(1);
-}
+require_once 'PHP/Depend/Util/CompositeFilter.php';
 
-$source = realpath($GLOBALS['argv'][1]);
-if (!is_dir($source)) {
-    echo $GLOBALS['argv'][1] . " doesn't exist.\n";
-    exit(1);
-}
-
-if (count($GLOBALS['argv']) > 2) {
-    $output = $GLOBALS['argv'][2];
-    
-    if (!is_dir($output) && !mkdir($output, 0755, true)) {
-        echo "Cannot create output directory {$output}.\n";
-        exit(1);
+/**
+ * Test case for the composite filter.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
+class PHP_Depend_Util_CompositeFilterTest extends PHP_Depend_AbstractTest
+{
+    /**
+     * Tests the execution chain in the composite filter.
+     *
+     * @return void
+     */
+    public function testCompositeFilter()
+    {
+        $filter0 = new PHP_Depend_Util_DummyFilter(true);
+        $filter1 = new PHP_Depend_Util_DummyFilter(true);
+        $filter2 = new PHP_Depend_Util_DummyFilter(false);
+        $filter3 = new PHP_Depend_Util_DummyFilter(true);
+        
+        $composite = new PHP_Depend_Util_CompositeFilter();
+        $composite->append($filter0);
+        $composite->append($filter1);
+        $composite->append($filter2);
+        $composite->append($filter3);
+        
+        $composite->accept(new SplFileInfo(dirname(__FILE__)));
+        
+        $this->assertTrue($filter0->invoked);
+        $this->assertTrue($filter1->invoked);
+        $this->assertTrue($filter2->invoked);
+        $this->assertFalse($filter3->invoked);
     }
-} else {
-    $output = getcwd();
 }
-
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Renderer/GdChartRenderer.php';
-require_once 'PHP/Depend/Renderer/XMLRenderer.php';
-require_once 'PHP/Depend/Util/ExcludePathFilter.php';
-require_once 'PHP/Depend/Util/ExtensionFilter.php';
-
-$pdepend = new PHP_Depend();
-$pdepend->addDirectory($source);
-
-$pdepend->addFilter(new PHP_Depend_Util_ExtensionFilter(array('php', 'inc')));
-$pdepend->addFilter(new PHP_Depend_Util_ExcludePathFilter(array('tests/')));
-
-$packages = $pdepend->analyze();
-
-$renderer = new PHP_Depend_Renderer_GdChartRenderer($output . '/php_depend.png');
-$renderer->render($packages);
-
-$renderer = new PHP_Depend_Renderer_XMLRenderer($output . '/php_depend.xml');
-$renderer->render($packages);
