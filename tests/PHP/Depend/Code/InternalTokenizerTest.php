@@ -185,4 +185,39 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
     }
+    
+    /**
+     * Test case for undetected static method call added.
+     *
+     * @return void
+     */
+    public function testInternalTokenizerStaticCallBug01()
+    {
+        $sourceFile = dirname(__FILE__) . '/../data/bugs/01.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        
+        $tokens = array(
+            PHP_Depend_Code_Tokenizer::T_DOC_COMMENT,
+            PHP_Depend_Code_Tokenizer::T_CLASS,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
+            PHP_Depend_Code_Tokenizer::T_FUNCTION,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_SEMICOLON,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE,            
+        );
+        
+        while (($token = $tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
+            $this->assertEquals(array_shift($tokens), $token[0]);
+        }
+    }
 }
