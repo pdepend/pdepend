@@ -92,7 +92,7 @@ software JDepend.
             </file>
           </dir>
           <dir name="Util">
-            <file name="PHPFilterIterator.php" role="php">
+            <file name="FileFilterIterator.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info" />
             </file>
           </dir>
@@ -187,7 +187,7 @@ software JDepend.
               <file name="AllTests.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info" />
               </file>
-              <file name="PHPFilterIteratorTest.php" role="test">
+              <file name="FileFilterIteratorTest.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info" />
               </file>
             </dir>

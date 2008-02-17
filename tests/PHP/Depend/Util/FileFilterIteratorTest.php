@@ -45,11 +45,14 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilter.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/Depend/Util/FileExtensionFilter.php';
+require_once 'PHP/Depend/Util/FileFilterIterator.php';
 
 /**
- * Simple utility filter iterator for php source files.
- * 
+ * Test case for the php file filter iterator.
+ *
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
@@ -58,35 +61,31 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_PHPFilterIterator extends FilterIterator
+class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
 {
     /**
-     * The associated filter object.
+     * Tests that the filter iterator only returns files with a .php extension.
      *
-     * @var unknown_type
+     * @return void
      */
-    protected $filter = null;
-    
-    /**
-     * Constructs a new file filter iterator.
-     *
-     * @param Iterator                   $it     The inner iterator.
-     * @param PHP_Depend_Util_FileFilter $filter The filter object.
-     */
-    public function __construct(Iterator $it, PHP_Depend_Util_FileFilter $filter)
+    public function testFilterIterator()
     {
-        parent::__construct($it);
+        $dir = dirname(__FILE__) . '/../data';
+        $it  = new PHP_Depend_Util_FileFilterIterator(
+            new DirectoryIterator($dir),
+            new PHP_Depend_Util_FileExtensionFilter(array('php'))
+        );
         
-        $this->filter = $filter;
-    }
-    
-    /**
-     * Returns <b>true</b> if the file name ends with '.php'.
-     *
-     * @return boolean
-     */
-    public function accept() 
-    {
-        return $this->filter->accept($this->getInnerIterator()->current());
+        $result   = array();
+        $expected = array('classes.php', 'func_class.php', 'func_code.php', 'mixed_code.php');
+        
+        foreach ($it as $file) {
+            $result[] = $file->getFilename();
+        }
+        
+        sort($expected);
+        sort($result);
+        
+        $this->assertEquals($expected, $result);
     }
 }
