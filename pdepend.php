@@ -77,12 +77,12 @@ require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Renderer/GdChartRenderer.php';
 require_once 'PHP/Depend/Renderer/XMLRenderer.php';
 require_once 'PHP/Depend/Util/ExcludePathFilter.php';
-require_once 'PHP/Depend/Util/ExtensionFilter.php';
+require_once 'PHP/Depend/Util/FileExtensionFilter.php';
 
 $pdepend = new PHP_Depend();
 $pdepend->addDirectory($source);
 
-$pdepend->addFilter(new PHP_Depend_Util_ExtensionFilter(array('php', 'inc')));
+$pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php', 'inc')));
 $pdepend->addFilter(new PHP_Depend_Util_ExcludePathFilter(array('tests/')));
 
 $packages = $pdepend->analyze();

@@ -48,7 +48,7 @@
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Util/ExtensionFilter.php';
+require_once 'PHP/Depend/Util/FileExtensionFilter.php';
 
 /**
  * Test case for PHP_Depend facade.
@@ -96,7 +96,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAddFilter()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addFilter(new PHP_Depend_Util_ExtensionFilter(array('php')));
+        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
     }
     
     /**
@@ -108,7 +108,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
-        $pdepend->addFilter(new PHP_Depend_Util_ExtensionFilter(array('php')));
+        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
         
         $metrics = $pdepend->analyze();
         

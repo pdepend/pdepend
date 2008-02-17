@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_ExtensionFilter implements PHP_Depend_Util_FileFilter
+class PHP_Depend_Util_FileExtensionFilter implements PHP_Depend_Util_FileFilter
 {
     /**
      * Whitelist of accepted file extensions.
