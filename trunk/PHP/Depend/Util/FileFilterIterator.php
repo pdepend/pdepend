@@ -45,14 +45,11 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/PHPFilterIterator.php';
+require_once 'PHP/Depend/Util/FileFilter.php';
 
 /**
- * Test case for the php file filter iterator.
- *
+ * Simple utility filter iterator for php source files.
+ * 
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
@@ -61,31 +58,35 @@ require_once 'PHP/Depend/Util/PHPFilterIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_PHPFilterIteratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Util_FileFilterIterator extends FilterIterator
 {
     /**
-     * Tests that the filter iterator only returns files with a .php extension.
+     * The associated filter object.
      *
-     * @return void
+     * @var unknown_type
      */
-    public function testFilterIterator()
+    protected $filter = null;
+    
+    /**
+     * Constructs a new file filter iterator.
+     *
+     * @param Iterator                   $it     The inner iterator.
+     * @param PHP_Depend_Util_FileFilter $filter The filter object.
+     */
+    public function __construct(Iterator $it, PHP_Depend_Util_FileFilter $filter)
     {
-        $dir = dirname(__FILE__) . '/../data';
-        $it  = new PHP_Depend_Util_PHPFilterIterator(
-            new DirectoryIterator($dir),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
+        parent::__construct($it);
         
-        $result   = array();
-        $expected = array('classes.php', 'func_class.php', 'func_code.php', 'mixed_code.php');
-        
-        foreach ($it as $file) {
-            $result[] = $file->getFilename();
-        }
-        
-        sort($expected);
-        sort($result);
-        
-        $this->assertEquals($expected, $result);
+        $this->filter = $filter;
+    }
+    
+    /**
+     * Returns <b>true</b> if the file name ends with '.php'.
+     *
+     * @return boolean
+     */
+    public function accept() 
+    {
+        return $this->filter->accept($this->getInnerIterator()->current());
     }
 }
