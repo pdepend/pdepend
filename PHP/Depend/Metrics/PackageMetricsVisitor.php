@@ -91,7 +91,7 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         $metrics = array();
         foreach ($this->data as $pkg => $data) {
             $metrics[$pkg] = new PHP_Depend_Metrics_PackageMetrics(
-                $pkg, 
+                $data['pkg'], 
                 $data['cc'],
                 $data['ac'],
                 $data['ca'],
@@ -213,10 +213,11 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         
         if (!isset($this->data[$name])) {
             $this->data[$name] = array(
-                'cc'  =>  array(),
-                'ac'  =>  array(),
-                'ca'  =>  array(),
-                'ce'  =>  array()
+                'cc'   =>  array(),
+                'ac'   =>  array(),
+                'ca'   =>  array(),
+                'ce'   =>  array(),
+                'pkg'  =>  $package
             );
         }
     }
