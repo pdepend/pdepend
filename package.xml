@@ -18,9 +18,9 @@ software JDepend.
     <email>mapi@manuel-pichler.de</email>
     <active>yes</active>
   </lead>
-  <date>2008-02-07</date>
+  <date>2008-02-17</date>
   <version>
-    <release>0.1.1</release>
+    <release>0.1.2</release>
     <api>0.1.0</api>
   </version>
   <stability>
@@ -29,7 +29,9 @@ software JDepend.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Checkout and test cases fixed for windows users. 
+- Simple support for cycles added.
+- File and directory based input filtering implemented.
+- Many minor bugfixes. 
   </notes>
   <contents>
     <dir name="/">
@@ -92,6 +94,18 @@ software JDepend.
             </file>
           </dir>
           <dir name="Util">
+            <file name="CompositeFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            </file>
+            <file name="ExcludePathFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            </file>
+            <file name="FileExtensionFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            </file>
+            <file name="FileFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            </file>
             <file name="FileFilterIterator.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info" />
             </file>
@@ -111,10 +125,22 @@ software JDepend.
         <dir name="PHP">
           <dir name="Depend">
             <dir name="data">
+              <dir name="bugs">
+                <file name="01.php" role="test" />
+              </dir>
               <dir name="code-5.2.x">
                 <file name="package1.php" role="test" />
                 <file name="package2.php" role="test" />
                 <file name="package3.php" role="test" />
+              </dir>
+              <dir name="code-5.3.x">
+                <file name="pkg3FooI.php" role="test" />
+              </dir>
+              <dir name="code-with-cycle">
+                <file name="code.php" role="test" />
+              </dir>
+              <dir name="code-without-cycle">
+                <file name="code.php" role="test" />
               </dir>
               <file name="classes.php" role="test" />
               <file name="func_class.php" role="test" />
@@ -185,6 +211,18 @@ software JDepend.
             </dir>
             <dir name="Util">
               <file name="AllTests.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info" />
+              </file>
+              <file name="CompositeFilterTest.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info" />
+              </file>
+              <file name="DummyFilter.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info" />
+              </file>
+              <file name="ExcludePathFilterTest.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info" />
+              </file>
+              <file name="FileExtensionFilterTest.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info" />
               </file>
               <file name="FileFilterIteratorTest.php" role="test">
@@ -279,5 +317,28 @@ software JDepend.
 - Initial release.
       </notes>
     </release>
+    
+    <release>
+      <lead>
+        <name>Manuel Pichler</name>
+        <user>mapi</user>
+        <email>mapi@manuel-pichler.de</email>
+        <active>yes</active>
+      </lead>
+      <date>2008-02-17</date>
+      <version>
+        <release>0.1.2</release>
+        <api>0.1.0</api>
+      </version>
+      <stability>
+        <release>alpha</release>
+        <api>alpha</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Checkout and test cases fixed for windows users. 
+      </notes>
+    </release>
+    
   </changelog>
 </package>
