@@ -250,7 +250,7 @@ class PHP_Depend_Parser
             // Get function body dependencies 
             $dependencies = array_merge($dependencies, $this->parseFunctionBody());
         }
-        
+
         $dependencies = array_map('trim', $dependencies);
         array_filter($dependencies);
         array_unique($dependencies);
@@ -341,6 +341,8 @@ class PHP_Depend_Parser
                     if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
                         // Skip method call
                         $this->tokenizer->next();
+                        
+                        $dependencies[] = $token[1];
                     }
                 }
                 break;
