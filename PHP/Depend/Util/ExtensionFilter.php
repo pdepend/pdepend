@@ -48,7 +48,7 @@
 require_once 'PHP/Depend/Util/FileFilter.php';
 
 /**
- * 
+ * Whitelist filter that accepts files by their file extension.
  * 
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -60,16 +60,36 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  */
 class PHP_Depend_Util_ExtensionFilter implements PHP_Depend_Util_FileFilter
 {
+    /**
+     * Whitelist of accepted file extensions.
+     *
+     * @type array<string>
+     * @var array(string) $extensions
+     */
     protected $extensions = array();
     
+    /**
+     * Constructs a new file extension filter instance with the given list of 
+     *  allowed file <b>$extensions</b>.
+     *
+     * @param array $extensions List of allowed extension.
+     */
     public function __construct(array $extensions)
     {
         $this->extensions = $extensions;
     }
     
-    public function accept(SplFileInfo $file)
+    /**
+     * Returns <b>true</b> if the extension of the given <b>$fileInfo</b> instance
+     * is in the list of allowed extensions.
+     * 
+     * @param SplFileInfo $fileInfo The context file object.
+     * 
+     * @return boolean
+     */
+    public function accept(SplFileInfo $fileInfo)
     {
-        $extension = pathinfo( $file, PATHINFO_EXTENSION );
+        $extension = pathinfo($fileInfo, PATHINFO_EXTENSION);
         
         return in_array($extension, $this->extensions);
     }
