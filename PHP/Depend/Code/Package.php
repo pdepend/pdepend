@@ -237,6 +237,13 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
                     return true;
                 }
             }
+            foreach ($class->getMethods() as $method) {
+                foreach ($method->getDependencies() as $dependency) {
+                    if ($dependency->getPackage()->collectCycle($storage)) {
+                        return true;
+                    }
+                }                
+            }
         }
         $storage->detach($this);
         
