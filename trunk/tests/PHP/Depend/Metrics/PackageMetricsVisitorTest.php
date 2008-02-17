@@ -127,6 +127,7 @@ class PHP_Depend_Metrics_PackageMetricsVisitorTest extends PHP_Depend_AbstractTe
 
             $data = $expected[$metrics->getName()];
 
+            $this->assertType('PHP_Depend_Code_Package', $metrics->getPackage());
             $this->assertEquals($data['abstractness'], $metrics->abstractness());
             $this->assertEquals($data['instability'], $metrics->instability());
             $this->assertEquals($data['efferentCoupling'], $metrics->efferentCoupling());

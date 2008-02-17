@@ -233,13 +233,15 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
 
         foreach ($this->getClasses() as $class) {
             foreach ($class->getDependencies() as $dependency) {
-                if ($dependency->getPackage()->collectCycle($storage)) {
+                $package = $dependency->getPackage();
+                if ($package !== $this && $package->collectCycle($storage)) {
                     return true;
                 }
             }
             foreach ($class->getMethods() as $method) {
                 foreach ($method->getDependencies() as $dependency) {
-                    if ($dependency->getPackage()->collectCycle($storage)) {
+                    $package = $dependency->getPackage();
+                    if ($package !== $this && $package->collectCycle($storage)) {
                         return true;
                     }
                 }                

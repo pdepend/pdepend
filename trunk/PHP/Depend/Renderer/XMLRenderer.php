@@ -99,60 +99,86 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
         $root = $dom->appendChild($dom->createElement('PHPDepend'));
         $pkgs = $root->appendChild($dom->createElement('Packages'));
         
+        // First sort the metrics
+        $sortedMetrics = array();
         foreach ($metrics as $metric) {
             if ($metric->getName() !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
+                $sortedMetrics[$metric->getName()] = $metric;
+            }
+        }
+        ksort($sortedMetrics);
+        
+        $cycles = array();
+        
+        foreach ($sortedMetrics as $metric) {
+            $pkg = $pkgs->appendChild($dom->createElement('Package'));
+            $pkg->setAttribute('name', $metric->getName());
             
-                $pkg = $pkgs->appendChild($dom->createElement('Package'));
-                $pkg->setAttribute('name', $metric->getName());
+            $stats = $pkg->appendChild($dom->createElement('Stats'));
             
-                $stats = $pkg->appendChild($dom->createElement('Stats'));
+            $stats->appendChild($dom->createElement('TotalClasses'))
+                  ->appendChild($dom->createTextNode($metric->getTotalClassCount()));
+            $stats->appendChild($dom->createElement('ConcreteClasses'))
+                  ->appendChild($dom->createTextNode($metric->getConcreteClassCount()));
+            $stats->appendChild($dom->createElement('AbstractClasses'))
+                  ->appendChild($dom->createTextNode($metric->getAbstractClassCount()));
+            $stats->appendChild($dom->createElement('Ca'))
+                  ->appendChild($dom->createTextNode($metric->afferentCoupling()));
+            $stats->appendChild($dom->createElement('Ce'))
+                  ->appendChild($dom->createTextNode($metric->efferentCoupling()));
+            $stats->appendChild($dom->createElement('A'))
+                  ->appendChild($dom->createTextNode($metric->abstractness()));
+            $stats->appendChild($dom->createElement('I'))
+                  ->appendChild($dom->createTextNode($metric->instability()));
+            $stats->appendChild($dom->createElement('D'))
+                  ->appendChild($dom->createTextNode($metric->distance()));
+            // TODO: V
+           
+            $cc = $pkg->appendChild($dom->createElement('ConcreteClasses'));
+            foreach ($metric->getConcreteClasses() as $class) {
+                $c = $cc->appendChild($dom->createElement('Class'));
+                $c->setAttribute('sourceFile', $class->getSourceFile());
+                $c->appendChild($dom->createTextNode($class->getName()));
+            }
+           
+            $ac = $pkg->appendChild($dom->createElement('AbstractClasses'));
+            foreach ($metric->getAbstractClasses() as $class) {
+                $c = $ac->appendChild($dom->createElement('Class'));
+                $c->setAttribute('sourceFile', $class->getSourceFile());
+                $c->appendChild($dom->createTextNode($class->getName()));
+            }
             
-                $stats->appendChild($dom->createElement('TotalClasses'))
-                      ->appendChild($dom->createTextNode($metric->getTotalClassCount()));
-                $stats->appendChild($dom->createElement('ConcreteClasses'))
-                      ->appendChild($dom->createTextNode($metric->getConcreteClassCount()));
-                $stats->appendChild($dom->createElement('AbstractClasses'))
-                      ->appendChild($dom->createTextNode($metric->getAbstractClassCount()));
-                $stats->appendChild($dom->createElement('Ca'))
-                      ->appendChild($dom->createTextNode($metric->afferentCoupling()));
-                $stats->appendChild($dom->createElement('Ce'))
-                      ->appendChild($dom->createTextNode($metric->efferentCoupling()));
-                $stats->appendChild($dom->createElement('A'))
-                      ->appendChild($dom->createTextNode($metric->abstractness()));
-                $stats->appendChild($dom->createElement('I'))
-                      ->appendChild($dom->createTextNode($metric->instability()));
-                $stats->appendChild($dom->createElement('D'))
-                      ->appendChild($dom->createTextNode($metric->distance()));
-                // TODO: V
+            $ce = $pkg->appendChild($dom->createElement('DependsUpon'));
+            foreach ($metric->getEfferents() as $dep) {
+                $p = $ce->appendChild($dom->createElement('Package'));
+                $p->appendChild($dom->createTextNode($dep->getName()));
+            }
+           
+            $ce = $pkg->appendChild($dom->createElement('UsedBy'));
+            foreach ($metric->getAfferents() as $dep) {
+                $p = $ce->appendChild($dom->createElement('Package'));
+                $p->appendChild($dom->createTextNode($dep->getName()));
+            }
             
-                $cc = $pkg->appendChild($dom->createElement('ConcreteClasses'));
-                foreach ($metric->getConcreteClasses() as $class) {
-                    $c = $cc->appendChild($dom->createElement('Class'));
-                    $c->setAttribute('sourceFile', $class->getSourceFile());
-                    $c->appendChild($dom->createTextNode($class->getName()));
-                }
-            
-                $ac = $pkg->appendChild($dom->createElement('AbstractClasses'));
-                foreach ($metric->getAbstractClasses() as $class) {
-                    $c = $ac->appendChild($dom->createElement('Class'));
-                    $c->setAttribute('sourceFile', $class->getSourceFile());
-                    $c->appendChild($dom->createTextNode($class->getName()));
-                }
-            
-                $ce = $pkg->appendChild($dom->createElement('DependsUpon'));
-                foreach ($metric->getEfferents() as $dep) {
-                    $p = $ce->appendChild($dom->createElement('Package'));
-                    $p->appendChild($dom->createTextNode($dep->getName()));
-                }
-            
-                $ce = $pkg->appendChild($dom->createElement('UsedBy'));
-                foreach ($metric->getAfferents() as $dep) {
-                    $p = $ce->appendChild($dom->createElement('Package'));
-                    $p->appendChild($dom->createTextNode($dep->getName()));
+            $list = new SplObjectStorage();
+            if ($metric->getPackage()->collectCycle($list)) {
+                $cycles[$metric->getName()] = $list;
+            }
+        }
+
+
+        if (count($cycles) > 0) {
+            $cyclesElem = $root->appendChild($dom->createElement('Cycles'));
+            foreach ($cycles as $name => $cycle) {
+                $pkgElem = $cyclesElem->appendChild($dom->createElement('Package'));
+                $pkgElem->setAttribute('Name', $name);
+                foreach ($cycle as $pkg) {
+                    $pkgElem->appendChild($dom->createElement('Package'))
+                            ->appendChild($dom->createTextNode($pkg->getName()));
                 }
             }
         }
-        
+
         if ($this->fileName === null) {
             echo $dom->saveXML();
         } else {
