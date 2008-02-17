@@ -47,7 +47,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Util/ExtensionFilter.php';
+require_once 'PHP/Depend/Util/FileExtensionFilter.php';
 require_once 'PHP/Depend/Util/PHPFilterIterator.php';
 
 /**
@@ -73,7 +73,7 @@ class PHP_Depend_Util_PHPFilterIteratorTest extends PHP_Depend_AbstractTest
         $dir = dirname(__FILE__) . '/../data';
         $it  = new PHP_Depend_Util_PHPFilterIterator(
             new DirectoryIterator($dir),
-            new PHP_Depend_Util_ExtensionFilter(array('php'))
+            new PHP_Depend_Util_FileExtensionFilter(array('php'))
         );
         
         $result   = array();
