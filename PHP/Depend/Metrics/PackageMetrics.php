@@ -59,12 +59,12 @@
 class PHP_Depend_Metrics_PackageMetrics
 {
     /**
-     * The name of the context package.
+     * The context package instance.
      *
-     * @type string
-     * @var string $name
+     * @type PHP_Depend_Code_Package
+     * @var PHP_Depend_Code_Package $package
      */
-    protected $name = '';
+    protected $package = null;
     
     /**
      * Number of concrete classes in this package.
@@ -155,13 +155,13 @@ class PHP_Depend_Metrics_PackageMetrics
     /**
      * Constructs a new package metrics instance.
      *
-     * @param string                         $name The name of the context package.
-     * @param array(PHP_Depend_Code_Class)   $cc   Concrete classes.
-     * @param array(PHP_Depend_Code_Class)   $ac   Abstract classes and interfaces.
-     * @param array(PHP_Depend_Code_Package) $ca   Incoming dependencies.
-     * @param array(PHP_Depend_Code_Package) $ce   Outgoing dependencies.
+     * @param PHP_Depend_Code_Package        $pkg The context package.
+     * @param array(PHP_Depend_Code_Class)   $cc  Concrete classes.
+     * @param array(PHP_Depend_Code_Class)   $ac  Abstract classes and interfaces.
+     * @param array(PHP_Depend_Code_Package) $ca  Incoming dependencies.
+     * @param array(PHP_Depend_Code_Package) $ce  Outgoing dependencies.
      */
-    public function __construct($name, array $cc, array $ac, array $ca, array $ce)
+    public function __construct(PHP_Depend_Code_Package $pkg, array $cc, array $ac, array $ca, array $ce)
     {
         $this->concreteClasses = $cc;
         $this->abstractClasses = $ac;
@@ -169,7 +169,7 @@ class PHP_Depend_Metrics_PackageMetrics
         $this->efferents = $ce;
         $this->afferents = $ca;
 
-        $this->name = $name;
+        $this->package = $pkg;
         
         $this->cc = count($cc);
         $this->ac = count($ac);
@@ -227,13 +227,23 @@ class PHP_Depend_Metrics_PackageMetrics
     }
     
     /**
+     * Returns the context package object.
+     *
+     * @return PHP_Depend_Code_Package
+     */
+    public function getPackage()
+    {
+        return $this->package;
+    }
+    
+    /**
      * Returns the name of the context package.
      *
      * @return string
      */
     public function getName()
     {
-        return $this->name;
+        return $this->package->getName();
     }
     
     /**
