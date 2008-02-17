@@ -48,7 +48,8 @@
 require_once 'PHP/Depend/Util/FileFilter.php';
 
 /**
- * 
+ * Simple composite pattern implementation that allows to bundle multiple
+ * filter implementations.
  * 
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -60,13 +61,36 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  */
 class PHP_Depend_Util_CompositeFilter implements PHP_Depend_Util_FileFilter
 {
+    /**
+     * List of aggregated {@link PHP_Depend_Util_FileFilter} objects.
+     *
+     * @type array<PHP_Depend_Util_FileFilter>
+     * @var array(PHP_Depend_Util_FileFilter) $filters.
+     */
     protected $filters = array();
     
+    /**
+     * Adds a file filter to this composite.
+     *
+     * @param PHP_Depend_Util_FileFilter $filter The new filter object.
+     * 
+     * @return void
+     */
     public function append(PHP_Depend_Util_FileFilter $filter)
     {
         $this->filters[] = $filter;
     }
     
+    /**
+     * Delegates the given <b>$fileInfo</b> object to all aggregated filters. 
+     * 
+     * If one of these filters fail, this method will return <b>false</b> otherwise
+     * the return value is <b>true</b>
+     *
+     * @param SplFileInfo $fileInfo The context file object.
+     * 
+     * @return boolean
+     */
     public function accept(SplFileInfo $fileInfo)
     {
         foreach ($this->filters as $filter) {

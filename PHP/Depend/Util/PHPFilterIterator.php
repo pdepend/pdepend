@@ -60,8 +60,19 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  */
 class PHP_Depend_Util_PHPFilterIterator extends FilterIterator
 {
+    /**
+     * The associated filter object.
+     *
+     * @var unknown_type
+     */
     protected $filter = null;
     
+    /**
+     * Constructs a new file filter iterator.
+     *
+     * @param Iterator                   $it     The inner iterator.
+     * @param PHP_Depend_Util_FileFilter $filter The filter object.
+     */
     public function __construct(Iterator $it, PHP_Depend_Util_FileFilter $filter)
     {
         parent::__construct($it);

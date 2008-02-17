@@ -48,7 +48,7 @@
 require_once 'PHP/Depend/Util/FileFilter.php';
 
 /**
- * 
+ * Filters a given file path against a blacklist with disallow path fragments.
  * 
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -60,8 +60,20 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  */
 class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilter
 {
-    protected $regexp = array();
+    /**
+     * Regular expression that should not match against the file path.
+     *
+     * @type string
+     * @var string $regexp
+     */
+    protected $regexp = '';
     
+    /**
+     * Constructs a new exclude path filter instance and accepts an array of
+     * exclude pattern as argument.
+     *
+     * @param array $patterns List of exclude file path patterns.
+     */
     public function __construct(array $patterns)
     {
         $regexp = join('|', array_map('preg_quote', $patterns));
@@ -70,6 +82,14 @@ class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilter
         $this->regexp = "({$regexp})i";
     }
     
+    /**
+     * Returns <b>true</b> while the file path doesn't match against any of the
+     * given patterns.
+     *
+     * @param SplFileInfo $fileInfo The context file object.
+     * 
+     * @return boolean
+     */
     public function accept(SplFileInfo $fileInfo)
     {
         return (preg_match($this->regexp, $fileInfo->getPathname()) === 0);
