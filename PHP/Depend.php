@@ -49,7 +49,7 @@ require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
-require_once 'PHP/Depend/Util/PHPFilterIterator.php';
+require_once 'PHP/Depend/Util/FileFilterIterator.php';
 
 /**
  * PHP_Depend analyzes php class files and generates metrics.
@@ -140,7 +140,7 @@ class PHP_Depend
         $iterator = new AppendIterator();
         
         foreach ($this->directories as $directory) {
-            $iterator->append(new PHP_Depend_Util_PHPFilterIterator(
+            $iterator->append(new PHP_Depend_Util_FileFilterIterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($directory)
                 ), $this->filter
