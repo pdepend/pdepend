@@ -48,6 +48,7 @@
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Metrics/PackageMetricsVisitor.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
 
@@ -82,6 +83,14 @@ class PHP_Depend
      * @var PHP_Depend_Util_CompositeFilter $filter
      */
     protected $filter = null;
+    
+    /**
+     * The used code node builder.
+     *
+     * @type PHP_Depend_Code_NodeBuilder
+     * @var PHP_Depend_Code_NodeBuilder $nodeBuilder
+     */
+    protected $nodeBuilder = null;
     
     /**
      * Generated {@link PHP_Depend_Metrics_PackageMetrics} objects.
@@ -147,23 +156,47 @@ class PHP_Depend
             ));
         }
         
-        $builder = new PHP_Depend_Code_DefaultBuilder();
+        $this->nodeBuilder = new PHP_Depend_Code_DefaultBuilder();
 
         foreach ( $iterator as $file ) {
             $parser = new PHP_Depend_Parser(
-                new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), $builder
+                new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), 
+                $this->nodeBuilder
             );
             $parser->parse();
         }
 
         $visitor = new PHP_Depend_Metrics_PackageMetricsVisitor();
 
-        foreach ($builder as $pkg) {
+        foreach ($this->nodeBuilder as $pkg) {
             $pkg->accept($visitor);
         }
         $this->packages = $visitor->getPackageMetrics();
         
         return $this->packages;
+    }
+    
+    /**
+     * Indicates whether the packages contain one or more dependency cycles.
+     *
+     * @return boolean <b>true</b> if one or more dependency cycles exist.
+     * 
+     * @throws RuntimeException 
+     *         If this method is called before the code was analyzed.
+     */
+    public function containsCycles()
+    {
+        if ($this->packages === null) {
+            $msg = 'containsCycles() doesn\'t work before the source was analyzed.';
+            throw new RuntimeException($msg);
+        }
+        
+        foreach ($this->nodeBuilder as $package) {
+            if ($package->containsCycle()) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**

@@ -130,6 +130,51 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the {@link PHP_Depend::containsCycles()} method returns 
+     * <b>true</b> for source code with cycles.
+     *
+     * @return void
+     */
+    public function testContainsCyclesWithCodeThatContainsACycle()
+    {
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-with-cycle');
+        $pdepend->analyze();
+        
+        $this->assertTrue($pdepend->containsCycles());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Depend::containsCycles()} method returns 
+     * <b>false</b> for source code without cycles.
+     *
+     * @return void
+     */
+    public function testContainsCyclesWithCodeThatDoesNotContainACycle()
+    {
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-without-cycle');
+        $pdepend->analyze();
+        
+        $this->assertFalse($pdepend->containsCycles());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Depend::containsCycles()} method fails with an
+     * exception if the code was not analyzed before.
+     *
+     * @return void
+     */
+    public function testContainsCyclesWithoutAnalyzeFail()
+    {
+        $this->setExpectedException('RuntimeException', 'containsCycles() doesn\'t work before the source was analyzed.');
+        
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->containsCycles();
+    }
+    
+    /**
      * Tests that the {@link PHP_Depend::countClasses()} method returns the 
      * expected number of classes.
      *
