@@ -55,7 +55,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once dirname(__FILE__) . '/CompositeFilterTest.php';
 require_once dirname(__FILE__) . '/ExcludePathFilterTest.php';
 require_once dirname(__FILE__) . '/FileExtensionFilterTest.php';
-require_once dirname(__FILE__) . '/PHPFilterIteratorTest.php';
+require_once dirname(__FILE__) . '/FileFilterIteratorTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Util package.
@@ -91,7 +91,7 @@ class PHP_Depend_Util_AllTests
         $suite->addTestSuite('PHP_Depend_Util_CompositeFilterTest');
         $suite->addTestSuite('PHP_Depend_Util_ExcludePathFilterTest');
         $suite->addTestSuite('PHP_Depend_Util_FileExtensionFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_PHPFilterIteratorTest');
+        $suite->addTestSuite('PHP_Depend_Util_FileFilterIteratorTest');
         
         return $suite;
     }
