@@ -46,7 +46,7 @@
  */
 
 /**
- * 
+ * Base interface for file filters.
  * 
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,5 +58,12 @@
  */
 interface PHP_Depend_Util_FileFilter
 {
+    /**
+     * Should return <b>true</b> if the given file should be part of the analyzation.
+     *
+     * @param SplFileInfo $fileInfo The context file object.
+     * 
+     * @return boolean
+     */
     function accept(SplFileInfo $fileInfo);
 }

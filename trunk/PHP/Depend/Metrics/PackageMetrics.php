@@ -177,8 +177,10 @@ class PHP_Depend_Metrics_PackageMetrics
         $this->ce = count($ce);
         $this->tc = ($this->cc + $this->ac);
         
+        $cea = ($this->ce + $this->ca);
+        
         $this->a = ($this->tc === 0 ? 0 : ($this->ac / $this->tc));
-        $this->i = (($this->ce + $this->ca) === 0 ? 0 : ($this->ce / ($this->ce + $this->ca)));
+        $this->i = ($cea === 0 ? 0 : ($this->ce / $cea));
         $this->d = abs(($this->a + $this->i) - 1);
     }
     

@@ -174,7 +174,8 @@ class PHP_Depend
     public function countClasses()
     {
         if ($this->packages === null) {
-            throw new RuntimeException('countClasses() doesn\'t work before the source was analyzed.');
+            $msg = 'countClasses() doesn\'t work before the source was analyzed.';
+            throw new RuntimeException($msg);
         }
         
         $classes = 0;
@@ -192,7 +193,8 @@ class PHP_Depend
     public function countPackages()
     {
         if ($this->packages === null) {
-            throw new RuntimeException('countPackages() doesn\'t work before the source was analyzed.');
+            $msg = 'countPackages() doesn\'t work before the source was analyzed.';
+            throw new RuntimeException($msg);
         }
         // TODO: This is internal knownhow, it is an ArrayIterator
         //       Replace it with a custom iterator interface
@@ -209,7 +211,8 @@ class PHP_Depend
     public function getPackage($name)
     {
         if ($this->packages === null) {
-            throw new RuntimeException('getPackage() doesn\'t work before the source was analyzed.');
+            $msg = 'getPackage() doesn\'t work before the source was analyzed.';
+            throw new RuntimeException($msg);
         }
         foreach ($this->packages as $package) {
             if ($package->getName() === $name) {
@@ -227,7 +230,8 @@ class PHP_Depend
     public function getPackages()
     {
         if ($this->packages === null) {
-            throw new RuntimeException('getPackages() doesn\'t work before the source was analyzed.');
+            $msg = 'getPackages() doesn\'t work before the source was analyzed.';
+            throw new RuntimeException($msg);
         }
         return $this->packages;
     }
