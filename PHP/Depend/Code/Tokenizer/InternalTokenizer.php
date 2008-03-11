@@ -69,15 +69,115 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
      * @var array(integer=>integer) $tokenMap
      */
     protected static $tokenMap = array(
-        T_NEW           =>  self::T_NEW,
-        T_CLASS         =>  self::T_CLASS,
-        T_STRING        =>  self::T_STRING,
-        T_FUNCTION      =>  self::T_FUNCTION,
-        T_ABSTRACT      =>  self::T_ABSTRACT,
-        T_INTERFACE     =>  self::T_INTERFACE,
-        T_CURLY_OPEN    =>  self::T_CURLY_BRACE_OPEN,
-        T_DOC_COMMENT   =>  self::T_DOC_COMMENT,
-        T_DOUBLE_COLON  =>  self::T_DOUBLE_COLON,
+        T_AS                        =>  self::T_AS,
+        T_DO                        =>  self::T_DO,
+        T_IF                        =>  self::T_IF,
+        T_SL                        =>  self::T_SL,
+        T_SR                        =>  self::T_SR,
+        T_DEC                       =>  self::T_DEC,
+        T_FOR                       =>  self::T_FOR,
+        T_INC                       =>  self::T_INC,
+        T_NEW                       =>  self::T_NEW,
+        T_TRY                       =>  self::T_TRY,
+        T_USE                       =>  self::T_USE,
+        T_VAR                       =>  self::T_VAR,
+        T_CASE                      =>  self::T_CASE,
+        T_ECHO                      =>  self::T_ECHO,
+        T_ELSE                      =>  self::T_ELSE,
+        T_EVAL                      =>  self::T_EVAL,
+        T_EXIT                      =>  self::T_EXIT,
+        T_FILE                      =>  self::T_FILE,
+        T_LINE                      =>  self::T_LINE,
+        T_LIST                      =>  self::T_LIST,
+        T_NS_C                      =>  self::T_NS_C,
+        T_ARRAY                     =>  self::T_ARRAY,
+        T_BREAK                     =>  self::T_BREAK,
+        T_CLASS                     =>  self::T_CLASS,
+        T_CATCH                     =>  self::T_CATCH,
+        T_CLONE                     =>  self::T_CLONE,
+        T_CONST                     =>  self::T_CONST,
+        T_EMPTY                     =>  self::T_EMPTY,
+        T_FINAL                     =>  self::T_FINAL,
+        T_ISSET                     =>  self::T_ISSET,
+        T_PRINT                     =>  self::T_PRINT,
+        T_THROW                     =>  self::T_THROW,
+        T_UNSET                     =>  self::T_UNSET,
+        T_WHILE                     =>  self::T_WHILE,
+        T_ELSEIF                    =>  self::T_ELSEIF,
+        T_FUNC_C                    =>  self::T_FUNC_C,
+        T_GLOBAL                    =>  self::T_GLOBAL,
+        T_PUBLIC                    =>  self::T_PUBLIC,
+        T_RETURN                    =>  self::T_RETURN,
+        T_STATIC                    =>  self::T_STATIC,
+        T_STRING                    =>  self::T_STRING,
+        T_SWITCH                    =>  self::T_SWITCH,
+        T_CLASS_C                   =>  self::T_CLASS_C,
+        T_DECLARE                   =>  self::T_DECLARE,
+        T_DEFAULT                   =>  self::T_DEFAULT,
+        T_DNUMBER                   =>  self::T_DNUMBER,
+        T_EXTENDS                   =>  self::T_EXTENDS,
+        T_FOREACH                   =>  self::T_FOREACH,
+        T_INCLUDE                   =>  self::T_INCLUDE,
+        T_LNUMBER                   =>  self::T_LNUMBER,
+        T_PRIVATE                   =>  self::T_PRIVATE,
+        T_REQUIRE                   =>  self::T_REQUIRE,
+        T_FUNCTION                  =>  self::T_FUNCTION,
+        T_ABSTRACT                  =>  self::T_ABSTRACT,
+        T_INT_CAST                  =>  self::T_INT_CAST,
+        T_IS_EQUAL                  =>  self::T_IS_EQUAL,
+        T_OR_EQUAL                  =>  self::T_OR_EQUAL,
+        T_CONTINUE                  =>  self::T_CONTINUE,
+        T_METHOD_C                  =>  self::T_METHOD_C,
+        T_OPEN_TAG                  =>  self::T_OPEN_TAG,
+        T_SL_EQUAL                  =>  self::T_SL_EQUAL,
+        T_SR_EQUAL                  =>  self::T_SR_EQUAL,
+        T_VARIABLE                  =>  self::T_VARIABLE,
+        T_DIV_EQUAL                 =>  self::T_DIV_EQUAL,
+        T_AND_EQUAL                 =>  self::T_AND_EQUAL,
+        T_MOD_EQUAL                 =>  self::T_MOD_EQUAL,
+        T_MUL_EQUAL                 =>  self::T_MUL_EQUAL,
+        T_XOR_EQUAL                 =>  self::T_XOR_EQUAL,
+        T_INTERFACE                 =>  self::T_INTERFACE,
+        T_BOOL_CAST                 =>  self::T_BOOL_CAST,
+        T_CLOSE_TAG                 =>  self::T_CLOSE_TAG,
+        T_PROTECTED                 =>  self::T_PROTECTED,
+        T_CURLY_OPEN                =>  self::T_CURLY_BRACE_OPEN,
+        T_IMPLEMENTS                =>  self::T_IMPLEMENTS,
+        T_NUM_STRING                =>  self::T_NUM_STRING,
+        T_PLUS_EQUAL                =>  self::T_PLUS_EQUAL,
+        T_ARRAY_CAST                =>  self::T_ARRAY_CAST,
+        T_BOOLEAN_OR                =>  self::T_BOOLEAN_OR,
+        T_INSTANCEOF                =>  self::T_INSTANCEOF,
+        T_LOGICAL_OR                =>  self::T_LOGICAL_OR,
+        T_UNSET_CAST                =>  self::T_UNSET_CAST,
+        T_DOC_COMMENT               =>  self::T_DOC_COMMENT,
+        T_END_HEREDOC               =>  self::T_END_HEREDOC,
+        T_MINUS_EQUAL               =>  self::T_MINUS_EQUAL,
+        T_BOOLEAN_AND               =>  self::T_BOOLEAN_AND,
+        T_DOUBLE_CAST               =>  self::T_DOUBLE_CAST,
+        T_INLINE_HTML               =>  self::T_INLINE_HTML,
+        T_LOGICAL_AND               =>  self::T_LOGICAL_AND,
+        T_LOGICAL_XOR               =>  self::T_LOGICAL_XOR,
+        T_OBJECT_CAST               =>  self::T_OBJECT_CAST,
+        T_STRING_CAST               =>  self::T_STRING_CAST,
+        T_DOUBLE_ARROW              =>  self::T_DOUBLE_ARROW,
+        T_INCLUDE_ONCE              =>  self::T_INCLUDE_ONCE,
+        T_IS_IDENTICAL              =>  self::T_IS_IDENTICAL,
+        T_DOUBLE_COLON              =>  self::T_DOUBLE_COLON,
+        T_CONCAT_EQUAL              =>  self::T_CONCAT_EQUAL,
+        T_IS_NOT_EQUAL              =>  self::T_IS_NOT_EQUAL,
+        T_REQUIRE_ONCE              =>  self::T_REQUIRE_ONCE,
+        T_HALT_COMPILER             =>  self::T_HALT_COMPILER,
+        T_START_HEREDOC             =>  self::T_START_HEREDOC,
+        T_STRING_VARNAME            =>  self::T_STRING_VARNAME,
+        T_OBJECT_OPERATOR           =>  self::T_OBJECT_OPERATOR,
+        T_IS_NOT_IDENTICAL          =>  self::T_IS_NOT_IDENTICAL,
+        T_OPEN_TAG_WITH_ECHO        =>  self::T_OPEN_TAG_WITH_ECHO,
+        T_IS_GREATER_OR_EQUAL       =>  self::T_IS_GREATER_OR_EQUAL,
+        T_IS_SMALLER_OR_EQUAL       =>  self::T_IS_SMALLER_OR_EQUAL,
+        T_PAAMAYIM_NEKUDOTAYIM      =>  self::T_DOUBLE_COLON,
+        T_CONSTANT_ENCAPSED_STRING  =>  self::T_CONSTANT_ENCAPSED_STRING,
+        T_DOLLAR_OPEN_CURLY_BRACES  =>  self::T_CURLY_BRACE_OPEN,
     );
     
     /**
@@ -87,25 +187,39 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
      * @var array(string=>integer) $literalMap
      */
     protected static $literalMap = array(
-        ';'  =>  self::T_SEMICOLON,
-        '{'  =>  self::T_CURLY_BRACE_OPEN,
-        '}'  =>  self::T_CURLY_BRACE_CLOSE,
-        '('  =>  self::T_PARENTHESIS_OPEN,
-        ')'  =>  self::T_PARENTHESIS_CLOSE,
-    );
-    
-    /**
-     * List of ignorable <b>T_STRING</b> tokens that are php keywords.
-     *
-     * @type array<boolean>
-     * @var array(string=>boolean) $ignoreMap
-     */
-    protected static $ignoreMap = array(
-        'null'    =>  true,
-        'array'   =>  true,
-        'parent'  =>  true,
-        'true'    =>  true,
-        'false'   =>  true,
+        '@'              =>  self::T_AT,
+        '/'              =>  self::T_DIV,
+        '%'              =>  self::T_MOD,
+        '*'              =>  self::T_MUL,
+        '+'              =>  self::T_PLUS,
+        ':'              =>  self::T_COLON,
+        ','              =>  self::T_COMMA,
+        '='              =>  self::T_EQUAL,
+        '-'              =>  self::T_MINUS,
+        '.'              =>  self::T_CONCAT,
+        ';'              =>  self::T_SEMICOLON,
+        '|'              =>  self::T_BITWISE_OR,
+        '&'              =>  self::T_BITWISE_AND,
+        '~'              =>  self::T_BITWISE_NOT,
+        '^'              =>  self::T_BITWISE_XOR,
+        '"'              =>  self::T_DOUBLE_QUOTE,
+        '?'              =>  self::T_QUESTION_MARK,
+        '!'              =>  self::T_EXCLAMATION_MARK,
+        '{'              =>  self::T_CURLY_BRACE_OPEN,
+        '}'              =>  self::T_CURLY_BRACE_CLOSE,
+        '('              =>  self::T_PARENTHESIS_OPEN,
+        ')'              =>  self::T_PARENTHESIS_CLOSE,
+        '<'              =>  self::T_ANGLE_BRACKET_OPEN,
+        '>'              =>  self::T_ANGLE_BRACKET_CLOSE,
+        '['              =>  self::T_SQUARED_BRACKET_OPEN,
+        ']'              =>  self::T_SQUARED_BRACKET_CLOSE,
+        'use'            =>  self::T_USE,
+        'null'           =>  self::T_NULL,
+        'true'           =>  self::T_TRUE,
+        'array'          =>  self::T_ARRAY,
+        'false'          =>  self::T_FALSE,
+        'parent'         =>  self::T_PARENT,
+        '__NAMESPACE__'  =>  self::T_NS_C,
     );
     
     /**
@@ -198,7 +312,23 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
      */
     protected function tokenize()
     {
-        $source = file_get_contents($this->sourceFile);
+        $source = "";
+        $lines  = preg_split('#(\r\n|\n|\r)#', file_get_contents($this->sourceFile));
+        foreach ($lines as $line) {
+            if (($line = trim($line)) !== '' ) {
+                $source .= $line . "\n";
+            }
+        }
+        
+        // Normalize all ) { combinations
+        $source = preg_replace('/\)\s*\{/s', ') {', $source);
+        // Normalize whitespace characters
+        $source = preg_replace( 
+            array('/\t+/', '/ +/' ),
+            ' ',
+            $source
+        );
+
         $tokens = token_get_all($source);
         
         foreach ($tokens as $token) {
@@ -206,12 +336,14 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
             if (is_string($token)) {
                 if (isset(self::$literalMap[$token])) {
                     $newToken = array(self::$literalMap[$token], $token);
+                } else {
+echo $token . "\n";
                 }
-            } else {
+            } else if ($token[0] !== T_WHITESPACE) {
                 $value = strtolower($token[1]);
-                if (!isset(self::$ignoreMap[$value]) 
-                  && isset(self::$tokenMap[$token[0]])) {
-                    
+                if (isset(self::$literalMap[$value])) {
+                    $newToken = array(self::$literalMap[$value], $value);
+                } else if (isset(self::$tokenMap[$token[0]])) {
                     $newToken = array(self::$tokenMap[$token[0]], $token[1]);
                 }
             }

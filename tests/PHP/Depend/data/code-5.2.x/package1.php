@@ -45,4 +45,4 @@ class pkg1Barfoo extends pkg1Bar implements pkg1FooI {
 /**
  * @package package1
  */
-//function foobar2($x){    pkg2Barfoo::xyz($x);}
+//function foobar2($x){     pkg2Barfoo::xyz($x);}
