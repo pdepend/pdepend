@@ -276,7 +276,12 @@ class PHP_Depend_Parser
     protected function  parseFunctionSignature()
     {
         if ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
-            throw new RuntimeException('Invalid function signature.');
+            throw new RuntimeException(
+                sprintf(
+                    'Invalid function signature in file: "%s".',
+                    $this->tokenizer->getSourceFile()
+                )
+            );
         }
         
         $token = $this->tokenizer->next();

@@ -168,12 +168,16 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserWithInvalidFunction2Fail()
     {
-        $this->setExpectedException('RuntimeException', 'Invalid function signature.');
-        
         $sourceFile = dirname(__FILE__) . '/data/invalid_function2.txt';
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
-        $builder    = new PHP_Depend_Code_DefaultBuilder();
-        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $this->setExpectedException(
+            'RuntimeException', 
+            "Invalid function signature in file: \"{$sourceFile}\"."
+        );
+        
+        $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder   = new PHP_Depend_Code_DefaultBuilder();
+        $parser    = new PHP_Depend_Parser($tokenizer, $builder);
         
         $parser->parse();
     }
