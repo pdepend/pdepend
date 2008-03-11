@@ -48,7 +48,7 @@
 
 // PEAR/svn workaround
 if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+    set_include_path(dirname(__FILE__));
 }
  
 if (count($GLOBALS['argv']) < 2) {
