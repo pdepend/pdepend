@@ -758,6 +758,11 @@ interface PHP_Depend_Code_Tokenizer
     const T_MOD = 136;
     
     /**
+     * Marks a comment token.
+     */
+    const T_COMMENT = 137;
+    
+    /**
      * Returns the name of the source file.
      *
      * @return string
