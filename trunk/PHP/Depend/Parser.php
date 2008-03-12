@@ -244,16 +244,6 @@ class PHP_Depend_Parser
     protected function parseFunction()
     {
         $token = $this->tokenizer->next();
- 
-        $dependencies = $this->parseFunctionSignature();
-        if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
-            // Get function body dependencies 
-            $dependencies = array_merge($dependencies, $this->parseFunctionBody());
-        }
-
-        $dependencies = array_map('trim', $dependencies);
-        array_filter($dependencies);
-        array_unique($dependencies);
         
         if ($this->className === null) {
             $function = $this->builder->buildFunction($token[1]);
@@ -262,18 +252,24 @@ class PHP_Depend_Parser
             $function = $this->builder->buildMethod($token[1]);
             $this->builder->buildClass($this->className)->addMethod($function);
         }
-
-        foreach ($dependencies as $dependency) {
-            $function->addDependency($this->builder->buildClass($dependency));
+ 
+        $dependencies = array();
+        
+        $this->parseFunctionSignature($function);
+        if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
+            // Get function body dependencies 
+            $this->parseFunctionBody($function);
         }
     }
 
     /**
      * Extracts all dependencies from a function signature.
      *
-     * @return array(string)
+     * @param PHP_Depend_Code_Function $function The context function instance.
+     * 
+     * @return void
      */
-    protected function  parseFunctionSignature()
+    protected function  parseFunctionSignature(PHP_Depend_Code_Function $function)
     {
         if ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
             throw new RuntimeException(
@@ -283,11 +279,8 @@ class PHP_Depend_Parser
                 )
             );
         }
-        
-        $token = $this->tokenizer->next();
 
-        $parenthesis  = 1;
-        $dependencies = array();
+        $parenthesis = 0;
         
         while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
 
@@ -301,7 +294,7 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_STRING:
-                $dependencies[] = $token[1];
+                $function->addDependency($this->builder->buildClass($token[1]));
                 break;
 
             default:
@@ -309,7 +302,7 @@ class PHP_Depend_Parser
             }
             
             if ($parenthesis === 0) {
-                return $dependencies;
+                return;
             }
         }
         throw new RuntimeException('Invalid function signature.');
@@ -318,12 +311,13 @@ class PHP_Depend_Parser
     /**
      * Extracts all dependencies from a function body.
      *
-     * @return array(string)
+     * @param PHP_Depend_Code_Function $function The context function instance.
+     * 
+     * @return void
      */
-    protected function parseFunctionBody()
+    protected function parseFunctionBody(PHP_Depend_Code_Function $function)
     {
-        $curly        = 0;
-        $dependencies = array();
+        $curly = 0;
 
         while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
@@ -333,8 +327,8 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_NEW:
                 // Check that the next token is a string
                 if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
-                    $token          = $this->tokenizer->next();
-                    $dependencies[] = $token[1];
+                    $token = $this->tokenizer->next();
+                    $function->addDependency($this->builder->buildClass($token[1]));
                 }
                 break;
                     
@@ -346,8 +340,8 @@ class PHP_Depend_Parser
                     if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
                         // Skip method call
                         $this->tokenizer->next();
-                        
-                        $dependencies[] = $token[1];
+
+                        $function->addDependency($this->builder->buildClass($token[1]));
                     }
                 }
                 break;
@@ -365,7 +359,7 @@ class PHP_Depend_Parser
             }
             
             if ($curly === 0) {
-                return $dependencies;
+                return;
             }
         }
 
