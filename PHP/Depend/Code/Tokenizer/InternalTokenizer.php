@@ -112,6 +112,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         T_STRING                    =>  self::T_STRING,
         T_SWITCH                    =>  self::T_SWITCH,
         T_CLASS_C                   =>  self::T_CLASS_C,
+        T_COMMENT                   =>  self::T_COMMENT,
         T_DECLARE                   =>  self::T_DECLARE,
         T_DEFAULT                   =>  self::T_DEFAULT,
         T_DNUMBER                   =>  self::T_DNUMBER,
@@ -324,26 +325,38 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
             ' ',
             $source
         );
-
-        $tokens = token_get_all($source);
         
-        foreach ($tokens as $token) {
+        $line = 1;
+        foreach (token_get_all($source) as $token) {
             $newToken = null;
             if (is_string($token)) {
                 if (isset(self::$literalMap[$token])) {
                     $newToken = array(self::$literalMap[$token], $token);
+                } else {
+                    throw new RuntimeException( "Unexpected token '{$token}'." );
                 }
-            } else if ($token[0] !== T_WHITESPACE) {
+            } else if ($token[0] === T_WHITESPACE) {
+                $line += substr_count($token[1], "\n");
+            } else {
                 $value = strtolower($token[1]);
                 if (isset(self::$literalMap[$value])) {
                     $newToken = array(self::$literalMap[$value], $value);
                 } else if (isset(self::$tokenMap[$token[0]])) {
                     $newToken = array(self::$tokenMap[$token[0]], $token[1]);
+                } else {
+                    throw new RuntimeException( "Unexpected token '{$token[1]}'." );
                 }
             }
             
             if ($newToken !== null) {
+                // Set token line number
+                $newToken[2] = $line;
+                
+                // Store token in internal ist
                 $this->tokens[] = $newToken;
+                
+                // Count new line tokens.
+                $line += substr_count($newToken[1], "\n");
             }
         }
         
