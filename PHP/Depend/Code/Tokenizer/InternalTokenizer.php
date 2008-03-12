@@ -315,13 +315,9 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         $source = "";
         $lines  = preg_split('#(\r\n|\n|\r)#', file_get_contents($this->sourceFile));
         foreach ($lines as $line) {
-            if (($line = trim($line)) !== '' ) {
-                $source .= $line . "\n";
-            }
+            $source .= trim($line) . "\n";
         }
-        
-        // Normalize all ) { combinations
-        $source = preg_replace('/\)\s*\{/s', ') {', $source);
+
         // Normalize whitespace characters
         $source = preg_replace( 
             array('/\t+/', '/ +/' ),
@@ -336,8 +332,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
             if (is_string($token)) {
                 if (isset(self::$literalMap[$token])) {
                     $newToken = array(self::$literalMap[$token], $token);
-                } else {
-echo $token . "\n";
                 }
             } else if ($token[0] !== T_WHITESPACE) {
                 $value = strtolower($token[1]);
