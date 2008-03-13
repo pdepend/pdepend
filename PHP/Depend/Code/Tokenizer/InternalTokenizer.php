@@ -137,6 +137,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         T_AND_EQUAL                 =>  self::T_AND_EQUAL,
         T_MOD_EQUAL                 =>  self::T_MOD_EQUAL,
         T_MUL_EQUAL                 =>  self::T_MUL_EQUAL,
+        T_NAMESPACE                 =>  self::T_NAMESPACE,
         T_XOR_EQUAL                 =>  self::T_XOR_EQUAL,
         T_INTERFACE                 =>  self::T_INTERFACE,
         T_BOOL_CAST                 =>  self::T_BOOL_CAST,

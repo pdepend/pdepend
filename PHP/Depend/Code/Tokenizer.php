@@ -60,6 +60,13 @@ if (!defined('T_USE')) {
 }
 
 /**
+ * Define PHP 5.3 'namespace' token constant.
+ */
+if (!defined('T_NAMESPACE')) {
+    define('T_NAMESPACE', 3);
+}
+
+/**
  * Base interface for all php code tokenizers.
  *
  * @category  QualityAssurance
@@ -761,6 +768,11 @@ interface PHP_Depend_Code_Tokenizer
      * Marks a comment token.
      */
     const T_COMMENT = 137;
+    
+    /**
+     * Marks a 'namespace' token.
+     */
+    const T_NAMESPACE = 138;
     
     /**
      * Returns the name of the source file.
