@@ -105,7 +105,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
             }
         }
         
-        $this->assertArrayHasKey('pkg3FooI.php', $result);
+        $this->assertArrayHasKey('pkg3FooI.txt', $result);
         $this->assertArrayHasKey('invalid_class_with_code.txt', $result);
         $this->assertArrayNotHasKey('package1.php', $result);
     }
@@ -138,7 +138,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
         
         $this->assertArrayHasKey('package2.php', $result);
         $this->assertArrayHasKey('invalid_class_with_code.txt', $result);
-        $this->assertArrayNotHasKey('pkg3FooI.php', $result);
+        $this->assertArrayNotHasKey('pkg3FooI.txt', $result);
         $this->assertArrayNotHasKey('package1.php', $result);
         $this->assertArrayNotHasKey('function.inc', $result);
     }
