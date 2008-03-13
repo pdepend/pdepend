@@ -1,0 +1,20 @@
+<?php
+namespace pkg2;
+
+use pkg1::pkg1Bar;
+
+class pkg2Foobar extends pkg1Bar {
+
+    protected static $manager = null;
+    
+    /**
+     * Command manager singleton method which returns a configured instance
+     * or <b>null</b>.
+     *
+     * @return mxpControllerCommandManager
+     */
+    public static function get()
+    {
+        return self::$manager;
+    }
+}
