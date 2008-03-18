@@ -334,7 +334,10 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
                 if (isset(self::$literalMap[$token])) {
                     $newToken = array(self::$literalMap[$token], $token);
                 } else {
+                    // This should never happen
+                    // @codeCoverageIgnoreStart
                     throw new RuntimeException( "Unexpected token '{$token}'." );
+                    // @codeCoverageIgnoreEnd
                 }
             } else if ($token[0] === T_WHITESPACE) {
                 $line += substr_count($token[1], "\n");
@@ -345,7 +348,10 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
                 } else if (isset(self::$tokenMap[$token[0]])) {
                     $newToken = array(self::$tokenMap[$token[0]], $token[1]);
                 } else {
+                    // This should never happen
+                    // @codeCoverageIgnoreStart
                     throw new RuntimeException( "Unexpected token '{$token[1]}'." );
+                    // @codeCoverageIgnoreEnd
                 }
             }
             
