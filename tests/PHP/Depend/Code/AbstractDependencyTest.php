@@ -122,7 +122,7 @@ abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Abstrac
         $this->assertEquals(1, $node->getDependencies()->count());
         $node->removeDependency($dep0);
         $this->assertEquals(0, $node->getDependencies()->count());
-    }
+    } 
     
     /**
      * Generates a node instance that can handle dependencies.
