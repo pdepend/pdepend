@@ -102,7 +102,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testAddClass()
     {
         $package = new PHP_Depend_Code_Package('package1');
-        $class   = new PHP_Depend_Code_Class('Class', 'class.php');
+        $class   = new PHP_Depend_Code_Class('Class', 0, 'class.php');
         
         $this->assertNull($class->getPackage());
         $package->addClass($class);
@@ -120,7 +120,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     {
         $package1 = new PHP_Depend_Code_Package('package1');
         $package2 = new PHP_Depend_Code_Package('package2');
-        $class    = new PHP_Depend_Code_Class('Class', 'class.php');
+        $class    = new PHP_Depend_Code_Class('Class', 0, 'class.php');
         
         $package1->addClass($class);
         $this->assertSame($package1, $class->getPackage());
@@ -142,8 +142,8 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testRemoveClass()
     {
         $package = new PHP_Depend_Code_Package('package1');
-        $class1  = new PHP_Depend_Code_Class('Class1', 'class1.php');
-        $class2  = new PHP_Depend_Code_Class('Class2', 'class2.php');
+        $class1  = new PHP_Depend_Code_Class('Class1', 0, 'class1.php');
+        $class2  = new PHP_Depend_Code_Class('Class2', 0, 'class2.php');
         
         $package->addClass($class1);
         $package->addClass($class2);
@@ -243,19 +243,19 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package3 = new PHP_Depend_Code_Package('package3');
         $package4 = new PHP_Depend_Code_Package('package4');
         
-        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $class01 = new PHP_Depend_Code_Class('class01', 0, null);
         $package0->addClass($class01);
         
-        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $class11 = new PHP_Depend_Code_Class('class11', 0, null);
         $package1->addClass($class11);
         
-        $class21 = new PHP_Depend_Code_Class('class21', null);
+        $class21 = new PHP_Depend_Code_Class('class21', 0, null);
         $package2->addClass($class21);
         
-        $class31 = new PHP_Depend_Code_Class('class31', null);
+        $class31 = new PHP_Depend_Code_Class('class31', 0, null);
         $package3->addClass($class31);
         
-        $class41 = new PHP_Depend_Code_Class('class41', null);
+        $class41 = new PHP_Depend_Code_Class('class41', 0, null);
         $package4->addClass($class41);
         
         // Cycle package2 <--> package3
@@ -291,19 +291,19 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package3 = new PHP_Depend_Code_Package('package3');
         $package4 = new PHP_Depend_Code_Package('package4');
         
-        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $class01 = new PHP_Depend_Code_Class('class01', 0, null);
         $package0->addClass($class01);
         
-        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $class11 = new PHP_Depend_Code_Class('class11', 0, null);
         $package1->addClass($class11);
         
-        $class21 = new PHP_Depend_Code_Class('class21', null);
+        $class21 = new PHP_Depend_Code_Class('class21', 0, null);
         $package2->addClass($class21);
         
-        $class31 = new PHP_Depend_Code_Class('class31', null);
+        $class31 = new PHP_Depend_Code_Class('class31', 0, null);
         $package3->addClass($class31);
         
-        $class41 = new PHP_Depend_Code_Class('class41', null);
+        $class41 = new PHP_Depend_Code_Class('class41', 0, null);
         $package4->addClass($class41);
         
         // Cycle package2 <--> package3
@@ -334,19 +334,19 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package3 = new PHP_Depend_Code_Package('package3');
         $package4 = new PHP_Depend_Code_Package('package4');
         
-        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $class01 = new PHP_Depend_Code_Class('class01', 0, null);
         $package0->addClass($class01);
         
-        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $class11 = new PHP_Depend_Code_Class('class11', 0, null);
         $package1->addClass($class11);
         
-        $class21 = new PHP_Depend_Code_Class('class21', null);
+        $class21 = new PHP_Depend_Code_Class('class21', 0, null);
         $package2->addClass($class21);
         
-        $class31 = new PHP_Depend_Code_Class('class31', null);
+        $class31 = new PHP_Depend_Code_Class('class31', 0, null);
         $package3->addClass($class31);
         
-        $class41 = new PHP_Depend_Code_Class('class41', null);
+        $class41 = new PHP_Depend_Code_Class('class41', 0, null);
         $package4->addClass($class41);
 
         // package0 --> package1 --> package2 --> package3 --> package4
@@ -372,10 +372,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package0 = new PHP_Depend_Code_Package('package0');
         $package1 = new PHP_Depend_Code_Package('package1');
         
-        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $class01 = new PHP_Depend_Code_Class('class01', 0, null);
         $package0->addClass($class01);
         
-        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $class11 = new PHP_Depend_Code_Class('class11', 0, null);
         $package1->addClass($class11);
 
         // package0 <--> package1
@@ -397,10 +397,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package0 = new PHP_Depend_Code_Package('package0');
         $package1 = new PHP_Depend_Code_Package('package1');
         
-        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $class01 = new PHP_Depend_Code_Class('class01', 0, null);
         $package0->addClass($class01);
         
-        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $class11 = new PHP_Depend_Code_Class('class11', 0, null);
         $package1->addClass($class11);
 
         // package0 --> package1
