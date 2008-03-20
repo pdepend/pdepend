@@ -94,6 +94,37 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     }
     
     /**
+     * Tests that {@link PHP_Depend_Code_Function#getLine()} works as expected.
+     *
+     * @return void
+     */
+    public function testGetLineNumber()
+    {
+        $function = new PHP_Depend_Code_Function('function1', 23);
+        $this->assertEquals(23, $function->getLine());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Function#getTokens()} works as expected.
+     * 
+     * @return void
+     */
+    public function testGetTokens()
+    {
+        $tokens = array(
+            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$foo', 3),
+            array(PHP_Depend_Code_Tokenizer::T_EQUAL, '=', 3),
+            array(PHP_Depend_Code_Tokenizer::T_LNUMBER, '42', 3),
+            array(PHP_Depend_Code_Tokenizer::T_SEMICOLON, ';', 3),
+        );
+        
+        $function = new PHP_Depend_Code_Function('function1', 42);
+        $function->setTokens($tokens);
+        
+        $this->assertEquals($tokens, $function->getTokens());
+    }
+    
+    /**
      * Tests the visitor accept method.
      *
      * @return void

@@ -77,6 +77,14 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     protected $line = 0;
     
     /**
+     * The tokens for this function.
+     *
+     * @type array<mixed>
+     * @var array(mixed) $tokens
+     */
+    protected $tokens = array();
+    
+    /**
      * The parent package for this function.
      *
      * @type PHP_Depend_Code_Package
@@ -122,6 +130,28 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     public function getLine()
     {
         return $this->line;
+    }
+    
+    /**
+     * Returns the tokens found in the function body.
+     *
+     * @return array(mixed)
+     */
+    public function getTokens()
+    {
+        return $this->tokens;
+    }
+    
+    /**
+     * Sets the tokens found in the function body.
+     * 
+     * @param array(mixed) $tokens The body tokens.
+     * 
+     * @return void
+     */
+    public function setTokens(array $tokens)
+    {
+        $this->tokens = $tokens;
     }
     
     /**

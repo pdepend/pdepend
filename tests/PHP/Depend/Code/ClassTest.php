@@ -169,6 +169,18 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
     }
     
     /**
+     * Tests that {@link PHP_Depend_Code_Class#getLine()} works as expected.
+     * 
+     * @return void
+     */
+    public function testGetLineNumber()
+    {
+        $class = new PHP_Depend_Code_Class('foo', 42, 'foo.php');
+        
+        $this->assertEquals(42, $class->getLine());
+    }
+    
+    /**
      * Tests the visitor accept method.
      *
      * @return void
