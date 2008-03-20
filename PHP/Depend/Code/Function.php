@@ -69,6 +69,14 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     protected $name = null;
     
     /**
+     * The line number with the function declaration.
+     *
+     * @type integer
+     * @var integer $line
+     */
+    protected $line = 0;
+    
+    /**
      * The parent package for this function.
      *
      * @type PHP_Depend_Code_Package
@@ -87,11 +95,13 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     /**
      * Constructs a new function for the given <b>$name</b>.
      *
-     * @param string $name The function name.
+     * @param string  $name The function name.
+     * @param integer $line The line number with the function declaration.
      */
-    public function __construct($name)
+    public function __construct($name, $line)
     {
         $this->name = $name;
+        $this->line = $line;
     }
     
     /**
@@ -102,6 +112,16 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Returns the line number with the function declaration.
+     *
+     * @return integer
+     */
+    public function getLine()
+    {
+        return $this->line;
     }
     
     /**

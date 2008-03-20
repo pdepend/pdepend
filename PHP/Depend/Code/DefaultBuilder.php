@@ -126,13 +126,14 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     /**
      * Builds a new method instance.
      *
-     * @param string $name The method name.
+     * @param string  $name The method name.
+     * @param integer $line The line number with the method declaration.
      * 
      * @return PHP_Depend_Code_Method The created class method object.
      */
-    public function buildMethod($name)
+    public function buildMethod($name, $line)
     {
-        return new PHP_Depend_Code_Method($name);
+        return new PHP_Depend_Code_Method($name, $line);
     }
     
     /**
@@ -153,14 +154,15 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     /**
      * Builds a new function instance.
      *
-     * @param string $name The function name.
+     * @param string  $name The function name.
+     * @param integer $line The line number with the function declaration.
      * 
      * @return PHP_Depend_Code_Function The function instance.
      */
-    public function buildFunction($name)
+    public function buildFunction($name, $line)
     {
         // Create new function
-        $function = new PHP_Depend_Code_Function($name);
+        $function = new PHP_Depend_Code_Function($name, $line);
         // Add to default package
         $this->defaultPackage->addFunction($function);
         

@@ -70,7 +70,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testCreateNewMethodInstance()
     {
-        $method = new PHP_Depend_Code_Method('method');
+        $method = new PHP_Depend_Code_Method('method', 0);
         $this->assertEquals('method', $method->getName());
     }
     
@@ -83,7 +83,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
     public function testGetSetClass()
     {
         $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
-        $method = new PHP_Depend_Code_Method('method');
+        $method = new PHP_Depend_Code_Method('method', 0);
         
         $this->assertNull($method->getClass());
         $method->setClass($class);
@@ -99,7 +99,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testVisitorAccept()
     {
-        $method  = new PHP_Depend_Code_Method('method');
+        $method  = new PHP_Depend_Code_Method('method', 0);
         $visitor = new PHP_Depend_Code_TestNodeVisitor();
         
         $this->assertNull($visitor->method);
@@ -114,6 +114,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     protected function createDependencyNode()
     {
-        return new PHP_Depend_Code_Method('method');
+        return new PHP_Depend_Code_Method('method', 0);
     }
 }
