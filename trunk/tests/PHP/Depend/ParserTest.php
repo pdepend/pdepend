@@ -207,4 +207,107 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(1, $methods->count());
         $this->assertEquals(1, $methods->current()->getDependencies()->count());
     }
+    
+    /**
+     * Tests that the parser sets the correct line number for a function.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectFunctionLineNumber()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/mixed_code.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $function = $builder->getPackages()->current()->getFunctions()->current();
+        $this->assertEquals(7, $function->getLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct tokens for a function.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectFunctionTokens()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/mixed_code.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $tokens = array(
+            array(PHP_Depend_Code_Tokenizer::T_FOREACH, 'foreach', 8),
+            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN, '(', 8),
+            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$foo', 8),
+            array(PHP_Depend_Code_Tokenizer::T_AS, 'as', 8),
+            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$bar', 8),
+            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE, ')', 8),
+            array(PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN, '{', 8),
+            array(PHP_Depend_Code_Tokenizer::T_STRING, 'FooBar', 9),
+            array(PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON, '::', 9),
+            array(PHP_Depend_Code_Tokenizer::T_STRING, 'y', 9),
+            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN, '(', 9),
+            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$bar', 9),
+            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE, ')', 9),
+            array(PHP_Depend_Code_Tokenizer::T_SEMICOLON, ';', 9),
+            array(PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE, '}', 10),
+        );
+        
+        $function = $builder->getPackages()->current()->getFunctions()->current();
+        $this->assertEquals($tokens, $function->getTokens());
+    }
+    
+    /**
+     * Tests that the parser sets the correct line number for a class.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectClassLineNumber()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/mixed_code.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $packages->next();
+
+        $class = $packages->current()->getClasses()->current();
+
+        $this->assertEquals(15, $class->getLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct line number for methods.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectMethodLineNumber()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/mixed_code.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $packages->next();
+        $packages->next();
+
+        $method = $packages->current()
+                           ->getClasses()
+                           ->current()
+                           ->getMethods()
+                           ->current();
+ 
+        $this->assertEquals(23, $method->getLine());
+    }
 }

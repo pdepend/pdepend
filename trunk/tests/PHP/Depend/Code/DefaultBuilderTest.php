@@ -88,8 +88,8 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     public function testBuildClassDefaultPackage()
     {
         $builder = new PHP_Depend_Code_DefaultBuilder();
-        $class1  = $builder->buildClass('clazz1', 'clazz1.php');
-        $class2  = $builder->buildClass('clazz2', 'clazz2.php');
+        $class1  = $builder->buildClass('clazz1', 0, 'clazz1.php');
+        $class2  = $builder->buildClass('clazz2', 0, 'clazz2.php');
         
         $this->assertNotNull($class1->getPackage());
         $this->assertNotNull($class2->getPackage());
