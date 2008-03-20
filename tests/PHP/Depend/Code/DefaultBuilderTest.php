@@ -106,7 +106,7 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     public function testBuildMethod()
     {
         $builder = new PHP_Depend_Code_DefaultBuilder();
-        $method  = $builder->buildMethod('method');
+        $method  = $builder->buildMethod('method', 0);
         
         $this->assertType('PHP_Depend_Code_Method', $method);
     }
@@ -180,8 +180,8 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     public function testBuildFunctionDefaultPackage()
     {
         $builder   = new PHP_Depend_Code_DefaultBuilder();
-        $function1 = $builder->buildFunction('func1');
-        $function2 = $builder->buildFunction('func2');
+        $function1 = $builder->buildFunction('func1', 0);
+        $function2 = $builder->buildFunction('func2', 0);
         
         $this->assertNotNull($function1->getPackage());
         $this->assertNotNull($function2->getPackage());

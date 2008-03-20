@@ -86,18 +86,20 @@ interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
     /**
      * Builds a new method instance.
      *
-     * @param string $name The method name.
+     * @param string  $name The method name.
+     * @param integer $line The line number with the method declaration.
      * 
      * @return PHP_Depend_Code_Method The created class method object.
      */
-    function buildMethod($name);
+    function buildMethod($name, $line);
     
     /**
      * Builds a new function instance.
      *
-     * @param string $name The function name.
+     * @param string  $name The function name.
+     * @param integer $line The line number with the function declaration.
      * 
      * @return PHP_Depend_Code_Function The function instance
      */
-    function buildFunction($name);
+    function buildFunction($name, $line);
 }
