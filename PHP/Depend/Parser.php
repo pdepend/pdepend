@@ -246,10 +246,10 @@ class PHP_Depend_Parser
         $token = $this->tokenizer->next();
         
         if ($this->className === null) {
-            $function = $this->builder->buildFunction($token[1]);
+            $function = $this->builder->buildFunction($token[1], $token[2]);
             $this->builder->buildPackage($this->package)->addFunction($function); 
         } else {
-            $function = $this->builder->buildMethod($token[1]);
+            $function = $this->builder->buildMethod($token[1], $token[2]);
             $this->builder->buildClass($this->className)->addMethod($function);
         }
  

@@ -178,7 +178,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testAddFunction()
     {
         $package  = new PHP_Depend_Code_Package('package1');
-        $function = new PHP_Depend_Code_Function('function');
+        $function = new PHP_Depend_Code_Function('function', 0);
         
         $this->assertNull($function->getPackage());
         $package->addFunction($function);
@@ -196,7 +196,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     {
         $package1 = new PHP_Depend_Code_Package('package1');
         $package2 = new PHP_Depend_Code_Package('package2');
-        $function = new PHP_Depend_Code_Function('func');
+        $function = new PHP_Depend_Code_Function('func', 0);
         
         $package1->addFunction($function);
         $this->assertSame($package1, $function->getPackage());
@@ -217,8 +217,8 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testRemoveFunction()
     {
         $package   = new PHP_Depend_Code_Package('package1');
-        $function1 = new PHP_Depend_Code_Function('func1');
-        $function2 = new PHP_Depend_Code_Function('func2');
+        $function1 = new PHP_Depend_Code_Function('func1', 0);
+        $function2 = new PHP_Depend_Code_Function('func2', 0);
         
         $package->addFunction($function1);
         $package->addFunction($function2);
