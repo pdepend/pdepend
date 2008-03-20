@@ -76,10 +76,10 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
         $this->setExpectedException('RuntimeException');
         
         $nodes = array(
-            new PHP_Depend_Code_Class('clazz1', 'clazz1.php'),
+            new PHP_Depend_Code_Class('clazz1', 0, 'clazz1.php'),
             new PHP_Depend_Code_Package('pkg'),
             new stdClass(),
-            new PHP_Depend_Code_Class('clazz2', 'clazz2.php'),
+            new PHP_Depend_Code_Class('clazz2', 0, 'clazz2.php'),
         );
         
         new PHP_Depend_Code_NodeIterator($nodes);
@@ -94,7 +94,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     public function testCreateIteratorWidthValidInput()
     {
         $nodes = array(
-            new PHP_Depend_Code_Class('clazz', 'clazz.php'),
+            new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
             new PHP_Depend_Code_Package('pkg'),
             new PHP_Depend_Code_Method('method'),
             new PHP_Depend_Code_Function('func'),
@@ -114,7 +114,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     {
         $names = array('clazz', 'pkg', 'method', 'func');
         $nodes = array(
-            new PHP_Depend_Code_Class('clazz', 'clazz.php'),
+            new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
             new PHP_Depend_Code_Package('pkg'),
             new PHP_Depend_Code_Method('method'),
             new PHP_Depend_Code_Function('func'),

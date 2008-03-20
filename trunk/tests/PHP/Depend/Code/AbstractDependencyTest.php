@@ -88,8 +88,8 @@ abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Abstrac
     public function testAddDependency()
     {
         $node = $this->createDependencyNode();
-        $dep0 = new PHP_Depend_Code_Class('dep0', 'dep0.php');
-        $dep1 = new PHP_Depend_Code_Class('dep1', 'dep1.php');
+        $dep0 = new PHP_Depend_Code_Class('dep0', 0, 'dep0.php');
+        $dep1 = new PHP_Depend_Code_Class('dep1', 0, 'dep1.php');
         
         $this->assertEquals(0, $node->getDependencies()->count());
         $node->addDependency($dep0);
@@ -109,8 +109,8 @@ abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Abstrac
     public function testRemoveDependency()
     {
         $node = $this->createDependencyNode();
-        $dep0 = new PHP_Depend_Code_Class('dep0', 'dep0.php');
-        $dep1 = new PHP_Depend_Code_Class('dep1', 'dep1.php');
+        $dep0 = new PHP_Depend_Code_Class('dep0', 0, 'dep0.php');
+        $dep1 = new PHP_Depend_Code_Class('dep1', 0, 'dep1.php');
         
         $this->assertEquals(0, $node->getDependencies()->count());
         $node->addDependency($dep0);
