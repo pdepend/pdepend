@@ -71,7 +71,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     public function testCreateNewFunctionInstance()
     {
-        $function = new PHP_Depend_Code_Function('func');
+        $function = new PHP_Depend_Code_Function('func', 0);
         $this->assertEquals('func', $function->getName());
     }
     
@@ -84,7 +84,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     public function testGetSetPackage()
     {
         $package  = new PHP_Depend_Code_Package('package');
-        $function = new PHP_Depend_Code_Function('func');
+        $function = new PHP_Depend_Code_Function('func', 0);
         
         $this->assertNull($function->getPackage());
         $function->setPackage($package);
@@ -100,7 +100,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     public function testVisitorAccept()
     {
-        $function = new PHP_Depend_Code_Function('func');
+        $function = new PHP_Depend_Code_Function('func', 0);
         $visitor  = new PHP_Depend_Code_TestNodeVisitor();
         
         $this->assertNull($visitor->function);
@@ -115,6 +115,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     protected function createDependencyNode()
     {
-        return new PHP_Depend_Code_Function('func');
+        return new PHP_Depend_Code_Function('func', 0);
     }
 }
