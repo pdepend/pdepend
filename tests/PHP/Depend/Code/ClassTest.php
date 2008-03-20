@@ -73,7 +73,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testCreateNewClassInstance()
     {
-        $class = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $class = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         
         $this->assertEquals('clazz', $class->getName());
         $this->assertEquals('clazz.php', $class->getSourceFile());
@@ -87,7 +87,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testMarkClassInstanceAsAbstract()
     {
-        $class = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $class = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         
         $this->assertFalse($class->isAbstract());
         $class->setAbstract(true);
@@ -104,7 +104,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testGetMethodNodeIterator()
     {
-        $class   = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $class   = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         $methods = $class->getMethods();
         
         $this->assertType('PHP_Depend_Code_NodeIterator', $methods);
@@ -119,7 +119,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testAddNewMethod()
     {
-        $class  = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         $method = new PHP_Depend_Code_Method('method');
         
         $this->assertNull($method->getClass());
@@ -136,8 +136,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testAddNewMethodAndReparent()
     {
-        $class1 = new PHP_Depend_Code_Class('clazz1', 'clazz1.php');
-        $class2 = new PHP_Depend_Code_Class('clazz2', 'clazz2.php');
+        $class1 = new PHP_Depend_Code_Class('clazz1', 0, 'clazz1.php');
+        $class2 = new PHP_Depend_Code_Class('clazz2', 0, 'clazz2.php');
         $method = new PHP_Depend_Code_Method('method');
         
         $class1->addMethod($method);
@@ -159,7 +159,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
     public function testGetSetPackage()
     {
         $package = new PHP_Depend_Code_Package('package');
-        $class   = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $class   = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         
         $this->assertNull($class->getPackage());
         $class->setPackage($package);
@@ -175,7 +175,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testVisitorAccept()
     {
-        $class   = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $class   = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         $visitor = new PHP_Depend_Code_TestNodeVisitor();
         
         $this->assertNull($visitor->class);
@@ -191,6 +191,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     protected function createDependencyNode()
     {
-        return new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        return new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
     }
 }

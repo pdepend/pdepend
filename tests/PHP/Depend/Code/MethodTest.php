@@ -82,7 +82,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testGetSetClass()
     {
-        $class  = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         $method = new PHP_Depend_Code_Method('method');
         
         $this->assertNull($method->getClass());

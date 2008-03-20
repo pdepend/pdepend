@@ -70,6 +70,14 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
     protected $name = '';
     
     /**
+     * The line number where the class declaration starts.
+     *
+     * @type integer
+     * @var integer $line
+     */
+    protected $line = 0;
+    
+    /**
      * The source file for this class.
      *
      * @type string
@@ -112,12 +120,14 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
     /**
      * Constructs a new class for the given <b>$name</b> and <b>$sourceFile</b>.
      *
-     * @param string $name       The class name.
-     * @param string $sourceFile The source file for this class.
+     * @param string  $name       The class name.
+     * @param integer $line       The class declaration line number.
+     * @param string  $sourceFile The source file for this class.
      */
-    public function __construct($name, $sourceFile)
+    public function __construct($name, $line, $sourceFile)
     {
         $this->name       = $name;
+        $this->line       = $line;
         $this->sourceFile = $sourceFile;
     }
     
@@ -129,6 +139,16 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Returns the line number where the class declaration can be found.
+     *
+     * @return integer
+     */
+    public function getLine()
+    {
+        return $this->line;
     }
     
     /**
