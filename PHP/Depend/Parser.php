@@ -144,7 +144,7 @@ class PHP_Depend_Parser
                     
                 $this->className = $token[1];
 
-                $class = $this->builder->buildClass($this->className);
+                $class = $this->builder->buildClass($this->className, $token[2]);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setAbstract($this->abstract);
                 foreach ($this->parseClassSignature() as $dependency) {
@@ -317,17 +317,18 @@ class PHP_Depend_Parser
      */
     protected function parseFunctionBody(PHP_Depend_Code_Function $function)
     {
-        $curly = 0;
+        $curly  = 0;
+        $tokens = array();
 
         while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
-            $token = $this->tokenizer->next();
+            $tokens[] = $token = $this->tokenizer->next();
 
             switch ($token[0]) {
             case PHP_Depend_Code_Tokenizer::T_NEW:
                 // Check that the next token is a string
                 if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
-                    $token = $this->tokenizer->next();
+                    $tokens[] = $token = $this->tokenizer->next();
                     $function->addDependency($this->builder->buildClass($token[1]));
                 }
                 break;
@@ -335,11 +336,11 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_STRING:
                 if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON) {
                     // Skip double colon
-                    $this->tokenizer->next();
+                    $tokens[] = $this->tokenizer->next();
                     // Check for method call
                     if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
                         // Skip method call
-                        $this->tokenizer->next();
+                        $tokens[] = $this->tokenizer->next();
 
                         $function->addDependency($this->builder->buildClass($token[1]));
                     }
@@ -359,6 +360,7 @@ class PHP_Depend_Parser
             }
             
             if ($curly === 0) {
+                $function->setTokens(array_slice($tokens, 1, count($tokens) - 2));
                 return;
             }
         }
