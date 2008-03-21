@@ -80,16 +80,16 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     /**
      * Mapping of outgoing dependencies.
      * 
-     * @type array<array>
-     * @var array(string=>array) $efferents
+     * @type array<SplObjectStorage>
+     * @var array(string=>SplObjectStorage) $efferents
      */
     protected $efferents = array();
     
     /**
      * Mapping of incoming dependencies.
      *
-     * @type array<array>
-     * @var array(string=>array) $afferents
+     * @type array<SplObjectStorage>
+     * @var array(string=>SplObjectStorage) $afferents
      */
     protected $afferents = array();
     
@@ -155,11 +155,11 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
             if ($dep->getPackage() !== $method->getClass()->getPackage()) {
                 $this->createPackage($dep->getPackage());
             
-                if (!in_array($dep->getPackage(), $this->efferents[$pkgName], true)) {
-                    $this->efferents[$pkgName][] = $dep->getPackage();
+                if (!$this->efferents[$pkgName]->contains($dep->getPackage())) {
+                    $this->efferents[$pkgName]->attach($dep->getPackage());
                 }
-                if (!in_array($method->getClass()->getPackage(), $this->afferents[$depPkgName], true)) {
-                    $this->afferents[$depPkgName][] = $method->getClass()->getPackage();
+                if (!$this->afferents[$depPkgName]->contains($method->getClass()->getPackage())) {
+                    $this->afferents[$depPkgName]->attach($method->getClass()->getPackage());
                 }
             }
         }
@@ -203,11 +203,11 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
            
                 $this->createPackage($dep->getPackage());
                 
-                if (!in_array($dep->getPackage(), $this->efferents[$pkgName], true)) {
-                    $this->efferents[$pkgName][] = $dep->getPackage();
+                if (!$this->efferents[$pkgName]->contains($dep->getPackage())) {
+                    $this->efferents[$pkgName]->attach($dep->getPackage());
                 }
-                if (!in_array($class->getPackage(), $this->afferents[$depPkgName], true)) {
-                    $this->afferents[$depPkgName][] = $class->getPackage();
+                if (!$this->afferents[$depPkgName]->contains($class->getPackage())) {
+                    $this->afferents[$depPkgName]->attach($class->getPackage());
                 }
             }
         }
@@ -232,8 +232,8 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         if (!isset($this->packages[$name])) {
             // Create a new package
             $this->packages[$name]  = new PHP_Depend_Metrics_Dependency_Package($package);
-            $this->efferents[$name] = array();
-            $this->afferents[$name] = array();
+            $this->efferents[$name] = new SplObjectStorage();
+            $this->afferents[$name] = new SplObjectStorage();
         }    
         // Return the package instance
         return $this->packages[$name];
@@ -242,11 +242,11 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     /**
      * Factory/Singleton for a set of metric package objects
      *
-     * @param array $packages The input code packages
+     * @param SplObjectStorage $packages The input code packages.
      * 
      * @return array(PHP_Depend_Metrics_Dependency_Package)
      */
-    protected function createPackages(array $packages)
+    protected function createPackages(SplObjectStorage $packages)
     {
         $output = array();
         foreach ($packages as $package) {
