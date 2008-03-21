@@ -45,10 +45,8 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/Package.php';
-
 /**
- * Base interface for all output renderers.
+ * Base class for a metric class model.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,14 +56,53 @@ require_once 'PHP/Depend/Metrics/Package.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Renderer
+class PHP_Depend_Metric_Class
 {
     /**
-     * Generates the metrics output.
+     * The code class for this metric model.
      *
-     * @param Iterator $metrics The aggregated metrics.
-     * 
-     * @return void
+     * @type PHP_Depend_Code_Class
+     * @var PHP_Depend_Code_Class $class
      */
-    function render(Iterator $metrics);
+    protected $class = null;
+    
+    /**
+     * Constructs a new class metric model.
+     *
+     * @param PHP_Depend_Code_Class $class The associated code class.
+     */
+    public function __construct(PHP_Depend_Code_Class $class)
+    {
+        $this->class = $class;
+    }
+    
+    /**
+     * Returns the name of this class.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->class->getName();
+    }
+    
+    /**
+     * Returns the source file with the class declaration. 
+     *
+     * @return string
+     */
+    public function getSourceFile()
+    {
+        return $this->class->getSourceFile();
+    }
+    
+    /**
+     * Returns the associated code class instance.
+     *
+     * @return PHP_Depend_Code_Class
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
 }
