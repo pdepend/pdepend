@@ -46,7 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
-require_once 'PHP/Depend/Metrics/PackageMetrics.php';
+require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 
 /**
  * This visitor generates the metrics for the analyzed packages.
@@ -70,6 +70,30 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     protected $data = array();
     
     /**
+     * Already created package instances.
+     *
+     * @type array<PHP_Depend_Metrics_Dependency_Package>
+     * @var array(string=>PHP_Depend_Metrics_Dependency_Package) $packages
+     */
+    protected $packages = array();
+    
+    /**
+     * Mapping of outgoing dependencies.
+     * 
+     * @type array<array>
+     * @var array(string=>array) $efferents
+     */
+    protected $efferents = array();
+    
+    /**
+     * Mapping of incoming dependencies.
+     *
+     * @type array<array>
+     * @var array(string=>array) $afferents
+     */
+    protected $afferents = array();
+    
+    /**
      * The generated project metrics.
      *
      * @type ArrayIterator
@@ -80,7 +104,7 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     /**
      * Returns the generated project metrics.
      *
-     * @return array(string=>PHP_Depend_Metrics_PackageMetrics)
+     * @return array(string=>PHP_Depend_Metrics_Dependency_Package)
      */
     public function getPackageMetrics()
     {
@@ -89,15 +113,14 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         }
 
         $metrics = array();
-        foreach ($this->data as $pkg => $data) {
-            $metrics[$pkg] = new PHP_Depend_Metrics_PackageMetrics(
-                $data['pkg'], 
-                $data['cc'],
-                $data['ac'],
-                $data['ca'],
-                $data['ce']
-            );
+        foreach ($this->packages as $name => $package) {
+            
+            $package->setAfferents($this->createPackages($this->afferents[$name]));
+            $package->setEfferents($this->createPackages($this->efferents[$name]));
+            
+            $metrics[$name] = $package;
         }
+
         $this->metrics = new ArrayIterator($metrics);
         
         return $this->metrics;
@@ -130,13 +153,13 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
             $depPkgName = $dep->getPackage()->getName();
             
             if ($dep->getPackage() !== $method->getClass()->getPackage()) {
-                $this->initPackage($dep->getPackage());
+                $this->createPackage($dep->getPackage());
             
-                if (!in_array($dep->getPackage(), $this->data[$pkgName]['ce'], true)) {
-                    $this->data[$pkgName]['ce'][] = $dep->getPackage();
+                if (!in_array($dep->getPackage(), $this->efferents[$pkgName], true)) {
+                    $this->efferents[$pkgName][] = $dep->getPackage();
                 }
-                if (!in_array($method->getClass()->getPackage(), $this->data[$depPkgName]['ca'], true)) {
-                    $this->data[$depPkgName]['ca'][] = $method->getClass()->getPackage();
+                if (!in_array($method->getClass()->getPackage(), $this->afferents[$depPkgName], true)) {
+                    $this->afferents[$depPkgName][] = $method->getClass()->getPackage();
                 }
             }
         }
@@ -171,26 +194,20 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     {
         $pkgName = $class->getPackage()->getName();
         
-        $this->initPackage($class->getPackage());
-        
-        if ($class->isAbstract()) {
-            $this->data[$pkgName]['ac'][] = $class;
-        } else {
-            $this->data[$pkgName]['cc'][] = $class;
-        }
+        $this->createPackage($class->getPackage());
         
         foreach ($class->getDependencies() as $dep) {
             $depPkgName = $dep->getPackage()->getName();
             
             if ($dep->getPackage() !== $class->getPackage()) {
            
-                $this->initPackage($dep->getPackage());
+                $this->createPackage($dep->getPackage());
                 
-                if (!in_array($dep->getPackage(), $this->data[$pkgName]['ce'], true)) {
-                    $this->data[$pkgName]['ce'][] = $dep->getPackage();
+                if (!in_array($dep->getPackage(), $this->efferents[$pkgName], true)) {
+                    $this->efferents[$pkgName][] = $dep->getPackage();
                 }
-                if (!in_array($class->getPackage(), $this->data[$depPkgName]['ca'], true)) {
-                    $this->data[$depPkgName]['ca'][] = $class->getPackage();
+                if (!in_array($class->getPackage(), $this->afferents[$depPkgName], true)) {
+                    $this->afferents[$depPkgName][] = $class->getPackage();
                 }
             }
         }
@@ -201,24 +218,40 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
     }
     
     /**
-     * Initializes the a data record for the given package object.
+     * Factory and singleton for metrics package objects.
      *
-     * @param PHP_Depend_Code_Package $package The context package object.
+     * @param PHP_Depend_Code_Package $package The associated code package.
      * 
-     * @return void
+     * @return PHP_Depend_Metrics_Dependency_Package
      */
-    protected function initPackage(PHP_Depend_Code_Package $package)
+    protected function createPackage(PHP_Depend_Code_Package $package)
     {
         $name = $package->getName();
         
-        if (!isset($this->data[$name])) {
-            $this->data[$name] = array(
-                'cc'   =>  array(),
-                'ac'   =>  array(),
-                'ca'   =>  array(),
-                'ce'   =>  array(),
-                'pkg'  =>  $package
-            );
+        // Check for an existing instance
+        if (!isset($this->packages[$name])) {
+            // Create a new package
+            $this->packages[$name]  = new PHP_Depend_Metrics_Dependency_Package($package);
+            $this->efferents[$name] = array();
+            $this->afferents[$name] = array();
+        }    
+        // Return the package instance
+        return $this->packages[$name];
+    }
+    
+    /**
+     * Factory/Singleton for a set of metric package objects
+     *
+     * @param array $packages The input code packages
+     * 
+     * @return array(PHP_Depend_Metrics_Dependency_Package)
+     */
+    protected function createPackages(array $packages)
+    {
+        $output = array();
+        foreach ($packages as $package) {
+            $output[] = $this->createPackage($package);
         }
+        return $output;
     }
 }

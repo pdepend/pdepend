@@ -45,8 +45,11 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Metrics/Class.php';
+require_once 'PHP/Depend/Metrics/Package.php';
+
 /**
- * Represents the metrics for a php package.
+ * 
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -56,132 +59,60 @@
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_PackageMetrics
+class PHP_Depend_Metrics_Dependency_Package extends PHP_Depend_Metrics_Package
 {
     /**
-     * The context package instance.
+     * Concrete {@link PHP_Depend_Metrics_Class} objects that are part of this
+     * package.
      *
-     * @type PHP_Depend_Code_Package
-     * @var PHP_Depend_Code_Package $package
+     * @type array<PHP_Depend_Metrics_Class>
+     * @var array(PHP_Depend_Metrics_Class) $concreteClasses
      */
-    protected $package = null;
-    
-    /**
-     * Number of concrete classes in this package.
-     *
-     * @type integer
-     * @var integer $cc
-     */
-    protected $cc = 0;
-    
-    /**
-     * Number of abstract classes in this package.
-     *
-     * @type integer
-     * @var integer $ac
-     */
-    protected $ac = 0;
-    
-    /**
-     * Number of packages that internal classes depend on.
-     * 
-     * @type integer
-     * @var integer $ca
-     */
-    protected $ca = 0;
-    
-    /**
-     * Number of packages that depend on internal classes.
-     * 
-     * @type integer
-     * @var integer $ce
-     */
-    protected $ce = 0;
-    
-    /**
-     * The package abstractness (0-1).
-     *
-     * @type float
-     * @var float $a
-     */
-    protected $a = 0;
-    
-    /**
-     * The package instability (0-1).
-     *
-     * @type float
-     * @var float $i
-     */
-    protected $i = 0;
-    
-    /**
-     * The package's distance from the main sequence (D).
-     *
-     * @type float
-     * @var float $d
-     */
-    protected $d = 0;
-    
-    /**
-     * The total number of all classes and interfaces in this package
-     *
-     * @type integer
-     * @var integer $tc
-     */
-    protected $tc = 0;
-    
     protected $concreteClasses = array();
     
+    /**
+     * Abstract {@link PHP_Depend_Metrics_Class} objects that are part of this
+     * package.
+     *
+     * @type array<PHP_Depend_Metrics_Class>
+     * @var array(PHP_Depend_Metrics_Class) $concreteClasses
+     */
     protected $abstractClasses = array();
     
     /**
-     * List of {@link PHP_Depend_Code_Package} objects that internal classes
-     * depend on.
+     * List of {@link PHP_Depend_Metrics_Dependency_Package} objects that 
+     * internal classes depend on.
      *
-     * @type array<PHP_Depend_Code_Package>
-     * @var array(PHP_Depend_Code_Package) $efferents
+     * @type array<PHP_Depend_Metrics_Dependency_Package>
+     * @var array(PHP_Depend_Metrics_Dependency_Package) $efferents
      */
     protected $efferents = array();
     
     /**
-     * List of {@link PHP_Depend_Code_Package} objects that depend on classes
-     * from this package.
+     * List of {@link PHP_Depend_Metrics_Dependency_Package} objects that depend 
+     * on classes from this package.
      *
-     * @type array<PHP_Depend_Code_Package>
-     * @var array(PHP_Depend_Code_Package) $afferents
+     * @type array<PHP_Depend_Metrics_Dependency_Package>
+     * @var array(PHP_Depend_Metrics_Dependency_Package) $afferents
      */
     protected $afferents = array();
     
     /**
      * Constructs a new package metrics instance.
      *
-     * @param PHP_Depend_Code_Package        $pkg The context package.
-     * @param array(PHP_Depend_Code_Class)   $cc  Concrete classes.
-     * @param array(PHP_Depend_Code_Class)   $ac  Abstract classes and interfaces.
-     * @param array(PHP_Depend_Code_Package) $ca  Incoming dependencies.
-     * @param array(PHP_Depend_Code_Package) $ce  Outgoing dependencies.
+     * @param PHP_Depend_Code_Package $package The associated code package.
      */
-    public function __construct(PHP_Depend_Code_Package $pkg, array $cc, array $ac, array $ca, array $ce)
+    public function __construct(PHP_Depend_Code_Package $package)
     {
-        $this->concreteClasses = $cc;
-        $this->abstractClasses = $ac;
+        parent::__construct($package);
         
-        $this->efferents = $ce;
-        $this->afferents = $ca;
-
-        $this->package = $pkg;
-        
-        $this->cc = count($cc);
-        $this->ac = count($ac);
-        $this->ca = count($ca);
-        $this->ce = count($ce);
-        $this->tc = ($this->cc + $this->ac);
-        
-        $cea = ($this->ce + $this->ca);
-        
-        $this->a = ($this->tc === 0 ? 0 : ($this->ac / $this->tc));
-        $this->i = ($cea === 0 ? 0 : ($this->ce / $cea));
-        $this->d = abs(($this->a + $this->i) - 1);
+        foreach ($package->getClasses() as $class) {
+            if ($class->isAbstract()) {
+                $this->abstractClasses[] = new PHP_Depend_Metric_Class($class);
+            } else {
+                $this->concreteClasses[] = new PHP_Depend_Metric_Class($class);
+            }
+        }
     }
     
     /**
@@ -205,19 +136,29 @@ class PHP_Depend_Metrics_PackageMetrics
     }
     
     /**
-     * Returns {@link PHP_Depend_Code_Package} objects that depend on classes
-     * from this package.
+     * Returns {@link PHP_Depend_Metrics_Dependency_Package} objects that depend 
+     * on classes from this package.
      *
      * @return Iterator
      */
     public function getAfferents()
     {
-        return $this->afferents;
+        return new ArrayIterator($this->afferents);
     }
     
     /**
-     * Returns {@link PHP_Depend_Code_Package} objects that internal classes
-     * depend on.
+     * Sets all dependent {@link PHP_Depend_Metrics_Dependency_Package} objects.
+     *
+     * @param array $afferents The incoming package dependencies.
+     */
+    public function setAfferents(array $afferents)
+    {
+        $this->afferents = $afferents;
+    }
+    
+    /**
+     * Returns {@link PHP_Depend_Metrics_Dependency_Package} objects that 
+     * classes of this package depend on.
      *
      * @return Iterator
      */
@@ -227,23 +168,14 @@ class PHP_Depend_Metrics_PackageMetrics
     }
     
     /**
-     * Returns the context package object.
+     * Sets all {@link PHP_Depend_Metrics_Dependency_Package} objects that 
+     * classes of this package depend on.
      *
-     * @return PHP_Depend_Code_Package
+     * @param array $efferents The outgoing package dependencies.
      */
-    public function getPackage()
+    public function setEfferents(array $efferents)
     {
-        return $this->package;
-    }
-    
-    /**
-     * Returns the name of the context package.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->package->getName();
+        $this->efferents = $efferents;
     }
     
     /**
@@ -253,7 +185,7 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function getTotalClassCount()
     {
-        return $this->tc;
+        return $this->getConcreteClassCount() + $this->getAbstractClassCount();
     }
     
     /**
@@ -263,7 +195,7 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function getConcreteClassCount()
     {
-        return $this->cc;
+        return count($this->concreteClasses);
     }
     
     /**
@@ -273,7 +205,7 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function getAbstractClassCount()
     {
-        return $this->ac;
+        return count($this->abstractClasses);
     }
     
     /**
@@ -284,7 +216,7 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function afferentCoupling()
     {
-        return $this->ca;
+        return count($this->afferents);
     }
     
     /**
@@ -295,7 +227,7 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function efferentCoupling()
     {
-        return $this->ce;
+        return count($this->efferents);
     }
     
     /**
@@ -305,7 +237,10 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function abstractness()
     {
-        return $this->a;
+        if ($this->getTotalClassCount() === 0) {
+            return 0;
+        }
+        return ($this->getAbstractClassCount() / $this->getTotalClassCount());
     }
     
     /**
@@ -315,7 +250,10 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function instability()
     {
-        return $this->i;
+        if (($total = count($this->efferents) + count($this->afferents)) === 0) {
+            return 0;
+        }
+        return (count($this->efferents) / $total);
     }
     
     /**
@@ -325,6 +263,6 @@ class PHP_Depend_Metrics_PackageMetrics
      */
     public function distance()
     {
-        return $this->d;
+        return abs(($this->abstractness() + $this->instability()) - 1);
     }
 }
