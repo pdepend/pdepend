@@ -121,7 +121,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         
         $this->assertType('Iterator', $metrics);
         foreach ($metrics as $metric) {
-            $this->assertType('PHP_Depend_Metrics_PackageMetrics', $metric);
+            $this->assertType('PHP_Depend_Metrics_Dependency_Package', $metric);
             
             unset($expected[$metric->getName()]);
         }
@@ -186,7 +186,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->analyze();
         
-        $this->assertEquals(10, $pdepend->countClasses());
+        $this->assertEquals(12, $pdepend->countClasses());
     }
     
     /**
@@ -246,10 +246,10 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
         $pdepend->analyze();
         
-        $this->assertType('PHP_Depend_Metrics_PackageMetrics', $pdepend->getPackage('package1'));
-        $this->assertType('PHP_Depend_Metrics_PackageMetrics', $pdepend->getPackage('package2'));
-        $this->assertType('PHP_Depend_Metrics_PackageMetrics', $pdepend->getPackage('package3'));
-        $this->assertType('PHP_Depend_Metrics_PackageMetrics', $pdepend->getPackage(PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE));
+        $this->assertType('PHP_Depend_Metrics_Dependency_Package', $pdepend->getPackage('package1'));
+        $this->assertType('PHP_Depend_Metrics_Dependency_Package', $pdepend->getPackage('package2'));
+        $this->assertType('PHP_Depend_Metrics_Dependency_Package', $pdepend->getPackage('package3'));
+        $this->assertType('PHP_Depend_Metrics_Dependency_Package', $pdepend->getPackage(PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE));
     }
     
     /**
