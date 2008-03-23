@@ -59,7 +59,7 @@ require_once 'PHP/Depend/Metrics/Dependency/Package.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_Dependency_MetricGenerator implements PHP_Depend_Code_NodeVisitor
+class PHP_Depend_Metrics_Dependency_Analyzer implements PHP_Depend_Code_NodeVisitor
 {
     /**
      * Already created package instances.
