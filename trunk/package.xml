@@ -121,9 +121,7 @@ software JDepend.
           <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
       </dir>
-      <dir name="tests">
-        <dir name="PHP">
-          <dir name="Depend">
+      <dir name="tests/PHP/Depend">
             <dir name="data">
               <dir name="bugs">
                 <file name="01.php" role="test" />
@@ -241,8 +239,6 @@ software JDepend.
             <file name="ParserTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info" />
             </file>
-          </dir>
-        </dir>
       </dir>
       <file name="pdepend.bat" role="script">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -303,7 +299,6 @@ software JDepend.
         <email>mapi@manuel-pichler.de</email>
         <active>yes</active>
       </lead>
-      <date>2008-02-06</date>
       <version>
         <release>0.1.0</release>
         <api>0.1.0</api>
@@ -312,6 +307,7 @@ software JDepend.
         <release>alpha</release>
         <api>alpha</api>
       </stability>
+      <date>2008-02-06</date>
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
 - Initial release.
@@ -325,7 +321,6 @@ software JDepend.
         <email>mapi@manuel-pichler.de</email>
         <active>yes</active>
       </lead>
-      <date>2008-02-17</date>
       <version>
         <release>0.1.2</release>
         <api>0.1.0</api>
@@ -334,6 +329,7 @@ software JDepend.
         <release>alpha</release>
         <api>alpha</api>
       </stability>
+      <date>2008-02-17</date>
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
 - Checkout and test cases fixed for windows users. 
