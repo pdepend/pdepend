@@ -47,7 +47,7 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Metrics/Dependency/MetricGenerator.php';
+require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 
 /**
  * Tests the for the package metrics visitor.
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Metrics/Dependency/MetricGenerator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_Dependency_MetricGeneratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
      * The used node builder.
@@ -115,7 +115,7 @@ class PHP_Depend_Metrics_Dependency_MetricGeneratorTest extends PHP_Depend_Abstr
             ),
         );
         
-        $visitor = new PHP_Depend_Metrics_Dependency_MetricGenerator();
+        $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
         foreach ($this->builder->getPackages() as $package) {
             $package->accept($visitor);
         }
@@ -146,7 +146,7 @@ class PHP_Depend_Metrics_Dependency_MetricGeneratorTest extends PHP_Depend_Abstr
      */
     public function testGenerateUniqueMetricsInstance()
     {
-        $visitor = new PHP_Depend_Metrics_Dependency_MetricGenerator();
+        $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
         foreach ($this->builder->getPackages() as $package) {
             $package->accept($visitor);
         }
