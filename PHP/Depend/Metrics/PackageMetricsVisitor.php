@@ -62,14 +62,6 @@ require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVisitor
 {
     /**
-     * The package data.
-     *
-     * @type array<array>
-     * @var array(string=>array) $data
-     */
-    protected $data = array();
-    
-    /**
      * Already created package instances.
      *
      * @type array<PHP_Depend_Metrics_Dependency_Package>
