@@ -48,7 +48,7 @@
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
-require_once 'PHP/Depend/Metrics/Dependency/MetricGenerator.php';
+require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
 
@@ -166,7 +166,7 @@ class PHP_Depend
             $parser->parse();
         }
 
-        $visitor = new PHP_Depend_Metrics_Dependency_MetricGenerator();
+        $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
 
         foreach ($this->nodeBuilder as $pkg) {
             $pkg->accept($visitor);
