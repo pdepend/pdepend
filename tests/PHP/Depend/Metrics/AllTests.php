@@ -52,7 +52,7 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/Dependency/MetricGeneratorTest.php';
+require_once dirname(__FILE__) . '/Dependency/AnalyzerTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Metrics package.
@@ -85,7 +85,7 @@ class PHP_Depend_Metrics_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics - AllTests');
-        $suite->addTestSuite('PHP_Depend_Metrics_Dependency_MetricGeneratorTest');
+        $suite->addTestSuite('PHP_Depend_Metrics_Dependency_AnalyzerTest');
         
         return $suite;
     }
