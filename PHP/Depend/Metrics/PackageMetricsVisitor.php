@@ -147,20 +147,23 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        $pkgName = $method->getClass()->getPackage()->getName();
+        $package     = $method->getClass()->getPackage();
+        $packageName = $package->getName();
         
         foreach ($method->getDependencies() as $dep) {
+            // Skip for this package
+            if ($dep->getPackage() === $package) {
+                continue;
+            }
+            
             $depPkgName = $dep->getPackage()->getName();
             
-            if ($dep->getPackage() !== $method->getClass()->getPackage()) {
-                $this->createPackage($dep->getPackage());
-            
-                if (!$this->efferents[$pkgName]->contains($dep->getPackage())) {
-                    $this->efferents[$pkgName]->attach($dep->getPackage());
-                }
-                if (!$this->afferents[$depPkgName]->contains($method->getClass()->getPackage())) {
-                    $this->afferents[$depPkgName]->attach($method->getClass()->getPackage());
-                }
+            $this->createPackage($dep->getPackage());
+            if (!$this->efferents[$packageName]->contains($dep->getPackage())) {
+                $this->efferents[$packageName]->attach($dep->getPackage());
+            }
+            if (!$this->afferents[$depPkgName]->contains($package)) {
+                $this->afferents[$depPkgName]->attach($package);
             }
         }
     }
