@@ -135,6 +135,8 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $package = $function->getPackage();
+        $this->createPackage($package);
         // TODO: Implement functions
     }
     

@@ -98,9 +98,9 @@ class PHP_Depend_Renderer_GdChartRenderer implements PHP_Depend_Renderer
         $orange = imagecolorallocate($im, 252, 175, 62);
         $green  = imagecolorallocate($im, 139, 226, 52);
         $white  = imagecolorallocate($im, 255, 255, 255);
-        $lgray  = imagecolorallocate($im, 186, 189, 182);
         $gray   = imagecolorallocate($im, 85, 87, 83);
         $dgray  = imagecolorallocate($im, 46, 52, 54);
+        //$lgray  = imagecolorallocate($im, 186, 189, 182);
 
         $bias = 0.1;
 

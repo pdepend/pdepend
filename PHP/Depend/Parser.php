@@ -252,8 +252,6 @@ class PHP_Depend_Parser
             $function = $this->builder->buildMethod($token[1], $token[2]);
             $this->builder->buildClass($this->className)->addMethod($function);
         }
- 
-        $dependencies = array();
         
         $this->parseFunctionSignature($function);
         if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
