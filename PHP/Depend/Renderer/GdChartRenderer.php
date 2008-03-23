@@ -46,7 +46,7 @@
  */
 
 require_once 'PHP/Depend/Renderer.php';
-require_once 'PHP/Depend/Metrics/PackageMetricsVisitor.php';
+require_once 'PHP/Depend/Metrics/Dependency/MetricGenerator.php';
 
 /**
  * Proof-of-Concept chart renderer that visualizes package metrics.
