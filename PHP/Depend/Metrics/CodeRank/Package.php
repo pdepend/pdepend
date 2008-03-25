@@ -60,5 +60,50 @@ require_once 'PHP/Depend/Metrics/Package.php';
  */
 class PHP_Depend_Metrics_CodeRank_Package extends PHP_Depend_Metrics_Package
 {
+    /**
+     * The forward code rank value for this package in the range of [0-1]. 
+     *
+     * @type float
+     * @var float $codeRank
+     */
+    protected $codeRank = 0.0;
     
+    /**
+     * The reverse code rank value for this package in the range of [0-1]
+     *
+     * @type float
+     * @var float $reverseCodeRank
+     */
+    protected $reverseCodeRank = 0.0;
+    
+    public function getCodeRank()
+    {
+        return $this->codeRank;
+    }
+    
+    public function setCodeRank($codeRank)
+    {
+        $this->codeRank = $this->checkCodeRankValue($codeRank);
+    }
+    
+    public function getReverseCodeRank()
+    {
+        return $this->reverseCodeRank;
+    }
+    
+    public function setReverseCodeRank($reverseCodeRank)
+    {
+        $this->reverseCodeRank = $this->checkCodeRankValue($reverseCodeRank);
+    }
+    
+    protected function checkCodeRankValue($codeRank)
+    {
+        if (!is_float($codeRank)) {
+            throw new InvalidArgumentException('Type float expected for code rank.');
+        }
+        if ($codeRank < 0.0 || $codeRank > 1.0) {
+            throw new InvalidArgumentException('Code rank must be in the range 0-1');
+        }
+        return $codeRank;
+    }
 }
