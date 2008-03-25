@@ -75,7 +75,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     public function getPackageRank()
     {
         if ($this->packageRank === null) {
-            $this->packageRank = $this->buildPackageRank();
+            $this->packageRank = $this->buildCodeRank(
+                $this->packageNodes, 'PHP_Depend_Metrics_CodeRank_Package'
+            );
         }
         return $this->packageRank;
     }
@@ -83,7 +85,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     public function getClassRank()
     {
         if ($this->classRank === null) {
-            $this->classRank = $this->buildClassRank();
+            $this->classRank = $this->buildCodeRank(
+                $this->classNodes, 'PHP_Depend_Metrics_CodeRank_Class'
+            );
         }
         return $this->classRank;
     }
@@ -95,7 +99,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-        $className = $class->getPackage()->getName() . '::' . $class->getName();
+        $packageName = $class->getPackage()->getName();
+        $className   = $packageName . '::' . $class->getName();
         
         if (!isset($this->classNodes[$className])) {
             $this->classNodes[$className] = array(
@@ -107,7 +112,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         
         foreach ($class->getDependencies() as $dep) {
             
-            $depClassName = $dep->getPackage()->getName() . '::' . $dep->getName();
+            $depPackageName = $dep->getPackage()->getName();
+            $depClassName   = $depPackageName . '::' . $dep->getName();
             
             if (!isset($this->classNodes[$depClassName])) {
                 $this->classNodes[$depClassName] = array(
@@ -118,6 +124,18 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
             }
             $this->classNodes[$className]['in'][$depClassName]  = $depClassName;
             $this->classNodes[$depClassName]['out'][$className] = $className;
+            
+            if (!isset($this->packageNodes[$depPackageName])) {
+                $this->packageNodes[$depPackageName] = array(
+                    'in'    =>  array(),
+                    'out'   =>  array(),
+                    'code'  =>  $dep->getPackage(),
+                );
+            }
+            if (!isset($this->packageNodes[$packageName]['in'][$depPackageName])) {
+                $this->packageNodes[$packageName]['in'][$depPackageName]  = $depPackageName;
+                $this->packageNodes[$depPackageName]['out'][$packageName] = $packageName;
+            }
         }
     }
     
@@ -148,6 +166,15 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $packageName = $package->getName();
+        if (!isset($this->packageNodes[$packageName])) {
+            $this->packageNodes[$packageName] = array(
+                'in'    =>  array(),
+                'out'   =>  array(),
+                'code'  =>  $package
+            );
+        }
+        
         foreach($package->getClasses() as $class) {
             $class->accept($this);
         }
@@ -156,30 +183,21 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         }
     }
     
-    protected function buildClassRank()
+    protected function buildCodeRank(array $nodes, $class)
     {
         $ranks = array();
-        foreach ($this->classNodes as $class => $info) {
-            $ranks[$class] = new PHP_Depend_Metrics_CodeRank_Class($info['code']);
-        }
-        foreach ($this->buildCodeRank($this->classNodes, 'in', 'out') as $class => $rank) {
-            $ranks[$class]->setCodeRank($rank);
-        }
-        foreach ($this->buildCodeRank($this->classNodes, 'out', 'in') as $class => $rank) {
-            $ranks[$class]->setReverseCodeRank($rank);
-        }
-        /*
-        print_r($ranks);
         
-        print_r($this->buildCodeRank($this->classNodes, 'in', 'out'));
-        print_r($this->buildCodeRank($this->classNodes, 'out', 'in'));
-        */
+        foreach ($nodes as $name => $info) {
+            $ranks[$name] = new PHP_Depend_Metrics_CodeRank_Class($info['code']);
+        }
+        foreach ($this->computeCodeRank($nodes, 'in', 'out') as $name => $rank) {
+            $ranks[$name]->setCodeRank($rank);
+        }
+        foreach ($this->computeCodeRank($nodes, 'out', 'in') as $name => $rank) {
+            $ranks[$name]->setReverseCodeRank($rank);
+        }
+
         return array_values($ranks);
-    }
-    
-    protected function buildPackageRank()
-    {
-        
     }
     
     protected function topologicalSort(array $nodes, $dir1, $dir2)
@@ -223,7 +241,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         return array_keys($sorted);
     }
     
-    protected function buildCodeRank(array $nodes, $id1, $id2)
+    protected function computeCodeRank(array $nodes, $id1, $id2)
     {
         $d = self::DAMPING_FACTOR;
         
