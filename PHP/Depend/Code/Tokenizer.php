@@ -775,6 +775,16 @@ interface PHP_Depend_Code_Tokenizer
     const T_NAMESPACE = 138;
     
     /**
+     * Marks a part of a string.
+     */
+    const T_ENCAPSED_AND_WHITESPACE = 139;
+    
+    /**
+     * Marks a '$' string token.
+     */
+    const T_DOLLAR = 140;
+    
+    /**
      * Returns the name of the source file.
      *
      * @return string

@@ -178,6 +178,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         T_IS_GREATER_OR_EQUAL       =>  self::T_IS_GREATER_OR_EQUAL,
         T_IS_SMALLER_OR_EQUAL       =>  self::T_IS_SMALLER_OR_EQUAL,
         T_PAAMAYIM_NEKUDOTAYIM      =>  self::T_DOUBLE_COLON,
+        T_ENCAPSED_AND_WHITESPACE   =>  self::T_ENCAPSED_AND_WHITESPACE,
         T_CONSTANT_ENCAPSED_STRING  =>  self::T_CONSTANT_ENCAPSED_STRING,
         T_DOLLAR_OPEN_CURLY_BRACES  =>  self::T_CURLY_BRACE_OPEN,
     );
@@ -199,6 +200,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         '='              =>  self::T_EQUAL,
         '-'              =>  self::T_MINUS,
         '.'              =>  self::T_CONCAT,
+        '$'              =>  self::T_DOLLAR,
         ';'              =>  self::T_SEMICOLON,
         '|'              =>  self::T_BITWISE_OR,
         '&'              =>  self::T_BITWISE_AND,
@@ -334,6 +336,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
                 if (isset(self::$literalMap[$token])) {
                     $newToken = array(self::$literalMap[$token], $token);
                 } else {
+var_dump($token, $line, $this->sourceFile->getPathname());
                     // This should never happen
                     // @codeCoverageIgnoreStart
                     throw new RuntimeException( "Unexpected token '{$token}'." );
@@ -348,6 +351,8 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
                 } else if (isset(self::$tokenMap[$token[0]])) {
                     $newToken = array(self::$tokenMap[$token[0]], $token[1]);
                 } else {
+var_dump($token, $this->sourceFile->getPathname(), token_name($token[0]));
+
                     // This should never happen
                     // @codeCoverageIgnoreStart
                     throw new RuntimeException( "Unexpected token '{$token[1]}'." );
