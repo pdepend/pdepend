@@ -45,18 +45,14 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Metrics_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/CodeRank/AnalyzerTest.php';
-require_once dirname(__FILE__) . '/Dependency/AnalyzerTest.php';
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
 
 /**
- * Main test suite for the PHP_Depend_Metrics package.
+ * 
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -66,33 +62,59 @@ require_once dirname(__FILE__) . '/Dependency/AnalyzerTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_AllTests
+class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
 {
-    /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
+    public function testGetClassRank()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-    
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics - AllTests');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
-        $suite->addTestSuite('PHP_Depend_Metrics_Dependency_AnalyzerTest');
+        $package      = new PHP_Depend_Code_Package('util');
+        $list         = new PHP_Depend_Code_Class('List', 1, null);
+        $order        = new PHP_Depend_Code_Class('Order', 1, null);
+        $arrayList    = new PHP_Depend_Code_Class('ArrayList', 1, null);
+        $collection   = new PHP_Depend_Code_Class('Collection', 1, null);
+        $abstractList = new PHP_Depend_Code_Class('AbstractList', 1, null);
         
-        return $suite;
+        $abstractList->addDependency($arrayList);
+        $collection->addDependency($list);
+        $list->addDependency($abstractList);
+        $list->addDependency($order);
+        
+        $package->addClass($list);
+        $package->addClass($order);
+        $package->addClass($arrayList);
+        $package->addClass($collection);
+        $package->addClass($abstractList);
+        
+        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $analyzer->visitPackage($package);
+        
+        $rank = $analyzer->getClassRank();
+        $this->assertEquals(5, count($rank));
+        
+        $values = array(
+            'Collection'    =>  array(0.5863688, 0.15),
+            'List'          =>  array(0.513375, 0.2775),
+            'AbstractList'  =>  array(0.2775, 0.2679375),
+            'ArrayList'     =>  array(0.15, 0.3777469),
+            'Order'         =>  array(0.15, 0.2679375),
+        );
+        
+        foreach ($rank as $class) {
+            $this->assertArrayHasKey($class->getName(), $values);
+            // Check forward code rank
+            $this->assertEquals(
+                $values[$class->getName()][0], 
+                $class->getCodeRank(),
+                '',
+                0.00005
+            );
+            // Check reverse code rank
+            $this->assertEquals(
+                $values[$class->getName()][1],
+                $class->getReverseCodeRank(),
+                '',
+                0.00005
+            );
+        }
+        
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Metrics_AllTests::main') {
-    PHP_Depend_Metrics_AllTests::main();
 }
