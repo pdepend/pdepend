@@ -785,6 +785,16 @@ interface PHP_Depend_Code_Tokenizer
     const T_DOLLAR = 140;
     
     /**
+     * Marks any character token.
+     */
+    const T_CHARACTER = 141;
+    
+    /**
+     * Marks any bad character token.
+     */
+    const T_BAD_CHARACTER = 142;
+    
+    /**
      * Returns the name of the source file.
      *
      * @return string
