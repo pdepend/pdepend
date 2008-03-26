@@ -174,7 +174,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
         if ($function->getPackage() !== null) {
             $function->getPackage()->removeFunction($function);
         }
-        
+
         // Set this as function package
         $function->setPackage($this);
         // Append function to internal list
