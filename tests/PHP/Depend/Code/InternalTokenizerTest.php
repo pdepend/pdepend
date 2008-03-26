@@ -272,7 +272,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      * 
      * @return void
      */
-    public function testInternalTokenizerDollarSyntaxBug()
+    public function testInternalTokenizerDollarSyntaxBug09()
     {
         $sourceFile = dirname(__FILE__) . '/../data/bugs/09.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
