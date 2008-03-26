@@ -114,7 +114,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserWithUnclosedClassFail()
     {
-        $this->setExpectedException('RuntimeException', 'Invalid state, unclosed class body.');
+        $this->setExpectedException(
+            'RuntimeException', 
+            'Invalid state, unclosed class body.'
+        );
         
         $sourceFile = dirname(__FILE__) . '/data/not_closed_class.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
@@ -172,7 +175,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         $this->setExpectedException(
             'RuntimeException', 
-            "Invalid function signature in file: \"{$sourceFile}\"."
+            "Invalid token \"Bar\" on line 3 in file: {$sourceFile}."
         );
         
         $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
@@ -206,6 +209,35 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $methods  = $classes->current()->getMethods();
         $this->assertEquals(1, $methods->count());
         $this->assertEquals(1, $methods->current()->getDependencies()->count());
+    }
+    
+    /**
+     * Tests that the parser handles function with reference return values
+     * correct.
+     *
+     * @return void
+     */
+    public function testParserReferenceReturnValueBug08()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/bugs/08.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $package = $builder->getPackages()->current();
+
+        // Get function
+        $function = $package->getFunctions()->current();
+        $this->assertEquals('barBug08', $function->getName());
+
+        // Get class method
+        $method = $package->getClasses()
+                          ->current()
+                          ->getMethods()
+                          ->current();
+        $this->assertEquals('fooBug08', $method->getName());
     }
     
     /**
