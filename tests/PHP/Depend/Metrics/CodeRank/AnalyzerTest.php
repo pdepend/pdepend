@@ -64,57 +64,61 @@ require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
  */
 class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * Tests the result of the class rank calculation against previous computed
+     * values.
+     *
+     * @return void
+     */
     public function testGetClassRank()
     {
-        $package      = new PHP_Depend_Code_Package('util');
-        $list         = new PHP_Depend_Code_Class('List', 1, null);
-        $order        = new PHP_Depend_Code_Class('Order', 1, null);
-        $arrayList    = new PHP_Depend_Code_Class('ArrayList', 1, null);
-        $collection   = new PHP_Depend_Code_Class('Collection', 1, null);
-        $abstractList = new PHP_Depend_Code_Class('AbstractList', 1, null);
-        
-        $abstractList->addDependency($arrayList);
-        $collection->addDependency($list);
-        $list->addDependency($abstractList);
-        $list->addDependency($order);
-        
-        $package->addClass($list);
-        $package->addClass($order);
-        $package->addClass($arrayList);
-        $package->addClass($collection);
-        $package->addClass($abstractList);
-        
-        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
-        $analyzer->visitPackage($package);
-        
-        $rank = $analyzer->getClassRank();
-        $this->assertEquals(5, count($rank));
-        
-        $values = array(
-            'Collection'    =>  array(0.5863688, 0.15),
-            'List'          =>  array(0.513375, 0.2775),
-            'AbstractList'  =>  array(0.2775, 0.2679375),
-            'ArrayList'     =>  array(0.15, 0.3777469),
-            'Order'         =>  array(0.15, 0.2679375),
+        $source = dirname(__FILE__) . '/../../data/code-5.2.x';
+        $files  = new PHP_Depend_Util_FileFilterIterator(
+            new DirectoryIterator($source),
+            new PHP_Depend_Util_FileExtensionFilter(array('php'))
         );
         
-        foreach ($rank as $class) {
-            $this->assertArrayHasKey($class->getName(), $values);
-            // Check forward code rank
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        foreach ($files as $file) {
+            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file->getRealPath());
+            
+            $parser = new PHP_Depend_Parser($tokenizer, $builder);
+            $parser->parse();
+        }
+        
+        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        foreach ($builder->getPackages() as $package) {
+            $analyzer->visitPackage($package);
+        }
+        
+        $expected = array(
+            'pkg1Foo'     =>  array(0.15, 0.181875),
+            'pkg2FooI'    =>  array(0.15, 0.181875),
+            'pkg2Bar'     =>  array(0.15, 0.1755),
+            'pkg2Foobar'  =>  array(0.15, 0.1755),
+            'pkg1Barfoo'  =>  array(0.15, 0.207375),
+            'pkg2Barfoo'  =>  array(0.15, 0.207375),
+            'pkg1Foobar'  =>  array(0.15, 0.411375),
+            'pkg1FooI'    =>  array(0.5325, 0.15),
+            'pkg1Bar'     =>  array(0.59625, 0.15),
+            'pkg3FooI'    =>  array(0.21375, 0.2775),
+            'Iterator'    =>  array(0.3316875, 0.15)
+        );
+        
+        foreach ($analyzer->getClassRank() as $rank) {
             $this->assertEquals(
-                $values[$class->getName()][0], 
-                $class->getCodeRank(),
+                $expected[$rank->getName()][0],
+                $rank->getCodeRank(),
                 '',
                 0.00005
             );
-            // Check reverse code rank
             $this->assertEquals(
-                $values[$class->getName()][1],
-                $class->getReverseCodeRank(),
+                $expected[$rank->getName()][1],
+                $rank->getReverseCodeRank(),
                 '',
                 0.00005
             );
         }
-        
     }
 }
