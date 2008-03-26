@@ -190,10 +190,10 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         foreach ($nodes as $name => $info) {
             $ranks[$name] = new PHP_Depend_Metrics_CodeRank_Class($info['code']);
         }
-        foreach ($this->computeCodeRank($nodes, 'in', 'out') as $name => $rank) {
+        foreach ($this->computeCodeRank($nodes, 'out', 'in') as $name => $rank) {
             $ranks[$name]->setCodeRank($rank);
         }
-        foreach ($this->computeCodeRank($nodes, 'out', 'in') as $name => $rank) {
+        foreach ($this->computeCodeRank($nodes, 'in', 'out') as $name => $rank) {
             $ranks[$name]->setReverseCodeRank($rank);
         }
 
