@@ -256,4 +256,53 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
     }
+    
+    /**
+     * Tests that the tokenizer handles the following syntax correct.
+     * 
+     * <code>
+     * class Foo {
+     *     public function formatBug09($x) {
+     *         self::${$x};
+     *     }
+     * }
+     * </code>
+     * 
+     * http://bugs.xplib.de/index.php?do=details&task_id=9&project=3
+     * 
+     * @return void
+     */
+    public function testInternalTokenizerDollarSyntaxBug()
+    {
+        $sourceFile = dirname(__FILE__) . '/../data/bugs/09.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        
+            $tokens = array(
+            PHP_Depend_Code_Tokenizer::T_OPEN_TAG,
+            PHP_Depend_Code_Tokenizer::T_DOC_COMMENT,
+            PHP_Depend_Code_Tokenizer::T_CLASS,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
+            PHP_Depend_Code_Tokenizer::T_PUBLIC,
+            PHP_Depend_Code_Tokenizer::T_FUNCTION,
+            PHP_Depend_Code_Tokenizer::T_STRING,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN,
+            PHP_Depend_Code_Tokenizer::T_VARIABLE,
+            PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
+            PHP_Depend_Code_Tokenizer::T_STRING, // SELF
+            PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON,
+            PHP_Depend_Code_Tokenizer::T_DOLLAR,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
+            PHP_Depend_Code_Tokenizer::T_VARIABLE,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_SEMICOLON,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE,            
+        );
+        
+        while (($token = $tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
+            $this->assertEquals(array_shift($tokens), $token[0]);
+        }
+    }
 }
