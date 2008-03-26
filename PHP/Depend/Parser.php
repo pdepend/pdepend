@@ -244,6 +244,9 @@ class PHP_Depend_Parser
     protected function parseFunction()
     {
         $token = $this->tokenizer->next();
+        if ($token[0] === PHP_Depend_Code_Tokenizer::T_BITWISE_AND) {
+            $token = $this->tokenizer->next();
+        }
         
         if ($this->className === null) {
             $function = $this->builder->buildFunction($token[1], $token[2]);
@@ -270,9 +273,15 @@ class PHP_Depend_Parser
     protected function  parseFunctionSignature(PHP_Depend_Code_Function $function)
     {
         if ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
+            // Load invalid token for line number
+            $token = $this->tokenizer->next();
+            
+            // Throw a detailed exception message
             throw new RuntimeException(
                 sprintf(
-                    'Invalid function signature in file: "%s".',
+                    'Invalid token "%s" on line %s in file: %s.',
+                    $token[1],
+                    $token[2],
                     $this->tokenizer->getSourceFile()
                 )
             );
