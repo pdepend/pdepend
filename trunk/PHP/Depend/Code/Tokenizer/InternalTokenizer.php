@@ -338,7 +338,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
                 if (isset(self::$literalMap[$token])) {
                     $newToken = array(self::$literalMap[$token], $token);
                 } else {
-var_dump($token, $line, $this->sourceFile->getPathname());
                     // This should never happen
                     // @codeCoverageIgnoreStart
                     throw new RuntimeException( "Unexpected token '{$token}'." );
@@ -353,8 +352,6 @@ var_dump($token, $line, $this->sourceFile->getPathname());
                 } else if (isset(self::$tokenMap[$token[0]])) {
                     $newToken = array(self::$tokenMap[$token[0]], $token[1]);
                 } else {
-var_dump($token, $this->sourceFile->getPathname(), token_name($token[0]));
-
                     // This should never happen
                     // @codeCoverageIgnoreStart
                     throw new RuntimeException( "Unexpected token '{$token[1]}'." );
