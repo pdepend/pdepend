@@ -340,8 +340,6 @@ class PHP_Depend_Parser
                 
                 $parts = array();
                 while (in_array($this->tokenizer->peek(), $allowed)) {
-                // Check that the next token is a string
-                //if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
                     $token    = $this->tokenizer->next();
                     $tokens[] = $token;
                     
