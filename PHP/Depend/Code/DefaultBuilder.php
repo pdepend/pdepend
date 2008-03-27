@@ -96,7 +96,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     public function __construct()
     {
         $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
-//echo "1) ", $this->defaultPackage->getName(), "(", spl_object_hash($this->defaultPackage), ")\n";
+        
         $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
     }
     
