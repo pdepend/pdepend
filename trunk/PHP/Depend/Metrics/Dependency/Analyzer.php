@@ -227,8 +227,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer implements PHP_Depend_Code_NodeVisi
         
         // Check for an existing instance
         if (!isset($this->packages[$name])) {
+            
+            $packageInstance = new PHP_Depend_Metrics_Dependency_Package($package);
+            
             // Create a new package
-            $this->packages[$name]  = new PHP_Depend_Metrics_Dependency_Package($package);
+            $this->packages[$name]  = $packageInstance;
             $this->efferents[$name] = new SplObjectStorage();
             $this->afferents[$name] = new SplObjectStorage();
         }    
