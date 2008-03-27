@@ -119,5 +119,7 @@ class PHP_Depend_Util_FileExtensionFilterTest extends PHP_Depend_AbstractTest
             'not_closed_class.txt',
             'not_closed_function.txt'
         );
+        
+        $this->assertEquals($expected, $result);
     }
 }
