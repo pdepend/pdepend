@@ -62,40 +62,82 @@ require_once 'PHP/Depend/Metrics/CodeRank/Package.php';
  */
 class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisitor
 {
+    /**
+     * The used damping factor.
+     */
     const DAMPING_FACTOR = 0.85;
     
+    /**
+     * The found class nodes.
+     *
+     * @type array
+     * @var array $classNodes
+     */
     protected $classNodes = array();
     
+    /**
+     * The calculated class ranks.
+     *
+     * @type array<PHP_Depend_Metrics_CodeRank_Class>
+     * @var array(PHP_Depend_Metrics_CodeRank_Class) $classRank
+     */
     protected $classRank = null;
     
+    /**
+     * The found package nodes.
+     *
+     * @type array
+     * @var array $packageNodes
+     */
     protected $packageNodes = array();
     
+    /**
+     * The calculated package ranks.
+     *
+     * @type array<PHP_Depend_Metrics_CodeRank_Package>
+     * @var array(PHP_Depend_Metrics_CodeRank_Package) $packageRank
+     */
     protected $packageRank = null;
     
+    /**
+     * Returns the package rank for all packages.
+     *
+     * @return array(PHP_Depend_Metrics_CodeRank_Package)
+     */
     public function getPackageRank()
     {
         if ($this->packageRank === null) {
-            $this->packageRank = $this->buildCodeRank(
-                $this->packageNodes, 'PHP_Depend_Metrics_CodeRank_Package'
-            );
+            // The result class
+            $class = 'PHP_Depend_Metrics_CodeRank_Package';
+            // Build package code rank
+            $this->packageRank = $this->buildCodeRank($this->packageNodes, $class);
         }
         return $this->packageRank;
     }
     
+    /**
+     * Returns the class rank for all classes.
+     *
+     * @return array(PHP_Depend_Metrics_CodeRank_Class)
+     */
     public function getClassRank()
     {
         if ($this->classRank === null) {
-            $this->classRank = $this->buildCodeRank(
-                $this->classNodes, 'PHP_Depend_Metrics_CodeRank_Class'
-            );
+            // The result class
+            $class = 'PHP_Depend_Metrics_CodeRank_Class';
+            // Build class code rank
+            $this->classRank = $this->buildCodeRank($this->classNodes, $class);
         }
         return $this->classRank;
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitClass()
+     * Visits a code class object.
      *
-     * @param PHP_Depend_Code_Class $class
+     * @param PHP_Depend_Code_Class $class The context code class.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -140,9 +182,12 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitFunction()
+     * Visits a code function object.
      *
-     * @param PHP_Depend_Code_Function $function
+     * @param PHP_Depend_Code_Function $function The context code function.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -150,9 +195,12 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitMethod()
+     * Visits a code method object.
      *
-     * @param PHP_Depend_Code_Method $method
+     * @param PHP_Depend_Code_Method $method The context code method.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -160,9 +208,12 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitPackage()
+     * Visits a code package object.
      *
-     * @param PHP_Depend_Code_Package $package
+     * @param PHP_Depend_Code_Package $package The context code package.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
@@ -175,20 +226,28 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
             );
         }
         
-        foreach($package->getClasses() as $class) {
+        foreach ($package->getClasses() as $class) {
             $class->accept($this);
         }
-        foreach($package->getFunctions() as $function) {
+        foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
     }
     
+    /**
+     * Generates the forward and reverse code rank for the given <b>$nodes</b>.
+     *
+     * @param array  $nodes List of nodes.
+     * @param string $class The metric model class.
+     * 
+     * @return array(stdClass) Code rank <b>$class</b> objects,
+     */
     protected function buildCodeRank(array $nodes, $class)
     {
         $ranks = array();
         
         foreach ($nodes as $name => $info) {
-            $ranks[$name] = new PHP_Depend_Metrics_CodeRank_Class($info['code']);
+            $ranks[$name] = new $class($info['code']);
         }
         foreach ($this->computeCodeRank($nodes, 'out', 'in') as $name => $rank) {
             $ranks[$name]->setCodeRank($rank);
@@ -200,6 +259,15 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         return array_values($ranks);
     }
     
+    /**
+     * Sorts the given <b>$nodes</b> set.
+     *
+     * @param array  $nodes List of nodes.
+     * @param string $dir1  Identifier for the incoming edges.
+     * @param string $dir2  Identifier for the outgoing edges.
+     * 
+     * @return array
+     */
     protected function topologicalSort(array $nodes, $dir1, $dir2)
     {
         $leafs  = array();
@@ -241,6 +309,15 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         return array_keys($sorted);
     }
     
+    /**
+     * Calculates the code rank for the given <b>$nodes</b> set.
+     *
+     * @param array  $nodes List of nodes. 
+     * @param string $id1   Identifier for the incoming edges.
+     * @param string $id2   Identifier for the outgoing edges.
+     * 
+     * @return array(string=>float)
+     */
     protected function computeCodeRank(array $nodes, $id1, $id2)
     {
         $d = self::DAMPING_FACTOR;

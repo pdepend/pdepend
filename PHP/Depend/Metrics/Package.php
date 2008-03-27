@@ -69,7 +69,7 @@ class PHP_Depend_Metrics_Package
     /**
      * Constructs a new metric package
      *
-     * @param PHP_Depend_Code_Package $package
+     * @param PHP_Depend_Code_Package $package The associated code package.
      */
     public function __construct(PHP_Depend_Code_Package $package)
     {
