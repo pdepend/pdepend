@@ -48,7 +48,7 @@
 require_once 'PHP/Depend/Metrics/Class.php';
 
 /**
- * 
+ * Special metrics class implementation for the code rank metric.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -76,26 +76,63 @@ class PHP_Depend_Metrics_CodeRank_Class extends PHP_Depend_Metric_Class
      */
     protected $reverseCodeRank = 0.0;
     
+    /**
+     * Returns the forward code rank value for this class.
+     *
+     * @return float
+     */
     public function getCodeRank()
     {
         return $this->codeRank;
     }
     
+    /**
+     * Sets the forward code rank value for this class.
+     *
+     * @param float $codeRank The rank value in the range of [0-1].
+     * 
+     * @return void
+     * @throws InvalidArgumentException If the given value is not of type float
+     *                                  or in the range of [0-1].
+     */
     public function setCodeRank($codeRank)
     {
         $this->codeRank = $this->checkCodeRankValue($codeRank);
     }
     
+    /**
+     * Returns the reverse code rank value for this class.
+     *
+     * @return float
+     */
     public function getReverseCodeRank()
     {
         return $this->reverseCodeRank;
     }
     
+    /**
+     * Sets the reverse code rank value for this class.
+     *
+     * @param float $reverseCodeRank The rank value in the range of [0-1].
+     * 
+     * @return void
+     * @throws InvalidArgumentException If the given value is not of type float
+     *                                  or in the range of [0-1].
+     */
     public function setReverseCodeRank($reverseCodeRank)
     {
         $this->reverseCodeRank = $this->checkCodeRankValue($reverseCodeRank);
     }
     
+    /**
+     * Checks a code rank value for type <b>float</b> and a range between [0-1].
+     *
+     * @param float $codeRank The code rank value.
+     * 
+     * @return float
+     * @throws InvalidArgumentException If the given value is not of type float
+     *                                  or in the range of [0-1].
+     */
     protected function checkCodeRankValue($codeRank)
     {
         if (!is_float($codeRank)) {

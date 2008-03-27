@@ -60,7 +60,8 @@ require_once 'PHP/Depend/Code/Tokenizer.php';
  * @link      http://www.manuel-pichler.de/
  *
  */
-class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tokenizer
+class PHP_Depend_Code_Tokenizer_InternalTokenizer 
+    implements PHP_Depend_Code_Tokenizer
 {
     /**
      * Mapping between php internal tokens and php depend tokens.
@@ -325,11 +326,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         }
 
         // Normalize whitespace characters
-        $source = preg_replace( 
-            array('/\t+/', '/ +/' ),
-            ' ',
-            $source
-        );
+        $source = preg_replace(array('/\t+/', '/ +/' ), ' ', $source);
         
         $line = 1;
         foreach (token_get_all($source) as $token) {
