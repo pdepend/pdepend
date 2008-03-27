@@ -79,8 +79,8 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
         
-        $sourceFile    = dirname(__FILE__) . '/../../data/mixed_code.php';
-        $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $source        = dirname(__FILE__) . '/../../data/mixed_code.php';
+        $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($source);
         $this->builder = new PHP_Depend_Code_DefaultBuilder();
         $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
         
@@ -96,22 +96,22 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $expected = array(
             'pkg1'  =>  array(
-                'abstractness'      =>  0,
-                'instability'       =>  1,
-                'efferentCoupling'  =>  2,
-                'afferentCoupling'  =>  0
+                'abstractness'  =>  0,
+                'instability'   =>  1,
+                'efferent'      =>  2,
+                'afferent'      =>  0
             ),
             'pkg2'  =>  array(
-                'abstractness'      =>  1,
-                'instability'       =>  0,
-                'efferentCoupling'  =>  0,
-                'afferentCoupling'  =>  1
+                'abstractness'  =>  1,
+                'instability'   =>  0,
+                'efferent'      =>  0,
+                'afferent'      =>  1
             ),
             'pkg3'  =>  array(
-                'abstractness'      =>  1,
-                'instability'       =>  0.5,
-                'efferentCoupling'  =>  1,
-                'afferentCoupling'  =>  1
+                'abstractness'  =>  1,
+                'instability'   =>  0.5,
+                'efferent'      =>  1,
+                'afferent'      =>  1
             ),
         );
         
@@ -130,8 +130,8 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             $this->assertType('PHP_Depend_Code_Package', $metrics->getPackage());
             $this->assertEquals($data['abstractness'], $metrics->abstractness());
             $this->assertEquals($data['instability'], $metrics->instability());
-            $this->assertEquals($data['efferentCoupling'], $metrics->efferentCoupling());
-            $this->assertEquals($data['afferentCoupling'], $metrics->afferentCoupling());
+            $this->assertEquals($data['efferent'], $metrics->efferentCoupling());
+            $this->assertEquals($data['afferent'], $metrics->afferentCoupling());
             
             unset($expected[$metrics->getName()]);
         }

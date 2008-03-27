@@ -65,7 +65,8 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Renderer_AbstractRendererTest extends PHP_Depend_AbstractTest
+abstract class PHP_Depend_Renderer_AbstractRendererTest 
+    extends PHP_Depend_AbstractTest
 {
     /**
      * The generated metrics.
@@ -93,9 +94,10 @@ abstract class PHP_Depend_Renderer_AbstractRendererTest extends PHP_Depend_Abstr
         $builder = new PHP_Depend_Code_DefaultBuilder();
         
         foreach ($files as $file) {
-            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file->getRealPath());
+            $path = $file->getRealPath();
+            $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
             
-            $parser = new PHP_Depend_Parser($tokenizer, $builder);
+            $parser = new PHP_Depend_Parser($tokz, $builder);
             $parser->parse();
         }
         
