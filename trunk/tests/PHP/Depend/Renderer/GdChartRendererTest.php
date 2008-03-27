@@ -60,7 +60,8 @@ require_once 'PHP/Depend/Renderer/GdChartRenderer.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Renderer_GdChartRendererTest extends PHP_Depend_Renderer_AbstractRendererTest
+class PHP_Depend_Renderer_GdChartRendererTest 
+    extends PHP_Depend_Renderer_AbstractRendererTest
 {
     /**
      * Tests the gd renderer generates an output file. 
