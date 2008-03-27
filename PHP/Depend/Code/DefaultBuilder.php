@@ -96,6 +96,8 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     public function __construct()
     {
         $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
+//echo "1) ", $this->defaultPackage->getName(), "(", spl_object_hash($this->defaultPackage), ")\n";
+        $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
     }
     
     /**
@@ -112,11 +114,22 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
         if (isset($this->classes[$name])) {
             $class = $this->classes[$name];
         } else {
-            $class = new PHP_Depend_Code_Class($name, $line, $sourceFile);
+            
+            $className   = $name;
+            $packageName = self::DEFAULT_PACKAGE;
+            
+            if (strpos($className, '::') !== false) {
+                $parts = explode('::', $className);
+                
+                $className   = array_pop($parts);
+                $packageName = join('::', $parts); 
+            }
+            
+            $class = new PHP_Depend_Code_Class($className, $line, $sourceFile);
             
             $this->classes[$name] = $class;
             
-            $this->defaultPackage->addClass($class);
+            $this->buildPackage($packageName)->addClass($class);
         }
         if ($sourceFile !== null) {
             $class->setSourceFile($sourceFile);
@@ -189,6 +202,15 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      */
     public function getPackages()
     {
-        return new PHP_Depend_Code_NodeIterator($this->packages);
+        // Create a package array copy
+        $packages = $this->packages;
+        
+        // Remove default package if empty
+        if ($this->defaultPackage->getClasses()->count() === 0 
+         && $this->defaultPackage->getFunctions()->count() === 0) {
+
+            unset($packages[self::DEFAULT_PACKAGE]);
+        }
+        return new PHP_Depend_Code_NodeIterator($packages);
     }
 }
