@@ -49,7 +49,7 @@ require_once 'PHP/Depend/Metrics/Class.php';
 require_once 'PHP/Depend/Metrics/Package.php';
 
 /**
- * 
+ * Special metrics package implementation for the dependency metric.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -150,6 +150,8 @@ class PHP_Depend_Metrics_Dependency_Package extends PHP_Depend_Metrics_Package
      * Sets all dependent {@link PHP_Depend_Metrics_Dependency_Package} objects.
      *
      * @param array $afferents The incoming package dependencies.
+     * 
+     * @return void
      */
     public function setAfferents(array $afferents)
     {
@@ -172,6 +174,8 @@ class PHP_Depend_Metrics_Dependency_Package extends PHP_Depend_Metrics_Package
      * classes of this package depend on.
      *
      * @param array $efferents The outgoing package dependencies.
+     * 
+     * @return void
      */
     public function setEfferents(array $efferents)
     {
