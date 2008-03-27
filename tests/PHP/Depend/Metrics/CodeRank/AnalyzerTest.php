@@ -103,7 +103,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
             'pkg1FooI'    =>  array(0.5325, 0.15),
             'pkg1Bar'     =>  array(0.59625, 0.15),
             'pkg3FooI'    =>  array(0.21375, 0.2775),
-            'Iterator'    =>  array(0.3316875, 0.15)
+            'Iterator'    =>  array(0.3316875, 0.15),
+            'Bar'         =>  array(0.15, 0.15)
         );
         
         foreach ($analyzer->getClassRank() as $rank) {
