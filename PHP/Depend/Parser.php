@@ -270,7 +270,7 @@ class PHP_Depend_Parser
      * 
      * @return void
      */
-    protected function  parseFunctionSignature(PHP_Depend_Code_Function $function)
+    protected function parseFunctionSignature(PHP_Depend_Code_Function $function)
     {
         if ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
             // Load invalid token for line number
@@ -333,11 +333,27 @@ class PHP_Depend_Parser
 
             switch ($token[0]) {
             case PHP_Depend_Code_Tokenizer::T_NEW:
+                $allowed = array(
+                    PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON,
+                    PHP_Depend_Code_Tokenizer::T_STRING,
+                );
+                
+                $parts = array();
+                while (in_array($this->tokenizer->peek(), $allowed)) {
                 // Check that the next token is a string
-                if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
-                    $tokens[] = $token = $this->tokenizer->next();
-                    $function->addDependency($this->builder->buildClass($token[1]));
+                //if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
+                    $token    = $this->tokenizer->next();
+                    $tokens[] = $token;
+                    
+                    if ($token[0] === PHP_Depend_Code_Tokenizer::T_STRING) {
+                        $parts[] = $token[1];
+                    }
                 }
+                
+                // Get last element of parts and create a class for it
+                $class = $this->builder->buildClass(join('::', $parts));
+                
+                $function->addDependency($class);
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_STRING:
