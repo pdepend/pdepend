@@ -201,8 +201,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parser->parse();
         
         $packages = $builder->getPackages();
-        $this->assertEquals(1, $packages->count());        
-        $package  = $packages->current();
+        $packages->next();
+        $this->assertEquals(2, $packages->count());
+                
+        $package = $packages->current();
         $this->assertEquals('package0', $package->getName());
         $classes  = $package->getClasses();
         $this->assertEquals(1, $classes->count()); 
@@ -254,7 +256,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         $parser->parse();
         
-        $function = $builder->getPackages()->current()->getFunctions()->current();
+        $packages = $builder->getPackages();
+        $packages->next();
+        
+        $function = $packages->current()->getFunctions()->current();
         $this->assertEquals(7, $function->getLine());
     }
     
@@ -290,7 +295,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE, '}', 10),
         );
         
-        $function = $builder->getPackages()->current()->getFunctions()->current();
+        $packages = $builder->getPackages();
+        $packages->next();
+        
+        $function = $packages->current()->getFunctions()->current();
         $this->assertEquals($tokens, $function->getTokens());
     }
     
@@ -309,6 +317,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parser->parse();
         
         $packages = $builder->getPackages();
+        $packages->next();
         $packages->next();
 
         $class = $packages->current()->getClasses()->current();
@@ -340,6 +349,29 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                            ->getMethods()
                            ->current();
  
-        $this->assertEquals(23, $method->getLine());
+        $this->assertEquals(16, $method->getLine());
+    }
+    
+    /**
+     * Tests that the parser handles PHP 5.3 object namespace + class chaining.
+     *
+     * @return void
+     */
+    public function testParserParseNewInstancePHP53()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/php-5.3/new.txt';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        
+        $this->assertEquals(3, $packages->count());
+        $packages->next();
+        $this->assertEquals('php::depend1', $packages->current()->getName());
+        $packages->next();
+        $this->assertEquals('php::depend2', $packages->current()->getName());
     }
 }
