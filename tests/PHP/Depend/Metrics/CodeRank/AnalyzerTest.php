@@ -52,7 +52,7 @@ require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
 
 /**
- * 
+ * Test case for the code metric analyzer class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -81,9 +81,11 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         $builder = new PHP_Depend_Code_DefaultBuilder();
         
         foreach ($files as $file) {
-            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file->getRealPath());
             
-            $parser = new PHP_Depend_Parser($tokenizer, $builder);
+            $path = $file->getRealPath();
+            $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
+            
+            $parser = new PHP_Depend_Parser($tokz, $builder);
             $parser->parse();
         }
         
@@ -108,18 +110,10 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         );
         
         foreach ($analyzer->getClassRank() as $rank) {
-            $this->assertEquals(
-                $expected[$rank->getName()][0],
-                $rank->getCodeRank(),
-                '',
-                0.00005
-            );
-            $this->assertEquals(
-                $expected[$rank->getName()][1],
-                $rank->getReverseCodeRank(),
-                '',
-                0.00005
-            );
+            // Get expected value set
+            $value = $expected[$rank->getName()];
+            $this->assertEquals($value[0], $rank->getCodeRank(), '', 0.00005);
+            $this->assertEquals($value[1], $rank->getReverseCodeRank(), '', 0.00005);
         }
     }
 }

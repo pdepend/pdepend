@@ -60,7 +60,8 @@ require_once 'PHP/Depend/Renderer/XMLRenderer.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Renderer_XMLRendererTest extends PHP_Depend_Renderer_AbstractRendererTest
+class PHP_Depend_Renderer_XMLRendererTest 
+    extends PHP_Depend_Renderer_AbstractRendererTest
 {
     /**
      * Tests the xml renderer output against a reference xml document. 
@@ -107,12 +108,12 @@ class PHP_Depend_Renderer_XMLRendererTest extends PHP_Depend_Renderer_AbstractRe
      */
     protected function loadReferenceXML()
     {
-        $replace = '/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend';
+        $replace = '#/home/manu/.*/Depend#U';
         $current = realpath(dirname(__FILE__) . '/..');
         
         $file = dirname(__FILE__) . '/ref.xml';
         $xml  = file_get_contents($file);
         
-        return str_replace($replace, $current, $xml);        
+        return preg_replace($replace, $current, $xml);        
     }
 }

@@ -76,9 +76,14 @@ class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
             new PHP_Depend_Util_FileExtensionFilter(array('php'))
         );
         
-        $result   = array();
-        $expected = array('classes.php', 'func_class.php', 'func_code.php', 'mixed_code.php');
+        $expected = array(
+            'classes.php', 
+            'func_class.php', 
+            'func_code.php', 
+            'mixed_code.php'
+        );
         
+        $result = array();
         foreach ($it as $file) {
             $result[] = $file->getFilename();
         }
