@@ -69,7 +69,8 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      */
     public function testExcludePathFilterWithFile()
     {
-        $filter = new PHP_Depend_Util_ExcludePathFilter(array('code-5.2.x/package2.php'));
+        $files  = array('code-5.2.x/package2.php');
+        $filter = new PHP_Depend_Util_ExcludePathFilter($files);
         $it     = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(dirname(__FILE__) . '/../data/code-5.2.x')
         );

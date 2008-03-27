@@ -135,7 +135,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserWithUnclosedFunctionFail()
     {
-        $this->setExpectedException('RuntimeException', 'Invalid state, unclosed function body.');
+        $this->setExpectedException(
+            'RuntimeException', 
+            'Invalid state, unclosed function body.'
+        );
         
         $sourceFile = dirname(__FILE__) . '/data/not_closed_function.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
@@ -153,7 +156,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserWithInvalidFunction1Fail()
     {
-        $this->setExpectedException('RuntimeException', 'Invalid function signature.');
+        $this->setExpectedException(
+            'RuntimeException', 
+            'Invalid function signature.'
+        );
         
         $sourceFile = dirname(__FILE__) . '/data/invalid_function1.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
@@ -206,9 +212,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                 
         $package = $packages->current();
         $this->assertEquals('package0', $package->getName());
-        $classes  = $package->getClasses();
+        $classes = $package->getClasses();
         $this->assertEquals(1, $classes->count()); 
-        $methods  = $classes->current()->getMethods();
+        $methods = $classes->current()->getMethods();
         $this->assertEquals(1, $methods->count());
         $this->assertEquals(1, $methods->current()->getDependencies()->count());
     }

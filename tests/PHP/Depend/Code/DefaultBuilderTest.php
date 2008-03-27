@@ -87,6 +87,8 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
      */
     public function testBuildClassDefaultPackage()
     {
+        $defaultPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE; 
+        
         $builder = new PHP_Depend_Code_DefaultBuilder();
         $class1  = $builder->buildClass('clazz1', 0, 'clazz1.php');
         $class2  = $builder->buildClass('clazz2', 0, 'clazz2.php');
@@ -95,7 +97,7 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $this->assertNotNull($class2->getPackage());
         
         $this->assertSame($class1->getPackage(), $class2->getPackage());
-        $this->assertEquals(PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE, $class1->getPackage()->getName());
+        $this->assertEquals($defaultPackage, $class1->getPackage()->getName());
     }
     
     /**
@@ -179,6 +181,8 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
      */
     public function testBuildFunctionDefaultPackage()
     {
+        $defaultPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+        
         $builder   = new PHP_Depend_Code_DefaultBuilder();
         $function1 = $builder->buildFunction('func1', 0);
         $function2 = $builder->buildFunction('func2', 0);
@@ -187,6 +191,6 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $this->assertNotNull($function2->getPackage());
         
         $this->assertSame($function1->getPackage(), $function2->getPackage());
-        $this->assertEquals(PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE, $function1->getPackage()->getName());
+        $this->assertEquals($defaultPackage, $function1->getPackage()->getName());
     }
 }
