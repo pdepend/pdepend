@@ -142,41 +142,25 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $packageName = $class->getPackage()->getName();
-        $className   = $packageName . '::' . $class->getName();
+        $className   = $this->buildQualifiedClassName($class);
         
-        if (!isset($this->classNodes[$className])) {
-            $this->classNodes[$className] = array(
-                'in'    =>  array(),
-                'out'   =>  array(),
-                'code'  =>  $class,
-            );
-        }
+        $this->initClassNode($class);
         
         foreach ($class->getDependencies() as $dep) {
             
             $depPackageName = $dep->getPackage()->getName();
-            $depClassName   = $depPackageName . '::' . $dep->getName();
+            $depClassName   = $this->buildQualifiedClassName($dep);
             
-            if (!isset($this->classNodes[$depClassName])) {
-                $this->classNodes[$depClassName] = array(
-                    'in'    =>  array(),
-                    'out'   =>  array(),
-                    'code'  =>  $dep,
-                );
-            }
-            $this->classNodes[$className]['in'][$depClassName]  = $depClassName;
-            $this->classNodes[$depClassName]['out'][$className] = $className;
+            $this->initClassNode($dep);
+            $this->initPackageNode($dep->getPackage());
             
-            if (!isset($this->packageNodes[$depPackageName])) {
-                $this->packageNodes[$depPackageName] = array(
-                    'in'    =>  array(),
-                    'out'   =>  array(),
-                    'code'  =>  $dep->getPackage(),
-                );
-            }
-            if (!isset($this->packageNodes[$packageName]['in'][$depPackageName])) {
-                $this->packageNodes[$packageName]['in'][$depPackageName]  = $depPackageName;
-                $this->packageNodes[$depPackageName]['out'][$packageName] = $packageName;
+            $this->classNodes[$className]['in'][]     = $depClassName;
+            $this->classNodes[$depClassName]['out'][] = $className;
+            
+            // No self references
+            if ($packageName !== $depPackageName) {
+                $this->packageNodes[$packageName]['in'][]     = $depPackageName;
+                $this->packageNodes[$depPackageName]['out'][] = $packageName;
             }
         }
     }
@@ -217,6 +201,45 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $this->initPackageNode($package);
+        
+        foreach ($package->getClasses() as $class) {
+            $class->accept($this);
+        }
+        foreach ($package->getFunctions() as $function) {
+            $function->accept($this);
+        }
+    }
+    
+    /**
+     * Initializes the node for the given class instance.
+     *
+     * @param PHP_Depend_Code_Class $class The context class instance.
+     * 
+     * @return void
+     */
+    protected function initClassNode(PHP_Depend_Code_Class $class)
+    {
+        $className = $this->buildQualifiedClassName($class);
+        
+        if (!isset($this->classNodes[$className])) {
+            $this->classNodes[$className] = array(
+                'in'    =>  array(),
+                'out'   =>  array(),
+                'code'  =>  $class,
+            );
+        }
+    }
+
+    /**
+     * Initializes the node for the given class instance.
+     *
+     * @param PHP_Depend_Code_Package $package The context package instance.
+     * 
+     * @return void
+     */
+    protected function initPackageNode(PHP_Depend_Code_Package $package)
+    {
         $packageName = $package->getName();
         if (!isset($this->packageNodes[$packageName])) {
             $this->packageNodes[$packageName] = array(
@@ -225,13 +248,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
                 'code'  =>  $package
             );
         }
-        
-        foreach ($package->getClasses() as $class) {
-            $class->accept($this);
-        }
-        foreach ($package->getFunctions() as $function) {
-            $function->accept($this);
-        }
+    }
+    
+    protected function buildQualifiedClassName(PHP_Depend_Code_Class $class)
+    {
+        return $class->getPackage()->getName() . '::' . $class->getName();
     }
     
     /**
@@ -289,8 +310,12 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
             unset($leafs[$name]);
             
             foreach ($leaf[$dir2] as $refName) {
-                // Remove edge between these two nodes 
-                unset($nodes[$refName][$dir1][$name]);
+                
+                // Search edge index
+                $index = array_search($name, $nodes[$refName][$dir1]);
+                
+                // Remove one edge between these two nodes 
+                unset($nodes[$refName][$dir1][$index]);
                 
                 // If the referenced node has no incoming/outgoing edges,
                 // put it in the list of leaf nodes.
@@ -303,6 +328,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         }
         
         if (count($nodes) > 0) {
+var_dump(array_keys($nodes));
             throw new RuntimeException('The object structure contains cycles');
         }
         
