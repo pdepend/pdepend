@@ -47,9 +47,14 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
+require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
+require_once 'PHP/Depend/Util/FileExtensionFilter.php';
+require_once 'PHP/Depend/Util/FileFilterIterator.php';
 
 /**
  * Test case for the code metric analyzer class.
@@ -110,6 +115,50 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         );
         
         foreach ($analyzer->getClassRank() as $rank) {
+            // Get expected value set
+            $value = $expected[$rank->getName()];
+            $this->assertEquals($value[0], $rank->getCodeRank(), '', 0.00005);
+            $this->assertEquals($value[1], $rank->getReverseCodeRank(), '', 0.00005);
+        }
+    }
+    
+    /**
+     * Tests the calculated package rank.
+     *
+     * @return void
+     */
+    public function testGetPackageRank()
+    {
+        $source = dirname(__FILE__) . '/../../data/code-5.2.x';
+        $files  = new PHP_Depend_Util_FileFilterIterator(
+            new DirectoryIterator($source),
+            new PHP_Depend_Util_FileExtensionFilter(array('php'))
+        );
+        
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        foreach ($files as $file) {
+            
+            $path = $file->getRealPath();
+            $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
+            
+            $parser = new PHP_Depend_Parser($tokz, $builder);
+            $parser->parse();
+        }
+        
+        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        foreach ($builder->getPackages() as $package) {
+            $analyzer->visitPackage($package);
+        }
+        
+        $expected = array(
+            'package1'  =>  array(0.2775, 0.385875),
+            'package2'  =>  array(0.15, 0.47799375),
+            'package3'  =>  array(0.385875, 0.2775),
+            'global'    =>  array(0.47799375, 0.15),
+        );
+        
+        foreach ($analyzer->getPackageRank() as $rank) {
             // Get expected value set
             $value = $expected[$rank->getName()];
             $this->assertEquals($value[0], $rank->getCodeRank(), '', 0.00005);
