@@ -124,6 +124,8 @@ class PHP_Depend_Parser
     {
         $this->reset();
         
+        $comment = null;
+        
         while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
             switch ($token[0]) {
@@ -132,6 +134,7 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_DOC_COMMENT:
+                $comment       = $token[1];
                 $this->package = $this->parsePackage($token[1]);
                 break;
                     
@@ -148,7 +151,7 @@ class PHP_Depend_Parser
 
                 $this->builder->buildPackage($this->package)->addType($class);
 
-                $this->parseClassBody($class);
+                $this->parseTypeBody($class);
                 $this->reset();
                 break;
                     
@@ -166,16 +169,21 @@ class PHP_Depend_Parser
 
                 $this->builder->buildPackage($this->package)->addType($class);
 
-                $this->parseClassBody($class);
+                $this->parseTypeBody($class);
                 $this->reset();
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_FUNCTION:
-                $this->parseFunction();
+                $function = $this->parseFunction();
+                $function->setDocComment($comment);
+                
+                $comment = null;
                 break;
                     
             default:
                 // TODO: Handle/log unused tokens
+                $comment = null;
+                break;
             }
         }
     }
@@ -242,28 +250,54 @@ class PHP_Depend_Parser
      *
      * @return void
      */
-    protected function parseClassBody(PHP_Depend_Code_Type $type)
+    protected function parseTypeBody(PHP_Depend_Code_Type $type)
     {
         $token = $this->tokenizer->next();
         $curly = 0;
+        
+        $comment    = null;
+        $visibility = null;
+        $modifiers  = null;
         
         while ($token !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
             switch ($token[0]) {
             case PHP_Depend_Code_Tokenizer::T_FUNCTION:
-                $this->parseFunction($type);
+                $method = $this->parseFunction($type);
+                $method->setDocComment($comment);
+                
+                $comment = null;
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
                 ++$curly;
+                $comment = null; 
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
                 --$curly;
+                $comment = null; 
+                break;
+                
+            case PHP_Depend_Code_Tokenizer::T_PUBLIC:
+            case PHP_Depend_Code_Tokenizer::T_PRIVATE:
+            case PHP_Depend_Code_Tokenizer::T_PROTECTED:
+                break;
+                
+            case PHP_Depend_Code_Tokenizer::T_STATIC:
+                break;
+                
+            case PHP_Depend_Code_Tokenizer::T_FINAL:
+                break;
+                
+            case PHP_Depend_Code_Tokenizer::T_DOC_COMMENT:
+                $comment = $token[1];
                 break;
             
             default:
-                // TODO: Handle/log unused tokens 
+                // TODO: Handle/log unused tokens
+                $comment = null; 
+                break;
             }
             
             if ($curly === 0) {
@@ -280,10 +314,10 @@ class PHP_Depend_Parser
     
     /**
      * Parses a function or a method and adds it to the parent context node.
-     *
+     * 
      * @param PHP_Depend_Code_Type $parent An optional parent interface of class.
      * 
-     * @return void
+     * @return PHP_Depend_Code_Function|PHP_Depend_Code_Method
      */
     protected function parseFunction(PHP_Depend_Code_Type $parent = null)
     {
@@ -292,19 +326,22 @@ class PHP_Depend_Parser
             $token = $this->tokenizer->next();
         }
         
+        $callable = null;
         if ($parent === null) {
-            $function = $this->builder->buildFunction($token[1], $token[2]);
-            $this->builder->buildPackage($this->package)->addFunction($function); 
+            $callable = $this->builder->buildFunction($token[1], $token[2]);
+            $this->builder->buildPackage($this->package)->addFunction($callable); 
         } else {
-            $function = $this->builder->buildMethod($token[1], $token[2]);
-            $parent->addMethod($function);
+            $callable = $this->builder->buildMethod($token[1], $token[2]);
+            $parent->addMethod($callable);
         }
         
-        $this->parseFunctionSignature($function);
+        $this->parseFunctionSignature($callable);
         if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies 
-            $this->parseFunctionBody($function);
+            $this->parseFunctionBody($callable);
         }
+        
+        return $callable;
     }
 
     /**

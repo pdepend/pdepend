@@ -380,4 +380,58 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $packages->next();
         $this->assertEquals('php::depend2', $packages->current()->getName());
     }
+    
+    /**
+     * Tests that doc comment blocks are added to a function. 
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectFunctionDocComment()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/function_comment.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $nodes = $builder->getPackages()->current()->getFunctions();
+        
+        $this->doTestParserSetsCorrectMethodOrFunctionDocComment($nodes);
+    }
+    
+    public function testParserSetsCorrectMethodDocComment()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/method_comment.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $nodes = $builder->getPackages()
+                         ->current()
+                         ->getTypes()
+                         ->current()
+                         ->getMethods();
+        
+        $this->doTestParserSetsCorrectMethodOrFunctionDocComment($nodes);
+    }
+    
+    protected function doTestParserSetsCorrectMethodOrFunctionDocComment(
+                                            PHP_Depend_Code_NodeIterator $nodes)
+    {
+        $expected = array(
+            "/**\n* This is one comment.\n*/",
+            null,
+            null,
+            "/**\n* This is a second comment.\n*/",
+        );
+        
+        foreach ($nodes as $callable) {
+            $comment = array_shift($expected);
+
+            $this->assertEquals($comment, $callable->getDocComment());
+        }
+    }
 }

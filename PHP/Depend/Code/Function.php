@@ -77,6 +77,14 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     protected $line = 0;
     
     /**
+     * The comment for this function.
+     *
+     * @type string
+     * @var string $docComment
+     */
+    protected $docComment = null;
+    
+    /**
      * The tokens for this function.
      *
      * @type array<mixed>
@@ -192,6 +200,26 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
             // Remove from internal list
             unset($this->dependencies[$i]);
         }
+    }
+    
+    /**
+     * Returns the doc comment for this function or <b>null</b>.
+     *
+     * @return string
+     */
+    public function getDocComment()
+    {
+        return $this->docComment;
+    }
+    
+    /**
+     * Sets the doc comment for this function.
+     *
+     * @param string $docComment The doc comment block.
+     */
+    public function setDocComment($docComment)
+    {
+        $this->docComment = $docComment;
     }
     
     /**
