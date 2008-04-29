@@ -121,7 +121,7 @@ class PHP_Depend_Code_TestNodeVisitor implements PHP_Depend_Code_NodeVisitor
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
-        
+        $this->interface = $interface;
     }
     
     /**
