@@ -45,10 +45,10 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Metrics/Type.php';
 
 /**
- * Base interface for all nodes that can handle dependencies.
+ * Special metrics type implementation for the code rank metric.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,31 +58,89 @@ require_once 'PHP/Depend/Code/Node.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_DependencyNode extends PHP_Depend_Code_Node
+class PHP_Depend_Metrics_CodeRank_Type extends PHP_Depend_Metrics_Type
 {
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this node depends on.
+     * The forward code rank value for this class in the range of [0-1]. 
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @type float
+     * @var float $codeRank
      */
-    function getDependencies();
+    protected $codeRank = 0.0;
     
     /**
-     * Adds the given {@link PHP_Depend_Code_Type} object as dependency.
+     * The reverse code rank value for this class in the range of [0-1]
      *
-     * @param PHP_Depend_Code_Type $type A type this node depends on.
-     * 
-     * @return void
+     * @type float
+     * @var float $reverseCodeRank
      */
-    function addDependency(PHP_Depend_Code_Type $type);
+    protected $reverseCodeRank = 0.0;
     
     /**
-     * Removes the given {@link PHP_Depend_Code_Type} object from the dependency
-     * list.
+     * Returns the forward code rank value for this class.
      *
-     * @param PHP_Depend_Code_Type $type A type to remove.
+     * @return float
+     */
+    public function getCodeRank()
+    {
+        return $this->codeRank;
+    }
+    
+    /**
+     * Sets the forward code rank value for this class.
+     *
+     * @param float $codeRank The rank value in the range of [0-1].
      * 
      * @return void
+     * @throws InvalidArgumentException If the given value is not of type float
+     *                                  or in the range of [0-1].
      */
-    function removeDependency(PHP_Depend_Code_Type $type);
+    public function setCodeRank($codeRank)
+    {
+        $this->codeRank = $this->checkCodeRankValue($codeRank);
+    }
+    
+    /**
+     * Returns the reverse code rank value for this class.
+     *
+     * @return float
+     */
+    public function getReverseCodeRank()
+    {
+        return $this->reverseCodeRank;
+    }
+    
+    /**
+     * Sets the reverse code rank value for this class.
+     *
+     * @param float $reverseCodeRank The rank value in the range of [0-1].
+     * 
+     * @return void
+     * @throws InvalidArgumentException If the given value is not of type float
+     *                                  or in the range of [0-1].
+     */
+    public function setReverseCodeRank($reverseCodeRank)
+    {
+        $this->reverseCodeRank = $this->checkCodeRankValue($reverseCodeRank);
+    }
+    
+    /**
+     * Checks a code rank value for type <b>float</b> and a range between [0-1].
+     *
+     * @param float $codeRank The code rank value.
+     * 
+     * @return float
+     * @throws InvalidArgumentException If the given value is not of type float
+     *                                  or in the range of [0-1].
+     */
+    protected function checkCodeRankValue($codeRank)
+    {
+        if (!is_float($codeRank)) {
+            throw new InvalidArgumentException('Type float expected for code rank.');
+        }
+        if ($codeRank < 0.0 || $codeRank > 1.0) {
+            throw new InvalidArgumentException('Code rank must be in the range 0-1');
+        }
+        return $codeRank;
+    }
 }

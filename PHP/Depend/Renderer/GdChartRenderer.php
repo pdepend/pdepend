@@ -129,14 +129,15 @@ class PHP_Depend_Renderer_GdChartRenderer implements PHP_Depend_Renderer
         foreach ($metrics as $metric) {
             if ($metric->getName() !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
             
-                $sum      = ($metric->getConcreteClassCount() + $metric->getAbstractClassCount());
-                $diameter = (sqrt($sum) * $size) / sqrt($size);
+                $s = $metric->getConcreteClassCount() 
+                   + $metric->getAbstractClassCount();
+                $d = (sqrt($s) * $size) / sqrt($size);
 
                 $A = $metric->abstractness();
                 $I = $metric->instability();
 
-                $offsetX = $size + ceil($A * (10 * $size)) + ($size / 2);
-                $offsetY = $size + ceil(10.5 * $size) + ($I * (-10 * $size));
+                $x = $size + ceil($A * (10 * $size)) + ($size / 2);
+                $y = $size + ceil(10.5 * $size) + ($I * (-10 * $size));
 
                 if ($metric->distance() < $bias) {
                     $color = $green;
@@ -144,10 +145,13 @@ class PHP_Depend_Renderer_GdChartRenderer implements PHP_Depend_Renderer
                     $color = $orange;
                 }
 
-                imagefilledarc($im, $offsetX, $offsetY, $diameter, $diameter, 0, 0, $color, IMG_ARC_PIE);
-                imagearc($im, $offsetX, $offsetY, $diameter, $diameter, 0, 0, $dgray);
+                imagefilledarc($im, $x, $y, $d, $d, 0, 0, $color, IMG_ARC_PIE);
+                imagearc($im, $x, $y, $d, $d, 0, 0, $dgray);
+                
+                $x += ceil($d / 2);
+                $y -= $d;
 
-                imagestring($im, 2, $offsetX + ceil($diameter / 2), $offsetY - $diameter, $metric->getName(), $dgray);
+                imagestring($im, 2, $x, $y, $metric->getName(), $dgray);
             }
         }
 
