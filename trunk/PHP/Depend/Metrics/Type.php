@@ -45,10 +45,10 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Node.php';
-
 /**
- * Base interface for all nodes that can handle dependencies.
+ * This class represents a generic metric type. Instances of this class can be
+ * used in all cases when it is not required to differentiate between classes 
+ * and interfaces.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,31 +58,53 @@ require_once 'PHP/Depend/Code/Node.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_DependencyNode extends PHP_Depend_Code_Node
+class PHP_Depend_Metrics_Type
 {
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this node depends on.
+     * The code class for this metric model.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @type PHP_Depend_Code_Type
+     * @var PHP_Depend_Code_Type $class
      */
-    function getDependencies();
+    protected $type = null;
     
     /**
-     * Adds the given {@link PHP_Depend_Code_Type} object as dependency.
+     * Constructs a new type metric model.
      *
-     * @param PHP_Depend_Code_Type $type A type this node depends on.
-     * 
-     * @return void
+     * @param PHP_Depend_Code_Type $type The associated code type.
      */
-    function addDependency(PHP_Depend_Code_Type $type);
+    public function __construct(PHP_Depend_Code_Type $type)
+    {
+        $this->type = $type;
+    }
     
     /**
-     * Removes the given {@link PHP_Depend_Code_Type} object from the dependency
-     * list.
+     * Returns the name of this class.
      *
-     * @param PHP_Depend_Code_Type $type A type to remove.
-     * 
-     * @return void
+     * @return string
      */
-    function removeDependency(PHP_Depend_Code_Type $type);
+    public function getName()
+    {
+        return $this->type->getName();
+    }
+    
+    /**
+     * Returns the source file with the class declaration. 
+     *
+     * @return string
+     */
+    public function getSourceFile()
+    {
+        return $this->type->getSourceFile();
+    }
+    
+    /**
+     * Returns the associated code type instance.
+     *
+     * @return PHP_Depend_Code_Type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }

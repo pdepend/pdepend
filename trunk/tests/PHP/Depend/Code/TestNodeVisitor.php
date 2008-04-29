@@ -69,6 +69,14 @@ class PHP_Depend_Code_TestNodeVisitor implements PHP_Depend_Code_NodeVisitor
     public $class = null;
     
     /**
+     * The last visited interface instance.
+     *
+     * @type PHP_Depend_Code_Interface
+     * @var PHP_Depend_Code_Interface $interface
+     */
+    public $interface = null;
+    
+    /**
      * The last visited method instance.
      *
      * @type PHP_Depend_Code_Method
@@ -102,6 +110,18 @@ class PHP_Depend_Code_TestNodeVisitor implements PHP_Depend_Code_NodeVisitor
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->class = $class;
+    }
+    
+    /**
+     * Visits a code interface object.
+     *
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * 
+     * @return void
+     */
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        
     }
     
     /**

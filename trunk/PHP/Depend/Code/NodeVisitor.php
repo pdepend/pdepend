@@ -68,6 +68,15 @@ interface PHP_Depend_Code_NodeVisitor
     function visitClass(PHP_Depend_Code_Class $class);
     
     /**
+     * Visits a code interface object.
+     *
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * 
+     * @return void
+     */
+    function visitInterface(PHP_Depend_Code_Interface $interface);
+    
+    /**
      * Visits a method node. 
      *
      * @param PHP_Depend_Code_Class $method The method class node.

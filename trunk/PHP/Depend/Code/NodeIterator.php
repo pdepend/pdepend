@@ -72,18 +72,21 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      * Constructs a new node iterator from the given {@link PHP_Depend_Code_Node}
      * node array.
      *
-     * @param array(PHP_Depend_Code_Node) $nodes List of code nodes.
+     * @param array(PHP_Depend_Code_Node) $nodes      List of code nodes.
+     * @param string                      $typeFilter Optional node type filter.
      * 
      * @throws RuntimeException If the array contains something different from
      *                          a {@link PHP_Depend_Code_Node} object.
      */
-    public function __construct(array $nodes) 
+    public function __construct(array $nodes, $typeFilter = null) 
     {
         foreach ($nodes as $node) {
             if (!($node instanceof PHP_Depend_Code_Node)) {
                 throw new RuntimeException('Invalid object given.');
             }
-            $this->nodes[$node->getName()] = $node;
+            if ($typeFilter === null || $node instanceof $typeFilter) {
+                $this->nodes[$node->getName()] = $node;
+            }
         }
     }
     

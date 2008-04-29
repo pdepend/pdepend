@@ -122,9 +122,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         $method = new PHP_Depend_Code_Method('method', 0);
         
-        $this->assertNull($method->getClass());
+        $this->assertNull($method->getParent());
         $class->addMethod($method);
-        $this->assertSame($class, $method->getClass());
+        $this->assertSame($class, $method->getParent());
         $this->assertEquals(1, $class->getMethods()->count());
     }
     
@@ -141,11 +141,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $method = new PHP_Depend_Code_Method('method', 0);
         
         $class1->addMethod($method);
-        $this->assertSame($class1, $method->getClass());
+        $this->assertSame($class1, $method->getParent());
         $this->assertSame($method, $class1->getMethods()->current());
         
         $class2->addMethod($method);
-        $this->assertSame($class2, $method->getClass());
+        $this->assertSame($class2, $method->getParent());
         $this->assertSame($method, $class2->getMethods()->current());
         $this->assertEquals(0, $class1->getMethods()->count());
     }

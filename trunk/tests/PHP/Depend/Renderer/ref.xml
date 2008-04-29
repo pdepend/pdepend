@@ -18,8 +18,8 @@
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package1.php">pkg1Barfoo</Class>
       </ConcreteClasses>
       <AbstractClasses>
-        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package1.php">pkg1FooI</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package1.php">pkg1Bar</Class>
+        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package1.php">pkg1FooI</Class>
       </AbstractClasses>
       <DependsUpon>
         <Package>package2</Package>
@@ -45,8 +45,8 @@
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package2.php">pkg2Barfoo</Class>
       </ConcreteClasses>
       <AbstractClasses>
-        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package2.php">pkg2FooI</Class>
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package2.php">pkg2Bar</Class>
+        <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/data/code-5.2.x/package2.php">pkg2FooI</Class>
       </AbstractClasses>
       <DependsUpon>
         <Package>package1</Package>

@@ -45,10 +45,11 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Metrics/Type.php';
 
 /**
- * Base interface for all nodes that can handle dependencies.
+ * This class represents a interface specialization of the generic type data
+ * type.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,31 +59,25 @@ require_once 'PHP/Depend/Code/Node.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_DependencyNode extends PHP_Depend_Code_Node
+class PHP_Depend_Metrics_Interface extends PHP_Depend_Metrics_Type
 {
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this node depends on.
+     * Constructs a new interface metric model.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @param PHP_Depend_Code_Interface $interface The associated code interface.
      */
-    function getDependencies();
+    public function __construct(PHP_Depend_Code_Interface $interface)
+    {
+        parent::__construct($interface);
+    }
     
     /**
-     * Adds the given {@link PHP_Depend_Code_Type} object as dependency.
+     * Returns the associated code interface instance.
      *
-     * @param PHP_Depend_Code_Type $type A type this node depends on.
-     * 
-     * @return void
+     * @return PHP_Depend_Code_Interface
      */
-    function addDependency(PHP_Depend_Code_Type $type);
-    
-    /**
-     * Removes the given {@link PHP_Depend_Code_Type} object from the dependency
-     * list.
-     *
-     * @param PHP_Depend_Code_Type $type A type to remove.
-     * 
-     * @return void
-     */
-    function removeDependency(PHP_Depend_Code_Type $type);
+    public function getInterface()
+    {
+        return $this->type;
+    }
 }

@@ -141,7 +141,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer implements PHP_Depend_Code_NodeVisi
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        $package     = $method->getClass()->getPackage();
+        $package     = $method->getParent()->getPackage();
         $packageName = $package->getName();
         
         foreach ($method->getDependencies() as $dep) {
@@ -171,8 +171,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer implements PHP_Depend_Code_NodeVisi
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        foreach ($package->getClasses() as $class) {
-            $class->accept($this);
+        foreach ($package->getTypes() as $type) {
+            $type->accept($this);
         }
         
         foreach ($package->getFunctions() as $function) {
@@ -189,27 +189,52 @@ class PHP_Depend_Metrics_Dependency_Analyzer implements PHP_Depend_Code_NodeVisi
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-        $pkgName = $class->getPackage()->getName();
+        $this->visitType($class);
+    }
+    
+    /**
+     * Visits an interface node. 
+     *
+     * @param PHP_Depend_Code_Interface $interface The current interface node.
+     * 
+     * @return void
+     */
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->visitType($interface);
+    }
+    
+    /**
+     * Generic visit method for classes and interfaces. Both visit methods 
+     * delegate calls to this method.
+     *
+     * @param PHP_Depend_Code_Type $type The context type instance.
+     * 
+     * @return void
+     */
+    protected function visitType(PHP_Depend_Code_Type $type)
+    {
+        $pkgName = $type->getPackage()->getName();
         
-        $this->createPackage($class->getPackage());
+        $this->createPackage($type->getPackage());
         
-        foreach ($class->getDependencies() as $dep) {
+        foreach ($type->getDependencies() as $dep) {
             $depPkgName = $dep->getPackage()->getName();
             
-            if ($dep->getPackage() !== $class->getPackage()) {
+            if ($dep->getPackage() !== $type->getPackage()) {
            
                 $this->createPackage($dep->getPackage());
                 
                 if (!$this->efferents[$pkgName]->contains($dep->getPackage())) {
                     $this->efferents[$pkgName]->attach($dep->getPackage());
                 }
-                if (!$this->afferents[$depPkgName]->contains($class->getPackage())) {
-                    $this->afferents[$depPkgName]->attach($class->getPackage());
+                if (!$this->afferents[$depPkgName]->contains($type->getPackage())) {
+                    $this->afferents[$depPkgName]->attach($type->getPackage());
                 }
             }
         }
 
-        foreach ($class->getMethods() as $method) {
+        foreach ($type->getMethods() as $method) {
             $method->accept($this);
         }
     }

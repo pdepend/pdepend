@@ -75,21 +75,21 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Method::getClass()} returns as
+     * Tests that the {@link PHP_Depend_Code_Method::getParent()} returns as
      * default value <b>null</b> and that the package could be set and unset.
      *
      * @return void
      */
-    public function testGetSetClass()
+    public function testGetSetParent()
     {
         $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
         $method = new PHP_Depend_Code_Method('method', 0);
         
-        $this->assertNull($method->getClass());
-        $method->setClass($class);
-        $this->assertSame($class, $method->getClass());
-        $method->setClass(null);
-        $this->assertNull($method->getClass());
+        $this->assertNull($method->getParent());
+        $method->setParent($class);
+        $this->assertSame($class, $method->getParent());
+        $method->setParent(null);
+        $this->assertNull($method->getParent());
     }
     
     /**

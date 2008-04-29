@@ -136,7 +136,21 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_INTERFACE:
-                $this->abstract = true;
+                // Get interface name
+                $token = $this->tokenizer->next();
+                    
+                $this->className = $token[1];
+
+                $class = $this->builder->buildInterface($this->className, $token[2]);
+                $class->setSourceFile($this->tokenizer->getSourceFile());
+                
+                $this->parseInterfaceSignature($class);
+
+                $this->builder->buildPackage($this->package)->addType($class);
+
+                $this->parseClassBody($class);
+                $this->reset();
+                break;
                     
             case PHP_Depend_Code_Tokenizer::T_CLASS:
                 // Get class name
@@ -147,12 +161,12 @@ class PHP_Depend_Parser
                 $class = $this->builder->buildClass($this->className, $token[2]);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setAbstract($this->abstract);
-                foreach ($this->parseClassSignature() as $dependency) {
-                    $class->addDependency($this->builder->buildClass($dependency));
-                }
-                $this->builder->buildPackage($this->package)->addClass($class);
+                
+                $this->parseClassSignature($class);
 
-                $this->parseClassBody();
+                $this->builder->buildPackage($this->package)->addType($class);
+
+                $this->parseClassBody($class);
                 $this->reset();
                 break;
                     
@@ -179,28 +193,56 @@ class PHP_Depend_Parser
     }
     
     /**
-     * Parses the dependencies in a class signature.
+     * Parses the dependencies in a interface signature.
+     * 
+     * @param PHP_Depend_Code_Interface $interface The context interface instance.
      *
-     * @return array(string)
+     * @return void
      */
-    protected function parseClassSignature()
+    protected function parseInterfaceSignature(PHP_Depend_Code_Interface $interface)
     {
-        $dependencies = array();
         while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
             $token = $this->tokenizer->next();
             if ($token[0] === PHP_Depend_Code_Tokenizer::T_STRING) {
-                $dependencies[] = $token[1];
+                $dependency = $this->builder->buildInterface($token[1]);
+                $interface->addDependency($dependency);
             }
         }
-        return $dependencies;
+    }
+    
+    /**
+     * Parses the dependencies in a class signature.
+     * 
+     * @param PHP_Depend_Code_Class $class The context class instance.
+     *
+     * @return void
+     */
+    protected function parseClassSignature(PHP_Depend_Code_Class $class)
+    {
+        $implements = false;
+        while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
+            $token = $this->tokenizer->next();
+            if ($token[0] === PHP_Depend_Code_Tokenizer::T_IMPLEMENTS) {
+                $implements = true;
+            } else if ($token[0] === PHP_Depend_Code_Tokenizer::T_STRING) {
+                if ($implements) {
+                    $dependency = $this->builder->buildInterface($token[1]);
+                } else {
+                    $dependency = $this->builder->buildClass($token[1]);
+                }
+                $class->addDependency($dependency);
+            }
+        }
     }
     
     /**
      * Parses a class/interface body.
+     * 
+     * @param PHP_Depend_Code_Type $type The context type instance.
      *
      * @return void
      */
-    protected function parseClassBody()
+    protected function parseClassBody(PHP_Depend_Code_Type $type)
     {
         $token = $this->tokenizer->next();
         $curly = 0;
@@ -209,7 +251,7 @@ class PHP_Depend_Parser
             
             switch ($token[0]) {
             case PHP_Depend_Code_Tokenizer::T_FUNCTION:
-                $this->parseFunction();
+                $this->parseFunction($type);
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
@@ -239,21 +281,23 @@ class PHP_Depend_Parser
     /**
      * Parses a function or a method and adds it to the parent context node.
      *
+     * @param PHP_Depend_Code_Type $parent An optional parent interface of class.
+     * 
      * @return void
      */
-    protected function parseFunction()
+    protected function parseFunction(PHP_Depend_Code_Type $parent = null)
     {
         $token = $this->tokenizer->next();
         if ($token[0] === PHP_Depend_Code_Tokenizer::T_BITWISE_AND) {
             $token = $this->tokenizer->next();
         }
         
-        if ($this->className === null) {
+        if ($parent === null) {
             $function = $this->builder->buildFunction($token[1], $token[2]);
             $this->builder->buildPackage($this->package)->addFunction($function); 
         } else {
             $function = $this->builder->buildMethod($token[1], $token[2]);
-            $this->builder->buildClass($this->className)->addMethod($function);
+            $parent->addMethod($function);
         }
         
         $this->parseFunctionSignature($function);
@@ -301,7 +345,9 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_STRING:
-                $function->addDependency($this->builder->buildClass($token[1]));
+                // Create an instance for this dependency and append it
+                $dependency = $this->builder->buildClassOrInterface($token[1]);
+                $function->addDependency($dependency);
                 break;
 
             default:
@@ -362,8 +408,10 @@ class PHP_Depend_Parser
                     if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
+                        // Create a dependency class
+                        $dependency = $this->builder->buildClassOrInterface($token[1]);
 
-                        $function->addDependency($this->builder->buildClass($token[1]));
+                        $function->addDependency($dependency);
                     }
                 }
                 break;
