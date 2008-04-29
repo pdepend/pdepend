@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/Depend/Metrics/Class.php';
+require_once 'PHP/Depend/Metrics/Interface.php';
 require_once 'PHP/Depend/Metrics/Package.php';
 
 /**
@@ -112,6 +113,9 @@ class PHP_Depend_Metrics_Dependency_Package extends PHP_Depend_Metrics_Package
             } else {
                 $this->concreteClasses[] = new PHP_Depend_Metric_Class($class);
             }
+        }
+        foreach ($package->getInterfaces() as $interface) {
+            $this->abstractClasses[] = new PHP_Depend_Metrics_Interface($interface);
         }
     }
     

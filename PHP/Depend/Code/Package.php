@@ -70,12 +70,12 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     protected $name = '';
     
     /**
-     * List of all {@link PHP_Depend_Code_Class} objects for this package.
+     * List of all {@link PHP_Depend_Code_Type} objects for this package.
      *
-     * @type array<PHP_Depend_Code_Class>
-     * @var array(PHP_Depend_Code_Class) $classes
+     * @type array<PHP_Depend_Code_Type>
+     * @var array(PHP_Depend_Code_Type) $types
      */
-    protected $classes = array();
+    protected $types = array();
     
     /**
      * List of all standalone {@link PHP_Depend_Code_Function} objects in this
@@ -107,48 +107,76 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     }
     
     /**
-     * Returns all {@link PHP_Depend_Code_Class} objects in this package.
+     * Returns an iterator with all {@link PHP_Depend_Code_Class} instances
+     * within this package.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
     public function getClasses()
     {
-        return new PHP_Depend_Code_NodeIterator($this->classes);
+        return new PHP_Depend_Code_NodeIterator(
+            $this->types, 
+            'PHP_Depend_Code_Class'
+        );
     }
     
     /**
-     * Adds the given class to this package.
+     * Returns an iterator with all {@link PHP_Depend_Code_Interface} instances
+     * within this package.
      *
-     * @param PHP_Depend_Code_Class $class The new package class.
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getInterfaces()
+    {
+        return new PHP_Depend_Code_NodeIterator(
+            $this->types, 
+            'PHP_Depend_Code_Interface'
+        );
+    }
+    
+    /**
+     * Returns all {@link PHP_Depend_Code_Type} objects in this package.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getTypes()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->types);
+    }
+    
+    /**
+     * Adds the given type to this package.
+     *
+     * @param PHP_Depend_Code_Type $type The new package type.
      * 
      * @return void
      */
-    public function addClass(PHP_Depend_Code_Class $class)
+    public function addType(PHP_Depend_Code_Type $type)
     {
-        if ($class->getPackage() !== null) {
-            $class->getPackage()->removeClass($class);
+        if ($type->getPackage() !== null) {
+            $type->getPackage()->removeType($type);
         }
         
         // Set this as class package
-        $class->setPackage($this);
+        $type->setPackage($this);
         // Append class to internal list
-        $this->classes[] = $class;
+        $this->types[] = $type;
     }
     
     /**
-     * Removes the given class from this package.
+     * Removes the given type instance from this package.
      *
-     * @param PHP_Depend_Code_Class $class The class to remove.
+     * @param PHP_Depend_Code_Type $type The type instance to remove.
      * 
      * @return void
      */
-    public function removeClass(PHP_Depend_Code_Class $class)
+    public function removeType(PHP_Depend_Code_Type $type)
     {
-        if (($i = array_search($class, $this->classes, true)) !== false) {
+        if (($i = array_search($type, $this->types, true)) !== false) {
             // Remove class from internal list
-            unset($this->classes[$i]);
+            unset($this->types[$i]);
             // Remove this as parent
-            $class->setPackage(null);
+            $type->setPackage(null);
         }
     }
     
@@ -231,7 +259,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
         
         $storage->attach($this);
 
-        foreach ($this->getClasses() as $class) {
+        foreach ($this->getTypes() as $class) {
             foreach ($class->getDependencies() as $dependency) {
                 $package = $dependency->getPackage();
                 if ($package !== $this && $package->collectCycle($storage)) {

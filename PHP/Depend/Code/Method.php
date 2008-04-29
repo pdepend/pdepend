@@ -61,33 +61,33 @@ require_once 'PHP/Depend/Code/Function.php';
 class PHP_Depend_Code_Method extends PHP_Depend_Code_Function
 {
     /**
-     * The parent class object.
+     * The parent type object.
      *
-     * @type PHP_Depend_Code_Class
-     * @var PHP_Depend_Code_Class $class
+     * @type PHP_Depend_Code_Type
+     * @var PHP_Depend_Code_Type $parent
      */
-    protected $class = null;
+    protected $parent = null;
     
     /**
-     * Returns the parent class object or <b>null</b>
+     * Returns the parent type object or <b>null</b>
      *
-     * @return PHP_Depend_Code_Class|null
+     * @return PHP_Depend_Code_Type|null
      */
-    public function getClass()
+    public function getParent()
     {
-        return $this->class;
+        return $this->parent;
     }
     
     /**
-     * Sets the parent class object.
+     * Sets the parent type object.
      *
-     * @param PHP_Depend_Code_Class $class The parent class.
+     * @param PHP_Depend_Code_Type $parent The parent type.
      * 
      * @return void
      */
-    public function setClass(PHP_Depend_Code_Class $class = null)
+    public function setParent(PHP_Depend_Code_Type $parent = null)
     {
-        $this->class = $class;
+        $this->parent = $parent;
     }
     
     /**

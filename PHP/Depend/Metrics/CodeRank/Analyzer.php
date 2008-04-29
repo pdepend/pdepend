@@ -46,7 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
-require_once 'PHP/Depend/Metrics/CodeRank/Class.php';
+require_once 'PHP/Depend/Metrics/CodeRank/Type.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Package.php';
 
 /**
@@ -124,7 +124,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     {
         if ($this->classRank === null) {
             // The result class
-            $class = 'PHP_Depend_Metrics_CodeRank_Class';
+            $class = 'PHP_Depend_Metrics_CodeRank_Type';
             // Build class code rank
             $this->classRank = $this->buildCodeRank($this->classNodes, $class);
         }
@@ -138,31 +138,25 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
      * 
      * @return void
      * @see PHP_Depend_Code_NodeVisitor::visitClass()
+     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-        $packageName = $class->getPackage()->getName();
-        $className   = $this->buildQualifiedClassName($class);
-        
-        $this->initClassNode($class);
-        
-        foreach ($class->getDependencies() as $dep) {
-            
-            $depPackageName = $dep->getPackage()->getName();
-            $depClassName   = $this->buildQualifiedClassName($dep);
-            
-            $this->initClassNode($dep);
-            $this->initPackageNode($dep->getPackage());
-            
-            $this->classNodes[$className]['in'][]     = $depClassName;
-            $this->classNodes[$depClassName]['out'][] = $className;
-            
-            // No self references
-            if ($packageName !== $depPackageName) {
-                $this->packageNodes[$packageName]['in'][]     = $depPackageName;
-                $this->packageNodes[$depPackageName]['out'][] = $packageName;
-            }
-        }
+        $this->visitType($class);
+    }
+    
+    /**
+     * Visits a code interface object.
+     *
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitInterface()
+     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
+     */
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->visitType($interface);
     }
     
     /**
@@ -203,8 +197,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     {
         $this->initPackageNode($package);
         
-        foreach ($package->getClasses() as $class) {
-            $class->accept($this);
+        foreach ($package->getTypes() as $type) {
+            $type->accept($this);
         }
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
@@ -212,21 +206,55 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     }
     
     /**
-     * Initializes the node for the given class instance.
+     * Generic visitor method for classes and interfaces. Both visit methods
+     * delegate calls to this method.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param PHP_Depend_Code_Type $type The context type instance.
      * 
      * @return void
      */
-    protected function initClassNode(PHP_Depend_Code_Class $class)
+    protected function visitType(PHP_Depend_Code_Type $type)
     {
-        $className = $this->buildQualifiedClassName($class);
+        $packageName = $type->getPackage()->getName();
+        $className   = $this->buildQualifiedTypeName($type);
         
-        if (!isset($this->classNodes[$className])) {
-            $this->classNodes[$className] = array(
+        $this->initTypeNode($type);
+        
+        foreach ($type->getDependencies() as $dep) {
+            
+            $depPackageName = $dep->getPackage()->getName();
+            $depClassName   = $this->buildQualifiedTypeName($dep);
+            
+            $this->initTypeNode($dep);
+            $this->initPackageNode($dep->getPackage());
+            
+            $this->classNodes[$className]['in'][]     = $depClassName;
+            $this->classNodes[$depClassName]['out'][] = $className;
+            
+            // No self references
+            if ($packageName !== $depPackageName) {
+                $this->packageNodes[$packageName]['in'][]     = $depPackageName;
+                $this->packageNodes[$depPackageName]['out'][] = $packageName;
+            }
+        }
+    }
+    
+    /**
+     * Initializes the node for the given type instance.
+     *
+     * @param PHP_Depend_Code_Type $type The context type instance.
+     * 
+     * @return void
+     */
+    protected function initTypeNode(PHP_Depend_Code_Type $type)
+    {
+        $typeName = $this->buildQualifiedTypeName($type);
+        
+        if (!isset($this->classNodes[$typeName])) {
+            $this->classNodes[$typeName] = array(
                 'in'    =>  array(),
                 'out'   =>  array(),
-                'code'  =>  $class,
+                'code'  =>  $type,
             );
         }
     }
@@ -249,10 +277,21 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
             );
         }
     }
-    
-    protected function buildQualifiedClassName(PHP_Depend_Code_Class $class)
+
+    /**
+     * Generates the full qualified type name for the given <b>$type</b> instance.
+     * 
+     * Full qualified means that the class name also includes the package or 
+     * namespace identifier. This method uses a notation that is equal to PHP 5.3
+     * namespaces.
+     *
+     * @param PHP_Depend_Code_Type $type The context type instance.
+     * 
+     * @return string
+     */
+    protected function buildQualifiedTypeName(PHP_Depend_Code_Type $type)
     {
-        return $class->getPackage()->getName() . '::' . $class->getName();
+        return $type->getPackage()->getName() . '::' . $type->getName();
     }
     
     /**
@@ -328,7 +367,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
         }
         
         if (count($nodes) > 0) {
-var_dump(array_keys($nodes));
             throw new RuntimeException('The object structure contains cycles');
         }
         

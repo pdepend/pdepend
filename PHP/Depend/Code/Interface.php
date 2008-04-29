@@ -45,10 +45,10 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/Class.php';
+require_once 'PHP/Depend/Code/Type.php';
 
 /**
- * Special metrics class implementation for the code rank metric.
+ * Representation of a code interface.  
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,89 +58,29 @@ require_once 'PHP/Depend/Metrics/Class.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_CodeRank_Class extends PHP_Depend_Metric_Class
+class PHP_Depend_Code_Interface extends PHP_Depend_Code_Type
 {
     /**
-     * The forward code rank value for this class in the range of [0-1]. 
+     * Returns <b>true</b> if this is an abstract class or an interface.
      *
-     * @type float
-     * @var float $codeRank
+     * @return boolean
      */
-    protected $codeRank = 0.0;
-    
-    /**
-     * The reverse code rank value for this class in the range of [0-1]
-     *
-     * @type float
-     * @var float $reverseCodeRank
-     */
-    protected $reverseCodeRank = 0.0;
-    
-    /**
-     * Returns the forward code rank value for this class.
-     *
-     * @return float
-     */
-    public function getCodeRank()
+    public function isAbstract()
     {
-        return $this->codeRank;
+        return true;
     }
     
     /**
-     * Sets the forward code rank value for this class.
+     * Visitor method for node tree traversal.
      *
-     * @param float $codeRank The rank value in the range of [0-1].
+     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
+     *                                             implementation.
      * 
      * @return void
-     * @throws InvalidArgumentException If the given value is not of type float
-     *                                  or in the range of [0-1].
      */
-    public function setCodeRank($codeRank)
+    public function accept(PHP_Depend_Code_NodeVisitor $visitor)
     {
-        $this->codeRank = $this->checkCodeRankValue($codeRank);
+        $visitor->visitInterface($this);
     }
     
-    /**
-     * Returns the reverse code rank value for this class.
-     *
-     * @return float
-     */
-    public function getReverseCodeRank()
-    {
-        return $this->reverseCodeRank;
-    }
-    
-    /**
-     * Sets the reverse code rank value for this class.
-     *
-     * @param float $reverseCodeRank The rank value in the range of [0-1].
-     * 
-     * @return void
-     * @throws InvalidArgumentException If the given value is not of type float
-     *                                  or in the range of [0-1].
-     */
-    public function setReverseCodeRank($reverseCodeRank)
-    {
-        $this->reverseCodeRank = $this->checkCodeRankValue($reverseCodeRank);
-    }
-    
-    /**
-     * Checks a code rank value for type <b>float</b> and a range between [0-1].
-     *
-     * @param float $codeRank The code rank value.
-     * 
-     * @return float
-     * @throws InvalidArgumentException If the given value is not of type float
-     *                                  or in the range of [0-1].
-     */
-    protected function checkCodeRankValue($codeRank)
-    {
-        if (!is_float($codeRank)) {
-            throw new InvalidArgumentException('Type float expected for code rank.');
-        }
-        if ($codeRank < 0.0 || $codeRank > 1.0) {
-            throw new InvalidArgumentException('Code rank must be in the range 0-1');
-        }
-        return $codeRank;
-    }
 }

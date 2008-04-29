@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/DependencyNode.php';
+require_once 'PHP/Depend/Code/Type.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
@@ -59,40 +59,8 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
+class PHP_Depend_Code_Class extends PHP_Depend_Code_Type
 {
-    /**
-     * The name for this class.
-     *
-     * @type string
-     * @var string $name
-     */
-    protected $name = '';
-    
-    /**
-     * The line number where the class declaration starts.
-     *
-     * @type integer
-     * @var integer $line
-     */
-    protected $line = 0;
-    
-    /**
-     * The source file for this class.
-     *
-     * @type string
-     * @var string $sourceFile
-     */
-    protected $sourceFile = '';
-    
-    /**
-     * The parent package for this class.
-     *
-     * @type PHP_Depend_Code_Package
-     * @var PHP_Depend_Code_Package $package
-     */
-    protected $package = null;
-    
     /**
      * Marks this class as abstract.
      *
@@ -100,78 +68,6 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
      * @var boolean $abstract
      */
     protected $abstract = false;
-    
-    /**
-     * List of {@link PHP_Depend_Code_Method} objects in this class.
-     *
-     * @type array<PHP_Depend_Code_Method>
-     * @var array(PHP_Depend_Code_Method) $methods
-     */
-    protected $methods = array();
-    
-    /**
-     * List of {@link PHP_Depend_Code_Class} objects this class depends on.
-     *
-     * @type array<PHP_Depend_Code_Class>
-     * @var array(PHP_Depend_Code_Class) $dependencies
-     */
-    protected $dependencies = array();
-    
-    /**
-     * Constructs a new class for the given <b>$name</b> and <b>$sourceFile</b>.
-     *
-     * @param string  $name       The class name.
-     * @param integer $line       The class declaration line number.
-     * @param string  $sourceFile The source file for this class.
-     */
-    public function __construct($name, $line, $sourceFile)
-    {
-        $this->name       = $name;
-        $this->line       = $line;
-        $this->sourceFile = $sourceFile;
-    }
-    
-    /**
-     * Returns the class name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * Returns the line number where the class declaration can be found.
-     *
-     * @return integer
-     */
-    public function getLine()
-    {
-        return $this->line;
-    }
-    
-    /**
-     * Returns the source file for this class.
-     *
-     * @return string
-     */
-    public function getSourceFile()
-    {
-        return $this->sourceFile;
-    }
-    
-    /**
-     * Sets the source file for this class.
-     * 
-     * @param string $sourceFile The class source file.
-     *
-     * @return void
-     */
-    public function setSourceFile($sourceFile)
-    {
-        $this->sourceFile = $sourceFile;
-    }
     
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -193,113 +89,6 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
     public function setAbstract($abstract)
     {
         $this->abstract = $abstract;
-    }
-    
-    /**
-     * Returns all {@link PHP_Depend_Code_Method} object in this class.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getMethods()
-    {
-        return new PHP_Depend_Code_NodeIterator($this->methods);
-    }
-    
-    /**
-     * Adds the given method to this class.
-     *
-     * @param PHP_Depend_Code_Method $method A new class method.
-     * 
-     * @return void
-     */
-    public function addMethod(PHP_Depend_Code_Method $method)
-    {
-        if ($method->getClass() !== null) {
-            $method->getClass()->removeMethod($method);
-        }
-        // Set this as owner class
-        $method->setClass($this);
-        // Store clas
-        $this->methods[] = $method;
-    }
-    
-    /**
-     * Removes the given method from this class.
-     *
-     * @param PHP_Depend_Code_Method $method The method to remove.
-     * 
-     * @return void
-     */
-    public function removeMethod(PHP_Depend_Code_Method $method)
-    {
-        if (($i = array_search($method, $this->methods, true)) !== false) {
-            // Remove this as owner
-            $method->setClass(null);
-            // Remove from internal list
-            unset($this->methods[$i]);
-        }
-    }
-    
-    /**
-     * Returns all {@link PHP_Depend_Code_Class} objects this class depends on.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getDependencies()
-    {
-        return new PHP_Depend_Code_NodeIterator($this->dependencies);
-    }
-    
-    /**
-     * Adds the given {@link PHP_Depend_Code_Class} object as dependency.
-     *
-     * @param PHP_Depend_Code_Class $class A class this function depends on.
-     * 
-     * @return void
-     */
-    public function addDependency(PHP_Depend_Code_Class $class)
-    {
-        if (array_search($class, $this->dependencies, true) === false) {
-            $this->dependencies[] = $class;
-        }
-    }
-    
-    /**
-     * Removes the given {@link PHP_Depend_Code_Class} object from the dependency
-     * list.
-     *
-     * @param PHP_Depend_Code_Class $class A class to remove.
-     * 
-     * @return void
-     */
-    public function removeDependency(PHP_Depend_Code_Class $class)
-    {
-        if (($i = array_search($class, $this->dependencies, true)) !== false) {
-            // Remove from internal list
-            unset($this->dependencies[$i]);
-        }
-    }
-    
-    /**
-     * Returns the parent package for this class.
-     *
-     * @return PHP_Depend_Code_Package
-     */
-    public function getPackage()
-    {
-        return $this->package;
-    }
-    
-    /**
-     * Sets the parent package for this class.
-     *
-     * @param PHP_Depend_Code_Package $package The parent package.
-     * 
-     * @return void
-     */
-    public function setPackage(PHP_Depend_Code_Package $package = null)
-    {
-        $this->package = $package;
     }
     
     /**

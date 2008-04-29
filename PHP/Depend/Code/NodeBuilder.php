@@ -64,7 +64,33 @@ interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
     const DEFAULT_PACKAGE = 'global';
     
     /**
-     * Builds a new package instance.
+     * Generic build class for classes and interfaces. This method should be used
+     * in cases when it is not clear what type is used in the current situation.
+     * This could happen if the parser analyzes a method signature. The default 
+     * return type is {@link PHP_Depend_Code_Class}, but if there is already an 
+     * interface for this name, the method will return this instance.
+     * 
+     * <code>
+     *   $builder->buildInterface('PHP_DependI');
+     * 
+     *   // Returns an instance of PHP_Depend_Code_Interface
+     *   $builder->buildClassOrInterface('PHP_DependI');
+     * 
+     *   // Returns an instance of PHP_Depend_Code_Class
+     *   $builder->buildClassOrInterface('PHP_Depend');
+     * </code>
+     *
+     * @param string  $name       The class name.
+     * @param integer $line       The line number for the class declaration.
+     * @param string  $sourceFile The source file for the class.
+     * 
+     * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface 
+     *         The created class or interface instance.
+     */
+    function buildClassOrInterface($name, $line = 0, $sourceFile = null);
+    
+    /**
+     * Builds a new code class instance.
      *
      * @param string  $name       The class name.
      * @param integer $line       The line number for the class declaration.
@@ -73,6 +99,17 @@ interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
      * @return PHP_Depend_Code_Class The created class object.
      */
     function buildClass($name, $line = 0, $sourceFile = null);
+    
+    /**
+     * Builds a new new interface instance.
+     *
+     * @param string  $name       The interface name.
+     * @param integer $line       The line number for the interface declaration.
+     * @param string  $sourceFile The source file for the interface.
+     * 
+     * @return PHP_Depend_Code_Interface The created interface object.
+     */
+    function buildInterface($name, $line = 0, $sourceFile = null);
     
     /**
      * Builds a new package instance.

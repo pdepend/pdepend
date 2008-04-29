@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/NodeBuilder.php'; 
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
@@ -83,12 +84,36 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     protected $classes = array();
     
     /**
+     * All generated {@link PHP_Depend_Code_Interface} instances.
+     *
+     * @type array<PHP_Depend_Code_Interface>
+     * @var array(string=>PHP_Depend_Code_Interface) $interfaces
+     */
+    protected $interfaces = array();
+    
+    /**
      * All generated {@link PHP_Depend_Code_Package} objects
      *
      * @type array<PHP_Depend_Code_Package>
      * @var array(string=>PHP_Depend_Code_Package) $packages
      */
     protected $packages = array();
+    
+    /**
+     * All generated {@link PHP_Depend_Code_Function} instances.
+     *
+     * @type array<PHP_Depend_Code_Function>
+     * @var array(string=>PHP_Depend_Code_Function) $functions
+     */
+    protected $functions = array();
+    
+    /**
+     * All generated {@link PHP_Depend_Code_Method} instances.
+     *
+     * @type array<PHP_Depend_Code_Method>
+     * @var array(PHP_Depend_Code_Method) $methods
+     */
+    protected $methods = array();
     
     /**
      * Constructs a new builder instance.
@@ -98,6 +123,42 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
         $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
         
         $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
+    }
+    
+    /**
+     * Generic build class for classes and interfaces. This method should be used
+     * in cases when it is not clear what type is used in the current situation.
+     * This could happen if the parser analyzes a method signature. The default 
+     * return type is {@link PHP_Depend_Code_Class}, but if there is already an 
+     * interface for this name, the method will return this instance.
+     * 
+     * <code>
+     *   $builder->buildInterface('PHP_DependI');
+     * 
+     *   // Returns an instance of PHP_Depend_Code_Interface
+     *   $builder->buildClassOrInterface('PHP_DependI');
+     * 
+     *   // Returns an instance of PHP_Depend_Code_Class
+     *   $builder->buildClassOrInterface('PHP_Depend');
+     * </code>
+     *
+     * @param string  $name       The class name.
+     * @param integer $line       The line number for the class declaration.
+     * @param string  $sourceFile The source file for the class.
+     * 
+     * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface 
+     *         The created class or interface instance.
+     */
+    public function buildClassOrInterface($name, $line = 0, $sourceFile = null)
+    {
+        if (isset($this->classes[$name])) {
+            $instance = $this->classes[$name];
+        } else if (isset($this->interfaces[$name])) {
+            $instance = $this->interfaces[$name];
+        } else {
+            $instance = $this->buildClass($name, $line, $sourceFile);
+        }
+        return $instance;
     }
     
     /**
@@ -115,26 +176,65 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
             $class = $this->classes[$name];
         } else {
             
-            $className   = $name;
-            $packageName = self::DEFAULT_PACKAGE;
-            
-            if (strpos($className, '::') !== false) {
-                $parts = explode('::', $className);
-                
-                $className   = array_pop($parts);
-                $packageName = join('::', $parts); 
-            }
+            $className   = $this->extractTypeName($name);
+            $packageName = $this->extractPackageName($name);
             
             $class = new PHP_Depend_Code_Class($className, $line, $sourceFile);
             
-            $this->classes[$name] = $class;
+            $this->classes[$className] = $class;
             
-            $this->buildPackage($packageName)->addClass($class);
+            $this->buildPackage($packageName)->addType($class);
         }
         if ($sourceFile !== null) {
             $class->setSourceFile($sourceFile);
         }
         return $class;
+    }
+    
+    /**
+     * Builds a new new interface instance.
+     *
+     * @param string  $name       The interface name.
+     * @param integer $line       The line number for the interface declaration.
+     * @param string  $sourceFile The source file for the interface.
+     * 
+     * @return PHP_Depend_Code_Interface The created interface object.
+     */
+    public function buildInterface($name, $line = 0, $sourceFile = null)
+    {
+        $class = null;
+        if (isset($this->classes[$name])) {
+            $class   = $this->classes[$name];
+            $package = $class->getPackage();
+            
+            $package->removeType($class);
+            
+            unset($this->classes[$name]);
+            
+            $name = sprintf('%s::%s', $package->getName(), $class->getName());
+        }
+        
+        if (isset($this->interfaces[$name])) {
+            $interface = $this->interfaces[$name];
+        } else {
+            $typeName    = $this->extractTypeName($name);
+            $packageName = $this->extractPackageName($name);
+            
+            $interface = new PHP_Depend_Code_Interface($typeName, $line);
+
+            $this->interfaces[$typeName] = $interface;
+            
+            $this->buildPackage($packageName)->addType($interface);
+        }
+        
+        if ($class !== null) {
+            $this->replaceClassReferences($class, $interface);
+        }
+        
+        if ($sourceFile !== null) {
+            $interface->setSourceFile($sourceFile);
+        }
+        return $interface;
     }
     
     /**
@@ -147,7 +247,13 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      */
     public function buildMethod($name, $line)
     {
-        return new PHP_Depend_Code_Method($name, $line);
+        // Create a new method instance
+        $method = new PHP_Depend_Code_Method($name, $line);
+        
+        // Store instance an local map
+        $this->methods[] = $method;
+        
+        return $method;
     }
     
     /**
@@ -175,10 +281,14 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      */
     public function buildFunction($name, $line)
     {
-        // Create new function
-        $function = new PHP_Depend_Code_Function($name, $line);
-        // Add to default package
-        $this->defaultPackage->addFunction($function);
+        if (isset($this->functions[$name])) {
+            $function = $this->functions[$name];
+        } else {
+            // Create new function
+            $function = new PHP_Depend_Code_Function($name, $line);
+            // Add to default package
+            $this->defaultPackage->addFunction($function);
+        }
         
         return $function;
     }
@@ -206,11 +316,129 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
         $packages = $this->packages;
         
         // Remove default package if empty
-        if ($this->defaultPackage->getClasses()->count() === 0 
+        if ($this->defaultPackage->getTypes()->count() === 0  
          && $this->defaultPackage->getFunctions()->count() === 0) {
 
             unset($packages[self::DEFAULT_PACKAGE]);
         }
         return new PHP_Depend_Code_NodeIterator($packages);
+    }
+    
+    /**
+     * Extracts the type name of a qualified PHP 5.3 type identifier.
+     *
+     * <code>
+     *   $typeName = $this->extractTypeName('foo::bar::foobar');
+     *   var_dump($typeName);
+     *   // Results in:
+     *   // string(6) "foobar"
+     * </code>
+     * 
+     * @param string $qualifiedName The qualified PHP 5.3 type identifier.
+     * 
+     * @return string
+     */
+    protected function extractTypeName($qualifiedName)
+    {
+        if (($pos = strpos($qualifiedName, '::')) !== false) {
+            return substr($qualifiedName, $pos + 2);
+        }
+        return $qualifiedName;
+    }
+    
+    /**
+     * Extracts the package name of a qualified PHP 5.3 class identifier. 
+     * 
+     * If the class name doesn't contain a package identifier this method will
+     * return the default identifier. 
+     *
+     * <code>
+     *   $packageName = $this->extractPackageName('foo::bar::foobar');
+     *   var_dump($packageName);
+     *   // Results in:
+     *   // string(8) "foo::bar"
+     * 
+     *   $packageName = $this->extractPackageName('foobar');
+     *   var_dump($packageName);
+     *   // Results in:
+     *   // string(6) "global"
+     * </code>
+     * 
+     * @param string $qualifiedName The qualified PHP 5.3 class identifier.
+     * 
+     * @return string
+     */
+    protected function extractPackageName($qualifiedName)
+    {
+        if (($pos = strrpos($qualifiedName, '::')) !== false) {
+            return substr($qualifiedName, 0, $pos);
+        }
+        return self::DEFAULT_PACKAGE; 
+    }
+    
+    /**
+     * This method will replace all existing references to the given <b>$class</b>
+     * instance with the interface instance. 
+     * 
+     * <code>
+     *   $class1 = $builder->buildClass('PHP_Depend');
+     *   $class2 = $builder->buildClassOrInterface('PHP_DependI');
+     * 
+     *   $class1->addDependency($class2);
+     * 
+     *   $builder->buildInterface('PHP_DependI');
+     * 
+     *   var_dump($class->getDependencies());
+     *   // Results in
+     *   // array(1) {
+     *   //   [0]=>
+     *   //   object(PHP_Depend_Code_Interface)#1 (0) {
+     *   //   }
+     *   // }
+     * </code>
+     *
+     * @param PHP_Depend_Code_Class     $class     The old context class instance.
+     * @param PHP_Depend_Code_Interface $interface Tge new interface instance.
+     * 
+     * @return void
+     */
+    protected function replaceClassReferences(PHP_Depend_Code_Class $class,
+                                              PHP_Depend_Code_Interface $interface)
+    {
+        foreach ($this->classes as $type) {
+            foreach ($type->getDependencies() as $dependency) {
+                if ($dependency === $class) {
+                    $type->removeDependency($class);
+                    $type->addDependency($interface);
+                }
+            }
+        }
+    
+        foreach ($this->interfaces as $type) {
+            foreach ($type->getDependencies() as $dependency) {
+                if ($dependency === $class) {
+                    $type->removeDependency($class);
+                    $type->addDependency($interface);
+                }
+            }
+        }
+    
+        foreach ($this->functions as $function) {
+            foreach ($function->getDependencies() as $dependency) {
+                if ($dependency === $class) {
+                    $function->removeDependency($class);
+                    $function->addDependency($interface);
+                }
+            }
+        }
+    
+        foreach ($this->methods as $method) {
+            foreach ($method->getDependencies() as $dependency) {
+                if ($dependency === $class) {
+                    $method->removeDependency($class);
+                    $method->addDependency($interface);
+                }
+            }
+        }
     }
 }
