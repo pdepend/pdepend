@@ -48,7 +48,7 @@
 require_once 'PHP/Depend/Code/DependencyNode.php';
 
 /**
- * Represents a php function node.
+ * Represents an interface or a class type.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,18 +58,18 @@ require_once 'PHP/Depend/Code/DependencyNode.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
+abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
 {
     /**
-     * The function name.
+     * The name for this class.
      *
      * @type string
      * @var string $name
      */
-    protected $name = null;
+    protected $name = '';
     
     /**
-     * The line number with the function declaration.
+     * The line number where the class declaration starts.
      *
      * @type integer
      * @var integer $line
@@ -77,15 +77,15 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     protected $line = 0;
     
     /**
-     * The tokens for this function.
+     * The source file for this class.
      *
-     * @type array<mixed>
-     * @var array(mixed) $tokens
+     * @type string
+     * @var string $sourceFile
      */
-    protected $tokens = array();
+    protected $sourceFile = '';
     
     /**
-     * The parent package for this function.
+     * The parent package for this class.
      *
      * @type PHP_Depend_Code_Package
      * @var PHP_Depend_Code_Package $package
@@ -93,7 +93,15 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     protected $package = null;
     
     /**
-     * List of {@link PHP_Depend_Code_Type} objects this function depends on.
+     * List of {@link PHP_Depend_Code_Method} objects in this class.
+     *
+     * @type array<PHP_Depend_Code_Method>
+     * @var array(PHP_Depend_Code_Method) $methods
+     */
+    protected $methods = array();
+    
+    /**
+     * List of {@link PHP_Depend_Code_Type} objects this type depends on.
      *
      * @type array<PHP_Depend_Code_Type>
      * @var array(PHP_Depend_Code_Type) $dependencies
@@ -101,19 +109,21 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     protected $dependencies = array();
     
     /**
-     * Constructs a new function for the given <b>$name</b>.
+     * Constructs a new class for the given <b>$name</b> and <b>$sourceFile</b>.
      *
-     * @param string  $name The function name.
-     * @param integer $line The line number with the function declaration.
+     * @param string  $name       The class name.
+     * @param integer $line       The class declaration line number.
+     * @param string  $sourceFile The source file for this class.
      */
-    public function __construct($name, $line)
+    public function __construct($name, $line, $sourceFile = null)
     {
-        $this->name = $name;
-        $this->line = $line;
+        $this->name       = $name;
+        $this->line       = $line;
+        $this->sourceFile = $sourceFile;
     }
     
     /**
-     * Return the function name.
+     * Returns the class name.
      *
      * @return string
      */
@@ -123,7 +133,7 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     }
     
     /**
-     * Returns the line number with the function declaration.
+     * Returns the line number where the class declaration can be found.
      *
      * @return integer
      */
@@ -133,29 +143,74 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     }
     
     /**
-     * Returns the tokens found in the function body.
+     * Returns the source file for this class.
      *
-     * @return array(mixed)
+     * @return string
      */
-    public function getTokens()
+    public function getSourceFile()
     {
-        return $this->tokens;
+        return $this->sourceFile;
     }
     
     /**
-     * Sets the tokens found in the function body.
+     * Sets the source file for this class.
      * 
-     * @param array(mixed) $tokens The body tokens.
+     * @param string $sourceFile The class source file.
+     *
+     * @return void
+     */
+    public function setSourceFile($sourceFile)
+    {
+        $this->sourceFile = $sourceFile;
+    }
+    
+    /**
+     * Returns all {@link PHP_Depend_Code_Method} object in this class.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getMethods()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->methods);
+    }
+    
+    /**
+     * Adds the given method to this class.
+     *
+     * @param PHP_Depend_Code_Method $method A new class method.
      * 
      * @return void
      */
-    public function setTokens(array $tokens)
+    public function addMethod(PHP_Depend_Code_Method $method)
     {
-        $this->tokens = $tokens;
+        if ($method->getParent() !== null) {
+            $method->getParent()->removeMethod($method);
+        }
+        // Set this as owner class
+        $method->setParent($this);
+        // Store clas
+        $this->methods[] = $method;
     }
     
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this function depends on.
+     * Removes the given method from this class.
+     *
+     * @param PHP_Depend_Code_Method $method The method to remove.
+     * 
+     * @return void
+     */
+    public function removeMethod(PHP_Depend_Code_Method $method)
+    {
+        if (($i = array_search($method, $this->methods, true)) !== false) {
+            // Remove this as owner
+            $method->setParent(null);
+            // Remove from internal list
+            unset($this->methods[$i]);
+        }
+    }
+    
+    /**
+     * Returns all {@link PHP_Depend_Code_Type} objects this type depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -173,7 +228,7 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
      */
     public function addDependency(PHP_Depend_Code_Type $type)
     {
-        if (in_array($type, $this->dependencies, true) === false) {
+        if (array_search($type, $this->dependencies, true) === false) {
             $this->dependencies[] = $type;
         }
     }
@@ -195,7 +250,7 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     }
     
     /**
-     * Returns the parent package for this function.
+     * Returns the parent package for this class.
      *
      * @return PHP_Depend_Code_Package
      */
@@ -205,7 +260,7 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     }
     
     /**
-     * Sets the parent package for this function.
+     * Sets the parent package for this class.
      *
      * @param PHP_Depend_Code_Package $package The parent package.
      * 
@@ -217,15 +272,9 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     }
     
     /**
-     * Visitor method for node tree traversal.
+     * Returns <b>true</b> if this is an abstract class or an interface.
      *
-     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
-     *                                             implementation.
-     * 
-     * @return void
+     * @return boolean
      */
-    public function accept(PHP_Depend_Code_NodeVisitor $visitor)
-    {
-        $visitor->visitFunction($this);
-    }
+    public abstract function isAbstract();
 }

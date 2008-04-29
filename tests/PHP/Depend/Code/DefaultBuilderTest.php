@@ -101,6 +101,24 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the node build generates an unique interface instance for the
+     * same identifier.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceUnique()
+    {
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $interface1 = $builder->buildInterface('interface1', 'interface1.php');
+        $interface2 = $builder->buildInterface('interface1', 'interface1.php');
+        
+        $this->assertType('PHP_Depend_Code_Interface', $interface1);
+        $this->assertType('PHP_Depend_Code_Interface', $interface2);
+        
+        $this->assertSame($interface1, $interface2);
+    }
+    
+    /**
      * Tests the PHP_Depend_Code_Method build method.
      *
      * @return void

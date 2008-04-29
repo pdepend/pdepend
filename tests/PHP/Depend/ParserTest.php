@@ -96,14 +96,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(0, count($expected));
         
         $this->assertEquals(1, $packages['pkg1']->getFunctions()->count());
-        $this->assertEquals(1, $packages['pkg1']->getClasses()->count());
-        $this->assertFalse($packages['pkg1']->getClasses()->current()->isAbstract());
+        $this->assertEquals(1, $packages['pkg1']->getTypes()->count());
+        $this->assertFalse($packages['pkg1']->getTypes()->current()->isAbstract());
         
-        $this->assertEquals(1, $packages['pkg2']->getClasses()->count());
-        $this->assertTrue($packages['pkg2']->getClasses()->current()->isAbstract());
+        $this->assertEquals(1, $packages['pkg2']->getTypes()->count());
+        $this->assertTrue($packages['pkg2']->getTypes()->current()->isAbstract());
         
-        $this->assertEquals(1, $packages['pkg3']->getClasses()->count());
-        $this->assertTrue($packages['pkg3']->getClasses()->current()->isAbstract());
+        $this->assertEquals(1, $packages['pkg3']->getTypes()->count());
+        $this->assertTrue($packages['pkg3']->getTypes()->current()->isAbstract());
     }
     
     /**
@@ -212,7 +212,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                 
         $package = $packages->current();
         $this->assertEquals('package0', $package->getName());
-        $classes = $package->getClasses();
+        $classes = $package->getTypes();
         $this->assertEquals(1, $classes->count()); 
         $methods = $classes->current()->getMethods();
         $this->assertEquals(1, $methods->count());
@@ -241,7 +241,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals('barBug08', $function->getName());
 
         // Get class method
-        $method = $package->getClasses()
+        $method = $package->getTypes()
                           ->current()
                           ->getMethods()
                           ->current();
@@ -326,7 +326,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $packages->next();
         $packages->next();
 
-        $class = $packages->current()->getClasses()->current();
+        $class = $packages->current()->getTypes()->current();
 
         $this->assertEquals(15, $class->getLine());
     }
@@ -350,11 +350,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $packages->next();
 
         $method = $packages->current()
-                           ->getClasses()
+                           ->getTypes()
                            ->current()
                            ->getMethods()
                            ->current();
- 
+
         $this->assertEquals(16, $method->getLine());
     }
     

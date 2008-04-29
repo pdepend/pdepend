@@ -78,80 +78,80 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Package::getClasses()} method returns
+     * Tests that the {@link PHP_Depend_Code_Package::getTypes()} method returns
      * an empty {@link PHP_Depend_Code_NodeIterator}.
      *
      * @return void
      */
-    public function testGetClassNodeIterator()
+    public function testGetTypeNodeIterator()
     {
         $package = new PHP_Depend_Code_Package('package1');
-        $classes = $package->getClasses();
+        $types = $package->getTypes();
         
-        $this->assertType('PHP_Depend_Code_NodeIterator', $classes);
-        $this->assertEquals(0, $classes->count());
+        $this->assertType('PHP_Depend_Code_NodeIterator', $types);
+        $this->assertEquals(0, $types->count());
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Package::addClass()} method sets
+     * Tests that the {@link PHP_Depend_Code_Package::addType()} method sets
      * the package in the {@link PHP_Depend_Code_Class} object and it tests the
      * iterator to contain the new class.
      *
      * @return void
      */
-    public function testAddClass()
+    public function testAddType()
     {
         $package = new PHP_Depend_Code_Package('package1');
         $class   = new PHP_Depend_Code_Class('Class', 0, 'class.php');
         
         $this->assertNull($class->getPackage());
-        $package->addClass($class);
+        $package->addType($class);
         $this->assertSame($package, $class->getPackage());
-        $this->assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Package::addClass()} reparents a
+     * Tests that the {@link PHP_Depend_Code_Package::addType()} reparents a
      * class.
      *
      * @return void
      */
-    public function testAddClassReparent()
+    public function testAddTypeReparent()
     {
         $package1 = new PHP_Depend_Code_Package('package1');
         $package2 = new PHP_Depend_Code_Package('package2');
         $class    = new PHP_Depend_Code_Class('Class', 0, 'class.php');
         
-        $package1->addClass($class);
+        $package1->addType($class);
         $this->assertSame($package1, $class->getPackage());
-        $this->assertSame($class, $package1->getClasses()->current());
+        $this->assertSame($class, $package1->getTypes()->current());
         
-        $package2->addClass($class);
+        $package2->addType($class);
         $this->assertSame($package2, $class->getPackage());
-        $this->assertSame($class, $package2->getClasses()->current());
-        $this->assertEquals(0, $package1->getClasses()->count());
+        $this->assertSame($class, $package2->getTypes()->current());
+        $this->assertEquals(0, $package1->getTypes()->count());
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Package::removeClass()} method unsets
+     * Tests that the {@link PHP_Depend_Code_Package::removeType()} method unsets
      * the package in the {@link PHP_Depend_Code_Class} object and it tests the
      * iterator to contain the new class.
      *
      * @return void
      */
-    public function testRemoveClass()
+    public function testRemoveType()
     {
         $package = new PHP_Depend_Code_Package('package1');
         $class1  = new PHP_Depend_Code_Class('Class1', 0, 'class1.php');
         $class2  = new PHP_Depend_Code_Class('Class2', 0, 'class2.php');
         
-        $package->addClass($class1);
-        $package->addClass($class2);
+        $package->addType($class1);
+        $package->addType($class2);
         $this->assertSame($package, $class2->getPackage());
         
-        $package->removeClass($class2);
+        $package->removeType($class2);
         $this->assertNull($class2->getPackage());
-        $this->assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
     }
     
     /**
@@ -244,19 +244,19 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package4 = new PHP_Depend_Code_Package('package4');
         
         $class01 = new PHP_Depend_Code_Class('class01', 0, null);
-        $package0->addClass($class01);
+        $package0->addType($class01);
         
         $class11 = new PHP_Depend_Code_Class('class11', 0, null);
-        $package1->addClass($class11);
+        $package1->addType($class11);
         
         $class21 = new PHP_Depend_Code_Class('class21', 0, null);
-        $package2->addClass($class21);
+        $package2->addType($class21);
         
         $class31 = new PHP_Depend_Code_Class('class31', 0, null);
-        $package3->addClass($class31);
+        $package3->addType($class31);
         
         $class41 = new PHP_Depend_Code_Class('class41', 0, null);
-        $package4->addClass($class41);
+        $package4->addType($class41);
         
         // Cycle package2 <--> package3
         $class01->addDependency($class11);
@@ -292,19 +292,19 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package4 = new PHP_Depend_Code_Package('package4');
         
         $class01 = new PHP_Depend_Code_Class('class01', 0, null);
-        $package0->addClass($class01);
+        $package0->addType($class01);
         
         $class11 = new PHP_Depend_Code_Class('class11', 0, null);
-        $package1->addClass($class11);
+        $package1->addType($class11);
         
         $class21 = new PHP_Depend_Code_Class('class21', 0, null);
-        $package2->addClass($class21);
+        $package2->addType($class21);
         
         $class31 = new PHP_Depend_Code_Class('class31', 0, null);
-        $package3->addClass($class31);
+        $package3->addType($class31);
         
         $class41 = new PHP_Depend_Code_Class('class41', 0, null);
-        $package4->addClass($class41);
+        $package4->addType($class41);
         
         // Cycle package2 <--> package3
         // Cycle package1 --> package2 --> package3 --> package4 --> package1
@@ -335,19 +335,19 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package4 = new PHP_Depend_Code_Package('package4');
         
         $class01 = new PHP_Depend_Code_Class('class01', 0, null);
-        $package0->addClass($class01);
+        $package0->addType($class01);
         
         $class11 = new PHP_Depend_Code_Class('class11', 0, null);
-        $package1->addClass($class11);
+        $package1->addType($class11);
         
         $class21 = new PHP_Depend_Code_Class('class21', 0, null);
-        $package2->addClass($class21);
+        $package2->addType($class21);
         
         $class31 = new PHP_Depend_Code_Class('class31', 0, null);
-        $package3->addClass($class31);
+        $package3->addType($class31);
         
         $class41 = new PHP_Depend_Code_Class('class41', 0, null);
-        $package4->addClass($class41);
+        $package4->addType($class41);
 
         // package0 --> package1 --> package2 --> package3 --> package4
         $class01->addDependency($class11);
@@ -373,10 +373,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package1 = new PHP_Depend_Code_Package('package1');
         
         $class01 = new PHP_Depend_Code_Class('class01', 0, null);
-        $package0->addClass($class01);
+        $package0->addType($class01);
         
         $class11 = new PHP_Depend_Code_Class('class11', 0, null);
-        $package1->addClass($class11);
+        $package1->addType($class11);
 
         // package0 <--> package1
         $class01->addDependency($class11);
@@ -398,10 +398,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $package1 = new PHP_Depend_Code_Package('package1');
         
         $class01 = new PHP_Depend_Code_Class('class01', 0, null);
-        $package0->addClass($class01);
+        $package0->addType($class01);
         
         $class11 = new PHP_Depend_Code_Class('class11', 0, null);
-        $package1->addClass($class11);
+        $package1->addType($class11);
 
         // package0 --> package1
         $class01->addDependency($class11);
@@ -423,6 +423,5 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $this->assertNull($visitor->package);
         $package->accept($visitor);
         $this->assertSame($package, $visitor->package);
-        
     }
 }

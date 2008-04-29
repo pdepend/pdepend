@@ -45,6 +45,8 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Metrics/Type.php';
+
 /**
  * Base class for a metric class model.
  *
@@ -56,16 +58,8 @@
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metric_Class
+class PHP_Depend_Metric_Class extends PHP_Depend_Metrics_Type
 {
-    /**
-     * The code class for this metric model.
-     *
-     * @type PHP_Depend_Code_Class
-     * @var PHP_Depend_Code_Class $class
-     */
-    protected $class = null;
-    
     /**
      * Constructs a new class metric model.
      *
@@ -73,27 +67,7 @@ class PHP_Depend_Metric_Class
      */
     public function __construct(PHP_Depend_Code_Class $class)
     {
-        $this->class = $class;
-    }
-    
-    /**
-     * Returns the name of this class.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->class->getName();
-    }
-    
-    /**
-     * Returns the source file with the class declaration. 
-     *
-     * @return string
-     */
-    public function getSourceFile()
-    {
-        return $this->class->getSourceFile();
+        parent::__construct($class);
     }
     
     /**
@@ -103,6 +77,6 @@ class PHP_Depend_Metric_Class
      */
     public function getClass()
     {
-        return $this->class;
+        return $this->type;
     }
 }
