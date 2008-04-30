@@ -144,15 +144,18 @@ class PHP_Depend_Parser
                     
                 $this->className = $token[1];
 
-                $class = $this->builder->buildInterface($this->className, $token[2]);
-                $class->setSourceFile($this->tokenizer->getSourceFile());
+                $interface = $this->builder->buildInterface($this->className, $token[2]);
+                $interface->setSourceFile($this->tokenizer->getSourceFile());
+                $interface->setDocComment($comment);
                 
-                $this->parseInterfaceSignature($class);
+                $this->parseInterfaceSignature($interface);
 
-                $this->builder->buildPackage($this->package)->addType($class);
+                $this->builder->buildPackage($this->package)->addType($interface);
 
-                $this->parseTypeBody($class);
+                $this->parseTypeBody($interface);
                 $this->reset();
+                
+                $comment = null;
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_CLASS:
@@ -164,6 +167,7 @@ class PHP_Depend_Parser
                 $class = $this->builder->buildClass($this->className, $token[2]);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setAbstract($this->abstract);
+                $class->setDocComment($comment);
                 
                 $this->parseClassSignature($class);
 
@@ -171,6 +175,8 @@ class PHP_Depend_Parser
 
                 $this->parseTypeBody($class);
                 $this->reset();
+                
+                $comment = null;
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_FUNCTION:
