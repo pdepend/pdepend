@@ -77,6 +77,7 @@ class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
         );
         
         $expected = array(
+            'class_and_interface_comment.php',
             'classes.php', 
             'func_class.php', 
             'func_code.php', 
