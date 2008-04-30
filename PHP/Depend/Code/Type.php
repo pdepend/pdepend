@@ -77,6 +77,14 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
     protected $line = 0;
     
     /**
+     * The comment for this type.
+     *
+     * @type string
+     * @var string $docComment
+     */
+    protected $docComment = null;
+    
+    /**
      * The source file for this class.
      *
      * @type string
@@ -247,6 +255,26 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
             // Remove from internal list
             unset($this->dependencies[$i]);
         }
+    }
+    
+    /**
+     * Returns the doc comment for this type or <b>null</b>.
+     *
+     * @return string
+     */
+    public function getDocComment()
+    {
+        return $this->docComment;
+    }
+    
+    /**
+     * Sets the doc comment for this type.
+     *
+     * @param string $docComment The doc comment block.
+     */
+    public function setDocComment($docComment)
+    {
+        $this->docComment = $docComment;
     }
     
     /**

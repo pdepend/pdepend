@@ -400,6 +400,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->doTestParserSetsCorrectMethodOrFunctionDocComment($nodes);
     }
     
+    /**
+     * Tests that doc comment blocks are added to a method. 
+     *
+     * @return void
+     */
     public function testParserSetsCorrectMethodDocComment()
     {
         $sourceFile = dirname(__FILE__) . '/data/method_comment.php';
@@ -418,6 +423,45 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->doTestParserSetsCorrectMethodOrFunctionDocComment($nodes);
     }
     
+    /**
+     * Tests that parser sets the correct doc comment blocks for classes and 
+     * interfaces. 
+     *
+     */
+    public function testParserSetsCorrectClassOrInterfaceDocComment()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/class_and_interface_comment.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $expected = array(
+            "/**\n* Sample comment.\n*/",
+            null,
+            null,
+            "/**\n* A second comment...\n*/",
+        );
+        
+        $types = $builder->getPackages()
+                         ->current()
+                         ->getTypes();
+                         
+        foreach ($types as $type) {
+            $comment = array_shift($expected);
+            
+            $this->assertEquals($comment, $type->getDocComment());
+        }
+    }
+    
+    /**
+     * Generic comment test method.
+     *
+     * @param PHP_Depend_Code_NodeIterator $nodes The context nodes.
+     * 
+     * @return void
+     */
     protected function doTestParserSetsCorrectMethodOrFunctionDocComment(
                                             PHP_Depend_Code_NodeIterator $nodes)
     {
