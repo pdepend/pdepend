@@ -231,7 +231,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
             $this->replaceClassReferences($class, $interface);
         }
         
-        if ($sourceFile !== null) {
+        if ($sourceFile !== null && $interface->getSourceFile() === null) {
             $interface->setSourceFile($sourceFile);
         }
         return $interface;
@@ -288,6 +288,8 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
             $function = new PHP_Depend_Code_Function($name, $line);
             // Add to default package
             $this->defaultPackage->addFunction($function);
+            // Store function reference
+            $this->functions[$name] = $function;
         }
         
         return $function;
