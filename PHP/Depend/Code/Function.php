@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/DependencyNode.php';
+require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Represents a php function node.
@@ -75,6 +76,14 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
      * @var integer $line
      */
     protected $line = 0;
+    
+    /**
+     * The unique identifier for this function.
+     *
+     * @type PHP_Depend_Util_UUID
+     * @var PHP_Depend_Util_UUID $uuid
+     */
+    protected $uuid = null;
     
     /**
      * The comment for this function.
@@ -118,6 +127,8 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     {
         $this->name = $name;
         $this->line = $line;
+        
+        $this->uuid = new PHP_Depend_Util_UUID();
     }
     
     /**
@@ -128,6 +139,16 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Returns a uuid for this code node.
+     *
+     * @return string
+     */
+    public function getUUID()
+    {
+        return (string) $this->uuid;
     }
     
     /**

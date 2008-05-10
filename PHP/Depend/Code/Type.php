@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/DependencyNode.php';
+require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Represents an interface or a class type.
@@ -69,6 +70,14 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
     protected $name = '';
     
     /**
+     * The unique identifier for this function.
+     *
+     * @type PHP_Depend_Util_UUID
+     * @var PHP_Depend_Util_UUID $uuid
+     */
+    protected $uuid = null;
+    
+    /**
      * The line number where the class declaration starts.
      *
      * @type integer
@@ -90,7 +99,7 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
      * @type string
      * @var string $sourceFile
      */
-    protected $sourceFile = '';
+    protected $sourceFile = null;
     
     /**
      * The parent package for this class.
@@ -128,6 +137,8 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
         $this->name       = $name;
         $this->line       = $line;
         $this->sourceFile = $sourceFile;
+        
+        $this->uuid = new PHP_Depend_Util_UUID();
     }
     
     /**
@@ -138,6 +149,16 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Returns a uuid for this code node.
+     *
+     * @return string
+     */
+    public function getUUID()
+    {
+        return (string) $this->uuid;
     }
     
     /**
