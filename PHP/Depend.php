@@ -167,11 +167,9 @@ class PHP_Depend
         }
 
         $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
-
-        foreach ($this->nodeBuilder as $pkg) {
-            $pkg->accept($visitor);
-        }
-        $this->packages = $visitor->getPackageMetrics();
+        $result  = $visitor->analyze($this->nodeBuilder->getPackages());
+        
+        $this->packages = $result->getPackages();
         
         return $this->packages;
     }
