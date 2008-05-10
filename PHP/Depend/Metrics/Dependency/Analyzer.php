@@ -46,6 +46,9 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/PackageProviderI.php';
+require_once 'PHP/Depend/Metrics/ResultSetI.php';
 require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 
 /**
@@ -59,7 +62,11 @@ require_once 'PHP/Depend/Metrics/Dependency/Package.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_Dependency_Analyzer implements PHP_Depend_Code_NodeVisitor
+class PHP_Depend_Metrics_Dependency_Analyzer 
+    implements PHP_Depend_Code_NodeVisitor,
+               PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_PackageProviderI,
+               PHP_Depend_Metrics_ResultSetI
 {
     /**
      * Already created package instances.
@@ -94,11 +101,26 @@ class PHP_Depend_Metrics_Dependency_Analyzer implements PHP_Depend_Code_NodeVisi
     protected $metrics = null;
     
     /**
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     *
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * 
+     * @return PHP_Depend_Metrics_ResultSetI
+     */
+    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    {
+        foreach ($packages as $package) {
+            $package->accept($this);
+        }
+        return $this;
+    }
+    
+    /**
      * Returns the generated project metrics.
      *
      * @return array(string=>PHP_Depend_Metrics_Dependency_Package)
      */
-    public function getPackageMetrics()
+    public function getPackages()
     {
         if ($this->metrics !== null) {
             return $this->metrics;
