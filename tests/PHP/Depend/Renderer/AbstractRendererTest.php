@@ -106,6 +106,6 @@ abstract class PHP_Depend_Renderer_AbstractRendererTest
             $package->accept($visitor);
         }
         
-        $this->metrics = $visitor->getPackageMetrics();
+        $this->metrics = $visitor->getPackages();
     }
 }
