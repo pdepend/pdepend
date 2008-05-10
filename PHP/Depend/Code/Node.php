@@ -66,6 +66,13 @@ interface PHP_Depend_Code_Node
     function getName();
     
     /**
+     * Returns a uuid for this code node.
+     *
+     * @return string
+     */
+    function getUUID();
+    
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
