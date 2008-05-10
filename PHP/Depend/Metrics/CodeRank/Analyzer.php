@@ -46,6 +46,10 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/PackageProviderI.php';
+require_once 'PHP/Depend/Metrics/ResultSetI.php';
+require_once 'PHP/Depend/Metrics/TypeProviderI.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Type.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Package.php';
 
@@ -60,7 +64,12 @@ require_once 'PHP/Depend/Metrics/CodeRank/Package.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisitor
+class PHP_Depend_Metrics_CodeRank_Analyzer 
+    implements PHP_Depend_Code_NodeVisitor,
+               PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_PackageProviderI,
+               PHP_Depend_Metrics_ResultSetI,
+               PHP_Depend_Metrics_TypeProviderI
 {
     /**
      * The used damping factor.
@@ -78,16 +87,16 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     /**
      * The calculated class ranks.
      *
-     * @type array<PHP_Depend_Metrics_CodeRank_Class>
-     * @var array(PHP_Depend_Metrics_CodeRank_Class) $classRank
+     * @type Iterator
+     * @var Iterator $classRank
      */
     protected $classRank = null;
     
     /**
      * The found package nodes.
      *
-     * @type array
-     * @var array $packageNodes
+     * @type Iterator
+     * @var Iterator $packageNodes
      */
     protected $packageNodes = array();
     
@@ -100,11 +109,36 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     protected $packageRank = null;
     
     /**
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     *
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * 
+     * @return PHP_Depend_Metrics_ResultSetI
+     */
+    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    {
+        foreach ($packages as $package) {
+            $package->accept($this);
+        }
+        return $this;
+    }
+    
+    /**
      * Returns the package rank for all packages.
      *
-     * @return array(PHP_Depend_Metrics_CodeRank_Package)
+     * @return Iterator
      */
     public function getPackageRank()
+    {
+        return $this->getPackages();
+    }
+    
+    /**
+     * Returns the package rank for all packages.
+     *
+     * @return Iterator
+     */
+    public function getPackages()
     {
         if ($this->packageRank === null) {
             // The result class
@@ -116,11 +150,21 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
     }
     
     /**
-     * Returns the class rank for all classes.
+     * Returns the class rank for all classes and interfaces.
      *
-     * @return array(PHP_Depend_Metrics_CodeRank_Class)
+     * @return Iterator
      */
     public function getClassRank()
+    {
+        return $this->getTypes();
+    }
+    
+    /**
+     * Returns the class rank for all classes and interfaces.
+     *
+     * @return Iterator
+     */
+    public function getTypes()
     {
         if ($this->classRank === null) {
             // The result class
@@ -300,7 +344,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
      * @param array  $nodes List of nodes.
      * @param string $class The metric model class.
      * 
-     * @return array(stdClass) Code rank <b>$class</b> objects,
+     * @return Iterator Code rank <b>$class</b> objects,
      */
     protected function buildCodeRank(array $nodes, $class)
     {
@@ -316,7 +360,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer implements PHP_Depend_Code_NodeVisito
             $ranks[$name]->setReverseCodeRank($rank);
         }
 
-        return array_values($ranks);
+        return new ArrayIterator($ranks); //array_values($ranks);
     }
     
     /**

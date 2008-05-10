@@ -46,8 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Metrics/ResultSetI.php';
+
 /**
- * Base class for a metric package.
+ * Base interface for all analyzer implementations.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -58,43 +60,14 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_Package
+interface PHP_Depend_Metrics_AnalyzerI
 {
     /**
-     * The code package for this metric model.
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
-     * @type PHP_Depend_Code_Package
-     * @var PHP_Depend_Code_Package $package
-     */
-    protected $package = null;
-    
-    /**
-     * Constructs a new metric package
-     *
-     * @param PHP_Depend_Code_Package $package The associated code package.
-     */
-    public function __construct(PHP_Depend_Code_Package $package)
-    {
-        $this->package = $package;
-    }
-    
-    /**
-     * Returns the name for this package or namespace.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->package->getName();
-    }
-    
-    /**
-     * Returns the associated code package.
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * 
-     * @return PHP_Depend_Code_Package
+     * @return PHP_Depend_Metrics_ResultSetI
      */
-    public function getPackage()
-    {
-        return $this->package;
-    }
+    function analyze(PHP_Depend_Code_NodeIterator $packages);
 }
