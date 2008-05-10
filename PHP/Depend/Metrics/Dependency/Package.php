@@ -40,7 +40,7 @@
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version   SVN: $Id$
  * @link      http://www.manuel-pichler.de/
  */
