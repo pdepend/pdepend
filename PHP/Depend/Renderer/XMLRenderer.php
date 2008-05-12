@@ -137,14 +137,14 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
             $cc = $pkg->appendChild($dom->createElement('ConcreteClasses'));
             foreach ($metric->getConcreteClasses() as $class) {
                 $c = $cc->appendChild($dom->createElement('Class'));
-                $c->setAttribute('sourceFile', $class->getSourceFile());
+                $c->setAttribute('sourceFile', (string) $class->getSourceFile());
                 $c->appendChild($dom->createTextNode($class->getName()));
             }
            
             $ac = $pkg->appendChild($dom->createElement('AbstractClasses'));
             foreach ($metric->getAbstractClasses() as $class) {
                 $c = $ac->appendChild($dom->createElement('Class'));
-                $c->setAttribute('sourceFile', $class->getSourceFile());
+                $c->setAttribute('sourceFile', (string) $class->getSourceFile());
                 $c->appendChild($dom->createTextNode($class->getName()));
             }
             

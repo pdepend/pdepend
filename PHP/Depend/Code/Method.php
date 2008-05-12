@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Function.php';
+require_once 'PHP/Depend/Code/AbstractCallable.php';
 
 /**
  * Represents a php method node.
@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Code/Function.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Method extends PHP_Depend_Code_Function
+class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
 {
     /**
      * The parent type object.

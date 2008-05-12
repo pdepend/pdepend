@@ -94,14 +94,14 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     }
     
     /**
-     * Tests that {@link PHP_Depend_Code_Function#getLine()} works as expected.
+     * Tests that {@link PHP_Depend_Code_Function#getStartLine()} works as expected.
      *
      * @return void
      */
-    public function testGetLineNumber()
+    public function testGetStartLineNumber()
     {
         $function = new PHP_Depend_Code_Function('function1', 23);
-        $this->assertEquals(23, $function->getLine());
+        $this->assertEquals(23, $function->getStartLine());
     }
     
     /**
@@ -137,6 +137,16 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
         $this->assertNull($visitor->function);
         $function->accept($visitor);
         $this->assertSame($function, $visitor->function);
+    }
+    
+    /**
+     * Creates an abstract item instance.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    protected function createItem()
+    {
+        return new PHP_Depend_Code_Function('func', 0);
     }
     
     /**

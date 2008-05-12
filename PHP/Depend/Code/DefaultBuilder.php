@@ -142,21 +142,19 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      *   $builder->buildClassOrInterface('PHP_Depend');
      * </code>
      *
-     * @param string  $name       The class name.
-     * @param integer $line       The line number for the class declaration.
-     * @param string  $sourceFile The source file for the class.
+     * @param string $name The class name.
      * 
      * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface 
      *         The created class or interface instance.
      */
-    public function buildClassOrInterface($name, $line = 0, $sourceFile = null)
+    public function buildClassOrInterface($name)
     {
         if (isset($this->classes[$name])) {
             $instance = $this->classes[$name];
         } else if (isset($this->interfaces[$name])) {
             $instance = $this->interfaces[$name];
         } else {
-            $instance = $this->buildClass($name, $line, $sourceFile);
+            $instance = $this->buildClass($name);
         }
         return $instance;
     }
@@ -164,13 +162,12 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     /**
      * Builds a new package instance.
      *
-     * @param string  $name       The class name.
-     * @param integer $line       The line number for the class declaration.
-     * @param string  $sourceFile The source file for the class.
+     * @param string  $name The class name.
+     * @param integer $line The line number for the class declaration.
      * 
      * @return PHP_Depend_Code_Class The created class object.
      */
-    public function buildClass($name, $line = 0, $sourceFile = null)
+    public function buildClass($name, $line = 0)
     {
         if (isset($this->classes[$name])) {
             $class = $this->classes[$name];
@@ -179,14 +176,11 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
             $className   = $this->extractTypeName($name);
             $packageName = $this->extractPackageName($name);
             
-            $class = new PHP_Depend_Code_Class($className, $line, $sourceFile);
+            $class = new PHP_Depend_Code_Class($className, $line);
             
             $this->classes[$className] = $class;
             
             $this->buildPackage($packageName)->addType($class);
-        }
-        if ($sourceFile !== null) {
-            $class->setSourceFile($sourceFile);
         }
         return $class;
     }
@@ -194,13 +188,12 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     /**
      * Builds a new new interface instance.
      *
-     * @param string  $name       The interface name.
-     * @param integer $line       The line number for the interface declaration.
-     * @param string  $sourceFile The source file for the interface.
+     * @param string  $name The interface name.
+     * @param integer $line The line number for the interface declaration.
      * 
      * @return PHP_Depend_Code_Interface The created interface object.
      */
-    public function buildInterface($name, $line = 0, $sourceFile = null)
+    public function buildInterface($name, $line = 0)
     {
         $class = null;
         if (isset($this->classes[$name])) {
@@ -231,9 +224,6 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
             $this->replaceClassReferences($class, $interface);
         }
         
-        if ($sourceFile !== null && $interface->getSourceFile() === null) {
-            $interface->setSourceFile($sourceFile);
-        }
         return $interface;
     }
     
@@ -245,7 +235,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      * 
      * @return PHP_Depend_Code_Method The created class method object.
      */
-    public function buildMethod($name, $line)
+    public function buildMethod($name, $line = 0)
     {
         // Create a new method instance
         $method = new PHP_Depend_Code_Method($name, $line);
@@ -274,22 +264,30 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     /**
      * Builds a new function instance.
      *
-     * @param string  $name The function name.
-     * @param integer $line The line number with the function declaration.
+     * @param string               $name       The function name.
+     * @param integer              $line       The line number with the function 
+     *                                         declaration.
+     * @param PHP_Depend_Code_File $sourceFile The source file for the function.
      * 
      * @return PHP_Depend_Code_Function The function instance.
      */
-    public function buildFunction($name, $line)
+    public function buildFunction($name, 
+                                  $line = 0, 
+                                  PHP_Depend_Code_File $sourceFile = null)
     {
         if (isset($this->functions[$name])) {
             $function = $this->functions[$name];
         } else {
             // Create new function
-            $function = new PHP_Depend_Code_Function($name, $line);
+            $function = new PHP_Depend_Code_Function($name, $line, $sourceFile);
             // Add to default package
             $this->defaultPackage->addFunction($function);
             // Store function reference
             $this->functions[$name] = $function;
+        }
+        
+        if ($sourceFile !== null && $function->getSourceFile() === null) {
+            $function->setSourceFile($sourceFile);
         }
         
         return $function;
