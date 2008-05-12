@@ -48,6 +48,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Code/File.php';
 
 /**
  * Test case implementation for the default node builder implementation.
@@ -70,8 +71,8 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     public function testBuildClassUnique()
     {
         $builder = new PHP_Depend_Code_DefaultBuilder();
-        $class1  = $builder->buildClass('clazz1', 'clazz1.php');
-        $class2  = $builder->buildClass('clazz1', 'clazz1.php');
+        $class1  = $builder->buildClass('clazz1');
+        $class2  = $builder->buildClass('clazz1');
         
         $this->assertType('PHP_Depend_Code_Class', $class1);
         $this->assertType('PHP_Depend_Code_Class', $class2);
@@ -87,11 +88,11 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
      */
     public function testBuildClassDefaultPackage()
     {
-        $defaultPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE; 
-        
+        $defaultPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+
         $builder = new PHP_Depend_Code_DefaultBuilder();
-        $class1  = $builder->buildClass('clazz1', 0, 'clazz1.php');
-        $class2  = $builder->buildClass('clazz2', 0, 'clazz2.php');
+        $class1  = $builder->buildClass('clazz1');
+        $class2  = $builder->buildClass('clazz2');
         
         $this->assertNotNull($class1->getPackage());
         $this->assertNotNull($class2->getPackage());
@@ -109,8 +110,8 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     public function testBuildInterfaceUnique()
     {
         $builder    = new PHP_Depend_Code_DefaultBuilder();
-        $interface1 = $builder->buildInterface('interface1', 'interface1.php');
-        $interface2 = $builder->buildInterface('interface1', 'interface1.php');
+        $interface1 = $builder->buildInterface('interface1');
+        $interface2 = $builder->buildInterface('interface1');
         
         $this->assertType('PHP_Depend_Code_Interface', $interface1);
         $this->assertType('PHP_Depend_Code_Interface', $interface2);
@@ -221,38 +222,6 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that build interface updates the source file information for null
-     * values.
-     *
-     * @return void
-     */
-    public function testBuildInterfaceSetsSourceFileInformationForNull()
-    {
-        $builder   = new PHP_Depend_Code_DefaultBuilder();
-        $interface = $builder->buildInterface('FooBar');
-        
-        $this->assertNull($interface->getSourceFile());
-        $builder->buildInterface('FooBar', 0, 'HelloWorld.php');
-        $this->assertEquals('HelloWorld.php', $interface->getSourceFile());
-    }
-    
-    /**
-     * Tests that the build interface method doesn't update an existing source
-     * file info.
-     *
-     * @return void
-     */
-    public function testBuildInterfaceDoesntSetSourceFileInformationForNotNullValues()
-    {
-        $builder   = new PHP_Depend_Code_DefaultBuilder();
-        $interface = $builder->buildInterface('FooBar', 0, 'FooBar.php');
-        
-        $this->assertEquals('FooBar.php', $interface->getSourceFile());
-        $builder->buildInterface('FooBar', 0, 'HelloWorld.php');
-        $this->assertEquals('FooBar.php', $interface->getSourceFile());
-    }
-    
-    /**
      * Tests the PHP_Depend_Code_Method build method.
      *
      * @return void
@@ -359,5 +328,42 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         
         $this->assertSame($function1->getPackage(), $function2->getPackage());
         $this->assertEquals($defaultPackage, $function1->getPackage()->getName());
+    }
+    
+    /**
+     * Tests that build function updates the source file information for null
+     * values.
+     *
+     * @return void
+     */
+    public function testBuildFunctionSetsSourceFileInformationForNull()
+    {
+        $file = new PHP_Depend_Code_File('FooBar.php');
+        
+        $builder  = new PHP_Depend_Code_DefaultBuilder();
+        $function = $builder->buildFunction('foobar');
+        
+        $this->assertNull($function->getSourceFile());
+        $builder->buildFunction('foobar', 0, $file);
+        $this->assertSame($file, $function->getSourceFile());
+    }
+    
+    /**
+     * Tests that the build function method doesn't update an existing source
+     * file info.
+     *
+     * @return void
+     */
+    public function testBuildFunctionDoesntSetSourceFileInformationForNotNullValues()
+    {
+        $file1 = new PHP_Depend_Code_File('FooBar.php');
+        $file2 = new PHP_Depend_Code_File('HelloWorld.php');
+        
+        $builder  = new PHP_Depend_Code_DefaultBuilder();
+        $function = $builder->buildFunction('foobar', 0, $file1);
+        
+        $this->assertSame($file1, $function->getSourceFile());
+        $builder->buildFunction('foobar', 0, $file2);
+        $this->assertSame($file1, $function->getSourceFile());
     }
 }
