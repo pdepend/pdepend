@@ -45,8 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/DependencyNode.php';
-require_once 'PHP/Depend/Util/UUID.php';
+require_once 'PHP/Depend/Code/AbstractCallable.php';
 
 /**
  * Represents a php function node.
@@ -59,48 +58,8 @@ require_once 'PHP/Depend/Util/UUID.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
-{
-    /**
-     * The function name.
-     *
-     * @type string
-     * @var string $name
-     */
-    protected $name = null;
-    
-    /**
-     * The line number with the function declaration.
-     *
-     * @type integer
-     * @var integer $line
-     */
-    protected $line = 0;
-    
-    /**
-     * The unique identifier for this function.
-     *
-     * @type PHP_Depend_Util_UUID
-     * @var PHP_Depend_Util_UUID $uuid
-     */
-    protected $uuid = null;
-    
-    /**
-     * The comment for this function.
-     *
-     * @type string
-     * @var string $docComment
-     */
-    protected $docComment = null;
-    
-    /**
-     * The tokens for this function.
-     *
-     * @type array<mixed>
-     * @var array(mixed) $tokens
-     */
-    protected $tokens = array();
-    
+class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
+{   
     /**
      * The parent package for this function.
      *
@@ -108,140 +67,6 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
      * @var PHP_Depend_Code_Package $package
      */
     protected $package = null;
-    
-    /**
-     * List of {@link PHP_Depend_Code_Type} objects this function depends on.
-     *
-     * @type array<PHP_Depend_Code_Type>
-     * @var array(PHP_Depend_Code_Type) $dependencies
-     */
-    protected $dependencies = array();
-    
-    /**
-     * Constructs a new function for the given <b>$name</b>.
-     *
-     * @param string  $name The function name.
-     * @param integer $line The line number with the function declaration.
-     */
-    public function __construct($name, $line)
-    {
-        $this->name = $name;
-        $this->line = $line;
-        
-        $this->uuid = new PHP_Depend_Util_UUID();
-    }
-    
-    /**
-     * Return the function name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * Returns a uuid for this code node.
-     *
-     * @return string
-     */
-    public function getUUID()
-    {
-        return (string) $this->uuid;
-    }
-    
-    /**
-     * Returns the line number with the function declaration.
-     *
-     * @return integer
-     */
-    public function getLine()
-    {
-        return $this->line;
-    }
-    
-    /**
-     * Returns the tokens found in the function body.
-     *
-     * @return array(mixed)
-     */
-    public function getTokens()
-    {
-        return $this->tokens;
-    }
-    
-    /**
-     * Sets the tokens found in the function body.
-     * 
-     * @param array(mixed) $tokens The body tokens.
-     * 
-     * @return void
-     */
-    public function setTokens(array $tokens)
-    {
-        $this->tokens = $tokens;
-    }
-    
-    /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this function depends on.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getDependencies()
-    {
-        return new PHP_Depend_Code_NodeIterator($this->dependencies);
-    }
-    
-    /**
-     * Adds the given {@link PHP_Depend_Code_Type} object as dependency.
-     *
-     * @param PHP_Depend_Code_Type $type A type this function depends on.
-     * 
-     * @return void
-     */
-    public function addDependency(PHP_Depend_Code_Type $type)
-    {
-        if (in_array($type, $this->dependencies, true) === false) {
-            $this->dependencies[] = $type;
-        }
-    }
-    
-    /**
-     * Removes the given {@link PHP_Depend_Code_Type} object from the dependency
-     * list.
-     *
-     * @param PHP_Depend_Code_Type $type A type to remove.
-     * 
-     * @return void
-     */
-    public function removeDependency(PHP_Depend_Code_Type $type)
-    {
-        if (($i = array_search($type, $this->dependencies, true)) !== false) {
-            // Remove from internal list
-            unset($this->dependencies[$i]);
-        }
-    }
-    
-    /**
-     * Returns the doc comment for this function or <b>null</b>.
-     *
-     * @return string
-     */
-    public function getDocComment()
-    {
-        return $this->docComment;
-    }
-    
-    /**
-     * Sets the doc comment for this function.
-     *
-     * @param string $docComment The doc comment block.
-     */
-    public function setDocComment($docComment)
-    {
-        $this->docComment = $docComment;
-    }
     
     /**
      * Returns the parent package for this function.

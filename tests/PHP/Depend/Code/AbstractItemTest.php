@@ -45,12 +45,10 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
-
-require_once 'PHP/Depend/Code/Class.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Abstract base test case for all node types that can handle dependencies.
+ * Base test case for abstract item implementations.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -60,74 +58,104 @@ require_once 'PHP/Depend/Code/Class.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Code_AbstractItemTest
+abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
 {
+    
     /**
-     * Tests that a new {@link PHP_Depend_Code_DependencyNode} instance returns 
-     * an empty {@link PHP_Depend_Code_NodeIterator} for dependencies.
+     * Tests that build interface updates the source file information for null
+     * values.
      *
      * @return void
      */
-    public function testGetDependencyNodeIterator()
+    public function testSetSourceFileInformationForNullValue()
     {
-        $node         = $this->createDependencyNode();
-        $dependencies = $node->getDependencies();
+        $item = $this->createItem();
+        $file = new PHP_Depend_Code_File('FooBar.php');
         
-        $this->assertType('PHP_Depend_Code_NodeIterator', $dependencies);
-        $this->assertEquals(0, $dependencies->count());
+        $this->assertNull($item->getSourceFile());
+        $item->setSourceFile($file);
+        $this->assertSame($file, $item->getSourceFile());
     }
     
     /**
-     * Tests that the add {@link PHP_Depend_Code_DependencyNode::addDependency()} 
-     * adds a new depended object to the internal list, but it should accept each
-     * type only once.
-     * 
-     * @return void
+     * Tests that the build interface method doesn't update an existing source
+     * file info.
      *
+     * @return void
      */
-    public function testAddDependency()
+    public function testDoesntSetSourceFileInformationForNotNullValue()
     {
-        $node = $this->createDependencyNode();
-        $dep0 = new PHP_Depend_Code_Class('dep0', 0, 'dep0.php');
-        $dep1 = new PHP_Depend_Code_Class('dep1', 0, 'dep1.php');
+        $item = $this->createItem();
+        $file = new PHP_Depend_Code_File('FooBar.php');
         
-        $this->assertEquals(0, $node->getDependencies()->count());
-        $node->addDependency($dep0);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->addDependency($dep0);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->addDependency($dep1);
-        $this->assertEquals(2, $node->getDependencies()->count());
+        $item->setSourceFile($file);
+        $item->setSourceFile(new PHP_Depend_Code_File('HelloWorld.php'));
+        
+        $this->assertSame($file, $item->getSourceFile());
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_DependencyNode::removeDependency()} 
-     * method works as expected.
+     * Tests that the start line number is set correct.
      *
      * @return void
      */
-    public function testRemoveDependency()
+    public function testSetStartLineNumberForZeroValue()
     {
-        $node = $this->createDependencyNode();
-        $dep0 = new PHP_Depend_Code_Class('dep0', 0, 'dep0.php');
-        $dep1 = new PHP_Depend_Code_Class('dep1', 0, 'dep1.php');
+        $item = $this->createItem();
         
-        $this->assertEquals(0, $node->getDependencies()->count());
-        $node->addDependency($dep0);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->addDependency($dep1);
-        $this->assertEquals(2, $node->getDependencies()->count());
-        
-        $node->removeDependency($dep1);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->removeDependency($dep0);
-        $this->assertEquals(0, $node->getDependencies()->count());
-    } 
+        $this->assertEquals(0, $item->getStartLine());
+        $item->setStartLine(42);
+        $this->assertEquals(42, $item->getStartLine());
+    }
     
     /**
-     * Generates a node instance that can handle dependencies.
+     * Tests that a previous set start line number is not replaced by a second
+     * value.
      *
-     * @return PHP_Depend_Code_DependencyNode
+     * @return void
      */
-    protected abstract function createDependencyNode();
+    public function testDoesntSetStartLineNumberForNonZeroValue()
+    {
+        $item = $this->createItem();
+        
+        $item->setStartLine(23);
+        $item->setStartLine(42);
+        $this->assertEquals(23, $item->getStartLine());
+    }
+    
+    /**
+     * Tests that the end line number is set correct.
+     *
+     * @return void
+     */
+    public function testSetEndLineNumberForZeroValue()
+    {
+        $item = $this->createItem();
+        
+        $this->assertEquals(0, $item->getEndLine());
+        $item->setEndLine(42);
+        $this->assertEquals(42, $item->getEndLine());
+    }
+    
+    /**
+     * Tests that a previous set ebd line number is not replaced by a second
+     * value.
+     *
+     * @return void
+     */
+    public function testDoesntSetEndLineNumberForNonZeroValue()
+    {
+        $item = $this->createItem();
+        
+        $item->setEndLine(23);
+        $item->setEndLine(42);
+        $this->assertEquals(23, $item->getEndLine());
+    }
+    
+    /**
+     * Creates an abstract item instance.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    protected abstract function createItem();
 }

@@ -80,36 +80,32 @@ interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
      *   $builder->buildClassOrInterface('PHP_Depend');
      * </code>
      *
-     * @param string  $name       The class name.
-     * @param integer $line       The line number for the class declaration.
-     * @param string  $sourceFile The source file for the class.
+     * @param string $name The class name.
      * 
      * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface 
      *         The created class or interface instance.
      */
-    function buildClassOrInterface($name, $line = 0, $sourceFile = null);
+    function buildClassOrInterface($name);
     
     /**
      * Builds a new code class instance.
      *
-     * @param string  $name       The class name.
-     * @param integer $line       The line number for the class declaration.
-     * @param string  $sourceFile The source file for the class.
+     * @param string  $name The class name.
+     * @param integer $line The line number for the class declaration.
      * 
      * @return PHP_Depend_Code_Class The created class object.
      */
-    function buildClass($name, $line = 0, $sourceFile = null);
+    function buildClass($name, $line = 0);
     
     /**
      * Builds a new new interface instance.
      *
-     * @param string  $name       The interface name.
-     * @param integer $line       The line number for the interface declaration.
-     * @param string  $sourceFile The source file for the interface.
+     * @param string  $name The interface name.
+     * @param integer $line The line number for the interface declaration.
      * 
      * @return PHP_Depend_Code_Interface The created interface object.
      */
-    function buildInterface($name, $line = 0, $sourceFile = null);
+    function buildInterface($name, $line = 0);
     
     /**
      * Builds a new package instance.
@@ -128,15 +124,17 @@ interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
      * 
      * @return PHP_Depend_Code_Method The created class method object.
      */
-    function buildMethod($name, $line);
+    function buildMethod($name, $line = 0);
     
     /**
      * Builds a new function instance.
      *
-     * @param string  $name The function name.
-     * @param integer $line The line number with the function declaration.
+     * @param string               $name       The function name.
+     * @param integer              $line       The line number with the function 
+     *                                         declaration.
+     * @param PHP_Depend_Code_File $sourceFile The source file for the function.
      * 
      * @return PHP_Depend_Code_Function The function instance
      */
-    function buildFunction($name, $line);
+    function buildFunction($name, $line = 0, PHP_Depend_Code_File $sourceFile = null);
 }

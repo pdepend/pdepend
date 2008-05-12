@@ -109,7 +109,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE
         );
         
-        $this->assertEquals($sourceFile, $tokenizer->getSourceFile());
+        $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
         
         foreach ($tokens as $token) {
             $t = $tokenizer->next();
@@ -157,7 +157,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_Code_Tokenizer::T_CLOSE_TAG, 16)
         );
         
-        $this->assertEquals($sourceFile, $tokenizer->getSourceFile());
+        $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
         
         while (($token = $tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
             list($tok, $line) = array_shift($tokens);
@@ -212,7 +212,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_Code_Tokenizer::T_CLOSE_TAG
         );
         
-        $this->assertEquals($sourceFile, $tokenizer->getSourceFile());
+        $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
         
         while ($tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_EOF) {
             $token = $tokenizer->next();
