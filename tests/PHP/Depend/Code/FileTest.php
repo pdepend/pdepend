@@ -45,13 +45,12 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
-require_once dirname(__FILE__) . '/TestNodeVisitor.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Method.php';
+require_once 'PHP/Depend/Code/File.php';
 
 /**
- * Test case implementation for the PHP_Depend_Code_Method class.
+ * Test case for the code file class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -61,69 +60,18 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
+class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the ctor and the {@link PHP_Depend_Code_Method::getName()} method.
+     * Tests the {@link PHP_Depend_Code_File#getLoc()} method.
      *
      * @return void
      */
-    public function testCreateNewMethodInstance()
+    public function testGetLoc()
     {
-        $method = new PHP_Depend_Code_Method('method', 0);
-        $this->assertEquals('method', $method->getName());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Depend_Code_Method::getParent()} returns as
-     * default value <b>null</b> and that the package could be set and unset.
-     *
-     * @return void
-     */
-    public function testGetSetParent()
-    {
-        $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
-        $method = new PHP_Depend_Code_Method('method', 0);
+        $file = new PHP_Depend_Code_File(dirname(__FILE__) . '/../data/mixed_code.php');
         
-        $this->assertNull($method->getParent());
-        $method->setParent($class);
-        $this->assertSame($class, $method->getParent());
-        $method->setParent(null);
-        $this->assertNull($method->getParent());
-    }
-    
-    /**
-     * Tests the visitor accept method.
-     *
-     * @return void
-     */
-    public function testVisitorAccept()
-    {
-        $method  = new PHP_Depend_Code_Method('method', 0);
-        $visitor = new PHP_Depend_Code_TestNodeVisitor();
-        
-        $this->assertNull($visitor->method);
-        $method->accept($visitor);
-        $this->assertSame($method, $visitor->method);
-    }
-    
-    /**
-     * Creates an abstract item instance.
-     *
-     * @return PHP_Depend_Code_AbstractItem
-     */
-    protected function createItem()
-    {
-        return new PHP_Depend_Code_Method('method', 0);
-    }
-    
-    /**
-     * Generates a node instance that can handle dependencies.
-     *
-     * @return PHP_Depend_Code_DependencyNode
-     */
-    protected function createDependencyNode()
-    {
-        return new PHP_Depend_Code_Method('method', 0);
+        $this->assertType('array', $file->getLoc());
+        $this->assertEquals(49, count($file->getLoc()));
     }
 }

@@ -45,6 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/File.php';
 require_once 'PHP/Depend/Code/Tokenizer.php';
 
 /**
@@ -230,10 +231,10 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     );
     
     /**
-     * The name of the source file.
+     * The source file instance.
      *
-     * @type string
-     * @var string $sourceFile
+     * @type PHP_Depend_Code_File
+     * @var PHP_Depend_Code_File $sourceFile
      */
     protected $sourceFile = '';
     
@@ -268,7 +269,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      */
     public function __construct($sourceFile)
     {
-        $this->sourceFile = $sourceFile;
+        $this->sourceFile = new PHP_Depend_Code_File($sourceFile);
         
         $this->tokenize();
     }
@@ -319,17 +320,8 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      */
     protected function tokenize()
     {
-        $source = "";
-        $lines  = preg_split('#(\r\n|\n|\r)#', file_get_contents($this->sourceFile));
-        foreach ($lines as $line) {
-            $source .= trim($line) . "\n";
-        }
-
-        // Normalize whitespace characters
-        $source = preg_replace(array('/\t+/', '/ +/' ), ' ', $source);
-        
         $line = 1;
-        foreach (token_get_all($source) as $token) {
+        foreach (token_get_all($this->sourceFile->getSource()) as $token) {
             $newToken = null;
             if (is_string($token)) {
                 if (isset(self::$literalMap[$token])) {

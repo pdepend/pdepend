@@ -45,6 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/AbstractItem.php';
 require_once 'PHP/Depend/Code/DependencyNode.php';
 require_once 'PHP/Depend/Util/UUID.php';
 
@@ -59,48 +60,10 @@ require_once 'PHP/Depend/Util/UUID.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
-{
-    /**
-     * The name for this class.
-     *
-     * @type string
-     * @var string $name
-     */
-    protected $name = '';
-    
-    /**
-     * The unique identifier for this function.
-     *
-     * @type PHP_Depend_Util_UUID
-     * @var PHP_Depend_Util_UUID $uuid
-     */
-    protected $uuid = null;
-    
-    /**
-     * The line number where the class declaration starts.
-     *
-     * @type integer
-     * @var integer $line
-     */
-    protected $line = 0;
-    
-    /**
-     * The comment for this type.
-     *
-     * @type string
-     * @var string $docComment
-     */
-    protected $docComment = null;
-    
-    /**
-     * The source file for this class.
-     *
-     * @type string
-     * @var string $sourceFile
-     */
-    protected $sourceFile = null;
-    
+abstract class PHP_Depend_Code_Type
+       extends PHP_Depend_Code_AbstractItem 
+    implements PHP_Depend_Code_DependencyNode
+{   
     /**
      * The parent package for this class.
      *
@@ -124,74 +87,6 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
      * @var array(PHP_Depend_Code_Type) $dependencies
      */
     protected $dependencies = array();
-    
-    /**
-     * Constructs a new class for the given <b>$name</b> and <b>$sourceFile</b>.
-     *
-     * @param string  $name       The class name.
-     * @param integer $line       The class declaration line number.
-     * @param string  $sourceFile The source file for this class.
-     */
-    public function __construct($name, $line, $sourceFile = null)
-    {
-        $this->name       = $name;
-        $this->line       = $line;
-        $this->sourceFile = $sourceFile;
-        
-        $this->uuid = new PHP_Depend_Util_UUID();
-    }
-    
-    /**
-     * Returns the class name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * Returns a uuid for this code node.
-     *
-     * @return string
-     */
-    public function getUUID()
-    {
-        return (string) $this->uuid;
-    }
-    
-    /**
-     * Returns the line number where the class declaration can be found.
-     *
-     * @return integer
-     */
-    public function getLine()
-    {
-        return $this->line;
-    }
-    
-    /**
-     * Returns the source file for this class.
-     *
-     * @return string
-     */
-    public function getSourceFile()
-    {
-        return $this->sourceFile;
-    }
-    
-    /**
-     * Sets the source file for this class.
-     * 
-     * @param string $sourceFile The class source file.
-     *
-     * @return void
-     */
-    public function setSourceFile($sourceFile)
-    {
-        $this->sourceFile = $sourceFile;
-    }
     
     /**
      * Returns all {@link PHP_Depend_Code_Method} object in this class.
@@ -276,26 +171,6 @@ abstract class PHP_Depend_Code_Type implements PHP_Depend_Code_DependencyNode
             // Remove from internal list
             unset($this->dependencies[$i]);
         }
-    }
-    
-    /**
-     * Returns the doc comment for this type or <b>null</b>.
-     *
-     * @return string
-     */
-    public function getDocComment()
-    {
-        return $this->docComment;
-    }
-    
-    /**
-     * Sets the doc comment for this type.
-     *
-     * @param string $docComment The doc comment block.
-     */
-    public function setDocComment($docComment)
-    {
-        $this->docComment = $docComment;
     }
     
     /**

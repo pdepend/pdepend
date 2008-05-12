@@ -266,7 +266,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $packages->next();
         
         $function = $packages->current()->getFunctions()->current();
-        $this->assertEquals(7, $function->getLine());
+        $this->assertEquals(7, $function->getStartLine());
     }
     
     /**
@@ -309,26 +309,94 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the parser sets the correct line number for a class.
+     * Tests that the parser sets the correct start line number for a class.
      *
      * @return void
      */
-    public function testParserSetsCorrectClassLineNumber()
+    public function testParserSetsCorrectClassStartLineNumber()
     {
-        $sourceFile = dirname(__FILE__) . '/data/mixed_code.php';
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
-        $builder    = new PHP_Depend_Code_DefaultBuilder();
-        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        $this->assertEquals(29, $this->getMixedCodeClass()->getStartLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct end line number for a class.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectClassEndLineNumber()
+    {
+        $this->assertEquals(36, $this->getMixedCodeClass()->getEndLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct start line number for class methods.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectClassMethodStartLineNumbers()
+    {
+        $methods = $this->getMixedCodeClassMethods();
         
-        $parser->parse();
+        $this->assertEquals(30, $methods->current()->getStartLine());
+        $methods->next();
+        $this->assertEquals(31, $methods->current()->getStartLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct end line number for class methods.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectClassMethodEndLineNumbers()
+    {
+        $methods = $this->getMixedCodeClassMethods();
         
-        $packages = $builder->getPackages();
-        $packages->next();
-        $packages->next();
-
-        $class = $packages->current()->getTypes()->current();
-
-        $this->assertEquals(15, $class->getLine());
+        $this->assertEquals(30, $methods->current()->getEndLine());
+        $methods->next();
+        $this->assertEquals(35, $methods->current()->getEndLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct start line number for an interface.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectInterfaceStartLineNumber()
+    {
+        $this->assertEquals(15, $this->getMixedCodeInterface()->getStartLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct end line number for an interface.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectInterfaceEndLineNumber()
+    {
+        $this->assertEquals(17, $this->getMixedCodeInterface()->getEndLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct start line number for interface 
+     * methods.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectInterfaceMethodStartLineNumbers()
+    {
+        $methods = $this->getMixedCodeInterfaceMethods();
+        $this->assertEquals(16, $methods->current()->getStartLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct end line number for interface methods.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectInterfaceMethodEndLineNumbers()
+    {
+        $methods = $this->getMixedCodeInterfaceMethods();
+        $this->assertEquals(16, $methods->current()->getEndLine());
     }
     
     /**
@@ -355,7 +423,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                            ->getMethods()
                            ->current();
 
-        $this->assertEquals(16, $method->getLine());
+        $this->assertEquals(16, $method->getStartLine());
     }
     
     /**
@@ -453,6 +521,70 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             
             $this->assertEquals($comment, $type->getDocComment());
         }
+    }
+    
+    /**
+     * Returns all packages in the mixed code example.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    protected function parseMixedCode()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/mixed_code.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        return $builder->getPackages();
+    }
+    
+    /**
+     * Returns an interface instance from the mixed code test file.
+     *
+     * @return PHP_Depend_Code_Interface
+     */
+    protected function getMixedCodeInterface()
+    {
+        $packages = $this->parseMixedCode();
+        $packages->next();
+        $packages->next();
+
+        return $packages->current()->getTypes()->current();
+    }
+    
+    /**
+     * Returns the methods of an interface from the mixed code test file.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    protected function getMixedCodeInterfaceMethods()
+    {
+        return $this->getMixedCodeInterface()->getMethods();
+    }
+    
+    /**
+     * Returns a class instance from the mixed code test file.
+     *
+     * @return PHP_Depend_Code_Class
+     */
+    protected function getMixedCodeClass()
+    {
+        $packages = $this->parseMixedCode();
+        $packages->next();
+        
+        return $packages->current()->getTypes()->current();
+    }
+    
+    /**
+     * Returns the methods of a class from the mixed code test file.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    protected function getMixedCodeClassMethods()
+    {
+        return $this->getMixedCodeClass()->getMethods();
     }
     
     /**
