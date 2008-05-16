@@ -45,19 +45,12 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Metrics_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/CodeRank/AnalyzerTest.php';
-require_once dirname(__FILE__) . '/Dependency/AnalyzerTest.php';
-require_once dirname(__FILE__) . '/Hierarchy/AnalyzerTest.php';
+require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
 
 /**
- * Main test suite for the PHP_Depend_Metrics package.
+ * Test case for the hierarchy analyzer.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -67,34 +60,55 @@ require_once dirname(__FILE__) . '/Hierarchy/AnalyzerTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_AllTests
+class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * The used node builder.
+     *
+     * @type PHP_Depend_Code_DefaultBuilder
+     * @var PHP_Depend_Code_DefaultBuilder $builder
+     */
+    protected $builder = null;
+    
+    /**
+     * Sets up the code builder.
      *
      * @return void
      */
-    public static function main()
+    protected function setUp()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        parent::setUp();
+        
+        $source        = dirname(__FILE__) . '/../../data/mixed_code.php';
+        $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($source);
+        $this->builder = new PHP_Depend_Code_DefaultBuilder();
+        $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
+        
+        $parser->parse();
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Tests that the {@link PHP_Depend_Metrics_Hierarchy_Analyzer::analyze()} 
+     * method creates the expected hierarchy metrics.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void.
      */
-    public static function suite()
+    public function testAnalyzeProjectMetrics()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics - AllTests');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
-        $suite->addTestSuite('PHP_Depend_Metrics_Dependency_AnalyzerTest');
-        $suite->addTestSuite('PHP_Depend_Metrics_Hierarchy_AnalyzerTest');
+        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $result   = $analyzer->analyze($this->builder->getPackages());
+        $project  = $result->getProjectMetrics();
         
-        return $suite;
+        $this->assertEquals(4, $project['pkg']);
+        $this->assertEquals(3, $project['cls']);
+        $this->assertEquals(1, $project['clsa']);
+        $this->assertEquals(2, $project['clsc']);
+        $this->assertEquals(1, $project['interfs']);
+        $this->assertEquals(2, $project['fcs']);
+        $this->assertEquals(1, $project['roots']);
+        $this->assertEquals(2, $project['leafs']);
+        $this->assertEquals(1, $project['maxDIT']);
+        
+        //var_dump($result->getProjectMetrics());
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Metrics_AllTests::main') {
-    PHP_Depend_Metrics_AllTests::main();
 }
