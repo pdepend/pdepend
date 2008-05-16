@@ -92,6 +92,32 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_Type
     }
     
     /**
+     * Returns the parent class or <b>null</b> if this class has no parent.
+     *
+     * @return PHP_Depend_Code_Class
+     */
+    public function getParentClass()
+    {
+        // We know that a class has only 'extends' and 'implements' dependencies
+        foreach ($this->getDependencies() as $dependency) {
+            if ($dependency instanceof PHP_Depend_Code_Class) {
+                return $dependency;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Returns an iterator with all child classes.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getChildClasses()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->children);
+    }
+    
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
