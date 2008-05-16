@@ -89,6 +89,15 @@ abstract class PHP_Depend_Code_Type
     protected $dependencies = array();
     
     /**
+     * List of {@link PHP_Depend_Code_Type} objects that extend or implement 
+     * this type. 
+     *
+     * @type array<PHP_Depend_Code_Type>
+     * @var array(PHP_Depend_Code_Type) $children
+     */
+    protected $children = array();
+    
+    /**
      * Returns all {@link PHP_Depend_Code_Method} object in this class.
      *
      * @return PHP_Depend_Code_NodeIterator
@@ -153,7 +162,10 @@ abstract class PHP_Depend_Code_Type
     public function addDependency(PHP_Depend_Code_Type $type)
     {
         if (array_search($type, $this->dependencies, true) === false) {
+            // Store type dependency
             $this->dependencies[] = $type;
+            // Add this as child type
+            $type->addChildType($this);
         }
     }
     
@@ -170,6 +182,52 @@ abstract class PHP_Depend_Code_Type
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list
             unset($this->dependencies[$i]);
+            // Remove this as child type
+            $type->removeChildType($this);
+        }
+    }
+    
+    /**
+     * Returns an iterator with all child types for this type.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getChildTypes()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->children);
+    }
+    
+    /**
+     * Adds a type instance that extends or implements this type.
+     *
+     * @param PHP_Depend_Code_Type $type The child type instance.
+     * 
+     * @return void
+     */
+    public function addChildType(PHP_Depend_Code_Type $type)
+    {
+        if (array_search($type, $this->children, true) === false) {
+            // First add the type as child
+            $this->children[] = $type;
+            // Try to add this as dependency...
+            $type->addDependency($this);
+        }
+    }
+    
+    /**
+     * Removes the given type from the list of known children.
+     *
+     * @param PHP_Depend_Code_Type $type The child type instance.
+     * 
+     * @return void
+     */
+    public function removeChildType(PHP_Depend_Code_Type $type)
+    {
+        if (($i = array_search($type, $this->children, true)) !== false) {
+            // First remove this child
+            unset($this->children[$i]);
+            // Try to remove this as dependency
+            $type->removeDependency($this);
         }
     }
     

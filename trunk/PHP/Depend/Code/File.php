@@ -59,7 +59,15 @@
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Code_File
-{
+{   
+    /**
+     * The unique identifier for this function.
+     *
+     * @type PHP_Depend_Util_UUID
+     * @var PHP_Depend_Util_UUID $uuid
+     */
+    protected $uuid = null;
+    
     /**
      * The source file name/path.
      *
@@ -92,6 +100,18 @@ class PHP_Depend_Code_File
     public function __construct($fileName)
     {
         $this->fileName = $fileName;
+        
+        $this->uuid = new PHP_Depend_Util_UUID();
+    }
+    
+    /**
+     * Returns a uuid for this code node.
+     *
+     * @return string
+     */
+    public function getUUID()
+    {
+        return (string) $this->uuid;
     }
     
     /**

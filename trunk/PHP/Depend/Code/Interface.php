@@ -71,6 +71,26 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_Type
     }
     
     /**
+     * Returns an iterator with all implementing classes.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getImplementingClasses()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->children, 'PHP_Depend_Code_Class');
+    }
+    
+    /**
+     * Returns an iterator with all child interfaces.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getChildInterfaces()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->children, 'PHP_Depend_Code_Interface');
+    }
+    
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
