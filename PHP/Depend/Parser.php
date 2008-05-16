@@ -247,6 +247,7 @@ class PHP_Depend_Parser
                 } else {
                     $dependency = $this->builder->buildClass($token[1]);
                 }
+                // Set class dependency
                 $class->addDependency($dependency);
             }
         }
