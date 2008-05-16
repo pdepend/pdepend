@@ -32,7 +32,7 @@ class FooBar extends Bar {
         if ($bar !== null) {
             $bar = new BarFoo($bar);
         }
-    }
+    }   
 }
 
 /**
