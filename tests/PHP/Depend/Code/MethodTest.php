@@ -108,6 +108,81 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
     }
     
     /**
+     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * fails with an exception for an invalid visibility type.
+     *
+     * @return void
+     */
+    public function testSetInvalidVisibilityFail()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        
+        $method = new PHP_Depend_Code_Method('method');
+        $method->setVisibility(0);
+    }
+    
+    /**
+     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * accepts the defined visibility value.
+     *
+     * @return void
+     */
+    public function testSetVisibilityAcceptsPublicValue()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+        $this->assertTrue($method->isPublic());
+        $this->assertFalse($method->isProtected());
+        $this->assertFalse($method->isPrivate());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * accepts the defined visibility value.
+     *
+     * @return void
+     */
+    public function testSetVisibilityAcceptsProtectedValue()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+        $this->assertTrue($method->isProtected());
+        $this->assertFalse($method->isPublic());
+        $this->assertFalse($method->isPrivate());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * accepts the defined visibility value.
+     *
+     * @return void
+     */
+    public function testSetVisibilityAcceptsPrivateValue()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+        $this->assertTrue($method->isPrivate());
+        $this->assertFalse($method->isPublic());
+        $this->assertFalse($method->isProtected());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * ignores repeated calls if the internal value is set.
+     *
+     * @return void
+     */
+    public function testSetVisibilityOnlyAcceptsTheFirstValue()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertFalse($method->isPublic());
+        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+        $this->assertTrue($method->isPublic());
+        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+        $this->assertTrue($method->isPublic());
+    }
+    
+    /**
      * Creates an abstract item instance.
      *
      * @return PHP_Depend_Code_AbstractItem

@@ -45,6 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 require_once 'PHP/Depend/Code/NodeBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer.php';
 
@@ -100,6 +101,10 @@ class PHP_Depend_Parser
      * @var PHP_Depend_Code_NodeBuilder $builder
      */
     protected $builder = null;
+    
+    protected $visibilityMap = array(
+        
+    );
     
     /**
      * Constructs a new source parser.
@@ -265,8 +270,9 @@ class PHP_Depend_Parser
         $token = $this->tokenizer->next();
         $curly = 0;
         
-        $comment  = null;
-        $abstract = false;
+        $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
+        $comment   = null;
+        $abstract  = false;
         
         while ($token !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
@@ -275,9 +281,11 @@ class PHP_Depend_Parser
                 $method = $this->parseCallable($type);
                 $method->setDocComment($comment);
                 $method->setAbstract($abstract);
+                $method->setVisibility($visibilty);
                 
-                $comment  = null;
-                $abstract = false;
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
+                $comment   = null;
+                $abstract  = false;
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
@@ -295,8 +303,15 @@ class PHP_Depend_Parser
                 break;
                 
             case PHP_Depend_Code_Tokenizer::T_PUBLIC:
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
+                break;
+                
             case PHP_Depend_Code_Tokenizer::T_PRIVATE:
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE;
+                break;
+                
             case PHP_Depend_Code_Tokenizer::T_PROTECTED:
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED;
                 break;
                 
             case PHP_Depend_Code_Tokenizer::T_STATIC:
