@@ -112,12 +112,12 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      */
     public function testNodeIteratorLoopWithKey()
     {
-        $names = array('clazz', 'pkg', 'method', 'func');
+        $names = array('clazz', 'func', 'method', 'pkg');
         $nodes = array(
             new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
-            new PHP_Depend_Code_Package('pkg'),
-            new PHP_Depend_Code_Method('method', 0),
             new PHP_Depend_Code_Function('func', 0),
+            new PHP_Depend_Code_Method('method', 0),
+            new PHP_Depend_Code_Package('pkg'),
         );
         
         $it = new PHP_Depend_Code_NodeIterator($nodes);
