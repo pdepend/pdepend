@@ -36,42 +36,63 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Log
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/Code/File.php';
+require_once 'PHP/Depend/Metrics/ResultSetI.php';
+require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
 
 /**
- * Test case for the code file class.
+ * Dummy implementation of a result set.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Log
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Log_Summary_ResultSetProjectAwareDummy
+    implements PHP_Depend_Metrics_ResultSetI,
+               PHP_Depend_Metrics_ResultSet_ProjectAwareI
 {
     /**
-     * Tests the {@link PHP_Depend_Code_File#getLoc()} method.
+     * Dummy project metrics.
      *
-     * @return void
+     * @type array<mixed>
+     * @var array(string=>mixed) $projectMetrics
      */
-    public function testGetLoc()
+    protected $projectMetrics = null;
+    
+    /**
+     * Constructs a new result set dummy instance.
+     *
+     * @param array(string=>mixed) $projectMetrics Dummy project metrics.
+     */
+    public function __construct(array $projectMetrics)
     {
-        $file = new PHP_Depend_Code_File(dirname(__FILE__) . '/../_code/mixed_code.php');
-        
-        $this->assertType('array', $file->getLoc());
-        $this->assertEquals(49, count($file->getLoc()));
+        $this->projectMetrics = $projectMetrics;
     }
+    
+    /**
+     * Returns the project metrics.
+     *
+     * @return array(string=>mixed)
+     * @see PHP_Depend_Metrics_ResultSet_ProjectAwareI::getProjectMetrics()
+     */
+    public function getProjectMetrics()
+    {
+        return $this->projectMetrics;
+    }
+
 }

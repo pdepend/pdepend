@@ -45,12 +45,8 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/Code/File.php';
-
 /**
- * Test case for the code file class.
+ * Marker interface that marks a result set as node metrics aware.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -60,18 +56,46 @@ require_once 'PHP/Depend/Code/File.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
+interface PHP_Depend_Metrics_ResultSet_NodeAwareI
 {
     /**
-     * Tests the {@link PHP_Depend_Code_File#getLoc()} method.
+     * This method will return an <b>array</b> with all generated metric values 
+     * for the node with the given <b>$uuid</b> identifier. If there are no
+     * metrics for the requested node, this method will return an empty <b>array</b>.
+     * 
+     * <code>
+     * array(
+     *     'loc'    =>  42,
+     *     'ncloc'  =>  17,
+     *     'cc'     =>  12
+     * )
+     * </code>
      *
-     * @return void
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array(string=>mixed)
      */
-    public function testGetLoc()
-    {
-        $file = new PHP_Depend_Code_File(dirname(__FILE__) . '/../_code/mixed_code.php');
-        
-        $this->assertType('array', $file->getLoc());
-        $this->assertEquals(49, count($file->getLoc()));
-    }
+    function getNodeMetrics($uuid);
+    
+    /**
+     * This method returns an <b>array</b> with all aggregated metrics.
+     *
+     * <code>
+     * array(
+     *     '0375e305-885a-4e91-8b5c-e25bda005438'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     ),
+     *     'e60c22f0-1a63-4c40-893e-ed3b35b84d0b'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     )
+     * )
+     * </code>
+     * 
+     * @return array(string=>array)
+     */
+    function getAllNodeMetrics();
 }

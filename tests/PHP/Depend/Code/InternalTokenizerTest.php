@@ -69,7 +69,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */
     public function testInternalTokenizerWithClasses()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../data/classes.php');
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/classes.php');
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
@@ -125,7 +125,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */   
     public function testInternalTokenizerWithMixedContent()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../data/func_class.php');
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
@@ -173,7 +173,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */
     public function testInternalTokenizerWithProceduralCodeAndFunction()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../data/func_code.php');
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_code.php');
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
@@ -227,7 +227,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */
     public function testInternalTokenizerStaticCallBug01()
     {
-        $sourceFile = dirname(__FILE__) . '/../data/bugs/01.php';
+        $sourceFile = dirname(__FILE__) . '/../_code/bugs/01.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
@@ -274,7 +274,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */
     public function testInternalTokenizerDollarSyntaxBug09()
     {
-        $sourceFile = dirname(__FILE__) . '/../data/bugs/09.php';
+        $sourceFile = dirname(__FILE__) . '/../_code/bugs/09.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(

@@ -85,7 +85,7 @@ abstract class PHP_Depend_Renderer_AbstractRendererTest
     {
         parent::setUp();
         
-        $source = dirname(__FILE__) . '/../data/code-5.2.x';
+        $source = dirname(__FILE__) . '/../_code/code-5.2.x';
         $files  = new PHP_Depend_Util_FileFilterIterator(
             new DirectoryIterator($source),
             new PHP_Depend_Util_FileExtensionFilter(array('php'))
