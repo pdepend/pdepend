@@ -115,7 +115,7 @@ class PHP_Depend_Log_Summary_Xml
         }
         if ($resultSet instanceof PHP_Depend_Metrics_ResultSet_NodeAwareI) {
             // Collect all node metrics
-            $this->nodeMetrics = array_merge(
+            $this->nodeMetrics = array_merge_recursive(
                 $this->nodeMetrics,
                 $resultSet->getAllNodeMetrics()
             );
@@ -126,7 +126,7 @@ class PHP_Depend_Log_Summary_Xml
         return $accept;
     }
     
-    public function write()
+    public function write($fileName)
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
@@ -143,26 +143,28 @@ class PHP_Depend_Log_Summary_Xml
             $packageXml = $dom->createElement('package');
             $packageXml->setAttribute('name', $package->getName());
             
+            $this->writeNodeMetrics($packageXml, $package->getUUID());
+            
             $this->writeClass($packageXml, $package);
             $this->writeFunctions($packageXml, $package);
             
             $metrics->appendChild($packageXml);
         }
         
-        $filesXml = $dom->createElement('files');
-        foreach ($this->fileSet as $file) {
-            $fileXml = $dom->createElement('file');
-            $fileXml->setAttribute('id', $file->getUUID());
-            $fileXml->setAttribute('name', $file->getFileName());
+        if (count($this->fileSet) > 0) {
+            $filesXml = $dom->createElement('files');
+            foreach ($this->fileSet as $file) {
+                $fileXml = $dom->createElement('file');
+                $fileXml->setAttribute('name', $file->getFileName());
             
-            $filesXml->appendChild($fileXml);
+                $filesXml->appendChild($fileXml);
+            }
+            $metrics->insertBefore($filesXml, $metrics->firstChild);
         }
-        
-        $metrics->insertBefore($filesXml, $metrics->firstChild);
         
         $dom->appendChild($metrics);
         
-        echo $dom->saveXML();
+        $dom->save($fileName);
     }
     
     protected function writeClass(DOMElement $xml, PHP_Depend_Code_Package $package)
@@ -173,6 +175,7 @@ class PHP_Depend_Log_Summary_Xml
             $classXml = $doc->createElement('class');
             $classXml->setAttribute('name', $class->getName());
             
+            $this->writeNodeMetrics($classXml, $class->getUUID());
             $this->writeFileReference($classXml, $class->getSourceFile());
             
             $xml->appendChild($classXml);
@@ -189,6 +192,8 @@ class PHP_Depend_Log_Summary_Xml
             $methodXml = $doc->createElement('method');
             $methodXml->setAttribute('name', $method->getName());
             
+            $this->writeNodeMetrics($methodXml, $method->getUUID());
+            
             $xml->appendChild($methodXml);
         }
     }
@@ -201,12 +206,41 @@ class PHP_Depend_Log_Summary_Xml
             $functionXml = $doc->createElement('function');
             $functionXml->setAttribute('name', $function->getName());
             
+            $this->writeNodeMetrics($functionXml, $function->getUUID());
             $this->writeFileReference($functionXml, $function->getSourceFile());
             
             $xml->appendChild($functionXml);
         }
     }
     
+    protected function writeNodeMetrics(DOMElement $xml, $uuid)
+    {
+        if (!isset($this->nodeMetrics[$uuid])) {
+            return;
+        }
+        
+        $metrics = $this->nodeMetrics[$uuid];
+        ksort($metrics);
+        
+        foreach ($metrics as $name => $value) {
+            $xml->setAttribute($name, $value);
+        }
+    }
+    
+    /**
+     * Appends a file reference element to the given <b>$xml</b> element.
+     * 
+     * <code>
+     *   <class name="PHP_Depend">
+     *     <file name="PHP/Depend.php" />
+     *   </class>
+     * </code>
+     *
+     * @param DOMElement $xml            The parent xml element.
+     * @param PHP_Depend_Code_File $file The code file instance.
+     * 
+     * @return void
+     */
     protected function writeFileReference(DOMElement $xml, PHP_Depend_Code_File $file = null)
     {
         if ($file === null) {
@@ -218,7 +252,7 @@ class PHP_Depend_Log_Summary_Xml
         }
         
         $fileXml = $xml->ownerDocument->createElement('file');
-        $fileXml->setAttribute('idref', $file->getUUID());
+        $fileXml->setAttribute('name', $file->getFileName());
         
         $xml->appendChild($fileXml);
     }
