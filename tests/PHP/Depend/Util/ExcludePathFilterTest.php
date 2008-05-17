@@ -96,7 +96,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
     {
         $filter = new PHP_Depend_Util_ExcludePathFilter(array('/code-5.2.x/'));
         $it     = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../data')
+            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
         );
         
         $result = array();
@@ -127,7 +127,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
         );
             
         $it = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../data')
+            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
         );
         
         $result = array();
