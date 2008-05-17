@@ -88,6 +88,8 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
                 $this->nodes[$node->getName()] = $node;
             }
         }
+        
+        ksort($this->nodes);
     }
     
     /**
