@@ -69,7 +69,7 @@ class PHP_Depend_Util_FileExtensionFilterTest extends PHP_Depend_AbstractTest
      */
     public function testFileExtensionFilterWithTxtExtension()
     {
-        $it     = new DirectoryIterator(dirname(__FILE__) . '/../data');
+        $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
         $filter = new PHP_Depend_Util_FileExtensionFilter(array('txt'));
         
         $result = array();
@@ -99,7 +99,7 @@ class PHP_Depend_Util_FileExtensionFilterTest extends PHP_Depend_AbstractTest
      */
     public function testFileExtensionFilterWithMultipleExtensions()
     {
-        $it     = new DirectoryIterator(dirname(__FILE__) . '/../data');
+        $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
         $filter = new PHP_Depend_Util_FileExtensionFilter(array('txt', 'inc'));
         
         $result = array();
