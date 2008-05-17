@@ -156,6 +156,8 @@ class PHP_Depend_Log_Summary_Xml
             foreach ($this->fileSet as $file) {
                 $fileXml = $dom->createElement('file');
                 $fileXml->setAttribute('name', $file->getFileName());
+                
+                $this->writeNodeMetrics($fileXml, $file->getUUID());
             
                 $filesXml->appendChild($fileXml);
             }
