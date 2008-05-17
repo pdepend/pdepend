@@ -61,12 +61,42 @@ require_once 'PHP/Depend/Code/AbstractCallable.php';
 class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
 {
     /**
+     * Marks this method as abstract.
+     *
+     * @type boolean
+     * @var boolean $abstract
+     */
+    protected $abstract = false;
+    
+    /**
      * The parent type object.
      *
      * @type PHP_Depend_Code_Type
      * @var PHP_Depend_Code_Type $parent
      */
     protected $parent = null;
+    
+    /**
+     * Returns <b>true</b> if this is an abstract method.
+     *
+     * @return boolean
+     */
+    public function isAbstract()
+    {
+        return $this->abstract;
+    }
+    
+    /**
+     * Marks this as an abstract method.
+     *
+     * @param boolean $abstract Set this to <b>true</b> for an abstract method.
+     * 
+     * @return void
+     */
+    public function setAbstract($abstract)
+    {
+        $this->abstract = $abstract;
+    }
     
     /**
      * Returns the parent type object or <b>null</b>

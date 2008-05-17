@@ -265,7 +265,8 @@ class PHP_Depend_Parser
         $token = $this->tokenizer->next();
         $curly = 0;
         
-        $comment = null;
+        $comment  = null;
+        $abstract = false;
         
         while ($token !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
@@ -273,8 +274,10 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_FUNCTION:
                 $method = $this->parseCallable($type);
                 $method->setDocComment($comment);
+                $method->setAbstract($abstract);
                 
-                $comment = null;
+                $comment  = null;
+                $abstract = false;
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
@@ -285,6 +288,10 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 $comment = null; 
+                break;
+                
+            case PHP_Depend_Code_Tokenizer::T_ABSTRACT:
+                $abstract = true;
                 break;
                 
             case PHP_Depend_Code_Tokenizer::T_PUBLIC:
