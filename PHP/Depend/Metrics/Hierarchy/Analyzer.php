@@ -48,8 +48,8 @@
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectMetricsI.php';
 require_once 'PHP/Depend/Metrics/ResultSetI.php';
+require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
 
 /**
  * This analyzer calculates class/package hierarchy metrics.
@@ -73,8 +73,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     implements PHP_Depend_Code_NodeVisitor,
                PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_ProjectMetricsI,
-               PHP_Depend_Metrics_ResultSetI
+               PHP_Depend_Metrics_ResultSetI,
+               PHP_Depend_Metrics_ResultSet_ProjectAwareI
 {
     /**
      * Number of all analyzed packages.

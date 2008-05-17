@@ -61,7 +61,7 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_ProjectMetricsI
+interface PHP_Depend_Metrics_ResultSet_ProjectAwareI
 {
     /**
      * Provides the project summary as an <b>array</b>.
