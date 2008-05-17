@@ -99,9 +99,19 @@ class PHP_Depend_Code_File
      */
     public function __construct($fileName)
     {
-        $this->fileName = $fileName;
+        $this->fileName = realpath($fileName);
         
         $this->uuid = new PHP_Depend_Util_UUID();
+    }
+    
+    /**
+     * Returns the physical file name for this object.
+     *
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
     }
     
     /**
