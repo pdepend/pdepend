@@ -427,6 +427,35 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser doesn't mark a non abstract method as abstract.
+     *
+     * @return void
+     */
+    public function testParserDoesntMarkNonAbstractMethodAsAbstract()
+    {
+        $methods = $this->getMixedCodeClass()->getMethods();
+        foreach ($methods as $method) {
+            $this->assertFalse($method->isAbstract());
+        }
+    }
+    
+    /**
+     * Tests that the parser marks an abstract method as abstract.
+     *
+     * @return void
+     */
+    public function testParsetMarksAbstractMethodAsAbstract()
+    {
+        $method = $this->getMixedCodeClass()
+                       ->getParentClass()
+                       ->getMethods()
+                       ->current();
+
+        $this->assertNotNull($method);
+        $this->assertTrue($method->isAbstract());
+    }
+    
+    /**
      * Tests that the parser handles PHP 5.3 object namespace + class chaining.
      *
      * @return void
