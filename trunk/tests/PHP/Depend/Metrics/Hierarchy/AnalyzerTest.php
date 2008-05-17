@@ -79,7 +79,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
         
-        $source        = dirname(__FILE__) . '/../../data/mixed_code.php';
+        $source        = dirname(__FILE__) . '/../../_code/mixed_code.php';
         $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($source);
         $this->builder = new PHP_Depend_Code_DefaultBuilder();
         $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);

@@ -72,7 +72,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
         $files  = array('code-5.2.x/package2.php');
         $filter = new PHP_Depend_Util_ExcludePathFilter($files);
         $it     = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../data/code-5.2.x')
+            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code/code-5.2.x')
         );
         
         $result = array();
