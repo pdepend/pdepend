@@ -57,6 +57,9 @@ require_once 'PHP/Depend/Metrics/ResultSetI.php';
  * This analyzer expects that a node list filter is set, before it starts the 
  * analyze process. This filter will suppress PHP internal and external library
  * stuff.
+ * 
+ * This analyzer is based on the following metric set:
+ * - http://www.aivosto.com/project/help/pm-oo-misc.html
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
