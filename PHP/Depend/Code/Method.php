@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractCallable.php';
+require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 
 /**
  * Represents a php method node.
@@ -58,7 +59,9 @@ require_once 'PHP/Depend/Code/AbstractCallable.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
+class PHP_Depend_Code_Method 
+    extends PHP_Depend_Code_AbstractCallable
+    implements PHP_Depend_Code_VisibilityAwareI
 {
     /**
      * Marks this method as abstract.
@@ -67,6 +70,14 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      * @var boolean $abstract
      */
     protected $abstract = false;
+    
+    /**
+     * Set defined visibility for this method.
+     *
+     * @type integer
+     * @var integer $visibility
+     */
+    protected $visibility = -1;
     
     /**
      * The parent type object.
@@ -97,6 +108,67 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     {
         $this->abstract = $abstract;
     }
+    
+    /**
+     * Sets the visibility for this node. 
+     * 
+     * The given <b>$visibility</b> value must equal to one of the defined 
+     * constants, otherwith this method will fail with an exception.
+     *
+     * @param integer $visibility The node visibility.
+     * 
+     * @return void
+     * @throws InvalidArgumentException If the given visibility is not equal to
+     *                                  one of the defined visibility constants.
+     */
+    public function setVisibility($visibility)
+    {
+        // List of allowed visibility values
+        $allowed = array(self::IS_PUBLIC, self::IS_PROTECTED, self::IS_PRIVATE);
+        
+        // Check for a valid value
+        if (in_array($visibility, $allowed, true) === false) {
+            throw new InvalidArgumentException('Invalid visibility value given.');
+        }
+        // Check for previous value
+        if ($this->visibility === -1) {
+            $this->visibility = $visibility;
+        }
+    }
+    
+    /**
+     * Returns <b>true</b> if this node is marked as public, otherwise the 
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return ($this->visibility === self::IS_PUBLIC);
+    }
+    
+    /**
+     * Returns <b>true</b> if this node is marked as protected, otherwise the 
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isProtected()
+    {
+        return ($this->visibility === self::IS_PROTECTED);
+    }
+    
+    /**
+     * Returns <b>true</b> if this node is marked as private, otherwise the 
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isPrivate()
+    {
+        return ($this->visibility === self::IS_PRIVATE);
+    }
+    
     
     /**
      * Returns the parent type object or <b>null</b>
