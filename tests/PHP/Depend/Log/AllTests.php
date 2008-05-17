@@ -36,42 +36,63 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Log
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+if (defined('PHPUnit_MAIN_METHOD') === false) {
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_AllTests::main');
+}
 
-require_once 'PHP/Depend/Code/File.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+require_once dirname(__FILE__) . '/Summary/XmlTest.php';
 
 /**
- * Test case for the code file class.
+ * Main test suite for the PHP_Depend_Log package.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Log
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Log_AllTests
 {
     /**
-     * Tests the {@link PHP_Depend_Code_File#getLoc()} method.
+     * Test suite main method.
      *
      * @return void
      */
-    public function testGetLoc()
+    public static function main()
     {
-        $file = new PHP_Depend_Code_File(dirname(__FILE__) . '/../_code/mixed_code.php');
-        
-        $this->assertType('array', $file->getLoc());
-        $this->assertEquals(49, count($file->getLoc()));
+        PHPUnit_TextUI_TestRunner::run(self::suite());
     }
+    
+    /**
+     * Creates the phpunit test suite for this package.
+     *
+     * @return PHPUnit_Framework_TestSuite
+     */
+    public static function suite()
+    {
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log - AllTests');
+        $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
+        
+        return $suite;
+    }
+}
+
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_AllTests::main') {
+    PHP_Depend_Log_AllTests::main();
 }

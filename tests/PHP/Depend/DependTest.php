@@ -85,7 +85,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAddDirectory()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
     }
     /**
      * Tests that the {@link PHP_Depend::addFilter()} method with an extension
@@ -107,7 +107,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAnalyze()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
         
         $metrics = $pdepend->analyze();
@@ -138,7 +138,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testContainsCyclesWithCodeThatContainsACycle()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-with-cycle');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-with-cycle');
         $pdepend->analyze();
         
         $this->assertTrue($pdepend->containsCycles());
@@ -153,7 +153,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testContainsCyclesWithCodeThatDoesNotContainACycle()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-without-cycle');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-cycle');
         $pdepend->analyze();
         
         $this->assertFalse($pdepend->containsCycles());
@@ -173,7 +173,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->containsCycles();
     }
     
@@ -186,7 +186,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testCountClasses()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
         $this->assertEquals(12, $pdepend->countClasses());
@@ -206,7 +206,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->countClasses();
     }
     
@@ -219,7 +219,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testCountPackages()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
         $this->assertEquals(4, $pdepend->countPackages());
@@ -239,7 +239,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->countPackages();
     }
     
@@ -252,7 +252,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testGetPackage()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
         $packages = array(
@@ -283,7 +283,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackage('package1');
     }
     
@@ -301,7 +301,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         $pdepend->getPackage('package0');
     }
@@ -316,7 +316,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testGetPackages()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         
         $metrics0 = $pdepend->analyze();
         $metrics1 = $pdepend->getPackages();
@@ -341,7 +341,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/data/code-5.2.x');
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackages();
     }
 }
