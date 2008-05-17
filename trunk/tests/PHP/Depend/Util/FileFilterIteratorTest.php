@@ -70,7 +70,7 @@ class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
      */
     public function testFilterIterator()
     {
-        $dir = dirname(__FILE__) . '/../data';
+        $dir = dirname(__FILE__) . '/../_code';
         $it  = new PHP_Depend_Util_FileFilterIterator(
             new DirectoryIterator($dir),
             new PHP_Depend_Util_FileExtensionFilter(array('php'))
