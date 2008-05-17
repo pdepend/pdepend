@@ -189,7 +189,7 @@ abstract class PHP_Depend_Code_AbstractItem
     /**
      * Returns the source file for this item.
      *
-     * @return string
+     * @return PHP_Depend_Code_File
      */
     public function getSourceFile()
     {
