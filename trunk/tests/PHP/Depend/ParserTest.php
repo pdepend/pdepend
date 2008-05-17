@@ -535,9 +535,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parser->parse();
         
         $expected = array(
+            null,
+            null,
             "/**\n* Sample comment.\n*/",
-            null,
-            null,
             "/**\n* A second comment...\n*/",
         );
         
@@ -627,10 +627,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                                             PHP_Depend_Code_NodeIterator $nodes)
     {
         $expected = array(
+            "/**\n* This is a second comment.\n*/",
             "/**\n* This is one comment.\n*/",
             null,
             null,
-            "/**\n* This is a second comment.\n*/",
         );
         
         foreach ($nodes as $callable) {
