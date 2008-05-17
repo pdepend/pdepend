@@ -77,8 +77,6 @@ class PHP_Depend_Renderer_XMLRendererTest
         $expected = $this->loadReferenceXML();
         $result   = file_get_contents($output);
         
-        copy($output, "/tmp/dep.xml");
-        
         $this->assertXmlStringEqualsXmlString($expected, $result);
         
         // Unlink temp file
