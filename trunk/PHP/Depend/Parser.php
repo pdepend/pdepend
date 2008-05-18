@@ -261,11 +261,11 @@ class PHP_Depend_Parser
     /**
      * Parses a class/interface body.
      * 
-     * @param PHP_Depend_Code_Type $type The context type instance.
+     * @param PHP_Depend_Code_AbstractType $type The context type instance.
      *
      * @return void
      */
-    protected function parseTypeBody(PHP_Depend_Code_Type $type)
+    protected function parseTypeBody(PHP_Depend_Code_AbstractType $type)
     {
         $token = $this->tokenizer->next();
         $curly = 0;
@@ -348,11 +348,11 @@ class PHP_Depend_Parser
     /**
      * Parses a function or a method and adds it to the parent context node.
      * 
-     * @param PHP_Depend_Code_Type $parent An optional parent interface of class.
+     * @param PHP_Depend_Code_AbstractType $parent An optional parent interface of class.
      * 
      * @return PHP_Depend_Code_Callable
      */
-    protected function parseCallable(PHP_Depend_Code_Type $parent = null)
+    protected function parseCallable(PHP_Depend_Code_AbstractType $parent = null)
     {
         $token = $this->tokenizer->next();
         if ($token[0] === PHP_Depend_Code_Tokenizer::T_BITWISE_AND) {
