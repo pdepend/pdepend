@@ -292,6 +292,7 @@ class PHP_Depend_Parser
                 $property = $this->builder->buildProperty($token[1], $token[2]);
                 $property->setDocComment($comment);
                 $property->setVisibility($visibilty);
+                $property->setEndLine($token[2]);
                 
                 // TODO: Do we need an instanceof, to check that $type is a
                 //       PHP_Depend_Code_Class instance or do we believe the 

@@ -277,7 +277,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return string
+     * @return PHP_Depend_Code_File
      */
     public function getSourceFile()
     {

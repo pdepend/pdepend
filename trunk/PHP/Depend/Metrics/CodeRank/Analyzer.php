@@ -187,6 +187,13 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->visitType($class);
+    
+        foreach ($class->getMethods() as $method) {
+            $method->accept($this);
+        }
+        foreach ($class->getProperties() as $property) {
+            $property->accept($this);
+        }
     }
     
     /**
@@ -201,6 +208,10 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->visitType($interface);
+    
+        foreach ($interface->getMethods() as $method) {
+            $method->accept($this);
+        }
     }
     
     /**
@@ -247,6 +258,19 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
+    }
+    
+    /**
+     * Visits a property node. 
+     *
+     * @param PHP_Depend_Code_Property $property The property class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitProperty()
+     */
+    public function visitProperty(PHP_Depend_Code_Property $property)
+    {
+        
     }
     
     /**

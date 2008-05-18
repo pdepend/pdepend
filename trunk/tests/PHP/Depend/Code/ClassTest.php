@@ -51,6 +51,7 @@ require_once dirname(__FILE__) . '/TestNodeVisitor.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Code/Property.php';
 
 /**
  * Test case implementation for the PHP_Depend_Code_Class class.
@@ -177,6 +178,123 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $class = new PHP_Depend_Code_Class('foo', 42);
         
         $this->assertEquals(42, $class->getStartLine());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::addDependency()} also adds the
+     * dependent classes as child types.
+     *
+     * @return void
+     */
+    public function testAddDependencyAlsoAddsChildType()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        $b = new PHP_Depend_Code_Class('b');
+        $c = new PHP_Depend_Code_Class('c');
+        $d = new PHP_Depend_Code_Class('d');
+        
+        $b->addDependency($a);
+        $c->addDependency($a);
+        
+        $d->addDependency($c);
+        
+        $typesA = $a->getChildTypes();
+        $this->assertEquals(2, $typesA->count());
+        $this->assertSame($b, $typesA->current());
+        $typesA->next();
+        $this->assertSame($c, $typesA->current());
+
+        $typesC = $c->getChildTypes();
+        $this->assertEquals(1, $typesC->count());
+        $this->assertSame($d, $typesC->current());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::removeDependency()} also removes
+     * the dependent child type.
+     *
+     * @return void
+     */
+    public function testRemoveDependencyAlsoRemovesChildType()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        $b = new PHP_Depend_Code_Class('b');
+        
+        $a->addDependency($b);
+        $this->assertEquals(1, $b->getChildTypes()->count());
+        $a->removeDependency($b);
+        $this->assertEquals(0, $b->getChildTypes()->count());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::addChildType()} also adds the
+     * dependent classes as dependencies.
+     *
+     * @return void
+     */
+    public function testAddChildTypeAlsoAddsDependency()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        $b = new PHP_Depend_Code_Class('b');
+        $c = new PHP_Depend_Code_Class('c');
+        $d = new PHP_Depend_Code_Class('d');
+        
+        $a->addChildType($b);
+        $a->addChildType($c);
+        
+        $c->addChildType($d);
+        
+        $depB = $b->getDependencies();
+        $this->assertEquals(1, $depB->count());
+        $this->assertSame($a, $depB->current());
+        
+        $depC = $c->getDependencies();
+        $this->assertEquals(1, $depC->count());
+        $this->assertSame($a, $depC->current());
+        
+        $depD = $d->getDependencies();
+        $this->assertEquals(1, $depD->count());
+        $this->assertSame($c, $depD->current());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::removeChildType()} also removes
+     * the dependency instance.
+     *
+     * @return void
+     */
+    public function testRemoveChildTypeAlsoRemovesDependency()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        $b = new PHP_Depend_Code_Class('b');
+        
+        $a->addChildType($b);
+        $this->assertEquals(1, $b->getDependencies()->count());
+        $a->removeChildType($b);
+        $this->assertEquals(0, $b->getDependencies()->count());
+    }
+    
+    /**
+     * Tests that 
+     *
+     */
+    public function testRemovePropertyAlsoUnsetsParentClass()
+    {
+        $class = new PHP_Depend_Code_Class('a');
+        $prop1 = new PHP_Depend_Code_Property('$p1');
+        $prop2 = new PHP_Depend_Code_Property('$p2');
+        
+        $class->addProperty($prop1);
+        $this->assertSame($class, $prop1->getParent());
+        
+        $class->addProperty($prop2);
+        $this->assertSame($class, $prop2->getParent());
+        
+        $this->assertEquals(2, $class->getProperties()->count());
+        
+        $class->removeProperty($prop1);
+        $this->assertNull($prop1->getParent());
+        $this->assertEquals(1, $class->getProperties()->count());
     }
     
     /**
