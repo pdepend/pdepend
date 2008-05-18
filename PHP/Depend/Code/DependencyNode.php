@@ -61,28 +61,28 @@ require_once 'PHP/Depend/Code/Node.php';
 interface PHP_Depend_Code_DependencyNode extends PHP_Depend_Code_Node
 {
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this node depends on.
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects this node depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
     function getDependencies();
     
     /**
-     * Adds the given {@link PHP_Depend_Code_Type} object as dependency.
+     * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
      *
-     * @param PHP_Depend_Code_Type $type A type this node depends on.
+     * @param PHP_Depend_Code_AbstractType $type A type this node depends on.
      * 
      * @return void
      */
-    function addDependency(PHP_Depend_Code_Type $type);
+    function addDependency(PHP_Depend_Code_AbstractType $type);
     
     /**
-     * Removes the given {@link PHP_Depend_Code_Type} object from the dependency
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the dependency
      * list.
      *
-     * @param PHP_Depend_Code_Type $type A type to remove.
+     * @param PHP_Depend_Code_AbstractType $type A type to remove.
      * 
      * @return void
      */
-    function removeDependency(PHP_Depend_Code_Type $type);
+    function removeDependency(PHP_Depend_Code_AbstractType $type);
 }
