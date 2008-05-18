@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Util/UUID.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Code_Type
+abstract class PHP_Depend_Code_AbstractType
        extends PHP_Depend_Code_AbstractItem 
     implements PHP_Depend_Code_DependencyNode
 {   
@@ -81,19 +81,19 @@ abstract class PHP_Depend_Code_Type
     protected $methods = array();
     
     /**
-     * List of {@link PHP_Depend_Code_Type} objects this type depends on.
+     * List of {@link PHP_Depend_Code_AbstractType} objects this type depends on.
      *
-     * @type array<PHP_Depend_Code_Type>
-     * @var array(PHP_Depend_Code_Type) $dependencies
+     * @type array<PHP_Depend_Code_AbstractType>
+     * @var array(PHP_Depend_Code_AbstractType) $dependencies
      */
     protected $dependencies = array();
     
     /**
-     * List of {@link PHP_Depend_Code_Type} objects that extend or implement 
+     * List of {@link PHP_Depend_Code_AbstractType} objects that extend or implement 
      * this type. 
      *
-     * @type array<PHP_Depend_Code_Type>
-     * @var array(PHP_Depend_Code_Type) $children
+     * @type array<PHP_Depend_Code_AbstractType>
+     * @var array(PHP_Depend_Code_AbstractType) $children
      */
     protected $children = array();
     
@@ -143,7 +143,7 @@ abstract class PHP_Depend_Code_Type
     }
     
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this type depends on.
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects this type depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -153,13 +153,13 @@ abstract class PHP_Depend_Code_Type
     }
     
     /**
-     * Adds the given {@link PHP_Depend_Code_Type} object as dependency.
+     * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
      *
-     * @param PHP_Depend_Code_Type $type A type this function depends on.
+     * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
      * 
      * @return void
      */
-    public function addDependency(PHP_Depend_Code_Type $type)
+    public function addDependency(PHP_Depend_Code_AbstractType $type)
     {
         if (array_search($type, $this->dependencies, true) === false) {
             // Store type dependency
@@ -170,14 +170,14 @@ abstract class PHP_Depend_Code_Type
     }
     
     /**
-     * Removes the given {@link PHP_Depend_Code_Type} object from the dependency
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the dependency
      * list.
      *
-     * @param PHP_Depend_Code_Type $type A type to remove.
+     * @param PHP_Depend_Code_AbstractType $type A type to remove.
      * 
      * @return void
      */
-    public function removeDependency(PHP_Depend_Code_Type $type)
+    public function removeDependency(PHP_Depend_Code_AbstractType $type)
     {
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list
@@ -200,11 +200,11 @@ abstract class PHP_Depend_Code_Type
     /**
      * Adds a type instance that extends or implements this type.
      *
-     * @param PHP_Depend_Code_Type $type The child type instance.
+     * @param PHP_Depend_Code_AbstractType $type The child type instance.
      * 
      * @return void
      */
-    public function addChildType(PHP_Depend_Code_Type $type)
+    public function addChildType(PHP_Depend_Code_AbstractType $type)
     {
         if (array_search($type, $this->children, true) === false) {
             // First add the type as child
@@ -217,11 +217,11 @@ abstract class PHP_Depend_Code_Type
     /**
      * Removes the given type from the list of known children.
      *
-     * @param PHP_Depend_Code_Type $type The child type instance.
+     * @param PHP_Depend_Code_AbstractType $type The child type instance.
      * 
      * @return void
      */
-    public function removeChildType(PHP_Depend_Code_Type $type)
+    public function removeChildType(PHP_Depend_Code_AbstractType $type)
     {
         if (($i = array_search($type, $this->children, true)) !== false) {
             // First remove this child
