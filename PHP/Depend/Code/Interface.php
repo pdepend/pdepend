@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Type.php';
+require_once 'PHP/Depend/Code/AbstractType.php';
 
 /**
  * Representation of a code interface.  
@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Code/Type.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Interface extends PHP_Depend_Code_Type
+class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
 {
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
