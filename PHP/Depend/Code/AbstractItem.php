@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/Node.php';
+
 /**
  * Abstract base class for code item.
  *
@@ -58,7 +60,7 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Code_AbstractItem
+abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_Node
 {
     /**
      * The name for this item.
