@@ -102,10 +102,6 @@ class PHP_Depend_Parser
      */
     protected $builder = null;
     
-    protected $visibilityMap = array(
-        
-    );
-    
     /**
      * Constructs a new source parser.
      *
