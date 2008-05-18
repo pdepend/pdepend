@@ -95,9 +95,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         }
         
         $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
-        foreach ($builder->getPackages() as $package) {
-            $analyzer->visitPackage($package);
-        }
+        $analyzer->analyze($builder->getPackages());
         
         $expected = array(
             'pkg1Foo'     =>  array(0.15, 0.181875),

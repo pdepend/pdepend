@@ -95,6 +95,15 @@ interface PHP_Depend_Code_NodeVisitor
     function visitPackage(PHP_Depend_Code_Package $package);
     
     /**
+     * Visits a property node. 
+     *
+     * @param PHP_Depend_Code_Property $property The property class node.
+     * 
+     * @return void
+     */
+    function visitProperty(PHP_Depend_Code_Property $property);
+    
+    /**
      * Visits a function node. 
      *
      * @param PHP_Depend_Code_Function $function The current function node.

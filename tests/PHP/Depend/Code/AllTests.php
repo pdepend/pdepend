@@ -56,10 +56,12 @@ require_once dirname(__FILE__) . '/ClassTest.php';
 require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
+require_once dirname(__FILE__) . '/InterfaceTest.php';
 require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
 require_once dirname(__FILE__) . '/MethodTest.php';
 require_once dirname(__FILE__) . '/NodeIteratorTest.php';
 require_once dirname(__FILE__) . '/PackageTest.php';
+require_once dirname(__FILE__) . '/PropertyTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Code package.
@@ -96,10 +98,12 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
+        $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');
         $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
         $suite->addTestSuite('PHP_Depend_Code_MethodTest');
         $suite->addTestSuite('PHP_Depend_Code_NodeIteratorTest');
         $suite->addTestSuite('PHP_Depend_Code_PackageTest');
+        $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
 
         return $suite;
     }

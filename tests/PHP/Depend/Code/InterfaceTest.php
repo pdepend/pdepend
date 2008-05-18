@@ -45,13 +45,13 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
 
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Interface.php';
 
 /**
- * Test case for the php file filter iterator.
+ * Test case for the code interface class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -61,40 +61,77 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTest
 {
     /**
-     * Tests that the filter iterator only returns files with a .php extension.
+     * Tests that {@link PHP_Depend_Code_Interface::getImplementingClasses()}
+     * only returns associated classes and no interfaces.
      *
      * @return void
      */
-    public function testFilterIterator()
+    public function testGetImplementingClassesReturnsOnlyClasses()
     {
-        $dir = dirname(__FILE__) . '/../_code';
-        $it  = new PHP_Depend_Util_FileFilterIterator(
-            new DirectoryIterator($dir),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
+        $i0 = new PHP_Depend_Code_Interface('i0');
+        $i1 = new PHP_Depend_Code_Interface('i1');
+        $i2 = new PHP_Depend_Code_Interface('i2');
+        $c0 = new PHP_Depend_Code_Class('c0');
+        $c1 = new PHP_Depend_Code_Class('c1');
         
-        $expected = array(
-            'class_and_interface_comment.php',
-            'classes.php', 
-            'func_class.php', 
-            'func_code.php', 
-            'function_comment.php',
-            'method_comment.php',
-            'mixed_code.php',
-            'property_comment.php'
-        );
+        $i0->addChildType($i1);
+        $i0->addChildType($i2);
+        $i0->addChildType($c0);
+        $i0->addChildType($c1);
         
-        $result = array();
-        foreach ($it as $file) {
-            $result[] = $file->getFilename();
-        }
-        
-        sort($expected);
-        sort($result);
-        
-        $this->assertEquals($expected, $result);
+        $classes = $i0->getImplementingClasses();
+        $this->assertEquals(2, $classes->count());
+        $this->assertSame($c0, $classes->current());
+        $classes->next();
+        $this->assertSame($c1, $classes->current());
     }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Interface::getChildInterfaces()}
+     * only returns associated interfaces and no classes.
+     *
+     * @return void
+     */
+    public function testGetChildInterfaces()
+    {
+        $i0 = new PHP_Depend_Code_Interface('i0');
+        $i1 = new PHP_Depend_Code_Interface('i1');
+        $i2 = new PHP_Depend_Code_Interface('i2');
+        $c0 = new PHP_Depend_Code_Class('c0');
+        $c1 = new PHP_Depend_Code_Class('c1');
+        
+        $i0->addChildType($i1);
+        $i0->addChildType($i2);
+        $i0->addChildType($c0);
+        $i0->addChildType($c1);
+        
+        $interfaces = $i0->getChildInterfaces();
+        $this->assertEquals(2, $interfaces->count());
+        $this->assertSame($i1, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($i2, $interfaces->current());
+    }
+    
+    /**
+     * Creates an abstract item instance.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    protected function createItem()
+    {
+        return new PHP_Depend_Code_Interface('interfs');
+    }
+    
+    /**
+     * Generates a node instance that can handle dependencies.
+     *
+     * @return PHP_Depend_Code_DependencyNode
+     */
+    protected function createDependencyNode()
+    {
+        return new PHP_Depend_Code_Interface('interfs');
+    }   
 }

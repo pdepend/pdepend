@@ -45,13 +45,13 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Property.php';
 
 /**
- * Test case for the php file filter iterator.
+ * Test case for the code property class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -61,40 +61,64 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_PropertyTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
-     * Tests that the filter iterator only returns files with a .php extension.
+     * Tests that {@link PHP_Depend_Code_Property::setVisibility()} fails with
+     * an exception for invalid visibility values.
      *
      * @return void
      */
-    public function testFilterIterator()
+    public function testSetVisibilityWithInvalidVisibilityTypeFail()
     {
-        $dir = dirname(__FILE__) . '/../_code';
-        $it  = new PHP_Depend_Util_FileFilterIterator(
-            new DirectoryIterator($dir),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
+        $this->setExpectedException('InvalidArgumentException');
         
-        $expected = array(
-            'class_and_interface_comment.php',
-            'classes.php', 
-            'func_class.php', 
-            'func_code.php', 
-            'function_comment.php',
-            'method_comment.php',
-            'mixed_code.php',
-            'property_comment.php'
-        );
+        $property = $this->createItem();
+        $property->setVisibility(-1);
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Property::setVisibility()} only accepts
+     * the first set value, later method calls will be ignored.
+     *
+     * @return void
+     */
+    public function testSetVisibilityOnlyAcceptsTheFirstValue()
+    {
+        $property = $this->createItem();
+        $this->assertFalse($property->isPublic());
+        $property->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+        $this->assertTrue($property->isPublic());
+        $property->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+        $this->assertTrue($property->isPublic());
+        $this->assertFalse($property->isPrivate());
+    }
+    
+    /**
+     * Tests the default behaviour of the <b>setParent()</b> and <b>getParent()</b>
+     * methods.
+     *
+     * @return void
+     */
+    public function testSetParentWithNullResetsParentReference()
+    {
+        $class = new PHP_Depend_Code_Class('clazz');
         
-        $result = array();
-        foreach ($it as $file) {
-            $result[] = $file->getFilename();
-        }
-        
-        sort($expected);
-        sort($result);
-        
-        $this->assertEquals($expected, $result);
+        $property = $this->createItem();
+        $this->assertNull($property->getParent());
+        $property->setParent($class);
+        $this->assertSame($class, $property->getParent());
+        $property->setParent();
+        $this->assertNull($property->getParent());
+    }
+    
+    /**
+     * Creates an abstract item instance.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    protected function createItem()
+    {
+        return new PHP_Depend_Code_Property('$pdepend', 0);
     }
 }
