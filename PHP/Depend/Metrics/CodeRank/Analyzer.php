@@ -253,11 +253,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param PHP_Depend_Code_Type $type The context type instance.
+     * @param PHP_Depend_Code_AbstractType $type The context type instance.
      * 
      * @return void
      */
-    protected function visitType(PHP_Depend_Code_Type $type)
+    protected function visitType(PHP_Depend_Code_AbstractType $type)
     {
         $packageName = $type->getPackage()->getName();
         $className   = $this->buildQualifiedTypeName($type);
@@ -286,11 +286,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     /**
      * Initializes the node for the given type instance.
      *
-     * @param PHP_Depend_Code_Type $type The context type instance.
+     * @param PHP_Depend_Code_AbstractType $type The context type instance.
      * 
      * @return void
      */
-    protected function initTypeNode(PHP_Depend_Code_Type $type)
+    protected function initTypeNode(PHP_Depend_Code_AbstractType $type)
     {
         $typeName = $this->buildQualifiedTypeName($type);
         
@@ -329,11 +329,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * namespace identifier. This method uses a notation that is equal to PHP 5.3
      * namespaces.
      *
-     * @param PHP_Depend_Code_Type $type The context type instance.
+     * @param PHP_Depend_Code_AbstractType $type The context type instance.
      * 
      * @return string
      */
-    protected function buildQualifiedTypeName(PHP_Depend_Code_Type $type)
+    protected function buildQualifiedTypeName(PHP_Depend_Code_AbstractType $type)
     {
         return $type->getPackage()->getName() . '::' . $type->getName();
     }

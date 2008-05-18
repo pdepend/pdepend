@@ -232,11 +232,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Generic visit method for classes and interfaces. Both visit methods 
      * delegate calls to this method.
      *
-     * @param PHP_Depend_Code_Type $type The context type instance.
+     * @param PHP_Depend_Code_AbstractType $type The context type instance.
      * 
      * @return void
      */
-    protected function visitType(PHP_Depend_Code_Type $type)
+    protected function visitType(PHP_Depend_Code_AbstractType $type)
     {
         $pkgName = $type->getPackage()->getName();
         
