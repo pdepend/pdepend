@@ -63,17 +63,17 @@ class PHP_Depend_Metrics_Type
     /**
      * The code class for this metric model.
      *
-     * @type PHP_Depend_Code_Type
-     * @var PHP_Depend_Code_Type $class
+     * @type PHP_Depend_Code_AbstractType
+     * @var PHP_Depend_Code_AbstractType $class
      */
     protected $type = null;
     
     /**
      * Constructs a new type metric model.
      *
-     * @param PHP_Depend_Code_Type $type The associated code type.
+     * @param PHP_Depend_Code_AbstractType $type The associated code type.
      */
-    public function __construct(PHP_Depend_Code_Type $type)
+    public function __construct(PHP_Depend_Code_AbstractType $type)
     {
         $this->type = $type;
     }
@@ -101,7 +101,7 @@ class PHP_Depend_Metrics_Type
     /**
      * Returns the associated code type instance.
      *
-     * @return PHP_Depend_Code_Type
+     * @return PHP_Depend_Code_AbstractType
      */
     public function getType()
     {
