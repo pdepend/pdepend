@@ -117,6 +117,16 @@ interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
     function buildPackage($name);
     
     /**
+     * Builds a new property instance.
+     *
+     * @param string  $name The property variable name.
+     * @param integer $line The line number with the property declaration.
+     * 
+     * @return PHP_Depend_Code_Property The created property instance.
+     */
+    function buildProperty($name, $line = 0);
+    
+    /**
      * Builds a new method instance.
      *
      * @param string  $name The method name.

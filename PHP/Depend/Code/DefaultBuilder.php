@@ -52,6 +52,7 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Code/Property.php';
 
 /**
  * Default code tree builder implementation.
@@ -259,6 +260,19 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
             $this->packages[$name] = new PHP_Depend_Code_Package($name);
         }
         return $this->packages[$name];
+    }
+    
+    /**
+     * Builds a new property instance.
+     *
+     * @param string  $name The property variable name.
+     * @param integer $line The line number with the property declaration.
+     * 
+     * @return PHP_Depend_Code_Property The created property instance.
+     */
+    public function buildProperty($name, $line = 0)
+    {
+        return new PHP_Depend_Code_Property($name, $line);
     }
     
     /**
