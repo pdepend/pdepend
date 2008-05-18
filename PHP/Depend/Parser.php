@@ -287,6 +287,21 @@ class PHP_Depend_Parser
                 $comment   = null;
                 $abstract  = false;
                 break;
+                
+            case PHP_Depend_Code_Tokenizer::T_VARIABLE:
+                $property = $this->builder->buildProperty($token[1], $token[2]);
+                $property->setDocComment($comment);
+                $property->setVisibility($visibilty);
+                
+                // TODO: Do we need an instanceof, to check that $type is a
+                //       PHP_Depend_Code_Class instance or do we believe the 
+                //       code is correct?
+                $type->addProperty($property);
+                
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
+                $comment   = null;
+                $abstract  = false;
+                break;
                     
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
                 ++$curly;
