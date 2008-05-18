@@ -70,6 +70,14 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     protected $abstract = false;
     
     /**
+     * List of associated properties.
+     *
+     * @type array<PHP_Depend_Code_Property>
+     * @var array(PHP_Depend_Code_Property) $properties
+     */
+    protected $properties = array();
+    
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
@@ -115,6 +123,50 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     public function getChildClasses()
     {
         return new PHP_Depend_Code_NodeIterator($this->children);
+    }
+    
+    /**
+     * Returns all properties for this class.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getProperties()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->properties);
+    }
+    
+    /**
+     * Adds a new property to this class instance.
+     *
+     * @param PHP_Depend_Code_Property $property The new class property.
+     * 
+     * @return void
+     */
+    public function addProperty(PHP_Depend_Code_Property $property)
+    {
+        if (in_array($property, $this->properties, true) === false) {
+            // Add to internal list
+            $this->properties[] = $property;
+            // Set this as parent
+            $property->setParent($this);
+        }
+    }
+    
+    /**
+     * Removes the given property from this class.
+     *
+     * @param PHP_Depend_Code_Property $property The property to remove.
+     * 
+     * @return void
+     */
+    public function removeProperty(PHP_Depend_Code_Property $property)
+    {
+        if (($i = array_search($property, $this->properties, true)) !== false) {
+            // Remove this as parent
+            $property->setParent(null);
+            // Remove from internal property list
+            unset($this->properties[$i]);
+        }
     }
     
     /**
