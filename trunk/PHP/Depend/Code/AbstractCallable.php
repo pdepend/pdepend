@@ -76,10 +76,10 @@ abstract class PHP_Depend_Code_AbstractCallable
     protected $tokens = array();
     
     /**
-     * List of {@link PHP_Depend_Code_Type} objects this function depends on.
+     * List of {@link PHP_Depend_Code_AbstractType} objects this function depends on.
      *
-     * @type array<PHP_Depend_Code_Type>
-     * @var array(PHP_Depend_Code_Type) $dependencies
+     * @type array<PHP_Depend_Code_AbstractType>
+     * @var array(PHP_Depend_Code_AbstractType) $dependencies
      */
     protected $dependencies = array();
     
@@ -106,7 +106,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
     
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects this function depends on.
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects this function depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -116,13 +116,13 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
     
     /**
-     * Adds the given {@link PHP_Depend_Code_Type} object as dependency.
+     * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
      *
-     * @param PHP_Depend_Code_Type $type A type this function depends on.
+     * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
      * 
      * @return void
      */
-    public function addDependency(PHP_Depend_Code_Type $type)
+    public function addDependency(PHP_Depend_Code_AbstractType $type)
     {
         if (in_array($type, $this->dependencies, true) === false) {
             $this->dependencies[] = $type;
@@ -130,14 +130,14 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
     
     /**
-     * Removes the given {@link PHP_Depend_Code_Type} object from the dependency
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the dependency
      * list.
      *
-     * @param PHP_Depend_Code_Type $type A type to remove.
+     * @param PHP_Depend_Code_AbstractType $type A type to remove.
      * 
      * @return void
      */
-    public function removeDependency(PHP_Depend_Code_Type $type)
+    public function removeDependency(PHP_Depend_Code_AbstractType $type)
     {
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list

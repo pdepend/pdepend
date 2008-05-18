@@ -79,10 +79,10 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     protected $uuid = null;
     
     /**
-     * List of all {@link PHP_Depend_Code_Type} objects for this package.
+     * List of all {@link PHP_Depend_Code_AbstractType} objects for this package.
      *
-     * @type array<PHP_Depend_Code_Type>
-     * @var array(PHP_Depend_Code_Type) $types
+     * @type array<PHP_Depend_Code_AbstractType>
+     * @var array(PHP_Depend_Code_AbstractType) $types
      */
     protected $types = array();
     
@@ -156,7 +156,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     }
     
     /**
-     * Returns all {@link PHP_Depend_Code_Type} objects in this package.
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects in this package.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -168,11 +168,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     /**
      * Adds the given type to this package.
      *
-     * @param PHP_Depend_Code_Type $type The new package type.
+     * @param PHP_Depend_Code_AbstractType $type The new package type.
      * 
      * @return void
      */
-    public function addType(PHP_Depend_Code_Type $type)
+    public function addType(PHP_Depend_Code_AbstractType $type)
     {
         if ($type->getPackage() !== null) {
             $type->getPackage()->removeType($type);
@@ -187,11 +187,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     /**
      * Removes the given type instance from this package.
      *
-     * @param PHP_Depend_Code_Type $type The type instance to remove.
+     * @param PHP_Depend_Code_AbstractType $type The type instance to remove.
      * 
      * @return void
      */
-    public function removeType(PHP_Depend_Code_Type $type)
+    public function removeType(PHP_Depend_Code_AbstractType $type)
     {
         if (($i = array_search($type, $this->types, true)) !== false) {
             // Remove class from internal list

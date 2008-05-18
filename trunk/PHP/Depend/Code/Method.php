@@ -82,8 +82,8 @@ class PHP_Depend_Code_Method
     /**
      * The parent type object.
      *
-     * @type PHP_Depend_Code_Type
-     * @var PHP_Depend_Code_Type $parent
+     * @type PHP_Depend_Code_AbstractType
+     * @var PHP_Depend_Code_AbstractType $parent
      */
     protected $parent = null;
     
@@ -173,7 +173,7 @@ class PHP_Depend_Code_Method
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return PHP_Depend_Code_Type|null
+     * @return PHP_Depend_Code_AbstractType|null
      */
     public function getParent()
     {
@@ -183,11 +183,11 @@ class PHP_Depend_Code_Method
     /**
      * Sets the parent type object.
      *
-     * @param PHP_Depend_Code_Type $parent The parent type.
+     * @param PHP_Depend_Code_AbstractType $parent The parent type.
      * 
      * @return void
      */
-    public function setParent(PHP_Depend_Code_Type $parent = null)
+    public function setParent(PHP_Depend_Code_AbstractType $parent = null)
     {
         $this->parent = $parent;
     }

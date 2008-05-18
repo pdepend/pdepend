@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Type.php';
+require_once 'PHP/Depend/Code/AbstractType.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
@@ -59,7 +59,7 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Class extends PHP_Depend_Code_Type
+class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
 {
     /**
      * Marks this class as abstract.
