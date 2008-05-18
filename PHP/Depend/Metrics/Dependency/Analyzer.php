@@ -205,6 +205,19 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     }
     
     /**
+     * Visits a property node. 
+     *
+     * @param PHP_Depend_Code_Property $property The property class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitProperty()
+     */
+    public function visitProperty(PHP_Depend_Code_Property $property)
+    {
+        
+    }
+    
+    /**
      * Visits a class node. 
      *
      * @param PHP_Depend_Code_Class $class The current class node.
@@ -214,6 +227,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->visitType($class);
+    
+        foreach ($class->getProperties() as $property) {
+            $property->accept($this);
+        }
     }
     
     /**

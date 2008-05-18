@@ -20,6 +20,7 @@ interface Foo {
  * @package pkg3
  */
 abstract class Bar implements Foo {
+    private $foo = 17;
     protected abstract function y(Bar $bar);
 }
 
@@ -27,7 +28,11 @@ abstract class Bar implements Foo {
  * @package pkg1
  */
 class FooBar extends Bar {
-    public function x() {}
+    private $x = 0x1234;
+    protected $y = null;
+    public $z = 'pdepend';
+    
+    public final function x() {}
     protected function y(Bar $bar) {
         if ($bar !== null) {
             $bar = new BarFoo($bar);

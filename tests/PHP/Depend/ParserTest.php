@@ -315,7 +315,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectClassStartLineNumber()
     {
-        $this->assertEquals(29, $this->getMixedCodeClass()->getStartLine());
+        $this->assertEquals(30, $this->getMixedCodeClass()->getStartLine());
     }
     
     /**
@@ -325,7 +325,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectClassEndLineNumber()
     {
-        $this->assertEquals(36, $this->getMixedCodeClass()->getEndLine());
+        $this->assertEquals(41, $this->getMixedCodeClass()->getEndLine());
     }
     
     /**
@@ -337,9 +337,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $methods = $this->getMixedCodeClassMethods();
         
-        $this->assertEquals(30, $methods->current()->getStartLine());
+        $this->assertEquals(35, $methods->current()->getStartLine());
         $methods->next();
-        $this->assertEquals(31, $methods->current()->getStartLine());
+        $this->assertEquals(36, $methods->current()->getStartLine());
     }
     
     /**
@@ -351,9 +351,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $methods = $this->getMixedCodeClassMethods();
         
-        $this->assertEquals(30, $methods->current()->getEndLine());
-        $methods->next();
         $this->assertEquals(35, $methods->current()->getEndLine());
+        $methods->next();
+        $this->assertEquals(40, $methods->current()->getEndLine());
     }
     
     /**
@@ -494,7 +494,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         $nodes = $builder->getPackages()->current()->getFunctions();
         
-        $this->doTestParserSetsCorrectMethodOrFunctionDocComment($nodes);
+        $this->doTestParserSetsCorrectDocComment($nodes);
     }
     
     /**
@@ -517,7 +517,59 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                          ->current()
                          ->getMethods();
         
-        $this->doTestParserSetsCorrectMethodOrFunctionDocComment($nodes);
+        $this->doTestParserSetsCorrectDocComment($nodes);
+    }
+    
+    /**
+     * Tests that the parser sets the correct doc comment blocks for properties.
+     * 
+     * @return void
+     */
+    public function testParserSetsCorrectPropertyDocComment()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/property_comment.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $nodes = $builder->getPackages()
+                         ->current()
+                         ->getTypes()
+                         ->current()
+                         ->getProperties();
+        
+        $this->doTestParserSetsCorrectDocComment($nodes);
+    }
+    
+    /**
+     * Tests that the parser sets the correct visibility for properties.
+     * 
+     * @return void
+     */
+    public function testParserSetsCorrectPropertyVisibility()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/property_comment.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $nodes = $builder->getPackages()
+                         ->current()
+                         ->getTypes()
+                         ->current()
+                         ->getProperties();
+                         
+        $this->assertTrue($nodes->current()->isProtected());
+        $nodes->next();
+        $this->assertTrue($nodes->current()->isPrivate());
+        $nodes->next();  
+        $this->assertTrue($nodes->current()->isProtected());
+        $nodes->next();
+        $this->assertTrue($nodes->current()->isPublic());
     }
     
     /**
@@ -623,7 +675,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * 
      * @return void
      */
-    protected function doTestParserSetsCorrectMethodOrFunctionDocComment(
+    protected function doTestParserSetsCorrectDocComment(
                                             PHP_Depend_Code_NodeIterator $nodes)
     {
         $expected = array(
