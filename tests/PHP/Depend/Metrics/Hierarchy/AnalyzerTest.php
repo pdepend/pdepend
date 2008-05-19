@@ -47,6 +47,9 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
 
 /**
@@ -110,5 +113,46 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         $this->assertEquals(1, $project['maxDIT']);
         
         //var_dump($result->getProjectMetrics());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Metrics_Hierarchy_Analyzer::analyze()} calculates
+     * the expected DIT values.
+     *
+     * @return void
+     */
+    public function testGetAllNodeMetrics()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        $b = new PHP_Depend_Code_Class('b');
+        $c = new PHP_Depend_Code_Class('c');
+        $d = new PHP_Depend_Code_Class('d');
+        $e = new PHP_Depend_Code_Class('e');
+        
+        $p = new PHP_Depend_Code_Package('p');
+        $p->addType($a);
+        $p->addType($b);
+        $p->addType($c);
+        $p->addType($d);
+        $p->addType($e);
+        
+        $a->addChildType($b);
+        $a->addChildType($c);
+        $c->addChildType($d);
+        $d->addChildType($e);
+        
+        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $result   = $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
+        $actual   = $result->getAllNodeMetrics();
+        
+        $expected = array(
+            $a->getUUID()  =>  array('dit'  =>  0),
+            $b->getUUID()  =>  array('dit'  =>  1),
+            $c->getUUID()  =>  array('dit'  =>  1),
+            $d->getUUID()  =>  array('dit'  =>  2),
+            $e->getUUID()  =>  array('dit'  =>  3),
+        );
+        
+        $this->assertEquals($expected, $actual);
     }
 }
