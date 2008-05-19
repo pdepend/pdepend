@@ -49,6 +49,7 @@ require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/ResultSetI.php';
+require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
 
 /**
@@ -74,6 +75,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
                PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_ResultSetI,
+               PHP_Depend_Metrics_ResultSet_NodeAwareI,
                PHP_Depend_Metrics_ResultSet_ProjectAwareI
 {
     /**
@@ -141,6 +143,29 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     protected $maxDIT = 0;
     
     /**
+     * Hash with all calculated node metrics.
+     *
+     * <code>
+     * array(
+     *     '0375e305-885a-4e91-8b5c-e25bda005438'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     ),
+     *     'e60c22f0-1a63-4c40-893e-ed3b35b84d0b'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     )
+     * )
+     * </code>
+     *
+     * @type array<array>
+     * @var array(string=>array) $nodeMetrics
+     */
+    protected $nodeMetrics = array();
+    
+    /**
      * @see PHP_Depend_Metrics_AnalyzerI::analyze()
      *
      * @param PHP_Depend_Code_NodeIterator $packages
@@ -176,6 +201,34 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
+     * This method returns an <b>array</b> with all aggregated metrics.
+     * 
+     * @return array(string=>array)
+     * @see PHP_Depend_Metrics_ResultSet_NodeAwareI::getAllNodeMetrics()
+     */
+    public function getAllNodeMetrics()
+    {
+        return $this->nodeMetrics;
+    }
+    
+    /**
+     * This method will return an <b>array</b> with all generated metric values 
+     * for the node with the given <b>$uuid</b> identifier. If there are no
+     * metrics for the requested node, this method will return an empty <b>array</b>.
+     *
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array(string=>mixed)
+     */
+    public function getNodeMetrics($uuid)
+    {
+        if (isset($this->nodeMetrics[$uuid])) {
+            return $this->nodeMetrics[$uuid];
+        }
+        return array();
+    }
+    
+    /**
      * @see PHP_Depend_Code_NodeVisitor::visitClass()
      *
      * @param PHP_Depend_Code_Class $class
@@ -194,7 +247,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             ++$this->roots;
         }
         
-        $this->maxDIT = max($this->maxDIT, $this->getClassDIT($class));
+        // Get class dit value
+        $dit = $this->getClassDIT($class);
+        // Store node metric
+        $this->nodeMetrics[$class->getUUID()] = array('dit'  =>  $dit);
+        // Collect max dit value
+        $this->maxDIT = max($this->maxDIT, $dit);
         
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
