@@ -71,6 +71,14 @@ class PHP_Depend_Parser
     protected $package = null;
     
     /**
+     * The package separator token.
+     *
+     * @type string
+     * @var string $packageSeparator
+     */
+    protected $packageSeparator = '::';
+    
+    /**
      * Marks the current class as abstract.
      *
      * @type boolean
@@ -537,7 +545,11 @@ class PHP_Depend_Parser
     protected function parsePackage($comment)
     {
         if (preg_match('#\*\s*@package\s+(.*)#', $comment, $match)) {
-            return trim($match[1]);
+            $package = trim($match[1]);
+            if (preg_match('#\*\s*@subpackage\s+(.*)#', $comment, $match)) {
+                $package .= $this->packageSeparator . trim($match[1]);
+            }
+            return $package;
         }
         return PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
     }    
