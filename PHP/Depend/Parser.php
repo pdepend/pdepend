@@ -71,6 +71,14 @@ class PHP_Depend_Parser
     protected $package = null;
     
     /**
+     * The package defined in the file level comment.
+     *
+     * @type string
+     * @var string $fileLevelPackage
+     */
+    protected $fileLevelPackage = null;
+    
+    /**
      * The package separator token.
      *
      * @type string
@@ -145,6 +153,11 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_DOC_COMMENT:
                 $comment       = $token[1];
                 $this->package = $this->parsePackage($token[1]);
+                
+                // Check for doc level comment
+                if ($this->tokenizer->prev() === PHP_Depend_Code_Tokenizer::T_OPEN_TAG) {
+                    $this->fileLevelPackage = $this->package;
+                }
                 break;
                     
             case PHP_Depend_Code_Tokenizer::T_INTERFACE:
