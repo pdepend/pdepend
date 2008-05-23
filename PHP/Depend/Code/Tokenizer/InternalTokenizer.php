@@ -313,7 +313,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     }
     
     /**
-     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} 
+     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_BOF} 
      * if there is no previous token.
      *
      * @return integer
@@ -323,7 +323,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         if ($this->index > 1) {
             return $this->tokens[$this->index - 2][0];
         }
-        return self::T_EOF;
+        return self::T_BOF;
     }
     
     /**
