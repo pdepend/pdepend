@@ -158,6 +158,8 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_Node
      * Sets the start line for this item.
      *
      * @param integer $startLine The start line for this item.
+     * 
+     * @return void
      */
     public function setStartLine($startLine)
     {
@@ -179,7 +181,9 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_Node
     /**
      * Sets the end line for this item.
      *
-     * @param integer $endLine
+     * @param integer $endLine The end line for this item
+     * 
+     * @return void
      */
     public function setEndLine($endLine)
     {
@@ -226,6 +230,8 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_Node
      * Sets the doc comment for this item.
      *
      * @param string $docComment The doc comment block.
+     * 
+     * @return void
      */
     public function setDocComment($docComment)
     {
