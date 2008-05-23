@@ -97,70 +97,43 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
         $analyzer->analyze($builder->getPackages());
         
-        $expected = array(
-            'pkg1Foo'     =>  array(0.15, 0.181875),
-            'pkg2FooI'    =>  array(0.15, 0.181875),
-            'pkg2Bar'     =>  array(0.15, 0.1755),
-            'pkg2Foobar'  =>  array(0.15, 0.1755),
-            'pkg1Barfoo'  =>  array(0.15, 0.207375),
-            'pkg2Barfoo'  =>  array(0.15, 0.207375),
-            'pkg1Foobar'  =>  array(0.15, 0.411375),
-            'pkg1FooI'    =>  array(0.5325, 0.15),
-            'pkg1Bar'     =>  array(0.59625, 0.15),
-            'pkg3FooI'    =>  array(0.21375, 0.2775),
-            'Iterator'    =>  array(0.3316875, 0.15),
-            'Bar'         =>  array(0.15, 0.15)
+        $input = array(
+            'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
+            'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
+            'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
+            'global'      =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
+            'pkg1Foo'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
+            'pkg2FooI'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
+            'pkg2Bar'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
+            'pkg2Foobar'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
+            'pkg1Barfoo'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.207375),
+            'pkg2Barfoo'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.207375),
+            'pkg1Foobar'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.411375),
+            'pkg1FooI'    =>  array('cr'  =>  0.5325,     'rcr'  =>  0.15),
+            'pkg1Bar'     =>  array('cr'  =>  0.59625,    'rcr'  =>  0.15),
+            'pkg3FooI'    =>  array('cr'  =>  0.21375,    'rcr'  =>  0.2775),
+            'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
+            'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
         );
         
-        foreach ($analyzer->getClassRank() as $rank) {
-            // Get expected value set
-            $value = $expected[$rank->getName()];
-            $this->assertEquals($value[0], $rank->getCodeRank(), '', 0.00005);
-            $this->assertEquals($value[1], $rank->getReverseCodeRank(), '', 0.00005);
-        }
-    }
-    
-    /**
-     * Tests the calculated package rank.
-     *
-     * @return void
-     */
-    public function testGetPackageRank()
-    {
-        $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
-        $files  = new PHP_Depend_Util_FileFilterIterator(
-            new DirectoryIterator($source),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
-        
-        $builder = new PHP_Depend_Code_DefaultBuilder();
-        
-        foreach ($files as $file) {
-            
-            $path = $file->getRealPath();
-            $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
-            
-            $parser = new PHP_Depend_Parser($tokz, $builder);
-            $parser->parse();
-        }
-        
-        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $expected = array();
         foreach ($builder->getPackages() as $package) {
-            $analyzer->visitPackage($package);
+            $expected[$package->getUUID()] = $input[$package->getName()];
+            foreach ($package->getTypes() as $type) {
+                $expected[$type->getUUID()] = $input[$type->getName()];
+            }
         }
         
-        $expected = array(
-            'package1'  =>  array(0.2775, 0.385875),
-            'package2'  =>  array(0.15, 0.47799375),
-            'package3'  =>  array(0.385875, 0.2775),
-            'global'    =>  array(0.47799375, 0.15),
-        );
+        foreach ($analyzer->getAllNodeMetrics() as $uuid => $metrics) {
+            $this->assertEquals($expected[$uuid]['cr'], $metrics['cr'], '', 0.00005);
+            $this->assertEquals($expected[$uuid]['rcr'], $metrics['rcr'], '', 0.00005);
+        }
         
-        foreach ($analyzer->getPackageRank() as $rank) {
-            // Get expected value set
-            $value = $expected[$rank->getName()];
-            $this->assertEquals($value[0], $rank->getCodeRank(), '', 0.00005);
-            $this->assertEquals($value[1], $rank->getReverseCodeRank(), '', 0.00005);
+        foreach ($expected as $uuid => $info) {
+            $metrics = $analyzer->getNodeMetrics($uuid);
+            
+            $this->assertEquals($info['cr'], $metrics['cr'], '', 0.00005);
+            $this->assertEquals($info['rcr'], $metrics['rcr'], '', 0.00005);
         }
     }
 }
