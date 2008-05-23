@@ -73,38 +73,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     const DAMPING_FACTOR = 0.85;
     
     /**
-     * The found class nodes.
-     *
-     * @type array
-     * @var array $classNodes
-     */
-    protected $classNodes = array();
-    
-    /**
-     * The calculated class ranks.
-     *
-     * @type Iterator
-     * @var Iterator $classRank
-     */
-    protected $classRank = null;
-    
-    /**
-     * The found package nodes.
-     *
-     * @type Iterator
-     * @var Iterator $packageNodes
-     */
-    protected $packageNodes = array();
-    
-    /**
-     * The calculated package ranks.
-     *
-     * @type array<PHP_Depend_Metrics_CodeRank_Package>
-     * @var array(PHP_Depend_Metrics_CodeRank_Package) $packageRank
-     */
-    protected $packageRank = null;
-    
-    /**
      * All found nodes.
      *
      * @type array<array>
