@@ -238,7 +238,7 @@ class PHP_Depend_Log_Summary_Xml
      *   </class>
      * </code>
      *
-     * @param DOMElement $xml            The parent xml element.
+     * @param DOMElement           $xml  The parent xml element.
      * @param PHP_Depend_Code_File $file The code file instance.
      * 
      * @return void
