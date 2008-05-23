@@ -332,9 +332,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     
     /**
      * Generates the forward and reverse code rank for the given <b>$nodes</b>.
-     *
-     * @param array  $nodes List of nodes.
-     * @param string $class The metric model class.
      * 
      * @return void
      */
@@ -349,10 +346,10 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         foreach ($this->nodes as $uuid => $info) {
             $this->nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
         }
-        foreach ($this->computeCodeRank($this->nodes, 'out', 'in') as $uuid => $rank) {
+        foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
             $this->nodeMetrics[$uuid]['cr'] = $rank;
         }
-        foreach ($this->computeCodeRank($this->nodes, 'in', 'out') as $uuid => $rank) {
+        foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
             $this->nodeMetrics[$uuid]['rcr'] = $rank;
         }
     }
@@ -413,17 +410,17 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     
     /**
      * Calculates the code rank for the given <b>$nodes</b> set.
-     *
-     * @param array  $nodes List of nodes. 
-     * @param string $id1   Identifier for the incoming edges.
-     * @param string $id2   Identifier for the outgoing edges.
+     * 
+     * @param string $id1 Identifier for the incoming edges.
+     * @param string $id2 Identifier for the outgoing edges.
      * 
      * @return array(string=>float)
      */
-    protected function computeCodeRank(array $nodes, $id1, $id2)
+    protected function computeCodeRank($id1, $id2)
     {
         $d = self::DAMPING_FACTOR;
         
+        $nodes = $this->nodes;
         $ranks = array();
         foreach ($this->topologicalSort($nodes, $id1, $id2) as $name) {
             $rank = 0.0;
