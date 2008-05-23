@@ -84,6 +84,7 @@ class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
             'function_comment.php',
             'method_comment.php',
             'mixed_code.php',
+            'package_file_level.php',
             'package_subpackage_support.php',
             'property_comment.php'
         );

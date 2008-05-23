@@ -624,6 +624,39 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser supports sub packages.
+     *
+     * @return void
+     */
+    public function testParserSetsFileLevelFunctionPackage()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/package_file_level.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        
+        $package0   = $packages->current();
+        $functions0 = $package0->getFunctions();
+        
+        $packages->next();
+        
+        $package1   = $packages->current();
+        $functions1 = $package1->getFunctions();
+        
+        $this->assertEquals(2, $functions0->count());
+        $this->assertEquals('PHP::Depend', $functions0->current()->getPackage()->getName());
+        $functions0->next();
+        $this->assertEquals('PHP::Depend', $functions0->current()->getPackage()->getName());
+
+        $this->assertEquals(1, $functions1->count());
+        $this->assertEquals('PHP_Depend::Test', $functions1->current()->getPackage()->getName());
+    }
+    
+    /**
      * Returns all packages in the mixed code example.
      *
      * @return PHP_Depend_Code_NodeIterator

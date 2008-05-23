@@ -320,8 +320,8 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      */
     public function prev()
     {
-        if ($this->index > 0) {
-            return $this->tokens[$this->index - 1][0];
+        if ($this->index > 1) {
+            return $this->tokens[$this->index - 2][0];
         }
         return self::T_EOF;
     }
