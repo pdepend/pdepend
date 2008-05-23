@@ -59,7 +59,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Code_File
-{   
+{
     /**
      * The unique identifier for this function.
      *
