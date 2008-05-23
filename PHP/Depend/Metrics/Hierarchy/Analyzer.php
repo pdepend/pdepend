@@ -229,9 +229,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitClass()
+     * Calculates metrics for the given <b>$class</b> instance.
      *
-     * @param PHP_Depend_Code_Class $class
+     * @param PHP_Depend_Code_Class $class The context class instance.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -263,9 +266,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitFunction()
+     * Calculates metrics for the given <b>$function</b> instance.
      *
-     * @param PHP_Depend_Code_Function $function
+     * @param PHP_Depend_Code_Function $function The context function instance.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -273,9 +279,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitInterface()
+     * Calculates metrics for the given <b>$interface</b> instance.
      *
-     * @param PHP_Depend_Code_Interface $interface
+     * @param PHP_Depend_Code_Interface $interface The context interface instance.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -287,9 +296,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitMethod()
+     * Calculates metrics for the given <b>$method</b> instance.
      *
-     * @param PHP_Depend_Code_Method $method
+     * @param PHP_Depend_Code_Method $method The context method instance.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -297,9 +309,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitPackage()
+     * Calculates metrics for the given <b>$package</b> instance.
      *
-     * @param PHP_Depend_Code_Package $package
+     * @param PHP_Depend_Code_Package $package The context package instance.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
@@ -331,6 +346,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * Returns the depth of inheritance tree value for the given class.
      *
      * @param PHP_Depend_Code_Class $class The context code class instance.
+     * 
+     * @return integer
      */
     protected function getClassDIT(PHP_Depend_Code_Class $class)
     {
