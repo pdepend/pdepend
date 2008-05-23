@@ -67,16 +67,16 @@ final class PHP_Depend_Util_UUID
      * The generated uuid.
      *
      * @type string
-     * @var string $uuid
+     * @var string $_uuid
      */
-    private $uuid = null;
+    private $_uuid = null;
 
     /**
      * The ctor generates a uuid.
      */
     public function __construct()
     {
-        $this->uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        $this->_uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff),
             mt_rand(0, 0x0fff) | 0x4000,
             mt_rand(0, 0x3fff) | 0x8000,
@@ -91,6 +91,6 @@ final class PHP_Depend_Util_UUID
      */
     public function __toString()
     {
-        return $this->uuid;
+        return $this->_uuid;
     }
 }

@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Util/UUID.php';
 abstract class PHP_Depend_Code_AbstractType
        extends PHP_Depend_Code_AbstractItem 
     implements PHP_Depend_Code_DependencyNode
-{   
+{
     /**
      * The parent package for this class.
      *
