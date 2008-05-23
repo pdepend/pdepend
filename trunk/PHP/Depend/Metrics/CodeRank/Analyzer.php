@@ -47,11 +47,8 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/PackageProviderI.php';
-require_once 'PHP/Depend/Metrics/ResultSetI.php';
-require_once 'PHP/Depend/Metrics/TypeProviderI.php';
-require_once 'PHP/Depend/Metrics/CodeRank/Type.php';
-require_once 'PHP/Depend/Metrics/CodeRank/Package.php';
+require_once 'PHP/Depend/Metrics/ResultSetI.php';;
+require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
 
 /**
  * Calculates the code ranke metric for classes and packages. 
@@ -67,9 +64,8 @@ require_once 'PHP/Depend/Metrics/CodeRank/Package.php';
 class PHP_Depend_Metrics_CodeRank_Analyzer 
     implements PHP_Depend_Code_NodeVisitor,
                PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_PackageProviderI,
                PHP_Depend_Metrics_ResultSetI,
-               PHP_Depend_Metrics_TypeProviderI
+               PHP_Depend_Metrics_ResultSet_NodeAwareI
 {
     /**
      * The used damping factor.
@@ -109,6 +105,37 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     protected $packageRank = null;
     
     /**
+     * All found nodes.
+     *
+     * @type array<array>
+     * @var array(string=>array) $nodes
+     */
+    protected $nodes = array();
+    
+    /**
+     * Hash with all calculated node metrics.
+     *
+     * <code>
+     * array(
+     *     '0375e305-885a-4e91-8b5c-e25bda005438'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     ),
+     *     'e60c22f0-1a63-4c40-893e-ed3b35b84d0b'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     )
+     * )
+     * </code>
+     *
+     * @type array<array>
+     * @var array(string=>array) $nodeMetrics
+     */
+    protected $nodeMetrics = null;
+    
+    /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
@@ -117,62 +144,43 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
+        // First traverse package tree
         foreach ($packages as $package) {
             $package->accept($this);
         }
+        
+        // Calculate code rank metrics
+        $this->buildCodeRankMetrics();
+        
         return $this;
     }
     
     /**
-     * Returns the package rank for all packages.
-     *
-     * @return Iterator
+     * This method returns an <b>array</b> with all aggregated metrics.
+     * 
+     * @return array(string=>array)
+     * @see PHP_Depend_Metrics_ResultSet_NodeAwareI::getAllNodeMetrics()
      */
-    public function getPackageRank()
+    public function getAllNodeMetrics()
     {
-        return $this->getPackages();
+        return $this->nodeMetrics;
     }
     
     /**
-     * Returns the package rank for all packages.
+     * This method will return an <b>array</b> with all generated metric values 
+     * for the node with the given <b>$uuid</b> identifier. If there are no
+     * metrics for the requested node, this method will return an empty <b>array</b>.
      *
-     * @return Iterator
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array(string=>mixed)
      */
-    public function getPackages()
+    public function getNodeMetrics($uuid)
     {
-        if ($this->packageRank === null) {
-            // The result class
-            $class = 'PHP_Depend_Metrics_CodeRank_Package';
-            // Build package code rank
-            $this->packageRank = $this->buildCodeRank($this->packageNodes, $class);
+        if (isset($this->nodeMetrics[$uuid])) {
+            return $this->nodeMetrics[$uuid];
         }
-        return $this->packageRank;
-    }
-    
-    /**
-     * Returns the class rank for all classes and interfaces.
-     *
-     * @return Iterator
-     */
-    public function getClassRank()
-    {
-        return $this->getTypes();
-    }
-    
-    /**
-     * Returns the class rank for all classes and interfaces.
-     *
-     * @return Iterator
-     */
-    public function getTypes()
-    {
-        if ($this->classRank === null) {
-            // The result class
-            $class = 'PHP_Depend_Metrics_CodeRank_Type';
-            // Build class code rank
-            $this->classRank = $this->buildCodeRank($this->classNodes, $class);
-        }
-        return $this->classRank;
+        return array();
     }
     
     /**
@@ -224,7 +232,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
-        //TODO - Insert your code here
+
     }
     
     /**
@@ -237,7 +245,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        //TODO - Insert your code here
+
     }
     
     /**
@@ -250,7 +258,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        $this->initPackageNode($package);
+        $this->initNode($package);
         
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
@@ -283,83 +291,43 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function visitType(PHP_Depend_Code_AbstractType $type)
     {
-        $packageName = $type->getPackage()->getName();
-        $className   = $this->buildQualifiedTypeName($type);
+        $pkg = $type->getPackage();
         
-        $this->initTypeNode($type);
+        $this->initNode($type);
         
         foreach ($type->getDependencies() as $dep) {
             
-            $depPackageName = $dep->getPackage()->getName();
-            $depClassName   = $this->buildQualifiedTypeName($dep);
+            $depPkg = $dep->getPackage();
             
-            $this->initTypeNode($dep);
-            $this->initPackageNode($dep->getPackage());
+            $this->initNode($dep);
+            $this->initNode($depPkg);
             
-            $this->classNodes[$className]['in'][]     = $depClassName;
-            $this->classNodes[$depClassName]['out'][] = $className;
+            $this->nodes[$type->getUUID()]['in'][] = $dep->getUUID();
+            $this->nodes[$dep->getUUID()]['out'][] = $type->getUUID();
             
             // No self references
-            if ($packageName !== $depPackageName) {
-                $this->packageNodes[$packageName]['in'][]     = $depPackageName;
-                $this->packageNodes[$depPackageName]['out'][] = $packageName;
+            if ($pkg !== $depPkg) {
+                $this->nodes[$pkg->getUUID()]['in'][]     = $depPkg->getUUID();
+                $this->nodes[$depPkg->getUUID()]['out'][] = $pkg->getUUID();
             }
         }
     }
     
     /**
-     * Initializes the node for the given type instance.
+     * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Depend_Code_AbstractType $type The context type instance.
+     * @param PHP_Depend_Code_Node $node The context node instance.
      * 
      * @return void
      */
-    protected function initTypeNode(PHP_Depend_Code_AbstractType $type)
+    protected function initNode(PHP_Depend_Code_Node $node)
     {
-        $typeName = $this->buildQualifiedTypeName($type);
-        
-        if (!isset($this->classNodes[$typeName])) {
-            $this->classNodes[$typeName] = array(
-                'in'    =>  array(),
-                'out'   =>  array(),
-                'code'  =>  $type,
+        if (!isset($this->nodes[$node->getUUID()])) {
+            $this->nodes[$node->getUUID()] = array(
+                'in'   =>  array(),
+                'out'  =>  array()
             );
         }
-    }
-
-    /**
-     * Initializes the node for the given class instance.
-     *
-     * @param PHP_Depend_Code_Package $package The context package instance.
-     * 
-     * @return void
-     */
-    protected function initPackageNode(PHP_Depend_Code_Package $package)
-    {
-        $packageName = $package->getName();
-        if (!isset($this->packageNodes[$packageName])) {
-            $this->packageNodes[$packageName] = array(
-                'in'    =>  array(),
-                'out'   =>  array(),
-                'code'  =>  $package
-            );
-        }
-    }
-
-    /**
-     * Generates the full qualified type name for the given <b>$type</b> instance.
-     * 
-     * Full qualified means that the class name also includes the package or 
-     * namespace identifier. This method uses a notation that is equal to PHP 5.3
-     * namespaces.
-     *
-     * @param PHP_Depend_Code_AbstractType $type The context type instance.
-     * 
-     * @return string
-     */
-    protected function buildQualifiedTypeName(PHP_Depend_Code_AbstractType $type)
-    {
-        return $type->getPackage()->getName() . '::' . $type->getName();
     }
     
     /**
@@ -368,23 +336,25 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @param array  $nodes List of nodes.
      * @param string $class The metric model class.
      * 
-     * @return Iterator Code rank <b>$class</b> objects,
+     * @return void
      */
-    protected function buildCodeRank(array $nodes, $class)
+    protected function buildCodeRankMetrics()
     {
-        $ranks = array();
+        if (is_array($this->nodeMetrics)) {
+            return;
+        }
         
-        foreach ($nodes as $name => $info) {
-            $ranks[$name] = new $class($info['code']);
+        $this->nodeMetrics = array();
+        
+        foreach ($this->nodes as $uuid => $info) {
+            $this->nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
         }
-        foreach ($this->computeCodeRank($nodes, 'out', 'in') as $name => $rank) {
-            $ranks[$name]->setCodeRank($rank);
+        foreach ($this->computeCodeRank($this->nodes, 'out', 'in') as $uuid => $rank) {
+            $this->nodeMetrics[$uuid]['cr'] = $rank;
         }
-        foreach ($this->computeCodeRank($nodes, 'in', 'out') as $name => $rank) {
-            $ranks[$name]->setReverseCodeRank($rank);
+        foreach ($this->computeCodeRank($this->nodes, 'in', 'out') as $uuid => $rank) {
+            $this->nodeMetrics[$uuid]['rcr'] = $rank;
         }
-
-        return new ArrayIterator($ranks); //array_values($ranks);
     }
     
     /**
