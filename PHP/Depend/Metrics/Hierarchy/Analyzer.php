@@ -166,10 +166,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     protected $nodeMetrics = array();
     
     /**
-     * @see PHP_Depend_Metrics_AnalyzerI::analyze()
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages
+     * @param PHP_Depend_Code_NodeIterator $packages The input package set.
+     * 
      * @return PHP_Depend_Metrics_ResultSetI
+     * @see PHP_Depend_Metrics_AnalyzerI::analyze()
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
