@@ -68,15 +68,15 @@ class PHP_Depend_Parser
      * @type string
      * @var string $package
      */
-    protected $package = null;
+    protected $package = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
     
     /**
      * The package defined in the file level comment.
      *
      * @type string
-     * @var string $fileLevelPackage
+     * @var string $globalPackage
      */
-    protected $fileLevelPackage = null;
+    protected $globalPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
     
     /**
      * The package separator token.
@@ -155,8 +155,10 @@ class PHP_Depend_Parser
                 $this->package = $this->parsePackage($token[1]);
                 
                 // Check for doc level comment
-                if ($this->tokenizer->prev() === PHP_Depend_Code_Tokenizer::T_OPEN_TAG) {
-                    $this->fileLevelPackage = $this->package;
+                if ($this->globalPackage === PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE 
+                 && $this->isFileComment() === true) {
+
+                    $this->globalPackage = $this->package;
                 }
                 break;
                     
@@ -207,6 +209,8 @@ class PHP_Depend_Parser
                 $function = $this->parseCallable();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
                 $function->setDocComment($comment);
+                
+                $this->reset();
                 
                 $comment = null;
                 break;
@@ -395,7 +399,13 @@ class PHP_Depend_Parser
         $callable = null;
         if ($parent === null) {
             $callable = $this->builder->buildFunction($token[1], $token[2]);
-            $this->builder->buildPackage($this->package)->addFunction($callable); 
+            
+            $package = $this->globalPackage;
+            if ($this->package !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
+                $package = $this->package;
+            }
+            
+            $this->builder->buildPackage($package)->addFunction($callable); 
         } else {
             $callable = $this->builder->buildMethod($token[1], $token[2]);
             $parent->addMethod($callable);
@@ -565,5 +575,22 @@ class PHP_Depend_Parser
             return $package;
         }
         return PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
-    }    
+    }
+
+    protected function isFileComment()
+    {
+        if ($this->tokenizer->prev() !== PHP_Depend_Code_Tokenizer::T_OPEN_TAG) {
+            return false;
+        }
+        
+        $notExpectedTags = array(
+            PHP_Depend_Code_Tokenizer::T_CLASS,
+            PHP_Depend_Code_Tokenizer::T_FINAL,
+            PHP_Depend_Code_Tokenizer::T_ABSTRACT,
+            PHP_Depend_Code_Tokenizer::T_FUNCTION,
+            PHP_Depend_Code_Tokenizer::T_INTERFACE
+        );
+        
+        return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
+    }
 }
