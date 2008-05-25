@@ -137,8 +137,9 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
-        $log = new PHP_Depend_Log_Summary_Xml($this->packages);
-        $log->write($this->resultFile);
+        $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
+        $log->setCode($this->packages);
+        $log->close();
         
         $fileName = 'xml-log-without-metrics.xml';
         $this->assertXmlStringEqualsXmlString(
@@ -161,14 +162,15 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $metricsTwo = array('ncloc'  =>  1742, 'loc'  =>  4217);
         $resultTwo  = new PHP_Depend_Log_Summary_ResultSetProjectAwareDummy($metricsTwo);
         
-        $log = new PHP_Depend_Log_Summary_Xml(new PHP_Depend_Code_NodeIterator(array()));
-        $this->assertTrue($log->accept($resultOne));
-        $this->assertTrue($log->accept($resultTwo));
+        $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
+        $log->setCode(new PHP_Depend_Code_NodeIterator(array()));
+        $this->assertTrue($log->log($resultOne));
+        $this->assertTrue($log->log($resultTwo));
         
         $fileName = 'project-aware-result-set-without-code.xml';
         $expected = dirname(__FILE__) . "/_expected/{$fileName}";
         
-        $log->write($this->resultFile);
+        $log->close();
         
         $this->assertXmlFileEqualsXmlFile($expected, $this->resultFile);
     }
@@ -212,11 +214,12 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $resultOne = new PHP_Depend_Log_Summary_ResultSetNodeAwareDummy($metricsOne);
         $resultTwo = new PHP_Depend_Log_Summary_ResultSetNodeAwareDummy($metricsTwo);
         
-        $log = new PHP_Depend_Log_Summary_Xml($this->packages);
-        $this->assertTrue($log->accept($resultOne));
-        $this->assertTrue($log->accept($resultTwo));
+        $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
+        $log->setCode($this->packages);
+        $this->assertTrue($log->log($resultOne));
+        $this->assertTrue($log->log($resultTwo));
         
-        $log->write($this->resultFile);
+        $log->close();
         
         $fileName = 'node-aware-result-set.xml';
         $this->assertXmlStringEqualsXmlString(

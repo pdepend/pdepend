@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/NodeVisitor.php';
+require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
 
@@ -61,15 +63,18 @@ require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_Xml
+class PHP_Depend_Log_Summary_Xml 
+    implements PHP_Depend_Code_NodeVisitor, PHP_Depend_Log_LoggerI
 {
+    protected $fileName = '';
+    
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
      *
      * @type PHP_Depend_Code_NodeIterator
-     * @var PHP_Depend_Code_NodeIterator $packages
+     * @var PHP_Depend_Code_NodeIterator $code
      */
-    protected $packages = null;
+    protected $code = null;
     
     /**
      * Set of all analyzed files.
@@ -95,12 +100,19 @@ class PHP_Depend_Log_Summary_Xml
      */
     protected $nodeMetrics = array();
     
-    public function __construct(PHP_Depend_Code_NodeIterator $packages)
+    protected $xmlStack = array();
+    
+    public function __construct($fileName)
     {
-        $this->packages = $packages;
+        $this->fileName = $fileName;
     }
     
-    public function accept(PHP_Depend_Metrics_ResultSetI $resultSet)
+    public function setCode(PHP_Depend_Code_NodeIterator $code)
+    {
+        $this->code = $code;
+    }
+    
+    public function log(PHP_Depend_Metrics_ResultSetI $resultSet)
     {
         $accept = false;
         
@@ -126,7 +138,7 @@ class PHP_Depend_Log_Summary_Xml
         return $accept;
     }
     
-    public function write($fileName)
+    public function close()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
@@ -139,16 +151,11 @@ class PHP_Depend_Log_Summary_Xml
             $metrics->setAttribute($name, $value);
         }
         
-        foreach ($this->packages as $package) {
-            $packageXml = $dom->createElement('package');
-            $packageXml->setAttribute('name', $package->getName());
-            
-            $this->writeNodeMetrics($packageXml, $package->getUUID());
-            
-            $this->writeClass($packageXml, $package);
-            $this->writeFunctions($packageXml, $package);
-            
-            $metrics->appendChild($packageXml);
+        array_push($this->xmlStack, $metrics);
+        
+        foreach ($this->code as $node)
+        {
+            $node->accept($this);
         }
         
         if (count($this->fileSet) > 0) {
@@ -166,53 +173,93 @@ class PHP_Depend_Log_Summary_Xml
         
         $dom->appendChild($metrics);
         
-        $dom->save($fileName);
+        $dom->save($this->fileName);
     }
     
-    protected function writeClass(DOMElement $xml, PHP_Depend_Code_Package $package)
+    public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $xml = end($this->xmlStack);
         $doc = $xml->ownerDocument;
         
-        foreach ($package->getClasses() as $class) {
-            $classXml = $doc->createElement('class');
-            $classXml->setAttribute('name', $class->getName());
+        $classXml = $doc->createElement('class');
+        $classXml->setAttribute('name', $class->getName());
             
-            $this->writeNodeMetrics($classXml, $class->getUUID());
-            $this->writeFileReference($classXml, $class->getSourceFile());
+        $this->writeNodeMetrics($classXml, $class->getUUID());
+        $this->writeFileReference($classXml, $class->getSourceFile());
             
-            $xml->appendChild($classXml);
-            
-            $this->writeMethods($classXml, $class);
-        }
-    }
-    
-    protected function writeMethods(DOMElement $xml, PHP_Depend_Code_Class $class)
-    {
-        $doc = $xml->ownerDocument;
+        $xml->appendChild($classXml);
+        
+        array_push($this->xmlStack, $classXml);
         
         foreach ($class->getMethods() as $method) {
-            $methodXml = $doc->createElement('method');
-            $methodXml->setAttribute('name', $method->getName());
-            
-            $this->writeNodeMetrics($methodXml, $method->getUUID());
-            
-            $xml->appendChild($methodXml);
+            $method->accept($this);
         }
+        foreach ($class->getProperties() as $property) {
+            $property->accept($this);
+        }
+        
+        array_pop($this->xmlStack);
     }
     
-    protected function writeFunctions(DOMElement $xml, PHP_Depend_Code_Package $package)
+    public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $xml = end($this->xmlStack);
         $doc = $xml->ownerDocument;
         
-        foreach ($package->getFunctions() as $function) {
-            $functionXml = $doc->createElement('function');
-            $functionXml->setAttribute('name', $function->getName());
+        $functionXml = $doc->createElement('function');
+        $functionXml->setAttribute('name', $function->getName());
             
-            $this->writeNodeMetrics($functionXml, $function->getUUID());
-            $this->writeFileReference($functionXml, $function->getSourceFile());
+        $this->writeNodeMetrics($functionXml, $function->getUUID());
+        $this->writeFileReference($functionXml, $function->getSourceFile());
             
-            $xml->appendChild($functionXml);
+        $xml->appendChild($functionXml);
+    }
+    
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        
+    }
+    
+    public function visitMethod(PHP_Depend_Code_Method $method)
+    {
+        $xml = end($this->xmlStack);
+        $doc = $xml->ownerDocument;
+        
+        $methodXml = $doc->createElement('method');
+        $methodXml->setAttribute('name', $method->getName());
+            
+        $this->writeNodeMetrics($methodXml, $method->getUUID());
+            
+        $xml->appendChild($methodXml);
+    }
+    
+    public function visitPackage(PHP_Depend_Code_Package $package)
+    {
+        $xml = end($this->xmlStack);
+        $doc = $xml->ownerDocument;
+        
+        $packageXml = $doc->createElement('package');
+        $packageXml->setAttribute('name', $package->getName());
+            
+        $this->writeNodeMetrics($packageXml, $package->getUUID());
+        
+        array_push($this->xmlStack, $packageXml);
+            
+        foreach ($package->getTypes() as $type) {
+            $type->accept($this);
         }
+        foreach ($package->getFunctions() as $function) {
+            $function->accept($this);
+        }
+        
+        array_pop($this->xmlStack);
+            
+        $xml->appendChild($packageXml);
+    }
+    
+    public function visitProperty(PHP_Depend_Code_Property $property)
+    {
+        
     }
     
     protected function writeNodeMetrics(DOMElement $xml, $uuid)
