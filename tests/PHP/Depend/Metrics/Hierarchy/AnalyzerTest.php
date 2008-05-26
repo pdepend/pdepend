@@ -111,8 +111,6 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         $this->assertEquals(1, $project['roots']);
         $this->assertEquals(2, $project['leafs']);
         $this->assertEquals(1, $project['maxDIT']);
-        
-        //var_dump($result->getProjectMetrics());
     }
     
     /**
@@ -154,5 +152,47 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         );
         
         $this->assertEquals($expected, $actual);
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Metrics_Hierarchy_Analyzer::analyze()} calculates
+     * the expected DIT values.
+     *
+     * @return void
+     */
+    public function testGetNodeMetrics()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        $b = new PHP_Depend_Code_Class('b');
+        $c = new PHP_Depend_Code_Class('c');
+        $d = new PHP_Depend_Code_Class('d');
+        $e = new PHP_Depend_Code_Class('e');
+        
+        $p = new PHP_Depend_Code_Package('p');
+        $p->addType($a);
+        $p->addType($b);
+        $p->addType($c);
+        $p->addType($d);
+        $p->addType($e);
+        
+        $a->addChildType($b);
+        $a->addChildType($c);
+        $c->addChildType($d);
+        $d->addChildType($e);
+        
+        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $result   = $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
+        
+        $expected = array(
+            $a->getUUID()  =>  array('dit'  =>  0),
+            $b->getUUID()  =>  array('dit'  =>  1),
+            $c->getUUID()  =>  array('dit'  =>  1),
+            $d->getUUID()  =>  array('dit'  =>  2),
+            $e->getUUID()  =>  array('dit'  =>  3),
+        );
+        
+        foreach ($expected as $uuid => $info) {
+            $this->assertEquals($info, $result->getNodeMetrics($uuid));
+        }
     }
 }
