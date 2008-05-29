@@ -115,7 +115,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
             'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
             'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
         );
-        
+
         $expected = array();
         foreach ($builder->getPackages() as $package) {
             $expected[$package->getUUID()] = $input[$package->getName()];
@@ -127,7 +127,11 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($analyzer->getAllNodeMetrics() as $uuid => $metrics) {
             $this->assertEquals($expected[$uuid]['cr'], $metrics['cr'], '', 0.00005);
             $this->assertEquals($expected[$uuid]['rcr'], $metrics['rcr'], '', 0.00005);
+            
+            unset($expected[$uuid]);
         }
+        
+        $this->assertEquals(0, count($expected));
         
         foreach ($expected as $uuid => $info) {
             $metrics = $analyzer->getNodeMetrics($uuid);
