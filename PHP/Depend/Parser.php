@@ -142,7 +142,7 @@ class PHP_Depend_Parser
         $this->reset();
         
         $comment = null;
-        
+
         while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
             switch ($token[0]) {
