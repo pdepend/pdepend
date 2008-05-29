@@ -494,7 +494,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         $nodes = $builder->getPackages()->current()->getFunctions();
         
-        $this->doTestParserSetsCorrectDocComment($nodes);
+        $this->doTestParserSetsCorrectDocComment($nodes, 0);
     }
     
     /**
@@ -589,8 +589,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $expected = array(
             null,
             null,
-            "/**\n* Sample comment.\n*/",
-            "/**\n* A second comment...\n*/",
+            "/**\n * Sample comment.\n */",
+            "/**\n * A second comment...\n */",
         );
         
         $types = $builder->getPackages()
@@ -723,16 +723,20 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     /**
      * Generic comment test method.
      *
-     * @param PHP_Depend_Code_NodeIterator $nodes The context nodes.
+     * @param PHP_Depend_Code_NodeIterator $nodes  The context nodes.
+     * @param integer                      $indent How deep is the commend indented.
      * 
      * @return void
      */
     protected function doTestParserSetsCorrectDocComment(
-                                            PHP_Depend_Code_NodeIterator $nodes)
+                                            PHP_Depend_Code_NodeIterator $nodes,
+                                            $indent = 1)
     {
+        $ws = str_repeat(" ", 4 * $indent);
+        
         $expected = array(
-            "/**\n* This is a second comment.\n*/",
-            "/**\n* This is one comment.\n*/",
+            "/**\n{$ws} * This is a second comment.\n{$ws} */",
+            "/**\n{$ws} * This is one comment.\n{$ws} */",
             null,
             null,
         );
