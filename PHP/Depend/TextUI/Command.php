@@ -47,9 +47,9 @@
  */
 
 require_once 'PHP/Depend.php';
+require_once 'PHP/Depend/Log/LoggerFactory.php';
+require_once 'PHP/Depend/Util/ExcludePathFilter.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
-
 /**
  * 
  *
@@ -87,6 +87,8 @@ class PHP_Depend_TextUI_Command
         }
         
         $pdepend = new PHP_Depend();
+        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php', 'inc')));
+        $pdepend->addFilter(new PHP_Depend_Util_ExcludePathFilter(array('.svn/', 'CVS')));
         
         try {
             foreach ($this->_directories as $dir) {
@@ -98,15 +100,38 @@ class PHP_Depend_TextUI_Command
             return;
         }
         
+        $loggerFactory = new PHP_Depend_Log_LoggerFactory();
+        
+        // Get a copy of all options
+        $options = $this->_options;
+        
+        // Get an array with all available log options
         $logOptions = $this->collectLogOptions();
         
-        foreach ($this->_options as $option => $value) {
-            if (!isset($logOptions[$option])) {
-                $this->printHelp();
-                echo "Unknown logger '{$option}' selected.\n";
-                return;
+        foreach ($options as $option => $value) {
+            if (isset($logOptions[$option])) {
+                // Reduce recieved option list
+                unset($options[$option]);
+                
+                // Remove leading hyphens
+                $identifier = substr($option, 2);
+                
+                // Create a logger
+                $logger = $loggerFactory->createLogger($identifier, $value);
+                
+                // Register logger
+                $pdepend->addLogger($logger);
             }
         }
+        
+        if (count($options) > 0) {
+            $this->printHelp();
+            echo "Unknown option '", key($options), "' given.\n";
+            return;
+        }
+        
+        $pdepend->analyze2();
+        
     }
     
     protected function handleArguments()
@@ -161,19 +186,46 @@ class PHP_Depend_TextUI_Command
     protected function printHelp()
     {
         $this->printUsage();
-        $this->printLogOptions();
+        
+        $length = $this->printLogOptions();
+        
+        $helpOption    = str_pad('--help', $length, ' ', STR_PAD_RIGHT);
+        $versionOption = str_pad('--version', $length, ' ', STR_PAD_RIGHT);
              
-        echo "  --help               Print this help text.\n",
-             "  --version            Print the current PHP_Depend version.\n\n";
+        echo "  {$helpOption} Print this help text.\n",
+             "  {$versionOption} Print the current PHP_Depend version.\n\n";
     }
     
     protected function printLogOptions()
     {
+        $maxLength = 0;
+        $options   = array();
         foreach ($this->collectLogOptions() as $option => $path) {
-            echo "  {$option}=<file> ";
-            echo (string) simplexml_load_file($path)->message, "\n";
+            // Build log option identifier
+            $identifier = "{$option}=<file>";
+            // Store in options array
+            $options[$identifier] = (string) simplexml_load_file($path)->message;
+            
+            if (($length = strlen($identifier)) > $maxLength) {
+                $maxLength = $length;
+            }
+        }
+
+        $last = null;
+        foreach ($options as $option => $message) {
+            
+            $current = substr($option, 0, strrpos($option, '-'));
+            if ($last !== null && $last !== $current) {
+                echo "\n";
+            }
+            $last = $current;
+            
+            $option = str_pad($option, $maxLength, ' ', STR_PAD_RIGHT);
+            echo '  ', $option, ' ', $message, "\n";
         }
         echo "\n";
+        
+        return $maxLength;
     }
     
     protected function collectLogOptions()
