@@ -70,4 +70,14 @@ interface PHP_Depend_Metrics_AnalyzerI
      * @return PHP_Depend_Metrics_ResultSetI
      */
     function analyze(PHP_Depend_Code_NodeIterator $packages);
+    
+    /**
+     * Checks if this analyzer provides a result set that matches at least one
+     * of the given <b>$expectedTypes</b>.
+     *
+     * @param array(string) $expectedTypes List of expected result set types.
+     * 
+     * @return boolean
+     */
+    function provides(array $expectedTypes);
 }
