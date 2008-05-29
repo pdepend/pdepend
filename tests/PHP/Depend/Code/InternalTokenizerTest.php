@@ -304,7 +304,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_Code_Tokenizer::T_VARIABLE,
             PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE,
             PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_Tokenizer::T_STRING, // SELF
+            PHP_Depend_Code_Tokenizer::T_SELF, // SELF
             PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON,
             PHP_Depend_Code_Tokenizer::T_DOLLAR,
             PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN,
