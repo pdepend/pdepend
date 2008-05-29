@@ -48,6 +48,7 @@
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
@@ -101,6 +102,14 @@ class PHP_Depend
     protected $packages = null;
     
     /**
+     * List of all registered {@link PHP_Depend_Log_LoggerI} instances.
+     *
+     * @type array<PHP_Depend_Log_LoggerI>
+     * @var array(PHP_Depend_Log_LoggerI) $loggers
+     */
+    protected $loggers = array();
+    
+    /**
      * Constructs a new php depend facade.
      */
     public function __construct()
@@ -129,6 +138,18 @@ class PHP_Depend
     }
     
     /**
+     * Adds a logger to the output list.
+     *
+     * @param PHP_Depend_Log_LoggerI $logger The logger instance.
+     * 
+     * @return void
+     */
+    public function addLogger(PHP_Depend_Log_LoggerI $logger)
+    {
+        $this->loggers[] = $logger;
+    }
+    
+    /**
      * Adds a new input/file filter.
      *
      * @param PHP_Depend_Util_FileFilter $filter New input/file filter instance.
@@ -138,6 +159,46 @@ class PHP_Depend
     public function addFilter(PHP_Depend_Util_FileFilter $filter)
     {
         $this->filter->append($filter);
+    }
+    
+    public function analyze2()
+    {
+        $acceptedTypes = $this->loadMetricAnalyzers();
+        $analyzerLoader = new PHP_Depend_Metrics_AnalyzerLoader($acceptedTypes);
+        
+        $iterator = new AppendIterator();
+        
+        foreach ($this->directories as $directory) {
+            $iterator->append(new PHP_Depend_Util_FileFilterIterator(
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($directory)
+                ), $this->filter
+            ));
+        }
+        
+        $this->nodeBuilder = new PHP_Depend_Code_DefaultBuilder();
+
+        foreach ($iterator as $file) {
+            $parser = new PHP_Depend_Parser(
+                new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), 
+                $this->nodeBuilder
+            );
+            $parser->parse();
+        }
+        
+        foreach ($analyzerLoader as $analyzer) {
+            
+            $resultSet = $analyzer->analyze($this->nodeBuilder->getPackages());
+            foreach ($this->loggers as $logger) {
+                $logger->log($resultSet);
+            }
+        }
+
+        foreach ($this->loggers as $logger) {
+            $logger->setCode($this->nodeBuilder->getPackages());
+            $logger->close();
+        }
+
     }
     
     /**
@@ -267,5 +328,29 @@ class PHP_Depend
             throw new RuntimeException($msg);
         }
         return $this->packages;
+    }
+    
+    protected function loadMetricAnalyzers()
+    {
+        $resultSets = array();
+        
+        foreach ($this->loggers as $logger) {
+            $fileName = strtr(get_class($logger), '_', '/') . '.xml';
+            
+            $xml  = file_get_contents($fileName, FILE_USE_INCLUDE_PATH);
+            $sxml = new SimpleXMLElement($xml);
+            
+            foreach ($sxml->resultsets->type as $node) {
+                // Get the referenced node type 
+                $type = (string) $node['match'];
+                
+                // Check for type existence
+                if (!in_array($type, $resultSets)) {
+                    $resultSets[] = $type;
+                }
+            }
+        }
+        
+        return $resultSets;
     }
 }
