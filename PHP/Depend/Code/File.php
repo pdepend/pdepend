@@ -166,10 +166,11 @@ class PHP_Depend_Code_File
         if ($this->loc === null) {
             $source = file_get_contents($this->fileName);
             // Normalize whitespace characters
-            $source = preg_replace(array('/\t+/', '/ +/' ), ' ', $source);
+            //$source = preg_replace(array('/\t+/', '/ +/' ), ' ', $source);
+            //$source = preg_replace('/\t+/', ' ', $source);
             
             $this->loc = preg_split('#(\r\n|\n|\r)#', $source);
-            $this->loc = array_map('trim', $this->loc);
+            //$this->loc = array_map('trim', $this->loc);
             
             $this->source = implode("\n", $this->loc);
         }

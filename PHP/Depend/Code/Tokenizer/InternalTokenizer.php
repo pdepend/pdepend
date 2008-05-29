@@ -36,13 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once 'PHP/Depend/Code/File.php';
@@ -52,13 +53,14 @@ require_once 'PHP/Depend/Code/Tokenizer.php';
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  *
  */
 class PHP_Depend_Code_Tokenizer_InternalTokenizer 
@@ -223,6 +225,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         ']'              =>  self::T_SQUARED_BRACKET_CLOSE,
         'use'            =>  self::T_USE,
         'null'           =>  self::T_NULL,
+        'self'           =>  self::T_SELF,
         'true'           =>  self::T_TRUE,
         'array'          =>  self::T_ARRAY,
         'false'          =>  self::T_FALSE,
