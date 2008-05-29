@@ -102,6 +102,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     protected $metrics = null;
     
+    protected $nodeMetrics = array();
+    
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
@@ -114,7 +116,21 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         foreach ($packages as $package) {
             $package->accept($this);
         }
+        
         return $this;
+    }
+    
+    /**
+     * Checks if this analyzer provides a result set that matches at least one
+     * of the given <b>$expectedTypes</b>.
+     *
+     * @param array(string) $expectedTypes List of expected result set types.
+     * 
+     * @return boolean
+     */
+    public function provides(array $expectedTypes)
+    {
+        return false;
     }
     
     /**
