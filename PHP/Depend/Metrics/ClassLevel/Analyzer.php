@@ -112,6 +112,19 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
+     * Checks if this analyzer provides a result set that matches at least one
+     * of the given <b>$expectedTypes</b>.
+     *
+     * @param array(string) $expectedTypes List of expected result set types.
+     * 
+     * @return boolean
+     */
+    public function provides(array $expectedTypes)
+    {
+        return in_array('PHP_Depend_Metrics_ResultSet_NodeAwareI', $expectedTypes);
+    }
+    
+    /**
      * This method returns an <b>array</b> with all aggregated metrics.
      * 
      * @return array(string=>array)
@@ -119,7 +132,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function getAllNodeMetrics()
     {
-        
+        return $this->nodeMetrics;
     }
     
     /**
@@ -133,7 +146,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function getNodeMetrics($uuid)
     {
-        
+        if (isset($this->nodeMetrics[$uuid])) {
+            return $this->nodeMetrics[$uuid];
+        }
+        return array();
     }
     
     /**

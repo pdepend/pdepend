@@ -36,13 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
@@ -53,13 +54,14 @@ require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
 /**
  * Calculates the code ranke metric for classes and packages. 
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_CodeRank_Analyzer 
     implements PHP_Depend_Code_NodeVisitor,
@@ -121,6 +123,19 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         $this->buildCodeRankMetrics();
         
         return $this;
+    }
+    
+    /**
+     * Checks if this analyzer provides a result set that matches at least one
+     * of the given <b>$expectedTypes</b>.
+     *
+     * @param array(string) $expectedTypes List of expected result set types.
+     * 
+     * @return boolean
+     */
+    public function provides(array $expectedTypes)
+    {
+        return in_array('PHP_Depend_Metrics_ResultSet_NodeAwareI', $expectedTypes);
     }
     
     /**
@@ -293,7 +308,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         if (!isset($this->nodes[$node->getUUID()])) {
             $this->nodes[$node->getUUID()] = array(
                 'in'   =>  array(),
-                'out'  =>  array()
+                'out'  =>  array(),
+                'name'  =>  $node->getName(),
+                'type'  =>  get_class($node)
             );
         }
     }
@@ -335,7 +352,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     {
         $leafs  = array();
         $sorted = array();
-        
+
         // Collect all leaf nodes
         foreach ($nodes as $name => $node) {
             if (count($node[$dir1]) === 0) {
@@ -355,7 +372,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
                 
                 // Search edge index
                 $index = array_search($name, $nodes[$refName][$dir1]);
-                
+
                 // Remove one edge between these two nodes 
                 unset($nodes[$refName][$dir1][$index]);
                 
@@ -370,6 +387,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         }
         
         if (count($nodes) > 0) {
+            var_dump($nodes);
+            exit();
             throw new RuntimeException('The object structure contains cycles');
         }
         
