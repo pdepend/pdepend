@@ -36,13 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
@@ -62,13 +63,14 @@ require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
  * This analyzer is based on the following metric set:
  * - http://www.aivosto.com/project/help/pm-oo-misc.html
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Hierarchy_Analyzer
     implements PHP_Depend_Code_NodeVisitor,
@@ -180,6 +182,23 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         }
         
         return $this;
+    }
+    
+    /**
+     * Checks if this analyzer provides a result set that matches at least one
+     * of the given <b>$expectedTypes</b>.
+     *
+     * @param array(string) $expectedTypes List of expected result set types.
+     * 
+     * @return boolean
+     */
+    public function provides(array $expectedTypes)
+    {
+        $providedTypes = array(
+            'PHP_Depend_Metrics_ResultSet_NodeAwareI',
+            'PHP_Depend_Metrics_ResultSet_ProjectAwareI'
+        );
+        return count(array_intersect($providedTypes, $expectedTypes)) > 0;
     }
     
     /**

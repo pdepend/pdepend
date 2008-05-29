@@ -47,7 +47,7 @@
  */
 
 /**
- * Interface that marks an analyzer as a type aware provider.
+ * 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -58,13 +58,38 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_TypeProviderI
+class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
 {
-    /**
-     * Returns an iterator with all analyzed {@link PHP_Depend_Metrics_Type}
-     * instances.
-     *
-     * @return Iterator
-     */
-    function getTypes();
+    protected $analyzers = array();
+    
+    public function __construct(array $acceptedTypes)
+    {
+        $dirs = new DirectoryIterator(dirname(__FILE__));
+        foreach ($dirs as $dir) {
+            if (!$dir->isDir() || $dir->isDot()) {
+                continue;
+            }
+            $files = new DirectoryIterator($dir->getPathname());
+            foreach ($files as $file) {
+                if ($file->getFilename() !== 'Analyzer.php') {
+                    continue;
+                }
+                include_once $file->getPathname();
+                
+                $package = $dir->getFilename();
+            
+                $class    = sprintf('PHP_Depend_Metrics_%s_Analyzer', $package);
+                $analyzer = new $class();
+                
+                if ($analyzer->provides($acceptedTypes)) {
+                    $this->analyzers[] = $analyzer;
+                }
+            }
+        }
+    }
+    
+    public function getIterator()
+    {
+        return new ArrayIterator($this->analyzers);
+    }
 }
