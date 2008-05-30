@@ -210,6 +210,8 @@ class PHP_Depend_TextUI_Command
                 $maxLength = $length;
             }
         }
+        
+        ksort($options);
 
         $last = null;
         foreach ($options as $option => $message) {
