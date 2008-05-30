@@ -130,7 +130,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function provides(array $expectedTypes)
     {
-        return false;
+        $providedTypes = array(
+            'PHP_Depend_Metrics_Dependency_ResultSet',
+        );
+        return count(array_intersect($providedTypes, $expectedTypes)) > 0;
     }
     
     /**
