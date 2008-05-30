@@ -36,13 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Renderer
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once 'PHP/Depend/Renderer.php';
@@ -51,13 +52,14 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 /**
  * Proof-of-Concept chart renderer that visualizes package metrics.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Log
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Renderer_GdChartRenderer implements PHP_Depend_Renderer
 {
