@@ -2,6 +2,6 @@
 <logger>
   <message>Generates the package dependency log.</message>
   <resultsets>
-    <type match="PHP_Depend_Metrics_Dependency_ResultSet" />
+    <type match="PHP_Depend_Metrics_Dependency_Analyzer" />
   </resultsets>
 </logger>

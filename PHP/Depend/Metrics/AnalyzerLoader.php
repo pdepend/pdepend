@@ -76,13 +76,17 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
                 }
                 include_once $file->getPathname();
                 
-                $package = $dir->getFilename();
-            
-                $class    = sprintf('PHP_Depend_Metrics_%s_Analyzer', $package);
-                $analyzer = new $class();
+                $package   = $dir->getFilename();
+                $className = sprintf('PHP_Depend_Metrics_%s_Analyzer', $package);
+
+                $providedTypes = array_merge(
+                    array($className),
+                    class_implements($className, false),
+                    class_parents($className)
+                );
                 
-                if ($analyzer->provides($acceptedTypes)) {
-                    $this->analyzers[] = $analyzer;
+                if (count(array_intersect($acceptedTypes, $providedTypes)) > 0) {
+                    $this->analyzers[] = new $className();                    
                 }
             }
         }

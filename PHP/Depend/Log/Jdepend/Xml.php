@@ -48,8 +48,6 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
 
 /**
  * 
@@ -101,6 +99,14 @@ class PHP_Depend_Log_Jdepend_Xml
     protected $nodeMetrics = array();
     
     /**
+     * The depedency result set.
+     *
+     * @type PHP_Depend_Metrics_Dependency_Analyzer
+     * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
+     */
+    protected $analyzer = null;
+    
+    /**
      * The Packages dom element.
      *
      * @type DOMElement
@@ -142,30 +148,14 @@ class PHP_Depend_Log_Jdepend_Xml
         $this->code = $code;
     }
     
-    public function log(PHP_Depend_Metrics_ResultSetI $resultSet)
+    public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $accept = false;
-        
-        if ($resultSet instanceof PHP_Depend_Metrics_ResultSet_ProjectAwareI) {
-            // Collect all project metrics
-            $this->projectMetrics = array_merge(
-                $this->projectMetrics,
-                $resultSet->getProjectMetrics()
-            );
-            
-            $accept = true;
+        if ($analyzer instanceof PHP_Depend_Metrics_Dependency_Analyzer) {
+            $this->analyzer = $analyzer;
+
+            return true;
         }
-        if ($resultSet instanceof PHP_Depend_Metrics_ResultSet_NodeAwareI) {
-            // Collect all node metrics
-            $this->nodeMetrics = array_merge_recursive(
-                $this->nodeMetrics,
-                $resultSet->getAllNodeMetrics()
-            );
-            
-            $accept = true;
-        }
-        
-        return $accept;
+        return false;
     }
     
     public function close()
@@ -232,6 +222,28 @@ class PHP_Depend_Log_Jdepend_Xml
 
         $packageXml = $doc->createElement('Package');
         $packageXml->setAttribute('name', $package->getName());
+        
+        $stats = $this->analyzer->getStats($package->getUUID());
+        
+        $statsXml = $doc->createElement('Stats');
+        $statsXml->appendChild($doc->createElement('TotalClasses'))
+                 ->appendChild($doc->createTextNode($stats['tc']));
+        $statsXml->appendChild($doc->createElement('ConcreteClasses'))
+                 ->appendChild($doc->createTextNode($stats['cc']));
+        $statsXml->appendChild($doc->createElement('AbstractClasses'))
+                 ->appendChild($doc->createTextNode($stats['ac']));
+        $statsXml->appendChild($doc->createElement('Ca'))
+                 ->appendChild($doc->createTextNode($stats['ca']));
+        $statsXml->appendChild($doc->createElement('Ce'))
+                 ->appendChild($doc->createTextNode($stats['ce']));
+        $statsXml->appendChild($doc->createElement('A'))
+                 ->appendChild($doc->createTextNode($stats['a'])); 
+        $statsXml->appendChild($doc->createElement('I'))
+                 ->appendChild($doc->createTextNode($stats['i']));
+        $statsXml->appendChild($doc->createElement('D'))
+                 ->appendChild($doc->createTextNode($stats['d']));
+                 
+        $packageXml->appendChild($statsXml);
         $packageXml->appendChild($this->concreteClasses);
         $packageXml->appendChild($this->abstractClasses);
         

@@ -46,8 +46,6 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/ResultSetI.php';
-
 /**
  * Base interface for all analyzer implementations.
  *
@@ -67,17 +65,7 @@ interface PHP_Depend_Metrics_AnalyzerI
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * 
-     * @return PHP_Depend_Metrics_ResultSetI
+     * @return void
      */
     function analyze(PHP_Depend_Code_NodeIterator $packages);
-    
-    /**
-     * Checks if this analyzer provides a result set that matches at least one
-     * of the given <b>$expectedTypes</b>.
-     *
-     * @param array(string) $expectedTypes List of expected result set types.
-     * 
-     * @return boolean
-     */
-    function provides(array $expectedTypes);
 }
