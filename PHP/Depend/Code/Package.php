@@ -176,6 +176,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function addType(PHP_Depend_Code_AbstractType $type)
     {
+        // Skip if this package already contains this type
+        if (in_array($type, $this->types, true)) {
+            return;
+        }
+        
         if ($type->getPackage() !== null) {
             $type->getPackage()->removeType($type);
         }
