@@ -49,9 +49,8 @@
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/ResultSetI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This analyzer calculates class/package hierarchy metrics.
@@ -76,9 +75,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     implements PHP_Depend_Code_NodeVisitor,
                PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_ResultSetI,
-               PHP_Depend_Metrics_ResultSet_NodeAwareI,
-               PHP_Depend_Metrics_ResultSet_ProjectAwareI
+               PHP_Depend_Metrics_NodeAwareI,
+               PHP_Depend_Metrics_ProjectAwareI
 {
     /**
      * Number of all analyzed packages.
@@ -172,7 +170,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      *
      * @param PHP_Depend_Code_NodeIterator $packages The input package set.
      * 
-     * @return PHP_Depend_Metrics_ResultSetI
+     * @return void
      * @see PHP_Depend_Metrics_AnalyzerI::analyze()
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
@@ -180,25 +178,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         foreach ($packages as $package) {
             $package->accept($this);
         }
-        
-        return $this;
-    }
-    
-    /**
-     * Checks if this analyzer provides a result set that matches at least one
-     * of the given <b>$expectedTypes</b>.
-     *
-     * @param array(string) $expectedTypes List of expected result set types.
-     * 
-     * @return boolean
-     */
-    public function provides(array $expectedTypes)
-    {
-        $providedTypes = array(
-            'PHP_Depend_Metrics_ResultSet_NodeAwareI',
-            'PHP_Depend_Metrics_ResultSet_ProjectAwareI'
-        );
-        return count(array_intersect($providedTypes, $expectedTypes)) > 0;
     }
     
     /**
@@ -225,7 +204,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * This method returns an <b>array</b> with all aggregated metrics.
      * 
      * @return array(string=>array)
-     * @see PHP_Depend_Metrics_ResultSet_NodeAwareI::getAllNodeMetrics()
+     * @see PHP_Depend_Metrics_NodeAwareI::getAllNodeMetrics()
      */
     public function getAllNodeMetrics()
     {

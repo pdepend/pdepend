@@ -187,10 +187,9 @@ class PHP_Depend
         }
         
         foreach ($analyzerLoader as $analyzer) {
-            
-            $resultSet = $analyzer->analyze($this->nodeBuilder->getPackages());
+            $analyzer->analyze($this->nodeBuilder->getPackages());
             foreach ($this->loggers as $logger) {
-                $logger->log($resultSet);
+                $logger->log($analyzer);
             }
         }
 
@@ -229,10 +228,10 @@ class PHP_Depend
             $parser->parse();
         }
 
-        $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
-        $result  = $visitor->analyze($this->nodeBuilder->getPackages());
+        $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
+        $analyzer->analyze($this->nodeBuilder->getPackages());
         
-        $this->packages = $result->getPackages();
+        $this->packages = $analyzer->getPackages();
         
         return $this->packages;
     }
