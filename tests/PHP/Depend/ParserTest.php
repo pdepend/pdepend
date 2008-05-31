@@ -79,10 +79,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parser->parse();
         
         $expected = array(
-            'pkg1'                                        =>  true, 
-            'pkg2'                                        =>  true, 
-            'pkg3'                                        =>  true,
-            PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE  =>  true
+            'pkg1'                                         =>  true, 
+            'pkg2'                                         =>  true, 
+            'pkg3'                                         =>  true,
+            PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE  =>  true
         );
         $packages = array();
         
@@ -284,21 +284,21 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parser->parse();
         
         $tokens = array(
-            array(PHP_Depend_Code_Tokenizer::T_FOREACH, 'foreach', 8),
-            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN, '(', 8),
-            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$foo', 8),
-            array(PHP_Depend_Code_Tokenizer::T_AS, 'as', 8),
-            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$bar', 8),
-            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE, ')', 8),
-            array(PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN, '{', 8),
-            array(PHP_Depend_Code_Tokenizer::T_STRING, 'FooBar', 9),
-            array(PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON, '::', 9),
-            array(PHP_Depend_Code_Tokenizer::T_STRING, 'y', 9),
-            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN, '(', 9),
-            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$bar', 9),
-            array(PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE, ')', 9),
-            array(PHP_Depend_Code_Tokenizer::T_SEMICOLON, ';', 9),
-            array(PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE, '}', 10),
+            array(PHP_Depend_Code_TokenizerI::T_FOREACH, 'foreach', 8),
+            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, '(', 8),
+            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, '$foo', 8),
+            array(PHP_Depend_Code_TokenizerI::T_AS, 'as', 8),
+            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, '$bar', 8),
+            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, ')', 8),
+            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN, '{', 8),
+            array(PHP_Depend_Code_TokenizerI::T_STRING, 'FooBar', 9),
+            array(PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON, '::', 9),
+            array(PHP_Depend_Code_TokenizerI::T_STRING, 'y', 9),
+            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, '(', 9),
+            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, '$bar', 9),
+            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, ')', 9),
+            array(PHP_Depend_Code_TokenizerI::T_SEMICOLON, ';', 9),
+            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 10),
         );
         
         $packages = $builder->getPackages();

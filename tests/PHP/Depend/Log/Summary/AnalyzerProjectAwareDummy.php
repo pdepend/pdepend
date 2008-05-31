@@ -46,12 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/ResultSetI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
- * Dummy implementation of a result set.
+ * Dummy implementation of an analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,9 +61,9 @@ require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_ResultSetProjectAwareDummy
-    implements PHP_Depend_Metrics_ResultSetI,
-               PHP_Depend_Metrics_ResultSet_ProjectAwareI
+class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
+    implements PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_ProjectAwareI
 {
     /**
      * Dummy project metrics.
@@ -75,7 +74,7 @@ class PHP_Depend_Log_Summary_ResultSetProjectAwareDummy
     protected $projectMetrics = null;
     
     /**
-     * Constructs a new result set dummy instance.
+     * Constructs a new analyzer dummy instance.
      *
      * @param array(string=>mixed) $projectMetrics Dummy project metrics.
      */
@@ -85,10 +84,21 @@ class PHP_Depend_Log_Summary_ResultSetProjectAwareDummy
     }
     
     /**
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     *
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * 
+     * @return void
+     */
+    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    {
+    }
+    
+    /**
      * Returns the project metrics.
      *
      * @return array(string=>mixed)
-     * @see PHP_Depend_Metrics_ResultSet_ProjectAwareI::getProjectMetrics()
+     * @see PHP_Depend_Metrics_ProjectAwareI::getProjectMetrics()
      */
     public function getProjectMetrics()
     {

@@ -112,10 +112,10 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     public function testGetTokens()
     {
         $tokens = array(
-            array(PHP_Depend_Code_Tokenizer::T_VARIABLE, '$foo', 3),
-            array(PHP_Depend_Code_Tokenizer::T_EQUAL, '=', 3),
-            array(PHP_Depend_Code_Tokenizer::T_LNUMBER, '42', 3),
-            array(PHP_Depend_Code_Tokenizer::T_SEMICOLON, ';', 3),
+            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, '$foo', 3),
+            array(PHP_Depend_Code_TokenizerI::T_EQUAL, '=', 3),
+            array(PHP_Depend_Code_TokenizerI::T_LNUMBER, '42', 3),
+            array(PHP_Depend_Code_TokenizerI::T_SEMICOLON, ';', 3),
         );
         
         $function = new PHP_Depend_Code_Function('function1', 42);
@@ -152,7 +152,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     /**
      * Generates a node instance that can handle dependencies.
      *
-     * @return PHP_Depend_Code_DependencyNode
+     * @return PHP_Depend_Code_DependencyNodeI
      */
     protected function createDependencyNode()
     {
