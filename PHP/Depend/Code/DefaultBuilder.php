@@ -48,7 +48,7 @@
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/NodeBuilder.php'; 
+require_once 'PHP/Depend/Code/NodeBuilderI.php'; 
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
@@ -67,7 +67,7 @@ require_once 'PHP/Depend/Code/Property.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
+class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
 {
     /**
      * Default package which contains all functions and classes with an unknown 

@@ -197,12 +197,12 @@ class PHP_Depend_Code_Method
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
-     *                                             implementation.
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     *                                              implementation.
      * 
      * @return void
      */
-    public function accept(PHP_Depend_Code_NodeVisitor $visitor)
+    public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
     {
         $visitor->visitMethod($this);
     }

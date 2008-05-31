@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilter.php';
+require_once 'PHP/Depend/Util/FileFilterI.php';
 
 /**
  * Simple utility filter iterator for php source files.
@@ -72,10 +72,10 @@ class PHP_Depend_Util_FileFilterIterator extends FilterIterator
     /**
      * Constructs a new file filter iterator.
      *
-     * @param Iterator                   $it     The inner iterator.
-     * @param PHP_Depend_Util_FileFilter $filter The filter object.
+     * @param Iterator                    $it     The inner iterator.
+     * @param PHP_Depend_Util_FileFilterI $filter The filter object.
      */
-    public function __construct(Iterator $it, PHP_Depend_Util_FileFilter $filter)
+    public function __construct(Iterator $it, PHP_Depend_Util_FileFilterI $filter)
     {
         parent::__construct($it);
         

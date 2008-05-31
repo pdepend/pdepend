@@ -79,7 +79,7 @@ if (!defined('T_NAMESPACE')) {
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_Tokenizer
+interface PHP_Depend_Code_TokenizerI
 {
     /**
      * Marks the end of the token stream.
@@ -814,7 +814,7 @@ interface PHP_Depend_Code_Tokenizer
     function getSourceFile();
     
     /**
-     * Returns the next token or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * Returns the next token or {@link PHP_Depend_Code_TokenizerI::T_EOF} if 
      * there is no next token.
      *
      * @return array|integer
@@ -822,7 +822,7 @@ interface PHP_Depend_Code_Tokenizer
     function next();
     
     /**
-     * Returns the next token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * Returns the next token type or {@link PHP_Depend_Code_TokenizerI::T_EOF} if 
      * there is no next token.
      *
      * @return integer
@@ -830,7 +830,7 @@ interface PHP_Depend_Code_Tokenizer
     function peek();
     
     /**
-     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_BOF} 
+     * Returns the previous token type or {@link PHP_Depend_Code_TokenizerI::T_BOF} 
      * if there is no previous token.
      *
      * @return integer

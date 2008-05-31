@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Code/NodeI.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Util/UUID.php';
 
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Util/UUID.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
+class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
 {
     /**
      * The package name.
@@ -306,12 +306,12 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
-     *                                             implementation.
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     *                                              implementation.
      * 
      * @return void
      */
-    public function accept(PHP_Depend_Code_NodeVisitor $visitor)
+    public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
     {
         $visitor->visitPackage($this);
     }
