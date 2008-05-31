@@ -243,9 +243,27 @@ class PHP_Depend_Log_Jdepend_Xml
         $statsXml->appendChild($doc->createElement('D'))
                  ->appendChild($doc->createTextNode($stats['d']));
                  
+        $dependsUpon = $doc->createElement('DependsUpon');
+        foreach ($this->analyzer->getEfferents($package->getUUID()) as $efferent) {
+            $efferentXml = $doc->createElement('Package');
+            $efferentXml->appendChild($doc->createTextNode($efferent->getName()));
+            
+            $dependsUpon->appendChild($efferentXml);
+        }
+        
+        $usedBy = $doc->createElement('UsedBy');
+        foreach ($this->analyzer->getAfferents($package->getUUID()) as $afferent) {
+            $afferentXml = $doc->createElement('Package');
+            $afferentXml->appendChild($doc->createTextNode($afferent->getName()));
+            
+            $usedBy->appendChild($afferentXml);
+        }
+                 
         $packageXml->appendChild($statsXml);
         $packageXml->appendChild($this->concreteClasses);
         $packageXml->appendChild($this->abstractClasses);
+        $packageXml->appendChild($dependsUpon);
+        $packageXml->appendChild($usedBy);
         
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
