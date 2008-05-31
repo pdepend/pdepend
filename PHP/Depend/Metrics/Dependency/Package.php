@@ -46,9 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/Class.php';
-require_once 'PHP/Depend/Metrics/Interface.php';
 require_once 'PHP/Depend/Metrics/Package.php';
+require_once 'PHP/Depend/Metrics/Type.php';
 
 /**
  * Special metrics package implementation for the dependency metric.
@@ -109,15 +108,12 @@ class PHP_Depend_Metrics_Dependency_Package extends PHP_Depend_Metrics_Package
     {
         parent::__construct($package);
         
-        foreach ($package->getClasses() as $class) {
-            if ($class->isAbstract()) {
-                $this->abstractClasses[] = new PHP_Depend_Metric_Class($class);
+        foreach ($package->getTypes() as $type) {
+            if ($type->isAbstract()) {
+                $this->abstractClasses[] = new PHP_Depend_Metrics_Type($type);
             } else {
-                $this->concreteClasses[] = new PHP_Depend_Metric_Class($class);
+                $this->concreteClasses[] = new PHP_Depend_Metrics_Type($type);
             }
-        }
-        foreach ($package->getInterfaces() as $interface) {
-            $this->abstractClasses[] = new PHP_Depend_Metrics_Interface($interface);
         }
     }
     
