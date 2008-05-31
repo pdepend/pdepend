@@ -100,6 +100,12 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     
     protected $nodeMetrics = array();
     
+    protected $nodeSet = array();
+    
+    private $_efferentNodes = array();
+    
+    private $_afferentNodes = array();
+    
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
@@ -113,7 +119,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             $package->accept($this);
         }
         
-        $this->prepareMetrics();
+        $this->postProcess();
         
         $this->calculateAbstractness();
         $this->calculateInstability();
@@ -124,6 +130,22 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     {
         if (isset($this->nodeMetrics[$uuid])) {
             return $this->nodeMetrics[$uuid];
+        }
+        return array();
+    }
+    
+    public function getAfferents($uuid)
+    {
+        if (isset($this->_afferentNodes[$uuid])) {
+            return $this->_afferentNodes[$uuid];
+        }
+        return array();
+    }
+    
+    public function getEfferents($uuid)
+    {
+        if (isset($this->_efferentNodes[$uuid])) {
+            return $this->_efferentNodes[$uuid];
         }
         return array();
     }
@@ -190,7 +212,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             }
             
             // Create a container for this dependency
-            $this->initPackageMetric($depPkgUUID);
+            $this->initPackageMetric($dep->getPackage());
             
             if (!in_array($depPkgUUID, $this->nodeMetrics[$pkgUUID]['ce'])) {
                 $this->nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
@@ -229,7 +251,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        $this->initPackageMetric($package->getUUID());
+        $this->initPackageMetric($package);
+        
+        $this->nodeSet[$package->getUUID()] = $package;
 
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
@@ -246,7 +270,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
-        
     }
     
     /**
@@ -307,7 +330,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             }
             
             // Create a container for this dependency
-            $this->initPackageMetric($depPkgUUID);
+            $this->initPackageMetric($dep->getPackage());
             
             if (!in_array($depPkgUUID, $this->nodeMetrics[$pkgUUID]['ce'])) {
                 $this->nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
@@ -338,9 +361,15 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         }
     }
     
-    protected function initPackageMetric($uuid)
+    protected function initPackageMetric(PHP_Depend_Code_Package $package)
     {
+        $uuid = $package->getUUID();
+        
         if (!isset($this->nodeMetrics[$uuid])) {
+            // Store a package reference 
+            $this->nodeSet[$uuid] = $package;
+            
+            // Create empty metrics for this package
             $this->nodeMetrics[$uuid] = array(
                 'tc'  =>  0,
                 'cc'  =>  0,
@@ -349,14 +378,29 @@ class PHP_Depend_Metrics_Dependency_Analyzer
                 'ce'  =>  array(),
                 'a'   =>  0,
                 'i'   =>  0,
-                'd'   =>  0  
+                'd'   =>  0
             );
         }
     }
     
-    protected function prepareMetrics()
+    protected function postProcess()
     {
         foreach ($this->nodeMetrics as $uuid => $metrics) {
+            
+            // Store afferent nodes for uuid
+            $this->_afferentNodes[$uuid] = array();
+            foreach ($metrics['ca'] as $caUUID) {
+                $this->_afferentNodes[$uuid][] = $this->nodeSet[$caUUID];
+            }
+            sort($this->_afferentNodes[$uuid]);
+            
+            // Store efferent nodes for uuid
+            $this->_efferentNodes[$uuid] = array();
+            foreach ($metrics['ce'] as $ceUUID) {
+                $this->_efferentNodes[$uuid][] = $this->nodeSet[$ceUUID];
+            }
+            sort($this->_efferentNodes[$uuid]);
+            
             $this->nodeMetrics[$uuid]['ca'] = count($metrics['ca']);
             $this->nodeMetrics[$uuid]['ce'] = count($metrics['ce']);
         }

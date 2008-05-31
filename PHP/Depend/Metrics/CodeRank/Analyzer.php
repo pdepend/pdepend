@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
@@ -63,8 +63,8 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_CodeRank_Analyzer 
-    implements PHP_Depend_Code_NodeVisitorI,
-               PHP_Depend_Metrics_AnalyzerI,
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+    implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI
 {
     /**
@@ -189,32 +189,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     }
     
     /**
-     * Visits a code function object.
-     *
-     * @param PHP_Depend_Code_Function $function The context code function.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
-     */
-    public function visitFunction(PHP_Depend_Code_Function $function)
-    {
-
-    }
-    
-    /**
-     * Visits a code method object.
-     *
-     * @param PHP_Depend_Code_Method $method The context code method.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
-     */
-    public function visitMethod(PHP_Depend_Code_Method $method)
-    {
-
-    }
-    
-    /**
      * Visits a code package object.
      *
      * @param PHP_Depend_Code_Package $package The context code package.
@@ -232,19 +206,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
-    }
-    
-    /**
-     * Visits a property node. 
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
-     */
-    public function visitProperty(PHP_Depend_Code_Property $property)
-    {
-        
     }
     
     /**
