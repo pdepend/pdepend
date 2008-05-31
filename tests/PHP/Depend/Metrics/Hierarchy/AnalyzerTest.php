@@ -99,8 +99,9 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
     public function testAnalyzeProjectMetrics()
     {
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
-        $result   = $analyzer->analyze($this->builder->getPackages());
-        $project  = $result->getProjectMetrics();
+        $analyzer->analyze($this->builder->getPackages());
+        
+        $project = $analyzer->getProjectMetrics();
         
         $this->assertEquals(4, $project['pkg']);
         $this->assertEquals(3, $project['cls']);
@@ -140,8 +141,9 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         $d->addChildType($e);
         
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
-        $result   = $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
-        $actual   = $result->getAllNodeMetrics();
+        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
+        
+        $actual = $analyzer->getAllNodeMetrics();
         
         $expected = array(
             $a->getUUID()  =>  array('dit'  =>  0),
@@ -181,7 +183,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         $d->addChildType($e);
         
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
-        $result   = $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
+        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
         
         $expected = array(
             $a->getUUID()  =>  array('dit'  =>  0),
@@ -192,7 +194,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         );
         
         foreach ($expected as $uuid => $info) {
-            $this->assertEquals($info, $result->getNodeMetrics($uuid));
+            $this->assertEquals($info, $analyzer->getNodeMetrics($uuid));
         }
     }
 }

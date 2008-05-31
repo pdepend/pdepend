@@ -116,10 +116,10 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $metrics = $pdepend->analyze();
         
         $expected = array(
-            'package1'                                    =>  true,
-            'package2'                                    =>  true,
-            'package3'                                    =>  true,
-            PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE  =>  true
+            'package1'                                     =>  true,
+            'package2'                                     =>  true,
+            'package3'                                     =>  true,
+            PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE  =>  true
         );
         
         $this->assertType('Iterator', $metrics);
@@ -262,7 +262,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'package1', 
             'package2', 
             'package3', 
-            PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE
+            PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE
         );
         
         $className = 'PHP_Depend_Metrics_Dependency_Package';

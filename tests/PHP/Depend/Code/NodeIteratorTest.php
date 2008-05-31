@@ -86,7 +86,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests the ctor with an valid input array of {@link PHP_Depend_Code_Node}
+     * Tests the ctor with an valid input array of {@link PHP_Depend_Code_NodeI}
      * objects.
      *
      * @return void
