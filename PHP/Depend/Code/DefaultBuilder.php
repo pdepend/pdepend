@@ -152,10 +152,13 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      */
     public function buildClassOrInterface($name)
     {
-        if (isset($this->classes[$name])) {
-            $instance = $this->classes[$name];
-        } else if (isset($this->interfaces[$name])) {
-            $instance = $this->interfaces[$name];
+        $cls = $this->extractTypeName($name);
+        $pkg = $this->extractPackageName($name);
+        
+        if (isset($this->classes[$cls][$pkg])) {
+            $instance = $this->classes[$cls][$pkg];
+        } else if (isset($this->interfaces[$cls][$pkg])) {
+            $instance = $this->interfaces[$cls][$pkg];
         } else {
             $instance = $this->buildClass($name);
         }
@@ -163,7 +166,28 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     }
     
     /**
-     * Builds a new package instance.
+     * Builds a new class instance or reuses a previous created class.
+     * 
+     * Where possible you should give a qualified class name, that is prefixed
+     * with the package identifier.
+     * 
+     * <code>
+     *   $builder->buildClass('php::depend::Parser');
+     * </code>
+     * 
+     * To determine the correct class, this method implements the following
+     * algorithm.
+     * 
+     * <ol>
+     *   <li>Check for an exactly matching instance and reuse it.</li>
+     *   <li>Check for a class instance that belongs to the default package. If
+     *   such an instance exists, reuse it and replace the default package with
+     *   the newly given package information.</li>
+     *   <li>Check that the requested class is in the default package, if this 
+     *   is true, reuse the first class instance and ignore the default package.
+     *   </li>
+     *   <li>Create a new instance for the specified package.</li>
+     * </ol>
      *
      * @param string  $name The class name.
      * @param integer $line The line number for the class declaration.
@@ -172,25 +196,74 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      */
     public function buildClass($name, $line = 0)
     {
-        if (isset($this->classes[$name])) {
-            $class = $this->classes[$name];
+        $cls = $this->extractTypeName($name);
+        $pkg = $this->extractPackageName($name);
+        
+        $class = null;
+        
+        // 1) check for an equal class version
+        if (isset($this->classes[$cls][$pkg])) {
+            $class = $this->classes[$cls][$pkg];
+            
+        // 2) check for a default version that could be replaced
+        } else if (isset($this->classes[$cls][self::DEFAULT_PACKAGE])) {
+            $class = $this->classes[$cls][self::DEFAULT_PACKAGE];
+            
+            unset($this->classes[$cls][self::DEFAULT_PACKAGE]);
+            
+            $this->classes[$cls][$pkg] = $class;
+            
+            $this->buildPackage($pkg)->addType($class);
+            
+        // 3) check for any version that could be used instead of the default     
+        } else if (isset($this->classes[$cls]) && $pkg === self::DEFAULT_PACKAGE) {
+            $class = reset($this->classes[$cls]);
+            
+        // 4) Create a new class for the given package
         } else {
+            // Create a new class instance
+            $class = new PHP_Depend_Code_Class($cls, $line);
             
-            $className   = $this->extractTypeName($name);
-            $packageName = $this->extractPackageName($name);
+            // Store class reference
+            $this->classes[$cls][$pkg] = $class;
             
-            $class = new PHP_Depend_Code_Class($className, $line);
-            
-            $this->classes[$className] = $class;
-            
-            $this->buildPackage($packageName)->addType($class);
+            // Append to class package
+            $this->buildPackage($pkg)->addType($class);
         }
+        
         return $class;
     }
     
     /**
      * Builds a new new interface instance.
-     *
+     * 
+     * If there is an existing class instance for the given name, this method
+     * checks if this class is part of the default namespace. If this is the
+     * case this method will update all references to the new interface and it
+     * removes the class instance. Otherwise it creates new interface instance.
+     * 
+     * Where possible you should give a qualified interface name, that is 
+     * prefixed with the package identifier.
+     * 
+     * <code>
+     *   $builder->buildInterface('php::depend::Parser');
+     * </code>
+     * 
+     * To determine the correct interface, this method implements the following
+     * algorithm.
+     * 
+     * <ol>
+     *   <li>Check for an exactly matching instance and reuse it.</li>
+     *   <li>Check for a interface instance that belongs to the default package.
+     *   If such an instance exists, reuse it and replace the default package 
+     *   with the newly given package information.</li>
+     *   <li>Check that the requested interface is in the default package, if 
+     *   this is true, reuse the first interface instance and ignore the default
+     *   package.
+     *   </li>
+     *   <li>Create a new instance for the specified package.</li>
+     * </ol>
+     * 
      * @param string  $name The interface name.
      * @param integer $line The line number for the interface declaration.
      * 
@@ -198,29 +271,60 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      */
     public function buildInterface($name, $line = 0)
     {
+        $ife = $this->extractTypeName($name);
+        $pkg = $this->extractPackageName($name);
+        
         $class = null;
-        if (isset($this->classes[$name])) {
-            $class   = $this->classes[$name];
-            $package = $class->getPackage();
-            
-            $package->removeType($class);
-            
-            unset($this->classes[$name]);
-            
-            $name = sprintf('%s::%s', $package->getName(), $class->getName());
+        if (isset($this->classes[$ife][$pkg])) {
+            $class = $this->classes[$ife][$pkg];
+        } else if (isset($this->classes[$ife][self::DEFAULT_PACKAGE])) {
+            // TODO: Implement something like: allwaysIsClass(),
+            //       This could be usefull for class names detected by 'new ...'
+            $class = $this->classes[$ife][self::DEFAULT_PACKAGE];
         }
         
-        if (isset($this->interfaces[$name])) {
-            $interface = $this->interfaces[$name];
+        if ($class !== null) {
+            $package = $class->getPackage();
+            
+            // Only reparent if the found class is part of the default package
+            if ($package === $this->defaultPackage) {
+                $package->removeType($class);
+            
+                unset($this->classes[$ife][$package->getName()]);
+            } else {
+                // Unset class reference
+                $class = null;
+            }
+        }
+        
+        // 1) check for an equal interface version
+        if (isset($this->interfaces[$ife][$pkg])) {
+            $interface = $this->interfaces[$ife][$pkg];
+            
+        // 2) check for a default version that could be replaced
+        } else if (isset($this->interfaces[$ife][self::DEFAULT_PACKAGE])) {
+            $interface = $this->interfaces[$ife][self::DEFAULT_PACKAGE];
+            
+            unset($this->interfaces[$ife][self::DEFAULT_PACKAGE]);
+            
+            $this->interfaces[$ife][$pkg] = $interface;
+            
+            $this->buildPackage($pkg)->addType($interface);
+            
+        // 3) check for any version that could be used instead of the default     
+        } else if (isset($this->interfaces[$ife]) && $pkg === self::DEFAULT_PACKAGE) {
+            $interface = reset($this->interfaces[$ife]);
+            
+        // 4) Create a new interface for the given package
         } else {
-            $typeName    = $this->extractTypeName($name);
-            $packageName = $this->extractPackageName($name);
-            
-            $interface = new PHP_Depend_Code_Interface($typeName, $line);
+            // Create a new interface instance
+            $interface = new PHP_Depend_Code_Interface($ife, $line);
 
-            $this->interfaces[$typeName] = $interface;
+            // Store interface reference
+            $this->interfaces[$ife][$pkg] = $interface;
             
-            $this->buildPackage($packageName)->addType($interface);
+            // Append interface to package
+            $this->buildPackage($pkg)->addType($interface);
         }
         
         if ($class !== null) {
@@ -356,7 +460,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      */
     protected function extractTypeName($qualifiedName)
     {
-        if (($pos = strpos($qualifiedName, '::')) !== false) {
+        if (($pos = strrpos($qualifiedName, '::')) !== false) {
             return substr($qualifiedName, $pos + 2);
         }
         return $qualifiedName;
@@ -421,20 +525,24 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     protected function replaceClassReferences(PHP_Depend_Code_Class $class,
                                               PHP_Depend_Code_Interface $interface)
     {
-        foreach ($this->classes as $type) {
-            foreach ($type->getDependencies() as $dependency) {
-                if ($dependency === $class) {
-                    $type->removeDependency($class);
-                    $type->addDependency($interface);
+        foreach ($this->classes as $types) {
+            foreach ($types as $type) {
+                foreach ($type->getDependencies() as $dependency) {
+                    if ($dependency === $class) {
+                        $type->removeDependency($class);
+                        $type->addDependency($interface);
+                    }
                 }
             }
         }
     
-        foreach ($this->interfaces as $type) {
-            foreach ($type->getDependencies() as $dependency) {
-                if ($dependency === $class) {
-                    $type->removeDependency($class);
-                    $type->addDependency($interface);
+        foreach ($this->interfaces as $types) {
+            foreach ($types as $type) {
+                foreach ($type->getDependencies() as $dependency) {
+                    if ($dependency === $class) {
+                        $type->removeDependency($class);
+                        $type->addDependency($interface);
+                    }
                 }
             }
         }
