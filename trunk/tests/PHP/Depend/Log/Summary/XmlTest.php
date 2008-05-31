@@ -47,8 +47,8 @@
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
-require_once dirname(__FILE__) . '/ResultSetNodeAwareDummy.php';
-require_once dirname(__FILE__) . '/ResultSetProjectAwareDummy.php';
+require_once dirname(__FILE__) . '/AnalyzerNodeAwareDummy.php';
+require_once dirname(__FILE__) . '/AnalyzerProjectAwareDummy.php';
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
@@ -154,13 +154,13 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testProjectAwareResultSetWithoutCode()
+    public function testProjectAwareAnalyzerWithoutCode()
     {
         $metricsOne = array('interfs'  =>  42, 'cls'  =>  23);
-        $resultOne  = new PHP_Depend_Log_Summary_ResultSetProjectAwareDummy($metricsOne);
+        $resultOne  = new PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy($metricsOne);
         
         $metricsTwo = array('ncloc'  =>  1742, 'loc'  =>  4217);
-        $resultTwo  = new PHP_Depend_Log_Summary_ResultSetProjectAwareDummy($metricsTwo);
+        $resultTwo  = new PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy($metricsTwo);
         
         $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
         $log->setCode(new PHP_Depend_Code_NodeIterator(array()));
@@ -175,7 +175,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $this->assertXmlFileEqualsXmlFile($expected, $this->resultFile);
     }
     
-    public function testNodeAwareResultSet()
+    public function testNodeAwareAnalyzer()
     {
         $input = array(
             array('loc'  =>  42),  array('ncloc'  =>  23),
@@ -211,8 +211,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
             }
         }
         
-        $resultOne = new PHP_Depend_Log_Summary_ResultSetNodeAwareDummy($metricsOne);
-        $resultTwo = new PHP_Depend_Log_Summary_ResultSetNodeAwareDummy($metricsTwo);
+        $resultOne = new PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy($metricsOne);
+        $resultTwo = new PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy($metricsTwo);
         
         $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
         $log->setCode($this->packages);

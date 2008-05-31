@@ -88,7 +88,7 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
      */
     public function testBuildClassDefaultPackage()
     {
-        $defaultPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+        $defaultPackage = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
 
         $builder = new PHP_Depend_Code_DefaultBuilder();
         $class1  = $builder->buildClass('clazz1');
@@ -317,7 +317,7 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
      */
     public function testBuildFunctionDefaultPackage()
     {
-        $defaultPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+        $defaultPackage = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
         
         $builder   = new PHP_Depend_Code_DefaultBuilder();
         $function1 = $builder->buildFunction('func1', 0);
