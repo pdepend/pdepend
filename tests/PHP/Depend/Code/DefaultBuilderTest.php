@@ -102,6 +102,64 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the {@link PHP_Depend_Code_DefaultBuilder::buildClass()} method
+     * creates two different class instances for the same class name, but 
+     * different packages.
+     *
+     * @return void
+     */
+    public function testBuildClassCreatesTwoDifferentInstancesForDifferentPackages()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        $class1  = $builder->buildClass('php::depend1::Parser');
+        $class2  = $builder->buildClass('php::depend2::Parser');
+        
+        $this->assertNotSame($class1, $class2);
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_DefaultBuilder::buildClass()} reuses
+     * an existing default package class instance with in a new specified package.
+     *
+     * @return void
+     */
+    public function testBuildClassReplacesDefaultPackageInstanceBySpecifiedPackage()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $defaultClass   = $builder->buildClass('Parser');
+        $defaultPackage = $defaultClass->getPackage();
+        
+        $pdependClass   = $builder->buildClass('php::depend::Parser');
+        $pdependPackage = $pdependClass->getPackage();
+        
+        $this->assertSame($defaultClass, $pdependClass);
+        $this->assertEquals(0, $defaultPackage->getClasses()->count());
+        $this->assertEquals(1, $pdependPackage->getClasses()->count());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_DefaultBuilder::buildClass()} returns
+     * a previous class instance for a specified package, if it is called for a
+     * same named class in the default package.
+     *
+     * @return void
+     */
+    public function testBuildClassReusesExistingNonDefaultPackageInstanceForDefaultPackage()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $pdependClass   = $builder->buildClass('php::depend::Parser');
+        $pdependPackage = $pdependClass->getPackage();
+        
+        $defaultClass   = $builder->buildClass('Parser');
+        $defaultPackage = $defaultClass->getPackage();
+        
+        $this->assertSame($defaultClass, $pdependClass);
+        $this->assertSame($defaultPackage, $pdependPackage);
+    }
+    
+    /**
      * Tests that the node build generates an unique interface instance for the
      * same identifier.
      *
@@ -135,6 +193,46 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Depend_Code_Interface', $type1);
         $type2 = $builder->buildClassOrInterface('FooBar');
         $this->assertType('PHP_Depend_Code_Interface', $type2);
+    }
+    
+    public function testBuildInterfaceForcesRecreateTypeForExistingClassInDefaultPackage()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $defaultClass   = $builder->buildClass('ParserI');
+        $defaultPackage = $defaultClass->getPackage();
+
+        $pdependInterface = $builder->buildInterface('php::depend::ParserI');
+        $pdependPackage   = $pdependInterface->getPackage();
+        
+        $this->assertNotSame($defaultClass, $pdependInterface);
+        $this->assertEquals(0, $defaultPackage->getClasses()->count());
+        $this->assertEquals(1, $pdependPackage->getInterfaces()->count());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_DefaultBuilder::buildInterface()}
+     * method only removes/replaces a previously created class instance, when 
+     * this class is part of the default namespace. Otherwise there are two user
+     * types with the same local or package internal name.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceDoesntRemoveClassForSameNamedInterface()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $package1 = $builder->buildPackage('package1');
+        $package2 = $builder->buildPackage('package2');
+        
+        $class = $builder->buildClass('Parser');
+        $package1->addType($class);
+        
+        $this->assertEquals(1, $package1->getTypes()->count());
+
+        $interface = $builder->buildInterface('Parser');
+        
+        $this->assertEquals(1, $package1->getTypes()->count());
     }
     
     /**
@@ -219,6 +317,65 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $type1 = $builder->buildInterface('FooBar');
         $this->assertEquals(1, $method->getDependencies()->count());
         $this->assertEquals($type1, $method->getDependencies()->current());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_DefaultBuilder::buildInterface()} creates
+     * different interface instances for different parent packages.
+     *
+     * @return void
+     */
+    public function testBuildInterfacesCreatesDifferentInstancesForDifferentPackages()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $interfaces1 = $builder->buildInterface('php::depend1::ParserI');
+        $interfaces2 = $builder->buildInterface('php::depend2::ParserI');
+        
+        $this->assertNotSame($interfaces1, $interfaces2);
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_DefaultBuilder::buildInterface()} 
+     * replaces an existing default package interface instance, if it creates a 
+     * more specific version. 
+     *
+     * @return void
+     */
+    public function testBuildInterfaceReplacesDefaultInstanceForSpecifiedPackage()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $defaultInterface = $builder->buildInterface('ParserI');
+        $defaultPackage   = $defaultInterface->getPackage();
+        
+        $pdependInterface = $builder->buildInterface('php::depend::ParserI');
+        $pdependPackage   = $pdependInterface->getPackage();
+        
+        $this->assertSame($defaultInterface, $pdependInterface);
+        $this->assertEquals(1, $pdependPackage->getInterfaces()->count());
+        $this->assertEquals(0, $defaultPackage->getInterfaces()->count());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_DefaultBuilder::buildInterface()} returns
+     * a previous interface instance for a specified package, if it is called 
+     * for a same named interface in the default package.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceReusesExistingNonDefaultPackageInstanceForDefaultPackage()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $pdependInterface = $builder->buildInterface('php::depend::ParserI');
+        $pdependPackage   = $pdependInterface->getPackage();
+        
+        $defaultInterface = $builder->buildInterface('ParserI');
+        $defaultPackage   = $defaultInterface->getPackage();
+        
+        $this->assertSame($defaultInterface, $pdependInterface);
+        $this->assertSame($defaultPackage, $pdependPackage);
     }
     
     /**
