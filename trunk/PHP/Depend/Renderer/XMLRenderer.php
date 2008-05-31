@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Renderer
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -54,7 +54,7 @@ require_once 'PHP/Depend/Renderer.php';
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Renderer
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
