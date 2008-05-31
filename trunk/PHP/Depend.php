@@ -88,8 +88,8 @@ class PHP_Depend
     /**
      * The used code node builder.
      *
-     * @type PHP_Depend_Code_NodeBuilder
-     * @var PHP_Depend_Code_NodeBuilder $nodeBuilder
+     * @type PHP_Depend_Code_NodeBuilderI
+     * @var PHP_Depend_Code_NodeBuilderI $nodeBuilder
      */
     protected $nodeBuilder = null;
     
@@ -152,11 +152,11 @@ class PHP_Depend
     /**
      * Adds a new input/file filter.
      *
-     * @param PHP_Depend_Util_FileFilter $filter New input/file filter instance.
+     * @param PHP_Depend_Util_FileFilterI $filter New input/file filter instance.
      * 
      * @return void
      */
-    public function addFilter(PHP_Depend_Util_FileFilter $filter)
+    public function addFilter(PHP_Depend_Util_FileFilterI $filter)
     {
         $this->filter->append($filter);
     }

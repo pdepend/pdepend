@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Util
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -47,70 +47,25 @@
  */
 
 /**
- * Base interface for visitors that work on the generated node tree.
- *
+ * Base interface for file filters.
+ * 
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Util
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeVisitor
+interface PHP_Depend_Util_FileFilterI
 {
     /**
-     * Visits a class node. 
+     * Should return <b>true</b> if the given file should be part of the analyzation.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param SplFileInfo $fileInfo The context file object.
      * 
-     * @return void
+     * @return boolean
      */
-    function visitClass(PHP_Depend_Code_Class $class);
-    
-    /**
-     * Visits a code interface object.
-     *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
-     * @return void
-     */
-    function visitInterface(PHP_Depend_Code_Interface $interface);
-    
-    /**
-     * Visits a method node. 
-     *
-     * @param PHP_Depend_Code_Class $method The method class node.
-     * 
-     * @return void
-     */
-    function visitMethod(PHP_Depend_Code_Method $method);
-    
-    /**
-     * Visits a package node. 
-     *
-     * @param PHP_Depend_Code_Class $package The package class node.
-     * 
-     * @return void
-     */
-    function visitPackage(PHP_Depend_Code_Package $package);
-    
-    /**
-     * Visits a property node. 
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     */
-    function visitProperty(PHP_Depend_Code_Property $property);
-    
-    /**
-     * Visits a function node. 
-     *
-     * @param PHP_Depend_Code_Function $function The current function node.
-     * 
-     * @return void
-     */
-    function visitFunction(PHP_Depend_Code_Function $function);
+    function accept(SplFileInfo $fileInfo);
 }

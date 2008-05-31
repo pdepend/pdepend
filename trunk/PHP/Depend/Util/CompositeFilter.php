@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilter.php';
+require_once 'PHP/Depend/Util/FileFilterI.php';
 
 /**
  * Simple composite pattern implementation that allows to bundle multiple
@@ -61,24 +61,24 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_CompositeFilter implements PHP_Depend_Util_FileFilter
+class PHP_Depend_Util_CompositeFilter implements PHP_Depend_Util_FileFilterI
 {
     /**
-     * List of aggregated {@link PHP_Depend_Util_FileFilter} objects.
+     * List of aggregated {@link PHP_Depend_Util_FileFilterI} objects.
      *
-     * @type array<PHP_Depend_Util_FileFilter>
-     * @var array(PHP_Depend_Util_FileFilter) $filters.
+     * @type array<PHP_Depend_Util_FileFilterI>
+     * @var array(PHP_Depend_Util_FileFilterI) $filters.
      */
     protected $filters = array();
     
     /**
      * Adds a file filter to this composite.
      *
-     * @param PHP_Depend_Util_FileFilter $filter The new filter object.
+     * @param PHP_Depend_Util_FileFilterI $filter The new filter object.
      * 
      * @return void
      */
-    public function append(PHP_Depend_Util_FileFilter $filter)
+    public function append(PHP_Depend_Util_FileFilterI $filter)
     {
         $this->filters[] = $filter;
     }

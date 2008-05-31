@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor.php';
+require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Metrics/Dependency/Package.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Dependency_Analyzer 
-    implements PHP_Depend_Code_NodeVisitor,
+    implements PHP_Depend_Code_NodeVisitorI,
                PHP_Depend_Metrics_AnalyzerI
 {
     /**
@@ -242,7 +242,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitProperty()
+     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
