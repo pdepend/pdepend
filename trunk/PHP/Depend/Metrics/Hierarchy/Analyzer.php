@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
@@ -72,8 +72,8 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Hierarchy_Analyzer
-    implements PHP_Depend_Code_NodeVisitorI,
-               PHP_Depend_Metrics_AnalyzerI,
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+    implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
                PHP_Depend_Metrics_ProjectAwareI
@@ -296,19 +296,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
-     * Calculates metrics for the given <b>$method</b> instance.
-     *
-     * @param PHP_Depend_Code_Method $method The context method instance.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
-     */
-    public function visitMethod(PHP_Depend_Code_Method $method)
-    {
-        
-    }
-    
-    /**
      * Calculates metrics for the given <b>$package</b> instance.
      *
      * @param PHP_Depend_Code_Package $package The context package instance.
@@ -330,19 +317,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     }
     
     /**
-     * Visits a property node. 
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
-     */
-    public function visitProperty(PHP_Depend_Code_Property $property)
-    {
-        
-    }
-    
-    /**
      * Returns the depth of inheritance tree value for the given class.
      *
      * @param PHP_Depend_Code_Class $class The context code class instance.
@@ -357,5 +331,4 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         }
         return $dit;
     }
-
 }

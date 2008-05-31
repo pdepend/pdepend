@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
@@ -66,8 +66,8 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_ClassLevel_Analyzer
-    implements PHP_Depend_Code_NodeVisitorI,
-               PHP_Depend_Metrics_AnalyzerI,
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+    implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI
 {
     /**
@@ -147,67 +147,6 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
-    }
-    
-    /**
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
-     *
-     * @param PHP_Depend_Code_Function $function
-     */
-    public function visitFunction(PHP_Depend_Code_Function $function)
-    {
-
-    }
-    
-    /**
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
-     *
-     * @param PHP_Depend_Code_Interface $interface
-     */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
-    {
-        foreach ($interface->getMethods() as $method) {
-            $method->accept($this);
-        }
-    }
-    
-    /**
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
-     *
-     * @param PHP_Depend_Code_Method $method
-     */
-    public function visitMethod(PHP_Depend_Code_Method $method)
-    {
-        
-    }
-    
-    /**
-     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
-     *
-     * @param PHP_Depend_Code_Package $package
-     */
-    public function visitPackage(PHP_Depend_Code_Package $package)
-    {
-        foreach ($package->getTypes() as $type) {
-            $type->accept($this);
-        }
-        
-        foreach ($package->getFunctions() as $function) {
-            $function->accept($this);
-        }
-    }
-    
-    /**
-     * Visits a property node. 
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
-     */
-    public function visitProperty(PHP_Depend_Code_Property $property)
-    {
-        
     }
     
     /**
