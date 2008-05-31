@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor.php';
+require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
@@ -72,7 +72,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Hierarchy_Analyzer
-    implements PHP_Depend_Code_NodeVisitor,
+    implements PHP_Depend_Code_NodeVisitorI,
                PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
@@ -234,7 +234,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * @param PHP_Depend_Code_Class $class The context class instance.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitClass()
+     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -271,7 +271,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * @param PHP_Depend_Code_Function $function The context function instance.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitFunction()
+     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -284,7 +284,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * @param PHP_Depend_Code_Interface $interface The context interface instance.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitInterface()
+     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -301,7 +301,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * @param PHP_Depend_Code_Method $method The context method instance.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitMethod()
+     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -314,7 +314,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * @param PHP_Depend_Code_Package $package The context package instance.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitPackage()
+     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
@@ -335,7 +335,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitProperty()
+     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {

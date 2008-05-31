@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Tokenizer.php';
+require_once 'PHP/Depend/Code/TokenizerI.php';
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
@@ -64,7 +64,7 @@ require_once 'PHP/Depend/Code/Tokenizer.php';
  *
  */
 class PHP_Depend_Code_Tokenizer_InternalTokenizer 
-    implements PHP_Depend_Code_Tokenizer
+    implements PHP_Depend_Code_TokenizerI
 {
     /**
      * Mapping between php internal tokens and php depend tokens.
@@ -288,7 +288,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     }
     
     /**
-     * Returns the next token or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * Returns the next token or {@link PHP_Depend_Code_TokenizerI::T_EOF} if 
      * there is no next token.
      *
      * @return array|integer
@@ -302,7 +302,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     }
     
     /**
-     * Returns the next token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * Returns the next token type or {@link PHP_Depend_Code_TokenizerI::T_EOF} if 
      * there is no next token.
      *
      * @return integer
@@ -316,7 +316,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     }
     
     /**
-     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_BOF} 
+     * Returns the previous token type or {@link PHP_Depend_Code_TokenizerI::T_BOF} 
      * if there is no previous token.
      *
      * @return integer

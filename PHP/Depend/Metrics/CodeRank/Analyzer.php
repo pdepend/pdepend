@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor.php';
+require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_CodeRank_Analyzer 
-    implements PHP_Depend_Code_NodeVisitor,
+    implements PHP_Depend_Code_NodeVisitorI,
                PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI
 {
@@ -155,7 +155,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @param PHP_Depend_Code_Class $class The context code class.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitClass()
+     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
@@ -176,7 +176,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @param PHP_Depend_Code_Interface $interface The context code interface.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitInterface()
+     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
@@ -194,7 +194,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @param PHP_Depend_Code_Function $function The context code function.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitFunction()
+     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -207,7 +207,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @param PHP_Depend_Code_Method $method The context code method.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitMethod()
+     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -220,7 +220,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @param PHP_Depend_Code_Package $package The context code package.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitPackage()
+     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
@@ -240,7 +240,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitProperty()
+     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
@@ -282,11 +282,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Depend_Code_Node $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return void
      */
-    protected function initNode(PHP_Depend_Code_Node $node)
+    protected function initNode(PHP_Depend_Code_NodeI $node)
     {
         if (!isset($this->nodes[$node->getUUID()])) {
             $this->nodes[$node->getUUID()] = array(

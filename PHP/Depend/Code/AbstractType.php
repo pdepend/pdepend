@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
-require_once 'PHP/Depend/Code/DependencyNode.php';
+require_once 'PHP/Depend/Code/DependencyNodeI.php';
 require_once 'PHP/Depend/Util/UUID.php';
 
 /**
@@ -64,7 +64,7 @@ require_once 'PHP/Depend/Util/UUID.php';
  */
 abstract class PHP_Depend_Code_AbstractType
        extends PHP_Depend_Code_AbstractItem 
-    implements PHP_Depend_Code_DependencyNode
+    implements PHP_Depend_Code_DependencyNodeI
 {
     /**
      * The parent package for this class.

@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor.php';
+require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
@@ -66,7 +66,7 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_ClassLevel_Analyzer
-    implements PHP_Depend_Code_NodeVisitor,
+    implements PHP_Depend_Code_NodeVisitorI,
                PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI
 {
@@ -136,7 +136,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitClass()
+     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
      *
      * @param PHP_Depend_Code_Class $class
      */
@@ -150,7 +150,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitFunction()
+     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      *
      * @param PHP_Depend_Code_Function $function
      */
@@ -160,7 +160,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitInterface()
+     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      *
      * @param PHP_Depend_Code_Interface $interface
      */
@@ -172,7 +172,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitMethod()
+     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      *
      * @param PHP_Depend_Code_Method $method
      */
@@ -182,7 +182,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitor::visitPackage()
+     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
      *
      * @param PHP_Depend_Code_Package $package
      */
@@ -203,7 +203,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor::visitProperty()
+     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {

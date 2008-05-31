@@ -58,7 +58,7 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
+interface PHP_Depend_Code_NodeBuilderI extends IteratorAggregate
 {
     /**
      * The default package name.

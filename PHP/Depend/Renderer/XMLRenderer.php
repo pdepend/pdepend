@@ -104,7 +104,7 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
         // First sort the metrics
         $sortedMetrics = array();
         foreach ($metrics as $metric) {
-            if ($metric->getName() !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
+            if ($metric->getName() !== PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE) {
                 $sortedMetrics[$metric->getName()] = $metric;
             }
         }

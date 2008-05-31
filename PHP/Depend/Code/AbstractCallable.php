@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
-require_once 'PHP/Depend/Code/DependencyNode.php';
+require_once 'PHP/Depend/Code/DependencyNodeI.php';
 
 /**
  * Abstract base class for callable objects.
@@ -65,7 +65,7 @@ require_once 'PHP/Depend/Code/DependencyNode.php';
  */
 abstract class PHP_Depend_Code_AbstractCallable
     extends PHP_Depend_Code_AbstractItem 
-    implements PHP_Depend_Code_DependencyNode
+    implements PHP_Depend_Code_DependencyNodeI
 {
     /**
      * The tokens for this function.

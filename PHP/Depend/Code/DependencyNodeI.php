@@ -46,8 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/NodeI.php';
+
 /**
- * Represents any possible code node.
+ * Base interface for all nodes that can handle dependencies.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -58,29 +60,31 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_Node
+interface PHP_Depend_Code_DependencyNodeI extends PHP_Depend_Code_NodeI
 {
     /**
-     * Returns the name for this code node.
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects this node depends on.
      *
-     * @return string
+     * @return PHP_Depend_Code_NodeIterator
      */
-    function getName();
+    function getDependencies();
     
     /**
-     * Returns a uuid for this code node.
+     * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
      *
-     * @return string
-     */
-    function getUUID();
-    
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
-     *                                             implementation.
+     * @param PHP_Depend_Code_AbstractType $type A type this node depends on.
      * 
      * @return void
      */
-    function accept(PHP_Depend_Code_NodeVisitor $visitor);
+    function addDependency(PHP_Depend_Code_AbstractType $type);
+    
+    /**
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the dependency
+     * list.
+     *
+     * @param PHP_Depend_Code_AbstractType $type A type to remove.
+     * 
+     * @return void
+     */
+    function removeDependency(PHP_Depend_Code_AbstractType $type);
 }
