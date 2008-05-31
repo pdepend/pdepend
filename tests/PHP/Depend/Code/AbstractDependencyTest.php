@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Code/Class.php';
 abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
-     * Tests that a new {@link PHP_Depend_Code_DependencyNode} instance returns 
+     * Tests that a new {@link PHP_Depend_Code_DependencyNodeI} instance returns 
      * an empty {@link PHP_Depend_Code_NodeIterator} for dependencies.
      *
      * @return void
@@ -78,7 +78,7 @@ abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Code_Ab
     }
     
     /**
-     * Tests that the add {@link PHP_Depend_Code_DependencyNode::addDependency()} 
+     * Tests that the add {@link PHP_Depend_Code_DependencyNodeI::addDependency()} 
      * adds a new depended object to the internal list, but it should accept each
      * type only once.
      * 
@@ -101,7 +101,7 @@ abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Code_Ab
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_DependencyNode::removeDependency()} 
+     * Tests that the {@link PHP_Depend_Code_DependencyNodeI::removeDependency()} 
      * method works as expected.
      *
      * @return void
@@ -127,7 +127,7 @@ abstract class PHP_Depend_Code_AbstractDependencyTest extends PHP_Depend_Code_Ab
     /**
      * Generates a node instance that can handle dependencies.
      *
-     * @return PHP_Depend_Code_DependencyNode
+     * @return PHP_Depend_Code_DependencyNodeI
      */
     protected abstract function createDependencyNode();
 }

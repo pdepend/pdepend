@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilter.php';
+require_once 'PHP/Depend/Util/FileFilterI.php';
 
 /**
  * Dummy filter.
@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_DummyFilter implements PHP_Depend_Util_FileFilter
+class PHP_Depend_Util_DummyFilter implements PHP_Depend_Util_FileFilterI
 {
     /**
      * The return value for this filter.

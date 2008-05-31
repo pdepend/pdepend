@@ -195,7 +195,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
     /**
      * Generates a node instance that can handle dependencies.
      *
-     * @return PHP_Depend_Code_DependencyNode
+     * @return PHP_Depend_Code_DependencyNodeI
      */
     protected function createDependencyNode()
     {

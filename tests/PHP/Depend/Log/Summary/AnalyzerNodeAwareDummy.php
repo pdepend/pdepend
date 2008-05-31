@@ -46,11 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/ResultSetI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
 /**
- * Dummy implementation of a result set.
+ * Dummy implementation of an analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,9 +61,9 @@ require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_ResultSetNodeAwareDummy
-    implements PHP_Depend_Metrics_ResultSetI,
-               PHP_Depend_Metrics_ResultSet_NodeAwareI
+class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
+    implements PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_NodeAwareI
 {
     /**
      * Dummy node metrics.
@@ -74,7 +74,7 @@ class PHP_Depend_Log_Summary_ResultSetNodeAwareDummy
     protected $nodeMetrics = null;
     
     /**
-     * Constructs a new result set dummy instance.
+     * Constructs a new analyzer dummy instance.
      *
      * @param array(string=>array) $nodeMetrics Dummy node metrics.
      */
@@ -84,10 +84,21 @@ class PHP_Depend_Log_Summary_ResultSetNodeAwareDummy
     }
     
     /**
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     *
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * 
+     * @return void
+     */
+    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    {
+    }
+    
+    /**
      * Returns all aggregated node metrics.
      *
      * @return array(string=>array)
-     * @see PHP_Depend_Metrics_ResultSet_NodeAwareI::getAllNodeMetrics()
+     * @see PHP_Depend_Metrics_NodeAwareI::getAllNodeMetrics()
      */
     public function getAllNodeMetrics()
     {
@@ -100,7 +111,7 @@ class PHP_Depend_Log_Summary_ResultSetNodeAwareDummy
      * @param string $uuid The unique node identifier.
      * 
      * @return array(string=>mixed)
-     * @see PHP_Depend_Metrics_ResultSet_NodeAwareI::getNodeMetrics()
+     * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
      */
     public function getNodeMetrics($uuid)
     {
