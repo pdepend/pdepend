@@ -49,7 +49,6 @@
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/PackageProviderI.php';
-require_once 'PHP/Depend/Metrics/ResultSetI.php';
 require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 
 /**
@@ -67,8 +66,7 @@ require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 class PHP_Depend_Metrics_Dependency_Analyzer 
     implements PHP_Depend_Code_NodeVisitor,
                PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_PackageProviderI,
-               PHP_Depend_Metrics_ResultSetI
+               PHP_Depend_Metrics_PackageProviderI
 {
     /**
      * Already created package instances.
@@ -109,7 +107,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * 
-     * @return PHP_Depend_Metrics_ResultSetI
+     * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
@@ -117,23 +115,19 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             $package->accept($this);
         }
         
-        return $this;
+        $this->prepareMetrics();
+        
+        $this->calculateAbstractness();
+        $this->calculateInstability();
+        $this->calculateDistance();
     }
     
-    /**
-     * Checks if this analyzer provides a result set that matches at least one
-     * of the given <b>$expectedTypes</b>.
-     *
-     * @param array(string) $expectedTypes List of expected result set types.
-     * 
-     * @return boolean
-     */
-    public function provides(array $expectedTypes)
+    public function getStats($uuid)
     {
-        $providedTypes = array(
-            'PHP_Depend_Metrics_Dependency_ResultSet',
-        );
-        return count(array_intersect($providedTypes, $expectedTypes)) > 0;
+        if (isset($this->nodeMetrics[$uuid])) {
+            return $this->nodeMetrics[$uuid];
+        }
+        return array();
     }
     
     /**
@@ -184,6 +178,29 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        // Get context package uuid
+        $pkgUUID = $method->getParent()->getPackage()->getUUID();
+        
+        // Traverse all dependencies
+        foreach ($method->getDependencies() as $dep) {
+            // Get dependent package uuid
+            $depPkgUUID = $dep->getPackage()->getUUID();
+            
+            // Skip if context and dependency are equal
+            if ($depPkgUUID === $pkgUUID) {
+                continue;
+            }
+            
+            // Create a container for this dependency
+            $this->initPackageMetric($depPkgUUID);
+            
+            if (!in_array($depPkgUUID, $this->nodeMetrics[$pkgUUID]['ce'])) {
+                $this->nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
+                $this->nodeMetrics[$depPkgUUID]['ca'][] = $pkgUUID;
+            }
+        }
+        
+        
         $package     = $method->getParent()->getPackage();
         $packageName = $package->getName();
         
@@ -214,12 +231,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $this->initPackageMetric($package->getUUID());
+
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
-        }
-        
-        foreach ($package->getFunctions() as $function) {
-            $function->accept($this);
         }
     }
     
@@ -246,10 +261,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->visitType($class);
-    
-        foreach ($class->getProperties() as $property) {
-            $property->accept($this);
-        }
     }
     
     /**
@@ -274,6 +285,38 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     protected function visitType(PHP_Depend_Code_AbstractType $type)
     {
+        // Get context package uuid
+        $pkgUUID = $type->getPackage()->getUUID();
+        
+        // Increment total classes count
+        ++$this->nodeMetrics[$pkgUUID]['tc'];
+        
+        // Check for abstract or concrete class
+        if ($type->isAbstract()) {
+            ++$this->nodeMetrics[$pkgUUID]['ac'];
+        } else {
+            ++$this->nodeMetrics[$pkgUUID]['cc'];
+        }
+        
+        // Traverse all dependencies
+        foreach ($type->getDependencies() as $dep) {
+            // Get dependent package uuid
+            $depPkgUUID = $dep->getPackage()->getUUID();
+            
+            // Skip if context and dependency are equal
+            if ($depPkgUUID === $pkgUUID) {
+                continue;
+            }
+            
+            // Create a container for this dependency
+            $this->initPackageMetric($depPkgUUID);
+            
+            if (!in_array($depPkgUUID, $this->nodeMetrics[$pkgUUID]['ce'])) {
+                $this->nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
+                $this->nodeMetrics[$depPkgUUID]['ca'][] = $pkgUUID;
+            }
+        }
+        
         $pkgName = $type->getPackage()->getName();
         
         $this->createPackage($type->getPackage());
@@ -287,8 +330,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
                 
                 if (!$this->efferents[$pkgName]->contains($dep->getPackage())) {
                     $this->efferents[$pkgName]->attach($dep->getPackage());
-                }
-                if (!$this->afferents[$depPkgName]->contains($type->getPackage())) {
                     $this->afferents[$depPkgName]->attach($type->getPackage());
                 }
             }
@@ -296,6 +337,60 @@ class PHP_Depend_Metrics_Dependency_Analyzer
 
         foreach ($type->getMethods() as $method) {
             $method->accept($this);
+        }
+    }
+    
+    protected function initPackageMetric($uuid)
+    {
+        if (!isset($this->nodeMetrics[$uuid])) {
+            $this->nodeMetrics[$uuid] = array(
+                'tc'  =>  0,
+                'cc'  =>  0,
+                'ac'  =>  0,
+                'ca'  =>  array(),
+                'ce'  =>  array(),
+                'a'   =>  0,
+                'i'   =>  0,
+                'd'   =>  0  
+            );
+        }
+    }
+    
+    protected function prepareMetrics()
+    {
+        foreach ($this->nodeMetrics as $uuid => $metrics) {
+            $this->nodeMetrics[$uuid]['ca'] = count($metrics['ca']);
+            $this->nodeMetrics[$uuid]['ce'] = count($metrics['ce']);
+        }
+    }
+    
+    protected function calculateAbstractness()
+    {
+        foreach ($this->nodeMetrics as $uuid => $metrics) {
+            if ($metrics['tc'] === 0) {
+                continue;
+            }
+            $this->nodeMetrics[$uuid]['a'] = ($metrics['ac'] / $metrics['tc']);
+        }
+    }
+    
+    protected function calculateInstability()
+    {
+        foreach ($this->nodeMetrics as $uuid => $metrics) {
+            // Count total incoming and outgoing dependencies
+            $total = ($metrics['ca'] + $metrics['ce']);
+            
+            if ($total === 0) {
+                continue;
+            }
+            $this->nodeMetrics[$uuid]['i'] = ($metrics['ce'] / $total);
+        }
+    }
+    
+    protected function calculateDistance()
+    {
+        foreach ($this->nodeMetrics as $uuid => $metrics) {
+            $this->nodeMetrics[$uuid]['d'] = abs(($metrics['a'] + $metrics['i']) - 1);
         }
     }
     

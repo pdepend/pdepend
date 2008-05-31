@@ -64,7 +64,7 @@ interface PHP_Depend_Log_LoggerI
     
     function setCode(PHP_Depend_Code_NodeIterator $code);
     
-    function log(PHP_Depend_Metrics_ResultSetI $resultSet);
+    function log(PHP_Depend_Metrics_AnalyzerI $analyzer);
     
     function close();
 }

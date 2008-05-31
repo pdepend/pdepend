@@ -2,7 +2,7 @@
 <logger>
   <message>Generates a xml log with all metrics.</message>
   <resultsets>
-    <type match="PHP_Depend_Metrics_ResultSet_NodeAwareI" />
-    <type match="PHP_Depend_Metrics_ResultSet_ProjectAwareI" />
+    <type match="PHP_Depend_Metrics_NodeAwareI" />
+    <type match="PHP_Depend_Metrics_ProjectAwareI" />
   </resultsets>
 </logger>
