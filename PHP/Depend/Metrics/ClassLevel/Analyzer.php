@@ -48,8 +48,7 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/ResultSetI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
 /**
  * Generates some class level based metrics. This analyzer is based on the 
@@ -69,8 +68,7 @@ require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
 class PHP_Depend_Metrics_ClassLevel_Analyzer
     implements PHP_Depend_Code_NodeVisitor,
                PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_ResultSetI,
-               PHP_Depend_Metrics_ResultSet_NodeAwareI
+               PHP_Depend_Metrics_NodeAwareI
 {
     /**
      * Hash with all calculated node metrics.
@@ -99,7 +97,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      *
      * @param PHP_Depend_Code_NodeIterator $packages
      * 
-     * @return PHP_Depend_Metrics_ResultSetI
+     * @return void
      * @see PHP_Depend_Metrics_AnalyzerI::analyze()
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
@@ -107,28 +105,13 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         foreach ($packages as $package) {
             $package->accept($this);
         }
-        
-        return $this;
-    }
-    
-    /**
-     * Checks if this analyzer provides a result set that matches at least one
-     * of the given <b>$expectedTypes</b>.
-     *
-     * @param array(string) $expectedTypes List of expected result set types.
-     * 
-     * @return boolean
-     */
-    public function provides(array $expectedTypes)
-    {
-        return in_array('PHP_Depend_Metrics_ResultSet_NodeAwareI', $expectedTypes);
     }
     
     /**
      * This method returns an <b>array</b> with all aggregated metrics.
      * 
      * @return array(string=>array)
-     * @see PHP_Depend_Metrics_ResultSet_NodeAwareI::getAllNodeMetrics()
+     * @see PHP_Depend_Metrics_NodeAwareI::getAllNodeMetrics()
      */
     public function getAllNodeMetrics()
     {

@@ -48,8 +48,8 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ResultSet/ProjectAwareI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * 
@@ -112,24 +112,24 @@ class PHP_Depend_Log_Summary_Xml
         $this->code = $code;
     }
     
-    public function log(PHP_Depend_Metrics_ResultSetI $resultSet)
+    public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $accept = false;
         
-        if ($resultSet instanceof PHP_Depend_Metrics_ResultSet_ProjectAwareI) {
+        if ($analyzer instanceof PHP_Depend_Metrics_ProjectAwareI) {
             // Collect all project metrics
             $this->projectMetrics = array_merge(
                 $this->projectMetrics,
-                $resultSet->getProjectMetrics()
+                $analyzer->getProjectMetrics()
             );
             
             $accept = true;
         }
-        if ($resultSet instanceof PHP_Depend_Metrics_ResultSet_NodeAwareI) {
+        if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
             // Collect all node metrics
             $this->nodeMetrics = array_merge_recursive(
                 $this->nodeMetrics,
-                $resultSet->getAllNodeMetrics()
+                $analyzer->getAllNodeMetrics()
             );
             
             $accept = true;

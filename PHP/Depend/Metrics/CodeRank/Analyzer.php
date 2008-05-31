@@ -48,8 +48,7 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/ResultSetI.php';;
-require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
 /**
  * Calculates the code ranke metric for classes and packages. 
@@ -66,8 +65,7 @@ require_once 'PHP/Depend/Metrics/ResultSet/NodeAwareI.php';
 class PHP_Depend_Metrics_CodeRank_Analyzer 
     implements PHP_Depend_Code_NodeVisitor,
                PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_ResultSetI,
-               PHP_Depend_Metrics_ResultSet_NodeAwareI
+               PHP_Depend_Metrics_NodeAwareI
 {
     /**
      * The used damping factor.
@@ -110,7 +108,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * 
-     * @return PHP_Depend_Metrics_ResultSetI
+     * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
@@ -121,28 +119,13 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         
         // Calculate code rank metrics
         $this->buildCodeRankMetrics();
-        
-        return $this;
-    }
-    
-    /**
-     * Checks if this analyzer provides a result set that matches at least one
-     * of the given <b>$expectedTypes</b>.
-     *
-     * @param array(string) $expectedTypes List of expected result set types.
-     * 
-     * @return boolean
-     */
-    public function provides(array $expectedTypes)
-    {
-        return in_array('PHP_Depend_Metrics_ResultSet_NodeAwareI', $expectedTypes);
     }
     
     /**
      * This method returns an <b>array</b> with all aggregated metrics.
      * 
      * @return array(string=>array)
-     * @see PHP_Depend_Metrics_ResultSet_NodeAwareI::getAllNodeMetrics()
+     * @see PHP_Depend_Metrics_NodeAwareI::getAllNodeMetrics()
      */
     public function getAllNodeMetrics()
     {

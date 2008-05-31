@@ -47,7 +47,7 @@
  */
 
 /**
- * Base interface for metric analyzer result sets.
+ * Marker interface that marks a result set as node metrics aware.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -58,7 +58,46 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_ResultSetI
+interface PHP_Depend_Metrics_NodeAwareI
 {
+    /**
+     * This method will return an <b>array</b> with all generated metric values 
+     * for the node with the given <b>$uuid</b> identifier. If there are no
+     * metrics for the requested node, this method will return an empty <b>array</b>.
+     * 
+     * <code>
+     * array(
+     *     'loc'    =>  42,
+     *     'ncloc'  =>  17,
+     *     'cc'     =>  12
+     * )
+     * </code>
+     *
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array(string=>mixed)
+     */
+    function getNodeMetrics($uuid);
     
+    /**
+     * This method returns an <b>array</b> with all aggregated metrics.
+     *
+     * <code>
+     * array(
+     *     '0375e305-885a-4e91-8b5c-e25bda005438'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     ),
+     *     'e60c22f0-1a63-4c40-893e-ed3b35b84d0b'  =>  array(
+     *         'loc'    =>  42,
+     *         'ncloc'  =>  17,
+     *         'cc'     =>  12
+     *     )
+     * )
+     * </code>
+     * 
+     * @return array(string=>array)
+     */
+    function getAllNodeMetrics();
 }
