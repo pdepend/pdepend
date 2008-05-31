@@ -48,7 +48,6 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/PackageProviderI.php';
 require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 
 /**
@@ -65,8 +64,7 @@ require_once 'PHP/Depend/Metrics/Dependency/Package.php';
  */
 class PHP_Depend_Metrics_Dependency_Analyzer 
     implements PHP_Depend_Code_NodeVisitor,
-               PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_PackageProviderI
+               PHP_Depend_Metrics_AnalyzerI
 {
     /**
      * Already created package instances.
