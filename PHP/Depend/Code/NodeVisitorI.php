@@ -70,6 +70,15 @@ interface PHP_Depend_Code_NodeVisitorI
     function visitClass(PHP_Depend_Code_Class $class);
     
     /**
+     * Visits a function node. 
+     *
+     * @param PHP_Depend_Code_Function $function The current function node.
+     * 
+     * @return void
+     */
+    function visitFunction(PHP_Depend_Code_Function $function);
+    
+    /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
@@ -104,13 +113,4 @@ interface PHP_Depend_Code_NodeVisitorI
      * @return void
      */
     function visitProperty(PHP_Depend_Code_Property $property);
-    
-    /**
-     * Visits a function node. 
-     *
-     * @param PHP_Depend_Code_Function $function The current function node.
-     * 
-     * @return void
-     */
-    function visitFunction(PHP_Depend_Code_Function $function);
 }
