@@ -52,6 +52,12 @@ require_once 'PHP/Depend/Code/TokenizerI.php';
 /**
  * The php source parser.
  * 
+ * <b>Note</b>: Due to the fact that it is possible to use the same name for 
+ * multiple classes and interfaces, and there is no way to determine to which 
+ * package it belongs, while the parser handles class, interface or method
+ * signatures, the parser could/will create a code tree that doesn't reflect the
+ * real source structure. 
+ * 
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
