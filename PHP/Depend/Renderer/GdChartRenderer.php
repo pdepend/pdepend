@@ -129,7 +129,7 @@ class PHP_Depend_Renderer_GdChartRenderer implements PHP_Depend_Renderer
         imageline($im, $size, $size, (12 * $size), (12 * $size), $red);
 
         foreach ($metrics as $metric) {
-            if ($metric->getName() !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
+            if ($metric->getName() !== PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE) {
             
                 $s = $metric->getConcreteClassCount() 
                    + $metric->getAbstractClassCount();

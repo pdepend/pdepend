@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Code/NodeI.php';
 
 /**
  * Iterator for code nodes.
@@ -63,27 +63,27 @@ require_once 'PHP/Depend/Code/Node.php';
 class PHP_Depend_Code_NodeIterator implements Iterator, Countable
 {
     /**
-     * List of {@link PHP_Depend_Code_Node} objects in this iterator.
+     * List of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
-     * @type array<PHP_Depend_Code_Node>
-     * @var array(PHP_Depend_Code_Node)$nodes
+     * @type array<PHP_Depend_Code_NodeI>
+     * @var array(PHP_Depend_Code_NodeI)$nodes
      */
     protected $nodes = array();
     
     /**
-     * Constructs a new node iterator from the given {@link PHP_Depend_Code_Node}
+     * Constructs a new node iterator from the given {@link PHP_Depend_Code_NodeI}
      * node array.
      *
-     * @param array(PHP_Depend_Code_Node) $nodes      List of code nodes.
-     * @param string                      $typeFilter Optional node type filter.
+     * @param array(PHP_Depend_Code_NodeI) $nodes      List of code nodes.
+     * @param string                       $typeFilter Optional node type filter.
      * 
      * @throws RuntimeException If the array contains something different from
-     *                          a {@link PHP_Depend_Code_Node} object.
+     *                          a {@link PHP_Depend_Code_NodeI} object.
      */
     public function __construct(array $nodes, $typeFilter = null) 
     {
         foreach ($nodes as $node) {
-            if (!($node instanceof PHP_Depend_Code_Node)) {
+            if (!($node instanceof PHP_Depend_Code_NodeI)) {
                 throw new RuntimeException('Invalid object given.');
             }
             if ($typeFilter === null || $node instanceof $typeFilter) {
@@ -95,7 +95,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     }
     
     /**
-     * Returns the number of {@link PHP_Depend_Code_Node} objects in this iterator.
+     * Returns the number of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
      * @return integer
      */
@@ -107,7 +107,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     /**
      * Returns the current node or <b>false</b>
      *
-     * @return PHP_Depend_Code_Node|false
+     * @return PHP_Depend_Code_NodeI|false
      */
     public function current()
     {
@@ -115,7 +115,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     }
     
     /**
-     * Returns the name of the current {@link PHP_Depend_Code_Node}.
+     * Returns the name of the current {@link PHP_Depend_Code_NodeI}.
      *
      * @return string
      */
@@ -125,7 +125,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     }
     
     /**
-     * Moves the internal pointer to the next {@link PHP_Depend_Code_Node}.
+     * Moves the internal pointer to the next {@link PHP_Depend_Code_NodeI}.
      *
      * @return void
      */
@@ -145,7 +145,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     }
 
     /**
-     * Returns <b>true</b> while there is a next {@link PHP_Depend_Code_Node}.
+     * Returns <b>true</b> while there is a next {@link PHP_Depend_Code_NodeI}.
      *
      * @return boolean
      */

@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilter.php';
+require_once 'PHP/Depend/Util/FileFilterI.php';
 
 /**
  * Filters a given file path against a blacklist with disallow path fragments.
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Util/FileFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilter
+class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilterI
 {
     /**
      * Regular expression that should not match against the file path.

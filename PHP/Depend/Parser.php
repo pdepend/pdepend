@@ -46,8 +46,8 @@
  */
 
 require_once 'PHP/Depend/Code/VisibilityAwareI.php';
-require_once 'PHP/Depend/Code/NodeBuilder.php';
-require_once 'PHP/Depend/Code/Tokenizer.php';
+require_once 'PHP/Depend/Code/NodeBuilderI.php';
+require_once 'PHP/Depend/Code/TokenizerI.php';
 
 /**
  * The php source parser.
@@ -68,7 +68,7 @@ class PHP_Depend_Parser
      * @type string
      * @var string $package
      */
-    protected $package = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+    protected $package = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
     
     /**
      * The package defined in the file level comment.
@@ -76,7 +76,7 @@ class PHP_Depend_Parser
      * @type string
      * @var string $globalPackage
      */
-    protected $globalPackage = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+    protected $globalPackage = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
     
     /**
      * The package separator token.
@@ -105,27 +105,27 @@ class PHP_Depend_Parser
     /**
      * The used code tokenizer.
      *
-     * @type PHP_Depend_Code_Tokenizer 
-     * @var PHP_Depend_Code_Tokenizer $tokenizer
+     * @type PHP_Depend_Code_TokenizerI 
+     * @var PHP_Depend_Code_TokenizerI $tokenizer
      */
     protected $tokenizer = null;
     
     /**
      * The used data structure builder.
      * 
-     * @type PHP_Depend_Code_NodeBuilder
-     * @var PHP_Depend_Code_NodeBuilder $builder
+     * @type PHP_Depend_Code_NodeBuilderI
+     * @var PHP_Depend_Code_NodeBuilderI $builder
      */
     protected $builder = null;
     
     /**
      * Constructs a new source parser.
      *
-     * @param PHP_Depend_Code_Tokenizer   $tokenizer The used code tokenizer.
-     * @param PHP_Depend_Code_NodeBuilder $builder   The used node builder.
+     * @param PHP_Depend_Code_TokenizerI   $tokenizer The used code tokenizer.
+     * @param PHP_Depend_Code_NodeBuilderI $builder   The used node builder.
      */
-    public function __construct(PHP_Depend_Code_Tokenizer $tokenizer, 
-                                PHP_Depend_Code_NodeBuilder $builder)
+    public function __construct(PHP_Depend_Code_TokenizerI $tokenizer, 
+                                PHP_Depend_Code_NodeBuilderI $builder)
     {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
@@ -143,26 +143,26 @@ class PHP_Depend_Parser
         
         $comment = null;
 
-        while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
+        while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
             switch ($token[0]) {
-            case PHP_Depend_Code_Tokenizer::T_ABSTRACT:
+            case PHP_Depend_Code_TokenizerI::T_ABSTRACT:
                 $this->abstract = true;
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_DOC_COMMENT:
+            case PHP_Depend_Code_TokenizerI::T_DOC_COMMENT:
                 $comment       = $token[1];
                 $this->package = $this->parsePackage($token[1]);
                 
                 // Check for doc level comment
-                if ($this->globalPackage === PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE 
+                if ($this->globalPackage === PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE 
                  && $this->isFileComment() === true) {
 
                     $this->globalPackage = $this->package;
                 }
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_INTERFACE:
+            case PHP_Depend_Code_TokenizerI::T_INTERFACE:
                 // Get interface name
                 $token = $this->tokenizer->next();
                     
@@ -183,7 +183,7 @@ class PHP_Depend_Parser
                 $comment = null;
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_CLASS:
+            case PHP_Depend_Code_TokenizerI::T_CLASS:
                 // Get class name
                 $token = $this->tokenizer->next();
                     
@@ -205,7 +205,7 @@ class PHP_Depend_Parser
                 $comment = null;
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_FUNCTION:
+            case PHP_Depend_Code_TokenizerI::T_FUNCTION:
                 $function = $this->parseCallable();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
                 $function->setDocComment($comment);
@@ -230,7 +230,7 @@ class PHP_Depend_Parser
      */
     protected function reset()
     {
-        $this->package   = PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+        $this->package   = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
         $this->abstract  = false;
         $this->className = null;
     }
@@ -244,9 +244,9 @@ class PHP_Depend_Parser
      */
     protected function parseInterfaceSignature(PHP_Depend_Code_Interface $interface)
     {
-        while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
+        while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
             $token = $this->tokenizer->next();
-            if ($token[0] === PHP_Depend_Code_Tokenizer::T_STRING) {
+            if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
                 $dependency = $this->builder->buildInterface($token[1]);
                 $interface->addDependency($dependency);
             }
@@ -263,11 +263,11 @@ class PHP_Depend_Parser
     protected function parseClassSignature(PHP_Depend_Code_Class $class)
     {
         $implements = false;
-        while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
+        while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
             $token = $this->tokenizer->next();
-            if ($token[0] === PHP_Depend_Code_Tokenizer::T_IMPLEMENTS) {
+            if ($token[0] === PHP_Depend_Code_TokenizerI::T_IMPLEMENTS) {
                 $implements = true;
-            } else if ($token[0] === PHP_Depend_Code_Tokenizer::T_STRING) {
+            } else if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
                 if ($implements) {
                     $dependency = $this->builder->buildInterface($token[1]);
                 } else {
@@ -295,10 +295,10 @@ class PHP_Depend_Parser
         $comment   = null;
         $abstract  = false;
         
-        while ($token !== PHP_Depend_Code_Tokenizer::T_EOF) {
+        while ($token !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
             switch ($token[0]) {
-            case PHP_Depend_Code_Tokenizer::T_FUNCTION:
+            case PHP_Depend_Code_TokenizerI::T_FUNCTION:
                 $method = $this->parseCallable($type);
                 $method->setDocComment($comment);
                 $method->setAbstract($abstract);
@@ -309,7 +309,7 @@ class PHP_Depend_Parser
                 $abstract  = false;
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_VARIABLE:
+            case PHP_Depend_Code_TokenizerI::T_VARIABLE:
                 $property = $this->builder->buildProperty($token[1], $token[2]);
                 $property->setDocComment($comment);
                 $property->setVisibility($visibilty);
@@ -325,39 +325,39 @@ class PHP_Depend_Parser
                 $abstract  = false;
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
+            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
                 ++$curly;
                 $comment = null; 
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
+            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 $comment = null; 
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_ABSTRACT:
+            case PHP_Depend_Code_TokenizerI::T_ABSTRACT:
                 $abstract = true;
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_PUBLIC:
+            case PHP_Depend_Code_TokenizerI::T_PUBLIC:
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_PRIVATE:
+            case PHP_Depend_Code_TokenizerI::T_PRIVATE:
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE;
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_PROTECTED:
+            case PHP_Depend_Code_TokenizerI::T_PROTECTED:
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED;
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_STATIC:
+            case PHP_Depend_Code_TokenizerI::T_STATIC:
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_FINAL:
+            case PHP_Depend_Code_TokenizerI::T_FINAL:
                 break;
                 
-            case PHP_Depend_Code_Tokenizer::T_DOC_COMMENT:
+            case PHP_Depend_Code_TokenizerI::T_DOC_COMMENT:
                 $comment = $token[1];
                 break;
             
@@ -392,7 +392,7 @@ class PHP_Depend_Parser
     protected function parseCallable(PHP_Depend_Code_AbstractType $parent = null)
     {
         $token = $this->tokenizer->next();
-        if ($token[0] === PHP_Depend_Code_Tokenizer::T_BITWISE_AND) {
+        if ($token[0] === PHP_Depend_Code_TokenizerI::T_BITWISE_AND) {
             $token = $this->tokenizer->next();
         }
         
@@ -401,7 +401,7 @@ class PHP_Depend_Parser
             $callable = $this->builder->buildFunction($token[1], $token[2]);
             
             $package = $this->globalPackage;
-            if ($this->package !== PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE) {
+            if ($this->package !== PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE) {
                 $package = $this->package;
             }
             
@@ -412,7 +412,7 @@ class PHP_Depend_Parser
         }
         
         $this->parseCallableSignature($callable);
-        if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
+        if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies 
             $this->parseCallableBody($callable);
         } else {
@@ -431,7 +431,7 @@ class PHP_Depend_Parser
      */
     protected function parseCallableSignature(PHP_Depend_Code_AbstractCallable $callable)
     {
-        if ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
+        if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN) {
             // Load invalid token for line number
             $token = $this->tokenizer->next();
             
@@ -448,18 +448,18 @@ class PHP_Depend_Parser
 
         $parenthesis = 0;
         
-        while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
+        while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
 
             switch ($token[0]) {
-            case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN:
+            case PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
                 break;
                  
-            case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE:
+            case PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE:
                 --$parenthesis;
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_STRING:
+            case PHP_Depend_Code_TokenizerI::T_STRING:
                 // Create an instance for this dependency and append it
                 $dependency = $this->builder->buildClassOrInterface($token[1]);
                 $callable->addDependency($dependency);
@@ -488,15 +488,15 @@ class PHP_Depend_Parser
         $curly  = 0;
         $tokens = array();
 
-        while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_EOF) {
+        while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
             $tokens[] = $token = $this->tokenizer->next();
 
             switch ($token[0]) {
-            case PHP_Depend_Code_Tokenizer::T_NEW:
+            case PHP_Depend_Code_TokenizerI::T_NEW:
                 $allowed = array(
-                    PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON,
-                    PHP_Depend_Code_Tokenizer::T_STRING,
+                    PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
+                    PHP_Depend_Code_TokenizerI::T_STRING,
                 );
                 
                 $parts = array();
@@ -504,7 +504,7 @@ class PHP_Depend_Parser
                     $token    = $this->tokenizer->next();
                     $tokens[] = $token;
                     
-                    if ($token[0] === PHP_Depend_Code_Tokenizer::T_STRING) {
+                    if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
                         $parts[] = $token[1];
                     }
                 }
@@ -515,12 +515,12 @@ class PHP_Depend_Parser
                 $callable->addDependency($class);
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_STRING:
-                if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON) {
+            case PHP_Depend_Code_TokenizerI::T_STRING:
+                if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON) {
                     // Skip double colon
                     $tokens[] = $this->tokenizer->next();
                     // Check for method call
-                    if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
+                    if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_STRING) {
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
                         // Create a dependency class
@@ -531,11 +531,11 @@ class PHP_Depend_Parser
                 }
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
+            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
                 ++$curly;
                 break;
                     
-            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
+            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 break;
 
@@ -574,21 +574,21 @@ class PHP_Depend_Parser
             }
             return $package;
         }
-        return PHP_Depend_Code_NodeBuilder::DEFAULT_PACKAGE;
+        return PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
     }
 
     protected function isFileComment()
     {
-        if ($this->tokenizer->prev() !== PHP_Depend_Code_Tokenizer::T_OPEN_TAG) {
+        if ($this->tokenizer->prev() !== PHP_Depend_Code_TokenizerI::T_OPEN_TAG) {
             return false;
         }
         
         $notExpectedTags = array(
-            PHP_Depend_Code_Tokenizer::T_CLASS,
-            PHP_Depend_Code_Tokenizer::T_FINAL,
-            PHP_Depend_Code_Tokenizer::T_ABSTRACT,
-            PHP_Depend_Code_Tokenizer::T_FUNCTION,
-            PHP_Depend_Code_Tokenizer::T_INTERFACE
+            PHP_Depend_Code_TokenizerI::T_CLASS,
+            PHP_Depend_Code_TokenizerI::T_FINAL,
+            PHP_Depend_Code_TokenizerI::T_ABSTRACT,
+            PHP_Depend_Code_TokenizerI::T_FUNCTION,
+            PHP_Depend_Code_TokenizerI::T_INTERFACE
         );
         
         return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
