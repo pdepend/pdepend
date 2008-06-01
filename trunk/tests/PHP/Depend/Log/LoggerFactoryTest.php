@@ -46,18 +46,12 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
-require_once dirname(__FILE__) . '/Summary/XmlTest.php';
+require_once 'PHP/Depend/Log/LoggerFactory.php';
 
 /**
- * Main test suite for the PHP_Depend_Log package.
+ * Test case for the logger factory.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -68,33 +62,52 @@ require_once dirname(__FILE__) . '/Summary/XmlTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_AllTests
+class PHP_Depend_Log_LoggerFactoryTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that {@link PHP_Depend_Log_LoggerFactory::createLogger()} returns
+     * the expected instance for a valid identifier.
      *
      * @return void
      */
-    public static function main()
+    public function testCreateLoggerWithValidIdentifier()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $factory = new PHP_Depend_Log_LoggerFactory();
+        $logger  = $factory->createLogger('summary-xml', 'pdepend.xml');
+        
+        $this->assertType('PHP_Depend_Log_Summary_Xml', $logger);
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Tests the singleton behaviour of the logger factory method 
+     * {@link PHP_Depend_Log_LoggerFactory::createLogger()}.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testCreateLoggerSingletonBehaviour()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log - AllTests');
-        $suite->addTestSuite('PHP_Depend_Log_LoggerFactoryTest');
-        $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
-        
-        return $suite;
-    }
-}
+        $factory = new PHP_Depend_Log_LoggerFactory();
+        $logger1 = $factory->createLogger('summary-xml', 'pdepend1.xml');
+        $logger2 = $factory->createLogger('summary-xml', 'pdepend2.xml');
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_AllTests::main') {
-    PHP_Depend_Log_AllTests::main();
+        $this->assertType('PHP_Depend_Log_Summary_Xml', $logger1);
+        $this->assertSame($logger1, $logger2);
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Log_LoggerFactory::createLogger()} fails with
+     * an exception for an invalid logger identifier.
+     *
+     * @return void
+     */
+    public function testCreateLoggerWithInvalidIdentifierFail()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            "Unknown logger class 'PHP_Depend_Log_FooBar_Xml'."
+        );
+        
+        $factory = new PHP_Depend_Log_LoggerFactory();
+        $factory->createLogger('foo-bar-xml', 'pdepend.xml');
+    }
 }

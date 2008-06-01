@@ -51,6 +51,7 @@ require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
+require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Test case for the hierarchy analyzer.
@@ -196,5 +197,22 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($expected as $uuid => $info) {
             $this->assertEquals($info, $analyzer->getNodeMetrics($uuid));
         }
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Metrics_Hierarchy_Analyzer::getNodeMetrics()}
+     * returns an empty <b>array</b> for an unknown node uuid. 
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsForUnknownUUID()
+    {
+        $uuid     = new PHP_Depend_Util_UUID();
+        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $metrics  = $analyzer->getNodeMetrics((string) $uuid);
+        
+        $this->assertType('array', $metrics);
+        $this->assertEquals(0, count($metrics));
+        
     }
 }
