@@ -159,6 +159,10 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             $instance = $this->classes[$cls][$pkg];
         } else if (isset($this->interfaces[$cls][$pkg])) {
             $instance = $this->interfaces[$cls][$pkg];
+        } else if (isset($this->classes[$cls])) {
+            $instance = reset($this->classes[$cls]);
+        } else if (isset($this->interfaces[$cls])) {
+            $instance = reset($this->interfaces[$cls]);
         } else {
             $instance = $this->buildClass($name);
         }
