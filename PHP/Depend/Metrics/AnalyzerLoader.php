@@ -47,7 +47,8 @@
  */
 
 /**
- * 
+ * This class provides a simple way to load all required analyzers by class,
+ * implemented interface or parent class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,7 +61,13 @@
  */
 class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
 {
-    protected $analyzers = array();
+    /**
+     * All matching analyzer instances.
+     *
+     * @type array<PHP_Depend_Metrics_AnalyzerI>
+     * @var array(PHP_Depend_Metrics_AnalyzerI) $_analyzers
+     */
+    protected $_analyzers = array();
     
     public function __construct(array $acceptedTypes)
     {
@@ -86,14 +93,20 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
                 );
                 
                 if (count(array_intersect($acceptedTypes, $providedTypes)) > 0) {
-                    $this->analyzers[] = new $className();                    
+                    $this->_analyzers[] = new $className();                    
                 }
             }
         }
     }
     
+    /**
+     * Returns a countable iterator of {@link PHP_Depend_Metrics_AnalyzerI}
+     * instances that match against the given accepted types. 
+     *
+     * @return Iterator
+     */
     public function getIterator()
     {
-        return new ArrayIterator($this->analyzers);
+        return new ArrayIterator($this->_analyzers);
     }
 }
