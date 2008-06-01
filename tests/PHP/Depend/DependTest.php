@@ -118,66 +118,17 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $expected = array(
             'package1'                                     =>  true,
             'package2'                                     =>  true,
-            'package3'                                     =>  true,
-            PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE  =>  true
+            'package3'                                     =>  true
         );
         
         $this->assertType('Iterator', $metrics);
         foreach ($metrics as $metric) {
-            $this->assertType('PHP_Depend_Metrics_Dependency_Package', $metric);
+            $this->assertType('PHP_Depend_Code_Package', $metric);
             
             unset($expected[$metric->getName()]);
         }
         
         $this->assertEquals(0, count($expected));
-    }
-    
-    /**
-     * Tests that the {@link PHP_Depend::containsCycles()} method returns 
-     * <b>true</b> for source code with cycles.
-     *
-     * @return void
-     */
-    public function testContainsCyclesWithCodeThatContainsACycle()
-    {
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-with-cycle');
-        $pdepend->analyze();
-        
-        $this->assertTrue($pdepend->containsCycles());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Depend::containsCycles()} method returns 
-     * <b>false</b> for source code without cycles.
-     *
-     * @return void
-     */
-    public function testContainsCyclesWithCodeThatDoesNotContainACycle()
-    {
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-cycle');
-        $pdepend->analyze();
-        
-        $this->assertFalse($pdepend->containsCycles());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Depend::containsCycles()} method fails with an
-     * exception if the code was not analyzed before.
-     *
-     * @return void
-     */
-    public function testContainsCyclesWithoutAnalyzeFail()
-    {
-        $this->setExpectedException(
-            'RuntimeException', 
-            'containsCycles() doesn\'t work before the source was analyzed.'
-        );
-        
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
-        $pdepend->containsCycles();
     }
     
     /**
@@ -192,7 +143,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
-        $this->assertEquals(12, $pdepend->countClasses());
+        $this->assertEquals(10, $pdepend->countClasses());
     }
     
     /**
@@ -225,7 +176,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
-        $this->assertEquals(4, $pdepend->countPackages());
+        $this->assertEquals(3, $pdepend->countPackages());
     }
     
     /**
@@ -261,11 +212,10 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $packages = array(
             'package1', 
             'package2', 
-            'package3', 
-            PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE
+            'package3'
         );
         
-        $className = 'PHP_Depend_Metrics_Dependency_Package';
+        $className = 'PHP_Depend_Code_Package';
         
         foreach ($packages as $package) {
             $this->assertType($className, $pdepend->getPackage($package));
@@ -321,13 +271,13 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         
-        $metrics0 = $pdepend->analyze();
-        $metrics1 = $pdepend->getPackages();
+        $package1 = $pdepend->analyze();
+        $package2 = $pdepend->getPackages();
         
-        $this->assertNotNull($metrics0);
-        $this->assertNotNull($metrics1);
+        $this->assertNotNull($package1);
+        $this->assertNotNull($package2);
         
-        $this->assertSame($metrics0, $metrics1);
+        $this->assertSame($package1, $package2);
     }
     
     /**
