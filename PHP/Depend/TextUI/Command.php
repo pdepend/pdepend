@@ -130,7 +130,7 @@ class PHP_Depend_TextUI_Command
             return;
         }
         
-        $pdepend->analyze2();
+        $pdepend->analyze();
         
     }
     

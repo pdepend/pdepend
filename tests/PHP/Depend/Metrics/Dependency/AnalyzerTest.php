@@ -139,46 +139,26 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($this->builder->getPackages() as $package) {
             $package->accept($visitor);
         }
-        $metrics0 = $visitor->getPackages(); 
-        foreach ($metrics0 as $metrics) {
+         
+        foreach ($this->builder->getPackages() as $package) {
             
-            $uuid = $metrics->getPackage()->getUUID();
+            $uuid = $package->getUUID();
             
             if (!isset($this->_expected[$uuid])) {
                 continue;
             }
 
-            $data = $this->_expected[$uuid];
+            $expected = $this->_expected[$uuid];
+            $actual   = $visitor->getStats($uuid);
 
-            $this->assertType('PHP_Depend_Code_Package', $metrics->getPackage());
-            $this->assertEquals($data['abstractness'], $metrics->abstractness());
-            $this->assertEquals($data['instability'], $metrics->instability());
-            $this->assertEquals($data['efferent'], $metrics->efferentCoupling());
-            $this->assertEquals($data['afferent'], $metrics->afferentCoupling());
+            $this->assertEquals($expected['abstractness'], $actual['a']);
+            $this->assertEquals($expected['instability'], $actual['i']);
+            $this->assertEquals($expected['efferent'], $actual['ce']);
+            $this->assertEquals($expected['afferent'], $actual['ca']);
             
             unset($this->_expected[$uuid]);
         }
         
         $this->assertEquals(0, count($this->_expected));
-    }
-    
-    /**
-     * Tests that metrics are only generated once.
-     *
-     * @return void
-     */
-    public function testGenerateUniqueMetricsInstance()
-    {
-        $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
-        foreach ($this->builder->getPackages() as $package) {
-            $package->accept($visitor);
-        }
-        $metrics0 = $visitor->getPackages();
-        $metrics1 = $visitor->getPackages();
-        
-        $this->assertNotNull($metrics0);
-        $this->assertNotNull($metrics1);
-        
-        $this->assertSame($metrics0, $metrics1);
     }
 }
