@@ -180,7 +180,7 @@ class PHP_Depend_TextUI_Command
     protected function printUsage()
     {
         $this->printVersion();
-        echo "Usage: pdepend [options] [logger] <directory>\n\n";        
+        echo "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";        
     }
 
     protected function printHelp()
