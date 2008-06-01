@@ -657,6 +657,33 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser ignores variable class instantiation. 
+     * 
+     * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
+     *
+     * @return void
+     */
+    public function testVariableClassNameBug10()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/10.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $package = $builder->getPackages()->current();
+        $class   = $package->getClasses()->current();
+        $method  = $class->getMethods()->current();
+        
+        $this->assertEquals('package10', $package->getName());
+        $this->assertEquals('VariableClassNamesBug10', $class->getName());
+        $this->assertEquals('foo10', $method->getName());
+        $this->assertEquals(0, count($method->getDependencies()));
+        
+    }
+    
+    /**
      * Returns all packages in the mixed code example.
      *
      * @return PHP_Depend_Code_NodeIterator
