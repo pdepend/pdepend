@@ -101,14 +101,6 @@ class PHP_Depend_Parser
     protected $abstract = false;
     
     /**
-     * The name of the context class.
-     *
-     * @type string 
-     * @var string $className
-     */
-    protected $className = '';
-    
-    /**
      * The used code tokenizer.
      *
      * @type PHP_Depend_Code_TokenizerI 
@@ -172,9 +164,9 @@ class PHP_Depend_Parser
                 // Get interface name
                 $token = $this->tokenizer->next();
                     
-                $this->className = $token[1];
+                $qualifiedName = "{$this->package}::{$token[1]}";
 
-                $interface = $this->builder->buildInterface($this->className, $token[2]);
+                $interface = $this->builder->buildInterface($qualifiedName, $token[2]);
                 $interface->setSourceFile($this->tokenizer->getSourceFile());
                 $interface->setStartLine($token[2]);
                 $interface->setDocComment($comment);
@@ -193,9 +185,9 @@ class PHP_Depend_Parser
                 // Get class name
                 $token = $this->tokenizer->next();
                     
-                $this->className = $token[1];
+                $qualifiedName = "{$this->package}::{$token[1]}";
 
-                $class = $this->builder->buildClass($this->className, $token[2]);
+                $class = $this->builder->buildClass($qualifiedName, $token[2]);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setStartLine($token[2]);
                 $class->setAbstract($this->abstract);
@@ -236,9 +228,8 @@ class PHP_Depend_Parser
      */
     protected function reset()
     {
-        $this->package   = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
-        $this->abstract  = false;
-        $this->className = null;
+        $this->package  = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
+        $this->abstract = false;
     }
     
     /**
