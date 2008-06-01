@@ -225,6 +225,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             
         // 4) Create a new class for the given package
         } else {
+            
             // Create a new class instance
             $class = new PHP_Depend_Code_Class($cls, $line);
             
