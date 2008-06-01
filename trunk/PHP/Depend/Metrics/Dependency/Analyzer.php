@@ -106,6 +106,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     
     private $_afferentNodes = array();
     
+    private $_cycles = array();
+    
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
@@ -148,6 +150,14 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             return $this->_efferentNodes[$uuid];
         }
         return array();
+    }
+    
+    public function getCycle($uuid)
+    {
+        if (isset($this->_cycles[$uuid])) {
+            return $this->_cycles[$uuid];
+        }
+        return null;
     }
     
     /**
@@ -243,6 +253,14 @@ class PHP_Depend_Metrics_Dependency_Analyzer
 
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
+        }
+        
+        $storage = new SplObjectStorage();
+        if ($this->collectCycle($storage, $package) === true) {
+            $this->_cycles[$package->getUUID()] = array();
+            foreach ($storage as $pkg) {
+                $this->_cycles[$package->getUUID()][] = $pkg;
+            }
         }
     }
     
@@ -407,6 +425,49 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         foreach ($this->nodeMetrics as $uuid => $metrics) {
             $this->nodeMetrics[$uuid]['d'] = abs(($metrics['a'] + $metrics['i']) - 1);
         }
+    }
+
+    /**
+     * Collects a single cycle that is reachable by this package. All packages
+     * that are part of the cylce are stored in the given {@link SplObjectStorage}
+     * instance. 
+     *
+     * @param SplObjectStorage $storage The cycle package object store.
+     * 
+     * @return boolean If this method detects a cycle the return value is <b>true</b>
+     *                 otherwise this method will return <b>false</b>.
+     */
+    protected function collectCycle(SplObjectStorage $storage, PHP_Depend_Code_Package $package)
+    {
+        if ($storage->contains($package)) {
+            $storage->rewind();
+            while (($tmp = $storage->current()) !== $package) {
+                $storage->detach($tmp);
+            }
+            return true;
+        }
+        
+        $storage->attach($package);
+
+        foreach ($package->getTypes() as $class) {
+            foreach ($class->getDependencies() as $dependency) {
+                $depPackage = $dependency->getPackage();
+                if ($depPackage !== $package && $this->collectCycle($storage, $depPackage)) {
+                    return true;
+                }
+            }
+            foreach ($class->getMethods() as $method) {
+                foreach ($method->getDependencies() as $dependency) {
+                    $depPackage = $dependency->getPackage();
+                    if ($depPackage !== $package && $this->collectCycle($storage, $depPackage)) {
+                        return true;
+                    }
+                }                
+            }
+        }
+        $storage->detach($package);
+        
+        return false;
     }
     
     /**
