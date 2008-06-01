@@ -46,19 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
-require_once dirname(__FILE__) . '/Jdepend/XmlTest.php';
-require_once dirname(__FILE__) . '/Summary/XmlTest.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
- * Main test suite for the PHP_Depend_Log package.
+ * Simple dummy analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -69,34 +60,17 @@ require_once dirname(__FILE__) . '/Summary/XmlTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_AllTests
+class PHP_Depend_Log_DummyAnalyzer implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
-     * Test suite main method.
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * 
      * @return void
      */
-    public static function main()
+    public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
     }
     
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log - AllTests');
-        $suite->addTestSuite('PHP_Depend_Log_LoggerFactoryTest');
-        $suite->addTestSuite('PHP_Depend_Log_Jdepend_XmlTest');
-        $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
-        
-        return $suite;
-    }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_AllTests::main') {
-    PHP_Depend_Log_AllTests::main();
 }

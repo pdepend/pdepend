@@ -47,10 +47,12 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 
 /**
- * 
+ * Generates an xml document with the aggregated metrics. The format is borrowed
+ * from <a href="http://clarkware.com/software/JDepend.html">JDepend</a>. 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,7 +64,8 @@ require_once 'PHP/Depend/Log/LoggerI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Log_Jdepend_Xml 
-    implements PHP_Depend_Code_NodeVisitorI, PHP_Depend_Log_LoggerI
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+    implements PHP_Depend_Log_LoggerI
 {
     protected $fileName = '';
     
@@ -192,11 +195,6 @@ class PHP_Depend_Log_Jdepend_Xml
         }
     }
     
-    public function visitFunction(PHP_Depend_Code_Function $function)
-    {
-
-    }
-    
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $doc = $this->abstractClasses->ownerDocument;
@@ -206,11 +204,6 @@ class PHP_Depend_Log_Jdepend_Xml
         $classXml->appendChild($doc->createTextNode($interface->getName()));
         
         $this->abstractClasses->appendChild($classXml);
-    }
-    
-    public function visitMethod(PHP_Depend_Code_Method $method)
-    {
-
     }
     
     public function visitPackage(PHP_Depend_Code_Package $package)
@@ -258,22 +251,30 @@ class PHP_Depend_Log_Jdepend_Xml
             
             $usedBy->appendChild($afferentXml);
         }
-                 
+        
         $packageXml->appendChild($statsXml);
         $packageXml->appendChild($this->concreteClasses);
         $packageXml->appendChild($this->abstractClasses);
         $packageXml->appendChild($dependsUpon);
         $packageXml->appendChild($usedBy);
         
+        if (($cycles = $this->analyzer->getCycle($package->getUUID())) !== null)
+        {
+            $cycleXml = $doc->createElement('Package');
+            $cycleXml->setAttribute('Name', $package->getName());
+            
+            foreach ($cycles as $cycle) {
+                $cycleXml->appendChild($doc->createElement('Package'))
+                         ->appendChild($doc->createTextNode($cycle->getName()));
+            }
+            
+            $this->cycles->appendChild($cycleXml);
+        }
+        
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
         }
             
         $this->packages->appendChild($packageXml);
-    }
-    
-    public function visitProperty(PHP_Depend_Code_Property $property)
-    {
-        
     }
 }
