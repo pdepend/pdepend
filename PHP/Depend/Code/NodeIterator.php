@@ -71,6 +71,14 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     protected $nodes = array();
     
     /**
+     * List of all assciated filter instances.
+     * 
+     * @type array<PHP_Depend_Code_NodeIterator_FilterI>
+     * @var array(PHP_Depend_Code_NodeIterator_FilterI) $_filters
+     */
+    private $_filters = array();
+    
+    /**
      * Constructs a new node iterator from the given {@link PHP_Depend_Code_NodeI}
      * node array.
      *
@@ -92,6 +100,22 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         }
         
         ksort($this->nodes);
+        
+        $this->rewind();
+    }
+    
+    /**
+     * Appends a filter to this iterator.
+     *
+     * @param PHP_Depend_Code_NodeIterator_FilterI $filter The filter instance.
+     * 
+     * @return void
+     */
+    public function addFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
+    {
+        if (in_array($filter, $this->_filters, true) === false) {
+            $this->_filters[] = $filter;
+        }
     }
     
     /**
@@ -132,6 +156,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function next()
     {
         next($this->nodes);
+        $this->_filterNext();
     }
     
     /**
@@ -142,6 +167,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function rewind()
     {
         reset($this->nodes);
+        $this->_filterNext();
     }
 
     /**
@@ -152,5 +178,29 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function valid()
     {
         return ($this->current() !== false);
+    }
+    
+    /**
+     * Moves the internal pointer to the next valid node. If no filter is 
+     * registered, this method will simply return.
+     *
+     * @return void
+     */
+    private function _filterNext()
+    {
+        if (count($this->_filters) === 0) {
+            return;
+        }
+        
+        while (($node = $this->current()) !== false)
+        {
+            foreach ($this->_filters as $filter) {
+                if ($filter->accept($node) === false) {
+                    $this->next();
+                    continue 2;
+                }
+            }
+            break;
+        }
     }
 }
