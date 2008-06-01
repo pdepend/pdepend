@@ -66,38 +66,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
        extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
     implements PHP_Depend_Metrics_AnalyzerI
 {
-    /**
-     * Already created package instances.
-     *
-     * @type array<PHP_Depend_Metrics_Dependency_Package>
-     * @var array(string=>PHP_Depend_Metrics_Dependency_Package) $packages
-     */
-    protected $packages = array();
-    
-    /**
-     * Mapping of outgoing dependencies.
-     * 
-     * @type array<SplObjectStorage>
-     * @var array(string=>SplObjectStorage) $efferents
-     */
-    protected $efferents = array();
-    
-    /**
-     * Mapping of incoming dependencies.
-     *
-     * @type array<SplObjectStorage>
-     * @var array(string=>SplObjectStorage) $afferents
-     */
-    protected $afferents = array();
-    
-    /**
-     * The generated project metrics.
-     *
-     * @type ArrayIterator
-     * @var ArrayIterator $metrics
-     */
-    protected $metrics = null;
-    
     protected $nodeMetrics = array();
     
     protected $nodeSet = array();
@@ -161,31 +129,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     }
     
     /**
-     * Returns the generated project metrics.
-     *
-     * @return array(string=>PHP_Depend_Metrics_Dependency_Package)
-     */
-    public function getPackages()
-    {
-        if ($this->metrics !== null) {
-            return $this->metrics;
-        }
-
-        $metrics = array();
-        foreach ($this->packages as $name => $package) {
-            
-            $package->setAfferents($this->createPackages($this->afferents[$name]));
-            $package->setEfferents($this->createPackages($this->efferents[$name]));
-            
-            $metrics[$name] = $package;
-        }
-
-        $this->metrics = new ArrayIterator($metrics);
-        
-        return $this->metrics;
-    }
-    
-    /**
      * Visits a method node. 
      *
      * @param PHP_Depend_Code_Class $method The method class node.
@@ -213,27 +156,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             if (!in_array($depPkgUUID, $this->nodeMetrics[$pkgUUID]['ce'])) {
                 $this->nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
                 $this->nodeMetrics[$depPkgUUID]['ca'][] = $pkgUUID;
-            }
-        }
-        
-        
-        $package     = $method->getParent()->getPackage();
-        $packageName = $package->getName();
-        
-        foreach ($method->getDependencies() as $dep) {
-            // Skip for this package
-            if ($dep->getPackage() === $package) {
-                continue;
-            }
-            
-            $depPkgName = $dep->getPackage()->getName();
-            
-            $this->createPackage($dep->getPackage());
-            if (!$this->efferents[$packageName]->contains($dep->getPackage())) {
-                $this->efferents[$packageName]->attach($dep->getPackage());
-            }
-            if (!$this->afferents[$depPkgName]->contains($package)) {
-                $this->afferents[$depPkgName]->attach($package);
             }
         }
     }
@@ -327,24 +249,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             if (!in_array($depPkgUUID, $this->nodeMetrics[$pkgUUID]['ce'])) {
                 $this->nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
                 $this->nodeMetrics[$depPkgUUID]['ca'][] = $pkgUUID;
-            }
-        }
-        
-        $pkgName = $type->getPackage()->getName();
-        
-        $this->createPackage($type->getPackage());
-        
-        foreach ($type->getDependencies() as $dep) {
-            $depPkgName = $dep->getPackage()->getName();
-            
-            if ($dep->getPackage() !== $type->getPackage()) {
-           
-                $this->createPackage($dep->getPackage());
-                
-                if (!$this->efferents[$pkgName]->contains($dep->getPackage())) {
-                    $this->efferents[$pkgName]->attach($dep->getPackage());
-                    $this->afferents[$depPkgName]->attach($type->getPackage());
-                }
             }
         }
 
@@ -468,46 +372,5 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         $storage->detach($package);
         
         return false;
-    }
-    
-    /**
-     * Factory and singleton for metrics package objects.
-     *
-     * @param PHP_Depend_Code_Package $package The associated code package.
-     * 
-     * @return PHP_Depend_Metrics_Dependency_Package
-     */
-    protected function createPackage(PHP_Depend_Code_Package $package)
-    {
-        $name = $package->getName();
-        
-        // Check for an existing instance
-        if (!isset($this->packages[$name])) {
-            
-            $packageInstance = new PHP_Depend_Metrics_Dependency_Package($package);
-            
-            // Create a new package
-            $this->packages[$name]  = $packageInstance;
-            $this->efferents[$name] = new SplObjectStorage();
-            $this->afferents[$name] = new SplObjectStorage();
-        }    
-        // Return the package instance
-        return $this->packages[$name];
-    }
-    
-    /**
-     * Factory/Singleton for a set of metric package objects
-     *
-     * @param SplObjectStorage $packages The input code packages.
-     * 
-     * @return array(PHP_Depend_Metrics_Dependency_Package)
-     */
-    protected function createPackages(SplObjectStorage $packages)
-    {
-        $output = array();
-        foreach ($packages as $package) {
-            $output[] = $this->createPackage($package);
-        }
-        return $output;
     }
 }

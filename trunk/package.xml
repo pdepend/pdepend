@@ -73,7 +73,7 @@ software JDepend.
             <file name="Package.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info" />
             </file>
-            <file name="Tokenizer.php" role="php">
+            <file name="TokenizerI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info" />
             </file>
           </dir>

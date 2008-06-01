@@ -48,47 +48,11 @@
 
 // PEAR/svn workaround
 if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path(dirname(__FILE__));
-}
- 
-if (count($GLOBALS['argv']) < 2) {
-    echo "Usage phpdep.php <source-dir> [<output-dir>]\n";
-    exit(1);
+    set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__));
 }
 
-$source = realpath($GLOBALS['argv'][1]);
-if (!is_dir($source)) {
-    echo $GLOBALS['argv'][1] . " doesn't exist.\n";
-    exit(1);
-}
+ini_set('memory_limit', '512M');
 
-if (count($GLOBALS['argv']) > 2) {
-    $output = $GLOBALS['argv'][2];
-    
-    if (!is_dir($output) && !mkdir($output, 0755, true)) {
-        echo "Cannot create output directory {$output}.\n";
-        exit(1);
-    }
-} else {
-    $output = getcwd();
-}
+require_once 'PHP/Depend/TextUI/Command.php';
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Renderer/GdChartRenderer.php';
-require_once 'PHP/Depend/Renderer/XMLRenderer.php';
-require_once 'PHP/Depend/Util/ExcludePathFilter.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-
-$pdepend = new PHP_Depend();
-$pdepend->addDirectory($source);
-
-$pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php', 'inc')));
-$pdepend->addFilter(new PHP_Depend_Util_ExcludePathFilter(array('tests/')));
-
-$packages = $pdepend->analyze();
-
-$renderer = new PHP_Depend_Renderer_GdChartRenderer($output . '/php_depend.png');
-$renderer->render($packages);
-
-$renderer = new PHP_Depend_Renderer_XMLRenderer($output . '/php_depend.xml');
-$renderer->render($packages);
+PHP_Depend_TextUI_Command::main();
