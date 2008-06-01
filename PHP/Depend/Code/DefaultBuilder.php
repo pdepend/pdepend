@@ -295,6 +295,10 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
                 $package->removeType($class);
             
                 unset($this->classes[$ife][$package->getName()]);
+                
+                if (count($this->classes[$ife]) === 0) {
+                    unset($this->classes[$ife]);
+                }
             } else {
                 // Unset class reference
                 $class = null;
