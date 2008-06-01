@@ -266,20 +266,18 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function buildCodeRankMetrics()
     {
-        if (is_array($this->nodeMetrics)) {
-            return;
-        }
+        if (!is_array($this->nodeMetrics)) {
+            $this->nodeMetrics = array();
         
-        $this->nodeMetrics = array();
-        
-        foreach ($this->nodes as $uuid => $info) {
-            $this->nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
-        }
-        foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
-            $this->nodeMetrics[$uuid]['cr'] = $rank;
-        }
-        foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
-            $this->nodeMetrics[$uuid]['rcr'] = $rank;
+            foreach ($this->nodes as $uuid => $info) {
+                $this->nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
+            }
+            foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
+                $this->nodeMetrics[$uuid]['cr'] = $rank;
+            }
+            foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
+                $this->nodeMetrics[$uuid]['rcr'] = $rank;
+            }
         }
     }
     
@@ -331,8 +329,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         }
         
         if (count($nodes) > 0) {
-            var_dump($nodes);
-            exit();
             throw new RuntimeException('The object structure contains cycles');
         }
         
