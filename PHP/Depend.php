@@ -162,7 +162,13 @@ class PHP_Depend
         $this->filter->append($filter);
     }
     
-    public function analyze2()
+    /**
+     * Analyzes the registered directories and returns the collection of 
+     * analyzed packages.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function analyze()
     {
         $acceptedTypes = $this->loadMetricAnalyzers();
         $analyzerLoader = new PHP_Depend_Metrics_AnalyzerLoader($acceptedTypes);
@@ -193,7 +199,7 @@ class PHP_Depend
                 $logger->log($analyzer);
             }
         }
-        
+
         $packages = $this->nodeBuilder->getPackages();
         $packages->addFilter(new PHP_Depend_Code_NodeIterator_DefaultPackageFilter());
 
@@ -202,65 +208,9 @@ class PHP_Depend
             $logger->close();
         }
 
-    }
-    
-    /**
-     * Analyzes the registered directories and returns the collection of 
-     * analyzed packages.
-     *
-     * @return Iterator
-     */
-    public function analyze()
-    {
-        $iterator = new AppendIterator();
+        $this->packages = $packages;
         
-        foreach ($this->directories as $directory) {
-            $iterator->append(new PHP_Depend_Util_FileFilterIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($directory)
-                ), $this->filter
-            ));
-        }
-        
-        $this->nodeBuilder = new PHP_Depend_Code_DefaultBuilder();
-
-        foreach ($iterator as $file) {
-            $parser = new PHP_Depend_Parser(
-                new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), 
-                $this->nodeBuilder
-            );
-            $parser->parse();
-        }
-
-        $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
-        $analyzer->analyze($this->nodeBuilder->getPackages());
-        
-        $this->packages = $analyzer->getPackages();
-        
-        return $this->packages;
-    }
-    
-    /**
-     * Indicates whether the packages contain one or more dependency cycles.
-     *
-     * @return boolean <b>true</b> if one or more dependency cycles exist.
-     * 
-     * @throws RuntimeException 
-     *         If this method is called before the code was analyzed.
-     */
-    public function containsCycles()
-    {
-        if ($this->packages === null) {
-            $msg = 'containsCycles() doesn\'t work before the source was analyzed.';
-            throw new RuntimeException($msg);
-        }
-        
-        foreach ($this->nodeBuilder as $package) {
-            if ($package->containsCycle()) {
-                return true;
-            }
-        }
-        return false;
+        return $packages;
     }
     
     /**
@@ -277,7 +227,7 @@ class PHP_Depend
         
         $classes = 0;
         foreach ($this->packages as $package) {
-            $classes += $package->getTotalClassCount();
+            $classes += $package->getTypes()->count();
         }
         return $classes;
     }
