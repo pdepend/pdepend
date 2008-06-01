@@ -58,7 +58,6 @@ require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/Code/AllTests.php';
 require_once dirname(__FILE__) . '/Log/AllTests.php';
 require_once dirname(__FILE__) . '/Metrics/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
 require_once dirname(__FILE__) . '/Util/AllTests.php';
 
 /**
@@ -95,7 +94,6 @@ class PHP_Depend_AllTests
         $suite->addTest(PHP_Depend_Code_AllTests::suite());
         $suite->addTest(PHP_Depend_Log_AllTests::suite());
         $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
-        $suite->addTest(PHP_Depend_Renderer_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_AllTests::suite());
         $suite->addTestSuite('PHP_Depend_ParserTest');
         $suite->addTestSuite('PHP_Depend_DependTest');
