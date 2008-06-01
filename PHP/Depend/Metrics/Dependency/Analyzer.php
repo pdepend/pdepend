@@ -254,7 +254,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
         }
-        
+
         $storage = new SplObjectStorage();
         if ($this->collectCycle($storage, $package) === true) {
             $this->_cycles[$package->getUUID()] = array();
