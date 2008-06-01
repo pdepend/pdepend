@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 
@@ -63,8 +63,8 @@ require_once 'PHP/Depend/Metrics/Dependency/Package.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Dependency_Analyzer 
-    implements PHP_Depend_Code_NodeVisitorI,
-               PHP_Depend_Metrics_AnalyzerI
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+    implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
      * Already created package instances.
@@ -176,20 +176,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     }
     
     /**
-     * Visits a function node. 
-     *
-     * @param PHP_Depend_Code_Function $function The current function node.
-     * 
-     * @return void
-     */
-    public function visitFunction(PHP_Depend_Code_Function $function)
-    {
-        $package = $function->getPackage();
-        $this->createPackage($package);
-        // TODO: Implement functions
-    }
-    
-    /**
      * Visits a method node. 
      *
      * @param PHP_Depend_Code_Class $method The method class node.
@@ -258,18 +244,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
         }
-    }
-    
-    /**
-     * Visits a property node. 
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
-     */
-    public function visitProperty(PHP_Depend_Code_Property $property)
-    {
     }
     
     /**
@@ -409,10 +383,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     protected function calculateAbstractness()
     {
         foreach ($this->nodeMetrics as $uuid => $metrics) {
-            if ($metrics['tc'] === 0) {
-                continue;
+            if ($metrics['tc'] !== 0) {
+                $this->nodeMetrics[$uuid]['a'] = ($metrics['ac'] / $metrics['tc']);
             }
-            $this->nodeMetrics[$uuid]['a'] = ($metrics['ac'] / $metrics['tc']);
+            
         }
     }
     
@@ -422,10 +396,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             // Count total incoming and outgoing dependencies
             $total = ($metrics['ca'] + $metrics['ce']);
             
-            if ($total === 0) {
-                continue;
+            if ($total !== 0) {
+                $this->nodeMetrics[$uuid]['i'] = ($metrics['ce'] / $total);
             }
-            $this->nodeMetrics[$uuid]['i'] = ($metrics['ce'] / $total);
         }
     }
     
