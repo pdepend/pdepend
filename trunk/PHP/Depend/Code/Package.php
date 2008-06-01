@@ -168,11 +168,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     }
     
     /**
-     * Adds the given type to this package.
+     * Adds the given type to this package and returns the input type instance.
      *
      * @param PHP_Depend_Code_AbstractType $type The new package type.
      * 
-     * @return void
+     * @return PHP_Depend_Code_AbstractType
      */
     public function addType(PHP_Depend_Code_AbstractType $type)
     {
@@ -189,6 +189,8 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         $type->setPackage($this);
         // Append class to internal list
         $this->types[] = $type;
+        
+        return $type;
     }
     
     /**
@@ -219,11 +221,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     }
     
     /**
-     * Adds the given function to this package.
+     * Adds the given function to this package and returns the input instance.
      *
      * @param PHP_Depend_Code_Function $function The new package function.
      * 
-     * @return void
+     * @return PHP_Depend_Code_Function
      */
     public function addFunction(PHP_Depend_Code_Function $function)
     {
@@ -235,6 +237,8 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         $function->setPackage($this);
         // Append function to internal list
         $this->functions[] = $function;
+        
+        return $function;
     }
     
     /**
