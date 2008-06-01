@@ -506,10 +506,13 @@ class PHP_Depend_Parser
                     }
                 }
                 
-                // Get last element of parts and create a class for it
-                $class = $this->builder->buildClass(join('::', $parts));
-                
-                $callable->addDependency($class);
+                // If this is a dynamic instantiation, do not add dependency.
+                // Something like: new $className('PDepend');
+                if (count($parts) > 0) {
+                    // Get last element of parts and create a class for it
+                    $class = $this->builder->buildClass(join('::', $parts));
+                    $callable->addDependency($class);
+                }
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_STRING:
