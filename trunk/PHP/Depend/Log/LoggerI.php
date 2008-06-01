@@ -60,11 +60,36 @@
  */
 interface PHP_Depend_Log_LoggerI
 {
+    /**
+     * Constructs a new logger for the given output file.
+     *
+     * @param string $fileName The log output file
+     */
     function __construct($fileName);
     
+    /**
+     * Sets the context code nodes.
+     *
+     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * 
+     * @return void
+     */
     function setCode(PHP_Depend_Code_NodeIterator $code);
     
+    /**
+     * Adds an analyzer to log. If this logger accepts the given analyzer it
+     * with return <b>true</b>, otherwise the return value is <b>false</b>.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     * 
+     * @return boolean
+     */
     function log(PHP_Depend_Metrics_AnalyzerI $analyzer);
     
+    /**
+     * Closes the logger process and writes the output file.
+     *
+     * @return void
+     */
     function close();
 }
