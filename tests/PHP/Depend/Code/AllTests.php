@@ -54,12 +54,14 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/ClassTest.php';
 require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
+require_once dirname(__FILE__) . '/DefaultPackageFilterTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/InterfaceTest.php';
 require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
 require_once dirname(__FILE__) . '/MethodTest.php';
 require_once dirname(__FILE__) . '/NodeIteratorTest.php';
+require_once dirname(__FILE__) . '/PackageFilterTest.php';
 require_once dirname(__FILE__) . '/PackageTest.php';
 require_once dirname(__FILE__) . '/PropertyTest.php';
 
@@ -96,12 +98,14 @@ class PHP_Depend_Code_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
         $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
+        $suite->addTestSuite('PHP_Depend_Code_DefaultPackageFilterTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
         $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');
         $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
         $suite->addTestSuite('PHP_Depend_Code_MethodTest');
         $suite->addTestSuite('PHP_Depend_Code_NodeIteratorTest');
+        $suite->addTestSuite('PHP_Depend_Code_PackageFilterTest');
         $suite->addTestSuite('PHP_Depend_Code_PackageTest');
         $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
 

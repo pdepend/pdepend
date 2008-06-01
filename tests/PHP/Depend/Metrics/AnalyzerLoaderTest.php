@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,55 +46,50 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
-require_once dirname(__FILE__) . '/Summary/XmlTest.php';
+require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 
 /**
- * Main test suite for the PHP_Depend_Log package.
+ * Test case for the analyzer loader.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_AllTests
+class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the analyzer loader loads the correct analyzer instances.
      *
      * @return void
      */
-    public static function main()
+    public function testLoadKnownAnalyzersByInstance()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-    
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log - AllTests');
-        $suite->addTestSuite('PHP_Depend_Log_LoggerFactoryTest');
-        $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
+        $acceptedTypes = array(
+            'PHP_Depend_Metrics_CodeRank_Analyzer',
+            'PHP_Depend_Metrics_Hierarchy_Analyzer',
+        );
         
-        return $suite;
+        $loader    = new PHP_Depend_Metrics_AnalyzerLoader($acceptedTypes);
+        $analyzers = $loader->getIterator();
+        
+        $this->assertEquals(2, $analyzers->count());
+        
+        $acceptedTypes = array_flip($acceptedTypes);
+        
+        foreach ($analyzers as $analyzer) {
+            $className = get_class($analyzer);
+            
+            $this->assertArrayHasKey($className, $acceptedTypes);
+            
+            unset($acceptedTypes[$className]);
+        }
+        $this->assertEquals(0, count($acceptedTypes));
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_AllTests::main') {
-    PHP_Depend_Log_AllTests::main();
 }

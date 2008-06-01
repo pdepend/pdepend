@@ -55,6 +55,7 @@ require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
+require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Test case for the code metric analyzer class.
@@ -70,13 +71,55 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
 class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the result of the class rank calculation against previous computed
-     * values.
+     * Test input data.
+     *
+     * @type array<array>
+     * @var array(string=>array) $_input
+     */
+    private $_input = array(
+        'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
+        'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
+        'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
+        'global'      =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
+        'pkg1Foo'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
+        'pkg2FooI'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
+        'pkg2Bar'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
+        'pkg2Foobar'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
+        'pkg1Barfoo'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.207375),
+        'pkg2Barfoo'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.207375),
+        'pkg1Foobar'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.411375),
+        'pkg1FooI'    =>  array('cr'  =>  0.5325,     'rcr'  =>  0.15),
+        'pkg1Bar'     =>  array('cr'  =>  0.59625,    'rcr'  =>  0.15),
+        'pkg3FooI'    =>  array('cr'  =>  0.21375,    'rcr'  =>  0.2775),
+        'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
+        'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
+    );
+    
+    /**
+     * The expected test data.
+     *
+     * @type array<array>
+     * @var array(string=>array) $_expected
+     */
+    private $_expected = array();
+    
+    /**
+     * The code rank analyzer.
+     *
+     * @type PHP_Depend_Metrics_CodeRank_Analyzer
+     * @var PHP_Depend_Metrics_CodeRank_Analyzer $_analyzer
+     */
+    private $_analyzer = null;
+    
+    /**
+     * Creates the expected metrics array.
      *
      * @return void
      */
-    public function testGetClassRank()
+    protected function setUp()
     {
+        parent::setUp();
+        
         $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
         $files  = new PHP_Depend_Util_FileFilterIterator(
             new DirectoryIterator($source),
@@ -94,50 +137,66 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
             $parser->parse();
         }
         
-        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
-        $analyzer->analyze($builder->getPackages());
-        
-        $input = array(
-            'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
-            'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
-            'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
-            'global'      =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
-            'pkg1Foo'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
-            'pkg2FooI'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
-            'pkg2Bar'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
-            'pkg2Foobar'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
-            'pkg1Barfoo'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.207375),
-            'pkg2Barfoo'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.207375),
-            'pkg1Foobar'  =>  array('cr'  =>  0.15,       'rcr'  =>  0.411375),
-            'pkg1FooI'    =>  array('cr'  =>  0.5325,     'rcr'  =>  0.15),
-            'pkg1Bar'     =>  array('cr'  =>  0.59625,    'rcr'  =>  0.15),
-            'pkg3FooI'    =>  array('cr'  =>  0.21375,    'rcr'  =>  0.2775),
-            'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
-            'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
-        );
+        $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $this->_analyzer->analyze($builder->getPackages());
 
-        $expected = array();
+        $this->_expected = array();
         foreach ($builder->getPackages() as $package) {
-            $expected[$package->getUUID()] = $input[$package->getName()];
+            $this->_expected[$package->getUUID()] = $this->_input[$package->getName()];
             foreach ($package->getTypes() as $type) {
-                $expected[$type->getUUID()] = $input[$type->getName()];
+                $this->_expected[$type->getUUID()] = $this->_input[$type->getName()];
             }
         }
-        
-        foreach ($analyzer->getAllNodeMetrics() as $uuid => $metrics) {
-            $this->assertEquals($expected[$uuid]['cr'], $metrics['cr'], '', 0.00005);
-            $this->assertEquals($expected[$uuid]['rcr'], $metrics['rcr'], '', 0.00005);
+    }
+    
+    /**
+     * Tests the result of the class rank calculation against previous computed
+     * values.
+     *
+     * @return void
+     */
+    public function testGetAllNodeMetrics()
+    {
+        foreach ($this->_analyzer->getAllNodeMetrics() as $uuid => $metrics) {
+            $this->assertEquals($this->_expected[$uuid]['cr'], $metrics['cr'], '', 0.00005);
+            $this->assertEquals($this->_expected[$uuid]['rcr'], $metrics['rcr'], '', 0.00005);
             
-            unset($expected[$uuid]);
+            unset($this->_expected[$uuid]);
         }
-        
-        $this->assertEquals(0, count($expected));
-        
-        foreach ($expected as $uuid => $info) {
-            $metrics = $analyzer->getNodeMetrics($uuid);
+        $this->assertEquals(0, count($this->_expected));
+    }
+    
+    /**
+     * Tests the result of the class rank calculation against previous computed
+     * values.
+     *
+     * @return void
+     */
+    public function testGetNodeMetrics()
+    {
+        foreach ($this->_expected as $uuid => $info) {
+            $metrics = $this->_analyzer->getNodeMetrics($uuid);
             
             $this->assertEquals($info['cr'], $metrics['cr'], '', 0.00005);
             $this->assertEquals($info['rcr'], $metrics['rcr'], '', 0.00005);
+            
+            unset($this->_expected[$uuid]);
         }
+        $this->assertEquals(0, count($this->_expected));
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Metrics_CodeRank_Analyzer::getNodeMetrics()}
+     * returns an empty <b>array</b> for an unknown identifier.
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsInvalidIdentifier()
+    {
+        $uuid    = new PHP_Depend_Util_UUID();
+        $metrics = $this->_analyzer->getNodeMetrics((string) $uuid);
+        
+        $this->assertType('array', $metrics);
+        $this->assertEquals(0, count($metrics));
     }
 }
