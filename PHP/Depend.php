@@ -47,6 +47,7 @@
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
@@ -192,9 +193,12 @@ class PHP_Depend
                 $logger->log($analyzer);
             }
         }
+        
+        $packages = $this->nodeBuilder->getPackages();
+        $packages->addFilter(new PHP_Depend_Code_NodeIterator_DefaultPackageFilter());
 
         foreach ($this->loggers as $logger) {
-            $logger->setCode($this->nodeBuilder->getPackages());
+            $logger->setCode($packages);
             $logger->close();
         }
 
