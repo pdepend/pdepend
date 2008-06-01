@@ -66,9 +66,9 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      * List of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
      * @type array<PHP_Depend_Code_NodeI>
-     * @var array(PHP_Depend_Code_NodeI)$nodes
+     * @var array(PHP_Depend_Code_NodeI) $_nodes
      */
-    protected $nodes = array();
+    private $_nodes = array();
     
     /**
      * List of all assciated filter instances.
@@ -82,30 +82,29 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      * Constructs a new node iterator from the given {@link PHP_Depend_Code_NodeI}
      * node array.
      *
-     * @param array(PHP_Depend_Code_NodeI) $nodes      List of code nodes.
-     * @param string                       $typeFilter Optional node type filter.
+     * @param array(PHP_Depend_Code_NodeI) $nodes List of code nodes.
      * 
      * @throws RuntimeException If the array contains something different from
      *                          a {@link PHP_Depend_Code_NodeI} object.
      */
-    public function __construct(array $nodes, $typeFilter = null) 
+    public function __construct(array $nodes) 
     {
         foreach ($nodes as $node) {
             if (!($node instanceof PHP_Depend_Code_NodeI)) {
                 throw new RuntimeException('Invalid object given.');
             }
-            if ($typeFilter === null || $node instanceof $typeFilter) {
-                $this->nodes[$node->getName()] = $node;
-            }
+            $this->_nodes[$node->getName()] = $node;
         }
         
-        ksort($this->nodes);
+        ksort($this->_nodes);
         
         $this->rewind();
     }
     
     /**
      * Appends a filter to this iterator.
+     * 
+     * A call to this method will reset the internal pointer.
      *
      * @param PHP_Depend_Code_NodeIterator_FilterI $filter The filter instance.
      * 
@@ -115,6 +114,8 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     {
         if (in_array($filter, $this->_filters, true) === false) {
             $this->_filters[] = $filter;
+            
+            $this->rewind();
         }
     }
     
@@ -122,10 +123,18 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      * Returns the number of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
      * @return integer
+     * @todo TODO: Find a better way to implement counting
      */
     public function count()
     {
-        return count($this->nodes);
+        $nodes = $this->_nodes;
+        $count = 0;
+        foreach ($nodes as $node) {
+            if ($this->_acceptNode($node)) {
+                ++$count;
+            }
+        }
+        return $count;
     }
     
     /**
@@ -135,7 +144,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function current()
     {
-        return current($this->nodes);
+        return current($this->_nodes);
     }
     
     /**
@@ -145,7 +154,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function key()
     {
-        return key($this->nodes);
+        return key($this->_nodes);
     }
     
     /**
@@ -155,7 +164,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function next()
     {
-        next($this->nodes);
+        next($this->_nodes);
         $this->_filterNext();
     }
     
@@ -166,7 +175,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function rewind()
     {
-        reset($this->nodes);
+        reset($this->_nodes);
         $this->_filterNext();
     }
 
@@ -194,13 +203,27 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         
         while (($node = $this->current()) !== false)
         {
-            foreach ($this->_filters as $filter) {
-                if ($filter->accept($node) === false) {
-                    $this->next();
-                    continue 2;
-                }
+            if ($this->_acceptNode($node) === true) {
+                break;
             }
-            break;
+            $this->next();
         }
+    }
+    
+    /**
+     * Returns <b>true</b> if all filters accept the given <b>$node</b>.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * 
+     * @return boolean
+     */
+    private function _acceptNode(PHP_Depend_Code_NodeI $node)
+    {
+        foreach ($this->_filters as $filter) {
+            if ($filter->accept($node) === false) {
+                return false;
+            }
+        }
+        return true;     
     }
 }

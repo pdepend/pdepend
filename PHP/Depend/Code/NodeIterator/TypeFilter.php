@@ -46,11 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/AbstractType.php';
-require_once 'PHP/Depend/Code/NodeIterator/TypeFilter.php';
+require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
 
 /**
- * Representation of a code interface.  
+ * This filter can be used to reduce a node iterator by the node type.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,62 +60,49 @@ require_once 'PHP/Depend/Code/NodeIterator/TypeFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
+class PHP_Depend_Code_NodeIterator_TypeFilter
+    implements PHP_Depend_Code_NodeIterator_FilterI
 {
     /**
-     * Returns <b>true</b> if this is an abstract class or an interface.
+     * List of allowed types.
+     *
+     * @var array(string) $_types
+     */
+    private $_types = array();
+    
+    /**
+     * Constructs a new type filter. The ctor accepts different arguments. You
+     * can pass a single <b>array</b> parameter in or variable amount of type
+     * names.
+     * 
+     * @param array|string $typesArrayOrFirstType An array of types or the first
+     *                                            type.
+     */
+    public function __construct($typesArrayOrFirstType)
+    {
+        $types = $typesArrayOrFirstType;
+        if (!is_array($types)) {
+            $types = func_get_args();
+        }
+        
+        foreach ($types as $type) {
+            $this->_types[] = (string) $type;
+        }
+    }
+    
+    /**
+     * Returns <b>true</b> if the given node should be part of the node iterator,
+     * otherwise this method will return <b>false</b>.
      *
      * @return boolean
      */
-    public function isAbstract()
+    public function accept(PHP_Depend_Code_NodeI $node)
     {
-        return true;
+        foreach ($this->_types as $type) {
+            if ($node instanceof $type) {
+                return true;
+            }
+        }
+        return false;
     }
-    
-    /**
-     * Returns an iterator with all implementing classes.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     * @todo TODO: Should we return all implementing classes? This would include
-     *             all classes that extend a implementing classes and all classes
-     *             that implement a child interface.
-     */
-    public function getImplementingClasses()
-    {
-        $type = 'PHP_Depend_Code_Class';
-        
-        $children = new PHP_Depend_Code_NodeIterator($this->children);
-        $children->addFilter(new PHP_Depend_Code_NodeIterator_TypeFilter($type));
-        
-        return $children;
-    }
-    
-    /**
-     * Returns an iterator with all child interfaces.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getChildInterfaces()
-    {
-        $type = 'PHP_Depend_Code_Interface';
-        
-        $children = new PHP_Depend_Code_NodeIterator($this->children);
-        $children->addFilter(new PHP_Depend_Code_NodeIterator_TypeFilter($type));
-        
-        return $children;
-    }
-    
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
-     *                                              implementation.
-     * 
-     * @return void
-     */
-    public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
-    {
-        $visitor->visitInterface($this);
-    }
-    
 }
