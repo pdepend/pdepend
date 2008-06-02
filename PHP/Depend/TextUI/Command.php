@@ -46,10 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Log/LoggerFactory.php';
-require_once 'PHP/Depend/Util/ExcludePathFilter.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
+require_once 'PHP/Depend/TextUI/Runner.php';
 /**
  * 
  *
@@ -64,45 +61,41 @@ require_once 'PHP/Depend/Util/FileExtensionFilter.php';
  */
 class PHP_Depend_TextUI_Command
 {
+    /**
+     * Marks a cli error exit.
+     */
+    const CLI_ERROR = 1742;
+    
     private $_logOptions = null;
     
     private $_options = array();
     
-    private $_extensions = array('inc', 'php', 'php5');
-    
-    private $_directories = array();
+    /**
+     * The used text ui runner.
+     *
+     * @type PHP_Depend_TextUI_Runner
+     * @var PHP_Depend_TextUI_Runner $_runner
+     */
+    private $_runner = null;
     
     public function run()
     {
+        // Create a new text ui runner
+        $this->_runner = new PHP_Depend_TextUI_Runner();
+        
         if ($this->handleArguments() === false) {
             $this->printHelp();
-            return;
+            return self::CLI_ERROR;
         }
         
         if (isset($this->_options['--help'])) {
             $this->printHelp();
-            return;            
+            return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
         }
         if (isset($this->_options['--version'])) {
             $this->printVersion();
-            return;
+            return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
         }
-        
-        $pdepend = new PHP_Depend();
-        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter($this->_extensions));
-        $pdepend->addFilter(new PHP_Depend_Util_ExcludePathFilter(array('.svn/', 'CVS')));
-        
-        try {
-            foreach ($this->_directories as $dir) {
-                $pdepend->addDirectory($dir);
-            }
-        } catch (RuntimeException $e) {
-            $this->printUsage();
-            echo $e->getMessage(), "\n";
-            return;
-        }
-        
-        $loggerFactory = new PHP_Depend_Log_LoggerFactory();
         
         // Get a copy of all options
         $options = $this->_options;
@@ -114,25 +107,27 @@ class PHP_Depend_TextUI_Command
             if (isset($logOptions[$option])) {
                 // Reduce recieved option list
                 unset($options[$option]);
-                
                 // Remove leading hyphens
                 $identifier = substr($option, 2);
-                
-                // Create a logger
-                $logger = $loggerFactory->createLogger($identifier, $value);
-                
                 // Register logger
-                $pdepend->addLogger($logger);
+                $this->_runner->addLogger($identifier, $value);
             }
         }
         
         if (count($options) > 0) {
             $this->printHelp();
             echo "Unknown option '", key($options), "' given.\n";
-            return;
+            return self::CLI_ERROR;
         }
         
-        $pdepend->analyze();
+        try {
+            return $this->_runner->run();
+        } catch (RuntimeException $e) {
+            // Print error message
+            echo $e->getMessage(), "\n";
+            // Return exit code
+            return $e->getCode();
+        }
     }
     
     protected function handleArguments()
@@ -158,7 +153,7 @@ class PHP_Depend_TextUI_Command
         
         // Last argument must be a list of source directories
         if (strpos(end($argv), '--') !== 0) {
-            $this->_directories = explode(',', array_pop($argv));
+            $this->_runner->setSourceDirectories(explode(',', array_pop($argv)));
         }
         
         foreach ($argv as $option) {
@@ -172,10 +167,22 @@ class PHP_Depend_TextUI_Command
         
         // Check for suffix option
         if (isset($this->_options['--suffix'])) {
-            // Get allowed extensions
-            $this->_extensions = explode(',', $this->_options['--suffix']);
+            // Get file extensions
+            $extensions = explode(',', $this->_options['--suffix']);
+            // Set allowed file extensions
+            $this->_runner->setFileExtensions($extensions);
             // Remove from options array 
             unset($this->_options['--suffix']);
+        }
+        
+        // Check for exclude option
+        if (isset($this->_options['--exclude'])) {
+            // Get exclude directories
+            $directories = explode(',', $this->_options['--exclude']);
+            // Set exclude directories
+            $this->_runner->setExcludeDirectories($directories);
+            // Remove from options array
+            unset($this->_options['--exclude']);
         }
         
         return true;
