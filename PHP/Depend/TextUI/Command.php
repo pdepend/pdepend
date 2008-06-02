@@ -68,6 +68,8 @@ class PHP_Depend_TextUI_Command
     
     private $_options = array();
     
+    private $_extensions = array('inc', 'php', 'php5');
+    
     private $_directories = array();
     
     public function run()
@@ -87,7 +89,7 @@ class PHP_Depend_TextUI_Command
         }
         
         $pdepend = new PHP_Depend();
-        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php', 'inc')));
+        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter($this->_extensions));
         $pdepend->addFilter(new PHP_Depend_Util_ExcludePathFilter(array('.svn/', 'CVS')));
         
         try {
@@ -131,7 +133,6 @@ class PHP_Depend_TextUI_Command
         }
         
         $pdepend->analyze();
-        
     }
     
     protected function handleArguments()
@@ -169,6 +170,14 @@ class PHP_Depend_TextUI_Command
             $this->_options[$option] = $value;
         }
         
+        // Check for suffix option
+        if (isset($this->_options['--suffix'])) {
+            // Get allowed extensions
+            $this->_extensions = explode(',', $this->_options['--suffix']);
+            // Remove from options array 
+            unset($this->_options['--suffix']);
+        }
+        
         return true;
     }
     
@@ -189,10 +198,14 @@ class PHP_Depend_TextUI_Command
         
         $length = $this->printLogOptions();
         
+        $suffixOption  = str_pad('--suffix=<ext[,...]>', $length, ' ', STR_PAD_RIGHT);
+        $excludeOption = str_pad('--exclude=<dir[,...]>', $length, ' ', STR_PAD_RIGHT);
         $helpOption    = str_pad('--help', $length, ' ', STR_PAD_RIGHT);
         $versionOption = str_pad('--version', $length, ' ', STR_PAD_RIGHT);
-             
-        echo "  {$helpOption} Print this help text.\n",
+        
+        echo "  {$suffixOption} List of valid PHP file extensions.\n",
+             "  {$excludeOption} List of exclude directories.\n\n",
+             "  {$helpOption} Print this help text.\n",
              "  {$versionOption} Print the current PHP_Depend version.\n\n";
     }
     

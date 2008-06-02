@@ -95,7 +95,7 @@ class PHP_Depend
     protected $nodeBuilder = null;
     
     /**
-     * Generated {@link PHP_Depend_Metrics_PackageMetrics} objects.
+     * Generated {@link PHP_Depend_Code_Package} objects.
      *
      * @type Iterator
      * @var Iterator $packages
@@ -253,7 +253,7 @@ class PHP_Depend
      *
      * @param string $name The package name.
      * 
-     * @return PHP_Depend_Metrics_PackageMetrics
+     * @return PHP_Depend_Code_Package
      */
     public function getPackage($name)
     {
