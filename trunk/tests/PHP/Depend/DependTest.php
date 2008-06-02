@@ -199,7 +199,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     
     /**
      * Tests that the {@link PHP_Depend::getPackage()} method returns the 
-     * expected {@link PHP_Depend_Metrics_PackageMetrics} objects.
+     * expected {@link PHP_Depend_Code_Package} objects.
      *
      * @return void
      */
@@ -261,8 +261,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     
     /**
      * Tests that the {@link PHP_Depend::getPackages()} method returns the 
-     * expected {@link PHP_Depend_Metrics_PackageMetrics} objects and reuses
-     * the result of {@link PHP_Depend::analyze()}.
+     * expected {@link PHP_Depend_Code_Package} objects and reuses the result of
+     * {@link PHP_Depend::analyze()}.
      *
      * @return void
      */

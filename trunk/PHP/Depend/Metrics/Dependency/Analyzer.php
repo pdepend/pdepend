@@ -48,7 +48,6 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/Dependency/Package.php';
 
 /**
  * This visitor generates the metrics for the analyzed packages.
@@ -96,6 +95,13 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         $this->calculateDistance();
     }
     
+    /**
+     * Returns the statistics for the requested node.
+     *
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array
+     */
     public function getStats($uuid)
     {
         if (isset($this->nodeMetrics[$uuid])) {
@@ -104,6 +110,13 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         return array();
     }
     
+    /**
+     * Returns an array of all afferent nodes.
+     *
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array(PHP_Depend_Code_NodeI)
+     */
     public function getAfferents($uuid)
     {
         if (isset($this->_afferentNodes[$uuid])) {
@@ -112,6 +125,13 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         return array();
     }
     
+    /**
+     * Returns an array of all efferent nodes.
+     *
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array(PHP_Depend_Code_NodeI)
+     */
     public function getEfferents($uuid)
     {
         if (isset($this->_efferentNodes[$uuid])) {
@@ -120,6 +140,14 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         return array();
     }
     
+    /**
+     * Returns an array of nodes that build a cycle for the requested node or it
+     * returns <b>null</b> if no cycle exists .
+     *
+     * @param string $uuid The unique node identifier.
+     * 
+     * @return array(PHP_Depend_Code_NodeI)
+     */
     public function getCycle($uuid)
     {
         if (isset($this->_cycles[$uuid])) {
