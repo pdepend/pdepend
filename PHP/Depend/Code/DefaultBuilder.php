@@ -79,6 +79,14 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     protected $defaultPackage = null;
     
     /**
+     * Default source file that acts as a dummy.
+     *
+     * @type PHP_Depend_Code_File
+     * @var PHP_Depend_Code_File $defaultFile
+     */
+    protected $defaultFile = null;
+    
+    /**
      * All generated {@link PHP_Depend_Code_Class} objects
      *
      * @type array<PHP_Depend_Code_Class>
@@ -124,6 +132,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     public function __construct()
     {
         $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
+        $this->defaultFile    = new PHP_Depend_Code_File(null);
         
         $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
     }
@@ -228,6 +237,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             
             // Create a new class instance
             $class = new PHP_Depend_Code_Class($cls, $line);
+            $class->setSourceFile($this->defaultFile);
             
             // Store class reference
             $this->classes[$cls][$pkg] = $class;
@@ -328,6 +338,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         } else {
             // Create a new interface instance
             $interface = new PHP_Depend_Code_Interface($ife, $line);
+            $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
             $this->interfaces[$ife][$pkg] = $interface;
@@ -409,13 +420,15 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         } else {
             // Create new function
             $function = new PHP_Depend_Code_Function($name, $line, $sourceFile);
+            $function->setSourceFile($this->defaultFile);
+            
             // Add to default package
             $this->defaultPackage->addFunction($function);
             // Store function reference
             $this->functions[$name] = $function;
         }
         
-        if ($sourceFile !== null && $function->getSourceFile() === null) {
+        if ($sourceFile !== null) {
             $function->setSourceFile($sourceFile);
         }
         

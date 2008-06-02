@@ -65,7 +65,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
        extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
     implements PHP_Depend_Metrics_AnalyzerI
 {
-    protected $nodeMetrics = array();
+    protected $nodeMetrics = null;
     
     protected $nodeSet = array();
     
@@ -73,7 +73,35 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     
     private $_afferentNodes = array();
     
-    private $_cycles = array();
+    /**
+     * This property holds the UUID ids of all skipable paths when this class
+     * collects the cycles. 
+     *
+     * @type array<boolean>
+     * @var array(string=>boolean) $_skipablePaths
+     */
+    private $_skipablePaths = array();
+    
+    /**
+     * All collected cycles for the input code.
+     * 
+     * <code>
+     * array(
+     *     <package-uuid> => array(
+     *         PHP_Depend_Code_Package {},
+     *         PHP_Depend_Code_Package {},
+     *     ),
+     *     <package-uuid> => array(
+     *         PHP_Depend_Code_Package {},
+     *         PHP_Depend_Code_Package {},
+     *     ),
+     * )
+     * </code>
+     *
+     * @type array<array>
+     * @var array(string=>array) $_collectedCycles
+     */
+    private $_collectedCycles = array();
     
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -84,6 +112,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
+        if ($this->nodeMetrics !== null) {
+            return;
+        }
+        $this->nodeMetrics = array();
+        
         foreach ($packages as $package) {
             $package->accept($this);
         }
@@ -150,8 +183,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function getCycle($uuid)
     {
-        if (isset($this->_cycles[$uuid])) {
-            return $this->_cycles[$uuid];
+        if (isset($this->_collectedCycles[$uuid])) {
+            return $this->_collectedCycles[$uuid];
         }
         return null;
     }
@@ -207,9 +240,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
 
         $storage = new SplObjectStorage();
         if ($this->collectCycle($storage, $package) === true) {
-            $this->_cycles[$package->getUUID()] = array();
+            $this->_collectedCycles[$package->getUUID()] = array();
             foreach ($storage as $pkg) {
-                $this->_cycles[$package->getUUID()][] = $pkg;
+                $this->_collectedCycles[$package->getUUID()][] = $pkg;
             }
         }
     }
@@ -382,20 +415,34 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         $storage->attach($package);
 
         foreach ($package->getTypes() as $class) {
+            
+            // Create a path identifier
+            $pathID = $package->getUUID() . '#' . $class->getUUID();
+            
+            // There is no cycle for this combination, if this id already exists.
+            if (isset($this->_skipablePaths[$pathID])) {
+                continue;
+            }
+            
+            // Traverse all direct class dependencies
             foreach ($class->getDependencies() as $dependency) {
-                $depPackage = $dependency->getPackage();
-                if ($depPackage !== $package && $this->collectCycle($storage, $depPackage)) {
+                $pkg = $dependency->getPackage();
+                if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
                     return true;
                 }
             }
+            // Traverse all indirect class dependencies
             foreach ($class->getMethods() as $method) {
                 foreach ($method->getDependencies() as $dependency) {
-                    $depPackage = $dependency->getPackage();
-                    if ($depPackage !== $package && $this->collectCycle($storage, $depPackage)) {
+                    $pkg = $dependency->getPackage();
+                    if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
                         return true;
                     }
                 }                
             }
+            
+            // No cycle detected, so mark as skipable
+            $this->_skipablePaths[$pathID] = true;
         }
         $storage->detach($package);
         

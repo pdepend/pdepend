@@ -143,7 +143,5 @@ abstract class PHP_Depend_Code_AbstractCallable
             // Remove from internal list
             unset($this->dependencies[$i]);
         }
-    }
- 
-    
+    }   
 }
