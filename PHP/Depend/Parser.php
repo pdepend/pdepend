@@ -157,6 +157,12 @@ class PHP_Depend_Parser
                  && $this->isFileComment() === true) {
 
                     $this->globalPackage = $this->package;
+                    
+                    $this->tokenizer->getSourceFile()->setDocComment($token[1]);
+                    
+                    // TODO: What happens if there is no file comment, we will
+                    //       reuse the same comment for a class, interface or
+                    //       function?
                 }
                 break;
                     

@@ -58,7 +58,7 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_File
+class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
 {
     /**
      * The unique identifier for this function.
@@ -93,15 +93,35 @@ class PHP_Depend_Code_File
     protected $loc = null;
     
     /**
+     * The comment for this type.
+     *
+     * @type string
+     * @var string $docComment
+     */
+    protected $docComment = null;
+    
+    /**
      * Constructs a new source file instance.
      *
      * @param string $fileName The source file name/path.
      */
     public function __construct($fileName)
     {
-        $this->fileName = realpath($fileName);
+        if ($fileName !== null) {
+            $this->fileName = realpath($fileName);
+        }
         
         $this->uuid = new PHP_Depend_Util_UUID();
+    }
+    
+    /**
+     * Returns the physical file name for this object.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->fileName;
     }
     
     /**
@@ -147,6 +167,41 @@ class PHP_Depend_Code_File
     }
     
     /**
+     * Returns the doc comment for this item or <b>null</b>.
+     *
+     * @return string
+     */
+    public function getDocComment()
+    {
+        return $this->docComment;
+    }
+    
+    /**
+     * Sets the doc comment for this item.
+     *
+     * @param string $docComment The doc comment block.
+     * 
+     * @return void
+     */
+    public function setDocComment($docComment)
+    {
+        $this->docComment = $docComment;
+    }
+    
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     *                                              implementation.
+     * 
+     * @return void
+     */
+    public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
+    {
+        $visitor->visitFile($this);
+    }
+    
+    /**
      * Returns the string representation of this class.
      *
      * @return string
@@ -165,12 +220,8 @@ class PHP_Depend_Code_File
     {
         if ($this->loc === null) {
             $source = file_get_contents($this->fileName);
-            // Normalize whitespace characters
-            //$source = preg_replace(array('/\t+/', '/ +/' ), ' ', $source);
-            //$source = preg_replace('/\t+/', ' ', $source);
             
             $this->loc = preg_split('#(\r\n|\n|\r)#', $source);
-            //$this->loc = array_map('trim', $this->loc);
             
             $this->source = implode("\n", $this->loc);
         }

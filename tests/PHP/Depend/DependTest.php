@@ -90,17 +90,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
     }
-    /**
-     * Tests that the {@link PHP_Depend::addFilter()} method with an extension
-     * filter.
-     *
-     * @return void
-     */
-    public function testAddFilter()
-    {
-        $pdepend = new PHP_Depend();
-        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
-    }
     
     /**
      * Tests the {@link PHP_Depend::analyze()} method and the return value. 
@@ -111,7 +100,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
-        $pdepend->addFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
+        $pdepend->addFIleFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
         
         $metrics = $pdepend->analyze();
         

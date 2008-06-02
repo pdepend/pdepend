@@ -55,4 +55,4 @@ ini_set('memory_limit', '512M');
 
 require_once 'PHP/Depend/TextUI/Command.php';
 
-PHP_Depend_TextUI_Command::main();
+exit(PHP_Depend_TextUI_Command::main());

@@ -500,7 +500,7 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $builder  = new PHP_Depend_Code_DefaultBuilder();
         $function = $builder->buildFunction('foobar');
         
-        $this->assertNull($function->getSourceFile());
+        $this->assertNull($function->getSourceFile()->getName());
         $builder->buildFunction('foobar', 0, $file);
         $this->assertSame($file, $function->getSourceFile());
     }

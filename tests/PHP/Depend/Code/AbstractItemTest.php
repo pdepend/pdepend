@@ -70,7 +70,7 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
     public function testSetSourceFileInformationForNullValue()
     {
         $item = $this->createItem();
-        $file = new PHP_Depend_Code_File('FooBar.php');
+        $file = new PHP_Depend_Code_File(__FILE__);
         
         $this->assertNull($item->getSourceFile());
         $item->setSourceFile($file);
@@ -86,7 +86,7 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
     public function testDoesntSetSourceFileInformationForNotNullValue()
     {
         $item = $this->createItem();
-        $file = new PHP_Depend_Code_File('FooBar.php');
+        $file = new PHP_Depend_Code_File(__FILE__);
         
         $item->setSourceFile($file);
         $item->setSourceFile(new PHP_Depend_Code_File('HelloWorld.php'));

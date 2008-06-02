@@ -211,7 +211,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      */
     public function setSourceFile(PHP_Depend_Code_File $sourceFile)
     {
-        if ($this->sourceFile === null) {
+        if ($this->sourceFile === null || $this->sourceFile->getName() === null) {
             $this->sourceFile = $sourceFile;
         }
     }
