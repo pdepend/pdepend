@@ -74,12 +74,27 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $class->getSourceFile()->accept($this);
+        
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
+    }
+    
+    /**
+     * Visits a file node. 
+     *
+     * @param PHP_Depend_Code_File $file The current file node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitFile()
+     */
+    public function visitFile(PHP_Depend_Code_File $file)
+    {
+        
     }
     
     /**
@@ -92,6 +107,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $function->getSourceFile()->accept($this);
     }
     
     /**
@@ -104,6 +120,8 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        $interface->getSourceFile()->accept($this);
+        
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }

@@ -157,9 +157,14 @@ class PHP_Depend
      * 
      * @return void
      */
-    public function addFilter(PHP_Depend_Util_FileFilterI $filter)
+    public function addFileFilter(PHP_Depend_Util_FileFilterI $filter)
     {
         $this->filter->append($filter);
+    }
+    
+    public function addCodeFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
+    {
+        
     }
     
     /**

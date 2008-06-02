@@ -180,4 +180,17 @@ class PHP_Depend_Code_TestNodeVisitor implements PHP_Depend_Code_NodeVisitorI
     {
         $this->function = $function;
     }
+    
+    /**
+     * Visits a file node. 
+     *
+     * @param PHP_Depend_Code_File $file The current file node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitFile()
+     */
+    public function visitFile(PHP_Depend_Code_File $file)
+    {
+        
+    }
 }
