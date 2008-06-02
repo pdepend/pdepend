@@ -70,6 +70,15 @@ interface PHP_Depend_Code_NodeVisitorI
     function visitClass(PHP_Depend_Code_Class $class);
     
     /**
+     * Visits a file node. 
+     *
+     * @param PHP_Depend_Code_File $file The current file node.
+     * 
+     * @return void
+     */
+    function visitFile(PHP_Depend_Code_File $file);
+    
+    /**
      * Visits a function node. 
      *
      * @param PHP_Depend_Code_Function $function The current function node.

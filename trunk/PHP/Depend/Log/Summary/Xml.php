@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
@@ -64,7 +64,8 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Log_Summary_Xml 
-    implements PHP_Depend_Code_NodeVisitorI, PHP_Depend_Log_LoggerI
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+    implements PHP_Depend_Log_LoggerI
 {
     protected $fileName = '';
     
@@ -292,7 +293,7 @@ class PHP_Depend_Log_Summary_Xml
      */
     protected function writeFileReference(DOMElement $xml, PHP_Depend_Code_File $file = null)
     {
-        if ($file === null) {
+        if ($file === null || $file->getFileName() === null) {
             return;
         }
         
