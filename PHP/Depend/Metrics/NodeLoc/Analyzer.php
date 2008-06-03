@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
@@ -181,15 +182,16 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         // Check for previous run
-        if ($this->_nodeMetrics !== null) {
-            return;
+        if ($this->_nodeMetrics === null) {
+            // Init node metrics
+            $this->_nodeMetrics = array();
+            
+            // Process all packages
+            foreach ($packages as $package) {
+                $package->accept($this);
+            }
         }
-        // Init node metrics
-        $this->_nodeMetrics = array();
-        
-        foreach ($packages as $package) {
-            $package->accept($this);
-        }
+
     }
     
     /**
@@ -204,7 +206,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     {
         $class->getSourceFile()->accept($this);
         
-        $loc = $class->getEndLine() - $class->getStartLine();
+        $loc = $class->getEndLine() - $class->getStartLine() + 1;
         
         $this->_nodeMetrics[$class->getUUID()] = array(
             'loc'    =>  $loc,
@@ -248,7 +250,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         $cloc = 0;
         if (($comment = $file->getDocComment()) !== null) {
-            $cloc = substr_count($comment, "\n") + 1;
+            $cloc = count(explode("\n", $comment));
         }
         
         $loc   = count($file->getLoc());
@@ -283,11 +285,11 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT) {
                 ++$cloc;
             } else if ($token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
-                $cloc += substr_count($token[1], "\n");
+                $cloc += count(explode("\n", $token[1]));
             }
         }
         
-        $loc   = $function->getEndLine() - $function->getStartLine();
+        $loc   = $function->getEndLine() - $function->getStartLine() + 1;
         $ncloc = $loc - $cloc;
         
         $this->_nodeMetrics[$function->getUUID()] = array(
@@ -295,9 +297,9 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             'cloc'   =>  $cloc,
             'ncloc'  =>  $ncloc
         );
-        
+
         if (($comment = $function->getDocComment()) !== null) {
-            $cloc =+ substr_count($comment, "\n") + 1;
+            $cloc += count(explode("\n", $comment));
         }
         $this->_updateFileLoc($function->getSourceFile(), $cloc);
     }
@@ -314,7 +316,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     {
         $interface->getSourceFile()->accept($this);
         
-        $loc = $interface->getEndLine() - $interface->getStartLine();
+        $loc = $interface->getEndLine() - $interface->getStartLine() + 1;
 
         $this->_nodeMetrics[$interface->getUUID()] = array(
             'loc'    =>  $loc,
@@ -348,11 +350,11 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT) {
                 ++$cloc;
             } else if ($token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
-                $cloc += substr_count($token[1], "\n");
+                $cloc += count(explode("\n", $token[1]));
             }
         }
 
-        $loc   = $method->getEndLine() - $method->getStartLine();
+        $loc   = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
         
         $this->_nodeMetrics[$method->getUUID()] = array(
@@ -362,7 +364,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         );
 
         if (($comment = $method->getDocComment()) !== null) {
-            $cloc =+ substr_count($comment, "\n") + 1;
+            $cloc += substr_count($comment, "\n") + 1;
         }
         $this->_updateParentLoc($method->getParent(), $cloc);
     }
@@ -400,14 +402,14 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     private function _updateParentLoc(PHP_Depend_Code_AbstractItem $item, $cloc)
     {
-        if (!isset($this->_nodeMetrics[$item->getUUID()])) {
-            return;
-        }
-       
-        $this->_nodeMetrics[$item->getUUID()]['cloc']  += $cloc;
-        $this->_nodeMetrics[$item->getUUID()]['ncloc'] -= $cloc;
+        if (isset($this->_nodeMetrics[$item->getUUID()])) {
+            // Update parent node metrics
+            $this->_nodeMetrics[$item->getUUID()]['cloc']  += $cloc;
+            $this->_nodeMetrics[$item->getUUID()]['ncloc'] -= $cloc;
         
-        $this->_updateFileLoc($item->getSourceFile(), $cloc);
+            // Update source file metrics
+            $this->_updateFileLoc($item->getSourceFile(), $cloc);
+        }
     }
     
     /**
@@ -420,15 +422,14 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     private function _updateFileLoc(PHP_Depend_Code_File $file, $cloc)
     {
-        if (!isset($this->_nodeMetrics[$file->getUUID()])) {
-            return;
+        if (isset($this->_nodeMetrics[$file->getUUID()])) {
+            // Update file node metrics
+            $this->_nodeMetrics[$file->getUUID()]['cloc']  += $cloc;
+            $this->_nodeMetrics[$file->getUUID()]['ncloc'] -= $cloc;
+        
+            // Update project metrics
+            $this->_projectMetrics['cloc']  += $cloc;
+            $this->_projectMetrics['ncloc'] -= $cloc;
         }
-        
-        $this->_nodeMetrics[$file->getUUID()]['cloc']  += $cloc;
-        $this->_nodeMetrics[$file->getUUID()]['ncloc'] -= $cloc;
-        
-        // Update project metrics
-        $this->_projectMetrics['cloc']  += $cloc;
-        $this->_projectMetrics['ncloc'] -= $cloc;
     }
 }

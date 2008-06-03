@@ -80,13 +80,10 @@ class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
             'class_and_interface_comment.php',
             'classes.php', 
             'func_class.php', 
-            'func_code.php', 
-            'function_comment.php',
-            'method_comment.php',
+            'func_code.php',
             'mixed_code.php',
             'package_file_level.php',
             'package_subpackage_support.php',
-            'property_comment.php'
         );
         
         $result = array();
