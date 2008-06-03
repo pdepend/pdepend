@@ -11,6 +11,10 @@ function func_with_comment()
 
 function func_without_comment()
 {
+    // A 
+    // multiline 
+    // inline 
+    // comment
 }
 
 // Wrong comment type
@@ -23,4 +27,5 @@ function func_without_doc_comment()
  */
 function another_func_with_comment()
 {
+    // Simple inline comment
 }
