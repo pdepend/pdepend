@@ -36,43 +36,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage TextUI
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_TextUI_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-require_once dirname(__FILE__) . '/DependTest.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/Code/AllTests.php';
-require_once dirname(__FILE__) . '/Log/AllTests.php';
-require_once dirname(__FILE__) . '/Metrics/AllTests.php';
-require_once dirname(__FILE__) . '/TextUI/AllTests.php';
-require_once dirname(__FILE__) . '/Util/AllTests.php';
+require_once dirname(__FILE__) . '/RunnerTest.php';
 
 /**
- * Main test suite for the PHP_Depend package.
+ * Main test suite for the PHP_Depend_TextUI package.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage TextUI
+ * @author     Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_AllTests
+class PHP_Depend_TextUI_AllTests
 {
     /**
      * Test suite main method.
@@ -91,19 +86,13 @@ class PHP_Depend_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
-        $suite->addTest(PHP_Depend_Code_AllTests::suite());
-        $suite->addTest(PHP_Depend_Log_AllTests::suite());
-        $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
-        $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
-        $suite->addTest(PHP_Depend_Util_AllTests::suite());
-        $suite->addTestSuite('PHP_Depend_ParserTest');
-        $suite->addTestSuite('PHP_Depend_DependTest');
-
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_TextUI - AllTests');
+        $suite->addTestSuite('PHP_Depend_TextUI_RunnerTest');
+        
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_AllTests::main') {
-    PHP_Depend_AllTests::main();
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_TextUI_AllTests::main') {
+    PHP_Depend_TextUI_AllTests::main();
 }
