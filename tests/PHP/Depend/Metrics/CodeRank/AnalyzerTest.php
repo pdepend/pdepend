@@ -142,9 +142,9 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
 
         $this->_expected = array();
         foreach ($builder->getPackages() as $package) {
-            $this->_expected[$package->getUUID()] = $this->_input[$package->getName()];
+            $this->_expected[] = array($package, $this->_input[$package->getName()]);
             foreach ($package->getTypes() as $type) {
-                $this->_expected[$type->getUUID()] = $this->_input[$type->getName()];
+                $this->_expected[] = array($type, $this->_input[$type->getName()]);
             }
         }
     }
@@ -155,32 +155,15 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testGetAllNodeMetrics()
-    {
-        foreach ($this->_analyzer->getAllNodeMetrics() as $uuid => $metrics) {
-            $this->assertEquals($this->_expected[$uuid]['cr'], $metrics['cr'], '', 0.00005);
-            $this->assertEquals($this->_expected[$uuid]['rcr'], $metrics['rcr'], '', 0.00005);
-            
-            unset($this->_expected[$uuid]);
-        }
-        $this->assertEquals(0, count($this->_expected));
-    }
-    
-    /**
-     * Tests the result of the class rank calculation against previous computed
-     * values.
-     *
-     * @return void
-     */
     public function testGetNodeMetrics()
     {
-        foreach ($this->_expected as $uuid => $info) {
-            $metrics = $this->_analyzer->getNodeMetrics($uuid);
+        foreach ($this->_expected as $key => $info) {
+            $metrics = $this->_analyzer->getNodeMetrics($info[0]);
             
-            $this->assertEquals($info['cr'], $metrics['cr'], '', 0.00005);
-            $this->assertEquals($info['rcr'], $metrics['rcr'], '', 0.00005);
+            $this->assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
+            $this->assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
             
-            unset($this->_expected[$uuid]);
+            unset($this->_expected[$key]);
         }
         $this->assertEquals(0, count($this->_expected));
     }
@@ -193,8 +176,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testGetNodeMetricsInvalidIdentifier()
     {
-        $uuid    = new PHP_Depend_Util_UUID();
-        $metrics = $this->_analyzer->getNodeMetrics((string) $uuid);
+        $class   = new PHP_Depend_Code_Class('PDepend');
+        $metrics = $this->_analyzer->getNodeMetrics($class);
         
         $this->assertType('array', $metrics);
         $this->assertEquals(0, count($metrics));

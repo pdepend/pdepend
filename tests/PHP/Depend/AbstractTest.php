@@ -74,15 +74,20 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     public static function init()
     {
         // Is it not installed?
-        if (is_file(dirname(__FILE__).'/../../../PHP/Depend.php')) {
+        if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
             
-            $path = realpath(dirname(__FILE__).'/../../..');
-            $path = $path . PATH_SEPARATOR . get_include_path();
+            $path  = realpath(dirname(__FILE__) . '/../../..');
+            $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
             
-            $whitelist = realpath(dirname(__FILE__).'/../../../PHP') . '/';
+            $whitelist = realpath(dirname(__FILE__) . '/../../../PHP') . '/';
             PHPUnit_Util_Filter::addDirectoryToWhitelist($whitelist);
         }
+        
+        // Set test path
+        $path  = realpath(dirname(__FILE__) . '/../..') ;
+        $path .= PATH_SEPARATOR . get_include_path();
+        set_include_path($path);
     }
     
     /**
