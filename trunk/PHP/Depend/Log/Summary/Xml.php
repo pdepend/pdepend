@@ -94,12 +94,13 @@ class PHP_Depend_Log_Summary_Xml
     protected $projectMetrics = array();
     
     /**
-     * List of all collected node metrics.
+     * List of all analyzers that implement the node aware interface
+     * {@link PHP_Depend_Metrics_NodeAwareI}.
      *
-     * @type array<array>
-     * @var array(string=>array) $nodeMetrics
+     * @type array<PHP_Depend_Metrics_AnalyzerI>
+     * @var array(PHP_Depend_Metrics_AnalyzerI) $_nodeAwareAnalyzers
      */
-    protected $nodeMetrics = array();
+    private $_nodeAwareAnalyzers = array();
     
     protected $xmlStack = array();
     
@@ -127,11 +128,7 @@ class PHP_Depend_Log_Summary_Xml
             $accept = true;
         }
         if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
-            // Collect all node metrics
-            $this->nodeMetrics = array_merge_recursive(
-                $this->nodeMetrics,
-                $analyzer->getAllNodeMetrics()
-            );
+            $this->_nodeAwareAnalyzers[] = $analyzer;
             
             $accept = true;
         }
@@ -165,7 +162,7 @@ class PHP_Depend_Log_Summary_Xml
                 $fileXml = $dom->createElement('file');
                 $fileXml->setAttribute('name', $file->getFileName());
                 
-                $this->writeNodeMetrics($fileXml, $file->getUUID());
+                $this->writeNodeMetrics($fileXml, $file);
             
                 $filesXml->appendChild($fileXml);
             }
@@ -185,7 +182,7 @@ class PHP_Depend_Log_Summary_Xml
         $classXml = $doc->createElement('class');
         $classXml->setAttribute('name', $class->getName());
             
-        $this->writeNodeMetrics($classXml, $class->getUUID());
+        $this->writeNodeMetrics($classXml, $class);
         $this->writeFileReference($classXml, $class->getSourceFile());
             
         $xml->appendChild($classXml);
@@ -210,7 +207,7 @@ class PHP_Depend_Log_Summary_Xml
         $functionXml = $doc->createElement('function');
         $functionXml->setAttribute('name', $function->getName());
             
-        $this->writeNodeMetrics($functionXml, $function->getUUID());
+        $this->writeNodeMetrics($functionXml, $function);
         $this->writeFileReference($functionXml, $function->getSourceFile());
             
         $xml->appendChild($functionXml);
@@ -218,7 +215,7 @@ class PHP_Depend_Log_Summary_Xml
     
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
-        
+        // Empty implementation, because we don't want interface methods.
     }
     
     public function visitMethod(PHP_Depend_Code_Method $method)
@@ -229,7 +226,7 @@ class PHP_Depend_Log_Summary_Xml
         $methodXml = $doc->createElement('method');
         $methodXml->setAttribute('name', $method->getName());
             
-        $this->writeNodeMetrics($methodXml, $method->getUUID());
+        $this->writeNodeMetrics($methodXml, $method);
             
         $xml->appendChild($methodXml);
     }
@@ -242,7 +239,7 @@ class PHP_Depend_Log_Summary_Xml
         $packageXml = $doc->createElement('package');
         $packageXml->setAttribute('name', $package->getName());
             
-        $this->writeNodeMetrics($packageXml, $package->getUUID());
+        $this->writeNodeMetrics($packageXml, $package);
         
         array_push($this->xmlStack, $packageXml);
             
@@ -258,18 +255,12 @@ class PHP_Depend_Log_Summary_Xml
         $xml->appendChild($packageXml);
     }
     
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    protected function writeNodeMetrics(DOMElement $xml, PHP_Depend_Code_NodeI $node)
     {
-        
-    }
-    
-    protected function writeNodeMetrics(DOMElement $xml, $uuid)
-    {
-        if (!isset($this->nodeMetrics[$uuid])) {
-            return;
+        $metrics = array();
+        foreach ($this->_nodeAwareAnalyzers as $analyzer) {
+            $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
         }
-        
-        $metrics = $this->nodeMetrics[$uuid];
         ksort($metrics);
         
         foreach ($metrics as $name => $value) {

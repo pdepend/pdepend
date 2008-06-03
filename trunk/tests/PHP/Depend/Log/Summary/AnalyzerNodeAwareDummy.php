@@ -95,28 +95,17 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
     }
     
     /**
-     * Returns all aggregated node metrics.
-     *
-     * @return array(string=>array)
-     * @see PHP_Depend_Metrics_NodeAwareI::getAllNodeMetrics()
-     */
-    public function getAllNodeMetrics()
-    {
-        return $this->nodeMetrics;
-    }
-    
-    /**
      * Returns an array with metrics for the requested node.
      *
-     * @param string $uuid The unique node identifier.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
      */
-    public function getNodeMetrics($uuid)
+    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->nodeMetrics[$uuid])) {
-            return $this->nodeMetrics[$uuid];
+        if (isset($this->nodeMetrics[$node->getUUID()])) {
+            return $this->nodeMetrics[$node->getUUID()];
         }
         return array();
     }
