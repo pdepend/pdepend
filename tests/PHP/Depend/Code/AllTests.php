@@ -55,6 +55,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once dirname(__FILE__) . '/ClassTest.php';
 require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
 require_once dirname(__FILE__) . '/DefaultPackageFilterTest.php';
+require_once dirname(__FILE__) . '/DefaultVisitorTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/InterfaceTest.php';
@@ -99,6 +100,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
         $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
         $suite->addTestSuite('PHP_Depend_Code_DefaultPackageFilterTest');
+        $suite->addTestSuite('PHP_Depend_Code_DefaultVisitorTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
         $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');

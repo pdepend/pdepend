@@ -108,29 +108,18 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
-     * This method returns an <b>array</b> with all aggregated metrics.
-     * 
-     * @return array(string=>array)
-     * @see PHP_Depend_Metrics_NodeAwareI::getAllNodeMetrics()
-     */
-    public function getAllNodeMetrics()
-    {
-        return $this->nodeMetrics;
-    }
-    
-    /**
      * This method will return an <b>array</b> with all generated metric values 
-     * for the node with the given <b>$uuid</b> identifier. If there are no
-     * metrics for the requested node, this method will return an empty <b>array</b>.
+     * for the given <b>$node</b>. If there are no metrics for the requested 
+     * node, this method will return an empty <b>array</b>.
      *
-     * @param string $uuid The unique node identifier.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics($uuid)
+    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->nodeMetrics[$uuid])) {
-            return $this->nodeMetrics[$uuid];
+        if (isset($this->nodeMetrics[$node->getUUID()])) {
+            return $this->nodeMetrics[$node->getUUID()];
         }
         return array();
     }

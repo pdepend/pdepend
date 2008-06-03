@@ -108,7 +108,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
             $this->assertArrayHasKey($function->getName(), $expectedValues);
             
             $expected = $expectedValues[$function->getName()];
-            $actual   = $analyzer->getNodeMetrics($function->getUUID());
+            $actual   = $analyzer->getNodeMetrics($function);
             
             $this->assertEquals($expected, $actual, 'Function: ', $function->getName());
             
@@ -119,7 +119,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $functions->rewind();
         $file = $functions->current()->getSourceFile();
         
-        $actual   = $analyzer->getNodeMetrics($file->getUUID());
+        $actual   = $analyzer->getNodeMetrics($file);
         $expected = array(
             'loc'    =>  31,
             'cloc'   =>  14,
@@ -145,7 +145,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->rewind();
         $class = $packages->current()->getClasses()->current();
         
-        $actual   = $analyzer->getNodeMetrics($class->getUUID());
+        $actual   = $analyzer->getNodeMetrics($class);
         $expected = array(
             'loc'    =>  30,
             'cloc'   =>  11,
@@ -181,7 +181,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($methods as $method) {
             $this->assertArrayHasKey($method->getName(), $expectedValues);
             
-            $actual   = $analyzer->getNodeMetrics($method->getUUID());
+            $actual   = $analyzer->getNodeMetrics($method);
             $expected = $expectedValues[$method->getName()];
             
             $this->assertEquals($expected, $actual, 'Method: ' . $method->getName());
@@ -190,7 +190,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         }
         $this->assertEquals(0, count($expectedValues));
         
-        $actual   = $analyzer->getNodeMetrics($class->getSourceFile()->getUUID());
+        $actual   = $analyzer->getNodeMetrics($class->getSourceFile());
         $expected = array(
             'loc'    =>  34,
             'cloc'   =>  14,
@@ -218,7 +218,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->rewind();
         $interface = $packages->current()->getInterfaces()->current();
         
-        $actual   = $analyzer->getNodeMetrics($interface->getUUID());
+        $actual   = $analyzer->getNodeMetrics($interface);
         $expected = array(
             'loc'    =>  17,
             'cloc'   =>  6,
@@ -254,7 +254,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($methods as $method) {
             $this->assertArrayHasKey($method->getName(), $expectedValues);
             
-            $actual   = $analyzer->getNodeMetrics($method->getUUID());
+            $actual   = $analyzer->getNodeMetrics($method);
             $expected = $expectedValues[$method->getName()];
             
             $this->assertEquals($expected, $actual, 'Method: ' . $method->getName());
@@ -263,7 +263,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         }
         $this->assertEquals(0, count($expectedValues));
         
-        $actual   = $analyzer->getNodeMetrics($interface->getSourceFile()->getUUID());
+        $actual   = $analyzer->getNodeMetrics($interface->getSourceFile());
         $expected = array(
             'loc'    =>  25,
             'cloc'   =>  12,
@@ -290,7 +290,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->rewind();
         $class = $packages->current()->getClasses()->current();
         
-        $actual   = $analyzer->getNodeMetrics($class->getUUID());
+        $actual   = $analyzer->getNodeMetrics($class);
         $expected = array(
             'loc'    =>  17,
             'cloc'   =>  6,
@@ -326,7 +326,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($properties as $property) {
             $this->assertArrayHasKey($property->getName(), $expectedValues);
             
-            $actual   = $analyzer->getNodeMetrics($property->getUUID());
+            $actual   = $analyzer->getNodeMetrics($property);
             $expected = $expectedValues[$property->getName()];
             
             $this->assertEquals($expected, $actual, 'Method: ' . $property->getName());
@@ -335,7 +335,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         }
         $this->assertEquals(0, count($expectedValues));
         
-        $actual   = $analyzer->getNodeMetrics($class->getSourceFile()->getUUID());
+        $actual   = $analyzer->getNodeMetrics($class->getSourceFile());
         $expected = array(
             'loc'    =>  21,
             'cloc'   =>  9,

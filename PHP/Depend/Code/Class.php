@@ -142,7 +142,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      *
      * @param PHP_Depend_Code_Property $property The new class property.
      * 
-     * @return void
+     * @return PHP_Depend_Code_Property
      */
     public function addProperty(PHP_Depend_Code_Property $property)
     {
@@ -152,6 +152,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
             // Set this as parent
             $property->setParent($this);
         }
+        return $property;
     }
     
     /**

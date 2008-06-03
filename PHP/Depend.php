@@ -295,7 +295,11 @@ class PHP_Depend
         foreach ($this->loggers as $logger) {
             $fileName = strtr(get_class($logger), '_', '/') . '.xml';
             
-            $xml  = file_get_contents($fileName, FILE_USE_INCLUDE_PATH);
+            if (!($xml = @file_get_contents($fileName, FILE_USE_INCLUDE_PATH))) {
+                $class = get_class($logger);
+                throw new RuntimeException("Missing configuration '{$class}'.");                
+            }
+            
             $sxml = new SimpleXMLElement($xml);
             
             foreach ($sxml->resultsets->type as $node) {
