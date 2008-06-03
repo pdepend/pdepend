@@ -114,7 +114,7 @@ abstract class PHP_Depend_Code_AbstractType
      *
      * @param PHP_Depend_Code_Method $method A new class method.
      * 
-     * @return void
+     * @return PHP_Depend_Code_Method
      */
     public function addMethod(PHP_Depend_Code_Method $method)
     {
@@ -125,6 +125,8 @@ abstract class PHP_Depend_Code_AbstractType
         $method->setParent($this);
         // Store clas
         $this->methods[] = $method;
+        
+        return $method;
     }
     
     /**

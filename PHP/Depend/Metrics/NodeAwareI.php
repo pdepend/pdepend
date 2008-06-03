@@ -73,31 +73,9 @@ interface PHP_Depend_Metrics_NodeAwareI
      * )
      * </code>
      *
-     * @param string $uuid The unique node identifier.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    function getNodeMetrics($uuid);
-    
-    /**
-     * This method returns an <b>array</b> with all aggregated metrics.
-     *
-     * <code>
-     * array(
-     *     '0375e305-885a-4e91-8b5c-e25bda005438'  =>  array(
-     *         'loc'    =>  42,
-     *         'ncloc'  =>  17,
-     *         'cc'     =>  12
-     *     ),
-     *     'e60c22f0-1a63-4c40-893e-ed3b35b84d0b'  =>  array(
-     *         'loc'    =>  42,
-     *         'ncloc'  =>  17,
-     *         'cc'     =>  12
-     *     )
-     * )
-     * </code>
-     * 
-     * @return array(string=>array)
-     */
-    function getAllNodeMetrics();
+    function getNodeMetrics(PHP_Depend_Code_NodeI $node);
 }

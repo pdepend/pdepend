@@ -51,6 +51,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Interface.php';
+require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
@@ -127,6 +128,11 @@ class PHP_Depend_Code_PackageFilterTest extends PHP_Depend_AbstractTest
         $this->assertEquals(0, count($expected));
     }
     
+    /**
+     * Tests the package filter for functions.
+     *
+     * @return void
+     */
     public function testFilterFunctionIterator()
     {
         $pkgIn  = new PHP_Depend_Code_Package('in');
@@ -148,6 +154,33 @@ class PHP_Depend_Code_PackageFilterTest extends PHP_Depend_AbstractTest
         foreach ($iterator as $fcn) {
             $this->assertArrayHasKey($fcn->getName(), $expected);
             unset($expected[$fcn->getName()]);
+        }
+        $this->assertEquals(0, count($expected));
+    }
+    
+    public function testFilterMethodIterator()
+    {
+        $pkgIn  = new PHP_Depend_Code_Package('in');
+        $clsIn  = $pkgIn->addType(new PHP_Depend_Code_Class('in'));
+        $mtdIn1 = $clsIn->addMethod(new PHP_Depend_Code_Method('in1'));
+        $mtdIn2 = $clsIn->addMethod(new PHP_Depend_Code_Method('in2'));
+        
+        $pkgOut  = new PHP_Depend_Code_Package('out');
+        $clsOut  = $pkgOut->addType(new PHP_Depend_Code_Class('out'));
+        $mtdOut1 = $clsOut->addMethod(new PHP_Depend_Code_Method('out1'));
+        $mtdOut2 = $clsOut->addMethod(new PHP_Depend_Code_Method('out2'));
+        
+        $methods  = array($mtdIn1, $mtdIn2, $mtdOut1, $mtdOut2);
+        $iterator = new PHP_Depend_Code_NodeIterator($methods);
+        
+        $filter = new PHP_Depend_Code_NodeIterator_PackageFilter(array('out'));
+        $iterator->addFilter($filter);
+        
+        $expected = array('in1'  =>  true, 'in2'  =>  true);
+        
+        foreach ($iterator as $mtd) {
+            $this->assertArrayHasKey($mtd->getName(), $expected);
+            unset($expected[$mtd->getName()]);
         }
         $this->assertEquals(0, count($expected));
     }

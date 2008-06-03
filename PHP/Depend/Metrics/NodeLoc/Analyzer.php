@@ -106,8 +106,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     
     /**
      * This method will return an <b>array</b> with all generated metric values 
-     * for the node with the given <b>$uuid</b> identifier. If there are no
-     * metrics for the requested node, this method will return an empty <b>array</b>.
+     * for the given <b>$node</b> instance. If there are no metrics for the 
+     * requested node, this method will return an empty <b>array</b>.
      * 
      * <code>
      * array(
@@ -117,41 +117,16 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * )
      * </code>
      *
-     * @param string $uuid The unique node identifier.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics($uuid)
+    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->_nodeMetrics[$uuid])) {
-            return $this->_nodeMetrics[$uuid];
+        if (isset($this->_nodeMetrics[$node->getUUID()])) {
+            return $this->_nodeMetrics[$node->getUUID()];
         }
         return array();
-    }
-    
-    /**
-     * This method returns an <b>array</b> with all aggregated metrics.
-     *
-     * <code>
-     * array(
-     *     '0375e305-885a-4e91-8b5c-e25bda005438'  =>  array(
-     *         'loc'    =>  23,
-     *         'cloc'   =>  17,
-     *         'ncloc'  =>  42
-     *     ),
-     *     'e60c22f0-1a63-4c40-893e-ed3b35b84d0b'  =>  array(
-     *         'loc'    =>  23,
-     *         'cloc'   =>  17,
-     *         'ncloc'  =>  42
-     *     )
-     * )
-     * </code>
-     * 
-     * @return array(string=>array)
-     */
-    public function getAllNodeMetrics()
-    {
-        return $this->_nodeMetrics;
     }
     
     /**
