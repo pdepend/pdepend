@@ -485,7 +485,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectFunctionDocComment()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/function_comment.php';
+        $sourceFile = dirname(__FILE__) . '/_code/comments/function.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -504,7 +504,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectMethodDocComment()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/method_comment.php';
+        $sourceFile = dirname(__FILE__) . '/_code/comments/method.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -527,7 +527,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectPropertyDocComment()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/property_comment.php';
+        $sourceFile = dirname(__FILE__) . '/_code/comments/property.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -550,18 +550,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectPropertyVisibility()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/property_comment.php';
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
-        $builder    = new PHP_Depend_Code_DefaultBuilder();
-        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
-        
-        $parser->parse();
-        
-        $nodes = $builder->getPackages()
-                         ->current()
-                         ->getTypes()
-                         ->current()
-                         ->getProperties();
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/property.php');
+
+        $nodes = $packages->current()
+                          ->getTypes()
+                          ->current()
+                          ->getProperties();
                          
         $this->assertTrue($nodes->current()->isProtected());
         $nodes->next();

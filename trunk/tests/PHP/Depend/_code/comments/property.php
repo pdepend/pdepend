@@ -2,7 +2,7 @@
 /**
  * A simple class comment.
  */
-class MyClass
+class MyPropertyClass
 {
     /**
      * This is one comment.

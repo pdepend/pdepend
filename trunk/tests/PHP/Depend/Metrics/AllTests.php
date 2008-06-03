@@ -56,6 +56,7 @@ require_once dirname(__FILE__) . '/AnalyzerLoaderTest.php';
 require_once dirname(__FILE__) . '/CodeRank/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/Dependency/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/Hierarchy/AnalyzerTest.php';
+require_once dirname(__FILE__) . '/NodeLoc/AnalyzerTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Metrics package.
@@ -92,6 +93,7 @@ class PHP_Depend_Metrics_AllTests
         $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_Dependency_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_Hierarchy_AnalyzerTest');
+        $suite->addTestSuite('PHP_Depend_Metrics_NodeLoc_AnalyzerTest');
         
         return $suite;
     }

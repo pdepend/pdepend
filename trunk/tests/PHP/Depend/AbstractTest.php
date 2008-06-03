@@ -47,6 +47,12 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
+require_once 'PHP/Depend/Parser.php';
+require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Util/ExcludePathFilter.php';
+require_once 'PHP/Depend/Util/FileFilterIterator.php';
+
 /**
  * Abstract test case implementation for the PHP_Depend package.
  *
@@ -77,6 +83,38 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $whitelist = realpath(dirname(__FILE__).'/../../../PHP') . '/';
             PHPUnit_Util_Filter::addDirectoryToWhitelist($whitelist);
         }
+    }
+    
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string $fileOrDirectory A source file or a source directory.
+     * 
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public static function parseSource($fileOrDirectory)
+    {
+        if (is_dir($fileOrDirectory)) {
+            $it = new PHP_Depend_Util_FileFilterIterator(
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($fileOrDirectory)
+                ),
+                new PHP_Depend_Util_ExcludePathFilter(array('.svn'))
+            );
+        } else {
+            $it = new ArrayIterator(array($fileOrDirectory));
+        }
+        
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        foreach ($it as $file) {
+            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file);
+            $parser    = new PHP_Depend_Parser($tokenizer, $builder);
+
+            $parser->parse();
+        }
+        return $builder->getPackages();
     }
 }
 

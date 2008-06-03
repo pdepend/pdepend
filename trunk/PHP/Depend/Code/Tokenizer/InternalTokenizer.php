@@ -270,11 +270,11 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      *
      * @param string $sourceFile A php source file.
      */
-    public function __construct($sourceFile)
+    public function __construct($sourceFile = null)
     {
-        $this->sourceFile = new PHP_Depend_Code_File($sourceFile);
-        
-        $this->tokenize();
+        if ($sourceFile !== null) {
+            $this->setSourceFile($sourceFile);
+        }
     }
     
     /**
@@ -285,6 +285,19 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     public function getSourceFile()
     {
         return $this->sourceFile;
+    }
+    
+    /**
+     * Sets a new php source file.
+     *
+     * @param string $sourceFile A php source file.
+     * 
+     * @return void
+     */
+    public function setSourceFile($sourceFile)
+    {
+        $this->sourceFile = new PHP_Depend_Code_File($sourceFile);
+        $this->tokenize();
     }
     
     /**
@@ -337,6 +350,10 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      */
     protected function tokenize()
     {
+        $this->tokens = array();
+        $this->index  = 0;
+        $this->count  = 0;
+        
         $line = 1;
         foreach (token_get_all($this->sourceFile->getSource()) as $token) {
             $newToken = null;
