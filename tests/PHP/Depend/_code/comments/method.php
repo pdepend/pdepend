@@ -2,7 +2,7 @@
 /**
  * A simple class comment.
  */
-class MyClass
+class MyMethodClass
 {
     /**
      * This is one comment.
@@ -28,5 +28,7 @@ class MyClass
      */
     function another_method_with_comment()
     {
+        // A test comment.
+        // Another test comment.
     }
 }
