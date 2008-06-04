@@ -47,6 +47,7 @@
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
@@ -79,14 +80,6 @@ class PHP_Depend
     protected $directories = array();
     
     /**
-     * A composite filter for input files.
-     *
-     * @type PHP_Depend_Util_CompositeFilter
-     * @var PHP_Depend_Util_CompositeFilter $filter
-     */
-    protected $filter = null;
-    
-    /**
      * The used code node builder.
      *
      * @type PHP_Depend_Code_NodeBuilderI
@@ -111,11 +104,32 @@ class PHP_Depend
     protected $loggers = array();
     
     /**
+     * A composite filter for input files.
+     *
+     * @type PHP_Depend_Util_CompositeFilter
+     * @var PHP_Depend_Util_CompositeFilter $_fileFilter
+     */
+    private $_fileFilter = null;
+    
+    /**
+     * A composite filter for source packages.
+     *
+     * @type PHP_Depend_Code_NodeIterator_CompositeFilter
+     * @var PHP_Depend_Code_NodeIterator_CompositeFilter $_codeFilter
+     */
+    private $_codeFilter = null;
+    
+    /**
      * Constructs a new php depend facade.
      */
     public function __construct()
     {
-        $this->filter = new PHP_Depend_Util_CompositeFilter();
+        $defaultFilter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
+        
+        $this->_codeFilter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
+        $this->_codeFilter->addFilter($defaultFilter);
+        
+        $this->_fileFilter = new PHP_Depend_Util_CompositeFilter();
     }
 
     /**
@@ -159,12 +173,12 @@ class PHP_Depend
      */
     public function addFileFilter(PHP_Depend_Util_FileFilterI $filter)
     {
-        $this->filter->append($filter);
+        $this->_fileFilter->append($filter);
     }
     
     public function addCodeFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
     {
-        
+        $this->_codeFilter->addFilter($filter);
     }
     
     /**
@@ -175,6 +189,10 @@ class PHP_Depend
      */
     public function analyze()
     {
+        if (count($this->directories) === 0) {
+            throw new RuntimeException('No source directory set.');
+        }
+        
         $acceptedTypes = $this->loadMetricAnalyzers();
         $analyzerLoader = new PHP_Depend_Metrics_AnalyzerLoader($acceptedTypes);
         
@@ -184,7 +202,7 @@ class PHP_Depend
             $iterator->append(new PHP_Depend_Util_FileFilterIterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($directory)
-                ), $this->filter
+                ), $this->_fileFilter
             ));
         }
         
@@ -198,15 +216,31 @@ class PHP_Depend
             $parser->parse();
         }
         
+        // Get global filter collection
+        $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+        
         foreach ($analyzerLoader as $analyzer) {
+            // Add filters if this analyzer is filter aware 
+            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
+                $staticFilter->addFilter($this->_codeFilter);
+            }
+            
             $analyzer->analyze($this->nodeBuilder->getPackages());
+            
+            // Remove filters if this analyzer is filter aware
+            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
+                $staticFilter->removeFilter($this->_codeFilter);
+            }
+            
             foreach ($this->loggers as $logger) {
                 $logger->log($analyzer);
             }
         }
+        
+        // Set global filter for logging
+        $staticFilter->addFilter($this->_codeFilter);
 
         $packages = $this->nodeBuilder->getPackages();
-        $packages->addFilter(new PHP_Depend_Code_NodeIterator_DefaultPackageFilter());
 
         foreach ($this->loggers as $logger) {
             $logger->setCode($packages);

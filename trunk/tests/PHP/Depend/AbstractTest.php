@@ -49,6 +49,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Util/ExcludePathFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
@@ -66,6 +67,18 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
  */
 class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Resets the global iterator filter.
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+        PHP_Depend_Code_NodeIterator_StaticFilter::getInstance()->clear();
+        
+        parent::tearDown();
+    }
+    
     /**
      * Initializes the test environment.
      *
