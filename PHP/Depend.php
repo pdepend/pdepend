@@ -144,9 +144,7 @@ class PHP_Depend
         $dir = realpath($directory);
         
         if (!is_dir($dir)) {
-            throw new RuntimeException(sprintf(
-                'Invalid directory "%s" added.', $directory
-            ));
+            throw new RuntimeException("Invalid directory '{$directory}' added.");
         }
         
         $this->directories[] = $dir;
@@ -176,6 +174,14 @@ class PHP_Depend
         $this->_fileFilter->append($filter);
     }
     
+    /**
+     * Adds an additional code filter. These filters could be used to hide 
+     * external libraries and global stuff from the PDepend output.  
+     *
+     * @param PHP_Depend_Code_NodeIterator_FilterI $filter The code filter.
+     * 
+     * @return void
+     */
     public function addCodeFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
     {
         $this->_codeFilter->addFilter($filter);
@@ -193,7 +199,7 @@ class PHP_Depend
             throw new RuntimeException('No source directory set.');
         }
         
-        $acceptedTypes = $this->loadMetricAnalyzers();
+        $acceptedTypes  = $this->_createAnalyzerList();
         $analyzerLoader = new PHP_Depend_Metrics_AnalyzerLoader($acceptedTypes);
         
         $iterator = new AppendIterator();
@@ -322,7 +328,12 @@ class PHP_Depend
         return $this->packages;
     }
     
-    protected function loadMetricAnalyzers()
+    /**
+     * Creates an <b>array</b> with all expected analyzers. 
+     *
+     * @return array(string)
+     */
+    private function _createAnalyzerList()
     {
         $resultSets = array();
         
@@ -331,7 +342,7 @@ class PHP_Depend
             
             if (!($xml = @file_get_contents($fileName, FILE_USE_INCLUDE_PATH))) {
                 $class = get_class($logger);
-                throw new RuntimeException("Missing configuration '{$class}'.");                
+                throw new RuntimeException("Missing configuration '{$class}'.");
             }
             
             $sxml = new SimpleXMLElement($xml);

@@ -106,7 +106,8 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
     
     /**
-     * Returns all {@link PHP_Depend_Code_AbstractType} objects this function depends on.
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects this function 
+     * depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -130,8 +131,8 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
     
     /**
-     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the dependency
-     * list.
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the 
+     * dependency list.
      *
      * @param PHP_Depend_Code_AbstractType $type A type to remove.
      * 

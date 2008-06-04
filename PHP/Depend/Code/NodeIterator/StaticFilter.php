@@ -49,7 +49,8 @@
 require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 
 /**
- * 
+ * Static composite filter for code nodes. This class is used for an overall 
+ * filtering.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend

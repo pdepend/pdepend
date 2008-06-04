@@ -63,6 +63,8 @@ interface PHP_Depend_Code_NodeIterator_FilterI
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
+     * 
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
      * @return boolean
      */

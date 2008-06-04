@@ -72,8 +72,23 @@
  */
 class PHP_Depend_Log_LoggerFactory
 {
+    /**
+     * Set of created logger instances.
+     *
+     * @type array<PHP_Depend_Log_LoggerI>
+     * @var array(string=>PHP_Depend_Log_LoggerI) $instances
+     */
     protected $instances = array();
     
+    /**
+     * Creates a new logger or returns an existing instance for the given 
+     * <b>$identifier</b>.
+     *
+     * @param string $identifier The logger identifier.
+     * @param string $fileName   The log output file name.
+     * 
+     * @return PHP_Depend_Log_LoggerI
+     */
     public function createLogger($identifier, $fileName)
     {
         if (!isset($this->instances[$identifier]))
