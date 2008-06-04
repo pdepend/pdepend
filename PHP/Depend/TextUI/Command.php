@@ -87,7 +87,6 @@ class PHP_Depend_TextUI_Command
             $this->printHelp();
             return self::CLI_ERROR;
         }
-        
         if (isset($this->_options['--help'])) {
             $this->printHelp();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
@@ -179,12 +178,22 @@ class PHP_Depend_TextUI_Command
             unset($this->_options['--suffix']);
         }
         
-        // Check for exclude option
-        if (isset($this->_options['--exclude'])) {
+        // Check for ignore option
+        if (isset($this->_options['--ignore'])) {
             // Get exclude directories
-            $directories = explode(',', $this->_options['--exclude']);
+            $directories = explode(',', $this->_options['--ignore']);
             // Set exclude directories
             $this->_runner->setExcludeDirectories($directories);
+            // Remove from options array
+            unset($this->_options['--ignore']);
+        }
+        
+        // Check for exclude package option
+        if (isset($this->_options['--exclude'])) {
+            // Get exclude directories
+            $packages = explode(',', $this->_options['--exclude']);
+            // Set exclude packages
+            $this->_runner->setExcludePackages($packages);
             // Remove from options array
             unset($this->_options['--exclude']);
         }
@@ -220,12 +229,14 @@ class PHP_Depend_TextUI_Command
         $length = $this->printLogOptions();
         
         $suffixOption  = str_pad('--suffix=<ext[,...]>', $length, ' ', STR_PAD_RIGHT);
-        $excludeOption = str_pad('--exclude=<dir[,...]>', $length, ' ', STR_PAD_RIGHT);
+        $ignoreOption  = str_pad('--ignore=<dir[,...]>', $length, ' ', STR_PAD_RIGHT);
+        $excludeOption = str_pad('--exclude=<pkg[,...]>', $length, ' ', STR_PAD_RIGHT);
         $helpOption    = str_pad('--help', $length, ' ', STR_PAD_RIGHT);
         $versionOption = str_pad('--version', $length, ' ', STR_PAD_RIGHT);
         
         echo "  {$suffixOption} List of valid PHP file extensions.\n",
-             "  {$excludeOption} List of exclude directories.\n\n",
+             "  {$ignoreOption} List of exclude directories.\n",
+             "  {$excludeOption} List of exclude packages.\n\n",
              "  {$helpOption} Print this help text.\n",
              "  {$versionOption} Print the current PHP_Depend version.\n\n";
     }
