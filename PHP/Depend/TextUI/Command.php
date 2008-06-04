@@ -92,6 +92,10 @@ class PHP_Depend_TextUI_Command
             $this->printHelp();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
         }
+        if (isset($this->_options['--usage'])) {
+            $this->printUsage();
+            return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
+        }
         if (isset($this->_options['--version'])) {
             $this->printVersion();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
@@ -134,9 +138,9 @@ class PHP_Depend_TextUI_Command
     {
         if (!isset($_SERVER['argv'])) {
             if (false === (boolean) ini_get('register_argc_argv')) {
-                echo 'Please enable register_argc_argv in your php.ini', PHP_EOL;
+                echo "Please enable register_argc_argv in your php.ini.\n\n";
             } else {
-                echo 'Unknown error, no $argv array available', PHP_EOL;
+                echo "Unknown error, no \$argv array available.\n\n";
             }
             return false;
         }
@@ -188,11 +192,21 @@ class PHP_Depend_TextUI_Command
         return true;
     }
     
+    /**
+     * Outputs the current PHP_Depend version.
+     *
+     * @return void
+     */
     protected function printVersion()
     {
         echo "PHP_Depend @package_version@ by Manuel Pichler\n\n";
     }
     
+    /**
+     * Outputs the base usage of PHP_Depend.
+     *
+     * @return void
+     */
     protected function printUsage()
     {
         $this->printVersion();
@@ -258,35 +272,51 @@ class PHP_Depend_TextUI_Command
         
         $this->_logOptions = array();
         
-        $base = realpath(dirname(__FILE__) . '/../Log');
-        $dirs = new DirectoryIterator($base);
+        // Get all include paths
+        $paths = explode(PATH_SEPARATOR, get_include_path());
         
-        foreach ($dirs as $dir) {
-            if (!$dir->isDir() || substr($dir->getFilename(), 0, 1) === '.') {
+        foreach ($paths as $path) {
+        
+            $path .= '/PHP/Depend/Log';
+            
+            if (is_dir($path) === false) {
                 continue;
             }
             
-            $files = new DirectoryIterator($dir->getPathname());
-            foreach ($files as $file) {
-                if (!$file->isFile()) {
+            $dirs = new DirectoryIterator($path);
+        
+            foreach ($dirs as $dir) {
+                if (!$dir->isDir() || substr($dir->getFilename(), 0, 1) === '.') {
                     continue;
                 }
-                if (substr($file->getFilename(), -4, 4) !== '.xml') {
-                    continue;
-                }
+            
+                $files = new DirectoryIterator($dir->getPathname());
+                foreach ($files as $file) {
+                    if (!$file->isFile()) {
+                        continue;
+                    }
+                    if (substr($file->getFilename(), -4, 4) !== '.xml') {
+                        continue;
+                    }
                 
-                $option = '--' . strtolower($dir->getFilename()) 
-                        . '-' . strtolower(substr($file->getFilename(), 0, -4));
+                    $option = '--' . strtolower($dir->getFilename()) 
+                            . '-' . strtolower(substr($file->getFilename(), 0, -4));
                         
-                $this->_logOptions[$option] = $file->getPathname();
+                    $this->_logOptions[$option] = $file->getPathname();
+                }
             }
         }
         return $this->_logOptions;
     }
 
+    /**
+     * Main method that starts the command line runner.
+     *
+     * @return integer The exit code.
+     */
     public static function main()
     {
         $command = new PHP_Depend_TextUI_Command();
-        $command->run();
+        return $command->run();
     }    
 }
