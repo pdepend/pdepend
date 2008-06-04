@@ -166,7 +166,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
                 $package->accept($this);
             }
         }
-
     }
     
     /**

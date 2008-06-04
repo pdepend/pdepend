@@ -94,11 +94,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     protected $nodeMetrics = array();
     
     /**
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * 
      * @return void
-     * @see PHP_Depend_Metrics_AnalyzerI::analyze()
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
@@ -125,9 +125,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
-     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     * Visits a class node. 
      *
-     * @param PHP_Depend_Code_Class $class
+     * @param PHP_Depend_Code_Class $class The current class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -142,6 +145,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Returns the depth of inheritance tree value for the given class.
      *
      * @param PHP_Depend_Code_Class $class The context code class instance.
+     * 
+     * @return integer
      */
     protected function getClassDIT(PHP_Depend_Code_Class $class)
     {

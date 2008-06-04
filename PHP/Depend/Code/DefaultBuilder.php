@@ -218,7 +218,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         if (isset($this->classes[$cls][$pkg])) {
             $class = $this->classes[$cls][$pkg];
             
-        // 2) check for a default version that could be replaced
+            // 2) check for a default version that could be replaced
         } else if (isset($this->classes[$cls][self::DEFAULT_PACKAGE])) {
             $class = $this->classes[$cls][self::DEFAULT_PACKAGE];
             
@@ -228,11 +228,11 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             
             $this->buildPackage($pkg)->addType($class);
             
-        // 3) check for any version that could be used instead of the default     
-        } else if (isset($this->classes[$cls]) && $pkg === self::DEFAULT_PACKAGE) {
+            // 3) check for any version that could be used instead of the default
+        } else if (isset($this->classes[$cls]) && $this->isDefault($pkg)) {
             $class = reset($this->classes[$cls]);
             
-        // 4) Create a new class for the given package
+            // 4) Create a new class for the given package
         } else {
             
             // Create a new class instance
@@ -320,7 +320,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         if (isset($this->interfaces[$ife][$pkg])) {
             $interface = $this->interfaces[$ife][$pkg];
             
-        // 2) check for a default version that could be replaced
+            // 2) check for a default version that could be replaced
         } else if (isset($this->interfaces[$ife][self::DEFAULT_PACKAGE])) {
             $interface = $this->interfaces[$ife][self::DEFAULT_PACKAGE];
             
@@ -330,11 +330,11 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             
             $this->buildPackage($pkg)->addType($interface);
             
-        // 3) check for any version that could be used instead of the default     
-        } else if (isset($this->interfaces[$ife]) && $pkg === self::DEFAULT_PACKAGE) {
+            // 3) check for any version that could be used instead of the default
+        } else if (isset($this->interfaces[$ife]) && $this->isDefault($pkg)) {
             $interface = reset($this->interfaces[$ife]);
             
-        // 4) Create a new interface for the given package
+            // 4) Create a new interface for the given package
         } else {
             // Create a new interface instance
             $interface = new PHP_Depend_Code_Interface($ife, $line);
@@ -464,6 +464,18 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             unset($packages[self::DEFAULT_PACKAGE]);
         }
         return new PHP_Depend_Code_NodeIterator($packages);
+    }
+    
+    /**
+     * Returns <b>true</b> if the given package is the default package.
+     *
+     * @param string $packageName The package name.
+     * 
+     * @return boolean
+     */
+    protected function isDefault($packageName)
+    {
+        return ($packageName === self::DEFAULT_PACKAGE);
     }
     
     /**

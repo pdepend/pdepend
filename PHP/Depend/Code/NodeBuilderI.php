@@ -148,5 +148,7 @@ interface PHP_Depend_Code_NodeBuilderI extends IteratorAggregate
      * 
      * @return PHP_Depend_Code_Function The function instance
      */
-    function buildFunction($name, $line = 0, PHP_Depend_Code_File $sourceFile = null);
+    function buildFunction($name, 
+                           $line = 0, 
+                           PHP_Depend_Code_File $sourceFile = null);
 }

@@ -67,8 +67,13 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @type array<PHP_Depend_Metrics_AnalyzerI>
      * @var array(PHP_Depend_Metrics_AnalyzerI) $_analyzers
      */
-    protected $_analyzers = array();
+    private $_analyzers = array();
     
+    /**
+     * Constructs a new analyzer loader. 
+     *
+     * @param array $acceptedTypes Accepted/expected analyzer types. 
+     */
     public function __construct(array $acceptedTypes)
     {
         $dirs = new DirectoryIterator(dirname(__FILE__));
@@ -85,12 +90,13 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
                 
                 $package   = $dir->getFilename();
                 $className = sprintf('PHP_Depend_Metrics_%s_Analyzer', $package);
+                
+                $parents    = class_parents($className); 
+                $implements = class_implements($className, false); 
 
-                $providedTypes = array_merge(
-                    array($className),
-                    class_implements($className, false),
-                    class_parents($className)
-                );
+                $providedTypes = array($className); 
+                $providedTypes = array_merge($providedTypes, $parents);
+                $providedTypes = array_merge($providedTypes, $implements);
                 
                 if (count(array_intersect($acceptedTypes, $providedTypes)) > 0) {
                     $this->_analyzers[] = new $className();                    
