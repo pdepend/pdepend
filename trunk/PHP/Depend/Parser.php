@@ -583,6 +583,14 @@ class PHP_Depend_Parser
         return PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
     }
 
+    /**
+     * Checks that the current token could be used as file comment. 
+     * 
+     * This method checks that the previous token is an open tag and the following
+     * token is not a class, a interface, final, abstract or a function.
+     *
+     * @return boolean
+     */
     protected function isFileComment()
     {
         if ($this->tokenizer->prev() !== PHP_Depend_Code_TokenizerI::T_OPEN_TAG) {

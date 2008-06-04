@@ -102,18 +102,44 @@ class PHP_Depend_Log_Summary_Xml
      */
     private $_nodeAwareAnalyzers = array();
     
-    protected $xmlStack = array();
+    /**
+     * The internal used xml stack.
+     *
+     * @type array<DOMElement>
+     * @var array(DOMElement) $_xmlStack
+     */
+    private $_xmlStack = array();
     
+    /**
+     * Constructs a new logger for the given output file.
+     *
+     * @param string $fileName The log output file
+     */
     public function __construct($fileName)
     {
         $this->fileName = $fileName;
     }
     
+    /**
+     * Sets the context code nodes.
+     *
+     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * 
+     * @return void
+     */
     public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
         $this->code = $code;
     }
     
+    /**
+     * Adds an analyzer to log. If this logger accepts the given analyzer it
+     * with return <b>true</b>, otherwise the return value is <b>false</b>.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     * 
+     * @return boolean
+     */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $accept = false;
@@ -136,9 +162,15 @@ class PHP_Depend_Log_Summary_Xml
         return $accept;
     }
     
+    /**
+     * Closes the logger process and writes the output file.
+     *
+     * @return void
+     */
     public function close()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
+        
         $dom->formatOutput = true;
         
         ksort($this->projectMetrics);
@@ -149,10 +181,9 @@ class PHP_Depend_Log_Summary_Xml
             $metrics->setAttribute($name, $value);
         }
         
-        array_push($this->xmlStack, $metrics);
+        array_push($this->_xmlStack, $metrics);
         
-        foreach ($this->code as $node)
-        {
+        foreach ($this->code as $node) {
             $node->accept($this);
         }
         
@@ -176,7 +207,7 @@ class PHP_Depend_Log_Summary_Xml
     
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-        $xml = end($this->xmlStack);
+        $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
         
         $classXml = $doc->createElement('class');
@@ -187,7 +218,7 @@ class PHP_Depend_Log_Summary_Xml
             
         $xml->appendChild($classXml);
         
-        array_push($this->xmlStack, $classXml);
+        array_push($this->_xmlStack, $classXml);
         
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -196,12 +227,12 @@ class PHP_Depend_Log_Summary_Xml
             $property->accept($this);
         }
         
-        array_pop($this->xmlStack);
+        array_pop($this->_xmlStack);
     }
     
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
-        $xml = end($this->xmlStack);
+        $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
         
         $functionXml = $doc->createElement('function');
@@ -220,7 +251,7 @@ class PHP_Depend_Log_Summary_Xml
     
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        $xml = end($this->xmlStack);
+        $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
         
         $methodXml = $doc->createElement('method');
@@ -233,7 +264,7 @@ class PHP_Depend_Log_Summary_Xml
     
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        $xml = end($this->xmlStack);
+        $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
         
         $packageXml = $doc->createElement('package');
@@ -241,7 +272,7 @@ class PHP_Depend_Log_Summary_Xml
             
         $this->writeNodeMetrics($packageXml, $package);
         
-        array_push($this->xmlStack, $packageXml);
+        array_push($this->_xmlStack, $packageXml);
             
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
@@ -250,7 +281,7 @@ class PHP_Depend_Log_Summary_Xml
             $function->accept($this);
         }
         
-        array_pop($this->xmlStack);
+        array_pop($this->_xmlStack);
             
         $xml->appendChild($packageXml);
     }
@@ -282,7 +313,8 @@ class PHP_Depend_Log_Summary_Xml
      * 
      * @return void
      */
-    protected function writeFileReference(DOMElement $xml, PHP_Depend_Code_File $file = null)
+    protected function writeFileReference(DOMElement $xml, 
+                                          PHP_Depend_Code_File $file = null)
     {
         if ($file === null || $file->getFileName() === null) {
             return;

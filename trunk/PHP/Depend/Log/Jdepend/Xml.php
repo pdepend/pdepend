@@ -141,16 +141,36 @@ class PHP_Depend_Log_Jdepend_Xml
      */
     protected $abstractClasses = null;
     
+    /**
+     * Constructs a new logger for the given output file.
+     *
+     * @param string $fileName The log output file
+     */
     public function __construct($fileName)
     {
         $this->fileName = $fileName;
     }
     
+    /**
+     * Sets the context code nodes.
+     *
+     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * 
+     * @return void
+     */
     public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
         $this->code = $code;
     }
     
+    /**
+     * Adds an analyzer to log. If this logger accepts the given analyzer it
+     * with return <b>true</b>, otherwise the return value is <b>false</b>.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     * 
+     * @return boolean
+     */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         if ($analyzer instanceof PHP_Depend_Metrics_Dependency_Analyzer) {
@@ -161,6 +181,11 @@ class PHP_Depend_Log_Jdepend_Xml
         return false;
     }
     
+    /**
+     * Closes the logger process and writes the output file.
+     *
+     * @return void
+     */
     public function close()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -171,8 +196,7 @@ class PHP_Depend_Log_Jdepend_Xml
         $this->packages = $jdepend->appendChild($dom->createElement('Packages'));
         $this->cycles   = $jdepend->appendChild($dom->createElement('Cycles'));
         
-        foreach ($this->code as $node)
-        {
+        foreach ($this->code as $node) {
             $node->accept($this);
         }
         
@@ -258,8 +282,7 @@ class PHP_Depend_Log_Jdepend_Xml
         $packageXml->appendChild($dependsUpon);
         $packageXml->appendChild($usedBy);
         
-        if (($cycles = $this->analyzer->getCycle($package->getUUID())) !== null)
-        {
+        if (($cycles = $this->analyzer->getCycle($package->getUUID())) !== null) {
             $cycleXml = $doc->createElement('Package');
             $cycleXml->setAttribute('Name', $package->getName());
             

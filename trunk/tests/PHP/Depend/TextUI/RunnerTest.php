@@ -75,7 +75,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Invalid directory "foo/bar" added.',
+            "Invalid directory 'foo/bar' added.",
             PHP_Depend_TextUI_Runner::EXCEPTION_EXIT
         );
         
