@@ -151,6 +151,11 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $this->assertHelpOutput($actual);        
     }
     
+    /**
+     * Tests that the command starts the text ui runner.
+     *
+     * @return void
+     */
     public function testCommandStartsProcessWithDummyLogger()
     {
         $logFile = sys_get_temp_dir() . '/pdepend.dummy';
@@ -158,7 +163,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         
         $argv = array(
             '--suffix=inc',
-            '--exclude=code-5.2.x',
+            '--ignore=code-5.2.x',
+            '--exclude=pdepend.test',
             '--dummy-logger=' . $logFile,
             $source
         );
@@ -201,7 +207,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $this->assertRegExp($startsWith, $actual);
         
         $endsWith = "/  --suffix=<ext\[,\.\.\.\]>[ ]*List of valid PHP file extensions\.\n"
-                  . "  --exclude=<dir\[,\.\.\.\]>[ ]*List of exclude directories\.\n\n"
+                  . "  --ignore=<dir\[,\.\.\.\]>[ ]*List of exclude directories\.\n"
+                  . "  --exclude=<pkg\[,\.\.\.\]>[ ]*List of exclude packages\.\n\n"
                   . "  --help[ ]*Print this help text\.\n"
                   . "  --version[ ]*Print the current PHP_Depend version\.\n\n$/";
         $this->assertRegExp($endsWith, $actual);
