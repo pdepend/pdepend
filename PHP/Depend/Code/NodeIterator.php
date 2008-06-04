@@ -101,9 +101,11 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         // Sort by name
         ksort($this->_nodes);
         
+        $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+        
         // Apply global filters
         $this->_filter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
-        $this->_filter->addFilter(PHP_Depend_Code_NodeIterator_StaticFilter::getInstance());
+        $this->_filter->addFilter($staticFilter);
         
         $this->rewind();
     }
@@ -206,8 +208,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
             return;
         }
         
-        while (($node = $this->current()) !== false)
-        {
+        while (($node = $this->current()) !== false) {
             if ($this->_filter->accept($node) === true) {
                 break;
             }

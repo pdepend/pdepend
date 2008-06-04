@@ -72,7 +72,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAddInvalidDirectoryFail()
     {
         $dir = dirname(__FILE__) . '/foobar';
-        $msg = sprintf('Invalid directory "%s" added.', $dir);
+        $msg = "Invalid directory '{$dir}' added.";
         
         $this->setExpectedException('RuntimeException', $msg);
         

@@ -318,6 +318,13 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         }
     }
     
+    /**
+     * Initializes the node metric record for the given <b>$package</b>.
+     *
+     * @param PHP_Depend_Code_Package $package The context package.
+     * 
+     * @return void
+     */
     protected function initPackageMetric(PHP_Depend_Code_Package $package)
     {
         $uuid = $package->getUUID();
@@ -340,6 +347,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         }
     }
     
+    /**
+     * Post processes all analyzed nodes.
+     *
+     * @return void
+     */
     protected function postProcess()
     {
         foreach ($this->nodeMetrics as $uuid => $metrics) {
@@ -363,6 +375,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         }
     }
     
+    /**
+     * Calculates the abstractness for all analyzed nodes.
+     *
+     * @return void
+     */
     protected function calculateAbstractness()
     {
         foreach ($this->nodeMetrics as $uuid => $metrics) {
@@ -373,6 +390,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         }
     }
     
+    /**
+     * Calculates the instability for all analyzed nodes.
+     *
+     * @return void
+     */
     protected function calculateInstability()
     {
         foreach ($this->nodeMetrics as $uuid => $metrics) {
@@ -385,10 +407,15 @@ class PHP_Depend_Metrics_Dependency_Analyzer
         }
     }
     
+    /**
+     * Calculates the distance to an optimal value.
+     *
+     * @return void
+     */
     protected function calculateDistance()
     {
-        foreach ($this->nodeMetrics as $uuid => $metrics) {
-            $this->nodeMetrics[$uuid]['d'] = abs(($metrics['a'] + $metrics['i']) - 1);
+        foreach ($this->nodeMetrics as $uuid => $m) {
+            $this->nodeMetrics[$uuid]['d'] = abs(($m['a'] + $m['i']) - 1);
         }
     }
 
@@ -397,12 +424,14 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * that are part of the cylce are stored in the given {@link SplObjectStorage}
      * instance. 
      *
-     * @param SplObjectStorage $storage The cycle package object store.
+     * @param SplObjectStorage        $storage The cycle package object store.
+     * @param PHP_Depend_Code_Package $package The context code package.
      * 
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */
-    protected function collectCycle(SplObjectStorage $storage, PHP_Depend_Code_Package $package)
+    protected function collectCycle(SplObjectStorage $storage, 
+                                    PHP_Depend_Code_Package $package)
     {
         if ($storage->contains($package)) {
             $storage->rewind();

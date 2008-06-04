@@ -174,8 +174,8 @@ abstract class PHP_Depend_Code_AbstractType
     }
     
     /**
-     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the dependency
-     * list.
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the 
+     * dependency list.
      *
      * @param PHP_Depend_Code_AbstractType $type A type to remove.
      * 

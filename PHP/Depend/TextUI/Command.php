@@ -47,8 +47,9 @@
  */
 
 require_once 'PHP/Depend/TextUI/Runner.php';
+
 /**
- * 
+ * Handles the command line stuff and starts the text ui runner. 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -66,8 +67,20 @@ class PHP_Depend_TextUI_Command
      */
     const CLI_ERROR = 1742;
     
+    /**
+     * Collected log options.
+     *
+     * @type array<string>
+     * @var array(string=>string) $_logOptions
+     */
     private $_logOptions = null;
     
+    /**
+     * The recieved cli options
+     *
+     * @type array<mixed>
+     * @var array(string=>mixed) $_options
+     */
     private $_options = array();
     
     /**
@@ -78,6 +91,11 @@ class PHP_Depend_TextUI_Command
      */
     private $_runner = null;
     
+    /**
+     * Performs the main cli process and returns the exit code.
+     *
+     * @return integer
+     */
     public function run()
     {
         // Create a new text ui runner
@@ -133,6 +151,11 @@ class PHP_Depend_TextUI_Command
         }
     }
     
+    /**
+     * Parses the cli arguments.
+     *
+     * @return boolean
+     */
     protected function handleArguments()
     {
         if (!isset($_SERVER['argv'])) {
@@ -221,18 +244,23 @@ class PHP_Depend_TextUI_Command
         $this->printVersion();
         echo "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";        
     }
-
+    
+    /**
+     * Outputs the main help of PHP_Depend.
+     *
+     * @return void
+     */
     protected function printHelp()
     {
         $this->printUsage();
         
-        $length = $this->printLogOptions();
+        $l = $this->printLogOptions();
         
-        $suffixOption  = str_pad('--suffix=<ext[,...]>', $length, ' ', STR_PAD_RIGHT);
-        $ignoreOption  = str_pad('--ignore=<dir[,...]>', $length, ' ', STR_PAD_RIGHT);
-        $excludeOption = str_pad('--exclude=<pkg[,...]>', $length, ' ', STR_PAD_RIGHT);
-        $helpOption    = str_pad('--help', $length, ' ', STR_PAD_RIGHT);
-        $versionOption = str_pad('--version', $length, ' ', STR_PAD_RIGHT);
+        $suffixOption  = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $ignoreOption  = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $excludeOption = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $helpOption    = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
+        $versionOption = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
         
         echo "  {$suffixOption} List of valid PHP file extensions.\n",
              "  {$ignoreOption} List of exclude directories.\n",
@@ -241,6 +269,12 @@ class PHP_Depend_TextUI_Command
              "  {$versionOption} Print the current PHP_Depend version.\n\n";
     }
     
+    /**
+     * Prints all available log options and returns the length of the longest 
+     * option. 
+     *
+     * @return integer
+     */
     protected function printLogOptions()
     {
         $maxLength = 0;
@@ -275,6 +309,11 @@ class PHP_Depend_TextUI_Command
         return $maxLength;
     }
     
+    /**
+     * Collects all logger options and the configuration name.
+     *
+     * @return array(string=>string)
+     */
     protected function collectLogOptions()
     {
         if ($this->_logOptions !== null) {

@@ -79,8 +79,8 @@ interface PHP_Depend_Code_DependencyNodeI extends PHP_Depend_Code_NodeI
     function addDependency(PHP_Depend_Code_AbstractType $type);
     
     /**
-     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the dependency
-     * list.
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the 
+     * dependency list.
      *
      * @param PHP_Depend_Code_AbstractType $type A type to remove.
      * 

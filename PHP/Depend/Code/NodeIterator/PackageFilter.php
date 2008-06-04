@@ -86,24 +86,26 @@ class PHP_Depend_Code_NodeIterator_PackageFilter
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
+     * 
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
      * @return boolean
      */
     public function accept(PHP_Depend_Code_NodeI $node)
     {
-        $result = true;
+        $package = null;
         // NOTE: This looks a little bit ugly and it seems better to exclude
         //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
         //       PDepend supports more node types, this could produce errors.
         if ($node instanceof PHP_Depend_Code_Package) {
-            $result = !in_array($node->getName(), $this->_packages);
+            $package = $node->getName();
         } else if ($node instanceof PHP_Depend_Code_AbstractType) {
-            $result = !in_array($node->getPackage()->getName(), $this->_packages);
+            $package = $node->getPackage()->getName();
         } else if ($node instanceof PHP_Depend_Code_Function) {
-            $result = !in_array($node->getPackage()->getName(), $this->_packages);
+            $package = $node->getPackage()->getName();
         } else if ($node instanceof PHP_Depend_Code_Method) {
-            $result = !in_array($node->getParent()->getPackage()->getName(), $this->_packages);
+            $package = $node->getParent()->getPackage()->getName();
         }
-        return $result;
+        return !in_array($package, $this->_packages);
     }
 }
