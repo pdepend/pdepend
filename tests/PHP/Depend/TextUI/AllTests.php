@@ -53,6 +53,7 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once dirname(__FILE__) . '/CommandTest.php';
 require_once dirname(__FILE__) . '/RunnerTest.php';
 
 /**
@@ -87,6 +88,7 @@ class PHP_Depend_TextUI_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_TextUI - AllTests');
+        $suite->addTestSuite('PHP_Depend_TextUI_CommandTest');
         $suite->addTestSuite('PHP_Depend_TextUI_RunnerTest');
         
         return $suite;
