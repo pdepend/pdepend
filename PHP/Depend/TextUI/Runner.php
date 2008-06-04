@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Depend.php';
+require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
 require_once 'PHP/Depend/Log/LoggerFactory.php';
 require_once 'PHP/Depend/Util/ExcludePathFilter.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
@@ -94,6 +95,14 @@ class PHP_Depend_TextUI_Runner
     private $_excludeDirectories = array('.svn', 'CVS');
     
     /**
+     * List of exclude packages.
+     *
+     * @type array<string>
+     * @var array(string) $_excludePackages
+     */
+    private $_excludePackages = array();
+    
+    /**
      * List of source code directories. 
      *
      * @type array<string>
@@ -128,13 +137,25 @@ class PHP_Depend_TextUI_Runner
      * 
      * NOTE: If this method is called, it will overwrite the default settings.
      *
-     * @param array(string) $excludeDirectories
+     * @param array(string) $excludeDirectories All exclude directories.
      * 
      * @return void
      */
     public function setExcludeDirectories(array $excludeDirectories)
     {
         $this->_excludeDirectories = $excludeDirectories;
+    }
+    
+    /**
+     * Sets a list of exclude packages.
+     *
+     * @param array(string) $excludePackages Exclude packages.
+     * 
+     * @return void
+     */
+    public function setExcludePackages(array $excludePackages)
+    {
+        $this->_excludePackages = $excludePackages;
     }
     
     /**
@@ -182,6 +203,11 @@ class PHP_Depend_TextUI_Runner
         if (count($this->_excludeDirectories) > 0) {
             $filter = new PHP_Depend_Util_ExcludePathFilter($this->_excludeDirectories);
             $pdepend->addFileFilter($filter);
+        }
+        
+        if (count($this->_excludePackages) > 0) {
+            $filter = new PHP_Depend_Code_NodeIterator_PackageFilter($this->_excludePackages);
+            $pdepend->addCodeFilter($filter);
         }
         
         // Try to set all source directories.
