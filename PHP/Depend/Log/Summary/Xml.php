@@ -52,7 +52,8 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
- * 
+ * This logger generates a summary xml document with aggregated project, class,
+ * method and file metrics.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -67,6 +68,12 @@ class PHP_Depend_Log_Summary_Xml
        extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
     implements PHP_Depend_Log_LoggerI
 {
+    /**
+     * The log output file.
+     *
+     * @type string
+     * @var string $fileName
+     */
     protected $fileName = '';
     
     /**
@@ -145,11 +152,10 @@ class PHP_Depend_Log_Summary_Xml
         $accept = false;
         
         if ($analyzer instanceof PHP_Depend_Metrics_ProjectAwareI) {
-            // Collect all project metrics
-            $this->projectMetrics = array_merge(
-                $this->projectMetrics,
-                $analyzer->getProjectMetrics()
-            );
+            // Get project metrics
+            $metrics = $analyzer->getProjectMetrics();
+            // Merge with existing metrics.
+            $this->projectMetrics = array_merge($this->projectMetrics, $metrics);
             
             $accept = true;
         }
@@ -205,6 +211,14 @@ class PHP_Depend_Log_Summary_Xml
         $dom->save($this->fileName);
     }
     
+    /**
+     * Visits a class node. 
+     *
+     * @param PHP_Depend_Code_Class $class The current class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $xml = end($this->_xmlStack);
@@ -230,6 +244,14 @@ class PHP_Depend_Log_Summary_Xml
         array_pop($this->_xmlStack);
     }
     
+    /**
+     * Visits a function node. 
+     *
+     * @param PHP_Depend_Code_Function $function The current function node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $xml = end($this->_xmlStack);
@@ -244,11 +266,27 @@ class PHP_Depend_Log_Summary_Xml
         $xml->appendChild($functionXml);
     }
     
+    /**
+     * Visits a code interface object.
+     *
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         // Empty implementation, because we don't want interface methods.
     }
     
+    /**
+     * Visits a method node. 
+     *
+     * @param PHP_Depend_Code_Class $method The method class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $xml = end($this->_xmlStack);
@@ -262,6 +300,14 @@ class PHP_Depend_Log_Summary_Xml
         $xml->appendChild($methodXml);
     }
     
+    /**
+     * Visits a package node. 
+     *
+     * @param PHP_Depend_Code_Class $package The package class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
+     */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $xml = end($this->_xmlStack);
@@ -286,6 +332,15 @@ class PHP_Depend_Log_Summary_Xml
         $xml->appendChild($packageXml);
     }
     
+    /**
+     * Aggregates all metrics for the given <b>$node</b> instance and adds them
+     * to the <b>DOMElement</b>
+     *
+     * @param DOMElement            $xml  DOM Element that represents <b>$node</b>.
+     * @param PHP_Depend_Code_NodeI $node The context code node instance.
+     * 
+     * @return void
+     */
     protected function writeNodeMetrics(DOMElement $xml, PHP_Depend_Code_NodeI $node)
     {
         $metrics = array();
