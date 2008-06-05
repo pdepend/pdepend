@@ -118,6 +118,22 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     }
     
     /**
+     * Returns a node iterator with all implemented interfaces.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getImplementedInterfaces()
+    {
+        $type   = 'PHP_Depend_Code_Interface';
+        $filter = new PHP_Depend_Code_NodeIterator_TypeFilter($type);
+        
+        $interfaces = $this->getDependencies();
+        $interfaces->addFilter($filter);
+        
+        return $interfaces;
+    }
+    
+    /**
      * Returns an iterator with all child classes.
      *
      * @return PHP_Depend_Code_NodeIterator
