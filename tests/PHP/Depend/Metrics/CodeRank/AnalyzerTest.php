@@ -182,4 +182,28 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         $this->assertType('array', $metrics);
         $this->assertEquals(0, count($metrics));
     }
+    
+    /**
+     * Tests that the analyze() method throws an exception for cycle structures.
+     *
+     * @return void
+     */
+    public function testAnalyzeThrowsExceptionForCycleFail()
+    {
+        $packageA = new PHP_Depend_Code_Package('pkgA');
+        $classA   = $packageA->addType(new PHP_Depend_Code_Class('A'));
+        
+        $packageB = new PHP_Depend_Code_Package('pkgB');
+        $classB   = $packageB->addType(new PHP_Depend_Code_Class('B'));
+        
+        $classB->addChildType($classA); // class A extends B {}
+        $classA->addChildType($classB); // class B extends A {}
+        
+        $packages = new PHP_Depend_Code_NodeIterator(array($packageA, $packageB));
+        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        
+        $this->setExpectedException('RuntimeException', 'The object structure contains cycles');
+        
+        $analyzer->analyze($packages);
+    }
 }
