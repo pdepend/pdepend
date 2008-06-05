@@ -130,7 +130,24 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         $interfaces = $this->getDependencies();
         $interfaces->addFilter($filter);
         
-        return $interfaces;
+        $nodes = array();
+        foreach ($interfaces as $interface) {
+            // Add this interface first
+            $nodes[] = $interface;
+            // Append all parent interfaces
+            foreach ($interface->getParentInterfaces() as $parentInterface) {
+                if (in_array($parentInterface, $nodes, true) === false) {
+                    $nodes[] = $parentInterface;
+                }
+            }
+        }
+        
+        if (($parent = $this->getParentClass()) !== null) {
+            foreach ($parent->getImplementedInterfaces() as $interface) {
+                $nodes[] = $interface;
+            }
+        }
+        return new PHP_Depend_Code_NodeIterator($nodes);
     }
     
     /**
