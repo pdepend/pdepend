@@ -116,6 +116,53 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
     }
     
     /**
+     * Tests the result of the <b>getParentInterfaces()</b> method.
+     *
+     * @return void
+     */
+    public function testGetParentInterfaces()
+    {
+        $interfsA = new PHP_Depend_Code_Interface('interfsA');
+        $interfsB = new PHP_Depend_Code_Interface('interfsB');
+        $interfsC = new PHP_Depend_Code_Interface('interfsC');
+        $interfsD = new PHP_Depend_Code_Interface('interfsD');
+        $interfsE = new PHP_Depend_Code_Interface('interfsE');
+        $interfsF = new PHP_Depend_Code_Interface('interfsF');
+        
+        $interfsA->addChildType($interfsB); // interface B extends A {}
+        $interfsA->addChildType($interfsC); // interface C extends A {}
+        $interfsC->addChildType($interfsD); // interface D extends C, E
+        $interfsE->addChildType($interfsD); // interface D extends C, E
+        $interfsF->addChildType($interfsE); // interface E extends F
+        
+        $this->assertEquals(0, $interfsA->getParentInterfaces()->count());
+        
+        $parents = $interfsB->getParentInterfaces();
+        $this->assertEquals(1, $parents->count());
+        $this->assertSame($interfsA, $parents->current());
+        
+        $parents = $interfsC->getParentInterfaces();
+        $this->assertEquals(1, $parents->count());
+        $this->assertSame($interfsA, $parents->current());
+        
+        $parents = $interfsD->getParentInterfaces();
+        $this->assertEquals(4, $parents->count());
+        $this->assertSame($interfsA, $parents->current());
+        $parents->next();
+        $this->assertSame($interfsC, $parents->current());
+        $parents->next();
+        $this->assertSame($interfsE, $parents->current());
+        $parents->next();
+        $this->assertSame($interfsF, $parents->current());
+        
+        $parents = $interfsE->getParentInterfaces();
+        $this->assertEquals(1, $parents->count());
+        $this->assertSame($interfsF, $parents->current());
+        
+        $this->assertEquals(0, $interfsF->getParentInterfaces()->count());
+    }
+    
+    /**
      * Creates an abstract item instance.
      *
      * @return PHP_Depend_Code_AbstractItem

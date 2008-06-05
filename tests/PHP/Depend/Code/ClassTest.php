@@ -49,6 +49,7 @@ require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
 require_once dirname(__FILE__) . '/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Property.php';
@@ -178,6 +179,59 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $class = new PHP_Depend_Code_Class('foo', 42);
         
         $this->assertEquals(42, $class->getStartLine());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::getImplementedInterfaces()}
+     * returns the expected result.
+     *
+     * @return void
+     */
+    public function testGetImplementedInterfaces()
+    {
+        $interfsA = new PHP_Depend_Code_Interface('interfsA');
+        $interfsB = new PHP_Depend_Code_Interface('interfsB');
+        $interfsC = new PHP_Depend_Code_Interface('interfsC');
+        $interfsD = new PHP_Depend_Code_Interface('interfsD');
+        $interfsE = new PHP_Depend_Code_Interface('interfsE');
+        $interfsF = new PHP_Depend_Code_Interface('interfsF');
+        
+        $classA = new PHP_Depend_Code_Class('classA');
+        $classB = new PHP_Depend_Code_Class('classB');
+        
+        $interfsA->addChildType($interfsB); // interface B extends A {}
+        $interfsA->addChildType($interfsC); // interface C extends A {}
+        $interfsB->addChildType($interfsD); // interface D extends B, E
+        $interfsE->addChildType($interfsD); // interface D extends B, E
+        $interfsF->addChildType($interfsE); // interface E extends F
+        
+        $interfsE->addChildType($classA); // class A implements E, C {}
+        $interfsC->addChildType($classA); // class A implements E, C {}
+        
+        $interfsD->addChildType($classB); // class B implements D, A
+        $interfsA->addChildType($classB); // class B implements D, A
+        
+        $interfaces = $classA->getImplementedInterfaces();
+        $this->assertEquals(4, $interfaces->count());
+        $this->assertSame($interfsA, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsC, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsE, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsF, $interfaces->current());
+        
+        $interfaces = $classB->getImplementedInterfaces();
+        $this->assertEquals(5, $interfaces->count());
+        $this->assertSame($interfsA, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsB, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsD, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsE, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsF, $interfaces->current());
     }
     
     /**

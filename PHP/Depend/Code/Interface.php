@@ -92,6 +92,29 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
     }
     
     /**
+     * Returns an iterator with all parent, parent parent etc. interfaces.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getParentInterfaces()
+    {
+        $interfaces = array();
+        foreach ($this->getDependencies() as $interface) {
+            // Append parent interface first 
+            if (in_array($interface, $interfaces, true) === false) {
+                $interfaces[] = $interface;
+            }
+            // Append parent parents
+            foreach ($interface->getParentInterfaces() as $parentInterface) {
+                if (in_array($parentInterface, $interfaces, true) === false) {
+                    $interfaces[] = $parentInterface;
+                }
+            }
+        }
+        return new PHP_Depend_Code_NodeIterator($interfaces);
+    }
+    
+    /**
      * Returns an iterator with all child interfaces.
      *
      * @return PHP_Depend_Code_NodeIterator
