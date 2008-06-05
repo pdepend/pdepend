@@ -252,6 +252,9 @@ class PHP_Depend
             $logger->setCode($packages);
             $logger->close();
         }
+        
+        // Remove global filter
+        $staticFilter->removeFilter($this->_codeFilter);
 
         $this->packages = $packages;
         

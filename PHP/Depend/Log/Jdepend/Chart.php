@@ -167,8 +167,11 @@ class PHP_Depend_Log_Jdepend_Chart
             imagestring($im, 1, $i - 4, ceil($size * 12.25), $text, $dgray);
         }
 
-        imagestring($im, 2, 6 * $size, floor(12.5 * $size), "Abstraction", $dgray);
-        imagestringup($im, 2, floor($size / 10), floor(7.5 * $size), "Instability", $dgray);
+        $text = 'Abstraction';
+        imagestring($im, 2, 6 * $size, floor(12.5 * $size), $text, $dgray);
+        
+        $text = 'Instability';
+        imagestringup($im, 2, floor($size / 10), floor(7.5 * $size), $text, $dgray);
 
         imageline($im, $size, $size, (12 * $size), (12 * $size), $red);
 
