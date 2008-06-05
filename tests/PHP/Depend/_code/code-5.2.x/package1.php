@@ -10,7 +10,7 @@ interface pkg1FooI {
  * @package package1
  */
 class pkg1Foo implements pkg1FooI {
-    
+    public $foo = null;
 }
 
 /**
@@ -24,7 +24,7 @@ abstract class pkg1Bar {
  * @package package1
  */
 class pkg1Foobar extends pkg1Bar implements pkg3FooI {
-    
+    private $foo = null;
 }
 
 /**

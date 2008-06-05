@@ -189,15 +189,16 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testGetImplementedInterfaces()
     {
-        $interfsA = new PHP_Depend_Code_Interface('interfsA');
-        $interfsB = new PHP_Depend_Code_Interface('interfsB');
-        $interfsC = new PHP_Depend_Code_Interface('interfsC');
-        $interfsD = new PHP_Depend_Code_Interface('interfsD');
-        $interfsE = new PHP_Depend_Code_Interface('interfsE');
-        $interfsF = new PHP_Depend_Code_Interface('interfsF');
+        $interfsA = new PHP_Depend_Code_Interface('A');
+        $interfsB = new PHP_Depend_Code_Interface('B');
+        $interfsC = new PHP_Depend_Code_Interface('C');
+        $interfsD = new PHP_Depend_Code_Interface('D');
+        $interfsE = new PHP_Depend_Code_Interface('E');
+        $interfsF = new PHP_Depend_Code_Interface('F');
         
-        $classA = new PHP_Depend_Code_Class('classA');
-        $classB = new PHP_Depend_Code_Class('classB');
+        $classA = new PHP_Depend_Code_Class('A');
+        $classB = new PHP_Depend_Code_Class('B');
+        $classC = new PHP_Depend_Code_Class('C');
         
         $interfsA->addChildType($interfsB); // interface B extends A {}
         $interfsA->addChildType($interfsC); // interface C extends A {}
@@ -208,8 +209,12 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $interfsE->addChildType($classA); // class A implements E, C {}
         $interfsC->addChildType($classA); // class A implements E, C {}
         
-        $interfsD->addChildType($classB); // class B implements D, A
-        $interfsA->addChildType($classB); // class B implements D, A
+        $interfsD->addChildType($classB); // class B extends C implements D, A {}
+        $interfsA->addChildType($classB); // class B extends C implements D, A {}
+        
+        $interfsC->addChildType($classC); // class C implements C {}
+        
+        $classC->addChildType($classB); // class B extends C implements D, A {}
         
         $interfaces = $classA->getImplementedInterfaces();
         $this->assertEquals(4, $interfaces->count());
@@ -222,16 +227,24 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $this->assertSame($interfsF, $interfaces->current());
         
         $interfaces = $classB->getImplementedInterfaces();
-        $this->assertEquals(5, $interfaces->count());
+        $this->assertEquals(6, $interfaces->count());
         $this->assertSame($interfsA, $interfaces->current());
         $interfaces->next();
         $this->assertSame($interfsB, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsC, $interfaces->current());
         $interfaces->next();
         $this->assertSame($interfsD, $interfaces->current());
         $interfaces->next();
         $this->assertSame($interfsE, $interfaces->current());
         $interfaces->next();
         $this->assertSame($interfsF, $interfaces->current());
+        
+        $interfaces = $classC->getImplementedInterfaces();
+        $this->assertEquals(2, $interfaces->count());
+        $this->assertSame($interfsA, $interfaces->current());
+        $interfaces->next();
+        $this->assertSame($interfsC, $interfaces->current());
     }
     
     /**

@@ -50,12 +50,11 @@ require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
- * Generates some class level based metrics. This analyzer is based on the 
- * metrics specified in the following document.
- * 
- * http://www.aivosto.com/project/help/pm-oo-misc.html
+ * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
+ * classes, methods and functions.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -66,11 +65,12 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Metrics_ClassLevel_Analyzer
+class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
        extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_NodeAwareI
+               PHP_Depend_Metrics_NodeAwareI,
+               PHP_Depend_Metrics_ProjectAwareI
 {
     /**
      * Hash with all calculated node metrics.
@@ -94,6 +94,22 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = array();
+    
+    /**
+     * The project Cyclomatic Complexity Number.
+     *
+     * @type integer
+     * @var integer $_ccn
+     */
+    private $_ccn = 0;
+    
+    /**
+     * Extended Cyclomatic Complexity Number(CCN2) for the project.
+     *
+     * @type integer
+     * @var integer $_ccn2
+     */
+    private $_ccn2 = 0;
     
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -128,6 +144,19 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     }
     
     /**
+     * Provides the project summary metrics as an <b>array</b>.
+     *
+     * @return array(string=>mixed)
+     */
+    public function getProjectMetrics()
+    {
+        return array(
+            'ccn'   =>  $this->_ccn,
+            'ccn2'  =>  $this->_ccn2
+        );
+    }
+    
+    /**
      * Visits a class node. 
      *
      * @param PHP_Depend_Code_Class $class The current class node.
@@ -138,24 +167,40 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->_nodeMetrics[$class->getUUID()] = array(
-            'dit'     =>  $this->_calculateDIT($class),
-            'impl'    =>  $class->getImplementedInterfaces()->count(),
-            'cis'     =>  0,
-            'csz'     =>  0,
-            'vars'    =>  0,
-            'varsi'   =>  $this->_calculateVARSi($class),
-            'varsnp'  =>  0,
-            'wmc'     =>  0,
-            'wmci'    =>  $this->_calculateWMCi($class),
-            'wmcnp'   =>  0
+            'ccn'   =>  0,
+            'ccn2'  =>  0
         );
-    
-        foreach ($class->getProperties() as $property) {
-            $property->accept($this);
-        }
+
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
+    }
+    
+    /**
+     * Visits a function node. 
+     *
+     * @param PHP_Depend_Code_Function $function The current function node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     */
+    public function visitFunction(PHP_Depend_Code_Function $function)
+    {
+        // Get all method tokens
+        $tokens = $function->getTokens();
+        
+        $ccn  = $this->_calculateCCN($tokens);
+        $ccn2 = $this->_calculateCCN2($tokens);
+        
+        // The method metrics
+        $this->_nodeMetrics[$function->getUUID()] = array(
+            'ccn'   =>  $ccn,
+            'ccn2'  =>  $ccn2
+        );
+        
+        // Update project metrics
+        $this->_ccn  += $ccn;
+        $this->_ccn2 += $ccn2;
     }
     
     /**
@@ -181,129 +226,91 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        // Get parent class uuid
+        // Get all method tokens
+        $tokens = $method->getTokens();
+        
+        $ccn  = $this->_calculateCCN($tokens);
+        $ccn2 = $this->_calculateCCN2($tokens);
+        
+        // The method metrics
+        $this->_nodeMetrics[$method->getUUID()] = array(
+            'ccn'   =>  $ccn,
+            'ccn2'  =>  $ccn2
+        );
+        
+        // Update parent class metrics
         $uuid = $method->getParent()->getUUID();
+        $this->_nodeMetrics[$uuid]['ccn']  += $ccn;
+        $this->_nodeMetrics[$uuid]['ccn2'] += $ccn2;
         
-        // Increment Weighted Methods Per Class(WMC) value
-        ++$this->_nodeMetrics[$uuid]['wmc'];
-        // Increment Class Size(CSZ) value
-        ++$this->_nodeMetrics[$uuid]['csz'];
-        
-        // Increment Non Private values
-        if ($method->isPublic()) {
-            // Increment Non Private WMC value
-            ++$this->_nodeMetrics[$uuid]['wmcnp'];
-            // Increment Class Interface Size(CIS) value
-            ++$this->_nodeMetrics[$uuid]['cis']; 
-        }
+        // Update project metrics
+        $this->_ccn  += $ccn;
+        $this->_ccn2 += $ccn2;
     }
     
     /**
-     * Visits a property node. 
+     * Calculates the Cyclomatic Complexity Number (CCN). 
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
-     */
-    public function visitProperty(PHP_Depend_Code_Property $property)
-    {
-        // Get parent class uuid
-        $uuid = $property->getParent()->getUUID();
-        
-        // Increment VARS value
-        ++$this->_nodeMetrics[$uuid]['vars'];
-        // Increment Class Size(CSZ) value
-        ++$this->_nodeMetrics[$uuid]['csz'];
-        
-        // Increment Non Private values
-        if ($property->isPublic()) {
-            // Increment Non Private VARS value
-            ++$this->_nodeMetrics[$uuid]['varsnp'];
-            // Increment Class Interface Size(CIS) value
-            ++$this->_nodeMetrics[$uuid]['cis'];
-        }
-    }
-    
-    /**
-     * Returns the depth of inheritance tree value for the given class.
-     *
-     * @param PHP_Depend_Code_Class $class The context code class instance.
+     * @param array $tokens The input tokens.
      * 
      * @return integer
      */
-    private function _calculateDIT(PHP_Depend_Code_Class $class)
+    private function _calculateCCN(array $tokens)
     {
-        $dit = 0;
-        while (($class = $class->getParentClass()) !== null) {
-            ++$dit;
-        }
-        return $dit;
-    }
-    
-    /**
-     * Calculates the Variables Inheritance of a class metric, this method only 
-     * counts protected and public properties of parent classes.
-     *
-     * @param PHP_Depend_Code_Class $class The context class instance.
-     * 
-     * @return integer
-     */
-    private function _calculateVARSi(PHP_Depend_Code_Class $class)
-    {
-        // List of properties, this method only counts not overwritten properties
-        $properties = array();
-        // Collect all properties of the context class
-        foreach ($class->getProperties() as $prop) {
-            $properties[$prop->getName()] = true;
-        }
+        // List of tokens
+        $countingTokens = array(
+            PHP_Depend_Code_TokenizerI::T_CASE,
+            PHP_Depend_Code_TokenizerI::T_CATCH,
+            PHP_Depend_Code_TokenizerI::T_ELSEIF,
+            PHP_Depend_Code_TokenizerI::T_FOR,
+            PHP_Depend_Code_TokenizerI::T_FOREACH,
+            PHP_Depend_Code_TokenizerI::T_IF,
+            PHP_Depend_Code_TokenizerI::T_QUESTION_MARK,
+            PHP_Depend_Code_TokenizerI::T_WHILE
+        );
         
-        // Get parent class and collect all non private properties
-        $parent = $class->getParentClass();
-        
-        while ($parent !== null) {
-            // Get all parent properties
-            foreach ($parent->getProperties() as $prop) {
-                if (!$prop->isPrivate() && !isset($properties[$prop->getName()])) {
-                    $properties[$prop->getName()] = true;
-                }
+        $ccn = 1;
+        foreach ($tokens as $token) {
+            if (in_array($token[0], $countingTokens) === true) {
+                ++$ccn;
             }
-            // Get next parent
-            $parent = $parent->getParentClass();
         }
-        return count($properties);
+        return $ccn;
     }
     
     /**
-     * Calculates the Weight Method Per Class metric, this method only counts 
-     * protected and public methods of parent classes.
+     * Calculates the second version of the Cyclomatic Complexity Number (CCN2).
+     * This version includes boolean operators like <b>&&</b>, <b>and</b>, 
+     * <b>or</b> and <b>||</b>. 
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param array $tokens The input tokens.
      * 
      * @return integer
      */
-    private function _calculateWMCi(PHP_Depend_Code_Class $class)
+    private function _calculateCCN2(array $tokens)
     {
-        // List of methods, this method only counts not overwritten methods. 
-        $methods = array();
-        // First collect all methods of the context class
-        foreach ($class->getMethods() as $method) {
-            $methods[$method->getName()] = true;
-        }
-
-        // Get parent class and collect all non private methods.
-        $parent = $class->getParentClass();
+        // List of tokens
+        $countingTokens = array(
+            PHP_Depend_Code_TokenizerI::T_BOOLEAN_AND,
+            PHP_Depend_Code_TokenizerI::T_BOOLEAN_OR,
+            PHP_Depend_Code_TokenizerI::T_CASE,
+            PHP_Depend_Code_TokenizerI::T_CATCH,
+            PHP_Depend_Code_TokenizerI::T_ELSEIF,
+            PHP_Depend_Code_TokenizerI::T_FOR,
+            PHP_Depend_Code_TokenizerI::T_FOREACH,
+            PHP_Depend_Code_TokenizerI::T_IF,
+            PHP_Depend_Code_TokenizerI::T_LOGICAL_AND,
+            PHP_Depend_Code_TokenizerI::T_LOGICAL_OR,
+            PHP_Depend_Code_TokenizerI::T_QUESTION_MARK,
+            PHP_Depend_Code_TokenizerI::T_WHILE
+        );
         
-        while ($parent !== null) {
-            // Count all methods
-            foreach ($parent->getMethods() as $method) {
-                if (!$method->isPrivate() && !isset($methods[$method->getName()])) {
-                    $methods[$method->getName()] = true;
-                }
+        $ccn2 = 1;
+        foreach ($tokens as $token) {
+            if (in_array($token[0], $countingTokens) === true) {
+                ++$ccn2;
             }
-            // Fetch parent class
-            $parent = $parent->getParentClass();
         }
-        return count($methods);
+        return $ccn2;
     }
 }
