@@ -91,8 +91,7 @@ class PHP_Depend_Log_LoggerFactory
      */
     public function createLogger($identifier, $fileName)
     {
-        if (!isset($this->instances[$identifier]))
-        {
+        if (!isset($this->instances[$identifier])) {
             // Extract all parts from the logger identifier
             $words = explode('-', $identifier);
             
