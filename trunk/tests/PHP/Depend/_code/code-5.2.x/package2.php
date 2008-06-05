@@ -20,7 +20,7 @@ abstract class pkg2Bar extends pkg1Bar {
  * @package package2
  */
 class pkg2Foobar extends pkg1Bar {
-
+    public $bar = null;
     protected static $manager = null;
     
     /**
@@ -39,5 +39,5 @@ class pkg2Foobar extends pkg1Bar {
  * @package package2
  */
 class pkg2Barfoo extends pkg1Bar implements pkg1FooI {
-    
+    private $foo = null;
 }
