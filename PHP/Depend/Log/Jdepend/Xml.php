@@ -189,6 +189,7 @@ class PHP_Depend_Log_Jdepend_Xml
     public function close()
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
+        
         $dom->formatOutput = true;
 
         $jdepend = $dom->createElement('PDepend');
@@ -204,6 +205,14 @@ class PHP_Depend_Log_Jdepend_Xml
         $dom->save($this->fileName);
     }
     
+    /**
+     * Visits a class node. 
+     *
+     * @param PHP_Depend_Code_Class $class The current class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $doc = $this->packages->ownerDocument;
@@ -219,6 +228,14 @@ class PHP_Depend_Log_Jdepend_Xml
         }
     }
     
+    /**
+     * Visits a code interface object.
+     *
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $doc = $this->abstractClasses->ownerDocument;
@@ -230,6 +247,14 @@ class PHP_Depend_Log_Jdepend_Xml
         $this->abstractClasses->appendChild($classXml);
     }
     
+    /**
+     * Visits a package node. 
+     *
+     * @param PHP_Depend_Code_Class $package The package class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
+     */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $doc = $this->packages->ownerDocument;
