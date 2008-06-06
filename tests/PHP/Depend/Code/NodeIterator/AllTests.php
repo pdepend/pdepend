@@ -46,24 +46,15 @@
  */
 
 if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_NodeIterator_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/ClassTest.php';
-require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
-require_once dirname(__FILE__) . '/DefaultVisitorTest.php';
-require_once dirname(__FILE__) . '/FileTest.php';
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/InterfaceTest.php';
-require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
-require_once dirname(__FILE__) . '/MethodTest.php';
-require_once dirname(__FILE__) . '/NodeIteratorTest.php';
-require_once dirname(__FILE__) . '/PackageTest.php';
-require_once dirname(__FILE__) . '/PropertyTest.php';
-require_once dirname(__FILE__) . '/NodeIterator/AllTests.php';
+require_once dirname(__FILE__) . '/DefaultPackageFilterTest.php';
+require_once dirname(__FILE__) . '/PackageFilterTest.php';
+require_once dirname(__FILE__) . '/StaticFilterTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Code package.
@@ -76,7 +67,7 @@ require_once dirname(__FILE__) . '/NodeIterator/AllTests.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_AllTests
+class PHP_Depend_Code_NodeIterator_AllTests
 {
     /**
      * Test suite main method.
@@ -95,24 +86,15 @@ class PHP_Depend_Code_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
-        $suite->addTest(PHP_Depend_Code_NodeIterator_AllTests::suite());
-        $suite->addTestSuite('PHP_Depend_Code_ClassTest');
-        $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
-        $suite->addTestSuite('PHP_Depend_Code_DefaultVisitorTest');
-        $suite->addTestSuite('PHP_Depend_Code_FileTest');
-        $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
-        $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');
-        $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
-        $suite->addTestSuite('PHP_Depend_Code_MethodTest');
-        $suite->addTestSuite('PHP_Depend_Code_NodeIteratorTest');
-        $suite->addTestSuite('PHP_Depend_Code_PackageTest');
-        $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code_NodeIterator - AllTests');
+        $suite->addTestSuite('PHP_Depend_Code_NodeIterator_DefaultPackageFilterTest');
+        $suite->addTestSuite('PHP_Depend_Code_NodeIterator_PackageFilterTest');
+        $suite->addTestSuite('PHP_Depend_Code_NodeIterator_StaticFilterTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_AllTests::main') {
-    PHP_Depend_Code_AllTests::main();
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_NodeIterator_AllTests::main') {
+    PHP_Depend_Code_NodeIterator_AllTests::main();
 }
