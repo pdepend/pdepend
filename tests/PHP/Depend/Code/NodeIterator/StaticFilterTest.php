@@ -46,15 +46,13 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeBuilderI.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
+require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
+require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
 
 /**
- * Test case for the default package filter.
+ * Test case for the static filter.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -65,26 +63,16 @@ require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_DefaultPackageFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_NodeIterator_StaticFilterTest extends PHP_Depend_AbstractTest
 {
-    public function testFilterDefaultPackage()
+    public function testStaticFilterClear()
     {
-        $in1 = new PHP_Depend_Code_Package('in1');
-        $in2 = new PHP_Depend_Code_Package('in2');
-        $out = new PHP_Depend_Code_Package(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE);
-        
-        $packages = array($in1, $in2, $out);
-        $iterator = new PHP_Depend_Code_NodeIterator($packages);
-        
-        $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
-        $iterator->addFilter($filter);
-        
-        $expected = array('in1'  =>  true, 'in2'  =>  true);
-        
-        foreach ($iterator as $pkg) {
-            $this->assertArrayHasKey($pkg->getName(), $expected);
-            unset($expected[$pkg->getName()]);
-        }
-        $this->assertEquals(0, count($expected));
+        $filter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+        $this->assertEquals(0, $filter->getIterator()->count());
+        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array()));
+        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array()));
+        $this->assertEquals(2, $filter->getIterator()->count());
+        $filter->clear();
+        $this->assertEquals(0, $filter->getIterator()->count());
     }
 }
