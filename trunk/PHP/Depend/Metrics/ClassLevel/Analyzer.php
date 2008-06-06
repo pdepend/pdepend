@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
@@ -68,7 +68,7 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  */
 class PHP_Depend_Metrics_ClassLevel_Analyzer
        extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
-    implements PHP_Depend_Metrics_AnalyzerI,
+    implements PHP_Depend_Metrics_AggregateAnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI
 {
@@ -96,6 +96,14 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     private $_nodeMetrics = null;
     
     /**
+     * The internal used cyclomatic complexity analyzer.
+     *
+     * @type PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticAnalyzer
+     */
+    private $_cyclomaticAnalyzer = null;
+    
+    /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
@@ -105,6 +113,13 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
+            // First check for the require cc analyzer
+            if ($this->_cyclomaticAnalyzer === null) {
+                throw new RuntimeException('Missing required CC analyzer.');
+            }
+            
+            $this->_cyclomaticAnalyzer->analyze($packages);
+            
             // Init node metrics
             $this->_nodeMetrics = array();
             
@@ -112,6 +127,35 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             foreach ($packages as $package) {
                 $package->accept($this);
             }
+        }
+    }
+    
+    /**
+     * This method must return an <b>array</b> of class names for required
+     * analyzers.
+     *
+     * @return array(string)
+     */
+    public function getRequiredAnalyzers()
+    {
+        return array(
+            'PHP_Depend_Metrics_CyclomaticComplexity_Analyzer'
+        );
+    }
+    
+    /**
+     * Adds a required sub analyzer.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The sub analyzer instance.
+     * 
+     * @return void
+     */
+    public function addAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    {
+        if ($analyzer instanceof PHP_Depend_Metrics_CyclomaticComplexity_Analyzer) {
+            $this->_cyclomaticAnalyzer = $analyzer;    
+        } else {
+            throw new InvalidArgumentException('CC Analyzer required.');
         }
     }
     
@@ -190,17 +234,19 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         // Get parent class uuid
         $uuid = $method->getParent()->getUUID();
         
+        $ccn2 = $this->_cyclomaticAnalyzer->getCCN2($method);
+        
         // Increment Weighted Methods Per Class(WMC) value
-        ++$this->_nodeMetrics[$uuid]['wmc'];
+        $this->_nodeMetrics[$uuid]['wmc'] += $ccn2;
         // Increment Class Size(CSZ) value
-        ++$this->_nodeMetrics[$uuid]['csz'];
+        $this->_nodeMetrics[$uuid]['csz'] += $ccn2;
         
         // Increment Non Private values
         if ($method->isPublic()) {
             // Increment Non Private WMC value
-            ++$this->_nodeMetrics[$uuid]['wmcnp'];
+            $this->_nodeMetrics[$uuid]['wmcnp'] += $ccn2;
             // Increment Class Interface Size(CIS) value
-            ++$this->_nodeMetrics[$uuid]['cis']; 
+            $this->_nodeMetrics[$uuid]['cis'] += $ccn2; 
         }
     }
     

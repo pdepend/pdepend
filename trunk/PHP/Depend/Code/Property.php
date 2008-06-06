@@ -69,17 +69,26 @@ class PHP_Depend_Code_Property
      * Set defined visibility for this method.
      *
      * @type integer
-     * @var integer $visibility
+     * @var integer $_visibility
      */
-    protected $visibility = -1;
+    private $_visibility = -1;
     
     /**
      * The parent type object.
      *
      * @type PHP_Depend_Code_Class
-     * @var PHP_Depend_Code_Class $parent
+     * @var PHP_Depend_Code_Class $_parent
      */
-    protected $parent = null;
+    private $_parent = null;
+    
+    /**
+     * The type for this property. This value is <b>null</b> by default and for
+     * scalar types.
+     *
+     * @type PHP_Depend_Code_AbstractType
+     * @var PHP_Depend_Code_AbstractType $_type
+     */
+    private $_type = null;
     
     /**
      * Sets the visibility for this node. 
@@ -103,8 +112,8 @@ class PHP_Depend_Code_Property
             throw new InvalidArgumentException('Invalid visibility value given.');
         }
         // Check for previous value
-        if ($this->visibility === -1) {
-            $this->visibility = $visibility;
+        if ($this->_visibility === -1) {
+            $this->_visibility = $visibility;
         }
     }
     
@@ -116,7 +125,7 @@ class PHP_Depend_Code_Property
      */
     public function isPublic()
     {
-        return ($this->visibility === self::IS_PUBLIC);
+        return ($this->_visibility === self::IS_PUBLIC);
     }
     
     /**
@@ -127,7 +136,7 @@ class PHP_Depend_Code_Property
      */
     public function isProtected()
     {
-        return ($this->visibility === self::IS_PROTECTED);
+        return ($this->_visibility === self::IS_PROTECTED);
     }
     
     /**
@@ -138,7 +147,7 @@ class PHP_Depend_Code_Property
      */
     public function isPrivate()
     {
-        return ($this->visibility === self::IS_PRIVATE);
+        return ($this->_visibility === self::IS_PRIVATE);
     }
     
     
@@ -149,7 +158,7 @@ class PHP_Depend_Code_Property
      */
     public function getParent()
     {
-        return $this->parent;
+        return $this->_parent;
     }
     
     /**
@@ -161,7 +170,30 @@ class PHP_Depend_Code_Property
      */
     public function setParent(PHP_Depend_Code_Class $parent = null)
     {
-        $this->parent = $parent;
+        $this->_parent = $parent;
+    }
+    
+    /**
+     * Returns the type of this property. This method will return <b>null</b>
+     * for all scalar type, only class properties will have a type.
+     *
+     * @return PHP_Depend_Code_AbstractType
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
+    
+    /**
+     * Sets the type of this property.
+     *
+     * @param PHP_Depend_Code_AbstractType $type The property type.
+     * 
+     * @return void
+     */
+    public function setType(PHP_Depend_Code_AbstractType $type)
+    {
+        $this->_type = $type;
     }
     
     /**

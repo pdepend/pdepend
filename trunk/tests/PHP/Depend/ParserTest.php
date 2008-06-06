@@ -498,6 +498,66 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser sets the correct function return type.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectFunctionReturnType()
+    {
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/function1.php');
+
+        $nodes = $packages->current()
+                          ->getFunctions();
+        $this->assertEquals(3, $nodes->count());
+        
+        $this->assertEquals('func1', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getReturnType());
+        $nodes->next();
+        $this->assertEquals('func2', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getReturnType());
+        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnType()->getName());
+        $nodes->next();
+        $this->assertEquals('func3', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getReturnType());
+        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnType()->getName());
+    }
+    
+    /**
+     * Tests that the parser sets the correct method exception types.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectFunctionExceptionTypes()
+    {
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/function1.php');
+
+        $nodes = $packages->current()
+                          ->getFunctions();
+                          
+        $this->assertEquals(3, $nodes->count());
+        
+        $this->assertEquals('func1', $nodes->current()->getName());
+        $ex = $nodes->current()->getExceptionTypes();
+        $this->assertEquals(1, $ex->count());
+        $this->assertEquals('RuntimeException', $ex->current()->getName());
+        
+        $nodes->next();
+        
+        $this->assertEquals('func2', $nodes->current()->getName());
+        $ex = $nodes->current()->getExceptionTypes();
+        $this->assertEquals(2, $ex->count());
+        $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
+        $ex->next();
+        $this->assertEquals('OutOfRangeException', $ex->current()->getName());
+        
+        $nodes->next();
+        
+        $this->assertEquals('func3', $nodes->current()->getName());
+        $ex = $nodes->current()->getExceptionTypes();
+        $this->assertEquals(0, $ex->count());
+    }
+    
+    /**
      * Tests that doc comment blocks are added to a method. 
      *
      * @return void
@@ -518,6 +578,70 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                          ->getMethods();
         
         $this->doTestParserSetsCorrectDocComment($nodes);
+    }
+    
+    /**
+     * Tests that the parser sets the correct method return type.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectMethodReturnType()
+    {
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method3.php');
+
+        $nodes = $packages->current()
+                          ->getTypes()
+                          ->current()
+                          ->getMethods();
+        $this->assertEquals(3, $nodes->count());
+        
+        $this->assertEquals('__construct', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getReturnType());
+        $nodes->next();
+        $this->assertEquals('method1', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getReturnType());
+        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnType()->getName());
+        $nodes->next();
+        $this->assertEquals('method2', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getReturnType());
+        $this->assertEquals('SplSubject', $nodes->current()->getReturnType()->getName());
+    }
+    
+    /**
+     * Tests that the parser sets the correct method exception types.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectMethodExceptionTypes()
+    {
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method3.php');
+
+        $nodes = $packages->current()
+                          ->getTypes()
+                          ->current()
+                          ->getMethods();
+                          
+        $this->assertEquals(3, $nodes->count());
+        
+        $this->assertEquals('__construct', $nodes->current()->getName());
+        $ex = $nodes->current()->getExceptionTypes();
+        $this->assertEquals(1, $ex->count());
+        $this->assertEquals('RuntimeException', $ex->current()->getName());
+        
+        $nodes->next();
+        
+        $this->assertEquals('method1', $nodes->current()->getName());
+        $ex = $nodes->current()->getExceptionTypes();
+        $this->assertEquals(2, $ex->count());
+        $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
+        $ex->next();
+        $this->assertEquals('OutOfRangeException', $ex->current()->getName());
+        
+        $nodes->next();
+        
+        $this->assertEquals('method2', $nodes->current()->getName());
+        $ex = $nodes->current()->getExceptionTypes();
+        $this->assertEquals(0, $ex->count());
     }
     
     /**
@@ -564,6 +688,43 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertTrue($nodes->current()->isProtected());
         $nodes->next();
         $this->assertTrue($nodes->current()->isPublic());
+    }
+    
+    /**
+     * Tests that the parser sets property types for non scalar properties.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectPropertyTypes()
+    {
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/property2.php');
+
+        $nodes = $packages->current()
+                          ->getTypes()
+                          ->current()
+                          ->getProperties();
+
+        $this->assertEquals('$property1', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getType());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $nodes->next();
+        $this->assertEquals('$property2', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getType());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $nodes->next();
+        $this->assertEquals('$property3', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getType());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $nodes->next();
+        $this->assertEquals('$property4', $nodes->current()->getName());
+        $this->assertNotNull($nodes->current()->getType());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $nodes->next();
+        $this->assertEquals('$property5', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
+        $nodes->next();
+        $this->assertEquals('$property6', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
     }
     
     /**

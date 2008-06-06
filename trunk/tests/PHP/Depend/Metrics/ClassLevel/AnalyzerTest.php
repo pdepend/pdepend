@@ -49,12 +49,15 @@
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/File.php';
 require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Property.php';
 require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
+require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
+require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 
 /**
  * Test case for the class level analyzer.
@@ -71,12 +74,46 @@ require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
 class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
+     * Tests that the {@link PHP_Depend_Metrics_ClassLevel_Analyzer::analyzer()}
+     * method fails with an exception if no cc analyzer was set.
+     *
+     * @return void
+     */
+    public function testAnalyzerFailsWithoutCCAnalyzerFail()
+    {
+        $package  = new PHP_Depend_Code_Package('package1');
+        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        
+        $this->setExpectedException('RuntimeException', 'Missing required CC analyzer.');
+        
+        $analyzer->analyze($packages);
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Metrics_ClassLevel_Analyzer::addAnalyzer()}
+     * fails for an invalid child analyzer.
+     *
+     * @return void
+     */
+    public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
+    {
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        
+        $this->setExpectedException('InvalidArgumentException', 'CC Analyzer required.');
+
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CodeRank_Analyzer());
+    }
+    
+    /**
      * Tests that the analyzer calculates the correct DIT values.
      *
      * @return void
      */
     public function testCalculateDITMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package1');
         $interfs = $package->addType(new PHP_Depend_Code_Interface('interfs'));
         $classA  = $package->addType(new PHP_Depend_Code_Class('classA'));
@@ -85,6 +122,14 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classD  = $package->addType(new PHP_Depend_Code_Class('classD'));
         $classE  = $package->addType(new PHP_Depend_Code_Class('classE'));
         $classF  = $package->addType(new PHP_Depend_Code_Class('classF'));
+        
+        $interfs->setSourceFile($file);
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
+        $classC->setSourceFile($file);
+        $classD->setSourceFile($file);
+        $classE->setSourceFile($file);
+        $classF->setSourceFile($file);
         
         $interfs->addChildType($classA); // class A implements I // DIT = 0 
         $classA->addChildType($classB);  // class B extends A {} // DIT = 1
@@ -95,6 +140,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -118,6 +164,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateIMPLMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package1 = new PHP_Depend_Code_Package('package1');
         $interfsA = $package1->addType(new PHP_Depend_Code_Interface('A'));
         $interfsB = $package1->addType(new PHP_Depend_Code_Interface('B'));
@@ -130,6 +178,16 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classA   = $package2->addType(new PHP_Depend_Code_Class('A'));
         $classB   = $package2->addType(new PHP_Depend_Code_Class('B'));
         $classC   = $package2->addType(new PHP_Depend_Code_Class('C'));
+        
+        $interfsA->setSourceFile($file);
+        $interfsB->setSourceFile($file);
+        $interfsC->setSourceFile($file);
+        $interfsD->setSourceFile($file);
+        $interfsE->setSourceFile($file);
+        $interfsF->setSourceFile($file);
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
+        $classC->setSourceFile($file);
         
         $interfsA->addChildType($interfsB); // interface B extends A {}
         $interfsA->addChildType($interfsC); // interface C extends A {}
@@ -149,6 +207,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package1, $package2));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -166,6 +225,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateCISMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -210,11 +271,16 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classC->addProperty(new PHP_Depend_Code_Property('$c'))
                ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
                
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
+        $classC->setSourceFile($file);
+               
         $classB->addChildType($classA); // class A extends B {}
         $classC->addChildType($classB); // class B extends C {}
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -232,6 +298,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateCSZMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -263,9 +331,13 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
                ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
                
         $classB->addChildType($classA); // class A extends B {}
+               
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -281,6 +353,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -300,11 +374,15 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classB = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addProperty(new PHP_Depend_Code_Property('$a'))
                ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
         
         $classB->addChildType($classA); // class A extends B {}
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -320,6 +398,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSiMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -347,9 +427,13 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
                ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
         
         $classB->addChildType($classA); // class A extends B {}
+               
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -365,6 +449,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSnpMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -392,9 +478,13 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
                ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
         
         $classB->addChildType($classA); // class A extends B {}
+               
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -410,6 +500,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateWMCMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -442,9 +534,14 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
                
         $classB->addChildType($classA); // class A extends B {}
         $classC->addChildType($classB); // class B extends C {}
+               
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
+        $classC->setSourceFile($file);
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -462,6 +559,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */    
     public function testCalculateWMCiMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -492,11 +591,16 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classC->addProperty(new PHP_Depend_Code_Property('$c'))
                ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
                
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
+        $classC->setSourceFile($file);
+               
         $classB->addChildType($classA); // class A extends B {}
         $classC->addChildType($classB); // class B extends C {}
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);
@@ -514,6 +618,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */    
     public function testCalculateWMCnpMetric()
     {
+        $file = new PHP_Depend_Code_File(null);
+        
         $package = new PHP_Depend_Code_Package('package');
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
@@ -544,11 +650,16 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classC->addProperty(new PHP_Depend_Code_Property('$c'))
                ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
                
+        $classA->setSourceFile($file);
+        $classB->setSourceFile($file);
+        $classC->setSourceFile($file);
+               
         $classB->addChildType($classA); // class A extends B {}
         $classC->addChildType($classB); // class B extends C {}
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
         $m = $analyzer->getNodeMetrics($classA);

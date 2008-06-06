@@ -117,6 +117,29 @@ class PHP_Depend_Parser
     protected $builder = null;
     
     /**
+     * List of scalar php types.
+     *
+     * @type array<string>
+     * @var array(string) $_scalarTypes
+     */
+    private $_scalarTypes = array(
+        'array',
+        'bool',
+        'boolean',
+        'double',
+        'float',
+        'int',
+        'integer',
+        'mixed',
+        'null',
+        'real',
+        'resource',
+        'string',
+        'unknown', // Eclipse default return value
+        'void'
+    );
+    
+    /**
      * Constructs a new source parser.
      *
      * @param PHP_Depend_Code_TokenizerI   $tokenizer The used code tokenizer.
@@ -214,6 +237,8 @@ class PHP_Depend_Parser
                 $function->setSourceFile($this->tokenizer->getSourceFile());
                 $function->setDocComment($comment);
                 
+                $this->_prepareCallable($function);
+                
                 $this->reset();
                 
                 $comment = null;
@@ -307,6 +332,8 @@ class PHP_Depend_Parser
                 $method->setAbstract($abstract);
                 $method->setVisibility($visibilty);
                 
+                $this->_prepareCallable($method);
+                
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
                 $comment   = null;
                 $abstract  = false;
@@ -317,6 +344,8 @@ class PHP_Depend_Parser
                 $property->setDocComment($comment);
                 $property->setVisibility($visibilty);
                 $property->setEndLine($token[2]);
+                
+                $this->_prepareProperty($property);
                 
                 // TODO: Do we need an instanceof, to check that $type is a
                 //       PHP_Depend_Code_Class instance or do we believe the 
@@ -390,7 +419,7 @@ class PHP_Depend_Parser
      * 
      * @param PHP_Depend_Code_AbstractType $parent An optional parent interface of class.
      * 
-     * @return PHP_Depend_Code_Callable
+     * @return PHP_Depend_Code_AbstractCallable
      */
     protected function parseCallable(PHP_Depend_Code_AbstractType $parent = null)
     {
@@ -606,5 +635,106 @@ class PHP_Depend_Parser
         );
         
         return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
+    }
+    
+    /**
+     * Tries to extract a class or interface type for the given <b>$annotation</b>
+     * with in <b>$comment</b>. If there is no matching annotation, this method
+     * will return <b>null</b>.
+     * 
+     * <code>
+     *   // (at)var RuntimeException
+     *   array(
+     *       'RuntimeException',
+     *       false, 
+     *   )
+     * 
+     *   // (at)return array(SplObjectStore)
+     *   array(
+     *       'SplObjectStore',
+     *       true, 
+     *   )
+     * </code>
+     *
+     * @param string $comment    The doc comment block.
+     * @param string $annotation The annotation tag (e.g. 'var', 'throws'...).
+     * 
+     * @return array|null
+     */
+    private function _parseTypeAnnotation($comment, $annotation)
+    {
+        $baseRegexp   = sprintf('\*\s*@%s\s+', $annotation);
+        $arrayRegexp  = '#' . $baseRegexp . 'array\(\s*(\w+\s*=>\s*)?(\w+)\s*\)#';
+        $simpleRegexp = '#' . $baseRegexp . '(\w+)#';
+    
+        $type = null;
+        if (preg_match($arrayRegexp, $comment, $match)) {
+            $type = array($match[2], true);
+        } else if (preg_match($simpleRegexp, $comment, $match)) {
+            $type = array($match[1], false);
+        }
+        return $type;
+    }
+    
+    /**
+     * Returns the class names of all <b>throws</b> annotations with in the
+     * given comment block. 
+     *
+     * @param string $comment The context doc comment block.
+     * 
+     * @return array
+     */
+    private function _parseThrowsAnnotations($comment)
+    {
+        $throws = array();
+        if (preg_match_all('#\*\s*@throws\s+(\w+)#', $comment, $matches) > 0) {
+            foreach ($matches[1] as $match) {
+                $throws[] = $match;
+            }
+        }
+        return $throws;
+    }
+    
+    /**
+     * Extracts non scalar types from the property doc comment and sets the
+     * matching type instance. 
+     *
+     * @param PHP_Depend_Code_Property $property The context property instance.
+     * 
+     * @return void
+     */
+    private function _prepareProperty(PHP_Depend_Code_Property $property)
+    {
+        // Get type annotation
+        $type = $this->_parseTypeAnnotation($property->getDocComment(), 'var');
+        
+        if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
+            $property->setType($this->builder->buildClassOrInterface($type[0]));
+        }
+    }
+    
+    /**
+     * Extracts documented <b>throws</b> and <b>return</b> types and sets them
+     * to the given <b>$callable</b> instance.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
+     * 
+     * @return void
+     */
+    private function _prepareCallable(PHP_Depend_Code_AbstractCallable $callable)
+    {
+        // Get all @throws Types
+        $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
+        // Append all exception types
+        foreach ($throws as $type) {
+            $callable->addExceptionType($this->builder->buildClassOrInterface($type));
+        }
+        
+        // Get return annotation
+        $type = $this->_parseTypeAnnotation($callable->getDocComment(), 'return');
+        
+        if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
+            $callable->setReturnType($this->builder->buildClassOrInterface($type[0]));
+        }
     }
 }
