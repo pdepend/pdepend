@@ -127,6 +127,14 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     protected $methods = array();
     
     /**
+     * All generated {@link PHP_Depend_Code_Property} instances.
+     *
+     * @type array<PHP_Depend_Code_Property>
+     * @var array(PHP_Depend_Code_Property) $_properties
+     */
+    private $_properties = array();
+    
+    /**
      * Constructs a new builder instance.
      */
     public function __construct()
@@ -398,7 +406,13 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      */
     public function buildProperty($name, $line = 0)
     {
-        return new PHP_Depend_Code_Property($name, $line);
+        // Create new property instance.
+        $property = new PHP_Depend_Code_Property($name, $line);
+        
+        // Store local reference
+        $this->_properties[] = $property;
+        
+        return $property;
     }
     
     /**
@@ -588,6 +602,15 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
                     $function->addDependency($interface);
                 }
             }
+            foreach ($function->getExceptionTypes() as $exceptionType) {
+                if ($exceptionType === $class) {
+                    $function->removeExceptionType($class);
+                    $function->addExceptionType($interface);
+                }
+            }
+            if ($function->getReturnType() === $class) {
+                $function->setReturnType($interface);
+            }
         }
     
         foreach ($this->methods as $method) {
@@ -596,6 +619,21 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
                     $method->removeDependency($class);
                     $method->addDependency($interface);
                 }
+            }
+            foreach ($method->getExceptionTypes() as $exceptionType) {
+                if ($exceptionType === $class) {
+                    $method->removeExceptionType($class);
+                    $method->addExceptionType($interface);
+                }
+            }
+            if ($method->getReturnType() === $class) {
+                $method->setReturnType($interface);
+            }
+        }
+        
+        foreach ($this->_properties as $property) {
+            if ($property->getType() === $class) {
+                $property->setType($interface);
             }
         }
     }

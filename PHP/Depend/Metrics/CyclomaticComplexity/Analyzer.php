@@ -54,7 +54,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
- * classes, methods and functions.
+ * methods and functions.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -132,6 +132,39 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     }
     
     /**
+     * Returns the cyclomatic complexity for the given <b>$node</b> instance.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * 
+     * @return integer
+     */
+    public function getCCN(PHP_Depend_Code_NodeI $node)
+    {
+        $ccn = 0;
+        if (isset($this->_nodeMetrics[$node->getUUID()])) {
+            $ccn = $this->_nodeMetrics[$node->getUUID()]['ccn'];
+        }
+        return $ccn;
+    }
+    
+    /**
+     * Returns the extended cyclomatic complexity for the given <b>$node</b> 
+     * instance.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * 
+     * @return integer
+     */
+    public function getCCN2(PHP_Depend_Code_NodeI $node)
+    {
+        $ccn2 = 0;
+        if (isset($this->_nodeMetrics[$node->getUUID()])) {
+            $ccn2 = $this->_nodeMetrics[$node->getUUID()]['ccn2'];
+        }
+        return $ccn2;
+    }
+    
+    /**
      * This method will return an <b>array</b> with all generated metric values 
      * for the given <b>$node</b>. If there are no metrics for the requested 
      * node, this method will return an empty <b>array</b>.
@@ -160,26 +193,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             'ccn'   =>  $this->_ccn,
             'ccn2'  =>  $this->_ccn2
         );
-    }
-    
-    /**
-     * Visits a class node. 
-     *
-     * @param PHP_Depend_Code_Class $class The current class node.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor::visitClass()
-     */
-    public function visitClass(PHP_Depend_Code_Class $class)
-    {
-        $this->_nodeMetrics[$class->getUUID()] = array(
-            'ccn'   =>  0,
-            'ccn2'  =>  0
-        );
-
-        foreach ($class->getMethods() as $method) {
-            $method->accept($this);
-        }
     }
     
     /**
@@ -243,11 +256,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             'ccn'   =>  $ccn,
             'ccn2'  =>  $ccn2
         );
-        
-        // Update parent class metrics
-        $uuid = $method->getParent()->getUUID();
-        $this->_nodeMetrics[$uuid]['ccn']  += $ccn;
-        $this->_nodeMetrics[$uuid]['ccn2'] += $ccn2;
         
         // Update project metrics
         $this->_ccn  += $ccn;

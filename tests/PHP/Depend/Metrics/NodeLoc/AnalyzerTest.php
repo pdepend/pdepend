@@ -345,6 +345,11 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $this->assertEquals($expected, $actual);
     }
     
+    /**
+     * Tests that the analyzer aggregates the expected project values.
+     *
+     * @return void
+     */
     public function testAnalyzerCalculatesCorrectProjectMetrics()
     {
         $source   = dirname(__FILE__) . '/../../_code/comments/';
@@ -355,9 +360,9 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getProjectMetrics();
         $expected = array(
-            'loc'    =>  111,
-            'cloc'   =>  49,
-            'ncloc'  =>  62
+            'loc'    =>  218,
+            'cloc'   =>  120,
+            'ncloc'  =>  98
         );
         
         $this->assertEquals($expected, $actual);
