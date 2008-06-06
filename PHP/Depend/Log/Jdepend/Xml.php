@@ -265,7 +265,7 @@ class PHP_Depend_Log_Jdepend_Xml
         $packageXml = $doc->createElement('Package');
         $packageXml->setAttribute('name', $package->getName());
         
-        $stats = $this->analyzer->getStats($package->getUUID());
+        $stats = $this->analyzer->getStats($package);
         
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
@@ -286,7 +286,7 @@ class PHP_Depend_Log_Jdepend_Xml
                  ->appendChild($doc->createTextNode($stats['d']));
                  
         $dependsUpon = $doc->createElement('DependsUpon');
-        foreach ($this->analyzer->getEfferents($package->getUUID()) as $efferent) {
+        foreach ($this->analyzer->getEfferents($package) as $efferent) {
             $efferentXml = $doc->createElement('Package');
             $efferentXml->appendChild($doc->createTextNode($efferent->getName()));
             
@@ -294,7 +294,7 @@ class PHP_Depend_Log_Jdepend_Xml
         }
         
         $usedBy = $doc->createElement('UsedBy');
-        foreach ($this->analyzer->getAfferents($package->getUUID()) as $afferent) {
+        foreach ($this->analyzer->getAfferents($package) as $afferent) {
             $afferentXml = $doc->createElement('Package');
             $afferentXml->appendChild($doc->createTextNode($afferent->getName()));
             
@@ -307,7 +307,7 @@ class PHP_Depend_Log_Jdepend_Xml
         $packageXml->appendChild($dependsUpon);
         $packageXml->appendChild($usedBy);
         
-        if (($cycles = $this->analyzer->getCycle($package->getUUID())) !== null) {
+        if (($cycles = $this->analyzer->getCycle($package)) !== null) {
             $cycleXml = $doc->createElement('Package');
             $cycleXml->setAttribute('Name', $package->getName());
             

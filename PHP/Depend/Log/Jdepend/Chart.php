@@ -177,7 +177,7 @@ class PHP_Depend_Log_Jdepend_Chart
 
         foreach ($this->_code as $package) {
             
-            $metrics = $this->_analyzer->getStats($package->getUUID());
+            $metrics = $this->_analyzer->getStats($package);
             
             $s = $metrics['cc']; 
                + $metrics['ac'];
