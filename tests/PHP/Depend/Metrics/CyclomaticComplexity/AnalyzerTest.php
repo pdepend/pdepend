@@ -91,8 +91,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
             $metrics = $analyzer->getNodeMetrics($function);
             
             $this->assertEquals(
-                $expected[$function->getName()], 
-                $analyzer->getNodeMetrics($function)
+                $expected[$function->getName()]['ccn'], 
+                $analyzer->getCCN($function)
+            );
+            $this->assertEquals(
+                $expected[$function->getName()]['ccn2'], 
+                $analyzer->getCCN2($function)
             );
         }
         
@@ -132,10 +136,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
                 $analyzer->getNodeMetrics($method)
             );
         }
-        
-        $expected = array('ccn'  =>  12, 'ccn2'  =>  16);
-        $this->assertEquals($expected, $analyzer->getNodeMetrics($classes->current()));
-        $this->assertEquals($expected, $analyzer->getProjectMetrics());
     }
     
     /**

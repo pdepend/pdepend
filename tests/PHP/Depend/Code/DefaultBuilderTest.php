@@ -379,6 +379,110 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the default builder updates an existing reference for a 
+     * property type.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdatePropertyType()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $property = $builder->buildProperty('$bar', 0);
+        $type0    = $builder->buildClassOrInterface('PDepend');
+        
+        $property->setType($type0);
+        $this->assertSame($type0, $property->getType());
+        
+        $type1 = $builder->buildInterface('PDepend');
+        $this->assertSame($type1, $property->getType());
+    }
+    
+    /**
+     * Tests that the default builder updates an existing reference for a 
+     * method return type.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateMethodReturnType()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $method = $builder->buildMethod('bar', 0);
+        $type0  = $builder->buildClassOrInterface('PDepend');
+        
+        $method->setReturnType($type0);
+        $this->assertSame($type0, $method->getReturnType());
+        
+        $type1 = $builder->buildInterface('PDepend');
+        $this->assertSame($type1, $method->getReturnType());
+    }
+    
+    /**
+     * Tests that the default builder updates an existing reference for a 
+     * method exceptiion type.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateMethodExceptionType()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $method = $builder->buildMethod('bar', 0);
+        $type0  = $builder->buildClassOrInterface('PDepend');
+        
+        $method->addExceptionType($type0);
+        $this->assertEquals(1, $method->getExceptionTypes()->count());
+        $this->assertSame($type0, $method->getExceptionTypes()->current());
+        
+        $type1 = $builder->buildInterface('PDepend');
+        $this->assertEquals(1, $method->getExceptionTypes()->count());
+        $this->assertSame($type1, $method->getExceptionTypes()->current());
+    }
+    
+    /**
+     * Tests that the default builder updates an existing reference for a 
+     * function return type.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateFunctionReturnType()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $function = $builder->buildFunction('bar', 0);
+        $type0    = $builder->buildClassOrInterface('PDepend');
+        
+        $function->setReturnType($type0);
+        $this->assertSame($type0, $function->getReturnType());
+        
+        $type1 = $builder->buildInterface('PDepend');
+        $this->assertSame($type1, $function->getReturnType());
+    }
+    
+    /**
+     * Tests that the default builder updates an existing reference for a 
+     * function exception type.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateFunctionExceptionType()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $function = $builder->buildFunction('bar', 0);
+        $type0    = $builder->buildClassOrInterface('PDepend');
+        
+        $function->addExceptionType($type0);
+        $this->assertEquals(1, $function->getExceptionTypes()->count());
+        $this->assertSame($type0, $function->getExceptionTypes()->current());
+        
+        $type1 = $builder->buildInterface('PDepend');
+        $this->assertEquals(1, $function->getExceptionTypes()->count());
+        $this->assertSame($type1, $function->getExceptionTypes()->current());
+    }
+    
+    /**
      * Tests the PHP_Depend_Code_Method build method.
      *
      * @return void

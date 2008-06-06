@@ -84,6 +84,23 @@ abstract class PHP_Depend_Code_AbstractCallable
     protected $dependencies = array();
     
     /**
+     * The return type for this callable. By default and for scalar types this
+     * will be <b>null</b>.
+     *
+     * @type PHP_Depend_Code_AbstractType
+     * @var PHP_Depend_Code_AbstractType $_returnType
+     */
+    private $_returnType = null;
+    
+    /**
+     * A list of all thrown exception types.
+     *
+     * @type array<PHP_Depend_Code_AbstractType>
+     * @var array(PHP_Depend_Code_AbstractType) $_exceptionTypes
+     */
+    private $_exceptionTypes = array();
+    
+    /**
      * Returns the tokens found in the function body.
      *
      * @return array(mixed)
@@ -144,5 +161,66 @@ abstract class PHP_Depend_Code_AbstractCallable
             // Remove from internal list
             unset($this->dependencies[$i]);
         }
-    }   
+    }
+    
+    /**
+     * Returns the return type of this callable. By default and for scalar types
+     * this will be <b>null</b>.
+     *
+     * @return PHP_Depend_Code_AbstractType
+     */
+    public function getReturnType()
+    {
+        return $this->_returnType;
+    }
+    
+    /**
+     * Sets the return type of this callable.
+     *
+     * @param PHP_Depend_Code_AbstractType $returnType The return type of this.
+     * 
+     * @return void
+     */
+    public function setReturnType(PHP_Depend_Code_AbstractType $returnType)
+    {
+        $this->_returnType = $returnType;
+    }
+
+    /**
+     * Returns an iterator with all thrown exception types.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getExceptionTypes()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->_exceptionTypes);
+    }
+    
+    /**
+     * Adds an exception to the list of thrown exception types.
+     *
+     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
+     * 
+     * @return void
+     */
+    public function addExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
+    {
+        if (in_array($exceptionType, $this->_exceptionTypes, true) === false) {
+            $this->_exceptionTypes[] = $exceptionType;
+        }
+    }
+    
+    /**
+     * Removes an exception from the list of thrown exception types.
+     *
+     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
+     * 
+     * @return void
+     */
+    public function removeExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
+    {
+        if (($i = array_search($exceptionType, $this->_exceptionTypes, true)) !== false) {
+            unset($this->_exceptionTypes[$i]);
+        }
+    }
 }

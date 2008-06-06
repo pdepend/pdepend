@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
+
 /**
  * This class provides a simple way to load all required analyzers by class,
  * implemented interface or parent class.
@@ -62,6 +64,14 @@
 class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
 {
     /**
+     * Mapping of all installed analyzers.
+     *
+     * @type array<string>
+     * @var array(string=>string) $_installedAnalyzers
+     */
+    private $_installedAnalyzers = null;
+    
+    /**
      * All matching analyzer instances.
      *
      * @type array<PHP_Depend_Metrics_AnalyzerI>
@@ -76,6 +86,94 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      */
     public function __construct(array $acceptedTypes)
     {
+        $this->_loadAcceptedAnalyzers($acceptedTypes);
+    }
+    
+    /**
+     * Returns a countable iterator of {@link PHP_Depend_Metrics_AnalyzerI}
+     * instances that match against the given accepted types. 
+     *
+     * @return Iterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->_analyzers);
+    }
+    
+    /**
+     * Loads all accepted node analyzers.
+     * 
+     * @param array $acceptedTypes Accepted/expected analyzer types.
+     *
+     * @return array(PHP_Depend_Metrics_AnalyzerI)
+     */
+    private function _loadAcceptedAnalyzers(array $acceptedTypes)
+    {
+        // First init list of installed analyzers
+        $this->_initInstalledAnalyzers();
+        
+        $analyzers = array();
+        foreach ($this->_installedAnalyzers as $fileName => $className) {
+            
+            // Fist check for already loaded instance
+            if (isset($this->_analyzers[$className])) {
+                // Store reference
+                $analyzers[] = $this->_analyzers[$className];
+                
+                continue;
+            }
+            
+            // Include class definition
+            include_once $fileName;
+
+            $parents    = class_parents($className, false); 
+            $implements = class_implements($className, false); 
+
+            $providedTypes = array($className); 
+            $providedTypes = array_merge($providedTypes, $parents);
+            $providedTypes = array_merge($providedTypes, $implements);
+                
+            // Skip if this analyzer doesn't provide an accepted type
+            if (count(array_intersect($acceptedTypes, $providedTypes)) === 0) {
+                continue;
+            }
+            // Create a new instance
+            $analyzer = new $className();
+            
+            if ($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI) {
+                $required          = $analyzer->getRequiredAnalyzers();
+                $requiredAnalyzers = $this->_loadAcceptedAnalyzers($required);
+                
+                foreach ($requiredAnalyzers as $requiredAnalyzer) {
+                    $analyzer->addAnalyzer($requiredAnalyzer);
+                }
+            }
+            
+            // Add analyzer to the return value array
+            $analyzers[] = $analyzer;
+            
+            // Add analyzer to global array
+            $this->_analyzers[$className] = $analyzer;
+        }
+
+        return $analyzers;
+    }
+    
+    /**
+     * Loads a list of all installed analyzers.
+     *
+     * @return void
+     */
+    private function _initInstalledAnalyzers()
+    {
+        // Only load once
+        if ($this->_installedAnalyzers !== null) {
+            return;
+        }
+        
+        // Init object property
+        $this->_installedAnalyzers = array();
+        
         $dirs = new DirectoryIterator(dirname(__FILE__));
         foreach ($dirs as $dir) {
             if (!$dir->isDir() || $dir->isDot()) {
@@ -91,28 +189,8 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
                 $package   = $dir->getFilename();
                 $className = sprintf('PHP_Depend_Metrics_%s_Analyzer', $package);
                 
-                $parents    = class_parents($className); 
-                $implements = class_implements($className, false); 
-
-                $providedTypes = array($className); 
-                $providedTypes = array_merge($providedTypes, $parents);
-                $providedTypes = array_merge($providedTypes, $implements);
-                
-                if (count(array_intersect($acceptedTypes, $providedTypes)) > 0) {
-                    $this->_analyzers[] = new $className();                    
-                }
+                $this->_installedAnalyzers[$file->getPathname()] = $className;
             }
         }
-    }
-    
-    /**
-     * Returns a countable iterator of {@link PHP_Depend_Metrics_AnalyzerI}
-     * instances that match against the given accepted types. 
-     *
-     * @return Iterator
-     */
-    public function getIterator()
-    {
-        return new ArrayIterator($this->_analyzers);
     }
 }
