@@ -149,7 +149,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             }
 
             $expected = $this->_expected[$uuid];
-            $actual   = $visitor->getStats($uuid);
+            $actual   = $visitor->getStats($package);
 
             $this->assertEquals($expected['abstractness'], $actual['a']);
             $this->assertEquals($expected['instability'], $actual['i']);

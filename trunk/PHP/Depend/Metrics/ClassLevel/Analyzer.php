@@ -93,7 +93,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
-    private $_nodeMetrics = array();
+    private $_nodeMetrics = null;
     
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -104,8 +104,14 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        foreach ($packages as $package) {
-            $package->accept($this);
+        if ($this->_nodeMetrics === null) {
+            // Init node metrics
+            $this->_nodeMetrics = array();
+            
+            // Visit all nodes
+            foreach ($packages as $package) {
+                $package->accept($this);
+            }
         }
     }
     
