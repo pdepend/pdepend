@@ -123,10 +123,11 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
+        $metrics = array();
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
-            return $this->_nodeMetrics[$node->getUUID()];
+            $metrics = $this->_nodeMetrics[$node->getUUID()];
         }
-        return array();
+        return $metrics;
     }
     
     /**

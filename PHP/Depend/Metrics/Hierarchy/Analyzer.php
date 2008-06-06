@@ -82,65 +82,73 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * Number of all analyzed packages.
      * 
      * @type integer
-     * @var integer $pkg
+     * @var integer $_pkgs
      */
-    protected $pkg = 0;
+    private $_pkgs = 0;
     
     /**
      * Number of all analyzed functions.
      *
      * @type integer
-     * @var integer $fcs
+     * @var integer $_fcs
      */
-    protected $fcs = 0;
+    private $_fcs = 0;
+    
+    /**
+     * Number of all analyzer methods.
+     *
+     * @type integer
+     * @var integer $_mts
+     */
+    private $_mts = 0;
     
     /**
      * Number of all analyzed classes.
      *
      * @type integer
-     * @var integer $cls
+     * @var integer $_cls
      */
-    protected $cls = 0;
+    private $_cls = 0;
     
     /**
      * Number of all analyzed abstract classes.
      *
      * @type integer
-     * @var integer $clsa
+     * @var integer $_clsa
      */
-    protected $clsa = 0;
+    private $_clsa = 0;
     
     /**
      * Number of all analyzed interfaces.
      *
      * @type integer 
-     * @var integer $interfs
+     * @var integer $_interfs
      */
-    protected $interfs = 0;
+    private $_interfs = 0;
     
     /**
      * Number of all root classes within the analyzed source code.
      *
      * @type integer
-     * @var integer $roots
+     * @var integer $_roots
      */
-    protected $roots = 0;
+    private $_roots = 0;
     
     /**
      * Number of all leaf classes within the analyzed source code
      *
      * @type integer
-     * @var integer $leafs
+     * @var integer $_leafs
      */
-    protected $leafs = 0;
+    private $_leafs = 0;
     
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
      *
      * @type integer
-     * @var integer $maxDIT
+     * @var integer $_maxDIT
      */
-    protected $maxDIT = 0;
+    private $_maxDIT = 0;
     
     /**
      * Hash with all calculated node metrics.
@@ -161,9 +169,9 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * </code>
      *
      * @type array<array>
-     * @var array(string=>array) $nodeMetrics
+     * @var array(string=>array) $_nodeMetrics
      */
-    protected $nodeMetrics = array();
+    private $_nodeMetrics = null;
     
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -175,8 +183,14 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        foreach ($packages as $package) {
-            $package->accept($this);
+        if ($this->_nodeMetrics === null) {
+            // Init node metrics
+            $this->_nodeMetrics = array();
+            
+            // Visit all nodes
+            foreach ($packages as $package) {
+                $package->accept($this);
+            }
         }
     }
     
@@ -188,15 +202,16 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     public function getProjectMetrics()
     {
         return array(
-            'pkg'      =>  $this->pkg,
-            'fcs'      =>  $this->fcs,
-            'interfs'  =>  $this->interfs,
-            'cls'      =>  $this->cls,
-            'clsa'     =>  $this->clsa,
-            'clsc'     =>  $this->cls - $this->clsa,
-            'roots'    =>  $this->roots,
-            'leafs'    =>  $this->leafs,
-            'maxDIT'   =>  $this->maxDIT,
+            'pkgs'     =>  $this->_pkgs,
+            'fcs'      =>  $this->_fcs,
+            'mts'      =>  $this->_mts,
+            'interfs'  =>  $this->_interfs,
+            'cls'      =>  $this->_cls,
+            'clsa'     =>  $this->_clsa,
+            'clsc'     =>  $this->_cls - $this->_clsa,
+            'roots'    =>  $this->_roots,
+            'leafs'    =>  $this->_leafs,
+            'maxDIT'   =>  $this->_maxDIT,
         );
     }
     
@@ -211,8 +226,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->nodeMetrics[$node->getUUID()])) {
-            return $this->nodeMetrics[$node->getUUID()];
+        if (isset($this->_nodeMetrics[$node->getUUID()])) {
+            return $this->_nodeMetrics[$node->getUUID()];
         }
         return array();
     }
@@ -227,24 +242,24 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-        ++$this->cls;
+        ++$this->_cls;
         
         if ($class->isAbstract()) {
-            ++$this->clsa;
+            ++$this->_clsa;
         }
         
         if ($class->getChildClasses()->count() === 0) {
-            ++$this->leafs;
+            ++$this->_leafs;
         } else if ($class->getParentClass() === null) {
-            ++$this->roots;
+            ++$this->_roots;
         }
         
         // Get class dit value
         $dit = $this->getClassDIT($class);
         // Store node metric
-        $this->nodeMetrics[$class->getUUID()] = array('dit'  =>  $dit);
+        $this->_nodeMetrics[$class->getUUID()] = array('dit'  =>  $dit);
         // Collect max dit value
-        $this->maxDIT = max($this->maxDIT, $dit);
+        $this->_maxDIT = max($this->_maxDIT, $dit);
         
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -264,7 +279,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
-        ++$this->fcs;
+        ++$this->_fcs;
     }
     
     /**
@@ -277,11 +292,24 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
-        ++$this->interfs;
+        ++$this->_interfs;
         
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
+    }
+    
+    /**
+     * Visits a method node. 
+     *
+     * @param PHP_Depend_Code_Class $method The method class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     */
+    public function visitMethod(PHP_Depend_Code_Method $method)
+    {
+        ++$this->_mts;
     }
     
     /**
@@ -294,7 +322,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        ++$this->pkg;
+        ++$this->_pkgs;
         
         foreach ($package->getTypes() as $type) {
             $type->accept($this);

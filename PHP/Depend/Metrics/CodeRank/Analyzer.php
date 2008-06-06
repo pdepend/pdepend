@@ -99,9 +99,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * </code>
      *
      * @type array<array>
-     * @var array(string=>array) $nodeMetrics
+     * @var array(string=>array) $_nodeMetrics
      */
-    protected $nodeMetrics = null;
+    private $_nodeMetrics = null;
     
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -112,13 +112,18 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        // First traverse package tree
-        foreach ($packages as $package) {
-            $package->accept($this);
-        }
+        if ($this->_nodeMetrics === null) {
+            // Init node metrics
+            $this->_nodeMetrics = array();
+            
+            // First traverse package tree
+            foreach ($packages as $package) {
+                $package->accept($this);
+            }
         
-        // Calculate code rank metrics
-        $this->buildCodeRankMetrics();
+            // Calculate code rank metrics
+            $this->buildCodeRankMetrics();
+        }
     }
     
     /**
@@ -132,8 +137,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->nodeMetrics[$node->getUUID()])) {
-            return $this->nodeMetrics[$node->getUUID()];
+        if (isset($this->_nodeMetrics[$node->getUUID()])) {
+            return $this->_nodeMetrics[$node->getUUID()];
         }
         return array();
     }
@@ -255,18 +260,14 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function buildCodeRankMetrics()
     {
-        if (!is_array($this->nodeMetrics)) {
-            $this->nodeMetrics = array();
-        
-            foreach ($this->nodes as $uuid => $info) {
-                $this->nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
-            }
-            foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
-                $this->nodeMetrics[$uuid]['cr'] = $rank;
-            }
-            foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
-                $this->nodeMetrics[$uuid]['rcr'] = $rank;
-            }
+        foreach ($this->nodes as $uuid => $info) {
+            $this->_nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
+        }
+        foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
+            $this->_nodeMetrics[$uuid]['cr'] = $rank;
+        }
+        foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
+            $this->_nodeMetrics[$uuid]['rcr'] = $rank;
         }
     }
     
