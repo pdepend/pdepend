@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Function.php';
@@ -68,7 +68,7 @@ require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_PackageFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that the package filter works a expected for packages.
