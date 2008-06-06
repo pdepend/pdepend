@@ -43,7 +43,7 @@ class FooBar extends Bar {
 /**
  * Enter description here...
  *
- * @return unknown
+ * @return string
  */
 function bar() {
     return 'bar';
