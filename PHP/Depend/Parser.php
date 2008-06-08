@@ -52,6 +52,18 @@ require_once 'PHP/Depend/Code/TokenizerI.php';
 /**
  * The php source parser.
  * 
+ * With the default settings the parser includes annotations, better known as
+ * doc comment tags, in the generated result. This means it extracts the type 
+ * information of @var tags for properties, and types in @return + @throws tags
+ * of functions and methods. The current implementation tries to ignore all
+ * scalar types from <b>boolean</b> to <b>void</b>. You should disable this
+ * feature for project that have more or less invalid doc comments, because it
+ * could produce invalid results.
+ * 
+ * <code>
+ *   $parser->setIgnoreAnnotations();
+ * </code>  
+ * 
  * <b>Note</b>: Due to the fact that it is possible to use the same name for 
  * multiple classes and interfaces, and there is no way to determine to which 
  * package it belongs, while the parser handles class, interface or method
@@ -140,6 +152,15 @@ class PHP_Depend_Parser
     );
     
     /**
+     * If this property is set to <b>true</b> the parser will ignore all doc 
+     * comment annotations.
+     *
+     * @type boolean
+     * @var boolean $_ignoreAnnotations
+     */
+    private $_ignoreAnnotations = false;
+    
+    /**
      * Constructs a new source parser.
      *
      * @param PHP_Depend_Code_TokenizerI   $tokenizer The used code tokenizer.
@@ -150,6 +171,17 @@ class PHP_Depend_Parser
     {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
+    }
+    
+    /**
+     * Sets the ignore annotations flag. This means that the parser will ignore
+     * doc comment annotations.
+     *
+     * @return void
+     */
+    public function setIgnoreAnnotations()
+    {
+        $this->_ignoreAnnotations = true;
     }
     
     /**
@@ -705,6 +737,11 @@ class PHP_Depend_Parser
      */
     private function _prepareProperty(PHP_Depend_Code_Property $property)
     {
+        // Skip, if ignore annotations is set
+        if ($this->_ignoreAnnotations === true) {
+            return; 
+        }
+        
         // Get type annotation
         $type = $this->_parseTypeAnnotation($property->getDocComment(), 'var');
         
@@ -723,6 +760,11 @@ class PHP_Depend_Parser
      */
     private function _prepareCallable(PHP_Depend_Code_AbstractCallable $callable)
     {
+        // Skip, if ignore annotations is set
+        if ($this->_ignoreAnnotations === true) {
+            return; 
+        }
+        
         // Get all @throws Types
         $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
         // Append all exception types
