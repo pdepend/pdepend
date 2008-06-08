@@ -206,6 +206,32 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     }
     
     /**
+     * Checks that this user type is a subtype of the given <b>$type</b> instance.
+     *
+     * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
+     * 
+     * @return boolean
+     */
+    public function isSubtypeOf(PHP_Depend_Code_AbstractType $type)
+    {
+        if ($type === $this) {
+            return true;
+        } else if ($type instanceof PHP_Depend_Code_Interface) {
+            foreach ($this->getImplementedInterfaces() as $interface) {
+                if ($interface === $type) {
+                    return true;
+                }
+            }
+        } else if (($parent = $this->getParentClass()) !== null) {
+            if ($parent === $type) {
+                return true;
+            }
+            return $parent->isSubtypeOf($type);
+        }
+        return false;
+    }
+    
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 

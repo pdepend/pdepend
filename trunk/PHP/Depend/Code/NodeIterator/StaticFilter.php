@@ -103,13 +103,4 @@ final class PHP_Depend_Code_NodeIterator_StaticFilter
     private function __construct()
     {
     }
-    
-    /**
-     * Private clone method.
-     *
-     * @return void
-     */
-    private function __clone()
-    {
-    }
 }

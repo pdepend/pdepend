@@ -263,4 +263,13 @@ abstract class PHP_Depend_Code_AbstractType
      * @return boolean
      */
     public abstract function isAbstract();
+    
+    /**
+     * Checks that this user type is a subtype of the given <b>$type</b> instance.
+     *
+     * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
+     * 
+     * @return boolean
+     */
+    public abstract function isSubtypeOf(PHP_Depend_Code_AbstractType $type);
 }
