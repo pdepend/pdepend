@@ -100,7 +100,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
-        $pdepend->addFIleFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
+        $pdepend->addFileFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
         
         $metrics = $pdepend->analyze();
         
@@ -118,6 +118,43 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         }
         
         $this->assertEquals(0, count($expected));
+    }
+    
+    /**
+     * Tests that {@PHP_Depend::analyzer()} throws an exception if no source
+     * directory was set.
+     *
+     * @return void
+     */
+    public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
+    {
+        $pdepend = new PHP_Depend();
+        $this->setExpectedException('RuntimeException', 'No source directory set.');
+        $pdepend->analyze();
+    }
+    
+    /**
+     * Tests that {PHP_Depend::analyze()} configures the ignore annotations
+     * option correct.
+     *
+     * @return void
+     */
+    public function testAnalyzeSetsWithoutAnnotations()
+    {
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code');
+        $pdepend->addFileFilter(new PHP_Depend_Util_FileExtensionFilter(array('inc')));
+        $pdepend->setWithoutAnnotations();
+        $packages = $pdepend->analyze();
+        
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals('pdepend.test', $packages->current()->getName());
+        
+        $function = $packages->current()->getFunctions()->current();
+        
+        $this->assertNotNull($function);
+        $this->assertEquals('foo', $function->getName());
+        $this->assertEquals(0, $function->getExceptionTypes()->count());
     }
     
     /**
