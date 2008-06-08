@@ -442,7 +442,9 @@ class PHP_Depend_Parser
         }
         
         if ($curly !== 0) {
-            throw new RuntimeException('Invalid state, unclosed class body.');
+            $fileName = (string) $this->tokenizer->getSourceFile();
+            $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
+            throw new RuntimeException($message);
         }
     }
     
