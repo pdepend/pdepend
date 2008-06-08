@@ -207,6 +207,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         '-'              =>  self::T_MINUS,
         '.'              =>  self::T_CONCAT,
         '$'              =>  self::T_DOLLAR,
+        '`'              =>  self::T_BACKTICK,
         ';'              =>  self::T_SEMICOLON,
         '|'              =>  self::T_BITWISE_OR,
         '&'              =>  self::T_BITWISE_AND,

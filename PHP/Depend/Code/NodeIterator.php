@@ -205,11 +205,11 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     private function _filterNext()
     {
         if ($this->_filter->count() > 0) {
-            while (($node = $this->current()) !== false) {
+            while (is_object($node = current($this->_nodes)) === true) {
                 if ($this->_filter->accept($node) === true) {
                     break;
                 }
-                $this->next();
+                next($this->_nodes);
             }
         }
         
