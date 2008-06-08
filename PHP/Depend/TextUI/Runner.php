@@ -111,6 +111,14 @@ class PHP_Depend_TextUI_Runner
     private $_sourceDirectories = array();
     
     /**
+     * Should the parse ignore doc comment annotations?
+     *
+     * @type boolean
+     * @var boolean $_withoutAnnotations
+     */
+    private $_withoutAnnotations = false;
+    
+    /**
      * List of log identifiers and log files.
      *
      * @type array<string>
@@ -171,6 +179,16 @@ class PHP_Depend_TextUI_Runner
     }
     
     /**
+     * Should the parse ignore doc comment annotations?
+     *
+     * @return void
+     */
+    public function setWithoutAnnotations()
+    {
+        $this->_withoutAnnotations = true;
+    }
+    
+    /**
      * Adds a logger to this runner.
      *
      * @param string $loggerID    The logger identifier.
@@ -208,6 +226,10 @@ class PHP_Depend_TextUI_Runner
         if (count($this->_excludePackages) > 0) {
             $filter = new PHP_Depend_Code_NodeIterator_PackageFilter($this->_excludePackages);
             $pdepend->addCodeFilter($filter);
+        }
+        
+        if ($this->_withoutAnnotations === true) {
+            $pdepend->setWithoutAnnotations();
         }
         
         // Try to set all source directories.

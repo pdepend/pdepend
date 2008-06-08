@@ -120,6 +120,14 @@ class PHP_Depend
     private $_codeFilter = null;
     
     /**
+     * Should the parse ignore doc comment annotations?
+     *
+     * @type boolean
+     * @var boolean $_withoutAnnotations
+     */
+    private $_withoutAnnotations = false;
+    
+    /**
      * Constructs a new php depend facade.
      */
     public function __construct()
@@ -188,6 +196,16 @@ class PHP_Depend
     }
     
     /**
+     * Should the parse ignore doc comment annotations?
+     *
+     * @return void
+     */
+    public function setWithoutAnnotations()
+    {
+        $this->_withoutAnnotations = true;
+    }
+    
+    /**
      * Analyzes the registered directories and returns the collection of 
      * analyzed packages.
      *
@@ -219,6 +237,12 @@ class PHP_Depend
                 new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), 
                 $this->nodeBuilder
             );
+            
+            // Disable annotation parsing?
+            if ($this->_withoutAnnotations === true) {
+                $parser->setIgnoreAnnotations();
+            }
+            
             $parser->parse();
         }
         
@@ -344,8 +368,12 @@ class PHP_Depend
             $fileName = strtr(get_class($logger), '_', '/') . '.xml';
             
             if (!($xml = @file_get_contents($fileName, FILE_USE_INCLUDE_PATH))) {
+                // FIXME: Is this testable? IMHO the triggered error will always
+                //        result in a failure.
+                // @codeCoverageIgnoreStart
                 $class = get_class($logger);
-                throw new RuntimeException("Missing configuration '{$class}'.");
+                throw new RuntimeException("Missing configuration for '{$class}'.");
+                // @codeCoverageIgnoreEnd
             }
             
             $sxml = new SimpleXMLElement($xml);
