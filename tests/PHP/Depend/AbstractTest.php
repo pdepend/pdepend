@@ -107,11 +107,12 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string $fileOrDirectory A source file or a source directory.
+     * @param string  $fileOrDirectory   A source file or a source directory.
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
      * 
      * @return PHP_Depend_Code_NodeIterator
      */
-    public static function parseSource($fileOrDirectory)
+    public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
         if (is_dir($fileOrDirectory)) {
             $it = new PHP_Depend_Util_FileFilterIterator(
@@ -128,7 +129,11 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         
         foreach ($it as $file) {
             $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file);
-            $parser    = new PHP_Depend_Parser($tokenizer, $builder);
+            
+            $parser = new PHP_Depend_Parser($tokenizer, $builder);
+            if ($ignoreAnnotations === true) {
+                $parser->setIgnoreAnnotations();
+            }
 
             $parser->parse();
         }
