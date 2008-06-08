@@ -193,6 +193,55 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the command handles the <b>--without-annotations</b> option 
+     * correct.
+     *
+     * @return void
+     */
+    public function testCommandHandlesWithoutAnnotationsOptionCorrect()
+    {
+        $logFile = sys_get_temp_dir() . '/pdepend.dummy';
+        $source  = realpath(dirname(__FILE__) . '/../_code');
+        
+        $argv = array(
+            '--suffix=inc',
+            '--without-annotations',
+            '--dummy-logger=' . $logFile,
+            $source
+        );
+        
+        if (file_exists($logFile)) {
+            unlink($logFile);
+        }
+        
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+        
+        $this->assertFileExists($logFile);
+        
+        $data = unserialize(file_get_contents($logFile));
+        
+        $code = $data['code'];
+        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertEquals(1, $code->count());
+        
+        $code->rewind();
+        
+        $package = $code->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertEquals('pdepend.test', $package->getName());
+        
+        $this->assertEquals(1, $package->getFunctions()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
+        
+        $function = $package->getFunctions()->current();
+        $this->assertType('PHP_Depend_Code_Function', $function);
+        $this->assertEquals('foo', $function->getName());
+        $this->assertEquals(0, $function->getExceptionTypes()->count());
+        
+        unlink($logFile);
+    }
+    
+    /**
      * Tests the help output with an optional prolog text.
      *
      * @param string $actual     The cli output.
@@ -209,6 +258,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $endsWith = "/  --suffix=<ext\[,\.\.\.\]>[ ]*List of valid PHP file extensions\.\n"
                   . "  --ignore=<dir\[,\.\.\.\]>[ ]*List of exclude directories\.\n"
                   . "  --exclude=<pkg\[,\.\.\.\]>[ ]*List of exclude packages\.\n\n"
+                  . "  --without-annotations[ ]*Do not parse doc comment annotations\.\n\n"
                   . "  --help[ ]*Print this help text\.\n"
                   . "  --version[ ]*Print the current PHP_Depend version\.\n\n$/";
         $this->assertRegExp($endsWith, $actual);

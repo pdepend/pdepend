@@ -135,6 +135,13 @@ class PHP_Depend_TextUI_Command
             }
         }
         
+        if (isset($options['--without-annotations'])) {
+            // Disable annotation parsing
+            $this->_runner->setWithoutAnnotations();
+            // Remove option
+            unset($options['--without-annotations']);
+        }
+        
         if (count($options) > 0) {
             $this->printHelp();
             echo "Unknown option '", key($options), "' given.\n";
@@ -261,12 +268,14 @@ class PHP_Depend_TextUI_Command
         $suffixOption  = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
         $ignoreOption  = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
         $excludeOption = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $noAnnotations = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
         $helpOption    = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
         $versionOption = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
         
         echo "  {$suffixOption} List of valid PHP file extensions.\n",
              "  {$ignoreOption} List of exclude directories.\n",
              "  {$excludeOption} List of exclude packages.\n\n",
+             "  {$noAnnotations} Do not parse doc comment annotations.\n\n",
              "  {$helpOption} Print this help text.\n",
              "  {$versionOption} Print the current PHP_Depend version.\n\n";
     }

@@ -112,13 +112,61 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $this->assertEquals('pdepend.test', $package->getName());
         
         $this->assertEquals(1, $package->getFunctions()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
         
         $function = $package->getFunctions()->current();
         $this->assertType('PHP_Depend_Code_Function', $function);
         $this->assertEquals('foo', $function->getName());
+        $this->assertEquals(1, $function->getExceptionTypes()->count());
+        $this->assertEquals('MyException', $function->getExceptionTypes()->current()->getName());
         
         $sourceFile = realpath(dirname(__FILE__). '/../_code/function.inc');
         $this->assertEquals($sourceFile, $function->getSourceFile()->getName());
+        
+        unlink($fileName);
+    }
+    
+    /**
+     * Tests that the runner handles the <b>--without-annotations</b> option
+     * correct.
+     *
+     * @return void
+     */
+    public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
+    {
+        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
+        if (file_exists($fileName)) {
+            unlink($fileName);
+        }
+        
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
+        $runner->setFileExtensions(array('inc'));
+        $runner->addLogger('dummy-logger', $fileName);
+        $runner->setWithoutAnnotations();
+        $runner->run();
+        
+        $this->assertFileExists($fileName);
+        
+        $data = unserialize(file_get_contents($fileName));
+        
+        $code = $data['code'];
+        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertEquals(1, $code->count());
+        
+        $code->rewind();
+        
+        $package = $code->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertEquals('pdepend.test', $package->getName());
+        
+        $this->assertEquals(1, $package->getFunctions()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
+        
+        $function = $package->getFunctions()->current();
+        $this->assertType('PHP_Depend_Code_Function', $function);
+        $this->assertEquals('foo', $function->getName());
+        $this->assertEquals(0, $function->getExceptionTypes()->count());
         
         unlink($fileName);
     }
