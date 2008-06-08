@@ -47,13 +47,6 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
-require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
-require_once 'PHP/Depend/Util/ExcludePathFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
-
 /**
  * Abstract test case implementation for the PHP_Depend package.
  *
@@ -114,6 +107,13 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
+        include_once 'PHP/Depend/Parser.php';
+        include_once 'PHP/Depend/Code/DefaultBuilder.php';
+        include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+        include_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+        include_once 'PHP/Depend/Util/ExcludePathFilter.php';
+        include_once 'PHP/Depend/Util/FileFilterIterator.php';
+        
         if (is_dir($fileOrDirectory)) {
             $it = new PHP_Depend_Util_FileFilterIterator(
                 new RecursiveIteratorIterator(
