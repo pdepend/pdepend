@@ -163,6 +163,88 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
     }
     
     /**
+     * Tests that {@link PHP_Depend_Code_Interface::isSubtypeOf()} returns
+     * <b>false</b> for an input class.
+     *
+     * @return void
+     */
+    public function testIsSubtypeOfReturnsFalseForNonParents()
+    {
+        $interfsA = new PHP_Depend_Code_Interface('A');
+        $interfsB = new PHP_Depend_Code_Interface('B');
+        $classC   = new PHP_Depend_Code_Class('C');
+        
+        $this->assertFalse($interfsA->isSubtypeOf($interfsB));
+        
+        // TODO: This should be fixed in the code and throw an exception.
+        $classC->addChildType($interfsA); // interface A extends C {}
+        $this->assertFalse($interfsA->isSubtypeOf($classC));
+    }
+    
+    /**
+     * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
+     *
+     * @return void
+     */
+    public function testIsSubtypeOnInheritanceHierarchy()
+    {
+        $interfsA = new PHP_Depend_Code_Interface('A');
+        $interfsB = new PHP_Depend_Code_Interface('B');
+        $interfsC = new PHP_Depend_Code_Interface('C');
+        $interfsD = new PHP_Depend_Code_Interface('D');
+        $interfsE = new PHP_Depend_Code_Interface('E');
+        $interfsF = new PHP_Depend_Code_Interface('F');
+        
+        $interfsA->addChildType($interfsB); // interface B extends A, C {}
+        $interfsC->addChildType($interfsB); // interface B extends A, C {}
+        $interfsD->addChildType($interfsC); // interface C extends D, E {}
+        $interfsE->addChildType($interfsC); // interface C extends D, E {}
+        $interfsF->addChildType($interfsA); // interface A extends F
+        
+        $this->assertTrue($interfsA->isSubtypeOf($interfsA));
+        $this->assertFalse($interfsA->isSubtypeOf($interfsB));
+        $this->assertFalse($interfsA->isSubtypeOf($interfsC));
+        $this->assertFalse($interfsA->isSubtypeOf($interfsD));
+        $this->assertFalse($interfsA->isSubtypeOf($interfsE));
+        $this->assertTrue($interfsA->isSubtypeOf($interfsF));
+        
+        $this->assertTrue($interfsB->isSubtypeOf($interfsA));
+        $this->assertTrue($interfsB->isSubtypeOf($interfsB));
+        $this->assertTrue($interfsB->isSubtypeOf($interfsC));
+        $this->assertTrue($interfsB->isSubtypeOf($interfsD));
+        $this->assertTrue($interfsB->isSubtypeOf($interfsE));
+        $this->assertTrue($interfsB->isSubtypeOf($interfsF));
+        
+        $this->assertFalse($interfsC->isSubtypeOf($interfsA));
+        $this->assertFalse($interfsC->isSubtypeOf($interfsB));
+        $this->assertTrue($interfsC->isSubtypeOf($interfsC));
+        $this->assertTrue($interfsC->isSubtypeOf($interfsD));
+        $this->assertTrue($interfsC->isSubtypeOf($interfsE));
+        $this->assertFalse($interfsC->isSubtypeOf($interfsF));
+        
+        $this->assertFalse($interfsD->isSubtypeOf($interfsA));
+        $this->assertFalse($interfsD->isSubtypeOf($interfsB));
+        $this->assertFalse($interfsD->isSubtypeOf($interfsC));
+        $this->assertTrue($interfsD->isSubtypeOf($interfsD));
+        $this->assertFalse($interfsD->isSubtypeOf($interfsE));
+        $this->assertFalse($interfsD->isSubtypeOf($interfsF));
+        
+        $this->assertFalse($interfsE->isSubtypeOf($interfsA));
+        $this->assertFalse($interfsE->isSubtypeOf($interfsB));
+        $this->assertFalse($interfsE->isSubtypeOf($interfsC));
+        $this->assertFalse($interfsE->isSubtypeOf($interfsD));
+        $this->assertTrue($interfsE->isSubtypeOf($interfsE));
+        $this->assertFalse($interfsE->isSubtypeOf($interfsF));
+        
+        $this->assertFalse($interfsF->isSubtypeOf($interfsA));
+        $this->assertFalse($interfsF->isSubtypeOf($interfsB));
+        $this->assertFalse($interfsF->isSubtypeOf($interfsC));
+        $this->assertFalse($interfsF->isSubtypeOf($interfsD));
+        $this->assertFalse($interfsF->isSubtypeOf($interfsE));
+        $this->assertTrue($interfsF->isSubtypeOf($interfsF));
+    }
+    
+    /**
      * Creates an abstract item instance.
      *
      * @return PHP_Depend_Code_AbstractItem

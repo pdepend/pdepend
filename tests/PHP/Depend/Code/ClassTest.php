@@ -365,6 +365,51 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
     }
     
     /**
+     * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
+     *
+     * @return void
+     */
+    public function testIsSubtypeOnInheritanceHierarchy()
+    {
+        $classA = new PHP_Depend_Code_Class('A');
+        $classB = new PHP_Depend_Code_Class('B');
+        $classC = new PHP_Depend_Code_Class('C');
+        
+        $interfsD = new PHP_Depend_Code_Interface('D');
+        $interfsE = new PHP_Depend_Code_Interface('E');
+        $interfsF = new PHP_Depend_Code_Interface('F');
+        
+        $interfsD->addChildType($classA); // class A implements D, E
+        $interfsE->addChildType($classA); // class A implements D, E
+
+        $interfsF->addChildType($classC); // class C extends B implements F {}
+        
+        $classA->addChildType($classB); // class B extends A {} 
+        $classB->addChildType($classC); // class C extends B implements F {}
+        
+        $this->assertTrue($classA->isSubtypeOf($classA));
+        $this->assertFalse($classA->isSubtypeOf($classB));
+        $this->assertFalse($classA->isSubtypeOf($classC));
+        $this->assertTrue($classA->isSubtypeOf($interfsD));
+        $this->assertTrue($classA->isSubtypeOf($interfsE));
+        $this->assertFalse($classA->isSubtypeOf($interfsF));
+        
+        $this->assertTrue($classB->isSubtypeOf($classA));
+        $this->assertTrue($classB->isSubtypeOf($classB));
+        $this->assertFalse($classB->isSubtypeOf($classC));
+        $this->assertTrue($classB->isSubtypeOf($interfsD));
+        $this->assertTrue($classB->isSubtypeOf($interfsE));
+        $this->assertFalse($classB->isSubtypeOf($interfsF));
+        
+        $this->assertTrue($classC->isSubtypeOf($classA));
+        $this->assertTrue($classC->isSubtypeOf($classB));
+        $this->assertTrue($classC->isSubtypeOf($classC));
+        $this->assertTrue($classC->isSubtypeOf($interfsD));
+        $this->assertTrue($classC->isSubtypeOf($interfsE));
+        $this->assertTrue($classC->isSubtypeOf($interfsF));
+    }
+    
+    /**
      * Tests the visitor accept method.
      *
      * @return void
