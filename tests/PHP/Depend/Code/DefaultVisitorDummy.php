@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+
 /**
  * Dummy implementation of the default visitor.
  *
