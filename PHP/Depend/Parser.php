@@ -553,6 +553,8 @@ class PHP_Depend_Parser
     {
         $curly  = 0;
         $tokens = array();
+        $string = false;
+        $escape = false;
 
         while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
@@ -601,14 +603,34 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
-                ++$curly;
+                if ($string === false || $this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                    ++$curly;
+                }
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
-                --$curly;
+                if ($string === false 
+                 || $this->tokenizer->prev() === PHP_Depend_Code_TokenizerI::T_VARIABLE
+                 || $this->tokenizer->prev() === PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE) {
+                    --$curly;
+                }
+                break;
+                
+            case PHP_Depend_Code_TokenizerI::T_BACKSLASH:
+                $escape = !$escape;
+                break;
+                
+            case PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE:
+                if ($escape === false) {
+                    $string = !$string;
+                }
+                if ($string === false) {
+                    $escape = false;
+                }
                 break;
 
             default:
+//                throw new RuntimeException("Unknown token '{$token[1]}'.");
                 // TODO: Handle/log unused tokens
             }
             
