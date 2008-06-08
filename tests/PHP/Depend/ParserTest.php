@@ -114,12 +114,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserWithUnclosedClassFail()
     {
+        $sourceFile = dirname(__FILE__) . '/_code/not_closed_class.txt'; 
+        
         $this->setExpectedException(
             'RuntimeException', 
-            'Invalid state, unclosed class body.'
+            "Invalid state, unclosed class body in file '{$sourceFile}'."
         );
         
-        $sourceFile = dirname(__FILE__) . '/_code/not_closed_class.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
