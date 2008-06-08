@@ -942,7 +942,27 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals('VariableClassNamesBug10', $class->getName());
         $this->assertEquals('foo10', $method->getName());
         $this->assertEquals(0, count($method->getDependencies()));
+    }
+    
+    public function testParserCurlyBraceBug11()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/11.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
         
+        $parser->parse();
+        
+        $package   = $builder->getPackages()->current();
+        $classes   = $package->getClasses();
+        $functions = $package->getFunctions();
+        
+        $this->assertEquals(1, $classes->count());
+        $this->assertEquals(1, $functions->count());
+        
+        $methods = $classes->current()->getMethods();
+        
+        $this->assertEquals(3, $methods->count());
     }
     
     /**

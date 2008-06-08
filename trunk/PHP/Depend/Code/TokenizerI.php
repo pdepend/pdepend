@@ -812,6 +812,11 @@ interface PHP_Depend_Code_TokenizerI
     const T_BACKTICK = 144;
     
     /**
+     * Marks a '\' backslash token.
+     */
+    const T_BACKSLASH = 145;
+    
+    /**
      * Returns the name of the source file.
      *
      * @return string
