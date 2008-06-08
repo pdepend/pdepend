@@ -603,7 +603,8 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
-                if ($string === false || $this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                if ($string === false 
+                 || $this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_VARIABLE) {
                     ++$curly;
                 }
                 break;
