@@ -115,14 +115,6 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
         $analyzers = array();
         foreach ($this->_installedAnalyzers as $fileName => $className) {
             
-            // Fist check for already loaded instance
-            if (isset($this->_analyzers[$className])) {
-                // Store reference
-                $analyzers[] = $this->_analyzers[$className];
-                
-                continue;
-            }
-            
             // Include class definition
             include_once $fileName;
 
@@ -135,6 +127,14 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
                 
             // Skip if this analyzer doesn't provide an accepted type
             if (count(array_intersect($acceptedTypes, $providedTypes)) === 0) {
+                continue;
+            }
+                    
+            // Fist check for already loaded instance
+            if (isset($this->_analyzers[$className])) {
+                // Store reference
+                $analyzers[] = $this->_analyzers[$className];
+                
                 continue;
             }
             // Create a new instance
