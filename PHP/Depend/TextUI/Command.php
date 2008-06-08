@@ -160,8 +160,10 @@ class PHP_Depend_TextUI_Command
     {
         if (!isset($_SERVER['argv'])) {
             if (false === (boolean) ini_get('register_argc_argv')) {
+                // @codeCoverageIgnoreStart
                 echo "Please enable register_argc_argv in your php.ini.\n\n";
             } else {
+                // @codeCoverageIgnoreEnd
                 echo "Unknown error, no \$argv array available.\n\n";
             }
             return false;
