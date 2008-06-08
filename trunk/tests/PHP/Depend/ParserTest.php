@@ -558,6 +558,36 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser doesn't handle annotations if this is set to true.
+     * 
+     * @return void
+     */
+    public function testParserHandlesIgnoreAnnotationsCorrectForFunctions()
+    {
+        $source   = dirname(__FILE__) . '/_code/comments/function1.php';
+        $packages = self::parseSource($source, true);
+
+        $nodes = $packages->current()
+                          ->getFunctions();
+                          
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());
+        
+        $nodes->next();
+                          
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());
+
+        $nodes->next();
+        
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());        
+    }
+    
+    /**
      * Tests that doc comment blocks are added to a method. 
      *
      * @return void
@@ -645,6 +675,38 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser doesn't handle annotations if this is set to true.
+     * 
+     * @return void
+     */
+    public function testParserHandlesIgnoreAnnotationsCorrectForMethods()
+    {
+        $source   = dirname(__FILE__) . '/_code/comments/method3.php';
+        $packages = self::parseSource($source, true);
+
+        $nodes = $packages->current()
+                          ->getTypes()
+                          ->current()
+                          ->getMethods();
+                          
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());
+        
+        $nodes->next();
+                          
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());
+
+        $nodes->next();
+        
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());        
+    }
+    
+    /**
      * Tests that the parser sets the correct doc comment blocks for properties.
      * 
      * @return void
@@ -723,6 +785,50 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals('$property5', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
         $nodes->next();
+        $this->assertEquals('$property6', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
+    }
+    
+    /**
+     * Tests that the parser sets property types for non scalar properties.
+     *
+     * @return void
+     */
+    public function testHandlesIgnoreAnnotationsCorrectForProperties()
+    {
+        $source   = dirname(__FILE__) . '/_code/comments/property2.php';
+        $packages = self::parseSource($source, true);
+
+        $nodes = $packages->current()
+                          ->getTypes()
+                          ->current()
+                          ->getProperties();
+
+        $this->assertEquals('$property1', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
+        
+        $nodes->next();
+        
+        $this->assertEquals('$property2', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
+        
+        $nodes->next();
+        
+        $this->assertEquals('$property3', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
+        
+        $nodes->next();
+        
+        $this->assertEquals('$property4', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
+        
+        $nodes->next();
+        
+        $this->assertEquals('$property5', $nodes->current()->getName());
+        $this->assertNull($nodes->current()->getType());
+        
+        $nodes->next();
+        
         $this->assertEquals('$property6', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
     }
