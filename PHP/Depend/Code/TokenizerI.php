@@ -807,6 +807,11 @@ interface PHP_Depend_Code_TokenizerI
     const T_SELF = 143;
     
     /**
+     * Marks a '`' backtick token.
+     */
+    const T_BACKTICK = 144;
+    
+    /**
      * Returns the name of the source file.
      *
      * @return string
