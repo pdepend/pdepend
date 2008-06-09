@@ -272,60 +272,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     }
     
     /**
-     * Sorts the given <b>$nodes</b> set.
-     *
-     * @param array  $nodes List of nodes.
-     * @param string $dir1  Identifier for the incoming edges.
-     * @param string $dir2  Identifier for the outgoing edges.
-     * 
-     * @return array
-     */
-    protected function topologicalSort(array $nodes, $dir1, $dir2)
-    {
-        $leafs  = array();
-        $sorted = array();
-
-        // Collect all leaf nodes
-        foreach ($nodes as $name => $node) {
-            if (count($node[$dir1]) === 0) {
-                unset($nodes[$name]);
-                $leafs[$name] = $node;
-            }
-        }
-
-        while (($leaf = reset($leafs)) !== false) {
-            $name = key($leafs);
-            
-            $sorted[$name] = $leaf;
-            
-            unset($leafs[$name]);
-            
-            foreach ($leaf[$dir2] as $refName) {
-                
-                // Search edge index
-                $index = array_search($name, $nodes[$refName][$dir1]);
-
-                // Remove one edge between these two nodes 
-                unset($nodes[$refName][$dir1][$index]);
-                
-                // If the referenced node has no incoming/outgoing edges,
-                // put it in the list of leaf nodes.
-                if (count($nodes[$refName][$dir1]) === 0) {
-                    $leafs[$refName] = $nodes[$refName];
-                    // Remove node from all nodes
-                    unset($nodes[$refName]);
-                }
-            }
-        }
-        
-        if (count($nodes) > 0) {
-            throw new RuntimeException('The object structure contains cycles');
-        }
-        
-        return array_keys($sorted);
-    }
-    
-    /**
      * Calculates the code rank for the given <b>$nodes</b> set.
      * 
      * @param string $id1 Identifier for the incoming edges.
@@ -339,17 +285,22 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         
         $nodes = $this->nodes;
         $ranks = array();
-        foreach ($this->topologicalSort($nodes, $id1, $id2) as $name) {
-            $rank = 0.0;
-            foreach ($nodes[$name][$id1] as $refName) {
-                $diff = 1;
-                if (($count = count($nodes[$refName][$id2])) > 0) {
-                    $diff = $count;
+        
+        foreach (array_keys($this->nodes) as $name) {
+            $ranks[$name] = 1;
+        }
+        
+        for ($i = 0; $i < 100; $i++) {
+            foreach ($this->nodes as $name => $info) {
+                $rank = 0;
+                foreach ($info[$id1] as $ref) {
+                    $pr = $ranks[$ref];
+                    $c  = count($this->nodes[$ref][$id2]);
+                    
+                    $rank += ($pr / $c);
                 }
-                $rank += ($ranks[$refName] / $diff);
+                $ranks[$name] = ((1 - $d)) + $d * $rank;
             }
-            
-            $ranks[$name] = (1 - $d) + $d * $rank;
         }
         return $ranks;
     }
