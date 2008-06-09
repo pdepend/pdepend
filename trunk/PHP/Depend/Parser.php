@@ -555,6 +555,7 @@ class PHP_Depend_Parser
         $tokens = array();
         $string = false;
         $escape = false;
+        $inline = false;
 
         while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
@@ -603,17 +604,18 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
-                if ($string === false 
-                 || $this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                if ($string === false) {
                     ++$curly;
+                } else if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                    ++$curly;
+                    $inline = true;
                 }
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
-                if ($string === false 
-                 || $this->tokenizer->prev() === PHP_Depend_Code_TokenizerI::T_VARIABLE
-                 || $this->tokenizer->prev() === PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE) {
+                if ($string === false || $inline === true) {
                     --$curly;
+                    $inline = false;
                 }
                 break;
                 
@@ -646,7 +648,9 @@ class PHP_Depend_Parser
         }
         // Throw an exception for invalid states
         if ($curly !== 0) {
-            throw new RuntimeException('Invalid state, unclosed function body.');
+            $fileName = (string) $this->tokenizer->getSourceFile();
+            $message  = "Invalid state, unclosed function body in '{$fileName}'.";
+            throw new RuntimeException($message);
         }
     }
     
