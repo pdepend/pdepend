@@ -351,9 +351,12 @@ class PHP_Depend_Parser
         $token = $this->tokenizer->next();
         $curly = 0;
         
+        // If type is an interface all methods are abstract
+        $abstractDefault = ($type instanceof PHP_Depend_Code_Interface);
+        
         $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
         $comment   = null;
-        $abstract  = false;
+        $abstract  = $abstractDefault;
         
         while ($token !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
@@ -368,7 +371,7 @@ class PHP_Depend_Parser
                 
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
                 $comment   = null;
-                $abstract  = false;
+                $abstract  = $abstractDefault;
                 break;
                 
             case PHP_Depend_Code_TokenizerI::T_VARIABLE:
@@ -386,7 +389,7 @@ class PHP_Depend_Parser
                 
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
                 $comment   = null;
-                $abstract  = false;
+                $abstract  = $abstractDefault;
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:

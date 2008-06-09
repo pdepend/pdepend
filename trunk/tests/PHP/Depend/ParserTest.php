@@ -402,6 +402,17 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser marks all interface methods as abstract.
+     *
+     * @return void
+     */
+    public function testParserSetsAllInterfaceMethodsAbstract()
+    {
+        $methods = $this->getMixedCodeInterfaceMethods();
+        $this->assertTrue($methods->current()->isAbstract());
+    }
+    
+    /**
      * Tests that the parser sets the correct line number for methods.
      *
      * @return void

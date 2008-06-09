@@ -202,11 +202,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     public function getProjectMetrics()
     {
         return array(
-            'pkgs'     =>  $this->_pkgs,
-            'fcs'      =>  $this->_fcs,
-            'mts'      =>  $this->_mts,
-            'interfs'  =>  $this->_interfs,
-            'cls'      =>  $this->_cls,
             'clsa'     =>  $this->_clsa,
             'clsc'     =>  $this->_cls - $this->_clsa,
             'roots'    =>  $this->_roots,
