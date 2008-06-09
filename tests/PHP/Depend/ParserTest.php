@@ -136,12 +136,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserWithUnclosedFunctionFail()
     {
+        $sourceFile = dirname(__FILE__) . '/_code/not_closed_function.txt';
+        
         $this->setExpectedException(
             'RuntimeException', 
-            'Invalid state, unclosed function body.'
+            "Invalid state, unclosed function body in '{$sourceFile}'."
         );
         
-        $sourceFile = dirname(__FILE__) . '/_code/not_closed_function.txt';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
@@ -963,6 +964,32 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $methods = $classes->current()->getMethods();
         
         $this->assertEquals(3, $methods->count());
+    }
+    
+    /**
+     * Tests that the parser handles curly braces in strings correct. 
+     * 
+     * http://bugs.xplib.de/index.php?do=details&task_id=12&project=3
+     *
+     * @return void
+     */
+    public function testParserCurlyBraceBug12()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/12.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $package = $builder->getPackages()->current();
+        $classes = $package->getClasses();
+        
+        $this->assertEquals(1, $classes->count());
+        
+        $methods = $classes->current()->getMethods();
+        
+        $this->assertEquals(1, $methods->count());
     }
     
     /**
