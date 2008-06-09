@@ -269,8 +269,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         // Update global method count
         ++$this->_nom;
         
+        $parent = $method->getParent();
+        
         // Update parent class or interface
-        ++$this->_nodeMetrics[$method->getParent()->getUUID()]['nom'];
+        ++$this->_nodeMetrics[$parent->getUUID()]['nom'];
+        // Update parent package
+        ++$this->_nodeMetrics[$parent->getPackage()->getUUID()]['nom'];
     }
     
     /**
