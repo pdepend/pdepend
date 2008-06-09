@@ -104,12 +104,8 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $project = $analyzer->getProjectMetrics();
         
-        $this->assertEquals(4, $project['pkgs']);
-        $this->assertEquals(3, $project['cls']);
         $this->assertEquals(1, $project['clsa']);
         $this->assertEquals(2, $project['clsc']);
-        $this->assertEquals(1, $project['interfs']);
-        $this->assertEquals(2, $project['fcs']);
         $this->assertEquals(1, $project['roots']);
         $this->assertEquals(2, $project['leafs']);
         $this->assertEquals(1, $project['maxDIT']);
