@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/NodeVisitor/VisitListenerI.php';
+
 /**
  * Base interface for visitors that work on the generated node tree.
  *
@@ -60,6 +62,26 @@
  */
 interface PHP_Depend_Code_NodeVisitorI
 {
+    /**
+     * Adds a new listener to this node visitor.
+     *
+     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener 
+     *        The new visit listener.
+     * 
+     * @return void
+     */
+    function addListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener);
+    
+    /**
+     * Removes the listener from this node visitor.
+     *
+     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener
+     *        The listener to remove.
+     * 
+     * @return void
+     */
+    function removeListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener);
+    
     /**
      * Visits a class node. 
      *

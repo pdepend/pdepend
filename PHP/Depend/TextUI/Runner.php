@@ -49,6 +49,7 @@
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
 require_once 'PHP/Depend/Log/LoggerFactory.php';
+require_once 'PHP/Depend/TextUI/ResultPrinter.php';
 require_once 'PHP/Depend/Util/ExcludePathFilter.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
 
@@ -254,6 +255,10 @@ class PHP_Depend_TextUI_Runner
         } catch (Exception $e) {
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
+        
+        $resultPrinter = new PHP_Depend_TextUI_ResultPrinter();
+        
+        $pdepend->addAnalyzeListener($resultPrinter);
         
         try {
             $pdepend->analyze();

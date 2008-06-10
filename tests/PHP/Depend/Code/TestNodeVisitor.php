@@ -109,6 +109,30 @@ class PHP_Depend_Code_TestNodeVisitor implements PHP_Depend_Code_NodeVisitorI
     public $function = null;
     
     /**
+     * Adds a new listener to this node visitor.
+     *
+     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener 
+     *        The new visit listener.
+     * 
+     * @return void
+     */
+    public function addListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener)
+    {
+    }
+    
+    /**
+     * Removes the listener from this node visitor.
+     *
+     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener
+     *        The listener to remove.
+     * 
+     * @return void
+     */
+    public function removeListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener)
+    {
+    }
+    
+    /**
      * Visits a class node. 
      *
      * @param PHP_Depend_Code_Class $class The current class node.

@@ -38,7 +38,6 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,46 +45,55 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitListener.php';
 require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
 
 /**
- * Base interface for all analyzer implementations.
+ * 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_AnalyzerI
+class PHP_Depend_TextUI_ResultPrinter
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitListener
+    implements PHP_Depend_Metrics_AnalyzeListenerI
 {
-    /**
-     * Adds a listener to this analyzer.
-     *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
+    const STEP_SIZE = 30;
     
-    /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
+    private $_count = 0;
     
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    function analyze(PHP_Depend_Code_NodeIterator $packages);
+    public function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    {
+        $this->_count  = 0;
+        
+        $name = substr(get_class($analyzer), 19, -9);
+        echo "Executing {$name}-Analyzer:\n";
+    }
+    
+    public function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    {
+        $diff = ($this->_count % (self::STEP_SIZE * 60));
+        if ($diff !== 0) {
+            $indent = 65 - ceil($diff / self::STEP_SIZE);
+            printf(".% {$indent}s\n", $this->_count);
+        }
+        echo "\n";
+    }
+    
+    public function startVisitNode(PHP_Depend_Code_NodeI $node)
+    {
+        ++$this->_count;
+        
+        if ($this->_count % self::STEP_SIZE === 0) {
+            echo '.';
+        }
+        if ($this->_count % (self::STEP_SIZE * 60) === 0) {
+            printf("% 5s\n", $this->_count);
+        }
+    }
 }

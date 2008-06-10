@@ -63,6 +63,26 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 class PHP_Depend_Log_DummyAnalyzer implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
+     * Adds a listener to this analyzer.
+     *
+     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * 
+     * @return void
+     */
+    public function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+    }
+    
+    /**
+     * Removes the listener from this analyzer.
+     *
+     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * 
+     * @return void
+     */
+    public function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+    }
+    
+    /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.

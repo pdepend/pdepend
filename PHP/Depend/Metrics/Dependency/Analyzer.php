@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Dependency_Analyzer 
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
@@ -134,6 +134,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
+            
+            $this->fireStartAnalyzer();
+            
             $this->_nodeMetrics = array();
         
             foreach ($packages as $package) {
@@ -145,6 +148,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             $this->calculateAbstractness();
             $this->calculateInstability();
             $this->calculateDistance();
+            
+            $this->fireEndAnalyzer();
         }
     }
     
@@ -221,6 +226,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
+        
         // Get context package uuid
         $pkgUUID = $method->getParent()->getPackage()->getUUID();
         
@@ -242,6 +249,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
                 $this->_nodeMetrics[$depPkgUUID]['ca'][] = $pkgUUID;
             }
         }
+        
+        $this->fireEndMethod($method);
     }
     
     /**
@@ -253,6 +262,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $this->fireStartPackage($package);
+        
         $this->initPackageMetric($package);
         
         $this->nodeSet[$package->getUUID()] = $package;
@@ -268,6 +279,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
                 $this->_collectedCycles[$package->getUUID()][] = $pkg;
             }
         }
+        
+        $this->fireEndPackage($package);
     }
     
     /**
@@ -279,7 +292,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $this->fireStartClass($class);
         $this->visitType($class);
+        $this->fireEndClass($class);
     }
     
     /**
@@ -291,7 +306,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        $this->fireStartInterface($interface);
         $this->visitType($interface);
+        $this->fireEndInterface($interface);
     }
     
     /**

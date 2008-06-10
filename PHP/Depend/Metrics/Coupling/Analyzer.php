@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
@@ -81,7 +81,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Coupling_Analyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_ProjectAwareI
 {
@@ -132,6 +132,9 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     {
         // Check for previous run
         if ($this->_calls === -1) {
+            
+            $this->fireStartAnalyzer();
+            
             // Init metrics
             $this->_calls  = 0;
             $this->_fanout = 0;
@@ -140,6 +143,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             foreach ($packages as $package) {
                 $package->accept($this);
             }
+            
+            $this->fireEndAnalyzer();
         }
     }
     
@@ -153,6 +158,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $this->fireStartFunction($function);
+        
         $fanouts = array();
         if (($type = $function->getReturnType()) !== null) {
             $fanouts[] = $type;
@@ -171,6 +178,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         }
         
         $this->_countCalls($function);
+        
+        $this->fireEndFunction($function);
     }
     
     /**
@@ -183,6 +192,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
+        
         $parent = $method->getParent();
         
         $fanouts = array();
@@ -212,6 +223,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         }
         
         $this->_countCalls($method);
+        
+        $this->fireEndMethod($method);
     }
     
     /**
@@ -224,17 +237,19 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
+        $this->fireStartProperty($property);
+        
         // Check for not null
-        if (($type = $property->getType()) === null) {
-            return;
+        if (($type = $property->getType()) !== null) {
+            $parent = $property->getParent();
+        
+            // Only increment if these types are not part of the same hierarchy
+            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
+                ++$this->_fanout;
+            }
         }
         
-        $parent = $property->getParent();
-        
-        // Only increment if these types are not part of the same hierarchy
-        if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-            ++$this->_fanout;
-        }
+        $this->fireEndProperty($property);
     }
     
     /**
