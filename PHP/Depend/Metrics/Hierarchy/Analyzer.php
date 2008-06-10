@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
@@ -72,7 +72,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_Hierarchy_Analyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
@@ -184,6 +184,9 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
+            
+            $this->fireStartAnalyzer();
+            
             // Init node metrics
             $this->_nodeMetrics = array();
             
@@ -191,6 +194,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             foreach ($packages as $package) {
                 $package->accept($this);
             }
+            
+            $this->fireEndAnalyzer();
         }
     }
     
@@ -237,6 +242,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $this->fireStartClass($class);
+        
         ++$this->_cls;
         
         if ($class->isAbstract()) {
@@ -262,6 +269,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
+        
+        $this->fireEndClass($class);
     }
     
     /**
@@ -274,7 +283,9 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $this->fireStartFunction($function);
         ++$this->_fcs;
+        $this->fireEndFunction($function);
     }
     
     /**
@@ -287,11 +298,15 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        $this->fireStartInterface($interface);
+        
         ++$this->_interfs;
         
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
+        
+        $this->fireEndInterface($interface);
     }
     
     /**
@@ -304,7 +319,9 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
         ++$this->_mts;
+        $this->fireEndMethod($method);
     }
     
     /**
@@ -317,6 +334,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $this->fireStartPackage($package);
+        
         ++$this->_pkgs;
         
         foreach ($package->getTypes() as $type) {
@@ -326,6 +345,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
+        
+        $this->fireEndPackage($package);
     }
     
     /**

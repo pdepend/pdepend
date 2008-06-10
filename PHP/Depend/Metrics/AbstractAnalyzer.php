@@ -46,10 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
- * Base interface for all analyzer implementations.
+ * 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,8 +61,18 @@ require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_AnalyzerI
+abstract class PHP_Depend_Metrics_AbstractAnalyzer
+       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+    implements PHP_Depend_Metrics_AnalyzerI
 {
+    /**
+     * List or registered listeners.
+     *
+     * @type array<PHP_Depend_Metrics_AnalyzeListenerI>
+     * @var array(PHP_Depend_Metrics_AnalyzeListenerI) $_listeners
+     */
+    private $_listeners = array();
+    
     /**
      * Adds a listener to this analyzer.
      *
@@ -69,7 +80,11 @@ interface PHP_Depend_Metrics_AnalyzerI
      * 
      * @return void
      */
-    function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
+    public function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+        if (in_array($listener, $this->_listeners, true) === false) {
+            $this->_listeners[] = $listener;
+        }
+    }
     
     /**
      * Removes the listener from this analyzer.
@@ -78,14 +93,21 @@ interface PHP_Depend_Metrics_AnalyzerI
      * 
      * @return void
      */
-    function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
+    public function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+        if (($i = array_search($listener, $this->_listeners, true)) !== false) {
+            unset($this->_listeners[$i]);
+        }
+    }
     
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    function analyze(PHP_Depend_Code_NodeIterator $packages);
+    protected function fireStartAnalyzer() {
+        foreach ($this->_listeners as $listener) {
+            $listener->startAnalyzer($this);
+        }
+    }
+    
+    protected function fireEndAnalyzer() {
+        foreach ($this->_listeners as $listener) {
+            $listener->endAnalyzer($this);
+        }
+    }
 }

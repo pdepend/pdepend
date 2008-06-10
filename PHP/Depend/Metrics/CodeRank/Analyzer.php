@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_CodeRank_Analyzer 
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI
 {
@@ -113,6 +113,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
+            
+            $this->fireStartAnalyzer();
+            
             // Init node metrics
             $this->_nodeMetrics = array();
             
@@ -123,6 +126,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
         
             // Calculate code rank metrics
             $this->buildCodeRankMetrics();
+            
+            $this->fireEndAnalyzer();
         }
     }
     
@@ -154,14 +159,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $this->fireStartClass($class);
         $this->visitType($class);
-    
-        foreach ($class->getMethods() as $method) {
-            $method->accept($this);
-        }
-        foreach ($class->getProperties() as $property) {
-            $property->accept($this);
-        }
+        $this->fireEndClass($class);
     }
     
     /**
@@ -175,11 +175,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
-        $this->visitType($interface);
-    
-        foreach ($interface->getMethods() as $method) {
-            $method->accept($this);
-        }
+        $this->fireStartInterface($interface);
+        $this->visitType($interface);        
+        $this->fireEndInterface($interface);
     }
     
     /**
@@ -192,14 +190,14 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $this->fireStartPackage($package);
         $this->initNode($package);
         
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
         }
-        foreach ($package->getFunctions() as $function) {
-            $function->accept($this);
-        }
+        
+        $this->fireEndPackage($package);
     }
     
     /**

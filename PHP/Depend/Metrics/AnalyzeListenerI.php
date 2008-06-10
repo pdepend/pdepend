@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
- * Base interface for all analyzer implementations.
+ * 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,32 +60,10 @@ require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_AnalyzerI
+interface PHP_Depend_Metrics_AnalyzeListenerI
+    extends PHP_Depend_Code_NodeVisitor_VisitListenerI
 {
-    /**
-     * Adds a listener to this analyzer.
-     *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
+    function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer);
     
-    /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
-    
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    function analyze(PHP_Depend_Code_NodeIterator $packages);
+    function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer);
 }

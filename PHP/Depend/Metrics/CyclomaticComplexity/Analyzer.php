@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
@@ -66,7 +66,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
@@ -121,6 +121,9 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
+            
+            $this->fireStartAnalyzer();
+            
             // Init node metrics
             $this->_nodeMetrics = array();
             
@@ -128,6 +131,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             foreach ($packages as $package) {
                 $package->accept($this);
             }
+            
+            $this->fireEndAnalyzer();
         }
     }
     
@@ -205,6 +210,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $this->fireStartFunction($function);
+        
         // Get all method tokens
         $tokens = $function->getTokens();
         
@@ -220,6 +227,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         // Update project metrics
         $this->_ccn  += $ccn;
         $this->_ccn2 += $ccn2;
+        
+        $this->fireEndFunction($function);
     }
     
     /**
@@ -245,6 +254,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
+        
         // Get all method tokens
         $tokens = $method->getTokens();
         
@@ -260,6 +271,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         // Update project metrics
         $this->_ccn  += $ccn;
         $this->_ccn2 += $ccn2;
+        
+        $this->fireEndMethod($method);
     }
     
     /**
