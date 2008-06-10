@@ -65,6 +65,44 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
     implements PHP_Depend_Code_NodeVisitorI
 {
     /**
+     * List of all registered listeners.
+     *
+     * @type array<PHP_Depend_Code_NodeVisitor_VisitListenerI>
+     * @var array(PHP_Depend_Code_NodeVisitor_VisitListenerI) $_listeners
+     */
+    private $_listeners = array();
+    
+    /**
+     * Adds a new listener to this node visitor.
+     *
+     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener 
+     *        The new visit listener.
+     * 
+     * @return void
+     */
+    public function addListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener)
+    {
+        if (in_array($listener, $this->_listeners, true) === false) {
+            $this->_listeners[] = $listener;
+        }
+    }
+    
+    /**
+     * Removes the listener from this node visitor.
+     *
+     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener
+     *        The listener to remove.
+     * 
+     * @return void
+     */
+    public function removeListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener)
+    {
+        if (($i = array_search($listener, $this->_listeners, true)) !== false) {
+            unset($this->_listeners[$i]);
+        }
+    }
+    
+    /**
      * Visits a class node. 
      *
      * @param PHP_Depend_Code_Class $class The current class node.
@@ -74,6 +112,8 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $this->fireStartClass($class);
+        
         $class->getSourceFile()->accept($this);
         
         foreach ($class->getProperties() as $property) {
@@ -82,6 +122,8 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
+        
+        $this->fireEndClass($class);
     }
     
     /**
@@ -94,7 +136,8 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
-        
+        $this->fireStartFile($file);
+        $this->fireEndFile($file);
     }
     
     /**
@@ -107,7 +150,11 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $this->fireStartFunction($function);
+        
         $function->getSourceFile()->accept($this);
+        
+        $this->fireEndFunction($function);
     }
     
     /**
@@ -120,11 +167,15 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        $this->fireStartInterface($interface);
+        
         $interface->getSourceFile()->accept($this);
         
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
+        
+        $this->fireEndInterface($interface);
     }
     
     /**
@@ -137,6 +188,8 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
+        $this->fireEndMethod($method);
     }
     
     /**
@@ -149,6 +202,8 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $this->fireStartPackage($package);
+        
         foreach ($package->getClasses() as $class) {
             $class->accept($this);
         }
@@ -158,6 +213,8 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
+        
+        $this->fireEndPackage($package);
     }
     
     /**
@@ -170,5 +227,105 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
+        $this->fireStartProperty($property);
+        $this->fireEndProperty($property);
+    }
+    
+    protected function fireStartClass(PHP_Depend_Code_Class $class)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitClass($class);
+        }
+    }
+    
+    protected function fireEndClass(PHP_Depend_Code_Class $class)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitClass($class);
+        }
+    }
+    
+    protected function fireStartFile(PHP_Depend_Code_File $file)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitFile($file);
+        }
+    }
+    
+    protected function fireEndFile(PHP_Depend_Code_File $file)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitFile($file);
+        }
+    }
+    
+    protected function fireStartFunction(PHP_Depend_Code_Function $function)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitFunction($function);
+        }
+    }
+    
+    protected function fireEndFunction(PHP_Depend_Code_Function $function)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitFunction($function);
+        }
+    }
+    
+    protected function fireStartInterface(PHP_Depend_Code_Interface $interface)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitInterface($interface);
+        }
+    }
+    
+    protected function fireEndInterface(PHP_Depend_Code_Interface $interface)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitInterface($interface);
+        }
+    }
+    
+    protected function fireStartMethod(PHP_Depend_Code_Method $method)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitMethod($method);
+        }
+    }
+    
+    protected function fireEndMethod(PHP_Depend_Code_Method $method)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitMethod($method);
+        }
+    }
+    
+    protected function fireStartPackage(PHP_Depend_Code_Package $package)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitPackage($package);
+        }
+    }
+    
+    protected function fireEndPackage(PHP_Depend_Code_Package $package)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitPackage($package);
+        }
+    }
+    
+    protected function fireStartProperty(PHP_Depend_Code_Property $property)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitProperty($property);
+        }
+    }
+    
+    protected function fireEndProperty(PHP_Depend_Code_Property $property)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitProperty($property);
+        }
     }
 }

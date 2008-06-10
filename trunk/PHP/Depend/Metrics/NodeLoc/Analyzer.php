@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
@@ -79,7 +79,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_NodeLoc_Analyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI,
                PHP_Depend_Metrics_ProjectAwareI
@@ -159,6 +159,9 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     {
         // Check for previous run
         if ($this->_nodeMetrics === null) {
+            
+            $this->fireStartAnalyzer();
+            
             // Init node metrics
             $this->_nodeMetrics = array();
             
@@ -166,6 +169,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             foreach ($packages as $package) {
                 $package->accept($this);
             }
+            
+            $this->fireEndAnalyzer();
         }
     }
     
@@ -179,6 +184,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $this->fireStartClass($class);
+        
         $class->getSourceFile()->accept($this);
         
         $loc = $class->getEndLine() - $class->getStartLine() + 1;
@@ -201,6 +208,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $cloc = substr_count($comment, "\n") + 1;
         }
         $this->_updateFileLoc($class->getSourceFile(), $cloc);
+        
+        $this->fireEndClass($class);
     }
     
     /**
@@ -223,6 +232,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             return;
         }
         
+        $this->fireStartFile($file);
+        
         $cloc = 0;
         if (($comment = $file->getDocComment()) !== null) {
             $cloc = count(explode("\n", $comment));
@@ -241,6 +252,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $this->_projectMetrics['loc']   += $loc;
         $this->_projectMetrics['cloc']  += $cloc;
         $this->_projectMetrics['ncloc'] += $ncloc;
+        
+        $this->fireEndFile($file);
     }
     
     /**
@@ -253,6 +266,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $this->fireStartFunction($function);
+        
         $function->getSourceFile()->accept($this);
         
         $cloc = 0;
@@ -277,6 +292,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $cloc += count(explode("\n", $comment));
         }
         $this->_updateFileLoc($function->getSourceFile(), $cloc);
+        
+        $this->fireEndFunction($function);
     }
     
     /**
@@ -289,6 +306,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        $this->fireStartInterface($interface);
+        
         $interface->getSourceFile()->accept($this);
         
         $loc = $interface->getEndLine() - $interface->getStartLine() + 1;
@@ -308,6 +327,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
+        
+        $this->fireEndInterface($interface);
     }
     
     /**
@@ -320,6 +341,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
+        
         $cloc = 0;
         foreach ($method->getTokens() as $token) {
             if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT) {
@@ -342,6 +365,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $cloc += substr_count($comment, "\n") + 1;
         }
         $this->_updateParentLoc($method->getParent(), $cloc);
+        
+        $this->fireEndMethod($method);
     }
     
     /**
@@ -354,6 +379,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
+        $this->fireStartProperty($property);
+        
         $this->_nodeMetrics[$property->getUUID()] = array(
             'loc'    =>  1,
             'cloc'   =>  0,
@@ -365,6 +392,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $cloc = substr_count($comment, "\n") + 1;
         }
         $this->_updateParentLoc($property->getParent(), $cloc);
+        
+        $this->fireEndProperty($property);
     }
     
     /**

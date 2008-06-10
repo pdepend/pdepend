@@ -149,6 +149,9 @@ class PHP_Depend_TextUI_Command
         }
         
         try {
+            // Output current pdepend version and author
+            $this->printVersion();
+        
             return $this->_runner->run();
         } catch (RuntimeException $e) {
             // Print error message

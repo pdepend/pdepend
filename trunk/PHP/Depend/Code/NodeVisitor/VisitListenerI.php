@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Metrics
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,46 +46,45 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
-
 /**
- * Base interface for all analyzer implementations.
+ * Base interface for a visitor listener.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Metrics
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_AnalyzerI
+interface PHP_Depend_Code_NodeVisitor_VisitListenerI
 {
-    /**
-     * Adds a listener to this analyzer.
-     *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
+    function startVisitClass(PHP_Depend_Code_Class $class);
     
-    /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener);
+    function endVisitClass(PHP_Depend_Code_Class $class);
     
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    function analyze(PHP_Depend_Code_NodeIterator $packages);
+    function startVisitFile(PHP_Depend_Code_File $file);
+    
+    function endVisitFile(PHP_Depend_Code_File $file);
+    
+    function startVisitFunction(PHP_Depend_Code_Function $function);
+    
+    function endVisitFunction(PHP_Depend_Code_Function $function);
+    
+    function startVisitInterface(PHP_Depend_Code_Interface $interface);
+    
+    function endVisitInterface(PHP_Depend_Code_Interface $interface);
+    
+    function startVisitMethod(PHP_Depend_Code_Method $method);
+    
+    function endVisitMethod(PHP_Depend_Code_Method $method);
+    
+    function startVisitPackage(PHP_Depend_Code_Package $package);
+    
+    function endVisitPackage(PHP_Depend_Code_Package $package);
+    
+    function startVisitProperty(PHP_Depend_Code_Property $property);
+    
+    function endVisitProperty(PHP_Depend_Code_Property $property);
 }
