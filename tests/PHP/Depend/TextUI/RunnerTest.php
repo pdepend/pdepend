@@ -95,7 +95,10 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
         $runner->setFileExtensions(array('inc'));
         $runner->addLogger('dummy-logger', $fileName);
+        
+        ob_start();
         $runner->run();
+        ob_end_clean();
         
         $this->assertFileExists($fileName);
         
@@ -144,7 +147,10 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $runner->setFileExtensions(array('inc'));
         $runner->addLogger('dummy-logger', $fileName);
         $runner->setWithoutAnnotations();
+        
+        ob_start();
         $runner->run();
+        ob_end_clean();
         
         $this->assertFileExists($fileName);
         

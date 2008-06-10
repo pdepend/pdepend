@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
@@ -66,7 +66,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_NodeCount_Analyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
@@ -183,6 +183,9 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     {
         // Check for previous run
         if ($this->_nodeMetrics === null) {
+            
+            $this->fireStartAnalyzer();
+            
             // Init node metrics
             $this->_nodeMetrics = array();
             
@@ -190,6 +193,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
             foreach ($packages as $package) {
                 $package->accept($this);
             }
+            
+            $this->fireEndAnalyzer();
         }
     }
 
@@ -203,6 +208,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $this->fireStartClass($class);
+        
         // Update global class count
         ++$this->_noc;
         
@@ -214,6 +221,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
+        
+        $this->fireEndClass($class);
     }
     
     /**
@@ -226,11 +235,15 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
+        $this->fireStartFunction($function);
+        
         // Update global function count
         ++$this->_nof;
         
         // Update parent package
         ++$this->_nodeMetrics[$function->getPackage()->getUUID()]['nof'];
+        
+        $this->fireEndFunction($function);
     }
     
     /**
@@ -243,6 +256,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        $this->fireStartInterface($interface);
+        
         // Update global class count
         ++$this->_noi;
         
@@ -254,6 +269,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
+        
+        $this->fireEndInterface($interface);
     }
     
     /**
@@ -266,6 +283,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
+        
         // Update global method count
         ++$this->_nom;
         
@@ -275,6 +294,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         ++$this->_nodeMetrics[$parent->getUUID()]['nom'];
         // Update parent package
         ++$this->_nodeMetrics[$parent->getPackage()->getUUID()]['nom'];
+        
+        $this->fireEndMethod($method);
     }
     
     /**
@@ -287,6 +308,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $this->fireStartPackage($package);
+        
         // Update package count
         ++$this->_nop;
         
@@ -307,5 +330,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
+        
+        $this->fireEndPackage($package);
     }
 }

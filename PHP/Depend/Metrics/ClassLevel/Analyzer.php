@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
@@ -67,7 +67,7 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_ClassLevel_Analyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AggregateAnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI
@@ -118,6 +118,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
                 throw new RuntimeException('Missing required CC analyzer.');
             }
             
+            $this->fireStartAnalyzer();
+            
             $this->_cyclomaticAnalyzer->analyze($packages);
             
             // Init node metrics
@@ -127,6 +129,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             foreach ($packages as $package) {
                 $package->accept($this);
             }
+            
+            $this->fireEndAnalyzer();
         }
     }
     
@@ -187,6 +191,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        $this->fireStartClass($class);
+        
         $this->_nodeMetrics[$class->getUUID()] = array(
             'dit'     =>  $this->_calculateDIT($class),
             'impl'    =>  $class->getImplementedInterfaces()->count(),
@@ -206,6 +212,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
+        
+        $this->fireEndClass($class);
     }
     
     /**
@@ -231,6 +239,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
+        $this->fireStartMethod($method);
+        
         // Get parent class uuid
         $uuid = $method->getParent()->getUUID();
         
@@ -248,6 +258,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             // Increment Class Interface Size(CIS) value
             $this->_nodeMetrics[$uuid]['cis'] += $ccn2; 
         }
+        
+        $this->fireEndMethod($method);
     }
     
     /**
@@ -260,6 +272,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
+        $this->fireStartProperty($property);
+        
         // Get parent class uuid
         $uuid = $property->getParent()->getUUID();
         
@@ -275,6 +289,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             // Increment Class Interface Size(CIS) value
             ++$this->_nodeMetrics[$uuid]['cis'];
         }
+        
+        $this->fireEndProperty($property);
     }
     
     /**

@@ -47,6 +47,7 @@
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
@@ -128,6 +129,14 @@ class PHP_Depend
     private $_withoutAnnotations = false;
     
     /**
+     * List or registered listeners.
+     *
+     * @type array<PHP_Depend_Metrics_AnalyzeListenerI>
+     * @var array(PHP_Depend_Metrics_AnalyzeListenerI) $_listeners
+     */
+    private $_listeners = array();
+    
+    /**
      * Constructs a new php depend facade.
      */
     public function __construct()
@@ -206,6 +215,19 @@ class PHP_Depend
     }
     
     /**
+     * Adds a listener to this analyzer.
+     *
+     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * 
+     * @return void
+     */
+    public function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+        if (in_array($listener, $this->_listeners, true) === false) {
+            $this->_listeners[] = $listener;
+        }
+    }
+    
+    /**
      * Analyzes the registered directories and returns the collection of 
      * analyzed packages.
      *
@@ -248,6 +270,17 @@ class PHP_Depend
         
         // Get global filter collection
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+
+        // Append all listeners
+        foreach ($analyzerLoader as $analyzer) {
+            foreach ($this->_listeners as $listener) {
+                $analyzer->addAnalyzeListener($listener);
+                
+                if ($analyzer instanceof PHP_Depend_Code_NodeVisitorI) {
+                    $analyzer->addListener($listener);
+                }
+            }
+        }
         
         foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware 
