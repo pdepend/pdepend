@@ -268,6 +268,14 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     protected $tokens = array();
     
     /**
+     * The next free identifier for unknown string tokens.
+     *
+     * @type integer
+     * @var integer $_unknownTokenID
+     */
+    private $_unknownTokenID = 1000;
+    
+    /**
      * Constructs a new tokenizer for the given file.
      *
      * @param string $sourceFile A php source file.
@@ -379,7 +387,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
                 } else {
                     // This should never happen
                     // @codeCoverageIgnoreStart
-                    throw new RuntimeException( "Unexpected token '{$token[1]}'." );
+                    $newToken = $this->_generateUnknownToken($token[1]);
                     // @codeCoverageIgnoreEnd
                 }
             }
@@ -397,5 +405,17 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         }
         
         $this->count = count($this->tokens);
+    }
+    
+    /**
+     * Generates a dummy/temp token for unknown string literals.
+     * 
+     * @param string $token The unknown string token.
+     *
+     * @return array(integer => mixed)
+     */
+    private function _generateUnknownToken($token)
+    {
+        return array($this->_unknownTokenID++, $token);
     }
 }
