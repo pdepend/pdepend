@@ -89,7 +89,7 @@ class PHP_Depend_TextUI_ResultPrinter
     {
         $this->_count = 0;
         
-        echo "Start file parsing:\n";
+        echo "Parsing source files:\n";
     }
     
     /**
@@ -235,11 +235,13 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     protected function finish($size = 1)
     {
-        $diff = ($this->_count % ($size * 60));   
-        if ($diff !== 0) {
+        $diff = ($this->_count % ($size * 60));
+
+        if ($diff === 0) {
+            printf(".% 6s\n\n", $this->_count);                
+        } else {
             $indent = 66 - ceil($diff / $size) + 1;
-            printf("% {$indent}s\n", $this->_count);
+            printf("% {$indent}s\n\n", $this->_count);
         }
-        echo "\n";        
     }
 }
