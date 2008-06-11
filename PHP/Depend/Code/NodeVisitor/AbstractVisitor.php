@@ -61,26 +61,25 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
     implements PHP_Depend_Code_NodeVisitorI
 {
     /**
      * List of all registered listeners.
      *
-     * @type array<PHP_Depend_Code_NodeVisitor_VisitListenerI>
-     * @var array(PHP_Depend_Code_NodeVisitor_VisitListenerI) $_listeners
+     * @type array<PHP_Depend_Code_NodeVisitor_ListenerI>
+     * @var array(PHP_Depend_Code_NodeVisitor_ListenerI) $_listeners
      */
     private $_listeners = array();
     
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener 
-     *        The new visit listener.
+     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The new visit listener.
      * 
      * @return void
      */
-    public function addListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener)
+    public function addListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
         if (in_array($listener, $this->_listeners, true) === false) {
             $this->_listeners[] = $listener;
@@ -90,12 +89,11 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
     /**
      * Removes the listener from this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_VisitListenerI $listener
-     *        The listener to remove.
+     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The listener to remove.
      * 
      * @return void
      */
-    public function removeListener(PHP_Depend_Code_NodeVisitor_VisitListenerI $listener)
+    public function removeListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
         if (($i = array_search($listener, $this->_listeners, true)) !== false) {
             unset($this->_listeners[$i]);
@@ -231,6 +229,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         $this->fireEndProperty($property);
     }
     
+    /**
+     * Sends a start class event.
+     *
+     * @param PHP_Depend_Code_Class $class The context class instance.
+     * 
+     * @return void
+     */
     protected function fireStartClass(PHP_Depend_Code_Class $class)
     {
         foreach ($this->_listeners as $listener) {
@@ -238,6 +243,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends an end class event.
+     *
+     * @param PHP_Depend_Code_Class $class The context class instance.
+     * 
+     * @return void
+     */
     protected function fireEndClass(PHP_Depend_Code_Class $class)
     {
         foreach ($this->_listeners as $listener) {
@@ -245,6 +257,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends a start file event.
+     *
+     * @param PHP_Depend_Code_File $file The context file.
+     * 
+     * @return void
+     */
     protected function fireStartFile(PHP_Depend_Code_File $file)
     {
         foreach ($this->_listeners as $listener) {
@@ -252,6 +271,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends an end file event.
+     *
+     * @param PHP_Depend_Code_File $file The context file instance.
+     * 
+     * @return void
+     */
     protected function fireEndFile(PHP_Depend_Code_File $file)
     {
         foreach ($this->_listeners as $listener) {
@@ -259,6 +285,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends a start function event.
+     *
+     * @param PHP_Depend_Code_Function $function The context function instance.
+     * 
+     * @return void
+     */
     protected function fireStartFunction(PHP_Depend_Code_Function $function)
     {
         foreach ($this->_listeners as $listener) {
@@ -266,6 +299,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends an end function event.
+     *
+     * @param PHP_Depend_Code_Function $function The context function instance.
+     * 
+     * @return void
+     */
     protected function fireEndFunction(PHP_Depend_Code_Function $function)
     {
         foreach ($this->_listeners as $listener) {
@@ -273,6 +313,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends a start interface event.
+     *
+     * @param PHP_Depend_Code_Interface $interface The context interface instance.
+     * 
+     * @return void
+     */
     protected function fireStartInterface(PHP_Depend_Code_Interface $interface)
     {
         foreach ($this->_listeners as $listener) {
@@ -280,6 +327,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends an end interface event.
+     *
+     * @param PHP_Depend_Code_Interface $interface The context interface instance.
+     * 
+     * @return void
+     */
     protected function fireEndInterface(PHP_Depend_Code_Interface $interface)
     {
         foreach ($this->_listeners as $listener) {
@@ -287,6 +341,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends a start method event.
+     *
+     * @param PHP_Depend_Code_Method $method The context method instance.
+     * 
+     * @return void
+     */
     protected function fireStartMethod(PHP_Depend_Code_Method $method)
     {
         foreach ($this->_listeners as $listener) {
@@ -294,6 +355,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends an end method event.
+     *
+     * @param PHP_Depend_Code_Method $method The context method instance.
+     * 
+     * @return void
+     */
     protected function fireEndMethod(PHP_Depend_Code_Method $method)
     {
         foreach ($this->_listeners as $listener) {
@@ -301,6 +369,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends a start package event. 
+     *
+     * @param PHP_Depend_Code_Package $package The context package instance.
+     * 
+     * @return void
+     */
     protected function fireStartPackage(PHP_Depend_Code_Package $package)
     {
         foreach ($this->_listeners as $listener) {
@@ -308,6 +383,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends an end package event.
+     *
+     * @param PHP_Depend_Code_Package $package The context package instance.
+     * 
+     * @return void
+     */
     protected function fireEndPackage(PHP_Depend_Code_Package $package)
     {
         foreach ($this->_listeners as $listener) {
@@ -315,6 +397,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends a start property event. 
+     *
+     * @param PHP_Depend_Code_Property $property The context property instance.
+     * 
+     * @return void
+     */
     protected function fireStartProperty(PHP_Depend_Code_Property $property)
     {
         foreach ($this->_listeners as $listener) {
@@ -322,6 +411,13 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
         }
     }
     
+    /**
+     * Sends an end property event.
+     *
+     * @param PHP_Depend_Code_Property $property The context property instance.
+     * 
+     * @return void
+     */
     protected function fireEndProperty(PHP_Depend_Code_Property $property)
     {
         foreach ($this->_listeners as $listener) {

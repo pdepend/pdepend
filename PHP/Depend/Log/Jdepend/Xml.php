@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/NodeVisitorI.php';
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 
 /**
@@ -64,7 +64,7 @@ require_once 'PHP/Depend/Log/LoggerI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Log_Jdepend_Xml 
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI
 {
     protected $fileName = '';

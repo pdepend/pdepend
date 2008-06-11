@@ -68,21 +68,21 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
     /**
      * Adds a listener to this analyzer.
      *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
      * 
      * @return void
      */
-    public function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
     }
     
     /**
      * Removes the listener from this analyzer.
      *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
      * 
      * @return void
      */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
     }
     
     /**
