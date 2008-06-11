@@ -46,7 +46,7 @@
  */
 
 require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
-require_once dirname(__FILE__) . '/TestNodeVisitor.php';
+require_once dirname(__FILE__) . '/NodeVisitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Interface.php';
@@ -417,7 +417,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
     public function testVisitorAccept()
     {
         $class   = new PHP_Depend_Code_Class('clazz', 0);
-        $visitor = new PHP_Depend_Code_TestNodeVisitor();
+        $visitor = new PHP_Depend_Code_NodeVisitor_TestNodeVisitor();
         
         $this->assertNull($visitor->class);
         $class->accept($visitor);

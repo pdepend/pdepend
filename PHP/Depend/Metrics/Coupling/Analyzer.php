@@ -66,7 +66,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  *   <li>local variables</li>
  * </ul>
  * 
- * http://www.jajakarta.org/turbine/en/turbine/maven/reference/metrics.html#Fan%20Out%20-%20FANOUT
+ * http://www.jajakarta.org/turbine/en/turbine/maven/reference/metrics.html
  * 
  * The implemented algorithm counts each type only once for a method and function.
  * Any type that is either a supertype or a subtype of the class is not counted.  

@@ -172,7 +172,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @param string PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return array(PHP_Depend_Code_NodeI)
      */
@@ -188,7 +188,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @param string PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return array(PHP_Depend_Code_NodeI)
      */
@@ -205,7 +205,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Returns an array of nodes that build a cycle for the requested node or it
      * returns <b>null</b> if no cycle exists .
      *
-     * @param string PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
      * @return array(PHP_Depend_Code_NodeI)
      */

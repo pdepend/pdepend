@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 
 /**
  * Dummy implementation of the default visitor.
@@ -60,8 +60,8 @@ require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_DefaultVisitorDummy
-    extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+class PHP_Depend_Code_NodeVisitor_DefaultVisitorDummy
+    extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
 {
     /**
      * Collected visit order.
