@@ -46,7 +46,7 @@
  */
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
-require_once dirname(__FILE__) . '/TestNodeVisitor.php';
+require_once dirname(__FILE__) . '/NodeVisitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Function.php';
@@ -237,7 +237,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testVisitorAccept()
     {
         $package = new PHP_Depend_Code_Package('package1');
-        $visitor = new PHP_Depend_Code_TestNodeVisitor();
+        $visitor = new PHP_Depend_Code_NodeVisitor_TestNodeVisitor();
         
         $this->assertNull($visitor->package);
         $package->accept($visitor);

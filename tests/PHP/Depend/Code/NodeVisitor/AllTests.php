@@ -36,56 +36,63 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Metrics
- * @author     Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright  2008 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   SVN: $Id$
+ * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/ListenerI.php';
+if (defined('PHPUnit_MAIN_METHOD') === false) {
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_NodeVisitor_AllTests::main');
+}
+
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+require_once dirname(__FILE__) . '/DefaultListenerTest.php';
+require_once dirname(__FILE__) . '/DefaultVisitorTest.php';
 
 /**
- * Base interface for all analyzer implementations.
+ * Main test suite for the PHP_Depend_Code package.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Metrics
- * @author     Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright  2008 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_AnalyzerI
+class PHP_Depend_Code_NodeVisitor_AllTests
 {
     /**
-     * Adds a listener to this analyzer.
+     * Test suite main method.
      *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
      * @return void
      */
-    function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener);
+    public static function main()
+    {
+        PHPUnit_TextUI_TestRunner::run(self::suite());
+    }
     
     /**
-     * Removes the listener from this analyzer.
+     * Creates the phpunit test suite for this package.
      *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
+     * @return PHPUnit_Framework_TestSuite
      */
-    function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener);
-    
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    function analyze(PHP_Depend_Code_NodeIterator $packages);
+    public static function suite()
+    {
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code_NodeVisitor - AllTests');
+        $suite->addTestSuite('PHP_Depend_Code_NodeVisitor_DefaultListenerTest');
+        $suite->addTestSuite('PHP_Depend_Code_NodeVisitor_DefaultVisitorTest');
+
+        return $suite;
+    }
+}
+
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_NodeVisitor_AllTests::main') {
+    PHP_Depend_Code_NodeVisitor_AllTests::main();
 }

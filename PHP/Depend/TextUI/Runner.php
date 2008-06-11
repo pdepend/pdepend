@@ -220,12 +220,14 @@ class PHP_Depend_TextUI_Runner
         }
         
         if (count($this->_excludeDirectories) > 0) {
-            $filter = new PHP_Depend_Util_ExcludePathFilter($this->_excludeDirectories);
+            $exclude = $this->_excludeDirectories;
+            $filter  = new PHP_Depend_Util_ExcludePathFilter($exclude);
             $pdepend->addFileFilter($filter);
         }
         
         if (count($this->_excludePackages) > 0) {
-            $filter = new PHP_Depend_Code_NodeIterator_PackageFilter($this->_excludePackages);
+            $exclude = $this->_excludePackages;
+            $filter  = new PHP_Depend_Code_NodeIterator_PackageFilter($exclude);
             $pdepend->addCodeFilter($filter);
         }
         
@@ -258,7 +260,7 @@ class PHP_Depend_TextUI_Runner
         
         $resultPrinter = new PHP_Depend_TextUI_ResultPrinter();
         
-        $pdepend->addAnalyzeListener($resultPrinter);
+        $pdepend->addProcessListener($resultPrinter);
         
         try {
             $pdepend->analyze();

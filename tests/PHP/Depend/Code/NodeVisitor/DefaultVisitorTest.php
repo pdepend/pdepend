@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 
 require_once 'PHP/Depend/Code/Class.php';
@@ -70,7 +70,7 @@ require_once 'PHP/Depend/Code/Property.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_DefaultVisitorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_NodeVisitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the execution order of the default visitor implementation.
@@ -108,7 +108,7 @@ class PHP_Depend_Code_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $interface1->addMethod(new PHP_Depend_Code_Method('methodCB'));
         $interface1->addMethod(new PHP_Depend_Code_Method('methodCA'));
         
-        $visitor = new PHP_Depend_Code_DefaultVisitorDummy();        
+        $visitor = new PHP_Depend_Code_NodeVisitor_DefaultVisitorDummy();        
         foreach (array($package1, $package2) as $package) {
             $package->accept($visitor);
         }

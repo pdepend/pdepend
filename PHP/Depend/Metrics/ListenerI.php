@@ -38,6 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -45,99 +46,40 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/VisitListenerI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
- * 
+ * An implementation of this listener can be used to recieve informations about
+ * the current metric analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitListener
-    implements PHP_Depend_Code_NodeVisitor_VisitListenerI
+interface PHP_Depend_Metrics_ListenerI
+    extends PHP_Depend_Code_NodeVisitor_ListenerI
 {
-    public function startVisitClass(PHP_Depend_Code_Class $class)
-    {
-        $this->startVisitNode($class);
-    }
+    /**
+     * This method is called when the analyzer starts code processing.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
+     * 
+     * @return void
+     */
+    function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer);
     
-    public function endVisitClass(PHP_Depend_Code_Class $class)
-    {
-        $this->endVisitNode($class);
-    }
-    
-    public function startVisitFile(PHP_Depend_Code_File $file)
-    {
-        $this->startVisitNode($file);
-    }
-    
-    public function endVisitFile(PHP_Depend_Code_File $file)
-    {
-        $this->endVisitNode($file);
-    }
-    
-    public function startVisitFunction(PHP_Depend_Code_Function $function)
-    {
-        $this->startVisitNode($function);
-    }
-    
-    public function endVisitFunction(PHP_Depend_Code_Function $function)
-    {
-        $this->endVisitNode($function);
-    }
-    
-    public function startVisitInterface(PHP_Depend_Code_Interface $interface)
-    {
-        $this->startVisitNode($interface);
-    }
-    
-    public function endVisitInterface(PHP_Depend_Code_Interface $interface)
-    {
-        $this->endVisitNode($interface);
-    }
-    
-    public function startVisitMethod(PHP_Depend_Code_Method $method)
-    {
-        $this->startVisitNode($method);
-    }
-    
-    public function endVisitMethod(PHP_Depend_Code_Method $method)
-    {
-        $this->endVisitNode($method);
-    }
-    
-    public function startVisitPackage(PHP_Depend_Code_Package $package)
-    {
-        $this->startVisitNode($package);
-    }
-    
-    public function endVisitPackage(PHP_Depend_Code_Package $package)
-    {
-        $this->endVisitNode($package);
-    }
-    
-    public function startVisitProperty(PHP_Depend_Code_Property $property)
-    {
-        $this->startVisitNode($property);
-    }
-    
-    public function endVisitProperty(PHP_Depend_Code_Property $property)
-    {
-        $this->endVisitNode($property);
-    }
-    
-    protected function startVisitNode(PHP_Depend_Code_NodeI $node)
-    {
-        
-    }
-    
-    protected function endVisitNode(PHP_Depend_Code_NodeI $node)
-    {
-        
-    }
+    /**
+     * This method is called when the analyzer has finished code processing.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
+     * 
+     * @return void
+     */
+    function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer);
 }

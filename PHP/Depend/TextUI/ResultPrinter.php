@@ -38,6 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
+ * @subpackage TextUI
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -45,14 +46,15 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitListener.php';
-require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
+require_once 'PHP/Depend/ProcessListenerI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractListener.php';
 
 /**
- * 
+ * Prints current the PDepend status informations.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
+ * @subpackage TextUI
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -60,40 +62,184 @@ require_once 'PHP/Depend/Metrics/AnalyzeListenerI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_TextUI_ResultPrinter
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitListener
-    implements PHP_Depend_Metrics_AnalyzeListenerI
+       extends PHP_Depend_Code_NodeVisitor_AbstractListener
+    implements PHP_Depend_ProcessListenerI
 {
-    const STEP_SIZE = 30;
+    /**
+     * The step size.
+     */
+    const STEP_SIZE = 20;
     
+    /**
+     * Number of processed items.
+     *
+     * @type integer
+     * @var integer $_count
+     */
     private $_count = 0;
     
+    /**
+     * Is called when PDepend starts the file parsing process.
+     *
+     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * 
+     * @return void
+     */
+    public function startParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    {
+        $this->_count = 0;
+        
+        echo "Start file parsing:\n";
+    }
+    
+    /**
+     * Is called when PDepend has finished the file parsing process.
+     *
+     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * 
+     * @return void
+     */
+    public function endParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    {
+        $this->finish();
+    }
+    
+    /**
+     * Is called when PDepend starts parsing of a new file.
+     *
+     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * 
+     * @return void
+     */
+    public function startFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    {
+        $this->step();
+    }
+    
+    /**
+     * Is called when PDepend has finished a file.
+     *
+     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * 
+     * @return void
+     */
+    public function endFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    {
+        
+    }
+    
+    /**
+     * Is called when PDepend starts the analyzing process.
+     * 
+     * @return void
+     */
+    public function startAnalyzeProcess()
+    {
+        
+    }
+    
+    /**
+     * Is called when PDepend has finished the analyzing process.
+     * 
+     * @return void
+     */
+    public function endAnalyzeProcess()
+    {
+        
+    }
+    
+    /**
+     * Is called when PDepend starts the logging process.
+     *
+     * @return void
+     */
+    public function startLogProcess()
+    {
+        echo "Generating pdepend log files, this may take a moment.\n";
+    }
+    
+    /**
+     * Is called when PDepend has finished the logging process.
+     *
+     * @return void
+     */
+    public function endLogProcess()
+    {
+        
+    }
+    
+    /**
+     * Is called when PDepend starts a new analyzer.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
+     * 
+     * @return void
+     */
     public function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $this->_count  = 0;
+        $this->_count = 0;
         
         $name = substr(get_class($analyzer), 19, -9);
         echo "Executing {$name}-Analyzer:\n";
     }
     
+    /**
+     * Is called when PDepend has finished one analyzing process.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
+     * 
+     * @return void
+     */
     public function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $diff = ($this->_count % (self::STEP_SIZE * 60));
-        if ($diff !== 0) {
-            $indent = 65 - ceil($diff / self::STEP_SIZE);
-            printf(".% {$indent}s\n", $this->_count);
-        }
-        echo "\n";
+        $this->finish(self::STEP_SIZE);
     }
     
+    /**
+     * Generic notification method that is called for every node start.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::startVisitNode()
+     */
     public function startVisitNode(PHP_Depend_Code_NodeI $node)
     {
-        ++$this->_count;
-        
-        if ($this->_count % self::STEP_SIZE === 0) {
+        $this->step(self::STEP_SIZE);
+    }
+    
+    /**
+     * Prints a single dot for the current step.
+     *
+     * @param integer $size The number of processed items that result in a new dot.
+     * 
+     * @return void 
+     */
+    protected function step($size = 1)
+    {
+        if ($this->_count > 0 && $this->_count % $size === 0) {
             echo '.';
         }
-        if ($this->_count % (self::STEP_SIZE * 60) === 0) {
-            printf("% 5s\n", $this->_count);
+        if ($this->_count > 0 && $this->_count % ($size * 60) === 0) {
+            printf("% 6s\n", $this->_count);
         }
+        ++$this->_count;        
+    }
+    
+    /**
+     * Closes the current dot line.
+     *
+     * @param integer $size The number of processed items that result in a new dot.
+     * 
+     * @return void
+     */
+    protected function finish($size = 1)
+    {
+        $diff = ($this->_count % ($size * 60));   
+        if ($diff !== 0) {
+            $indent = 66 - ceil($diff / $size) + 1;
+            printf("% {$indent}s\n", $this->_count);
+        }
+        echo "\n";        
     }
 }
