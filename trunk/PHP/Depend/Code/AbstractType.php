@@ -206,7 +206,7 @@ abstract class PHP_Depend_Code_AbstractType
      *
      * @param PHP_Depend_Code_AbstractType $type The child type instance.
      * 
-     * @return void
+     * @return PHP_Depend_Code_AbstractType
      */
     public function addChildType(PHP_Depend_Code_AbstractType $type)
     {
@@ -216,6 +216,7 @@ abstract class PHP_Depend_Code_AbstractType
             // Try to add this as dependency...
             $type->addDependency($this);
         }
+        return $type;
     }
     
     /**
