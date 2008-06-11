@@ -36,34 +36,43 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Metrics
- * @author     Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright  2008 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   SVN: $Id$
+ * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractListener.php';
 
 /**
- * 
+ * Simple test node visitor implementation.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Metrics
- * @author     Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright  2008 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_AnalyzeListenerI
-    extends PHP_Depend_Code_NodeVisitor_VisitListenerI
+class PHP_Depend_Code_NodeVisitor_TestListener extends PHP_Depend_Code_NodeVisitor_AbstractListener
 {
-    function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer);
+    public $nodes = array();
     
-    function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer);
+    public function startVisitNode(PHP_Depend_Code_NodeI $node)
+    {
+        $this->nodes[$node->getUUID() . '#start'] = $node;
+        
+        parent::startVisitNode($node);
+    }
+
+    public function endVisitNode(PHP_Depend_Code_NodeI $node)
+    {
+        $this->nodes[$node->getUUID() . '#end'] = $node;
+        
+        parent::endVisitNode($node);
+    }
 }

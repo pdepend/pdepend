@@ -46,11 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractDefaultVisitor.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
- * 
+ * This abstract class provides a base implementation of an analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,25 +62,26 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @link       http://www.manuel-pichler.de/
  */
 abstract class PHP_Depend_Metrics_AbstractAnalyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractDefaultVisitor
+       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
     implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
      * List or registered listeners.
      *
-     * @type array<PHP_Depend_Metrics_AnalyzeListenerI>
-     * @var array(PHP_Depend_Metrics_AnalyzeListenerI) $_listeners
+     * @type array<PHP_Depend_Metrics_ListenerI>
+     * @var array(PHP_Depend_Metrics_ListenerI) $_listeners
      */
     private $_listeners = array();
     
     /**
      * Adds a listener to this analyzer.
      *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
      * 
      * @return void
      */
-    public function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
+    {
         if (in_array($listener, $this->_listeners, true) === false) {
             $this->_listeners[] = $listener;
         }
@@ -89,23 +90,40 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * Removes the listener from this analyzer.
      *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
      * 
      * @return void
      */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
+    {
         if (($i = array_search($listener, $this->_listeners, true)) !== false) {
             unset($this->_listeners[$i]);
         }
     }
     
-    protected function fireStartAnalyzer() {
+    /**
+     * The analyzer implementation should call this method when it starts the 
+     * code processing. This method will send an analyzer start event to all
+     * registered listeners.
+     *
+     * @return void
+     */
+    protected function fireStartAnalyzer()
+    {
         foreach ($this->_listeners as $listener) {
             $listener->startAnalyzer($this);
         }
     }
     
-    protected function fireEndAnalyzer() {
+    /**
+     * The analyzer implementation should call this method when it has finished
+     * the code processing. This method will send an analyzer end event to all
+     * registered listeners.
+     *
+     * @return void
+     */
+    protected function fireEndAnalyzer()
+    {
         foreach ($this->_listeners as $listener) {
             $listener->endAnalyzer($this);
         }

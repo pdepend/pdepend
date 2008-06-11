@@ -131,8 +131,8 @@ class PHP_Depend
     /**
      * List or registered listeners.
      *
-     * @type array<PHP_Depend_Metrics_AnalyzeListenerI>
-     * @var array(PHP_Depend_Metrics_AnalyzeListenerI) $_listeners
+     * @type array<PHP_Depend_ProcessListenerI>
+     * @var array(PHP_Depend_ProcessListenerI) $_listeners
      */
     private $_listeners = array();
     
@@ -215,13 +215,14 @@ class PHP_Depend
     }
     
     /**
-     * Adds a listener to this analyzer.
+     * Adds a process listener.
      *
-     * @param PHP_Depend_Metrics_AnalyzeListenerI $listener The listener instance.
+     * @param PHP_Depend_ProcessListenerI $listener The listener instance.
      * 
      * @return void
      */
-    public function addAnalyzeListener(PHP_Depend_Metrics_AnalyzeListenerI $listener) {
+    public function addProcessListener(PHP_Depend_ProcessListenerI $listener)
+    {
         if (in_array($listener, $this->_listeners, true) === false) {
             $this->_listeners[] = $listener;
         }
@@ -253,20 +254,25 @@ class PHP_Depend
         }
         
         $this->nodeBuilder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $this->fireStartParseProcess($this->nodeBuilder);
 
         foreach ($iterator as $file) {
-            $parser = new PHP_Depend_Parser(
-                new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), 
-                $this->nodeBuilder
-            );
+            
+            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file); 
+            $parser    = new PHP_Depend_Parser($tokenizer, $this->nodeBuilder);
             
             // Disable annotation parsing?
             if ($this->_withoutAnnotations === true) {
                 $parser->setIgnoreAnnotations();
             }
             
+            $this->fireStartFileParsing($tokenizer);
             $parser->parse();
+            $this->fireEndFileParsing($tokenizer);
         }
+        
+        $this->fireEndParseProcess($this->nodeBuilder);
         
         // Get global filter collection
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
@@ -281,6 +287,8 @@ class PHP_Depend
                 }
             }
         }
+        
+        $this->fireStartAnalyzeProcess();
         
         foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware 
@@ -300,15 +308,21 @@ class PHP_Depend
             }
         }
         
+        $this->fireEndAnalyzeProcess();
+        
         // Set global filter for logging
         $staticFilter->addFilter($this->_codeFilter);
 
         $packages = $this->nodeBuilder->getPackages();
+        
+        $this->fireStartLogProcess();
 
         foreach ($this->loggers as $logger) {
             $logger->setCode($packages);
             $logger->close();
         }
+        
+        $this->fireEndLogProcess();
         
         // Remove global filter
         $staticFilter->removeFilter($this->_codeFilter);
@@ -386,6 +400,110 @@ class PHP_Depend
             throw new RuntimeException($msg);
         }
         return $this->packages;
+    }
+    
+    /**
+     * Send the start parsing process event.
+     *
+     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * 
+     * @return void
+     */
+    protected function fireStartParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startParseProcess($builder);
+        }
+    }
+    
+    /**
+     * Send the end parsing process event.
+     *
+     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * 
+     * @return void
+     */
+    protected function fireEndParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endParseProcess($builder);
+        }
+    }
+    
+    /**
+     * Sends the start file parsing event.
+     *
+     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * 
+     * @return void
+     */
+    protected function fireStartFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startFileParsing($tokenizer);
+        }
+    }
+    
+    /**
+     * Sends the end file parsing event.
+     *
+     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * 
+     * @return void
+     */
+    protected function fireEndFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endFileParsing($tokenizer);
+        }
+    }
+    
+    /**
+     * Sends the start analyzing process event.
+     * 
+     * @return void
+     */
+    protected function fireStartAnalyzeProcess()
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startAnalyzeProcess();
+        }
+    }
+    
+    /**
+     * Sends the end analyzing process event.
+     * 
+     * @return void
+     */
+    protected function fireEndAnalyzeProcess()
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endAnalyzeProcess();
+        }
+    }
+    
+    /**
+     * Sends the start log process event.
+     * 
+     * @return void
+     */
+    protected function fireStartLogProcess()
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startLogProcess();
+        }
+    }
+    
+    /**
+     * Sends the end log process event.
+     * 
+     * @return void
+     */
+    protected function fireEndLogProcess()
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endLogProcess();
+        }
     }
     
     /**

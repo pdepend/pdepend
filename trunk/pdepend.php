@@ -51,7 +51,7 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
     set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__));
 }
 
-ini_set('memory_limit', '512M');
+ini_set('memory_limit', '1024M');
 
 require_once 'PHP/Depend/TextUI/Command.php';
 

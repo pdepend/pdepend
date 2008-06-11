@@ -45,28 +45,13 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/ClassTest.php';
-require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
-require_once dirname(__FILE__) . '/FileTest.php';
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/InterfaceTest.php';
-require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
-require_once dirname(__FILE__) . '/MethodTest.php';
-require_once dirname(__FILE__) . '/NodeIteratorTest.php';
-require_once dirname(__FILE__) . '/PackageTest.php';
-require_once dirname(__FILE__) . '/PropertyTest.php';
-require_once dirname(__FILE__) . '/NodeIterator/AllTests.php';
-require_once dirname(__FILE__) . '/NodeVisitor/AllTests.php';
+require_once 'PHP/Depend/Code/NodeBuilderI.php';
+require_once 'PHP/Depend/Code/TokenizerI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
+require_once 'PHP/Depend/Metrics/ListenerI.php';
 
 /**
- * Main test suite for the PHP_Depend_Code package.
+ * This listener can be used to get informations about the current pdepend process.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -76,43 +61,71 @@ require_once dirname(__FILE__) . '/NodeVisitor/AllTests.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_AllTests
+interface PHP_Depend_ProcessListenerI
+    extends PHP_Depend_Code_NodeVisitor_ListenerI,
+            PHP_Depend_Metrics_ListenerI
 {
     /**
-     * Test suite main method.
+     * Is called when PDepend starts the file parsing process.
+     *
+     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * 
+     * @return void
+     */
+    function startParseProcess(PHP_Depend_Code_NodeBuilderI $builder);
+    
+    /**
+     * Is called when PDepend has finished the file parsing process.
+     *
+     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * 
+     * @return void
+     */
+    function endParseProcess(PHP_Depend_Code_NodeBuilderI $builder);
+    
+    /**
+     * Is called when PDepend starts parsing of a new file.
+     *
+     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * 
+     * @return void
+     */
+    function startFileParsing(PHP_Depend_Code_TokenizerI $tokenizer);
+    
+    /**
+     * Is called when PDepend has finished a file.
+     *
+     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * 
+     * @return void
+     */
+    function endFileParsing(PHP_Depend_Code_TokenizerI $tokenizer);
+    
+    /**
+     * Is called when PDepend starts the analyzing process.
+     * 
+     * @return void
+     */
+    function startAnalyzeProcess();
+    
+    /**
+     * Is called when PDepend has finished the analyzing process.
+     * 
+     * @return void
+     */
+    function endAnalyzeProcess();
+    
+    /**
+     * Is called when PDepend starts the logging process.
      *
      * @return void
      */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
+    function startLogProcess();
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Is called when PDepend has finished the logging process.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
-        $suite->addTest(PHP_Depend_Code_NodeIterator_AllTests::suite());
-        $suite->addTest(PHP_Depend_Code_NodeVisitor_AllTests::suite());
-        $suite->addTestSuite('PHP_Depend_Code_ClassTest');
-        $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
-        $suite->addTestSuite('PHP_Depend_Code_FileTest');
-        $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
-        $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');
-        $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
-        $suite->addTestSuite('PHP_Depend_Code_MethodTest');
-        $suite->addTestSuite('PHP_Depend_Code_NodeIteratorTest');
-        $suite->addTestSuite('PHP_Depend_Code_PackageTest');
-        $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
-
-        return $suite;
-    }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_AllTests::main') {
-    PHP_Depend_Code_AllTests::main();
+    function endLogProcess();
 }

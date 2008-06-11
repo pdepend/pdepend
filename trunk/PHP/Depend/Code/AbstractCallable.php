@@ -219,7 +219,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function removeExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
     {
-        if (($i = array_search($exceptionType, $this->_exceptionTypes, true)) !== false) {
+        if (($i = array_search($exceptionType, $this->_exceptionTypes, true))) {
             unset($this->_exceptionTypes[$i]);
         }
     }
