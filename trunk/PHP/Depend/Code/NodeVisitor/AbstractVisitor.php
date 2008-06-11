@@ -79,7 +79,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * 
      * @return void
      */
-    public function addListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
+    public function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
         if (in_array($listener, $this->_listeners, true) === false) {
             $this->_listeners[] = $listener;
@@ -93,7 +93,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * 
      * @return void
      */
-    public function removeListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
+    public function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
         if (($i = array_search($listener, $this->_listeners, true)) !== false) {
             unset($this->_listeners[$i]);

@@ -116,7 +116,7 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
      * 
      * @return void
      */
-    public function addListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
+    public function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
     }
     
@@ -128,7 +128,7 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
      * 
      * @return void
      */
-    public function removeListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
+    public function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
     }
     

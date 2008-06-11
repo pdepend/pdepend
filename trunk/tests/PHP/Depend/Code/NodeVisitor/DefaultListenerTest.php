@@ -92,7 +92,7 @@ class PHP_Depend_Code_NodeVisitor_DefaultListenerTest extends PHP_Depend_Abstrac
         
         $listener = new PHP_Depend_Code_NodeVisitor_TestListener();
         $visitor  = new PHP_Depend_Code_NodeVisitor_DefaultVisitorDummy();
-        $visitor->addListener($listener);
+        $visitor->addVisitListener($listener);
         $visitor->visitPackage($package);
         
         $this->assertArrayHasKey($file->getUUID() . '#start', $listener->nodes);

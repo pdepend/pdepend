@@ -302,7 +302,5 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             // Replace global $argv
             $_SERVER['argv'] = $argv;
         }
-        
     }
-    
 }
