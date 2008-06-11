@@ -69,7 +69,7 @@ interface PHP_Depend_Code_NodeVisitorI
      * 
      * @return void
      */
-    function addListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
+    function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
     
     /**
      * Removes the listener from this node visitor.
@@ -78,7 +78,7 @@ interface PHP_Depend_Code_NodeVisitorI
      * 
      * @return void
      */
-    function removeListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
+    function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
     
     /**
      * Visits a class node. 

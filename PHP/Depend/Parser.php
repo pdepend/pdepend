@@ -621,18 +621,9 @@ class PHP_Depend_Parser
                     $inline = false;
                 }
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_BACKSLASH:
-                $escape = !$escape;
-                break;
-                
+
             case PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE:
-                if ($escape === false) {
-                    $string = !$string;
-                }
-                if ($string === false) {
-                    $escape = false;
-                }
+                $string = !$string;
                 break;
 
             default:

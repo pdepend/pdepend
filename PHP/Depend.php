@@ -283,7 +283,7 @@ class PHP_Depend
                 $analyzer->addAnalyzeListener($listener);
                 
                 if ($analyzer instanceof PHP_Depend_Code_NodeVisitorI) {
-                    $analyzer->addListener($listener);
+                    $analyzer->addVisitListener($listener);
                 }
             }
         }
