@@ -197,4 +197,28 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $this->assertArrayHasKey('calls', $project);
         $this->assertEquals(30, $project['calls']);
     }
+    
+    /**
+     * Test case for the execution chain bug 14.
+     * 
+     * http://bugs.xplib.de/index.php?do=details&task_id=14&project=3
+     *
+     * @return void
+     */
+    public function testAnalyzerExecutionChainBug14()
+    {
+        $source   = dirname(__FILE__) . '/../../_code/bugs/14.php';
+        $packages = self::parseSource($source);
+        
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(1, $packages->current()->getFunctions()->count());
+        
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
+        
+        $project = $analyzer->getProjectMetrics();
+        
+        $this->assertArrayHasKey('calls', $project);
+        $this->assertEquals(3, $project['calls']);
+    }
 }
