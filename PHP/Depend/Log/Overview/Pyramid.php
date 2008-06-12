@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Depend/Log/LoggerI.php';
+require_once 'PHP/Depend/Util/ImageConvert.php';
 
 /**
  * 
@@ -208,7 +209,14 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
             $style = preg_replace('/fill:#[^;"]+/', "fill:{$match[1]}", $style);
             $rect->setAttribute('style', $style);
         }
-        $svg->save($this->_fileName);
+        
+        $temp = sys_get_temp_dir() . '/' . uniqid('pdepend_') . '.svg';
+        $svg->save($temp);
+        
+        PHP_Depend_Util_ImageConvert::convert($temp, $this->_fileName);
+        
+        // Remove temp file
+        unlink($temp);
     }
     
     /**
