@@ -529,7 +529,7 @@ class PHP_Depend
             
             $sxml = new SimpleXMLElement($xml);
             
-            foreach ($sxml->resultsets->type as $node) {
+            foreach ($sxml->analyzers->type as $node) {
                 // Get the referenced node type 
                 $type = (string) $node['match'];
                 
