@@ -266,18 +266,25 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             PHP_Depend_Code_TokenizerI::T_VARIABLE
         );
         
+        $countedTokens = array();
+        
+        $prevString = null;
         $prevToken1 = null;
         $prevToken2 = null;
         foreach ($callable->getTokens() as $token) {
             if ($token[0] === PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN
              && $prevToken2 !== PHP_Depend_Code_TokenizerI::T_NEW
-             && in_array($prevToken1, $tokenTypes, true) === true) {
+             && in_array($prevToken1, $tokenTypes, true) === true
+             && in_array($prevString, $countedTokens, true) === false) {
                 
                 ++$this->_calls;
+                
+                $countedTokens[] = $prevString;
             }
             
             $prevToken2 = $prevToken1;
             $prevToken1 = $token[0];
+            $prevString = $token[1];
         }
     }
 }
