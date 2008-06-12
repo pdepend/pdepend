@@ -261,30 +261,51 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $tokenTypes = array(
+        $callT = array(
             PHP_Depend_Code_TokenizerI::T_STRING,
             PHP_Depend_Code_TokenizerI::T_VARIABLE
         );
+        $chainT = array(
+            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
+            PHP_Depend_Code_TokenizerI::T_OBJECT_OPERATOR,
+        );
         
-        $countedTokens = array();
+        $called = array();
         
-        $prevString = null;
-        $prevToken1 = null;
-        $prevToken2 = null;
-        foreach ($callable->getTokens() as $token) {
-            if ($token[0] === PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN
-             && $prevToken2 !== PHP_Depend_Code_TokenizerI::T_NEW
-             && in_array($prevToken1, $tokenTypes, true) === true
-             && in_array($prevString, $countedTokens, true) === false) {
-                
-                ++$this->_calls;
-                
-                $countedTokens[] = $prevString;
+        $tokens = $callable->getTokens();
+        for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
+            // Skip non parenthesis tokens
+            if ($tokens[$i][0] !== PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN) {
+                continue;
             }
-            
-            $prevToken2 = $prevToken1;
-            $prevToken1 = $token[0];
-            $prevString = $token[1];
+            // Skip first token
+            if (!isset($tokens[$i - 1]) || !in_array($tokens[$i - 1][0], $callT)) {
+                continue;
+            }
+            // Count if no other token exists
+            if (!isset($tokens[$i - 2]) && !isset($called[$tokens[$i - 1][1]])) {
+                $called[$tokens[$i - 1]] = true;
+                ++$this->_calls;
+                continue;
+            } else if (in_array($tokens[$i - 2][0], $chainT)) {
+                $identifier = $tokens[$i - 2][1] . $tokens[$i - 1][1];
+                for ($j = $i - 3; $j >= 0; --$j) {
+                    if (!in_array($tokens[$j][0], $callT) 
+                     && !in_array($tokens[$j][0], $chainT)) {
+
+                        break;
+                    }
+                    $identifier = $tokens[$j][1] . $identifier;
+                }
+                
+                if (!isset($called[$identifier])) {
+                    $called[$identifier] = true;
+                    ++$this->_calls;
+                }
+            } else if ($tokens[$i - 2][0] !== PHP_Depend_Code_TokenizerI::T_NEW) {
+                $called[$tokens[$i - 1][1]] = true;
+                ++$this->_calls;
+            }
         }
     }
 }
