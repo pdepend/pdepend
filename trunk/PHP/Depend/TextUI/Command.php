@@ -304,6 +304,9 @@ class PHP_Depend_TextUI_Command
             }
         }
         
+        // Calculate the max message length
+        $messageLength = 77 - $maxLength;
+        
         ksort($options);
 
         $last = null;
@@ -315,8 +318,19 @@ class PHP_Depend_TextUI_Command
             }
             $last = $current;
             
+            
+            
             $option = str_pad($option, $maxLength, ' ', STR_PAD_RIGHT);
-            echo '  ', $option, ' ', $message, "\n";
+            echo '  ', $option, ' ';
+            
+            $lines = explode("\n", wordwrap($message, $messageLength, "\n"));
+            echo array_shift($lines);
+            
+            while (($line = array_shift($lines)) !== null) {
+                echo "\n", str_repeat(' ', $maxLength + 3), $line; 
+            }
+            
+            echo "\n";
         }
         echo "\n";
         
