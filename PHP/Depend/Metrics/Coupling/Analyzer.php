@@ -284,7 +284,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             }
             // Count if no other token exists
             if (!isset($tokens[$i - 2]) && !isset($called[$tokens[$i - 1][1]])) {
-                $called[$tokens[$i - 1]] = true;
+                $called[$tokens[$i - 1][1]] = true;
                 ++$this->_calls;
                 continue;
             } else if (in_array($tokens[$i - 2][0], $chainT)) {
