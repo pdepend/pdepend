@@ -46,21 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
-require_once dirname(__FILE__) . '/Jdepend/ChartTest.php';
-require_once dirname(__FILE__) . '/Jdepend/XmlTest.php';
-require_once dirname(__FILE__) . '/Overview/PyramidTest.php';
-require_once dirname(__FILE__) . '/Summary/XmlTest.php';
+require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
 
 /**
- * Main test suite for the PHP_Depend_Log package.
+ * Dummy inheritance analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -71,36 +60,14 @@ require_once dirname(__FILE__) . '/Summary/XmlTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_AllTests
+class PHP_Depend_Log_Overview_InheritanceAnalyzer 
+    extends PHP_Depend_Metrics_Inheritance_Analyzer
 {
-    /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
+    public function getProjectMetrics()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        return array(
+            'andc'  =>  0.31,
+            'ahh'   =>  0.12
+        );
     }
-    
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log - AllTests');
-        $suite->addTestSuite('PHP_Depend_Log_LoggerFactoryTest');
-        $suite->addTestSuite('PHP_Depend_Log_Jdepend_ChartTest');
-        $suite->addTestSuite('PHP_Depend_Log_Jdepend_XmlTest');
-        $suite->addTestSuite('PHP_Depend_Log_Overview_PyramidTest');
-        $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
-        
-        return $suite;
-    }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_AllTests::main') {
-    PHP_Depend_Log_AllTests::main();
 }
