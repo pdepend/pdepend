@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <logger>
   <message>Generates a diagram of the analyzed packages.</message>
-  <resultsets>
+  <analyzers>
     <type match="PHP_Depend_Metrics_Dependency_Analyzer" />
-  </resultsets>
+  </analyzers>
 </logger>
