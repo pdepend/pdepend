@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyzer>
+  <options>
+    <option name="coderank-mode" value="*">
+      <message>Used CodeRank strategies. Comma separated list of 'inheritance'(default), 'properties' and 'methods'.</message>
+    </option>
+  </options>
+</analyzer>
