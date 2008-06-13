@@ -46,10 +46,12 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/Depend/Util/ImageConvert.php';
+
 /**
- * Simple utility class that is used to create different image formats. This 
- * class can use the ImageMagick cli tool <b>convert</b> and the pecl extension
- * <b>pecl/imagick</b>.
+ * Test case for the image convert utility class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,71 +62,64 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_ImageConvert
+class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tries to converts the <b>$input</b> image into the <b>$output</b> format.
+     * The temporary output file.
      *
-     * @param string $input  The input file.
-     * @param string $output The output file.
-     * 
+     * @type string
+     * @var string
+     */
+    private $_out = null;
+    
+    /**
+     * Removes temporary output files.
+     *
      * @return void
      */
-    public static function convert($input, $output)
+    protected function tearDown()
     {
-        $inputType  = pathinfo($input, PATHINFO_EXTENSION);
-        $outputType = pathinfo($output, PATHINFO_EXTENSION);
-        
-        if ($inputType === $outputType) {
-            file_put_contents($output, file_get_contents($input));
-        } else if (extension_loaded('imagick') === true) {
-            $im = new Imagick($input);
-            $im->setImageFormat($outputType);
-            $im->writeImage($output);
-            
-            // The following code is not testable when imagick is installed
-            // @codeCoverageIgnoreStart
-        } else if (self::hasImagickConvert() === true) {
-            $input  = escapeshellarg($input);
-            $output = escapeshellarg($output);
-            
-            system("convert {$input} {$output}");
-        } else {
-            
-            $fallback = substr($output, 0, -strlen($outputType)) . $inputType;
-            
-            echo "WARNING: Cannot generate image of type '{$outputType}'. This",
-                 " feature needs either the\n         pecl/imagick extension or",
-                 " the ImageMagick cli tool 'convert'.\n\n",
-                 "Writing alternative image:\n{$fallback}\n\n";
-            
-            file_put_contents($fallback, file_get_contents($input));
+        if (file_exists($this->_out)) {
+            unlink($this->_out);
         }
-        // @codeCoverageIgnoreEnd
+        
+        parent::tearDown();
     }
     
     /**
-     * Tests that the ImageMagick CLI tool <b>convert</b> exists.
+     * Tests the copy behaviour for same mime types.
      *
-     * @return boolean
+     * @return void
      */
-    protected static function hasImagickConvert()
+    public function testConvertMakesCopyForSameMimeType()
     {
-        // @codeCoverageIgnoreStart
-        $desc = array(
-            0  =>  array('pipe', 'r'),
-            1  =>  array('pipe', 'w'),
-            2  =>  array('pipe', 'a'),
-        );
+        $input      = dirname(__FILE__) . '/_input/pyramid.svg';
+        $this->_out = sys_get_temp_dir() . '/pdepend.out.svg';
         
-        $proc = proc_open('convert', $desc, $pipes);
-        if (is_resource($proc)) {
-            fwrite($pipes[0], '-version');
-            fclose($pipes[0]);
-            
-            return (0 === proc_close($proc));
+        $this->assertFileNotExists($this->_out);
+        
+        PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
+        
+        $this->assertFileExists($this->_out);
+        $this->assertFileEquals($input, $this->_out);
+    }
+    
+    /**
+     * Tests the image convert behaviour of the image magick execution path.
+     *
+     * @return void
+     */
+    public function testConvertWithImageMagickExtension()
+    {
+        if (extension_loaded('imagick') === false) {
+            $this->markTestSkipped('No pecl/imagick extension.');
         }
-        return false;
-        // @codeCoverageIgnoreEnd
+        
+        $input      = dirname(__FILE__) . '/_input/pyramid.svg';
+        $this->_out = sys_get_temp_dir() . '/pdepend.out.png';
+        
+        $this->assertFileNotExists($this->_out);
+        PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
+        $this->assertFileExists($this->_out);
     }
 }
