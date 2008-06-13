@@ -206,6 +206,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '--suffix=inc',
             '--without-annotations',
+            '--coderank-mode=properties',
             '--dummy-logger=' . $logFile,
             $source
         );

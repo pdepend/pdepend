@@ -49,6 +49,7 @@
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/CodeRank/InheritanceStrategy.php';
 
 /**
  * Calculates the code ranke metric for classes and packages. 
@@ -79,6 +80,14 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * @var array(string=>array) $nodes
      */
     protected $nodes = array();
+    
+    /**
+     * List of node collect strategies.
+     * 
+     * @type array<PHP_Depend_Metrics_CodeRank_CodeRankStrategyI>
+     * @var array(PHP_Depend_Metrics_CodeRank_CodeRankStrategyI) $_strategies
+     */
+    private $_strategies = array();
     
     /**
      * Hash with all calculated node metrics.
@@ -116,14 +125,27 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
             
             $this->fireStartAnalyzer();
             
+            $this->_strategies = array(
+                new PHP_Depend_Metrics_CodeRank_InheritanceStrategy()
+            );
+
+            // First traverse package tree
+            foreach ($packages as $package) {
+                // Traverse all strategies
+                foreach ($this->_strategies as $strategy) {
+                    $package->accept($strategy);    
+                }
+            }
+            
+            // Collect all nodes
+            foreach ($this->_strategies as $strategy) {
+                $collected   = $strategy->getCollectedNodes();
+                $this->nodes = array_merge_recursive($collected, $this->nodes);
+            }
+            
             // Init node metrics
             $this->_nodeMetrics = array();
             
-            // First traverse package tree
-            foreach ($packages as $package) {
-                $package->accept($this);
-            }
-        
             // Calculate code rank metrics
             $this->buildCodeRankMetrics();
             
@@ -146,109 +168,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
             return $this->_nodeMetrics[$node->getUUID()];
         }
         return array();
-    }
-    
-    /**
-     * Visits a code class object.
-     *
-     * @param PHP_Depend_Code_Class $class The context code class.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
-     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
-     */
-    public function visitClass(PHP_Depend_Code_Class $class)
-    {
-        $this->fireStartClass($class);
-        $this->visitType($class);
-        $this->fireEndClass($class);
-    }
-    
-    /**
-     * Visits a code interface object.
-     *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
-     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
-     */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
-    {
-        $this->fireStartInterface($interface);
-        $this->visitType($interface);        
-        $this->fireEndInterface($interface);
-    }
-    
-    /**
-     * Visits a code package object.
-     *
-     * @param PHP_Depend_Code_Package $package The context code package.
-     * 
-     * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
-     */
-    public function visitPackage(PHP_Depend_Code_Package $package)
-    {
-        $this->fireStartPackage($package);
-        $this->initNode($package);
-        
-        foreach ($package->getTypes() as $type) {
-            $type->accept($this);
-        }
-        
-        $this->fireEndPackage($package);
-    }
-    
-    /**
-     * Generic visitor method for classes and interfaces. Both visit methods
-     * delegate calls to this method.
-     *
-     * @param PHP_Depend_Code_AbstractType $type The context type instance.
-     * 
-     * @return void
-     */
-    protected function visitType(PHP_Depend_Code_AbstractType $type)
-    {
-        $pkg = $type->getPackage();
-        
-        $this->initNode($type);
-        
-        foreach ($type->getDependencies() as $dep) {
-            
-            $depPkg = $dep->getPackage();
-            
-            $this->initNode($dep);
-            $this->initNode($depPkg);
-            
-            $this->nodes[$type->getUUID()]['in'][] = $dep->getUUID();
-            $this->nodes[$dep->getUUID()]['out'][] = $type->getUUID();
-            
-            // No self references
-            if ($pkg !== $depPkg) {
-                $this->nodes[$pkg->getUUID()]['in'][]     = $depPkg->getUUID();
-                $this->nodes[$depPkg->getUUID()]['out'][] = $pkg->getUUID();
-            }
-        }
-    }
-    
-    /**
-     * Initializes the temporary node container for the given <b>$node</b>.
-     *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
-     * @return void
-     */
-    protected function initNode(PHP_Depend_Code_NodeI $node)
-    {
-        if (!isset($this->nodes[$node->getUUID()])) {
-            $this->nodes[$node->getUUID()] = array(
-                'in'   =>  array(),
-                'out'  =>  array(),
-                'name'  =>  $node->getName(),
-                'type'  =>  get_class($node)
-            );
-        }
     }
     
     /**
