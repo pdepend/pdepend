@@ -137,6 +137,14 @@ class PHP_Depend
     private $_listeners = array();
     
     /**
+     * List of analyzer options.
+     *
+     * @type array<mixed>
+     * @var array(string=>mixed) $_options
+     */
+    private $_options = array();
+    
+    /**
      * Constructs a new php depend facade.
      */
     public function __construct()
@@ -202,6 +210,18 @@ class PHP_Depend
     public function addCodeFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
     {
         $this->_codeFilter->addFilter($filter);
+    }
+    
+    /**
+     * Sets analyzer options.
+     *
+     * @param array(string=>mixed) $options The analyzer options.
+     * 
+     * @return void
+     */
+    public function setOptions(array $options = array())
+    {
+        $this->_options = $options;
     }
     
     /**

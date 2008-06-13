@@ -128,6 +128,14 @@ class PHP_Depend_TextUI_Runner
     private $_loggerMap = array();
     
     /**
+     * List of cli options for loggers or analyzers.
+     *
+     * @type array<mixed>
+     * @var array(string=>mixed) $_options
+     */
+    private $_options = array();
+    
+    /**
      * Sets a list of allowed file extensions.
      * 
      * NOTE: If you call this method, it will replace the default file extensions. 
@@ -203,6 +211,19 @@ class PHP_Depend_TextUI_Runner
     }
     
     /**
+     * Adds a logger or analyzer option.
+     *
+     * @param string       $identifier The option identifier.
+     * @param string|array $value      The option value.
+     * 
+     * @return void
+     */
+    public function addOption($identifier, $value)
+    {
+        $this->_options[$identifier] = $value;
+    }
+    
+    /**
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *
@@ -213,6 +234,7 @@ class PHP_Depend_TextUI_Runner
     public function run()
     {
         $pdepend = new PHP_Depend();
+        $pdepend->setOptions($this->_options);
         
         if (count($this->_extensions) > 0) {
             $filter = new PHP_Depend_Util_FileExtensionFilter($this->_extensions);

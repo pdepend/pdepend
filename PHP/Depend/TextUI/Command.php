@@ -68,12 +68,25 @@ class PHP_Depend_TextUI_Command
     const CLI_ERROR = 1742;
     
     /**
+     * Marks an input error exit.
+     */
+    const INPUT_ERROR = 1743;
+    
+    /**
      * Collected log options.
      *
      * @type array<string>
      * @var array(string=>string) $_logOptions
      */
     private $_logOptions = null;
+    
+    /**
+     * Collected analyzer options.
+     *
+     * @type array<string>
+     * @var array(string=>string) $_analyzerOptions
+     */
+    private $_analyzerOptions = null;
     
     /**
      * The recieved cli options
@@ -124,14 +137,26 @@ class PHP_Depend_TextUI_Command
         // Get an array with all available log options
         $logOptions = $this->collectLogOptions();
         
+        // Get an array with all available analyzer options
+        $analyzerOptions = $this->collectAnalyzerOptions();
+        
         foreach ($options as $option => $value) {
             if (isset($logOptions[$option])) {
                 // Reduce recieved option list
                 unset($options[$option]);
-                // Remove leading hyphens
-                $identifier = substr($option, 2);
                 // Register logger
-                $this->_runner->addLogger($identifier, $value);
+                $this->_runner->addLogger(substr($option, 2), $value);
+            } else if (isset($analyzerOptions[$option])) {
+                // Reduce recieved option list
+                unset($options[$option]);
+                
+                if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
+                    echo "Option '{$option}' requires a value.\n";
+                    return self::INPUT_ERROR;
+                } else if ($analyzerOptions[$option]['value'] === '*') {
+                    $value = array_map('trim', explode(',', $value));
+                }
+                $this->_runner->addOption(substr($option, 2), $value);
             }
         }
         
@@ -267,6 +292,7 @@ class PHP_Depend_TextUI_Command
         $this->printUsage();
         
         $l = $this->printLogOptions();
+        $l = $this->printAnalyzerOptions($l);
         
         $suffixOption  = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
         $ignoreOption  = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
@@ -318,19 +344,7 @@ class PHP_Depend_TextUI_Command
             }
             $last = $current;
             
-            
-            
-            $option = str_pad($option, $maxLength, ' ', STR_PAD_RIGHT);
-            echo '  ', $option, ' ';
-            
-            $lines = explode("\n", wordwrap($message, $messageLength, "\n"));
-            echo array_shift($lines);
-            
-            while (($line = array_shift($lines)) !== null) {
-                echo "\n", str_repeat(' ', $maxLength + 3), $line; 
-            }
-            
-            echo "\n";
+            $this->_printOption($option, $message, $maxLength);
         }
         echo "\n";
         
@@ -385,6 +399,91 @@ class PHP_Depend_TextUI_Command
             }
         }
         return $this->_logOptions;
+    }
+    
+    protected function printAnalyzerOptions($length)
+    {
+        $options = $this->collectAnalyzerOptions();
+        if (count($options) === 0) {
+            return $length;
+        }
+        
+        ksort($options);
+        
+        foreach ($options as $option => $info) {
+            
+            if (isset($info['value'])) {
+                if ($info['value'] === '*') {
+                    $option .= '=<*[,...]>';
+                } else {
+                    $option .= '=<value>';
+                }
+            }
+            
+            $this->_printOption($option, $info['message'], $length);
+        }
+        echo "\n";
+        
+        return $length;
+    }
+    
+    protected function collectAnalyzerOptions()
+    {
+        if ($this->_analyzerOptions !== null) {
+            return $this->_analyzerOptions;
+        }
+        $this->_analyzerOptions = array();
+        
+        // Get all include paths
+        $paths = explode(PATH_SEPARATOR, get_include_path());
+        foreach ($paths as $path) {
+            // Get all analyzer configurations
+            $files = glob("{$path}/PHP/Depend/Metrics/*/Analyzer.xml");
+            
+            foreach ($files as $file) {
+
+                // Create a simple xml instance
+                $sxml = simplexml_load_file($file);
+
+                // Check for options
+                if (!isset($sxml->options->option)) {
+                    continue;
+                }
+                
+                foreach ($sxml->options->option as $option) {
+                    $identifier = '--' . (string) $option['name'];
+                    $message    = (string) $option->message;
+                    
+                    $value = null;
+                    if (isset($option['value'])) {
+                        $value = (string) $option['value'];
+                    }
+                    
+                    $this->_analyzerOptions[$identifier] = array(
+                        'message'  =>  $message,
+                        'value'    =>  $value
+                    );
+                }
+            }
+        }
+        return $this->_analyzerOptions;
+    }
+    
+    private function _printOption($option, $message, $length)
+    {
+        // Calculate the max message length
+        $mlength = 77 - $length;
+        
+        $option  = str_pad($option, $length, ' ', STR_PAD_RIGHT);
+        echo '  ', $option, ' ';
+            
+        $lines = explode("\n", wordwrap($message, $mlength, "\n"));
+        echo array_shift($lines);
+            
+        while (($line = array_shift($lines)) !== null) {
+            echo "\n", str_repeat(' ', $length + 3), $line; 
+        }
+        echo "\n";
     }
 
     /**
