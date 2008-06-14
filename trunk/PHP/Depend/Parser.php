@@ -623,7 +623,17 @@ class PHP_Depend_Parser
                 break;
 
             case PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE:
-                $string = !$string;
+                while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE) {
+                    $tokens[] = $this->tokenizer->next();
+                }
+                $tokens[] = $this->tokenizer->next();
+                break;
+                
+            case PHP_Depend_Code_TokenizerI::T_BACKTICK:
+                while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_BACKTICK) {
+                    $tokens[] = $this->tokenizer->next();
+                }
+                $tokens[] = $this->tokenizer->next();
                 break;
 
             default:
