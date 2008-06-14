@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,88 +46,101 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
+require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
 
 /**
- * Dummy implementation of an analyzer.
+ * Collects class and package metrics based on class properties.
+ * 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_NodeAwareI
-{    
+class PHP_Depend_Metrics_CodeRank_PropertyStrategy
+       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
+    implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
+{
     /**
-     * Dummy node metrics.
+     * All found nodes.
      *
-     * @type array<mixed>
-     * @var array(string=>array) $nodeMetrics
+     * @type array<array>
+     * @var array(string=>array) $_nodes
      */
-    protected $nodeMetrics = null;
+    private $_nodes = array();
     
     /**
-     * Constructs a new analyzer dummy instance.
+     * Returns the collected nodes.
      *
-     * @param array(string=>array) $nodeMetrics Dummy node metrics.
+     * @return array(string=>array)
      */
-    public function __construct(array $nodeMetrics = array())
+    public function getCollectedNodes()
     {
-        $this->nodeMetrics = $nodeMetrics;
+        return $this->_nodes;
     }
+    
+    /**
+     * Visits a property node. 
+     *
+     * @param PHP_Depend_Code_Property $property The property class node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitProperty()
+     */
+    public function visitProperty(PHP_Depend_Code_Property $property)
+    {
+        $this->fireStartProperty($property);
+        
+        if (($depClass = $property->getType()) === null) {
+            $this->fireEndProperty($property);
+            return;
+        }
+        
+        $depPackage = $depClass->getPackage();
+            
+        $class   = $property->getParent();
+        $package = $class->getPackage();
 
-    /**
-     * Adds a listener to this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
+        if ($depClass !== $class) {
+            $this->initNode($class);
+            $this->initNode($depClass);
+    
+            $this->_nodes[$class->getUUID()]['in'][]     = $depClass->getUUID();
+            $this->_nodes[$depClass->getUUID()]['out'][] = $class->getUUID();
+        }
+            
+        if ($depPackage !== $package) {
+            $this->initNode($package);
+            $this->initNode($depPackage);
+    
+            $this->_nodes[$package->getUUID()]['in'][]     = $depPackage->getUUID();
+            $this->_nodes[$depPackage->getUUID()]['out'][] = $package->getUUID();
+        }
+        
+        $this->fireEndProperty($property);
     }
     
     /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
-    }
-    
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
-    {
-    }
-    
-    /**
-     * Returns an array with metrics for the requested node.
+     * Initializes the temporary node container for the given <b>$node</b>.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
      * 
-     * @return array(string=>mixed)
-     * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
+     * @return void
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    protected function initNode(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->nodeMetrics[$node->getUUID()])) {
-            return $this->nodeMetrics[$node->getUUID()];
+        if (!isset($this->_nodes[$node->getUUID()])) {
+            $this->_nodes[$node->getUUID()] = array(
+                'in'   =>  array(),
+                'out'  =>  array(),
+                'name'  =>  $node->getName(),
+                'type'  =>  get_class($node)
+            );
         }
-        return array();
     }
-
 }

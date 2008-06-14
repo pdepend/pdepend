@@ -54,7 +54,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/AnalyzerLoaderTest.php';
 require_once dirname(__FILE__) . '/ClassLevel/AnalyzerTest.php';
-require_once dirname(__FILE__) . '/CodeRank/AnalyzerTest.php';
+require_once dirname(__FILE__) . '/CodeRank/AllTests.php';
 require_once dirname(__FILE__) . '/Coupling/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/CyclomaticComplexity/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/Dependency/AnalyzerTest.php';
@@ -94,9 +94,9 @@ class PHP_Depend_Metrics_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics - AllTests');
+        $suite->addTest(PHP_Depend_Metrics_CodeRank_AllTests::suite());
         $suite->addTestSuite('PHP_Depend_Metrics_AnalyzerLoaderTest');
         $suite->addTestSuite('PHP_Depend_Metrics_ClassLevel_AnalyzerTest');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_Coupling_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_Dependency_AnalyzerTest');

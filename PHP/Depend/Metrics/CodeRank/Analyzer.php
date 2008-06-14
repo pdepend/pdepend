@@ -49,7 +49,7 @@
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/CodeRank/InheritanceStrategy.php';
+require_once 'PHP/Depend/Metrics/CodeRank/StrategyFactory.php';
 
 /**
  * Calculates the code ranke metric for classes and packages. 
@@ -73,6 +73,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     const DAMPING_FACTOR = 0.85;
     
+    /**
+     * Option key for the code rank mode.
+     */
+    const STRATEGY_OPTION = 'coderank-mode';
+        
     /**
      * All found nodes.
      *
@@ -125,15 +130,27 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
             
             $this->fireStartAnalyzer();
             
-            $this->_strategies = array(
-                new PHP_Depend_Metrics_CodeRank_InheritanceStrategy()
-            );
+            $factory = new PHP_Depend_Metrics_CodeRank_StrategyFactory();
+            if (isset($this->options[self::STRATEGY_OPTION])) {
+                foreach ($this->options[self::STRATEGY_OPTION] as $identifier) {
+                    $this->_strategies[] = $factory->createStrategy($identifier);
+                }
+            } else {
+                $this->_strategies[] = $factory->createDefaultStrategy();
+            }
+            
+            // Register all listeners
+            foreach ($this->getVisitListeners() as $listener) {
+                foreach ($this->_strategies as $strategy) {
+                    $strategy->addVisitListener($listener);
+                }
+            }
 
             // First traverse package tree
             foreach ($packages as $package) {
                 // Traverse all strategies
                 foreach ($this->_strategies as $strategy) {
-                    $package->accept($strategy);    
+                    $package->accept($strategy);
                 }
             }
             

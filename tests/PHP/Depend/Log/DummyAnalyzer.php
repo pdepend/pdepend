@@ -63,6 +63,17 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 class PHP_Depend_Log_DummyAnalyzer implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
+     * Constructs a new analyzer instance.
+     *
+     * @param array(string=>mixed) $options Global option array, every analyzer
+     *                                      can extract the required options.
+     */
+    public function __construct(array $options = array())
+    {
+        
+    }
+    
+    /**
      * Adds a listener to this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
