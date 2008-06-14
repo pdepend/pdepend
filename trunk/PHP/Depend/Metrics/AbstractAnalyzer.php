@@ -66,12 +66,31 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
+     * Global options array.
+     *
+     * @type array<mixed>
+     * @var array(string=>mixed) $options
+     */
+    protected $options = array();
+    
+    /**
      * List or registered listeners.
      *
      * @type array<PHP_Depend_Metrics_ListenerI>
      * @var array(PHP_Depend_Metrics_ListenerI) $_listeners
      */
     private $_listeners = array();
+    
+    /**
+     * Constructs a new analyzer instance.
+     *
+     * @param array(string=>mixed) $options Global option array, every analyzer
+     *                                      can extract the required options.
+     */
+    public function __construct(array $options = array())
+    {
+        $this->options = $options;
+    }
     
     /**
      * Adds a listener to this analyzer.

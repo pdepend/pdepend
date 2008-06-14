@@ -73,6 +73,16 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
     private $_listeners = array();
     
     /**
+     * Returns an iterator with all registered visit listeners.
+     *
+     * @return Iterator
+     */
+    public function getVisitListeners()
+    {
+        return new ArrayIterator($this->_listeners);
+    }
+    
+    /**
      * Adds a new listener to this node visitor.
      *
      * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The new visit listener.
