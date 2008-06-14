@@ -260,8 +260,8 @@ class PHP_Depend
             throw new RuntimeException('No source directory set.');
         }
         
-        $acceptedTypes  = $this->_createAnalyzerList();
-        $analyzerLoader = new PHP_Depend_Metrics_AnalyzerLoader($acceptedTypes);
+        $accepted = $this->_createAnalyzerList();
+        $loader   = new PHP_Depend_Metrics_AnalyzerLoader($accepted, $this->_options);
         
         $iterator = new AppendIterator();
         
@@ -298,7 +298,7 @@ class PHP_Depend
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
 
         // Append all listeners
-        foreach ($analyzerLoader as $analyzer) {
+        foreach ($loader as $analyzer) {
             foreach ($this->_listeners as $listener) {
                 $analyzer->addAnalyzeListener($listener);
                 
@@ -310,7 +310,7 @@ class PHP_Depend
         
         $this->fireStartAnalyzeProcess();
         
-        foreach ($analyzerLoader as $analyzer) {
+        foreach ($loader as $analyzer) {
             // Add filters if this analyzer is filter aware 
             if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
                 $staticFilter->addFilter($this->_codeFilter);

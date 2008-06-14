@@ -2,7 +2,7 @@
 <analyzer>
   <options>
     <option name="coderank-mode" value="*">
-      <message>Used CodeRank strategies. Comma separated list of 'inheritance'(default), 'properties' and 'methods'.</message>
+      <message>Used CodeRank strategies. Comma separated list of 'inheritance'(default), 'property' and 'method'.</message>
     </option>
   </options>
 </analyzer>
