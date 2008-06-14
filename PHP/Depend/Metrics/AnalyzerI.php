@@ -63,6 +63,14 @@ require_once 'PHP/Depend/Metrics/ListenerI.php';
 interface PHP_Depend_Metrics_AnalyzerI
 {
     /**
+     * Constructs a new analyzer instance.
+     *
+     * @param array(string=>mixed) $options Global option array, every analyzer
+     *                                      can extract the required options.
+     */
+    function __construct(array $options = array());
+    
+    /**
      * Adds a listener to this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.

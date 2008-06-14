@@ -78,7 +78,7 @@ class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
      *
      * @param array(string=>mixed) $projectMetrics Dummy project metrics.
      */
-    public function __construct(array $projectMetrics)
+    public function __construct(array $projectMetrics = array())
     {
         $this->projectMetrics = $projectMetrics;
     }

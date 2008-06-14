@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,88 +46,92 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-
 /**
- * Dummy implementation of an analyzer.
+ * Factory for the different code rank strategies.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_NodeAwareI
-{    
+class PHP_Depend_Metrics_CodeRank_StrategyFactory
+{
     /**
-     * Dummy node metrics.
-     *
-     * @type array<mixed>
-     * @var array(string=>array) $nodeMetrics
+     * The identifier for the inheritance strategy.
      */
-    protected $nodeMetrics = null;
+    const STRATEGY_INHERITANCE = 'inheritance';
     
     /**
-     * Constructs a new analyzer dummy instance.
-     *
-     * @param array(string=>array) $nodeMetrics Dummy node metrics.
+     * The identifier for the property strategy.
      */
-    public function __construct(array $nodeMetrics = array())
+    const STRATEGY_PROPERTY = 'property';
+    
+    /**
+     * The identifier for the method strategy.
+     */
+    const STRATEGY_METHOD = 'method';
+    
+    /**
+     * The default strategy.
+     *
+     * @type string
+     * @var string $_defaultStrategy
+     */
+    private $_defaultStrategy = self::STRATEGY_INHERITANCE;
+    
+    /**
+     * List of all valid properties.
+     *
+     * @type array<string>
+     * @var array(string) $_validStrategies
+     */
+    private $_validStrategies = array(
+        self::STRATEGY_INHERITANCE,
+        self::STRATEGY_METHOD,
+        self::STRATEGY_PROPERTY
+    );
+    
+    /**
+     * Creates the default code rank strategy.
+     *
+     * @return PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
+     */
+    public function createDefaultStrategy()
     {
-        $this->nodeMetrics = $nodeMetrics;
-    }
-
-    /**
-     * Adds a listener to this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
+        return $this->createStrategy($this->_defaultStrategy);
     }
     
     /**
-     * Removes the listener from this analyzer.
+     * Creates a code rank strategy for the given identifier.
      *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * @param string $id The strategy identifier.
      * 
-     * @return void
+     * @return PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
+     * @throws RuntimeException If the given <b>$id</b> is not valid or no
+     *                          matching class declaration exists.
      */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
-    }
-    
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function createStrategy($id)
     {
-    }
-    
-    /**
-     * Returns an array with metrics for the requested node.
-     *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
-     * @return array(string=>mixed)
-     * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
-     */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
-    {
-        if (isset($this->nodeMetrics[$node->getUUID()])) {
-            return $this->nodeMetrics[$node->getUUID()];
+        if (in_array($id, $this->_validStrategies) === false) {
+            throw new RuntimeException("Cannot load file for identifier '{$id}'.");
         }
-        return array();
-    }
+        
+        // Prepare identifier
+        $name = ucfirst(strtolower($id));
 
+        $fileName  = "PHP/Depend/Metrics/CodeRank/{$name}Strategy.php";
+        $className = "PHP_Depend_Metrics_CodeRank_{$name}Strategy";
+
+        include_once $fileName;
+        
+        if (class_exists($className, false) === false) {
+            throw new RuntimeException("Unknown strategy class '{$className}'.");
+        }
+        
+        return new $className();
+    }
 }

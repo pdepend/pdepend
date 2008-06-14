@@ -82,11 +82,12 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * Constructs a new analyzer loader. 
      *
-     * @param array $acceptedTypes Accepted/expected analyzer types. 
+     * @param array(string)        $acceptedTypes Accepted/expected analyzer types.
+     * @param array(string=>mixed) $options       List of cli options. 
      */
-    public function __construct(array $acceptedTypes)
+    public function __construct(array $acceptedTypes, array $options = array())
     {
-        $this->_loadAcceptedAnalyzers($acceptedTypes);
+        $this->_loadAcceptedAnalyzers($acceptedTypes, $options);
     }
     
     /**
@@ -102,12 +103,13 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     
     /**
      * Loads all accepted node analyzers.
-     * 
-     * @param array $acceptedTypes Accepted/expected analyzer types.
+     *
+     * @param array(string)        $acceptedTypes Accepted/expected analyzer types.
+     * @param array(string=>mixed) $options       List of cli options. 
      *
      * @return array(PHP_Depend_Metrics_AnalyzerI)
      */
-    private function _loadAcceptedAnalyzers(array $acceptedTypes)
+    private function _loadAcceptedAnalyzers(array $acceptedTypes, array $options)
     {
         // First init list of installed analyzers
         $this->_initInstalledAnalyzers();
@@ -138,11 +140,11 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
                 continue;
             }
             // Create a new instance
-            $analyzer = new $className();
+            $analyzer = new $className($options);
             
             if ($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI) {
                 $required          = $analyzer->getRequiredAnalyzers();
-                $requiredAnalyzers = $this->_loadAcceptedAnalyzers($required);
+                $requiredAnalyzers = $this->_loadAcceptedAnalyzers($required, $options);
                 
                 foreach ($requiredAnalyzers as $requiredAnalyzer) {
                     $analyzer->addAnalyzer($requiredAnalyzer);
