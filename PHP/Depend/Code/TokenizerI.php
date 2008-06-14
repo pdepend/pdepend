@@ -782,7 +782,7 @@ interface PHP_Depend_Code_TokenizerI
     const T_NAMESPACE = 138;
     
     /**
-     * Marks a part of a string.
+     * Marks an escape token.
      */
     const T_ENCAPSED_AND_WHITESPACE = 139;
     
