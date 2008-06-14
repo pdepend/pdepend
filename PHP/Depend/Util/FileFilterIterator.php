@@ -65,7 +65,8 @@ class PHP_Depend_Util_FileFilterIterator extends FilterIterator
     /**
      * The associated filter object.
      *
-     * @var unknown_type
+     * @type PHP_Depend_Util_FileFilterI
+     * @var PHP_Depend_Util_FileFilterI $filter
      */
     protected $filter = null;
     
