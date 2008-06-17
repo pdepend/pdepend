@@ -356,7 +356,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         $methods = array();
         // First collect all methods of the context class
         foreach ($class->getMethods() as $method) {
-            $methods[$method->getName()] = true;
+            $methods[$method->getName()] = $this->_cyclomaticAnalyzer->getCCN2($method);
         }
 
         // Get parent class and collect all non private methods.
@@ -366,12 +366,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             // Count all methods
             foreach ($parent->getMethods() as $method) {
                 if (!$method->isPrivate() && !isset($methods[$method->getName()])) {
-                    $methods[$method->getName()] = true;
+                    $methods[$method->getName()] = $this->_cyclomaticAnalyzer->getCCN2($method);
                 }
             }
             // Fetch parent class
             $parent = $parent->getParentClass();
         }
-        return count($methods);
+        return array_sum($methods);
     }
 }
