@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0"
-    xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
-                        http://pear.php.net/dtd/tasks-1.0.xsd
-                        http://pear.php.net/dtd/package-2.0
-                        http://pear.php.net/dtd/package-2.0.xsd">
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                         http://pear.php.net/dtd/tasks-1.0.xsd                         http://pear.php.net/dtd/package-2.0                         http://pear.php.net/dtd/package-2.0.xsd">
   <name>PHP_Depend</name>
   <channel>pear.xplib.de</channel>
   <summary>PHP_Depend design quality metrics for PHP packages</summary>
@@ -18,14 +12,14 @@ software JDepend.
     <email>mapi@manuel-pichler.de</email>
     <active>yes</active>
   </lead>
-  <date>2008-02-17</date>
+  <date>2008-06-16</date>
   <version>
-    <release>0.1.2</release>
-    <api>0.1.0</api>
+    <release>0.8.0beta1</release>
+    <api>1.0.0</api>
   </version>
   <stability>
-    <release>alpha</release>
-    <api>alpha</api>
+    <release>beta</release>
+    <api>beta</api>
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
@@ -35,221 +29,721 @@ software JDepend.
   </notes>
   <contents>
     <dir name="/">
+      <file name="pdepend.bat" role="script">
+        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+        <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
+        <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config"/>
+      </file>
+      <file name="pdepend.php" role="script">
+        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+        <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
+        <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
+      </file>
       <dir name="PHP">
         <dir name="Depend">
-          <dir name="Code">
-            <dir name="Tokenizer">
-              <file name="InternalTokenizer.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-            </dir>
-            <file name="Class.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+          <dir name="TextUI">
+            <file name="ResultPrinter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="DefaultBuilder.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="Command.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="DependencyNode.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="Function.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="Method.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="Node.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="NodeBuilder.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="NodeIterator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="NodeVisitor.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="Package.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
-            <file name="TokenizerI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="Runner.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
           <dir name="Metrics">
-            <file name="PackageMetrics.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <dir name="NodeCount">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Coupling">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="CyclomaticComplexity">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Hierarchy">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="NodeLoc">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="CodeRank">
+              <file name="MethodStrategy.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="InheritanceStrategy.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="StrategyFactory.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="PropertyStrategy.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="CodeRankStrategyI.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Analyzer.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Inheritance">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Dependency">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="ClassLevel">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="ListenerI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="PackageMetricsVisitor.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="AnalyzerI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-          </dir>
-          <dir name="Renderer">
-            <file name="GdChartRenderer.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="FilterAwareI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="XMLRenderer.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="AbstractAnalyzer.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ProjectAwareI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AnalyzerLoader.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AggregateAnalyzerI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NodeAwareI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
           <dir name="Util">
-            <file name="CompositeFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
-            </file>
             <file name="ExcludePathFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="UUID.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CompositeFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="FileExtensionFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="FileFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="ImageConvert.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="FileFilterIterator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="FileFilterI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Log">
+            <dir name="Summary">
+              <file name="Xml.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Xml.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Overview">
+              <file name="pyramid.svg" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Pyramid.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Pyramid.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Jdepend">
+              <file name="Chart.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Xml.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Chart.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Xml.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="LoggerI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="LoggerFactory.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Code">
+            <dir name="NodeIterator">
+              <file name="TypeFilter.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="StaticFilter.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="DefaultPackageFilter.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="PackageFilter.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="CompositeFilter.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="FilterI.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="NodeVisitor">
+              <file name="AbstractListener.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="ListenerI.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="AbstractVisitor.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Tokenizer">
+              <file name="InternalTokenizer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="DefaultBuilder.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Method.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NodeIterator.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Package.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NodeI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NodeVisitorI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Function.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="File.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AbstractItem.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="VisibilityAwareI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AbstractCallable.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Class.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Interface.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="DependencyNodeI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Property.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AbstractType.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NodeBuilderI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="TokenizerI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
           <file name="Parser.php" role="php">
-            <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="Renderer.php" role="php">
-            <tasks:replace from="@package_version@" to="version" type="package-info" />
+          <file name="ProcessListenerI.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
         <file name="Depend.php" role="php">
-          <tasks:replace from="@package_version@" to="version" type="package-info" />
+          <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
       </dir>
       <dir name="tests/PHP/Depend">
-            <dir name="data">
-              <dir name="bugs">
-                <file name="01.php" role="test" />
-              </dir>
-              <dir name="code-5.2.x">
-                <file name="package1.php" role="test" />
-                <file name="package2.php" role="test" />
-                <file name="package3.php" role="test" />
-              </dir>
-              <dir name="code-5.3.x">
-                <file name="pkg3FooI.php" role="test" />
-              </dir>
-              <dir name="code-with-cycle">
-                <file name="code.php" role="test" />
-              </dir>
-              <dir name="code-without-cycle">
-                <file name="code.php" role="test" />
-              </dir>
-              <file name="classes.php" role="test" />
-              <file name="func_class.php" role="test" />
-              <file name="func_code.php" role="test" />
-              <file name="invalid_class_with_code.txt" role="test" />
-              <file name="invalid_function1.txt" role="test" />
-              <file name="invalid_function2.txt" role="test" />
-              <file name="mixed_code.php" role="test" />
-              <file name="not_closed_class.txt" role="test" />
-              <file name="not_closed_function.txt" role="test" />
-            </dir>
-            <dir name="Code">
-              <file name="AbstractDependencyTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
+        <dir name="Log">
+          <dir name="Summary">
+            <dir name="_expected">
+              <file name="project-aware-result-set-without-code.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="AllTests.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
+              <file name="node-aware-result-set.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="ClassTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="DefaultBuilderTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="FunctionTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="InternalTokenizerTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="MethodTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="NodeIteratorTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="PackageTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="TestNodeVisitor.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
+              <file name="xml-log-without-metrics.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="Metrics">
-              <file name="AllTests.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="PackageMetricsVisitorTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="AnalyzerProjectAwareDummy.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AnalyzerNodeAwareDummy.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="XmlTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Overview">
+            <file name="NodeCountAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CouplingAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="InheritanceAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="PyramidTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NodeLocAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CyclomaticComplexityAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Dummy">
+            <file name="Logger.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Logger.xml" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Jdepend">
+            <dir name="_expected">
+              <file name="pdepend-log.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="Renderer">
-              <file name="AbstractRendererTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="AllTests.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="GdChartRendererTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="ref.xml" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="XMLRendererTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-            </dir>
-            <dir name="Util">
-              <file name="AllTests.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="CompositeFilterTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="DummyFilter.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="ExcludePathFilterTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="FileExtensionFilterTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-              <file name="FileFilterIteratorTest.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info" />
-              </file>
-            </dir>
-            <file name="AbstractTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="ChartTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="XmlTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="DummyAnalyzer.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="LoggerFactoryTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="Code">
+          <dir name="NodeIterator">
+            <file name="PackageFilterTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="AllTests.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="DependTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="StaticFilterTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ParserTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info" />
+            <file name="DefaultPackageFilterTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+          </dir>
+          <dir name="NodeVisitor">
+            <file name="DefaultVisitorTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="TestNodeVisitor.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AllTests.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="DefaultVisitorDummy.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="TestListener.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="DefaultListenerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="AbstractDependencyTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="InterfaceTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="PackageTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="FileTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="FunctionTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AbstractItemTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="MethodTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ClassTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="NodeIteratorTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="DefaultBuilderTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="PropertyTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="InternalTokenizerTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="_code">
+          <dir name="ccn">
+            <file name="method.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="function.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="code-without-cycle">
+            <file name="code.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="php-5.3">
+            <file name="new.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="code-5.2.x">
+            <file name="package1.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="package2.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="package3.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="coderank">
+            <file name="property.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="code-5.3.x">
+            <file name="pkg1FooI.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg1Bar.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg3FooI.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg1Foo.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg2Barfoo.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg2Foobar.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg2Bar.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg2FooI.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg1Foobar.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="pkg1Barfoo.txt" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="comments">
+            <file name="method3.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="function1.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="method.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="method2.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="property2.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="function.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="property.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="coupling">
+            <file name="method.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="function.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="property.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="class.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="code-with-cycle">
+            <file name="code.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="bugs">
+            <file name="12.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="11.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="15.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="10.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="14.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="08.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="09.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="01.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="classes.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="invalid_class_with_code.txt" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="function.inc" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="class_and_interface_comment.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="mixed_code.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="invalid_function1.txt" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="package_file_level.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="not_closed_class.txt" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="package_subpackage_support.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="invalid_function2.txt" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="not_closed_function.txt" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="func_code.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="func_class.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="Util">
+          <dir name="_input">
+            <file name="pyramid.svg" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="FileFilterIteratorTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="FileExtensionFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="DummyFilter.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ImageConvertTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ExcludePathFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="CompositeFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="Metrics">
+          <dir name="Coupling">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="CyclomaticComplexity">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Hierarchy">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="NodeCount">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="CodeRank">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="PropertyStrategyTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AllTests.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Dependency">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Inheritance">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="NodeLoc">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="ClassLevel">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="AnalyzerLoaderTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="TextUI">
+          <file name="RunnerTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="CommandTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <file name="DependTest.php" role="test">
+          <tasks:replace from="@package_version@" to="version" type="package-info"/>
+        </file>
+        <file name="AllTests.php" role="test">
+          <tasks:replace from="@package_version@" to="version" type="package-info"/>
+        </file>
+        <file name="ParserTest.php" role="test">
+          <tasks:replace from="@package_version@" to="version" type="package-info"/>
+        </file>
+        <file name="AbstractTest.php" role="test">
+          <tasks:replace from="@package_version@" to="version" type="package-info"/>
+        </file>
       </dir>
-      <file name="pdepend.bat" role="script">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-        <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
-        <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />      
-      </file>
-      <file name="pdepend.php" role="script">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-        <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
-        <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />      
-      </file>
     </dir>
   </contents>
   <dependencies>
@@ -270,8 +764,15 @@ software JDepend.
         <name>spl</name>
       </extension>
     </required>
+    <optional>
+      <package>
+        <name>imagick</name>
+        <channel>pecl.php.net</channel>
+        <min>2.2.0b2</min>
+        <providesextension>imagick</providesextension>
+      </package>
+    </optional>
   </dependencies>
-
   <phprelease>
     <installconditions>
       <os>
@@ -279,18 +780,16 @@ software JDepend.
       </os>
     </installconditions>
     <filelist>
-      <install as="pdepend" name="pdepend.php" />
-      <install as="pdepend.bat" name="pdepend.bat" />
+      <install as="pdepend" name="pdepend.php"/>
+      <install as="pdepend.bat" name="pdepend.bat"/>
     </filelist>
   </phprelease>
-
   <phprelease>
     <filelist>
-      <install as="pdepend" name="pdepend.php" />
-      <ignore name="pdepend.bat" />
+      <install as="pdepend" name="pdepend.php"/>
+      <ignore name="pdepend.bat"/>
     </filelist>
   </phprelease>
-
   <changelog>
     <release>
       <lead>
@@ -313,7 +812,6 @@ software JDepend.
 - Initial release.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -335,6 +833,5 @@ software JDepend.
 - Checkout and test cases fixed for windows users. 
       </notes>
     </release>
-    
   </changelog>
 </package>
