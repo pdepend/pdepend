@@ -4,7 +4,7 @@
   <channel>pear.xplib.de</channel>
   <summary>PHP_Depend design quality metrics for PHP packages</summary>
   <description>PHP_Depend is an adaption of the Java design quality metrics 
-software JDepend.
+software JDepend and the NDepend metric tool.
   </description>
   <lead>
     <name>Manuel Pichler</name>
@@ -12,7 +12,7 @@ software JDepend.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2008-06-16</date>
+  <date>2008-06-18</date>
   <version>
     <release>0.8.0beta1</release>
     <api>1.0.0</api>
