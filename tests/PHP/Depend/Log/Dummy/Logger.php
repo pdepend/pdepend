@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Depend/Log/LoggerI.php';
+require_once 'PHP/Depend/Log/CodeAwareI.php';
 
 /**
  * Dummy logger for testing
@@ -60,7 +61,9 @@ require_once 'PHP/Depend/Log/LoggerI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Dummy_Logger implements PHP_Depend_Log_LoggerI
+class PHP_Depend_Log_Dummy_Logger 
+    implements PHP_Depend_Log_LoggerI,
+               PHP_Depend_Log_CodeAwareI
 {
     /**
      * The output file name.

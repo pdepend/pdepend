@@ -48,6 +48,7 @@
 
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
+require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
@@ -66,7 +67,8 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  */
 class PHP_Depend_Log_Summary_Xml 
        extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
-    implements PHP_Depend_Log_LoggerI
+    implements PHP_Depend_Log_LoggerI,
+               PHP_Depend_Log_CodeAwareI
 {
     /**
      * The log output file.

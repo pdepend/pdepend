@@ -338,7 +338,10 @@ class PHP_Depend
         $this->fireStartLogProcess();
 
         foreach ($this->loggers as $logger) {
-            $logger->setCode($packages);
+            // Check for code aware loggers
+            if ($logger instanceof PHP_Depend_Log_CodeAwareI) {
+                $logger->setCode($packages);
+            }
             $logger->close();
         }
         
