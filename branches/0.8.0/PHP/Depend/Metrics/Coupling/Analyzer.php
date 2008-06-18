@@ -261,7 +261,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $callT = array(
+        $callT  = array(
             PHP_Depend_Code_TokenizerI::T_STRING,
             PHP_Depend_Code_TokenizerI::T_VARIABLE
         );

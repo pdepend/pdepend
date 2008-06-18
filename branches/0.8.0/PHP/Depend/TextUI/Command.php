@@ -401,6 +401,13 @@ class PHP_Depend_TextUI_Command
         return $this->_logOptions;
     }
     
+    /**
+     * Prints the analyzer options.
+     *
+     * @param integer $length Length of the longest option.
+     * 
+     * @return integer
+     */
     protected function printAnalyzerOptions($length)
     {
         $options = $this->collectAnalyzerOptions();
@@ -427,6 +434,11 @@ class PHP_Depend_TextUI_Command
         return $length;
     }
     
+    /**
+     * Collects cli options for installed analyzers.
+     *
+     * @return array(string=>array)
+     */
     protected function collectAnalyzerOptions()
     {
         if ($this->_analyzerOptions !== null) {
@@ -469,12 +481,21 @@ class PHP_Depend_TextUI_Command
         return $this->_analyzerOptions;
     }
     
+    /**
+     * Prints a single option.
+     *
+     * @param string  $option  The option identifier.
+     * @param string  $message The option help message.
+     * @param integer $length  The length of the longest option.
+     * 
+     * @return void
+     */
     private function _printOption($option, $message, $length)
     {
         // Calculate the max message length
         $mlength = 77 - $length;
         
-        $option  = str_pad($option, $length, ' ', STR_PAD_RIGHT);
+        $option = str_pad($option, $length, ' ', STR_PAD_RIGHT);
         echo '  ', $option, ' ';
             
         $lines = explode("\n", wordwrap($message, $mlength, "\n"));
