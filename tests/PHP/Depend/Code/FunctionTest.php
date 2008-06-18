@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008, Manuel Pichler <mapi@pmanuel-pichler.de>.
+ * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
@@ -56,7 +56,7 @@ require_once 'PHP/Depend/Code/Package.php';
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
