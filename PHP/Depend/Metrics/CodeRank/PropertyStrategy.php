@@ -51,7 +51,6 @@ require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
 
 /**
  * Collects class and package metrics based on class properties.
- * 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
