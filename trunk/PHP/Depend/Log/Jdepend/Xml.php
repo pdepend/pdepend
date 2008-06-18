@@ -49,6 +49,7 @@
 require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
+require_once 'PHP/Depend/Log/CodeAwareI.php';
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -65,7 +66,8 @@ require_once 'PHP/Depend/Log/LoggerI.php';
  */
 class PHP_Depend_Log_Jdepend_Xml 
        extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
-    implements PHP_Depend_Log_LoggerI
+    implements PHP_Depend_Log_LoggerI,
+               PHP_Depend_Log_CodeAwareI
 {
     protected $fileName = '';
     

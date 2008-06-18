@@ -50,7 +50,10 @@ require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
 
 /**
+ * This logger generates a system overview pyramid, as described in the book
+ * <b>Object-Oriented Metrics in Practice</b>.
  * 
+ * http://www.springer.com/computer/programming/book/978-3-540-24429-5
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -137,18 +140,6 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
     public function __construct($fileName)
     {
         $this->_fileName = $fileName;
-    }
-    
-    /**
-     * Sets the context code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
-     * 
-     * @return void
-     */
-    public function setCode(PHP_Depend_Code_NodeIterator $code)
-    {
-        $this->_code = $code;
     }
     
     /**
