@@ -9,7 +9,7 @@ software JDepend.
   <lead>
     <name>Manuel Pichler</name>
     <user>mapi</user>
-    <email>mapi@manuel-pichler.de</email>
+    <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
   <date>2008-06-16</date>
@@ -23,9 +23,18 @@ software JDepend.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Simple support for cycles added.
-- File and directory based input filtering implemented.
-- Many minor bugfixes. 
+- New metrics implemented
+  - ClassLevel (wmc, vars, dit, csz, ...)
+  - CodeRank (cr, rcr - PageRank adaption for classes and packages)
+  - Coupling (Fanout, calls)
+  - CyclomaticComplexity (CCN, CCN2)
+  - Dependency (ac, cc, ce, ca, d, a, i)
+  - Hierarchy (clsa, clsc, roots, leafs, maxDIT)
+  - Inheritance (andc, ahh)
+  - NodeCount (nop, noc, nof, noi, nom)
+  - NodeLoc (loc, cloc, ncloc)
+- Pluggable logger architecture.
+- Pluggable metric analyzer architecture.
   </notes>
   <contents>
     <dir name="/">
@@ -795,7 +804,7 @@ software JDepend.
       <lead>
         <name>Manuel Pichler</name>
         <user>mapi</user>
-        <email>mapi@manuel-pichler.de</email>
+        <email>mapi@pdepend.org</email>
         <active>yes</active>
       </lead>
       <version>
@@ -816,7 +825,7 @@ software JDepend.
       <lead>
         <name>Manuel Pichler</name>
         <user>mapi</user>
-        <email>mapi@manuel-pichler.de</email>
+        <email>mapi@pdepend.org</email>
         <active>yes</active>
       </lead>
       <version>
