@@ -1,3 +1,10 @@
+PHP_Depend 0.8.0beta2
+---------------------
+
+- #18 + Introduce a CodeAware interface for loggers.
+- #23 + Use an SVG-Template for the jdepend chart.
+- #24 + There is an endless loop for inline html.
+
 PHP_Depend 0.8.0beta1
 ---------------------
 
