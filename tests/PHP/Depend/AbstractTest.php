@@ -47,8 +47,6 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
-
 /**
  * Abstract test case implementation for the PHP_Depend package.
  *
@@ -96,6 +94,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $path  = realpath(dirname(__FILE__) . '/../..') ;
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
+        
+        include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
     }
     
     /**
