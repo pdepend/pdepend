@@ -47,6 +47,8 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
+require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+
 /**
  * Abstract test case implementation for the PHP_Depend package.
  *
