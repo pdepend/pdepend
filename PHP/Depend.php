@@ -294,6 +294,14 @@ class PHP_Depend
         
         $this->fireEndParseProcess($this->nodeBuilder);
         
+        if ($this->nodeBuilder->getPackages()->count() === 1) {
+            $message = "The parser doesn't detect package informations "
+                     . "within the analyzed project, please check the "
+                     . "documentation blocks for @package-annotations.";
+                     
+            throw new RuntimeException($message);
+        }
+        
         // Get global filter collection
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
 
