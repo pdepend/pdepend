@@ -46,6 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/NodeI.php';
+require_once 'PHP/Depend/Util/UUID.php';
+
 /**
  * This class provides an interface to a single source file.
  *

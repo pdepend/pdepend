@@ -364,8 +364,20 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         $this->index  = 0;
         $this->count  = 0;
         
+        // Replace short open tags, it produces bugs.
+        $source = $this->sourceFile->getSource();
+        $source = str_replace('<?=', '<?php echo ', $source);
+        
+        $tokens = token_get_all($source);
+        reset($tokens);
+        
+        // The current line number
         $line = 1;
-        foreach (token_get_all($this->sourceFile->getSource()) as $token) {
+        
+        // Number of skippend lines
+        $skippedLines = 0;
+
+        while (($token = current($tokens)) !== false) {
             $newToken = null;
             if (is_string($token)) {
                 if (isset(self::$literalMap[$token])) {
@@ -376,6 +388,27 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
                     throw new RuntimeException( "Unexpected token '{$token}'." );
                     // @codeCoverageIgnoreEnd
                 }
+            } else if ($token[0] === T_CLOSE_TAG) {
+                // Create a new token instance
+                $newToken = array(self::$tokenMap[$token[0]], $token[1]);
+
+                // Fetch next token
+                $token = (array) next($tokens);
+                    
+                // Skipp all non open tags
+                while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
+                       $token[0] !== T_OPEN_TAG &&
+                       $token[0] !== false) {
+
+                    // Count skipped lines
+                    $tokenContent  = (isset($token[1]) ? $token[1] : $token[0]);
+                    $skippedLines += substr_count($tokenContent, "\n");
+                    
+                    $token = (array) next($tokens);
+                }
+                
+                // Set internal pointer one back
+                prev($tokens);
             } else if ($token[0] === T_WHITESPACE) {
                 $line += substr_count($token[1], "\n");
             } else {
@@ -400,8 +433,13 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
                 $this->tokens[] = $newToken;
                 
                 // Count new line tokens.
-                $line += substr_count($newToken[1], "\n");
+                $line += substr_count($newToken[1], "\n") + $skippedLines;
             }
+            
+            next($tokens);
+            
+            // Rest skipped lines
+            $skippedLines = 0;
         }
         
         $this->count = count($this->tokens);
