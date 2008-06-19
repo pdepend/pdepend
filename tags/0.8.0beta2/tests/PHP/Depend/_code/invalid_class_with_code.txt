@@ -1,0 +1,6 @@
+<?php
+class Foo {
+    function __construct(Bar $bar) {
+        $foo = new Foo(new Bar());    
+    }
+$foo = new Foo(new Bar());

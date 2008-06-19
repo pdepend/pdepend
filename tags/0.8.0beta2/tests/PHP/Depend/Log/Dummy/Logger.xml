@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logger>
+  <message>Dummy logger implementation.</message>
+  <analyzers>
+    <type match="PHP_Depend_Metrics_NodeAwareI" />
+  </analyzers>
+</logger>
