@@ -49,6 +49,7 @@
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
+require_once 'PHP/Depend/Util/ImageConvert.php';
 
 /**
  * Generates a chart with the aggregated metrics. 
@@ -138,76 +139,78 @@ class PHP_Depend_Log_Jdepend_Chart
      */
     public function close()
     {
-        $size = 40;
-
-        $im = imagecreatetruecolor(13 * $size, 13 * $size);
-
-        $red    = imagecolorallocate($im, 67, 118, 16);
-        $orange = imagecolorallocate($im, 252, 175, 62);
-        $green  = imagecolorallocate($im, 139, 226, 52);
-        $white  = imagecolorallocate($im, 255, 255, 255);
-        $gray   = imagecolorallocate($im, 85, 87, 83);
-        $dgray  = imagecolorallocate($im, 46, 52, 54);
-        //$lgray  = imagecolorallocate($im, 186, 189, 182);
-
         $bias = 0.1;
 
-        imagefill($im, 0, 0, $white);
-        imagerectangle($im, $size, $size, 12 * $size, 12 * $size, $gray);
-
-        for ($n = 0.0, $i = ($size + ($size / 2)); $i < (12 * $size); $n += 0.1, $i += $size) {
-            
-            imageline($im, $size, $i, ( 12 * $size ), $i, $gray);
-            imageline($im, $i, $size, $i, ( 12 * $size ), $gray);
-
-            imageline($im, ($size - 2), $i, ($size + 2), $i, $dgray);
-            imageline($im, $i, ((12 * $size) - 2), $i, ((12 * $size) + 2), $dgray);
-
-            $text = sprintf('%.1f', $n);
-
-            imagestring($im, 1, floor($size / 2), (13 * $size) - $i - 4, $text, $dgray);
-            imagestring($im, 1, $i - 4, ceil($size * 12.25), $text, $dgray);
-        }
-
-        $text = 'Abstraction';
-        imagestring($im, 2, 6 * $size, floor(12.5 * $size), $text, $dgray);
+        $svg = new DOMDocument('1.0', 'UTF-8');
+        $svg->load(dirname(__FILE__) . '/chart.svg');
         
-        $text = 'Instability';
-        imagestringup($im, 2, floor($size / 10), floor(7.5 * $size), $text, $dgray);
-
-        imageline($im, $size, $size, (12 * $size), (12 * $size), $red);
-
+        $bad   = $svg->getElementById('jdepend.bad');
+        $good  = $svg->getElementById('jdepend.good');
+        $layer = $svg->getElementById('jdepend.layer');
+        
+        $max = 0;
+        $min = 0;
+        
+        $items = array();
         foreach ($this->_code as $package) {
-            
             $metrics = $this->_analyzer->getStats($package);
             
-            $s = $metrics['cc']; 
-               + $metrics['ac'];
-            $d = (sqrt($s) * $size) / sqrt($size);
-
-            $A = $metrics['a'];
-            $I = $metrics['i'];
-
-            $x = $size + ceil($A * (10 * $size)) + ($size / 2);
-            $y = $size + ceil(10.5 * $size) + ($I * (-10 * $size));
-
-            if ($metrics['d'] < $bias) {
-                $color = $green;
-            } else {
-                $color = $orange;
+            $size = $metrics['cc'] + $metrics['ac'];
+            if ($size > $max) {
+                $max = $size;
+            } else if ($min === 0 || $size < $min) {
+                $min = $size;
             }
-
-            imagefilledarc($im, $x, $y, $d, $d, 0, 0, $color, IMG_ARC_PIE);
-            imagearc($im, $x, $y, $d, $d, 0, 0, $dgray);
-                
-            $x += ceil($d / 2);
-            $y -= $d;
-                
-            imagestring($im, 2, $x, $y, $package->getName(), $dgray);
+            
+            $items[] = array(
+                'size'         =>  $size,
+                'abstraction'  =>  $metrics['a'],
+                'instability'  =>  $metrics['i'],
+                'distance'     =>  $metrics['d'],
+                'name'         =>  $package->getName()
+            );
         }
 
-        imagepng($im, $this->_fileName);
-        imagedestroy($im);
+        $diff = (($max - $min) / 10);
+        
+        // Sort items by size
+        usort($items, create_function('$a, $b', 'return ($a["size"] - $b["size"]);'));
+
+        foreach ($items as $item) {
+            if ($item['distance'] < $bias) {
+                $ellipse = $good->cloneNode(true);
+            } else {
+                $ellipse = $bad->cloneNode(true);
+            }
+            $r = 15;
+            if ($diff !== 0) {
+                $r = 5 + (($item['size'] - $min) / $diff);
+            }
+            
+            $a = $r / 15;
+            $e = (50 - $r) + ($item['abstraction'] * 320);
+            $f = (20 - $r + 190) - ($item['instability'] * 190);
+            
+            $transform = "matrix({$a}, 0, 0, {$a}, {$e}, {$f})";
+
+            $ellipse->removeAttribute('xml:id');
+            $ellipse->setAttribute('id', uniqid('pdepend_'));
+            $ellipse->setAttribute('title', $item['name']);
+            $ellipse->setAttribute('transform', $transform);
+            
+            $layer->appendChild($ellipse);           
+        }
+
+        $bad->parentNode->removeChild($bad);
+        $good->parentNode->removeChild($good);
+        
+        $temp = sys_get_temp_dir() . '/' . uniqid('pdepend_') . '.svg';
+        $svg->save($temp);
+        
+        PHP_Depend_Util_ImageConvert::convert($temp, $this->_fileName);
+        
+        // Remove temp file
+        unlink($temp);
     }
     
 }
