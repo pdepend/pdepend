@@ -87,7 +87,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.5"
-     inkscape:cx="195"
+     inkscape:cx="138.95468"
      inkscape:cy="125"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -538,6 +538,17 @@
          id="tspan4610"
          x="-126.09961"
          y="10.589844">Instability</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L"
+       x="313.30417"
+       y="246.10596"
+       id="text2692"><tspan
+         sodipodi:role="line"
+         id="tspan2694"
+         x="313.30417"
+         y="246.10596"
+         style="font-size:9px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#2e3436;font-family:Arial;-inkscape-font-specification:Arial Italic">Generated  by PHP_Depend</tspan></text>
     <ellipse
        sodipodi:ry="15"
        sodipodi:rx="15"
