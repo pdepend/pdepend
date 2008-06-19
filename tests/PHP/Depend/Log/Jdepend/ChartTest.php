@@ -176,6 +176,10 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      */
     public function testGeneratesImageFile()
     {
+        if (extension_loaded('imagick') === false) {
+            $this->markTestSkipped('No pecl/imagick extension.');
+        }
+        
         $fileName = sys_get_temp_dir() . '/jdepend-test-out.png';
         if (file_exists($fileName)) {
             unlink($fileName);
