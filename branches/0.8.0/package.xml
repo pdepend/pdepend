@@ -12,9 +12,9 @@ software JDepend and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2008-06-18</date>
+  <date>2008-06-19</date>
   <version>
-    <release>0.8.0beta1</release>
+    <release>0.8.0beta2</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -23,18 +23,9 @@ software JDepend and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- New metrics implemented
-  - ClassLevel (wmc, vars, dit, csz, ...)
-  - CodeRank (cr, rcr - PageRank adaption for classes and packages)
-  - Coupling (Fanout, calls)
-  - CyclomaticComplexity (CCN, CCN2)
-  - Dependency (ac, cc, ce, ca, d, a, i)
-  - Hierarchy (clsa, clsc, roots, leafs, maxDIT)
-  - Inheritance (andc, ahh)
-  - NodeCount (nop, noc, nof, noi, nom)
-  - NodeLoc (loc, cloc, ncloc)
-- Pluggable logger architecture.
-- Pluggable metric analyzer architecture.
+- #18 + Introduce a CodeAware interface for loggers.
+- #23 + Use an SVG-Template for the jdepend chart.
+- #24 + There is an endless loop for inline html.
   </notes>
   <contents>
     <dir name="/">
@@ -174,14 +165,6 @@ software JDepend and the NDepend metric tool.
             </file>
           </dir>
           <dir name="Log">
-            <dir name="Summary">
-              <file name="Xml.xml" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="Xml.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
             <dir name="Overview">
               <file name="pyramid.svg" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -193,11 +176,22 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <dir name="Summary">
+              <file name="Xml.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Xml.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <dir name="Jdepend">
               <file name="Chart.xml" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="Xml.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="chart.svg" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="Chart.php" role="php">
@@ -211,6 +205,9 @@ software JDepend and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="LoggerFactory.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CodeAwareI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -375,6 +372,9 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <file name="DependencyAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="ChartTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -593,6 +593,9 @@ software JDepend and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="08.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="24.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="09.php" role="test">
@@ -840,6 +843,38 @@ software JDepend and the NDepend metric tool.
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
 - Checkout and test cases fixed for windows users. 
+      </notes>
+    </release>
+    <release>
+      <lead>
+        <name>Manuel Pichler</name>
+        <user>mapi</user>
+        <email>mapi@pdepend.org</email>
+        <active>yes</active>
+      </lead>
+      <version>
+        <release>0.8.0beta1</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>beta</api>
+      </stability>
+      <date>2008-06-18</date>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- New metrics implemented
+  - ClassLevel (wmc, vars, dit, csz, ...)
+  - CodeRank (cr, rcr - PageRank adaption for classes and packages)
+  - Coupling (Fanout, calls)
+  - CyclomaticComplexity (CCN, CCN2)
+  - Dependency (ac, cc, ce, ca, d, a, i)
+  - Hierarchy (clsa, clsc, roots, leafs, maxDIT)
+  - Inheritance (andc, ahh)
+  - NodeCount (nop, noc, nof, noi, nom)
+  - NodeLoc (loc, cloc, ncloc)
+- Pluggable logger architecture.
+- Pluggable metric analyzer architecture.
       </notes>
     </release>
   </changelog>
