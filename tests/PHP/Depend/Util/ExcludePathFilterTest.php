@@ -94,7 +94,8 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      */
     public function testExcludePathFilterWithDirectory()
     {
-        $filter = new PHP_Depend_Util_ExcludePathFilter(array('/code-5.2.x/'));
+        $files  = array('/code-5.2.x/', '/code-without-comments');
+        $filter = new PHP_Depend_Util_ExcludePathFilter($files);
         $it     = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
         );
@@ -122,6 +123,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
             array(
                 '/code-5.3.x/',
                 '/code-5.2.x/package1.php',
+                '/code-without-comments/',
                 '/function.inc'
             )
         );

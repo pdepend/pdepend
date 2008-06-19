@@ -121,7 +121,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that {@PHP_Depend::analyzer()} throws an exception if no source
+     * Tests that {@PHP_Depend::analyze()} throws an exception if no source
      * directory was set.
      *
      * @return void
@@ -131,6 +131,26 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend = new PHP_Depend();
         $this->setExpectedException('RuntimeException', 'No source directory set.');
         $pdepend->analyze();
+    }
+    
+    /**
+     * Tests that {@PHP_Depend::analyze()} throws an exception if no custom
+     * packages exist.
+     *
+     * @return void
+     */
+    public function testAnalyzerThrowsAnExceptionIfTheParserDoesntDetectCustomPackages()
+    {
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
+        
+        $message = "The parser doesn't detect package informations within the "
+                 . "analyzed project, please check the documentation blocks for "
+                 . "@package-annotations.";
+        
+        $this->setExpectedException('RuntimeException', $message);
+        
+        $pdepend->analyze();        
     }
     
     /**
