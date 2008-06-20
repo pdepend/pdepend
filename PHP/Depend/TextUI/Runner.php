@@ -120,6 +120,14 @@ class PHP_Depend_TextUI_Runner
     private $_withoutAnnotations = false;
     
     /**
+     * Should PHP_Depend treat <b>+global</b> as a regular project package?
+     *
+     * @type boolean
+     * @var boolean $_supportBadDocumentation
+     */
+    private $_supportBadDocumentation = false;
+    
+    /**
      * List of log identifiers and log files.
      *
      * @type array<string>
@@ -188,13 +196,25 @@ class PHP_Depend_TextUI_Runner
     }
     
     /**
-     * Should the parse ignore doc comment annotations?
+     * Should the parser ignore doc comment annotations?
      *
      * @return void
      */
     public function setWithoutAnnotations()
     {
         $this->_withoutAnnotations = true;
+    }
+    
+    /**
+     * Should PHP_Depend support projects with a bad documentation. If this
+     * option is set to <b>true</b>, PHP_Depend will treat the default package
+     * <b>+global</b> as a regular project package.
+     *
+     * @return void
+     */
+    public function setSupportBadDocumentation()
+    {
+        $this->_supportBadDocumentation = true;
     }
     
     /**
@@ -255,6 +275,9 @@ class PHP_Depend_TextUI_Runner
         
         if ($this->_withoutAnnotations === true) {
             $pdepend->setWithoutAnnotations();
+        }
+        if ($this->_supportBadDocumentation === true) {
+            $pdepend->setSupportBadDocumentation();
         }
         
         // Try to set all source directories.

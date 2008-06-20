@@ -188,4 +188,40 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         
         unlink($fileName);
     }
+    
+    public function testSupportBadDocumentation()
+    {
+        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
+        if (file_exists($fileName)) {
+            unlink($fileName);
+        }
+        
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
+        $runner->setSupportBadDocumentation();
+        $runner->addLogger('dummy-logger', $fileName);
+        
+        ob_start();
+        $runner->run();
+        ob_end_clean();
+        
+        $this->assertFileExists($fileName);
+        
+        $data = unserialize(file_get_contents($fileName));
+        
+        $code = $data['code'];
+        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertEquals(1, $code->count());
+        
+        $code->rewind();
+        
+        $package = $code->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertEquals(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE, $package->getName());
+        
+        $this->assertEquals(8, $package->getClasses()->count());
+        $this->assertEquals(3, $package->getInterfaces()->count());
+        
+        unlink($fileName);
+    }
 }
