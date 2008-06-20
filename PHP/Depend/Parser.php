@@ -556,9 +556,6 @@ class PHP_Depend_Parser
     {
         $curly  = 0;
         $tokens = array();
-        $string = false;
-        $escape = false;
-        $inline = false;
 
         while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
@@ -607,19 +604,11 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
-                if ($string === false) {
-                    ++$curly;
-                } else if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_VARIABLE) {
-                    ++$curly;
-                    $inline = true;
-                }
+                ++$curly;
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
-                if ($string === false || $inline === true) {
-                    --$curly;
-                    $inline = false;
-                }
+                --$curly;
                 break;
 
             case PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE:
