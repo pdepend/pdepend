@@ -563,21 +563,8 @@ class PHP_Depend_Parser
 
             switch ($token[0]) {
             case PHP_Depend_Code_TokenizerI::T_NEW:
-                $allowed = array(
-                    PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
-                    PHP_Depend_Code_TokenizerI::T_STRING,
-                );
-                
-                $parts = array();
-                while (in_array($this->tokenizer->peek(), $allowed)) {
-                    $token    = $this->tokenizer->next();
-                    $tokens[] = $token;
-                    
-                    if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
-                        $parts[] = $token[1];
-                    }
-                }
-                
+                $parts = $this->_parseClassNameChain($tokens);
+                                
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: new $className('PDepend');
                 if (count($parts) > 0) {
@@ -612,17 +599,8 @@ class PHP_Depend_Parser
                 break;
 
             case PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE:
-                while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE) {
-                    $tokens[] = $this->tokenizer->next();
-                }
-                $tokens[] = $this->tokenizer->next();
-                break;
-                
             case PHP_Depend_Code_TokenizerI::T_BACKTICK:
-                while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_BACKTICK) {
-                    $tokens[] = $this->tokenizer->next();
-                }
-                $tokens[] = $this->tokenizer->next();
+                $this->_skipEncapsultedBlock($tokens, $token[0]);
                 break;
 
             default:
@@ -689,6 +667,52 @@ class PHP_Depend_Parser
         );
         
         return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
+    }
+    
+    /**
+     * Parses a php class/method name chain.
+     * 
+     * <code>
+     * PHP::Depend::Parser::parse();
+     * </code>
+     * 
+     * @param array(array) &$tokens The tokens array.
+     *
+     * @return array(array)
+     */
+    private function _parseClassNameChain(&$tokens)
+    {
+        $allowed = array(
+            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
+            PHP_Depend_Code_TokenizerI::T_STRING,
+        );
+        
+        $parts  = array();
+        while (in_array($this->tokenizer->peek(), $allowed)) {
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+
+            if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
+                $parts[] = $token[1];
+            }
+        }
+        return $parts;
+    }
+    
+    /**
+     * Skips an encapsulted block like strings or backtick strings.
+     *
+     * @param array(array) &$tokens  The tokens array.
+     * @param integer      $endToken The end token.
+     * 
+     * @return void
+     */
+    private function _skipEncapsultedBlock(&$tokens, $endToken)
+    {
+        while ($this->tokenizer->peek() !== $endToken) {
+            $tokens[] = $this->tokenizer->next();
+        }
+        $tokens[] = $this->tokenizer->next();
     }
     
     /**
