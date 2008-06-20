@@ -3,7 +3,7 @@
   <files>
     <file name="???"/>
   </files>
-  <package name=".global" loc="42" ncloc="23">
+  <package name="+global" loc="42" ncloc="23">
     <class name="BarFoo" loc="33" ncloc="20"/>
     <function name="bar" loc="9" ncloc="7">
       <file name="???"/>
