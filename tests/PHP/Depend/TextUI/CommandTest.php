@@ -250,6 +250,49 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the command handles the <b>--bad-documentation</b> option 
+     * correct.
+     *
+     * @return void
+     */
+    public function testCommandHandlesBadDocumentationOptionCorrect()
+    {
+        $logFile = sys_get_temp_dir() . '/pdepend.dummy';
+        $source  = realpath(dirname(__FILE__) . '/../_code/code-without-comments');
+        
+        $argv = array(
+            '--bad-documentation',
+            '--dummy-logger=' . $logFile,
+            $source
+        );
+        
+        if (file_exists($logFile)) {
+            unlink($logFile);
+        }
+        
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+        
+        $this->assertFileExists($logFile);
+        
+        $data = unserialize(file_get_contents($logFile));
+        
+        $code = $data['code'];
+        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertEquals(1, $code->count());
+        
+        $code->rewind();
+        
+        $package = $code->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertEquals(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE, $package->getName());
+        
+        $this->assertEquals(8, $package->getClasses()->count());
+        $this->assertEquals(3, $package->getInterfaces()->count());
+        
+        unlink($logFile);
+    }
+    
+    /**
      * Tests the help output with an optional prolog text.
      *
      * @param string $actual     The cli output.
@@ -266,7 +309,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $endsWith = "/  --suffix=<ext\[,\.\.\.\]>[ ]*List of valid PHP file extensions\.\n"
                   . "  --ignore=<dir\[,\.\.\.\]>[ ]*List of exclude directories\.\n"
                   . "  --exclude=<pkg\[,\.\.\.\]>[ ]*List of exclude packages\.\n\n"
-                  . "  --without-annotations[ ]*Do not parse doc comment annotations\.\n\n"
+                  . "  --without-annotations[ ]*Do not parse doc comment annotations\.\n"
+                  . "  --bad-documentation[ ]*Fallback for projects with bad doc comments\.\n\n"
                   . "  --help[ ]*Print this help text\.\n"
                   . "  --version[ ]*Print the current PHP_Depend version\.\n\n$/";
         $this->assertRegExp($endsWith, $actual);

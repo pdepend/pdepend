@@ -130,6 +130,14 @@ class PHP_Depend
     private $_withoutAnnotations = false;
     
     /**
+     * Should PHP_Depend treat <b>+global</b> as a regular project package?
+     *
+     * @type boolean
+     * @var boolean $_supportBadDocumentation
+     */
+    private $_supportBadDocumentation = false;
+    
+    /**
      * List or registered listeners.
      *
      * @type array<PHP_Depend_ProcessListenerI>
@@ -150,14 +158,7 @@ class PHP_Depend
      */
     public function __construct()
     {
-        $defaultFilter  = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
-        $internalFilter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
-        
         $this->_codeFilter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
-        $this->_codeFilter->addFilter($defaultFilter);
-        $this->_codeFilter->addFilter($internalFilter);
-        
-        
         $this->_fileFilter = new PHP_Depend_Util_CompositeFilter();
     }
 
@@ -239,6 +240,18 @@ class PHP_Depend
     }
     
     /**
+     * Should PHP_Depend support projects with a bad documentation. If this
+     * option is set to <b>true</b>, PHP_Depend will treat the default package
+     * <b>+global</b> as a regular project package.
+     *
+     * @return void
+     */
+    public function setSupportBadDocumentation()
+    {
+        $this->_supportBadDocumentation = true;
+    }
+    
+    /**
      * Adds a process listener.
      *
      * @param PHP_Depend_ProcessListenerI $listener The listener instance.
@@ -297,6 +310,15 @@ class PHP_Depend
         }
         
         $this->fireEndParseProcess($this->nodeBuilder);
+
+        // Initialize defaul filters
+        if ($this->_supportBadDocumentation === false) {
+            $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
+            $this->_codeFilter->addFilter($filter);
+        }
+        
+        $filter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
+        $this->_codeFilter->addFilter($filter);
         
         // Get global filter collection
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
