@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/TypeConstant.php';
 require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/InternalTypes.php';
 require_once 'PHP/Depend/Code/NodeBuilderI.php'; 
@@ -134,6 +135,14 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      * @var array(PHP_Depend_Code_Property) $_properties
      */
     private $_properties = array();
+    
+    /**
+     * All generated {@link PHP_Depend_Code_TypeConstant} instances.
+     *
+     * @type array<PHP_Depend_Code_TypeConstant>
+     * @var array(PHP_Depend_Code_TypeConstant) $_typeConstants
+     */
+    private $_typeConstants = array();
     
     /**
      * The internal types class.
@@ -270,6 +279,24 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         }
         
         return $class;
+    }
+    
+    /**
+     * Builds a new code class constant instance.
+     *
+     * @param string  $name The constant name.
+     * 
+     * @return PHP_Depend_Code_TypeConstant The created constant object.
+     */
+    public function buildTypeConstant($name)
+    {
+        // Create new constant instance.
+        $constant = new PHP_Depend_Code_TypeConstant($name);
+        
+        // Store local reference
+        $this->_typeConstants[] = $constant;
+        
+        return $constant;
     }
     
     /**

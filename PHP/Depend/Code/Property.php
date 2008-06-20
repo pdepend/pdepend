@@ -150,7 +150,6 @@ class PHP_Depend_Code_Property
         return ($this->_visibility === self::IS_PRIVATE);
     }
     
-    
     /**
      * Returns the parent class object or <b>null</b>
      *
