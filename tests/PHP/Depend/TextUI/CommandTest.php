@@ -164,7 +164,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '--suffix=inc',
             '--ignore=code-5.2.x',
-            '--exclude=pdepend.test',
+            '--exclude=pdepend.test2',
             '--dummy-logger=' . $logFile,
             $source
         );
@@ -175,6 +175,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         
         list($exitCode, $actual) = $this->_executeCommand($argv);
         
+        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
         $this->assertFileExists($logFile);
         
         unlink($logFile);
@@ -223,7 +224,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         
         $code = $data['code'];
         $this->assertType('PHP_Depend_Code_NodeIterator', $code);
-        $this->assertEquals(1, $code->count());
+        $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
@@ -238,6 +239,12 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Depend_Code_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionTypes()->count());
+        
+        $code->next();
+        
+        $package = $code->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertEquals('pdepend.test2', $package->getName());
         
         unlink($logFile);
     }

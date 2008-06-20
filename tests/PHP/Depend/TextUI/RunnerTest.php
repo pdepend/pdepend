@@ -106,7 +106,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         
         $code = $data['code'];
         $this->assertType('PHP_Depend_Code_NodeIterator', $code);
-        $this->assertEquals(1, $code->count());
+        $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
@@ -122,6 +122,12 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(1, $function->getExceptionTypes()->count());
         $this->assertEquals('MyException', $function->getExceptionTypes()->current()->getName());
+        
+        $code->next();
+        
+        $package = $code->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertEquals('pdepend.test2', $package->getName());
         
         $sourceFile = realpath(dirname(__FILE__). '/../_code/function.inc');
         $this->assertEquals($sourceFile, $function->getSourceFile()->getName());
@@ -158,7 +164,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         
         $code = $data['code'];
         $this->assertType('PHP_Depend_Code_NodeIterator', $code);
-        $this->assertEquals(1, $code->count());
+        $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
@@ -173,6 +179,12 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Depend_Code_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionTypes()->count());
+        
+        $code->next();
+        
+        $package = $code->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertEquals('pdepend.test2', $package->getName());
         
         unlink($fileName);
     }

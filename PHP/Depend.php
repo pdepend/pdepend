@@ -50,6 +50,7 @@ require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
+require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
@@ -149,10 +150,13 @@ class PHP_Depend
      */
     public function __construct()
     {
-        $defaultFilter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
+        $defaultFilter  = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
+        $internalFilter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
         
         $this->_codeFilter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
         $this->_codeFilter->addFilter($defaultFilter);
+        $this->_codeFilter->addFilter($internalFilter);
+        
         
         $this->_fileFilter = new PHP_Depend_Util_CompositeFilter();
     }
@@ -294,7 +298,11 @@ class PHP_Depend
         
         $this->fireEndParseProcess($this->nodeBuilder);
         
-        if ($this->nodeBuilder->getPackages()->count() === 1) {
+        // Get global filter collection
+        $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+        $staticFilter->addFilter($this->_codeFilter);
+        
+        if ($this->nodeBuilder->getPackages()->count() === 0) {
             $message = "The parser doesn't detect package informations "
                      . "within the analyzed project, please check the "
                      . "documentation blocks for @package-annotations.";
@@ -302,8 +310,7 @@ class PHP_Depend
             throw new RuntimeException($message);
         }
         
-        // Get global filter collection
-        $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+        $staticFilter->removeFilter($this->_codeFilter);
 
         // Append all listeners
         foreach ($loader as $analyzer) {
@@ -356,7 +363,7 @@ class PHP_Depend
         $this->fireEndLogProcess();
         
         // Remove global filter
-        $staticFilter->removeFilter($this->_codeFilter);
+        // $staticFilter->removeFilter($this->_codeFilter);
 
         $this->packages = $packages;
         
