@@ -1,3 +1,11 @@
+PHP_Depend 0.8.0beta3
+---------------------
+
+- #25 + PHP_Depend should print an error if no @package information is available.
+- #26 + Handle class and interface names case insensitive.
+- #27 + Handle internal classes and interfaces.
+- #28 + Add option --bad-documentation.
+
 PHP_Depend 0.8.0beta2
 ---------------------
 
