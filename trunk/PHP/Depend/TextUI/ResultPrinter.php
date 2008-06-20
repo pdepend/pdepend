@@ -217,7 +217,7 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     protected function step($size = 1)
     {
-        if ($this->_count > 0 && $this->_count % $size === 0) {
+        if (($this->_count > 0 || $size === 1) && $this->_count % $size === 0) {
             echo '.';
         }
         if ($this->_count > 0 && $this->_count % ($size * 60) === 0) {
