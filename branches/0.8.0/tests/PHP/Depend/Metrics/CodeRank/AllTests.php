@@ -54,6 +54,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/AnalyzerTest.php';
+require_once dirname(__FILE__) . '/MethodStrategyTest.php';
 require_once dirname(__FILE__) . '/PropertyStrategyTest.php';
 
 /**
@@ -89,6 +90,7 @@ class PHP_Depend_Metrics_CodeRank_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics_CodeRank - AllTests');
         $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
+        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_MethodStrategyTest');
         $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_PropertyStrategyTest');
         
         return $suite;
