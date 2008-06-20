@@ -494,6 +494,21 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         
         $this->assertType('PHP_Depend_Code_Method', $method);
     }
+    
+    /**
+     * Tests the {@link PHP_Depend_Code_DefaultBuilder::buildTypeConstant()}
+     * method.
+     * 
+     * @return void
+     */
+    public function testBuildConstant()
+    {
+        $builder  = new PHP_Depend_Code_DefaultBuilder();
+        $constant = $builder->buildTypeConstant('CONSTANT', 0);
+        
+        $this->assertType('PHP_Depend_Code_TypeConstant', $constant);
+    }
+    
     /**
      * Tests that the node builder creates a package for the same name only once.
      *

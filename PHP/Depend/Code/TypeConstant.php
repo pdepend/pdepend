@@ -46,10 +46,19 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
+require_once 'PHP/Depend/Code/AbstractItem.php';
 
 /**
- * Base interface for visitors that work on the generated node tree.
+ * An instance of this class represents a class or interface constant within the
+ * analyzed source code.
+ * 
+ * <code>
+ * <?php
+ * class PHP_Depend_Code_NodeBuilderI
+ * {
+ *     const DEFAULT_PACKAGE = '+global';
+ * }
+ * </code>
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,95 +69,48 @@ require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeVisitorI
+class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
 {
     /**
-     * Adds a new listener to this node visitor.
+     * The parent type object.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The new visit listener.
-     * 
-     * @return void
+     * @type PHP_Depend_Code_AbstractType
+     * @var PHP_Depend_Code_AbstractType $_parent
      */
-    function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
+    private $_parent = null;
+
+    /**
+     * Returns the parent type object or <b>null</b>
+     *
+     * @return PHP_Depend_Code_AbstractType|null
+     */
+    public function getParent()
+    {
+        return $this->_parent;
+    }
     
     /**
-     * Removes the listener from this node visitor.
+     * Sets the parent type object.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The listener to remove.
+     * @param PHP_Depend_Code_AbstractType $parent The parent class.
      * 
      * @return void
      */
-    function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
+    public function setParent(PHP_Depend_Code_AbstractType $parent = null)
+    {
+        $this->_parent = $parent;
+    }
     
     /**
-     * Visits a class node. 
+     * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     *                                              implementation.
      * 
      * @return void
      */
-    function visitClass(PHP_Depend_Code_Class $class);
-    
-    /**
-     * Visits a file node. 
-     *
-     * @param PHP_Depend_Code_File $file The current file node.
-     * 
-     * @return void
-     */
-    function visitFile(PHP_Depend_Code_File $file);
-    
-    /**
-     * Visits a function node. 
-     *
-     * @param PHP_Depend_Code_Function $function The current function node.
-     * 
-     * @return void
-     */
-    function visitFunction(PHP_Depend_Code_Function $function);
-    
-    /**
-     * Visits a code interface object.
-     *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
-     * @return void
-     */
-    function visitInterface(PHP_Depend_Code_Interface $interface);
-    
-    /**
-     * Visits a method node. 
-     *
-     * @param PHP_Depend_Code_Class $method The method class node.
-     * 
-     * @return void
-     */
-    function visitMethod(PHP_Depend_Code_Method $method);
-    
-    /**
-     * Visits a package node. 
-     *
-     * @param PHP_Depend_Code_Class $package The package class node.
-     * 
-     * @return void
-     */
-    function visitPackage(PHP_Depend_Code_Package $package);
-    
-    /**
-     * Visits a property node. 
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     */
-    function visitProperty(PHP_Depend_Code_Property $property);
-    
-    /**
-     * Visits a class constant node. 
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     * 
-     * @return void
-     */
-    function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant);
+    public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
+    {
+        $visitor->visitTypeConstant($this);
+    }
 }

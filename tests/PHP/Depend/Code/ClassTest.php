@@ -53,6 +53,7 @@ require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Property.php';
+require_once 'PHP/Depend/Code/TypeConstant.php';
 
 /**
  * Test case implementation for the PHP_Depend_Code_Class class.
@@ -339,6 +340,39 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $this->assertEquals(1, $b->getDependencies()->count());
         $a->removeChildType($b);
         $this->assertEquals(0, $b->getDependencies()->count());
+    }
+    
+    /**
+     * Tests the remove constant method.
+     *
+     * @return void
+     */
+    public function testRemoveConstant()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        
+        $this->assertEquals(0, $a->getConstants()->count());
+        $c = $a->addConstant(new PHP_Depend_Code_TypeConstant('FOO_BAR'));
+        $this->assertEquals(1, $a->getConstants()->count());
+        $a->removeConstant($c);
+        $this->assertEquals(0, $a->getConstants()->count());
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::addConstant()} reparents the
+     * an already associated class instance.
+     * 
+     * @return void
+     */
+    public function testAddConstantReparentsClassInstance()
+    {
+        $a = new PHP_Depend_Code_Class('a');
+        $b = new PHP_Depend_Code_Class('b');
+        
+        $c = $a->addConstant(new PHP_Depend_Code_TypeConstant('FOO_BAR'));
+        $this->assertSame($a, $c->getParent());
+        $b->addConstant($c);
+        $this->assertSame($b, $c->getParent());
     }
     
     /**

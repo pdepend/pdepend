@@ -185,4 +185,22 @@ interface PHP_Depend_Code_NodeVisitor_ListenerI
      * @return void
      */
     function endVisitProperty(PHP_Depend_Code_Property $property);
+    
+    /**
+     * Is called when the visitor starts a new constant instance.
+     *
+     * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
+     * 
+     * @return void
+     */
+    function startVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant);
+    
+    /**
+     * Is called when the visitor ends with a constant instance.
+     *
+     * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
+     * 
+     * @return void
+     */
+    function endVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant);
 }
