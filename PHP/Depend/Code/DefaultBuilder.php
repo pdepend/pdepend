@@ -48,6 +48,7 @@
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Interface.php';
+require_once 'PHP/Depend/Code/InternalTypes.php';
 require_once 'PHP/Depend/Code/NodeBuilderI.php'; 
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
@@ -135,6 +136,14 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     private $_properties = array();
     
     /**
+     * The internal types class.
+     *
+     * @type PHP_Depend_Code_InternalTypes
+     * @var PHP_Depend_Code_InternalTypes $_internalTypes
+     */
+    private $_internalTypes = null;
+    
+    /**
      * Constructs a new builder instance.
      */
     public function __construct()
@@ -143,6 +152,8 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         $this->defaultFile    = new PHP_Depend_Code_File(null);
         
         $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
+        
+        $this->_internalTypes = PHP_Depend_Code_InternalTypes::getInstance();
     }
     
     /**
@@ -535,7 +546,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      *   $packageName = $this->extractPackageName('foobar');
      *   var_dump($packageName);
      *   // Results in:
-     *   // string(6) "global"
+     *   // string(6) "+global"
      * </code>
      * 
      * @param string $qualifiedName The qualified PHP 5.3 class identifier.
@@ -546,6 +557,9 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     {
         if (($pos = strrpos($qualifiedName, '::')) !== false) {
             return substr($qualifiedName, 0, $pos);
+        } else if ($this->_internalTypes->isInternal($qualifiedName)) {
+            //echo "Internal Package: ", $this->_internalTypes->getTypePackage($qualifiedName), "\n";
+            return $this->_internalTypes->getTypePackage($qualifiedName);
         }
         return self::DEFAULT_PACKAGE; 
     }
