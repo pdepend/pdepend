@@ -359,6 +359,7 @@
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
        x="158"
        y="135"
+       title="Average Number of Derived Classes"
        id="text5010"><tspan
          sodipodi:role="line"
          id="tspan5012"
@@ -369,6 +370,7 @@
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
        x="158"
        y="151"
+       title="Average Hierarchy Height"
        id="text5014"><tspan
          sodipodi:role="line"
          id="tspan5016"
@@ -379,6 +381,7 @@
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
        x="158"
        y="168"
+       title="Number Of Packages"
        id="text5018"><tspan
          sodipodi:role="line"
          id="tspan5020"
@@ -390,6 +393,7 @@
        x="119"
        y="183.00002"
        id="text5022"
+       title="Number Of Classes"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5024"
@@ -401,6 +405,7 @@
        x="81"
        y="198.00002"
        id="text5026"
+       title="Number Of Methods (Methods+Functions)"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5028"
@@ -412,6 +417,7 @@
        x="42"
        y="213.00002"
        id="text5030"
+       title="Lines Of Code"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5032"
@@ -423,6 +429,7 @@
        x="3"
        y="230.00002"
        id="text5034"
+       title="Cyclomatic Complexity"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5036"
@@ -434,6 +441,7 @@
        x="286"
        y="198.00002"
        id="text5038"
+       title="Number Of Methods"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5040"
@@ -445,6 +453,7 @@
        x="348"
        y="213.00002"
        id="text5042"
+       title="Number of Operation Calls"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5044"
@@ -456,6 +465,7 @@
        x="387"
        y="230.00002"
        id="text5046"
+       title="Number of Called Classes"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5048"
