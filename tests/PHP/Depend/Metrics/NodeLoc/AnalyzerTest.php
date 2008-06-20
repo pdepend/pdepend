@@ -346,6 +346,138 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the analyzer calculates the correct class, constant and file
+     * loc values.
+     *
+     * @return void
+     */
+    public function testAnalyzerCalculatesCorrectConstantAndClassAndFileLoc()
+    {
+        $source   = dirname(__FILE__) . '/../../_code/comments/constant.php';
+        $packages = self::parseSource($source);
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+        
+        $packages->rewind();
+        $class = $packages->current()->getClasses()->current();
+        
+        $actual   = $analyzer->getNodeMetrics($class);
+        $expected = array(
+            'loc'    =>  17,
+            'cloc'   =>  6,
+            'ncloc'  =>  11
+        );
+        
+        $this->assertEquals($expected, $actual);
+        
+        $expectedValues = array(
+            'constant_with_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+            'constant_without_doc_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+            'constant_without_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+            'another_constant_with_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+        );
+        
+        $constants = $class->getConstants();
+        foreach ($constants as $constant) {
+            $this->assertArrayHasKey($constant->getName(), $expectedValues);
+            unset($expectedValues[$constant->getName()]);
+        }
+        $this->assertEquals(0, count($expectedValues));
+        
+        $actual   = $analyzer->getNodeMetrics($class->getSourceFile());
+        $expected = array(
+            'loc'    =>  21,
+            'cloc'   =>  9,
+            'ncloc'  =>  12
+        );
+        
+        $this->assertEquals($expected, $actual);
+    }
+    
+    /**
+     * Tests that the analyzer calculates the correct interface, constant and file
+     * loc values.
+     *
+     * @return void
+     */
+    public function testAnalyzerCalculatesCorrectConstantAndInterfaceAndFileLoc()
+    {
+        $source   = dirname(__FILE__) . '/../../_code/comments/constant1.php';
+        $packages = self::parseSource($source);
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+        
+        $packages->rewind();
+        $interface = $packages->current()->getInterfaces()->current();
+        
+        $actual   = $analyzer->getNodeMetrics($interface);
+        $expected = array(
+            'loc'    =>  17,
+            'cloc'   =>  6,
+            'ncloc'  =>  11
+        );
+        
+        $this->assertEquals($expected, $actual);
+        
+        $expectedValues = array(
+            'constant_with_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+            'constant_without_doc_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+            'constant_without_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+            'another_constant_with_comment'  =>  array(
+                'loc'    =>  1,
+                'cloc'   =>  0,
+                'ncloc'  =>  1,
+            ),
+        );
+        
+        $constants = $interface->getConstants();
+        foreach ($constants as $constant) {
+            $this->assertArrayHasKey($constant->getName(), $expectedValues);
+            unset($expectedValues[$constant->getName()]);
+        }
+        $this->assertEquals(0, count($expectedValues));
+        
+        $actual   = $analyzer->getNodeMetrics($interface->getSourceFile());
+        $expected = array(
+            'loc'    =>  21,
+            'cloc'   =>  9,
+            'ncloc'  =>  12
+        );
+        
+        $this->assertEquals($expected, $actual);
+    }
+    
+    /**
      * Tests that the analyzer aggregates the expected project values.
      *
      * @return void
@@ -360,9 +492,9 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getProjectMetrics();
         $expected = array(
-            'loc'    =>  218,
-            'cloc'   =>  120,
-            'ncloc'  =>  98
+            'loc'    =>  260,
+            'cloc'   =>  138,
+            'ncloc'  =>  122
         );
         
         $this->assertEquals($expected, $actual);

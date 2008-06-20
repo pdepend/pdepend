@@ -100,7 +100,63 @@ abstract class PHP_Depend_Code_AbstractType
     protected $children = array();
     
     /**
-     * Returns all {@link PHP_Depend_Code_Method} object in this class.
+     * List of {@link PHP_Depend_Code_TypeConstant} objects that belong to this 
+     * type. 
+     *
+     * @type array<PHP_Depend_Code_TypeConstant>
+     * @var array(PHP_Depend_Code_TypeConstant) $children
+     */
+    private $_constants = array();
+    
+    /**
+     * Returns all {@link PHP_Depend_Code_TypeConstant} objects in this type.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getConstants()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->_constants);
+    }
+    
+    /**
+     * Adds the given constant to this type.
+     *
+     * @param PHP_Depend_Code_TypeConstant $constant A new type constant.
+     * 
+     * @return PHP_Depend_Code_TypeConstant
+     */
+    public function addConstant(PHP_Depend_Code_TypeConstant $constant)
+    {
+        if ($constant->getParent() !== null) {
+            $constant->getParent()->removeConstant($constant);
+        }
+        // Set this as owner type
+        $constant->setParent($this);
+        // Store constant
+        $this->_constants[] = $constant;
+        
+        return $constant;
+    }
+    
+    /**
+     * Removes the given constant from this type.
+     *
+     * @param PHP_Depend_Code_TypeConstant $constant The constant to remove.
+     * 
+     * @return void
+     */
+    public function removeConstant(PHP_Depend_Code_TypeConstant $constant)
+    {
+        if (($i = array_search($constant, $this->_constants, true)) !== false) {
+            // Remove this as owner
+            $constant->setParent(null);
+            // Remove from internal list
+            unset($this->_constants[$i]);
+        }
+    }
+    
+    /**
+     * Returns all {@link PHP_Depend_Code_Method} objects in this type.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -110,9 +166,9 @@ abstract class PHP_Depend_Code_AbstractType
     }
     
     /**
-     * Adds the given method to this class.
+     * Adds the given method to this type.
      *
-     * @param PHP_Depend_Code_Method $method A new class method.
+     * @param PHP_Depend_Code_Method $method A new type method.
      * 
      * @return PHP_Depend_Code_Method
      */
@@ -121,9 +177,9 @@ abstract class PHP_Depend_Code_AbstractType
         if ($method->getParent() !== null) {
             $method->getParent()->removeMethod($method);
         }
-        // Set this as owner class
+        // Set this as owner type
         $method->setParent($this);
-        // Store clas
+        // Store method
         $this->methods[] = $method;
         
         return $method;

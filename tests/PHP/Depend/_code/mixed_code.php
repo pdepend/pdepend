@@ -13,14 +13,14 @@ function foo($foo = array()) {
  * @package pkg2
  */
 interface Foo {
+    const FOOBAR = 0x1742;
     function x();
 }
 
 /**
  * @package pkg3
  */
-abstract class Bar implements Foo {
-    private $foo = 17;
+abstract class Bar implements Foo {private $foo = 17;
     protected abstract function y(Bar $bar);
 }
 
@@ -28,6 +28,14 @@ abstract class Bar implements Foo {
  * @package pkg1
  */
 class FooBar extends Bar {
+    const FOO = 42;
+    
+    /**
+     * My BAR constant.
+     */
+    const BAR = 23;
+    
+    
     private $x = 0x1234;
     protected $y = null;
     public $z = 'pdepend';

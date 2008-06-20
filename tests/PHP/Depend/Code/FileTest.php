@@ -72,6 +72,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
         $file = new PHP_Depend_Code_File(dirname(__FILE__) . '/../_code/mixed_code.php');
         
         $this->assertType('array', $file->getLoc());
-        $this->assertEquals(54, count($file->getLoc()));
+        $this->assertEquals(62, count($file->getLoc()));
     }
 }
