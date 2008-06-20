@@ -3,7 +3,7 @@
   <files>
     <file name="???"/>
   </files>
-  <package name="global">
+  <package name=".global">
     <class name="BarFoo"/>
     <function name="bar">
       <file name="???"/>

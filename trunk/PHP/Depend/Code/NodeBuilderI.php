@@ -63,7 +63,7 @@ interface PHP_Depend_Code_NodeBuilderI extends IteratorAggregate
     /**
      * The default package name.
      */
-    const DEFAULT_PACKAGE = 'global';
+    const DEFAULT_PACKAGE = '.global';
     
     /**
      * Generic build class for classes and interfaces. This method should be used
