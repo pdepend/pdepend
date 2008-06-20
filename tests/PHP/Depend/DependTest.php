@@ -343,4 +343,18 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackages();
     }
+    
+    /**
+     * Tests the <b>--bad-documentation</b> option support.
+     *
+     * @return void
+     */
+    public function testSupportBadDocumentation()
+    {
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
+        $pdepend->setSupportBadDocumentation();
+        $pdepend->analyze();
+        $this->assertEquals(1, $pdepend->getPackages()->count());
+    }
 }
