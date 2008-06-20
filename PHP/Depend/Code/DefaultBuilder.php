@@ -172,14 +172,16 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         $cls = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
         
-        if (isset($this->classes[$cls][$pkg])) {
-            $instance = $this->classes[$cls][$pkg];
-        } else if (isset($this->interfaces[$cls][$pkg])) {
-            $instance = $this->interfaces[$cls][$pkg];
-        } else if (isset($this->classes[$cls])) {
-            $instance = reset($this->classes[$cls]);
-        } else if (isset($this->interfaces[$cls])) {
-            $instance = reset($this->interfaces[$cls]);
+        $typeID = strtolower($cls);
+        
+        if (isset($this->classes[$typeID][$pkg])) {
+            $instance = $this->classes[$typeID][$pkg];
+        } else if (isset($this->interfaces[$typeID][$pkg])) {
+            $instance = $this->interfaces[$typeID][$pkg];
+        } else if (isset($this->classes[$typeID])) {
+            $instance = reset($this->classes[$typeID]);
+        } else if (isset($this->interfaces[$typeID])) {
+            $instance = reset($this->interfaces[$typeID]);
         } else {
             $instance = $this->buildClass($name);
         }
@@ -220,25 +222,27 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         $cls = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
         
+        $typeID = strtolower($cls);
+        
         $class = null;
         
         // 1) check for an equal class version
-        if (isset($this->classes[$cls][$pkg])) {
-            $class = $this->classes[$cls][$pkg];
+        if (isset($this->classes[$typeID][$pkg])) {
+            $class = $this->classes[$typeID][$pkg];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->classes[$cls][self::DEFAULT_PACKAGE])) {
-            $class = $this->classes[$cls][self::DEFAULT_PACKAGE];
+        } else if (isset($this->classes[$typeID][self::DEFAULT_PACKAGE])) {
+            $class = $this->classes[$typeID][self::DEFAULT_PACKAGE];
             
-            unset($this->classes[$cls][self::DEFAULT_PACKAGE]);
+            unset($this->classes[$typeID][self::DEFAULT_PACKAGE]);
             
-            $this->classes[$cls][$pkg] = $class;
+            $this->classes[$typeID][$pkg] = $class;
             
             $this->buildPackage($pkg)->addType($class);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->classes[$cls]) && $this->isDefault($pkg)) {
-            $class = reset($this->classes[$cls]);
+        } else if (isset($this->classes[$typeID]) && $this->isDefault($pkg)) {
+            $class = reset($this->classes[$typeID]);
             
             // 4) Create a new class for the given package
         } else {
@@ -248,7 +252,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             $class->setSourceFile($this->defaultFile);
             
             // Store class reference
-            $this->classes[$cls][$pkg] = $class;
+            $this->classes[$typeID][$pkg] = $class;
             
             // Append to class package
             $this->buildPackage($pkg)->addType($class);
@@ -297,13 +301,15 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         $ife = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
         
+        $typeID = strtolower($ife);
+        
         $class = null;
-        if (isset($this->classes[$ife][$pkg])) {
-            $class = $this->classes[$ife][$pkg];
-        } else if (isset($this->classes[$ife][self::DEFAULT_PACKAGE])) {
+        if (isset($this->classes[$typeID][$pkg])) {
+            $class = $this->classes[$typeID][$pkg];
+        } else if (isset($this->classes[$typeID][self::DEFAULT_PACKAGE])) {
             // TODO: Implement something like: allwaysIsClass(),
             //       This could be usefull for class names detected by 'new ...'
-            $class = $this->classes[$ife][self::DEFAULT_PACKAGE];
+            $class = $this->classes[$typeID][self::DEFAULT_PACKAGE];
         }
         
         if ($class !== null) {
@@ -313,10 +319,10 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             if ($package === $this->defaultPackage) {
                 $package->removeType($class);
             
-                unset($this->classes[$ife][$package->getName()]);
+                unset($this->classes[$typeID][$package->getName()]);
                 
-                if (count($this->classes[$ife]) === 0) {
-                    unset($this->classes[$ife]);
+                if (count($this->classes[$typeID]) === 0) {
+                    unset($this->classes[$typeID]);
                 }
             } else {
                 // Unset class reference
@@ -325,22 +331,22 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         }
         
         // 1) check for an equal interface version
-        if (isset($this->interfaces[$ife][$pkg])) {
-            $interface = $this->interfaces[$ife][$pkg];
+        if (isset($this->interfaces[$typeID][$pkg])) {
+            $interface = $this->interfaces[$typeID][$pkg];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->interfaces[$ife][self::DEFAULT_PACKAGE])) {
-            $interface = $this->interfaces[$ife][self::DEFAULT_PACKAGE];
+        } else if (isset($this->interfaces[$typeID][self::DEFAULT_PACKAGE])) {
+            $interface = $this->interfaces[$typeID][self::DEFAULT_PACKAGE];
             
-            unset($this->interfaces[$ife][self::DEFAULT_PACKAGE]);
+            unset($this->interfaces[$typeID][self::DEFAULT_PACKAGE]);
             
-            $this->interfaces[$ife][$pkg] = $interface;
+            $this->interfaces[$typeID][$pkg] = $interface;
             
             $this->buildPackage($pkg)->addType($interface);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->interfaces[$ife]) && $this->isDefault($pkg)) {
-            $interface = reset($this->interfaces[$ife]);
+        } else if (isset($this->interfaces[$typeID]) && $this->isDefault($pkg)) {
+            $interface = reset($this->interfaces[$typeID]);
             
             // 4) Create a new interface for the given package
         } else {
@@ -349,7 +355,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
             $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
-            $this->interfaces[$ife][$pkg] = $interface;
+            $this->interfaces[$typeID][$pkg] = $interface;
             
             // Append interface to package
             $this->buildPackage($pkg)->addType($interface);

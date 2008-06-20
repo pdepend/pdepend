@@ -627,4 +627,79 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
         $builder->buildFunction('foobar', 0, $file2);
         $this->assertSame($file1, $function->getSourceFile());
     }
+    
+    /**
+     * Tests that the node builder works case insensitive for class names.
+     *
+     * @return void
+     */
+    public function testBuildClassWorksCaseInsensitiveIssue26()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $classA = $builder->buildClass('PHP_Depend_Parser');
+        $classB = $builder->buildClass('php_Depend_parser');
+        
+        $this->assertSame($classA, $classB);
+    }
+    
+    /**
+     * Tests that the node builder works case insensitive for interface names.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceWorksCaseInsensitiveIssue26()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $interfaceA = $builder->buildInterface('PHP_Depend_TokenizerI');
+        $interfaceB = $builder->buildInterface('php_Depend_tokenizeri');
+        
+        $this->assertSame($interfaceA, $interfaceB);
+    }
+    
+    /**
+     * Tests that the node builder works case insensitive for interface names.
+     *
+     * @return void
+     */
+    public function testBuildClassOrInterfaceWorksCaseInsensitive1Issue26()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $interfaceA = $builder->buildInterface('PHP_Depend_TokenizerI');
+        $interfaceB = $builder->buildClassOrInterface('php_Depend_tokenizeri');
+        
+        $this->assertSame($interfaceA, $interfaceB);
+    }
+    
+    /**
+     * Tests that the node builder works case insensitive for interface names.
+     *
+     * @return void
+     */
+    public function testBuildClassOrInterfaceWorksCaseInsensitive2Issue26()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $classA = $builder->buildClass('PHP_Depend_Parser');
+        $classB = $builder->buildClassOrInterface('php_Depend_parser');
+        
+        $this->assertSame($classA, $classB);
+    }
+    
+    /**
+     * Tests that the node builder works case insensitive for interface names.
+     *
+     * @return void
+     */
+    public function testBuildClassOrInterfaceWorksCaseInsensitive3Issue26()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $classA = $builder->buildClassOrInterface('PHP_Depend_Parser');
+        $classB = $builder->buildClassOrInterface('php_Depend_parser');
+        
+        $this->assertSame($classA, $classB);
+    }
 }
