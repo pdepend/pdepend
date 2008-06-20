@@ -146,7 +146,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         
         $message = "The parser doesn't detect package informations within the "
                  . "analyzed project, please check the documentation blocks for "
-                 . "@package-annotations.";
+                 . "@package-annotations or use the --bad-documentation option.";
         
         $this->setExpectedException('RuntimeException', $message);
         
