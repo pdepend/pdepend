@@ -53,6 +53,7 @@ require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
+require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
 require_once 'PHP/Depend/Log/Jdepend/Xml.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
@@ -127,6 +128,8 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $this->analyzer->analyze($this->packages);
         
         $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
+        $this->packages->addFilter($filter);
+        $filter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
         $this->packages->addFilter($filter);
         
         $this->resultFile = tempnam(sys_get_temp_dir(), 'pdepend-log.xml');
