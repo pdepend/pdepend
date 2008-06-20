@@ -76,6 +76,8 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
         
         $this->assertEquals(2, $packages->count());
+        $packages->next();
+        $this->assertEquals('default::package', $packages->current()->getName());
         $this->assertEquals(2, $packages->current()->getFunctions()->count());
         
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
@@ -102,6 +104,8 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
         
         $this->assertEquals(2, $packages->count());
+        $packages->next();
+        $this->assertEquals('default::package', $packages->current()->getName());
         $this->assertEquals(1, $packages->current()->getClasses()->count());
         $this->assertEquals(1, $packages->current()->getInterfaces()->count());
         
@@ -129,6 +133,8 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
         
         $this->assertEquals(2, $packages->count());
+        $packages->next();
+        $this->assertEquals('default::package', $packages->current()->getName());
         $this->assertEquals(1, $packages->current()->getClasses()->count());
         
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
@@ -155,6 +161,8 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
         
         $this->assertEquals(2, $packages->count());
+        $packages->next();
+        $this->assertEquals('default::package', $packages->current()->getName());
         $this->assertEquals(1, $packages->current()->getClasses()->count());
         $this->assertEquals(1, $packages->current()->getInterfaces()->count());
         
@@ -182,6 +190,8 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
         
         $this->assertEquals(2, $packages->count());
+        $packages->next();
+        $this->assertEquals('default::package', $packages->current()->getName());
         $this->assertEquals(3, $packages->current()->getClasses()->count());
         $this->assertEquals(2, $packages->current()->getInterfaces()->count());
         $this->assertEquals(2, $packages->current()->getFunctions()->count());
