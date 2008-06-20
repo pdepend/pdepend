@@ -211,7 +211,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function __toString()
     {
-        return $this->fileName;
+        return ($this->fileName === null ? '' : $this->fileName);
     }
     
     /**

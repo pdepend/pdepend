@@ -167,7 +167,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->setWithoutAnnotations();
         $packages = $pdepend->analyze();
         
-        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(2, $packages->count());
         $this->assertEquals('pdepend.test', $packages->current()->getName());
         
         $function = $packages->current()->getFunctions()->current();
