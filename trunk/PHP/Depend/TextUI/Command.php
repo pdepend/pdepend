@@ -258,6 +258,14 @@ class PHP_Depend_TextUI_Command
             unset($this->_options['--exclude']);
         }
         
+        // Check for the bad documentation option
+        if (isset($this->_options['--bad-documentation'])) {
+            // Enable bad documentation support
+            $this->_runner->setSupportBadDocumentation();
+            // Remove from options array
+            unset($this->_options['--bad-documentation']);
+        }
+        
         return true;
     }
     
@@ -294,17 +302,19 @@ class PHP_Depend_TextUI_Command
         $l = $this->printLogOptions();
         $l = $this->printAnalyzerOptions($l);
         
-        $suffixOption  = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $ignoreOption  = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $excludeOption = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $noAnnotations = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
-        $helpOption    = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
-        $versionOption = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
+        $suffixOption     = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $ignoreOption     = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $excludeOption    = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $noAnnotations    = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
+        $badDocumentation = str_pad('--bad-documentation', $l, ' ', STR_PAD_RIGHT);
+        $helpOption       = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
+        $versionOption    = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
         
         echo "  {$suffixOption} List of valid PHP file extensions.\n",
              "  {$ignoreOption} List of exclude directories.\n",
              "  {$excludeOption} List of exclude packages.\n\n",
-             "  {$noAnnotations} Do not parse doc comment annotations.\n\n",
+             "  {$noAnnotations} Do not parse doc comment annotations.\n",
+             "  {$badDocumentation} Fallback for projects with bad doc comments.\n\n",
              "  {$helpOption} Print this help text.\n",
              "  {$versionOption} Print the current PHP_Depend version.\n\n";
     }
