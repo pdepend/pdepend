@@ -327,7 +327,8 @@ class PHP_Depend
         if ($this->nodeBuilder->getPackages()->count() === 0) {
             $message = "The parser doesn't detect package informations "
                      . "within the analyzed project, please check the "
-                     . "documentation blocks for @package-annotations.";
+                     . "documentation blocks for @package-annotations or use "
+                     . "the --bad-documentation option.";
                      
             throw new RuntimeException($message);
         }
