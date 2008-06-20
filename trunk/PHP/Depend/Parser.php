@@ -369,7 +369,7 @@ class PHP_Depend_Parser
                 
                 $this->_prepareCallable($method);
                 
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 break;
@@ -387,7 +387,22 @@ class PHP_Depend_Parser
                 //       code is correct?
                 $type->addProperty($property);
                 
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
+                $comment   = null;
+                $abstract  = $abstractDefault;
+                break;
+            
+            case PHP_Depend_Code_TokenizerI::T_CONST:
+                $token = $this->tokenizer->next();
+                
+                $constant = $this->builder->buildTypeConstant($token[1]);
+                $constant->setDocComment($comment);
+                $constant->setStartLine($token[2]);
+                $constant->setEndLine($token[2]);
+                
+                $type->addConstant($constant);
+                
+                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 break;

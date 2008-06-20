@@ -202,6 +202,9 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
+        foreach ($class->getConstants() as $constant) {
+            $constant->accept($this);
+        }
         
         $cloc = 0;
         if (($comment = $class->getDocComment()) !== null) {
@@ -327,6 +330,9 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
+        foreach ($interface->getConstants() as $constant) {
+            $constant->accept($this);
+        }
         
         $this->fireEndInterface($interface);
     }
@@ -394,6 +400,27 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $this->_updateParentLoc($property->getParent(), $cloc);
         
         $this->fireEndProperty($property);
+    }
+    
+    /**
+     * Visits a class constant node. 
+     *
+     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
+     * 
+     * @return void
+     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitTypeConstant()
+     */
+    public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
+    {
+        $this->fireStartTypeConstant($constant);
+        
+        $cloc = 0;
+        if (($comment = $constant->getDocComment()) !== null) {
+            $cloc = substr_count($comment, "\n") + 1;
+        }
+        $this->_updateParentLoc($constant->getParent(), $cloc);
+        
+        $this->fireEndTypeConstant($constant);
     }
     
     /**

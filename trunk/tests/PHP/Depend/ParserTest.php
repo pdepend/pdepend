@@ -327,7 +327,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectClassEndLineNumber()
     {
-        $this->assertEquals(41, $this->getMixedCodeClass()->getEndLine());
+        $this->assertEquals(49, $this->getMixedCodeClass()->getEndLine());
     }
     
     /**
@@ -339,9 +339,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $methods = $this->getMixedCodeClassMethods();
         
-        $this->assertEquals(35, $methods->current()->getStartLine());
+        $this->assertEquals(43, $methods->current()->getStartLine());
         $methods->next();
-        $this->assertEquals(36, $methods->current()->getStartLine());
+        $this->assertEquals(44, $methods->current()->getStartLine());
     }
     
     /**
@@ -353,9 +353,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $methods = $this->getMixedCodeClassMethods();
         
-        $this->assertEquals(35, $methods->current()->getEndLine());
+        $this->assertEquals(43, $methods->current()->getEndLine());
         $methods->next();
-        $this->assertEquals(40, $methods->current()->getEndLine());
+        $this->assertEquals(48, $methods->current()->getEndLine());
     }
     
     /**
@@ -375,7 +375,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectInterfaceEndLineNumber()
     {
-        $this->assertEquals(17, $this->getMixedCodeInterface()->getEndLine());
+        $this->assertEquals(18, $this->getMixedCodeInterface()->getEndLine());
     }
     
     /**
@@ -387,7 +387,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectInterfaceMethodStartLineNumbers()
     {
         $methods = $this->getMixedCodeInterfaceMethods();
-        $this->assertEquals(16, $methods->current()->getStartLine());
+        $this->assertEquals(17, $methods->current()->getStartLine());
     }
     
     /**
@@ -398,7 +398,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectInterfaceMethodEndLineNumbers()
     {
         $methods = $this->getMixedCodeInterfaceMethods();
-        $this->assertEquals(16, $methods->current()->getEndLine());
+        $this->assertEquals(17, $methods->current()->getEndLine());
     }
     
     /**
@@ -436,7 +436,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                            ->getMethods()
                            ->current();
 
-        $this->assertEquals(16, $method->getStartLine());
+        $this->assertEquals(17, $method->getStartLine());
     }
     
     /**
@@ -928,6 +928,150 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(1, $functions1->count());
         $this->assertEquals('PHP_Depend::Test', $functions1->current()->getPackage()->getName());
+    }
+    
+    /**
+     * Tests that the parser sets the correct constant parent.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectParentForInterfaceConstant()
+    {
+        $interface = $this->getMixedCodeInterface();
+        $constants = $interface->getConstants();
+        
+        $this->assertEquals(1, $constants->count());
+        $this->assertEquals('FOOBAR', $constants->current()->getName());
+        $this->assertSame($interface, $constants->current()->getParent());
+    }
+    
+    /**
+     * Tests that the parser sets the correct constant start line.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectStartLineForInterfaceConstant()
+    {
+        $interface = $this->getMixedCodeInterface();
+        $constants = $interface->getConstants();
+        
+        $this->assertEquals(1, $constants->count());
+        $this->assertEquals('FOOBAR', $constants->current()->getName());
+        $this->assertSame(16, $constants->current()->getStartLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct constant ebd line.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectEndLineForInterfaceConstant()
+    {
+        $interface = $this->getMixedCodeInterface();
+        $constants = $interface->getConstants();
+        
+        $this->assertEquals(1, $constants->count());
+        $this->assertEquals('FOOBAR', $constants->current()->getName());
+        $this->assertSame(16, $constants->current()->getEndLine());
+    }
+    
+    /**
+     * Tests that the parser sets null comment for no comment constant.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectNullForInterfaceConstantWithoutComment()
+    {
+        $interface = $this->getMixedCodeInterface();
+        $constants = $interface->getConstants();
+        
+        $this->assertEquals(1, $constants->count());
+        $this->assertEquals('FOOBAR', $constants->current()->getName());
+        $this->assertNull($constants->current()->getDocComment());
+    }
+    
+    /**
+     * Tests that the parser sets the correct constant parent.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectParentForClassConstant()
+    {
+        $class     = $this->getMixedCodeClass();
+        $constants = $class->getConstants();
+        
+        $this->assertEquals(2, $constants->count());
+        $this->assertEquals('BAR', $constants->current()->getName());
+        $this->assertSame($class, $constants->current()->getParent());
+        
+        $constants->next();
+        
+        $this->assertEquals('FOO', $constants->current()->getName());
+        $this->assertSame($class, $constants->current()->getParent());
+    }
+    
+    /**
+     * Tests that the parser sets the correct start line number.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectStartLineForClassConstant()
+    {
+        $class     = $this->getMixedCodeClass();
+        $constants = $class->getConstants();
+        
+        $this->assertEquals(2, $constants->count());
+        $this->assertEquals('BAR', $constants->current()->getName());
+        $this->assertEquals(36, $constants->current()->getStartLine());
+        
+        $constants->next();
+        
+        $this->assertEquals('FOO', $constants->current()->getName());
+        $this->assertEquals(31, $constants->current()->getStartLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct end line number.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectEndLineForClassConstant()
+    {
+        $class     = $this->getMixedCodeClass();
+        $constants = $class->getConstants();
+        
+        $this->assertEquals(2, $constants->count());
+        $this->assertEquals('BAR', $constants->current()->getName());
+        $this->assertEquals(36, $constants->current()->getEndLine());
+        
+        $constants->next();
+        
+        $this->assertEquals('FOO', $constants->current()->getName());
+        $this->assertEquals(31, $constants->current()->getEndLine());
+    }
+    
+    /**
+     * Tests that the parser sets the correct doc comment.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectCommentForClassConstant()
+    {
+        $class     = $this->getMixedCodeClass();
+        $constants = $class->getConstants();
+        
+        $expected = '/**
+     * My BAR constant.
+     */';
+        
+        $this->assertEquals(2, $constants->count());
+        $this->assertEquals('BAR', $constants->current()->getName());
+        $this->assertEquals($expected, $constants->current()->getDocComment());
+        
+        $constants->next();
+        
+        $this->assertEquals('FOO', $constants->current()->getName());
+        $this->assertNull($constants->current()->getDocComment());
     }
     
     /**
