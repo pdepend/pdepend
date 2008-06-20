@@ -49,7 +49,7 @@
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/code-5.2.x/package2.php">pkg2FooI</Class>
       </AbstractClasses>
       <DependsUpon>
-        <Package>global</Package>
+        <Package>.global</Package>
         <Package>package1</Package>
       </DependsUpon>
       <UsedBy>
@@ -72,7 +72,7 @@
         <Class sourceFile="/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/code-5.2.x/package3.php">pkg3FooI</Class>
       </AbstractClasses>
       <DependsUpon>
-        <Package>global</Package>
+        <Package>.global</Package>
       </DependsUpon>
       <UsedBy>
         <Package>package1</Package>
