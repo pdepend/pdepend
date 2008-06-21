@@ -55,8 +55,9 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * This analyzer collects different lines of code metrics.
  * 
  * It collects the total Lines Of Code(<b>loc</b>), the None Comment Lines Of
- * Code(<b>ncloc) and the Comment Lines Of Code(<b>cloc</b>) for files, classes, 
- * interfaces, methods, properties and function.
+ * Code(<b>ncloc</b>), the Comment Lines Of Code(<b>cloc</b>) and a approximated
+ * Executable Lines Of Code(<b>eloc</b>) for files, classes, interfaces, 
+ * methods, properties and function.
  * 
  * The current implementation has a limitation, that affects inline comments. 
  * The following code will suppress one line of code.
@@ -114,6 +115,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * array(
      *     'loc'    =>  23,
      *     'cloc'   =>  17,
+     *     'eloc'   =>  17,
      *     'ncloc'  =>  42
      * )
      * </code>
@@ -189,12 +191,16 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         $class->getSourceFile()->accept($this);
         
-        $loc = $class->getEndLine() - $class->getStartLine() + 1;
+        list($cloc, $eloc) = $this->_linesOfCode($class->getTokens());
+        
+        $loc   = $class->getEndLine() - $class->getStartLine() + 1;
+        $ncloc = $loc - $cloc;
         
         $this->_nodeMetrics[$class->getUUID()] = array(
             'loc'    =>  $loc,
-            'cloc'   =>  0,
-            'ncloc'  =>  $loc,
+            'cloc'   =>  $cloc,
+            'eloc'   =>  $eloc,
+            'ncloc'  =>  $ncloc,
         );
 
         foreach ($class->getMethods() as $method) {
@@ -232,32 +238,9 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         $this->fireStartFile($file);
         
-        $loc = count($file->getLoc());
-        
-        $clines = array_fill(0, $loc + 1, false);
-        $elines = array_fill(0, $loc + 1, false);
-
-        $comment = array(
-            PHP_Depend_Code_TokenizerI::T_COMMENT,
-            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT
-        );
-        
-        foreach ($file->getTokens() as $token) {
-            $lines = count(explode("\n", trim($token[1])));
-            
-            if (in_array($token[0], $comment) === true) {
-                for ($i = 0; $i < $lines; ++$i) {
-                    $clines[$token[2] + $i] = true;
-                }
-            } else {
-                for ($i = 0; $i < $lines; ++$i) {
-                    $elines[$token[2] + $i] = true;
-                }
-            }
-        }
-
-        $cloc  = count(array_filter($clines));
-        $eloc  = count(array_filter($elines));
+        list($cloc, $eloc) = $this->_linesOfCode($file->getTokens());
+                
+        $loc   = count($file->getLoc());
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$uuid] = array(
@@ -290,14 +273,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         $function->getSourceFile()->accept($this);
         
-        $cloc = 0;
-        foreach ($function->getTokens() as $token) {
-            if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT) {
-                ++$cloc;
-            } else if ($token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
-                $cloc += count(explode("\n", $token[1]));
-            }
-        }
+        list($cloc, $eloc) = $this->_linesOfCode($function->getTokens());
         
         $loc   = $function->getEndLine() - $function->getStartLine() + 1;
         $ncloc = $loc - $cloc;
@@ -305,6 +281,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $this->_nodeMetrics[$function->getUUID()] = array(
             'loc'    =>  $loc,
             'cloc'   =>  $cloc,
+            'eloc'   =>  $eloc,
             'ncloc'  =>  $ncloc
         );
         
@@ -325,12 +302,16 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         $interface->getSourceFile()->accept($this);
         
-        $loc = $interface->getEndLine() - $interface->getStartLine() + 1;
+        list($cloc, $eloc) = $this->_linesOfCode($interface->getTokens());
+        
+        $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
+        $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$interface->getUUID()] = array(
             'loc'    =>  $loc,
-            'cloc'   =>  0,
-            'ncloc'  =>  $loc,
+            'cloc'   =>  $cloc,
+            'eloc'   =>  $eloc,
+            'ncloc'  =>  $ncloc
         );
         
         foreach ($interface->getMethods() as $method) {
@@ -355,29 +336,18 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     {
         $this->fireStartMethod($method);
         
-        $cloc = 0;
-        foreach ($method->getTokens() as $token) {
-            if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT) {
-                ++$cloc;
-            } else if ($token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
-                $cloc += count(explode("\n", $token[1]));
-            }
-        }
-
+        list($cloc, $eloc) = $this->_linesOfCode($method->getTokens());
+        
         $loc   = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
         
         $this->_nodeMetrics[$method->getUUID()] = array(
             'loc'    =>  $loc,
             'cloc'   =>  $cloc,
+            'eloc'   =>  $eloc,
             'ncloc'  =>  $ncloc
         );
 
-        if (($comment = $method->getDocComment()) !== null) {
-            $cloc += substr_count($comment, "\n") + 1;
-        }
-        $this->_updateParentLoc($method->getParent(), $cloc);
-        
         $this->fireEndMethod($method);
     }
     
@@ -396,15 +366,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $this->_nodeMetrics[$property->getUUID()] = array(
             'loc'    =>  1,
             'cloc'   =>  0,
+            'eloc'   =>  0,
             'ncloc'  =>  1
         );
-        
-        $cloc = 0;
-        if (($comment = $property->getDocComment()) !== null) {
-            $cloc = substr_count($comment, "\n") + 1;
-        }
-        $this->_updateParentLoc($property->getParent(), $cloc);
-        
+
         $this->fireEndProperty($property);
     }
     
@@ -419,30 +384,57 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
     {
         $this->fireStartTypeConstant($constant);
-        
-        $cloc = 0;
-        if (($comment = $constant->getDocComment()) !== null) {
-            $cloc = substr_count($comment, "\n") + 1;
-        }
-        $this->_updateParentLoc($constant->getParent(), $cloc);
+                
+        $this->_nodeMetrics[$constant->getUUID()] = array(
+            'loc'    =>  1,
+            'cloc'   =>  0,
+            'eloc'   =>  0,
+            'ncloc'  =>  1
+        );
         
         $this->fireEndTypeConstant($constant);
     }
     
     /**
-     * Updates the <b>cloc</b> and <b>ncloc</b> values of a parent node. 
-     *
-     * @param PHP_Depend_Code_AbstractItem $item The parent node instance.
-     * @param integer                      $cloc The cloc value.
+     * Counts the Comment Lines Of Code (CLOC) and a pseudo Executable Lines Of
+     * Code (ELOC) values. 
      * 
-     * @return void
+     * ELOC = Non Whitespace Lines + Non Comment Lines
+     * 
+     * <code>
+     * array(
+     *     0  =>  23,  // Comment Lines Of Code
+     *     1  =>  42   // Executable Lines Of Code
+     * )
+     * </code>
+     *
+     * @param array(array) $tokens The raw token stream.
+     * 
+     * @return array(integer)
      */
-    private function _updateParentLoc(PHP_Depend_Code_AbstractItem $item, $cloc)
+    private function _linesOfCode(array $tokens)
     {
-        if (isset($this->_nodeMetrics[$item->getUUID()])) {
-            // Update parent node metrics
-            $this->_nodeMetrics[$item->getUUID()]['cloc']  += $cloc;
-            $this->_nodeMetrics[$item->getUUID()]['ncloc'] -= $cloc;
+        $clines = array();
+        $elines = array();
+
+        $comment = array(
+            PHP_Depend_Code_TokenizerI::T_COMMENT,
+            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT
+        );
+        
+        foreach ($tokens as $token) {
+            $lines = count(explode("\n", trim($token[1])));
+            
+            if (in_array($token[0], $comment) === true) {
+                for ($i = 0; $i < $lines; ++$i) {
+                    $clines[$token[2] + $i] = true;
+                }
+            } else {
+                for ($i = 0; $i < $lines; ++$i) {
+                    $elines[$token[2] + $i] = true;
+                }
+            }
         }
+        return array(count($clines), count($elines));
     }
 }
