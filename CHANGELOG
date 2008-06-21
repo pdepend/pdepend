@@ -1,7 +1,7 @@
 PHP_Depend 0.9.0
 ----------------
 
-- #19 + Implement a phpunit compatible xml logger
+- #19 + Implement a phpunit compatible xml logger.
 - #20 + Add support for class constants.
 - #30 + Improve Lines Of Code. 
 
