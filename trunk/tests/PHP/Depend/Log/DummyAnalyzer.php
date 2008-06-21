@@ -47,6 +47,8 @@
  */
 
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * Simple dummy analyzer.
@@ -60,8 +62,25 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_DummyAnalyzer implements PHP_Depend_Metrics_AnalyzerI
+class PHP_Depend_Log_DummyAnalyzer 
+    implements PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_NodeAwareI,
+               PHP_Depend_Metrics_ProjectAwareI
 {
+    /**
+     * Test project metrics
+     *
+     * @var array $projectMetrics
+     */
+    public $projectMetrics = array();
+    
+    /**
+     * Test node metrics.
+     *
+     * @var array $nodeMetrics
+     */
+    public $nodeMetrics = array();
+    
     /**
      * Constructs a new analyzer instance.
      *
@@ -71,6 +90,31 @@ class PHP_Depend_Log_DummyAnalyzer implements PHP_Depend_Metrics_AnalyzerI
     public function __construct(array $options = array())
     {
         
+    }
+    
+    /**
+     * Returns the project metrics.
+     *
+     * @return array
+     */
+    public function getProjectMetrics()
+    {
+        return $this->projectMetrics;
+    }
+    
+    /**
+     * Returns the node metrics.
+     *
+     * @param PHP_Depend_Code_NodeI $node context npde.
+     * 
+     * @return array
+     */
+    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    {
+        if (isset($this->nodeMetrics[$node->getName()])) {
+            return $this->nodeMetrics[$node->getName()];
+        }
+        return array();
     }
     
     /**
