@@ -417,7 +417,7 @@
        x="42"
        y="213.00002"
        id="text5030"
-       title="Lines Of Code"
+       title="Lines Of Code (Non Comment and Non Whitespace Lines)"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5032"
