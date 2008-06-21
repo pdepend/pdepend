@@ -100,6 +100,14 @@ abstract class PHP_Depend_Code_AbstractType
     protected $children = array();
     
     /**
+     * The tokens for this type.
+     *
+     * @type array<array>
+     * @var array(array) $_tokens
+     */
+    private $_tokens = array();
+    
+    /**
      * List of {@link PHP_Depend_Code_TypeConstant} objects that belong to this 
      * type. 
      *
@@ -290,6 +298,28 @@ abstract class PHP_Depend_Code_AbstractType
             // Try to remove this as dependency
             $type->removeDependency($this);
         }
+    }
+    
+    /**
+     * Returns an <b>array</b> with all tokens within this type.
+     *
+     * @return array(array)
+     */
+    public function getTokens()
+    {
+        return $this->_tokens;
+    }
+    
+    /**
+     * Sets the tokens for this type.
+     *
+     * @param array(array) $tokens The generated tokens.
+     * 
+     * @return void
+     */
+    public function setTokens(array $tokens)
+    {
+        $this->_tokens = $tokens;
     }
     
     /**

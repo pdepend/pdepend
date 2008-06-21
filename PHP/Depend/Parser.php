@@ -300,17 +300,21 @@ class PHP_Depend_Parser
      * 
      * @param PHP_Depend_Code_Interface $interface The context interface instance.
      *
-     * @return void
+     * @return array(array)
      */
     protected function parseInterfaceSignature(PHP_Depend_Code_Interface $interface)
     {
+        $tokens = array();
         while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
-            $token = $this->tokenizer->next();
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+            
             if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
                 $dependency = $this->builder->buildInterface($token[1]);
                 $interface->addDependency($dependency);
             }
         }
+        return $tokens;
     }
     
     /**
@@ -322,9 +326,13 @@ class PHP_Depend_Parser
      */
     protected function parseClassSignature(PHP_Depend_Code_Class $class)
     {
+        $tokens     = array();
         $implements = false;
+        
         while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
-            $token = $this->tokenizer->next();
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+            
             if ($token[0] === PHP_Depend_Code_TokenizerI::T_IMPLEMENTS) {
                 $implements = true;
             } else if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
@@ -337,6 +345,8 @@ class PHP_Depend_Parser
                 $class->addDependency($dependency);
             }
         }
+        
+        return $tokens;
     }
     
     /**
@@ -344,12 +354,14 @@ class PHP_Depend_Parser
      * 
      * @param PHP_Depend_Code_AbstractType $type The context type instance.
      *
-     * @return void
+     * @return array(array)
      */
     protected function parseTypeBody(PHP_Depend_Code_AbstractType $type)
     {
         $token = $this->tokenizer->next();
         $curly = 0;
+        
+        $tokens = array($token);
         
         // If type is an interface all methods are abstract
         $abstractDefault = ($type instanceof PHP_Depend_Code_Interface);
@@ -362,7 +374,7 @@ class PHP_Depend_Parser
             
             switch ($token[0]) {
             case PHP_Depend_Code_TokenizerI::T_FUNCTION:
-                $method = $this->parseCallable($type);
+                $method = $this->parseCallable($tokens, $type);
                 $method->setDocComment($comment);
                 $method->setAbstract($abstract);
                 $method->setVisibility($visibilty);
@@ -393,7 +405,8 @@ class PHP_Depend_Parser
                 break;
             
             case PHP_Depend_Code_TokenizerI::T_CONST:
-                $token = $this->tokenizer->next();
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
                 
                 $constant = $this->builder->buildTypeConstant($token[1]);
                 $constant->setDocComment($comment);
@@ -452,10 +465,13 @@ class PHP_Depend_Parser
             if ($curly === 0) {
                 // Set end line number 
                 $type->setEndLine($token[2]);
+                // Set type tokens
+                $type->setTokens($tokens);
                 // Stop processing
                 break;
             } else {
-                $token = $this->tokenizer->next();
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
             }
         }
         
@@ -464,6 +480,8 @@ class PHP_Depend_Parser
             $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
             throw new RuntimeException($message);
         }
+        
+        return $tokens;
     }
     
     /**
@@ -473,11 +491,14 @@ class PHP_Depend_Parser
      * 
      * @return PHP_Depend_Code_AbstractCallable
      */
-    protected function parseCallable(PHP_Depend_Code_AbstractType $parent = null)
+    protected function parseCallable(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
     {
-        $token = $this->tokenizer->next();
+        $token    = $this->tokenizer->next();
+        $tokens[] = $token;
+        
         if ($token[0] === PHP_Depend_Code_TokenizerI::T_BITWISE_AND) {
-            $token = $this->tokenizer->next();
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
         }
         
         $callable = null;
@@ -495,10 +516,10 @@ class PHP_Depend_Parser
             $parent->addMethod($callable);
         }
         
-        $this->parseCallableSignature($callable);
+        $this->parseCallableSignature($tokens, $callable);
         if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies 
-            $this->parseCallableBody($callable);
+            $this->parseCallableBody($tokens, $callable);
         } else {
             $callable->setEndLine($token[2]);
         }
@@ -513,11 +534,12 @@ class PHP_Depend_Parser
      * 
      * @return void
      */
-    protected function parseCallableSignature(PHP_Depend_Code_AbstractCallable $callable)
+    protected function parseCallableSignature(array &$tokens, PHP_Depend_Code_AbstractCallable $callable)
     {
         if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN) {
             // Load invalid token for line number
-            $token = $this->tokenizer->next();
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
             
             // Throw a detailed exception message
             throw new RuntimeException(
@@ -534,6 +556,8 @@ class PHP_Depend_Parser
         
         while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
 
+            $tokens[] = $token;
+            
             switch ($token[0]) {
             case PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
@@ -567,7 +591,7 @@ class PHP_Depend_Parser
      * 
      * @return void
      */
-    protected function parseCallableBody(PHP_Depend_Code_AbstractCallable $callable)
+    protected function parseCallableBody(array &$outTokens, PHP_Depend_Code_AbstractCallable $callable)
     {
         $curly  = 0;
         $tokens = array();
@@ -637,6 +661,11 @@ class PHP_Depend_Parser
             $fileName = (string) $this->tokenizer->getSourceFile();
             $message  = "Invalid state, unclosed function body in '{$fileName}'.";
             throw new RuntimeException($message);
+        }
+        
+        // Append all tokens
+        foreach ($tokens as $token) {
+            $outTokens[] = $token;
         }
     }
     
