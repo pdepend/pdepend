@@ -597,7 +597,7 @@ class PHP_Depend_Parser
         $tokens = array();
 
         while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_EOF) {
-            
+
             $tokens[] = $token = $this->tokenizer->next();
 
             switch ($token[0]) {
@@ -651,7 +651,7 @@ class PHP_Depend_Parser
                 // Set end line number
                 $callable->setEndLine($token[2]);
                 // Set all tokens for this function
-                $callable->setTokens(array_slice($tokens, 1, count($tokens) - 2));
+                $callable->setTokens($tokens);
                 // Stop processing
                 break;
             }
