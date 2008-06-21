@@ -23,7 +23,9 @@ software JDepend and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
+- #19 + Implement a phpunit compatible xml logger
 - #20 + Add support for class constants.
+- #30 + Improve Lines Of Code. 
   </notes>
   <contents>
     <dir name="/">
