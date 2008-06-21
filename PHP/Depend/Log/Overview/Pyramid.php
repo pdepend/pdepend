@@ -231,22 +231,13 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
             return 'low';
         } else if ($value >= $threshold[2]) {
             return 'high';
-        } else if ($value > $threshold[0] || $value < $threshold[1]) {
+        } else {
             $low = $value - $threshold[0];
             $avg = $threshold[1] - $value;
 
             if ($low < $avg) {
                 return 'low';
             }
-            return 'average';
-        } else if ($value > $threshold[1] && $value < $threshold[2]) {
-            $avg  = $value - $threshold[1];
-            $high = $threshold[2] - $value;
-            
-            if ($avg < $high) {
-                return 'average';
-            }
-            return 'high';
         }
         return 'average';
     }
