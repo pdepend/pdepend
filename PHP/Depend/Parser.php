@@ -487,7 +487,8 @@ class PHP_Depend_Parser
     /**
      * Parses a function or a method and adds it to the parent context node.
      * 
-     * @param PHP_Depend_Code_AbstractType $parent An optional parent interface of class.
+     * @param array(array)                 &$tokens Collected tokens.
+     * @param PHP_Depend_Code_AbstractType $parent  An optional parent interface of class.
      * 
      * @return PHP_Depend_Code_AbstractCallable
      */
@@ -530,6 +531,7 @@ class PHP_Depend_Parser
     /**
      * Extracts all dependencies from a callable signature.
      *
+     * @param array(array)                     &$tokens  Collected tokens.
      * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
      * 
      * @return void
@@ -587,7 +589,8 @@ class PHP_Depend_Parser
     /**
      * Extracts all dependencies from a callable body.
      *
-     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
+     * @param array(array)                     &$outTokens Collected tokens.
+     * @param PHP_Depend_Code_AbstractCallable $callable   The context callable.
      * 
      * @return void
      */
@@ -643,7 +646,7 @@ class PHP_Depend_Parser
                 break;
 
             default:
-//                throw new RuntimeException("Unknown token '{$token[1]}'.");
+                // throw new RuntimeException("Unknown token '{$token[1]}'.");
                 // TODO: Handle/log unused tokens
             }
             
@@ -731,7 +734,8 @@ class PHP_Depend_Parser
             PHP_Depend_Code_TokenizerI::T_STRING,
         );
         
-        $parts  = array();
+        $parts = array();
+        
         while (in_array($this->tokenizer->peek(), $allowed)) {
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
