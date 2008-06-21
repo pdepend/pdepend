@@ -66,7 +66,7 @@ class PHP_Depend_Log_Overview_NodeLocAnalyzer
     public function getProjectMetrics()
     {
         return array(
-            'ncloc'  =>  35175
+            'eloc'  =>  35175
         );
     }
 }
