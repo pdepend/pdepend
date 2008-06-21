@@ -308,6 +308,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     {
         $this->sourceFile = new PHP_Depend_Code_File($sourceFile);
         $this->tokenize();
+        $this->sourceFile->setTokens($this->tokens);
     }
     
     /**

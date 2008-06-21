@@ -315,7 +315,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
         
         return array(
             'cyclo'   =>  $cyclomatic['ccn2'],
-            'loc'     =>  $nodeLoc['ncloc'],
+            'loc'     =>  $nodeLoc['eloc'],
             'nom'     =>  ($nodeCount['nom'] + $nodeCount['nof']),
             'noc'     =>  $nodeCount['noc'],
             'nop'     =>  $nodeCount['nop'],

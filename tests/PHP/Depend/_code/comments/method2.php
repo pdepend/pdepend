@@ -13,8 +13,8 @@ interface MyInterface
      */
     function method_with_comment();
 
-    function method_without_comment();
-
+    function method_without_comment(
+    );
     // Wrong comment type
     function method_without_doc_comment();
 
