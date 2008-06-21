@@ -101,6 +101,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     private $_projectMetrics = array(
         'loc'    =>  0,
         'cloc'   =>  0,
+        'eloc'   =>  0,
         'ncloc'  =>  0
     );
     
@@ -206,12 +207,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $constant->accept($this);
         }
         
-        $cloc = 0;
-        if (($comment = $class->getDocComment()) !== null) {
-            $cloc = substr_count($comment, "\n") + 1;
-        }
-        $this->_updateFileLoc($class->getSourceFile(), $cloc);
-        
         $this->fireEndClass($class);
     }
     
@@ -237,23 +232,45 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         $this->fireStartFile($file);
         
-        $cloc = 0;
-        if (($comment = $file->getDocComment()) !== null) {
-            $cloc = count(explode("\n", $comment));
+        $loc = count($file->getLoc());
+        
+        $clines = array_fill(0, $loc + 1, false);
+        $elines = array_fill(0, $loc + 1, false);
+
+        $comment = array(
+            PHP_Depend_Code_TokenizerI::T_COMMENT,
+            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT
+        );
+        
+        foreach ($file->getTokens() as $token) {
+            $lines = count(explode("\n", trim($token[1])));
+            
+            if (in_array($token[0], $comment) === true) {
+                for ($i = 0; $i < $lines; ++$i) {
+                    $clines[$token[2] + $i] = true;
+                }
+            } else {
+                for ($i = 0; $i < $lines; ++$i) {
+                    $elines[$token[2] + $i] = true;
+                }
+            }
         }
-        
-        $loc   = count($file->getLoc());
-        $ncloc = $loc - $cloc; 
-        
+
+        $cloc  = count(array_filter($clines));
+        $eloc  = count(array_filter($elines));
+        $ncloc = $loc - $cloc;
+
         $this->_nodeMetrics[$uuid] = array(
             'loc'    =>  $loc,
             'cloc'   =>  $cloc,
+            'eloc'   =>  $eloc,
             'ncloc'  =>  $ncloc
         );
         
         // Update project metrics
         $this->_projectMetrics['loc']   += $loc;
         $this->_projectMetrics['cloc']  += $cloc;
+        $this->_projectMetrics['eloc']  += $eloc;
         $this->_projectMetrics['ncloc'] += $ncloc;
         
         $this->fireEndFile($file);
@@ -290,11 +307,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             'cloc'   =>  $cloc,
             'ncloc'  =>  $ncloc
         );
-
-        if (($comment = $function->getDocComment()) !== null) {
-            $cloc += count(explode("\n", $comment));
-        }
-        $this->_updateFileLoc($function->getSourceFile(), $cloc);
         
         $this->fireEndFunction($function);
     }
@@ -320,12 +332,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             'cloc'   =>  0,
             'ncloc'  =>  $loc,
         );
-
-        $cloc = 0;
-        if (($comment = $interface->getDocComment()) !== null) {
-            $cloc = substr_count($comment, "\n") + 1;
-        }
-        $this->_updateFileLoc($interface->getSourceFile(), $cloc);
         
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
@@ -437,30 +443,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             // Update parent node metrics
             $this->_nodeMetrics[$item->getUUID()]['cloc']  += $cloc;
             $this->_nodeMetrics[$item->getUUID()]['ncloc'] -= $cloc;
-        
-            // Update source file metrics
-            $this->_updateFileLoc($item->getSourceFile(), $cloc);
-        }
-    }
-    
-    /**
-     * Updates the <b>cloc</b> and <b>ncloc</b> values of a file. 
-     *
-     * @param PHP_Depend_Code_File $file The parent file instance.
-     * @param integer              $cloc The cloc value.
-     * 
-     * @return void
-     */
-    private function _updateFileLoc(PHP_Depend_Code_File $file, $cloc)
-    {
-        if (isset($this->_nodeMetrics[$file->getUUID()])) {
-            // Update file node metrics
-            $this->_nodeMetrics[$file->getUUID()]['cloc']  += $cloc;
-            $this->_nodeMetrics[$file->getUUID()]['ncloc'] -= $cloc;
-        
-            // Update project metrics
-            $this->_projectMetrics['cloc']  += $cloc;
-            $this->_projectMetrics['ncloc'] -= $cloc;
         }
     }
 }

@@ -67,41 +67,49 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      * The unique identifier for this function.
      *
      * @type PHP_Depend_Util_UUID
-     * @var PHP_Depend_Util_UUID $uuid
+     * @var PHP_Depend_Util_UUID $_uuid
      */
-    protected $uuid = null;
+    private $_uuid = null;
     
     /**
      * The source file name/path.
      *
      * @type string
-     * @var string $fileName
+     * @var string $_fileName
      */
-    protected $fileName = null;
+    private $_fileName = null;
     
     /**
      * Normalized code in this file.
      *
      * @type string
-     * @var string $source
+     * @var string $_source
      */
-    protected $source = null;
+    private $_source = null;
     
     /**
      * The lines of code in this file.
      *
      * @type array<string>
-     * @var array(integer=>string) $loc
+     * @var array(integer=>string) $_loc
      */
-    protected $loc = null;
+    private $_loc = null;
+    
+    /**
+     * The tokens for this file.
+     *
+     * @type array<array>
+     * @var array(array) $_tokens
+     */
+    private $_tokens = array();
     
     /**
      * The comment for this type.
      *
      * @type string
-     * @var string $docComment
+     * @var string $_docComment
      */
-    protected $docComment = null;
+    private $_docComment = null;
     
     /**
      * Constructs a new source file instance.
@@ -111,10 +119,10 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function __construct($fileName)
     {
         if ($fileName !== null) {
-            $this->fileName = realpath($fileName);
+            $this->_fileName = realpath($fileName);
         }
         
-        $this->uuid = new PHP_Depend_Util_UUID();
+        $this->_uuid = new PHP_Depend_Util_UUID();
     }
     
     /**
@@ -124,7 +132,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getName()
     {
-        return $this->fileName;
+        return $this->_fileName;
     }
     
     /**
@@ -134,7 +142,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getFileName()
     {
-        return $this->fileName;
+        return $this->_fileName;
     }
     
     /**
@@ -144,7 +152,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getUUID()
     {
-        return (string) $this->uuid;
+        return (string) $this->_uuid;
     }
     
     /**
@@ -155,7 +163,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function getLoc()
     {
         $this->readSource();
-        return $this->loc;
+        return $this->_loc;
     }
     
     /**
@@ -166,7 +174,29 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function getSource()
     {
         $this->readSource();
-        return $this->source;
+        return $this->_source;
+    }
+    
+    /**
+     * Returns an <b>array</b> with all tokens within this file.
+     *
+     * @return array(array)
+     */
+    public function getTokens()
+    {
+        return $this->_tokens;
+    }
+    
+    /**
+     * Sets the tokens for this file.
+     *
+     * @param array(array) $tokens The generated tokens.
+     * 
+     * @return void
+     */
+    public function setTokens(array $tokens)
+    {
+        $this->_tokens = $tokens;
     }
     
     /**
@@ -176,7 +206,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getDocComment()
     {
-        return $this->docComment;
+        return $this->_docComment;
     }
     
     /**
@@ -188,7 +218,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setDocComment($docComment)
     {
-        $this->docComment = $docComment;
+        $this->_docComment = $docComment;
     }
     
     /**
@@ -211,7 +241,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function __toString()
     {
-        return ($this->fileName === null ? '' : $this->fileName);
+        return ($this->_fileName === null ? '' : $this->_fileName);
     }
     
     /**
@@ -221,12 +251,12 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     protected function readSource()
     {
-        if ($this->loc === null) {
-            $source = file_get_contents($this->fileName);
+        if ($this->_loc === null) {
+            $source = file_get_contents($this->_fileName);
             
-            $this->loc = preg_split('#(\r\n|\n|\r)#', $source);
+            $this->_loc = preg_split('#(\r\n|\n|\r)#', $source);
             
-            $this->source = implode("\n", $this->loc);
+            $this->_source = implode("\n", $this->_loc);
         }
     }
 }
