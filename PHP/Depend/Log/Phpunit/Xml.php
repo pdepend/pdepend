@@ -139,6 +139,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * @var array(string=>string)
      */
     private $_phpunitTranslationTable = array(
+        'ccn2'    =>  'ccn',
         'noc'     =>  'classes',
         'noi'     =>  'interfs',
         'nof'     =>  'functions',
