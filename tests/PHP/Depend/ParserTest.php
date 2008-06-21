@@ -286,6 +286,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parser->parse();
         
         $tokens = array(
+            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN, '{', 7),
             array(PHP_Depend_Code_TokenizerI::T_FOREACH, 'foreach', 8),
             array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, '(', 8),
             array(PHP_Depend_Code_TokenizerI::T_VARIABLE, '$foo', 8),
@@ -301,6 +302,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, ')', 9),
             array(PHP_Depend_Code_TokenizerI::T_SEMICOLON, ';', 9),
             array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 10),
+            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 11),
         );
         
         $packages = $builder->getPackages();
