@@ -217,7 +217,7 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     protected function step($size = 1)
     {
-        if (($this->_count > 0 || $size === 1) && $this->_count % $size === 0) {
+        if ($this->_count > 0 && $this->_count % $size === 0) {
             echo '.';
         }
         if ($this->_count > 0 && $this->_count % ($size * 60) === 0) {
@@ -238,7 +238,10 @@ class PHP_Depend_TextUI_ResultPrinter
         $diff = ($this->_count % ($size * 60));
 
         if ($diff === 0) {
-            printf(".% 6s\n\n", $this->_count);                
+            printf(".% 6s\n\n", $this->_count);
+        } else if ($size === 1) {
+            $indent = 66 - ceil($diff / $size);
+            printf(".% {$indent}s\n\n", $this->_count);
         } else {
             $indent = 66 - ceil($diff / $size) + 1;
             printf("% {$indent}s\n\n", $this->_count);

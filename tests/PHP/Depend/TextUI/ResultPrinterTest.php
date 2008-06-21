@@ -87,7 +87,34 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
         $actual = ob_get_contents();
         ob_end_clean();
         
-        $expected = ".                                                                 1\n\n";
+        $expected = ".                                                                1\n\n";
+
+        $this->assertEquals($expected, $actual);
+    }
+    
+    /**
+     * Tests the result printer with multiple entries.
+     *
+     * @return void
+     */
+    public function testResultPrinterOutputForMultipleEntries()
+    {
+        // Create dummy objects
+        $builder   = new PHP_Depend_Code_DefaultBuilder();
+        $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer(__FILE__);
+        
+        $printer = new PHP_Depend_TextUI_ResultPrinter();
+        
+        ob_start();
+        for ($i = 0; $i < 73; ++$i) {
+            $printer->startFileParsing($tokenizer);
+        }
+        $printer->endParseProcess($builder);
+        $actual = ob_get_contents();
+        ob_end_clean();
+        
+        $expected = "............................................................    60\n"
+                  . ".............                                                   73\n\n";
 
         $this->assertEquals($expected, $actual);
     }
