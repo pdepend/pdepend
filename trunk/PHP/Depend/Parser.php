@@ -147,7 +147,8 @@ class PHP_Depend_Parser
         'real',
         'resource',
         'string',
-        'unknown', // Eclipse default return value
+        'unknown',      // Eclipse default return type
+        'unknown_type', // Eclipse default property type
         'void'
     );
     
