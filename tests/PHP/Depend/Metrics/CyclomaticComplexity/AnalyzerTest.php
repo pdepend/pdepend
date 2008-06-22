@@ -78,7 +78,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         
         $packages->rewind();
         
-        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(2, $packages->count()); // +global & +standard
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(2, $functions->count());
         
@@ -117,9 +117,9 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         
         $packages->rewind();
         
-        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(2, $packages->count()); // +global & +standard
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(1, $classes->count());
         $methods = $classes->current()->getMethods();
         $this->assertEquals(2, $methods->count());
         
