@@ -606,6 +606,7 @@ class PHP_Depend_Parser
 
             switch ($token[0]) {
             case PHP_Depend_Code_TokenizerI::T_NEW:
+            case PHP_Depend_Code_TokenizerI::T_INSTANCEOF:
                 $parts = $this->_parseClassNameChain($tokens);
                                 
                 // If this is a dynamic instantiation, do not add dependency.

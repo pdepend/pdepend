@@ -1341,6 +1341,81 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser detect a type within an instance of operator.
+     * 
+     * <code>
+     * if ($object instanceof SplObjectStorage) {
+     * 
+     * }
+     * </code>
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=16
+     *
+     * @return void
+     */
+    public function testParserDetectsTypeWithinInstanceOfOperatorIssue16()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/16-1.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(2, $packages->count()); // +global & +spl
+        
+        $functions = $packages->current()->getFunctions();
+        $this->assertEquals(1, $functions->count());
+        
+        $function = $functions->current();
+        $this->assertEquals('pdepend', $function->getName());
+        
+        $dependencies = $function->getDependencies();
+        $this->assertEquals(1, $dependencies->count());
+        $this->assertEquals('SplObjectStorage', $dependencies->current()->getName());
+    }
+    
+    /**
+     * Tests that the parser ignores dynamic(with variables) instanceof operations.
+     * 
+     * <code>
+     * $class = 'SplObjectStorage';
+     * if ($object instanceof $class) {
+     * 
+     * }
+     * </code>
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=16
+     *
+     * @return void
+     * @todo TODO: It would be a cool feature if PHP_Depend would replace such
+     *             combinations (T_VARIABLE = T_CONSTANT_ENCAPSED_STRING with
+     *             T_INSTANCEOF + T_VARIABLE).
+     */
+    public function testParserIgnoresDynamicInstanceOfOperatorIssue16()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/16-2.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(1, $packages->count()); // +global
+        
+        $functions = $packages->current()->getFunctions();
+        $this->assertEquals(1, $functions->count());
+        
+        $function = $functions->current();
+        $this->assertEquals('pdepend', $function->getName());
+        
+        $dependencies = $function->getDependencies();
+        $this->assertEquals(0, $dependencies->count());
+    }
+    
+    /**
      * Returns all packages in the mixed code example.
      *
      * @return PHP_Depend_Code_NodeIterator
