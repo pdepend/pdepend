@@ -605,6 +605,10 @@ class PHP_Depend_Parser
             $tokens[] = $token = $this->tokenizer->next();
 
             switch ($token[0]) {
+            case PHP_Depend_Code_TokenizerI::T_CATCH:
+                // Skip open parenthesis
+                $tokens[] = $this->tokenizer->next();
+                
             case PHP_Depend_Code_TokenizerI::T_NEW:
             case PHP_Depend_Code_TokenizerI::T_INSTANCEOF:
                 $parts = $this->_parseClassNameChain($tokens);

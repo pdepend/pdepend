@@ -1416,6 +1416,42 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser detects a type within a catch block.
+     * 
+     * <code>
+     * try {
+     *     $foo->bar();
+     * } catch (Exception $e) {}
+     * </code>
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=17
+     *
+     * @return void
+     */
+    public function testParserDetectsTypeWithinCatchBlockIssue17()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/17-1.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(2, $packages->count()); // +global & +spl
+        
+        $functions = $packages->current()->getFunctions();
+        $this->assertEquals(1, $functions->count());
+        
+        $function = $functions->current();
+        $this->assertEquals('pdepend', $function->getName());
+        
+        $dependencies = $function->getDependencies();
+        $this->assertEquals(1, $dependencies->count());
+        $this->assertEquals('OutOfBoundsException', $dependencies->current()->getName());
+    }
+    
+    /**
      * Returns all packages in the mixed code example.
      *
      * @return PHP_Depend_Code_NodeIterator
