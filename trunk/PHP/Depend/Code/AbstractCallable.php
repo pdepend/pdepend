@@ -101,6 +101,14 @@ abstract class PHP_Depend_Code_AbstractCallable
     private $_exceptionTypes = array();
     
     /**
+     * List of method/function parameters.
+     *
+     * @type array<PHP_Depend_Code_Parameter>
+     * @var array(PHP_Depend_Code_Parameter) $_parameters
+     */
+    private $_parameters = array();
+    
+    /**
      * Returns the tokens found in the function body.
      *
      * @return array(mixed)
@@ -130,7 +138,19 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getDependencies()
     {
-        return new PHP_Depend_Code_NodeIterator($this->dependencies);
+        $dependencies = $this->dependencies;
+        foreach ($this->_parameters as $parameter) {
+            // Skip all scalar parameters
+            if (($type = $parameter->getType()) === null) {
+                continue;
+            }
+            // Add only once
+            if (in_array($type, $dependencies, true) === false) {
+                $dependencies[] = $type;
+            }
+        }
+        
+        return new PHP_Depend_Code_NodeIterator($dependencies);
     }
     
     /**
@@ -221,6 +241,57 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         if (($i = array_search($exceptionType, $this->_exceptionTypes, true))) {
             unset($this->_exceptionTypes[$i]);
+        }
+    }
+    
+    /**
+     * Returns an iterator with all method/function parameters.
+     * 
+     * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
+     * nodes. Use the {@link PHP_Depend_Code_Parameter::getPosition()} for the
+     * correct parameter position.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getParameters()
+    {
+        return new PHP_Depend_Code_NodeIterator($this->_parameters);
+    }
+    
+    /**
+     * Adds a parameter to the list of method/function parameters.
+     *
+     * @param PHP_Depend_Code_Parameter $parameter The parameter instance.
+     * 
+     * @return PHP_Depend_Code_Parameter
+     */
+    public function addParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        if ($parameter->getParent() !== null) {
+            $parameter->getParent()->removeParameter($parameter);
+        }
+        // Set this as parent
+        $parameter->setParent($this);
+        // Store reference
+        $this->_parameters[] = $parameter;
+        
+        return $parameter;
+    }
+    
+    /**
+     * Removes the parameter from this callable.
+     *
+     * @param PHP_Depend_Code_Parameter $parameter The parameter instance.
+     * 
+     * @return void
+     */
+    public function removeParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        if (($i = array_search($parameter, $this->_parameters, true)) !== false) {
+            // Remove this parent
+            $parameter->setParent(null);
+            // Remove internal reference
+            unset($this->_parameters[$i]);
         }
     }
 }

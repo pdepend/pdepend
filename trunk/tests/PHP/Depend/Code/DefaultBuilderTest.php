@@ -320,6 +320,26 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that a type recreate forces the parameter type to be updated.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateParameterType()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $param  = $builder->buildParameter('$bar', 0);
+        $type0  = $builder->buildClassOrInterface('FooBar');
+        
+        $this->assertNull($param->getType());
+        $param->setType($type0);
+        $this->assertSame($type0, $param->getType());
+        
+        $type1 = $builder->buildInterface('FooBar');
+        $this->assertSame($type1, $param->getType());
+    }
+    
+    /**
      * Tests that {@link PHP_Depend_Code_DefaultBuilder::buildInterface()} creates
      * different interface instances for different parent packages.
      *
