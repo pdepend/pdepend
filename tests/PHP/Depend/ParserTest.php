@@ -1547,6 +1547,69 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * The type hint detection was broken when a constant was used as default
+     * value for a function parameter.
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
+     *
+     * @return void
+     */
+    public function testParserDetectsOnlyTypeHintsWithinTheFunctionSignatureBug33()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/33-1.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(1, $packages->count()); // +global
+        
+        $functions = $packages->current()->getFunctions();
+        $this->assertEquals(1, $functions->count());
+        
+        $function = $functions->current();
+        $this->assertEquals('pdepend', $function->getName());
+        
+        $this->assertEquals(1, $function->getDependencies()->count());
+    }
+    
+    /**
+     * The type hint detection was broken when a constant was used as default
+     * value for a method parameter.
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
+     *
+     * @return void
+     */
+    public function testParserDetectsOnlyTypeHintsWithinTheMethodSignatureBug33()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/33-2.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(1, $packages->count()); // +global
+        
+        $classes = $packages->current()->getClasses();
+        $this->assertEquals(2, $classes->count());
+        
+        $classes->next();
+        
+        $class = $classes->current();
+        $this->assertEquals('PHP_Depend_Parser', $class->getName());
+        
+        $method = $class->getMethods()->current();
+        $this->assertEquals('parse', $method->getName());
+        
+        $this->assertEquals(1, $method->getDependencies()->count());
+    }
+    
+    /**
      * Returns all packages in the mixed code example.
      *
      * @return PHP_Depend_Code_NodeIterator
