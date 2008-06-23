@@ -571,6 +571,10 @@ class PHP_Depend_Parser
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_STRING:
+                // Check that the next token is a variable
+                if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                    continue;
+                }
                 // Create an instance for this dependency and append it
                 $dependency = $this->builder->buildClassOrInterface($token[1]);
                 $callable->addDependency($dependency);
