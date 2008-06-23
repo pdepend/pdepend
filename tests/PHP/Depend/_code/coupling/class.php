@@ -2,7 +2,7 @@
 /**
  * FANOUT := 12
  * CALLS  := 10
- * 
+ *
  * @package default
  * @subpackage package
  */
