@@ -46,10 +46,24 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
+require_once 'PHP/Depend/Code/AbstractItem.php';
+require_once 'PHP/Depend/Code/TypeAwareI.php';
 
 /**
- * Base interface for visitors that work on the generated node tree.
+ * An instance of this class represents a function or method parameter within 
+ * the analyzed source code.
+ * 
+ * <code>
+ * <?php
+ * class PHP_Depend_Code_NodeBuilderI
+ * {
+ *     public function buildNode($name, $line, PHP_Depend_Code_File $file) {
+ *     }
+ * }
+ * 
+ * function parse(PHP_Depend_Code_NodeBuilderI $builder, $file) {
+ * }
+ * </code>
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,104 +74,112 @@ require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeVisitorI
+class PHP_Depend_Code_Parameter 
+       extends PHP_Depend_Code_AbstractItem
+    implements PHP_Depend_Code_TypeAwareI
 {
     /**
-     * Adds a new listener to this node visitor.
+     * The parent function or method instance.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The new visit listener.
-     * 
-     * @return void
+     * @type PHP_Depend_Code_AbstractCallable
+     * @var PHP_Depend_Code_AbstractCallable $_parent
      */
-    function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
+    private $_parent = null;
     
     /**
-     * Removes the listener from this node visitor.
+     * The parameter position.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The listener to remove.
-     * 
-     * @return void
+     * @type integer
+     * @var integer $_position
      */
-    function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
+    private $_position = 0;
     
     /**
-     * Visits a class node. 
+     * The type for this property. This value is <b>null</b> by default and for
+     * scalar types.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
-     * 
-     * @return void
+     * @type PHP_Depend_Code_AbstractType
+     * @var PHP_Depend_Code_AbstractType $_type
      */
-    function visitClass(PHP_Depend_Code_Class $class);
+    private $_type = null;
+
+    /**
+     * Returns the parent function or method instance or <b>null</b>
+     *
+     * @return PHP_Depend_Code_AbstractCallable|null
+     */
+    public function getParent()
+    {
+        return $this->_parent;
+    }
     
     /**
-     * Visits a file node. 
+     * Sets the parent function or method object.
      *
-     * @param PHP_Depend_Code_File $file The current file node.
+     * @param PHP_Depend_Code_AbstractCallable $parent The parent callable.
      * 
      * @return void
      */
-    function visitFile(PHP_Depend_Code_File $file);
+    public function setParent(PHP_Depend_Code_AbstractCallable $parent = null)
+    {
+        $this->_parent = $parent;
+    }
     
     /**
-     * Visits a function node. 
+     * Returns the parameter position in the method/function signature.
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
-     * 
-     * @return void
+     * @return integer
      */
-    function visitFunction(PHP_Depend_Code_Function $function);
+    public function getPosition()
+    {
+        return $this->_position;
+    }
     
     /**
-     * Visits a code interface object.
+     * Sets the parameter position in the method/function signature.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param integer $position The parameter position.
      * 
      * @return void
      */
-    function visitInterface(PHP_Depend_Code_Interface $interface);
+    public function setPosition($position)
+    {
+        $this->_position = $position;
+    }
     
     /**
-     * Visits a method node. 
+     * Returns the type of this property. This method will return <b>null</b>
+     * for all scalar type, only class properties will have a type.
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
-     * 
-     * @return void
+     * @return PHP_Depend_Code_AbstractType
      */
-    function visitMethod(PHP_Depend_Code_Method $method);
+    public function getType()
+    {
+        return $this->_type;
+    }
     
     /**
-     * Visits a package node. 
+     * Sets the type of this property.
      *
-     * @param PHP_Depend_Code_Class $package The package class node.
+     * @param PHP_Depend_Code_AbstractType $type The property type.
      * 
      * @return void
      */
-    function visitPackage(PHP_Depend_Code_Package $package);
+    public function setType(PHP_Depend_Code_AbstractType $type)
+    {
+        $this->_type = $type;
+    }
     
     /**
-     * Visits a parameter node.
+     * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_Parameter $parameter The parameter node.
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     *                                              implementation.
      * 
      * @return void
      */
-    function visitParameter(PHP_Depend_Code_Parameter $parameter);
-    
-    /**
-     * Visits a property node. 
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     * 
-     * @return void
-     */
-    function visitProperty(PHP_Depend_Code_Property $property);
-    
-    /**
-     * Visits a class constant node. 
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     * 
-     * @return void
-     */
-    function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant);
+    public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
+    {
+        $visitor->visitParameter($this);
+    }
 }

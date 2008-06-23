@@ -554,6 +554,9 @@ class PHP_Depend_Parser
                 )
             );
         }
+        
+        $parameterType     = null;
+        $parameterPosition = 0;
 
         $parenthesis = 0;
         
@@ -564,24 +567,48 @@ class PHP_Depend_Parser
             switch ($token[0]) {
             case PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
+                $parameterType = null;
                 break;
                  
             case PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE:
                 --$parenthesis;
+                $parameterType = null;
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_STRING:
-                // Check that the next token is a variable
-                if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                // Check that the next token is a variable or next token is the
+                // reference operator and the fo
+                if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_VARIABLE
+                 && $this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_BITWISE_AND) {
                     continue;
                 }
-                // Create an instance for this dependency and append it
-                $dependency = $this->builder->buildClassOrInterface($token[1]);
-                $callable->addDependency($dependency);
+                if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_BITWISE_AND) {
+                    // Store reference operator
+                    $tokens[] = $this->tokenizer->next();
+                    // Check next token
+                    if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                        continue;
+                    }
+                }
+                
+                // Create an instance for this parameter
+                $parameterType = $this->builder->buildClassOrInterface($token[1]);
+                break;
+                
+            case PHP_Depend_Code_TokenizerI::T_VARIABLE:
+                $parameter = $this->builder->buildParameter($token[1], $token[2]);
+                $parameter->setPosition($parameterPosition++);
+                
+                if ($parameterType !== null) {
+                    $parameter->setType($parameterType);
+                }
+                $callable->addParameter($parameter);
                 break;
 
             default:
                 // TODO: Handle/log unused tokens
+                $parameterType = null;
+                break;
             }
             
             if ($parenthesis === 0) {
