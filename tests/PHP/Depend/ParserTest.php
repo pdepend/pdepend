@@ -1610,6 +1610,93 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser supports function parameters.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectFunctionParametersIssue32()
+    {
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/32-1.php');
+        $this->assertEquals(1, $packages->count());
+        
+        $function = $packages->current()->getFunctions()->current();
+        $this->assertNotNull($function);
+        $this->assertEquals('pdepend', $function->getName());
+        
+        $parameters = $function->getParameters();
+        $this->assertEquals(3, $parameters->count());
+        
+        // Note alphabetic order
+        $parameter = $parameters->current();
+        $this->assertEquals('$bar', $parameter->getName());
+        $this->assertEquals(1, $parameter->getPosition());
+        $this->assertNotNull($parameter->getType());
+        $this->assertEquals('Bar', $parameter->getType()->getName());
+        
+        $parameters->next();
+        
+        $parameter = $parameters->current();
+        $this->assertEquals('$foo', $parameter->getName());
+        $this->assertEquals(0, $parameter->getPosition());
+        $this->assertNull($parameter->getType());
+        
+        $parameters->next();
+        
+        $parameter = $parameters->current();
+        $this->assertEquals('$foobar', $parameter->getName());
+        $this->assertEquals(2, $parameter->getPosition());
+        $this->assertNull($parameter->getType());
+    }
+    
+    /**
+     * Tests that the parser supports method parameters.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectMethodParametersIssue32()
+    {
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/32-2.php');
+        $this->assertEquals(1, $packages->count());
+        
+        $classes = $packages->current()->getClasses();
+        $this->assertEquals(2, $classes->count());
+        
+        $classes->next();
+        
+        $class = $classes->current();
+        $this->assertNotNull($class);
+        $this->assertEquals('PHP_Depend_Parser', $class->getName());
+        
+        $method = $class->getMethods()->current();
+        $this->assertNotNull($method);
+        $this->assertEquals('parse', $method->getName());
+        
+        $parameters = $method->getParameters();
+        $this->assertEquals(3, $parameters->count());
+        
+        // Note alphabetic order
+        $parameter = $parameters->current();
+        $this->assertEquals('$bar', $parameter->getName());
+        $this->assertEquals(1, $parameter->getPosition());
+        $this->assertNotNull($parameter->getType());
+        $this->assertEquals('Bar', $parameter->getType()->getName());
+        
+        $parameters->next();
+        
+        $parameter = $parameters->current();
+        $this->assertEquals('$foo', $parameter->getName());
+        $this->assertEquals(0, $parameter->getPosition());
+        $this->assertNull($parameter->getType());
+        
+        $parameters->next();
+        
+        $parameter = $parameters->current();
+        $this->assertEquals('$foobar', $parameter->getName());
+        $this->assertEquals(2, $parameter->getPosition());
+        $this->assertNull($parameter->getType());
+    }
+    
+    /**
      * Returns all packages in the mixed code example.
      *
      * @return PHP_Depend_Code_NodeIterator

@@ -55,6 +55,7 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Code/Parameter.php';
 require_once 'PHP/Depend/Code/Property.php';
 
 /**
@@ -127,6 +128,16 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      * @var array(PHP_Depend_Code_Method) $methods
      */
     protected $methods = array();
+    
+    /**
+    
+    /**
+     * All generated {@link PHP_Depend_Code_Parameter} instances.
+     *
+     * @type array<PHP_Depend_Code_Parameter>
+     * @var array(PHP_Depend_Code_Parameter) $_parameters
+     */
+    private $_parameters = array();
     
     /**
      * All generated {@link PHP_Depend_Code_Property} instances.
@@ -441,6 +452,25 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     }
     
     /**
+     * Builds a new parameter instance.
+     *
+     * @param string  $name The parameter variable name.
+     * @param integer $line The line number with the parameter declaration.
+     * 
+     * @return PHP_Depend_Code_Parameter The created parameter instance.
+     */
+    public function buildParameter($name, $line = 0)
+    {
+        // Create a new parameter instance
+        $parameter = new PHP_Depend_Code_Parameter($name, $line);
+        
+        // Store local reference 
+        $this->_parameters[] = $parameter;
+        
+        return $parameter;
+    }
+    
+    /**
      * Builds a new property instance.
      *
      * @param string  $name The property variable name.
@@ -681,6 +711,12 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         foreach ($this->_properties as $property) {
             if ($property->getType() === $class) {
                 $property->setType($interface);
+            }
+        }
+        
+        foreach ($this->_parameters as $parameter) {
+            if ($parameter->getType() === $class) {
+                $parameter->setType($interface);
             }
         }
     }

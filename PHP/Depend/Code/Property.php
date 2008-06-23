@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
+require_once 'PHP/Depend/Code/TypeAwareI.php';
 require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 
 /**
@@ -63,7 +64,8 @@ require_once 'PHP/Depend/Code/VisibilityAwareI.php';
  */
 class PHP_Depend_Code_Property
     extends PHP_Depend_Code_AbstractItem
-    implements PHP_Depend_Code_VisibilityAwareI
+    implements PHP_Depend_Code_TypeAwareI,
+               PHP_Depend_Code_VisibilityAwareI
 {
     /**
      * Set defined visibility for this method.
