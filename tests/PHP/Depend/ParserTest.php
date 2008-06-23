@@ -313,6 +313,101 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the parser sets a detected file comment.
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectFileComment()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/coupling/class.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(4, $packages->count()); // default, +global, +spl & +standard
+        
+        $packages->next();
+        $packages->next();
+        $packages->next();
+        
+        $package = $packages->current();
+        $this->assertEquals('default::package', $package->getName());
+        
+        $class = $package->getClasses()->current();
+        $this->assertNotNull($class);
+        
+        $actual = $class->getSourceFile()->getDocComment();
+        $this->assertNotNull($actual);
+        
+        $expected = "/**\n"
+                  . " * FANOUT := 12\n"
+                  . " * CALLS  := 10\n"
+                  . " *\n" 
+                  . " * @package default\n" 
+                  . " * @subpackage package\n"
+                  . " */";
+        
+        $this->assertEquals($expected, $actual);
+    }
+    
+    /**
+     * Tests that the parser doesn't reuse a type comment as file comment.
+     *
+     * @return void
+     */
+    public function testParserDoesntReuseTypeComment()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/comments/constant.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(1, $packages->count()); // +global
+        
+        $package = $packages->current();
+        $this->assertEquals('+global', $package->getName());
+        
+        $class = $package->getClasses()->current();
+        $this->assertNotNull($class);
+        
+        $actual = $class->getSourceFile()->getDocComment();
+        $this->assertNull($actual);
+    }
+    
+    /**
+     * Tests that the parser doesn't reuse a function comment as file comment.
+     *
+     * @return void
+     */
+    public function testParserDoesntReuseFunctionComment()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/comments/function.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(1, $packages->count()); // +global
+        
+        $package = $packages->current();
+        $this->assertEquals('+global', $package->getName());
+        
+        $function = $package->getFunctions()->current();
+        $this->assertNotNull($function);
+        
+        $actual = $function->getSourceFile()->getDocComment();
+        $this->assertNull($actual);
+    }
+    
+    /**
      * Tests that the parser sets the correct start line number for a class.
      *
      * @return void
