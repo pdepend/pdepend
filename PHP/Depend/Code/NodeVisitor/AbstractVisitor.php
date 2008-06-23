@@ -165,6 +165,10 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
         
         $function->getSourceFile()->accept($this);
         
+        foreach ($function->getParameters() as $parameter) {
+            $parameter->accept($this);
+        }
+        
         $this->fireEndFunction($function);
     }
     
@@ -203,6 +207,11 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
+        
+        foreach ($method->getParameters() as $parameter) {
+            $parameter->accept($this);
+        }
+        
         $this->fireEndMethod($method);
     }
     
@@ -229,6 +238,19 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
         }
         
         $this->fireEndPackage($package);
+    }
+    
+    /**
+     * Visits a parameter node.
+     *
+     * @param PHP_Depend_Code_Parameter $parameter The parameter node.
+     * 
+     * @return void
+     */
+    public function visitParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        $this->fireStartParameter($parameter);
+        $this->fireEndParameter($parameter);
     }
     
     /**
@@ -423,6 +445,34 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitPackage($package);
+        }
+    }
+    
+    /**
+     * Sends a start parameter event. 
+     *
+     * @param PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * 
+     * @return void
+     */
+    protected function fireStartParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitParameter($parameter);
+        }
+    }
+    
+    /**
+     * Sends a end parameter event. 
+     *
+     * @param PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * 
+     * @return void
+     */
+    protected function fireEndParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitParameter($parameter);
         }
     }
     

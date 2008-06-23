@@ -93,6 +93,14 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
     public $package = null;
     
     /**
+     * The last visited parameter instance.
+     *
+     * @type PHP_Depend_Code_Parameter
+     * @var PHP_Depend_Code_Parameter $parameter
+     */
+    public $parameter = null;
+    
+    /**
      * The last visited property instance.
      *
      * @type PHP_Depend_Code_Property
@@ -186,6 +194,18 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $this->package = $package;
+    }
+    
+    /**
+     * Visits a parameter node.
+     *
+     * @param PHP_Depend_Code_Parameter $parameter The parameter node.
+     * 
+     * @return void
+     */
+    public function visitParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        $this->parameter = $parameter;
     }
     
     /**

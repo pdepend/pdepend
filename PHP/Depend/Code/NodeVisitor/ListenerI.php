@@ -169,6 +169,24 @@ interface PHP_Depend_Code_NodeVisitor_ListenerI
     function endVisitPackage(PHP_Depend_Code_Package $package);
     
     /**
+     * Is called when the visitor starts a new parameter instance.
+     *
+     * @param PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * 
+     * @return void
+     */
+    function startVisitParameter(PHP_Depend_Code_Parameter $parameter);
+    
+    /**
+     * Is called when the visitor ends with a parameter instance.
+     *
+     * @param PHP_Depend_Code_Package $parameter The context parameter instance.
+     * 
+     * @return void
+     */
+    function endVisitParameter(PHP_Depend_Code_Parameter $parameter);
+    
+    /**
      * Is called when the visitor starts a new property instance.
      *
      * @param PHP_Depend_Code_Property $property The context property instance.
