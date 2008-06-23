@@ -218,14 +218,27 @@ class PHP_Depend_TextUI_Command
         if (strpos(end($argv), '--') !== 0) {
             $this->_runner->setSourceDirectories(explode(',', array_pop($argv)));
         }
-        
-        foreach ($argv as $option) {
-            if (strpos($option, '=') === false) {
-                $value = true;
+
+        for ($i = 0, $c = count($argv); $i < $c; ++$i) {
+            
+            // Is it an ini_set option?
+            if ($argv[$i] === '-d' && isset($argv[$i + 1])) {
+                if (strpos($argv[++$i], '=') === false) {
+                    ini_set($argv[$i], 'on');
+                } else {
+                    // Split key=value
+                    list($key, $value) = explode('=', $argv[$i]);
+                    // set ini option
+                    ini_set($key, $value);
+                }
+            } else if (strpos($argv[$i], '=') === false) {
+                $this->_options[$argv[$i]] = true;
             } else {
-                list($option, $value) = explode('=', $option);
+                // Split key=value
+                list($key, $value) = explode('=', $argv[$i]);
+                // Set option
+                $this->_options[$key] = $value;
             }
-            $this->_options[$option] = $value;
         }
         
         // Check for suffix option
@@ -307,6 +320,7 @@ class PHP_Depend_TextUI_Command
         $excludeOption    = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
         $noAnnotations    = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
         $badDocumentation = str_pad('--bad-documentation', $l, ' ', STR_PAD_RIGHT);
+        $iniOption        = str_pad('-d key[=value]', $l, ' ', STR_PAD_RIGHT);
         $helpOption       = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
         $versionOption    = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
         
@@ -316,7 +330,8 @@ class PHP_Depend_TextUI_Command
              "  {$noAnnotations} Do not parse doc comment annotations.\n",
              "  {$badDocumentation} Fallback for projects with bad doc comments.\n\n",
              "  {$helpOption} Print this help text.\n",
-             "  {$versionOption} Print the current PHP_Depend version.\n\n";
+             "  {$versionOption} Print the current PHP_Depend version.\n",
+             "  {$iniOption} Sets a php.ini value.\n\n";
     }
     
     /**

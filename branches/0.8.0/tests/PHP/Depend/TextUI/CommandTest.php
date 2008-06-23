@@ -293,6 +293,58 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the command interpretes a "-d key" as "on".
+     *
+     * @return void
+     */
+    public function testCommandHandlesIniOptionWithoutValueToON()
+    {
+        // Get backup
+        if (($backup = ini_set('html_errors', 'off')) === false) {
+            $this->markTestSkipped('Cannot alter ini setting "html_errors".');
+        }
+        
+        $argv = array(
+            '-d',
+            'html_errors',
+            dirname(__FILE__)
+        );
+        
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+        
+        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        $this->assertEquals('on', ini_get('html_errors'));
+        
+        ini_set('html_errors', $backup);
+    }
+    
+    /**
+     * Tests that the text ui command handles an ini option "-d key=value" correct.
+     *
+     * @return void
+     */
+    public function testCommandHandlesIniOptionWithValue()
+    {
+        // Get backup
+        if (($backup = ini_set('html_errors', 'on')) === false) {
+            $this->markTestSkipped('Cannot alter ini setting "html_errors".');
+        }
+        
+        $argv = array(
+            '-d',
+            'html_errors=off',
+            dirname(__FILE__)
+        );
+        
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+        
+        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        $this->assertEquals('off', ini_get('html_errors'));
+        
+        ini_set('html_errors', $backup);
+    }
+    
+    /**
      * Tests the help output with an optional prolog text.
      *
      * @param string $actual     The cli output.
@@ -312,7 +364,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
                   . "  --without-annotations[ ]*Do not parse doc comment annotations\.\n"
                   . "  --bad-documentation[ ]*Fallback for projects with bad doc comments\.\n\n"
                   . "  --help[ ]*Print this help text\.\n"
-                  . "  --version[ ]*Print the current PHP_Depend version\.\n\n$/";
+                  . "  --version[ ]*Print the current PHP_Depend version\.\n"
+                  . "  -d key\[=value\][ ]*Sets a php.ini value.\n\n$/";
         $this->assertRegExp($endsWith, $actual);
     }
     
