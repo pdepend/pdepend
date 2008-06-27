@@ -184,4 +184,31 @@ class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_Abstract
         }
         $this->assertEquals(0, count($expected));
     }
+    
+    /**
+     * Tests that the package filter works with wild cards.
+     *
+     * @return void
+     */
+    public function testFilterPackageWithWildcard()
+    {
+        $pkgIn1  = new PHP_Depend_Code_Package('ezcGraph');
+        $pkgIn2  = new PHP_Depend_Code_Package('Zend_Controller');
+        $pkgOut1 = new PHP_Depend_Code_Package('PHP_Depend_Code');
+        $pkgOut2 = new PHP_Depend_Code_Package('PHP_Depend_Metrics');
+        
+        $packages = array($pkgIn1, $pkgIn2, $pkgOut1, $pkgOut2);
+        $iterator = new PHP_Depend_Code_NodeIterator($packages);
+        
+        $filter = new PHP_Depend_Code_NodeIterator_PackageFilter(array('ezc*', 'Zend_*'));
+        $iterator->addFilter($filter);
+        
+        $expected = array('PHP_Depend_Code'  =>  true, 'PHP_Depend_Metrics'  =>  true);
+        
+        foreach ($iterator as $mtd) {
+            $this->assertArrayHasKey($mtd->getName(), $expected);
+            unset($expected[$mtd->getName()]);
+        }
+        $this->assertEquals(0, count($expected));
+    }
 }
