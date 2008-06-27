@@ -78,9 +78,11 @@ class PHP_Depend_Code_NodeIterator_PackageFilter
      */
     public function __construct(array $packages)
     {
+        $patterns = array();
         foreach ($packages as $package) {
-            $this->_packages[] = (string) $package;
+            $patterns[] = str_replace('\*', '\w*', preg_quote($package));
         }
+        $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
     }
     
     /**
@@ -106,6 +108,6 @@ class PHP_Depend_Code_NodeIterator_PackageFilter
         } else if ($node instanceof PHP_Depend_Code_Method) {
             $package = $node->getParent()->getPackage()->getName();
         }
-        return !in_array($package, $this->_packages);
+        return (preg_match($this->_pattern, $package) === 0);
     }
 }
