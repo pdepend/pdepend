@@ -64,12 +64,12 @@ class PHP_Depend_Code_NodeIterator_PackageFilter
     implements PHP_Depend_Code_NodeIterator_FilterI
 {
     /**
-     * List of package names that should be ignored. 
+     * Regexp with ignorable package names and package name fragments. 
      *
-     * @type array<string>
-     * @var array(string) $packages
+     * @type string
+     * @var string $_pattern
      */
-    private $_packages = array();
+    private $_pattern = array();
     
     /**
      * Constructs a new package filter for the given list of package names.
