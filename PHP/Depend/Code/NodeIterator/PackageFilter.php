@@ -80,7 +80,7 @@ class PHP_Depend_Code_NodeIterator_PackageFilter
     {
         $patterns = array();
         foreach ($packages as $package) {
-            $patterns[] = str_replace('\*', '\w*', preg_quote($package));
+            $patterns[] = str_replace('\*', '\S*', preg_quote($package));
         }
         $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
     }
