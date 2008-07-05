@@ -130,6 +130,20 @@ class PHP_Depend_Log_Summary_Xml
     }
     
     /**
+     * Returns an <b>array</b> with accepted analyzer types. These types can be
+     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     *
+     * @return array(string)
+     */
+    public function getAcceptedAnalyzers()
+    {
+        return array(
+            'PHP_Depend_Metrics_NodeAwareI',
+            'PHP_Depend_Metrics_ProjectAwareI'
+        );
+    }
+    
+    /**
      * Sets the context code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $code The code nodes.

@@ -95,6 +95,17 @@ class PHP_Depend_Log_Dummy_Logger
     }
     
     /**
+     * Returns an <b>array</b> with accepted analyzer types. These types can be
+     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     *
+     * @return array(string)
+     */
+    public function getAcceptedAnalyzers()
+    {
+        return array('PHP_Depend_Metrics_NodeAwareI');
+    }
+    
+    /**
      * Sets the context code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $code The code nodes.

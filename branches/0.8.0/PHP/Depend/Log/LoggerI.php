@@ -83,4 +83,12 @@ interface PHP_Depend_Log_LoggerI
      * @return void
      */
     function close();
+    
+    /**
+     * Returns an <b>array</b> with accepted analyzer types. These types can be
+     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     *
+     * @return array(string)
+     */
+    function getAcceptedAnalyzers();
 }

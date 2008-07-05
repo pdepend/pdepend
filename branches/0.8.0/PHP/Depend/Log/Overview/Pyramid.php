@@ -143,6 +143,23 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
     }
     
     /**
+     * Returns an <b>array</b> with accepted analyzer types. These types can be
+     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     *
+     * @return array(string)
+     */
+    public function getAcceptedAnalyzers()
+    {
+        return array(
+            'PHP_Depend_Metrics_Coupling_Analyzer',
+            'PHP_Depend_Metrics_CyclomaticComplexity_Analyzer',
+            'PHP_Depend_Metrics_Inheritance_Analyzer',
+            'PHP_Depend_Metrics_NodeCount_Analyzer',
+            'PHP_Depend_Metrics_NodeLoc_Analyzer'
+        );
+    }
+    
+    /**
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
