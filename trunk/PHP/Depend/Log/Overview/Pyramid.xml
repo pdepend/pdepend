@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <logger>
   <message>Generates a chart with an Overview Pyramid for the analyzed project.</message>
-  <analyzers>
-    <type match="PHP_Depend_Metrics_Coupling_Analyzer" />
-    <type match="PHP_Depend_Metrics_CyclomaticComplexity_Analyzer" />
-    <type match="PHP_Depend_Metrics_Inheritance_Analyzer" />
-    <type match="PHP_Depend_Metrics_NodeCount_Analyzer" />
-    <type match="PHP_Depend_Metrics_NodeLoc_Analyzer" />
-  </analyzers>
 </logger>

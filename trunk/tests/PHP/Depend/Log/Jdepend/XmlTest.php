@@ -148,6 +148,20 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the logger returns the expected set of analyzers.
+     *
+     * @return void
+     */
+    public function testReturnsExceptedAnalyzers()
+    {
+        $logger    = new PHP_Depend_Log_Jdepend_Xml(__FILE__);
+        $actual    = $logger->getAcceptedAnalyzers();
+        $exptected = array('PHP_Depend_Metrics_Dependency_Analyzer');
+        
+        $this->assertEquals($exptected, $actual);
+    }
+    
+    /**
      * Tests that {@link PHP_Depend_Log_Summary_Xml::write()} generates the 
      * expected document structure for the source, but without any applied 
      * metrics.

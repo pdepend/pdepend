@@ -47,6 +47,7 @@
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
 require_once dirname(__FILE__) . '/DependencyAnalyzer.php';
 
 require_once 'PHP/Depend/Code/NodeIterator.php';
@@ -68,6 +69,28 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
  */
 class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * Tests that the logger returns the expected set of analyzers.
+     *
+     * @return void
+     */
+    public function testReturnsExceptedAnalyzers()
+    {
+        $logger    = new PHP_Depend_Log_Jdepend_Chart(__FILE__);
+        $actual    = $logger->getAcceptedAnalyzers();
+        $exptected = array('PHP_Depend_Metrics_Dependency_Analyzer');
+        
+        $this->assertEquals($exptected, $actual);
+    }
+    
+    public function testChartLogAcceptsOnlyTheCorrectAnalyzer()
+    {
+        $logger = new PHP_Depend_Log_Jdepend_Chart(__FILE__);
+        
+        $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
+        $this->assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
+    }
+    
     /**
      * Tests that the logger generates an image file.
      *
