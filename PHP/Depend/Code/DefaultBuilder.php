@@ -130,8 +130,6 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     protected $methods = array();
     
     /**
-    
-    /**
      * All generated {@link PHP_Depend_Code_Parameter} instances.
      *
      * @type array<PHP_Depend_Code_Parameter>
@@ -295,7 +293,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
     /**
      * Builds a new code class constant instance.
      *
-     * @param string  $name The constant name.
+     * @param string $name The constant name.
      * 
      * @return PHP_Depend_Code_TypeConstant The created constant object.
      */
@@ -615,7 +613,6 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
         if (($pos = strrpos($qualifiedName, '::')) !== false) {
             return substr($qualifiedName, 0, $pos);
         } else if ($this->_internalTypes->isInternal($qualifiedName)) {
-            //echo "Internal Package: ", $this->_internalTypes->getTypePackage($qualifiedName), "\n";
             return $this->_internalTypes->getTypePackage($qualifiedName);
         }
         return self::DEFAULT_PACKAGE; 
