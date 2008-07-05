@@ -49,6 +49,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/TextUI/Command.php';
+require_once 'PHP/Depend/Util/ConfigurationInstance.php';
 
 /**
  * Test case for the text ui command.
@@ -160,6 +161,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     {
         $logFile = sys_get_temp_dir() . '/pdepend.dummy';
         $source  = realpath(dirname(__FILE__) . '/../_code');
+        
+        set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
         
         $argv = array(
             '--suffix=inc',
@@ -345,6 +348,69 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the command sets a configuration instance for a specified
+     * config file.
+     *
+     * @return void
+     */
+    public function testCommandHandlesConfigurationFileCorrect()
+    {
+        // Sample config file
+        $configFile = sys_get_temp_dir() . '/config.xml';
+        // Write a dummy config file.
+        file_put_contents(
+            $configFile, 
+            '<?xml version="1.0"?>
+             <configuration>
+               <test />
+             </configuration>'
+        );
+        
+        $argv = array(
+            '--configuration=' . $configFile,
+            dirname(__FILE__)
+        );
+        
+        // Result previous instance
+        PHP_Depend_Util_ConfigurationInstance::set(null);
+        
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+        
+        // Remove temp config file
+        unlink($configFile);
+        
+        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        $this->assertNotNull(PHP_Depend_Util_ConfigurationInstance::get());
+        
+        $test = isset(PHP_Depend_Util_ConfigurationInstance::get()->test);
+        $this->assertTrue($test);
+    }
+    
+    /**
+     * Tests that the command fails for an invalid config file.
+     *
+     * @return void
+     */
+    public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
+    {
+        $configFile = sys_get_temp_dir() . '/config.xml';
+        if (file_exists($configFile) === true) {
+            unlink($configFile);
+        }
+        
+        $argv = array(
+            '--configuration=' . $configFile,
+            dirname(__FILE__)
+        );
+        
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+        
+        $expected = "The configuration file '{$configFile}' doesn't exist.\n\n";
+        $this->assertTrue(strpos($actual, $expected) === 0);
+        $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+    }
+    
+    /**
      * Tests the help output with an optional prolog text.
      *
      * @param string $actual     The cli output.
@@ -358,7 +424,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $startsWith = '/^' . preg_quote($startsWith) . '/';
         $this->assertRegExp($startsWith, $actual);
         
-        $endsWith = "/  --suffix=<ext\[,\.\.\.\]>[ ]*List of valid PHP file extensions\.\n"
+        $endsWith = "/  --configuration=<file>[ ]*Optional PHP_Depend configuration file.\n\n"
+                  . "  --suffix=<ext\[,\.\.\.\]>[ ]*List of valid PHP file extensions\.\n"
                   . "  --ignore=<dir\[,\.\.\.\]>[ ]*List of exclude directories\.\n"
                   . "  --exclude=<pkg\[,\.\.\.\]>[ ]*List of exclude packages\.\n\n"
                   . "  --without-annotations[ ]*Do not parse doc comment annotations\.\n"

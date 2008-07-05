@@ -48,6 +48,8 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/Depend/Util/Configuration.php';
+require_once 'PHP/Depend/Util/ConfigurationInstance.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
 
 /**
@@ -121,5 +123,87 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         $this->assertFileNotExists($this->_out);
         PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
         $this->assertFileExists($this->_out);
+    }
+    
+    /**
+     * Tests that the convert util recognizes the imageConvert configuration
+     * for the font-family:
+     *
+     * @return void
+     */
+    public function testConvertRecognizesFontFamilyInConfiguration()
+    {
+        $config = new PHP_Depend_Util_Configuration('<?xml version="1.0"?>
+        <configuration>
+          <imageConvert>
+            <fontFamily>Verdana</fontFamily>
+          </imageConvert>
+        </configuration>
+        ');
+        PHP_Depend_Util_ConfigurationInstance::set($config);
+        
+        $this->_out = sys_get_temp_dir() . '/pdepend.svg';
+        copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
+        
+        $svg = file_get_contents($this->_out);
+        preg_match_all('/font-family:\s*Arial/', $svg, $matches);
+        $expectedArial = count($matches[0]);
+        preg_match_all('/font-family:\s*Verdana/', $svg, $matches);
+        $expectedVerdana = count($matches[0]);
+        
+        $this->assertEquals(0, $expectedVerdana);
+        
+        PHP_Depend_Util_ImageConvert::convert($this->_out, $this->_out);
+
+        $svg = file_get_contents($this->_out);
+        preg_match_all('/font-family:\s*Arial/', $svg, $matches);
+        $actualArial = count($matches[0]);
+        preg_match_all('/font-family:\s*Verdana/', $svg, $matches);
+        $actualVerdana = count($matches[0]);
+        
+        $this->assertEquals(0, $actualArial);
+        $this->assertEquals($expectedArial, $actualVerdana);
+    }
+    
+    /**
+     * Tests that the convert util recognizes the imageConvert configuration
+     * for the font-size:
+     *
+     * @return void
+     */
+    public function testConvertRecognizesFontSizeInConfiguration()
+    {
+        $config = new PHP_Depend_Util_Configuration('<?xml version="1.0"?>
+        <configuration>
+          <imageConvert>
+            <fontSize>14</fontSize>
+          </imageConvert>
+        </configuration>
+        ');
+        PHP_Depend_Util_ConfigurationInstance::set($config);
+        
+        $this->_out = sys_get_temp_dir() . '/pdepend.svg';
+        copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
+        
+        $svg = file_get_contents($this->_out);
+        preg_match_all('/font-size:\s*11px/', $svg, $matches);
+        $expected11 = count($matches[0]);
+        preg_match_all('/font-size:\s*14px/', $svg, $matches);
+        $expected14 = count($matches[0]);
+        
+        
+        $this->assertEquals(25, $expected11);
+        $this->assertEquals(0, $expected14);
+        
+        PHP_Depend_Util_ImageConvert::convert($this->_out, $this->_out);
+
+        $svg = file_get_contents($this->_out);
+        preg_match_all('/font-size:\s*11px/', $svg, $matches);
+        $actual11 = count($matches[0]);
+        preg_match_all('/font-size:\s*14px/', $svg, $matches);
+        $actual14 = count($matches[0]);
+        
+        $this->assertEquals(0, $actual11);
+        $this->assertEquals(25, $actual14);
     }
 }
