@@ -577,30 +577,13 @@ class PHP_Depend
         $resultSets = array();
         
         foreach ($this->loggers as $logger) {
-            $fileName = strtr(get_class($logger), '_', '/') . '.xml';
-            
-            if (!($xml = @file_get_contents($fileName, FILE_USE_INCLUDE_PATH))) {
-                // FIXME: Is this testable? IMHO the triggered error will always
-                //        result in a failure.
-                // @codeCoverageIgnoreStart
-                $class = get_class($logger);
-                throw new RuntimeException("Missing configuration for '{$class}'.");
-                // @codeCoverageIgnoreEnd
-            }
-            
-            $sxml = new SimpleXMLElement($xml);
-            
-            foreach ($sxml->analyzers->type as $node) {
-                // Get the referenced node type 
-                $type = (string) $node['match'];
-                
+            foreach ($logger->getAcceptedAnalyzers() as $type) {
                 // Check for type existence
                 if (!in_array($type, $resultSets)) {
                     $resultSets[] = $type;
                 }
             }
         }
-        
         return $resultSets;
     }
 }

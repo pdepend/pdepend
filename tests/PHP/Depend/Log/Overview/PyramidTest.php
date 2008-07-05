@@ -47,6 +47,7 @@
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
 require_once dirname(__FILE__) . '/CouplingAnalyzer.php';
 require_once dirname(__FILE__) . '/CyclomaticComplexityAnalyzer.php';
 require_once dirname(__FILE__) . '/InheritanceAnalyzer.php';
@@ -69,6 +70,37 @@ require_once 'PHP/Depend/Log/Overview/Pyramid.php';
  */
 class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * Tests that the logger returns the expected set of analyzers.
+     *
+     * @return void
+     */
+    public function testReturnsExceptedAnalyzers()
+    {
+        $logger    = new PHP_Depend_Log_Overview_Pyramid(__FILE__);
+        $actual    = $logger->getAcceptedAnalyzers();
+        $exptected = array(
+            'PHP_Depend_Metrics_Coupling_Analyzer',
+            'PHP_Depend_Metrics_CyclomaticComplexity_Analyzer',
+            'PHP_Depend_Metrics_Inheritance_Analyzer',
+            'PHP_Depend_Metrics_NodeCount_Analyzer',
+            'PHP_Depend_Metrics_NodeLoc_Analyzer'
+        );
+        
+        $this->assertEquals($exptected, $actual);
+    }
+    
+    /**
+     * Tests that the log method returns <b>false</b> for an invalid logger.
+     *
+     * @return void
+     */
+    public function testPyramidDoesntAcceptInvalidAnalyzer()
+    {
+        $logger = new PHP_Depend_Log_Overview_Pyramid(__FILE__);
+        $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
+    }
+    
     /**
      * Tests that the logger checks for the required analyzer.
      *
