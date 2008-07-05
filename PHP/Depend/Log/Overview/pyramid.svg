@@ -37,7 +37,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.5"
-     inkscape:cx="149.52924"
+     inkscape:cx="179.96345"
      inkscape:cy="96.137457"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -437,16 +437,16 @@
          y="230.00002">CYCLO</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
-       x="286"
-       y="198.00002"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       x="308.85785"
+       y="198.00043"
        id="text5038"
        title="Number Of Methods"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5040"
-         x="286"
-         y="198.00002">NOM</tspan></text>
+         x="308.85785"
+         y="198.00043">NOM</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
@@ -499,7 +499,7 @@
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
        x="232"
-       y="225.00002"
+       y="230.00002"
        id="text5058"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
@@ -630,14 +630,14 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
-       x="387"
+       x="388.56299"
        y="213.00002"
        id="text5102"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          id="tspan5104"
          xml:id="pdepend.fanout-calls"
-         x="387"
+         x="388.56299"
          y="213.00002">0,561</tspan></text>
     <text
        xml:space="preserve"
@@ -653,15 +653,15 @@
          y="198.00002">4,18</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:8px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L"
-       x="329.07266"
+       style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;text-anchor:end;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       x="386.39493"
        y="246.10596"
        id="text2692"><tspan
          sodipodi:role="line"
          id="tspan2694"
-         x="329.07266"
+         x="386.39493"
          y="246.10596"
-         style="font-size:9px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#2e3436;font-family:Arial;-inkscape-font-specification:Arial Italic">Generated  by PHP_Depend</tspan></text>
+         style="font-size:9px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;text-anchor:end;fill:#2e3436;font-family:Arial;">Generated  by PHP_Depend</tspan></text>
     <path
        sodipodi:type="arc"
        style="opacity:1;fill:#555753;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -674,7 +674,7 @@
        transform="matrix(0.375,0,0,0.4354839,-5.4999995,119.09677)" />
     <text
        xml:space="preserve"
-       style="font-size:8px;font-style:normal;font-weight:bold;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:Arial Bold"
+       style="font-size:8px;font-style:normal;font-weight:bold;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L;"
        x="32.386719"
        y="246.64209"
        id="text3782"><tspan
@@ -682,7 +682,7 @@
          id="tspan3784"
          x="32.386719"
          y="246.64209"
-         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#2e3436;font-family:Arial;-inkscape-font-specification:Arial Bold">Low</tspan></text>
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#2e3436;font-family:Arial;">Low</tspan></text>
     <path
        sodipodi:type="arc"
        style="opacity:1;fill:#73d216;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -695,7 +695,7 @@
        transform="matrix(0.375,0,0,0.4354839,54.5,119.09677)" />
     <text
        xml:space="preserve"
-       style="font-size:8px;font-style:normal;font-weight:bold;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:Arial Bold"
+       style="font-size:8px;font-style:normal;font-weight:bold;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L;"
        x="102.38672"
        y="245.77417"
        id="text3788"><tspan
@@ -703,7 +703,7 @@
          id="tspan3790"
          x="102.38672"
          y="245.77417"
-         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#2e3436;font-family:Arial;-inkscape-font-specification:Arial Bold">Average</tspan></text>
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#2e3436;font-family:Arial;">Average</tspan></text>
     <path
        sodipodi:type="arc"
        style="opacity:1;fill:#f57900;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -716,7 +716,7 @@
        transform="matrix(0.375,0,0,0.4354839,132.5,119.09677)" />
     <text
        xml:space="preserve"
-       style="font-size:8px;font-style:normal;font-weight:bold;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:Arial Bold"
+       style="font-size:8px;font-style:normal;font-weight:bold;text-align:center;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:URW Chancery L;"
        x="170.38672"
        y="245.77417"
        id="text3794"><tspan
@@ -724,6 +724,6 @@
          id="tspan3796"
          x="170.38672"
          y="245.77417"
-         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#2e3436;font-family:Arial;-inkscape-font-specification:Arial Bold">High</tspan></text>
+         style="font-size:9px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#2e3436;font-family:Arial;">High</tspan></text>
   </g>
 </svg>
