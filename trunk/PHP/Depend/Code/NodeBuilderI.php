@@ -102,7 +102,7 @@ interface PHP_Depend_Code_NodeBuilderI extends IteratorAggregate
     /**
      * Builds a new code class constant instance.
      *
-     * @param string  $name The constant name.
+     * @param string $name The constant name.
      * 
      * @return PHP_Depend_Code_TypeConstant The created constant object.
      */

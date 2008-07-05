@@ -101,8 +101,7 @@ class PHP_Depend_ManifestUpdater
     {
         $manifest = $parent->ownerDocument;
         
-        foreach ($struct as $name => $value)
-        {
+        foreach ($struct as $name => $value) {
             if (is_array($value)) {
                 $item = $manifest->createElement('dir');
                 $item->setAttribute('name', $name);
@@ -163,7 +162,8 @@ class PHP_Depend_ManifestUpdater
         );
         
         foreach (array_keys($struct) as $name) {
-            $struct[$name][1] = $this->_readContent(dirname(__FILE__) . "/../{$name}");
+            $contents         = dirname(__FILE__) . "/../{$name}";
+            $struct[$name][1] = $this->_readContent($contents);
         }
         return $struct;
     }
@@ -184,10 +184,11 @@ class PHP_Depend_ManifestUpdater
                 continue;
             }
             
+            $fileName = $file->getFilename();
             if ($file->isDir()) {
-                $struct[$file->getFilename()] = $this->_readContent($file->getPathname());
+                $struct[$fileName] = $this->_readContent($file->getPathname());
             } else {
-                $struct[$file->getFilename()] = true;
+                $struct[$fileName] = true;
             }
         }
         
