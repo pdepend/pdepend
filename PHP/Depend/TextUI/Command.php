@@ -47,6 +47,8 @@
  */
 
 require_once 'PHP/Depend/TextUI/Runner.php';
+require_once 'PHP/Depend/Util/Configuration.php';
+require_once 'PHP/Depend/Util/ConfigurationInstance.php';
 
 /**
  * Handles the command line stuff and starts the text ui runner. 
@@ -279,6 +281,27 @@ class PHP_Depend_TextUI_Command
             unset($this->_options['--bad-documentation']);
         }
         
+        // Check for configuration option
+        if (isset($this->_options['--configuration'])) {
+            // Get config file
+            $configFile = $this->_options['--configuration'];
+            // Remove option from array
+            unset($this->_options['--configuration']);
+            
+            // First check config file
+            if (file_exists($configFile) === false) {
+                // Print error message
+                echo "The configuration file '{$configFile}' doesn't exist.\n\n";
+                // Return error
+                return false;
+            }
+            
+            // Load configuration file
+            $config = new PHP_Depend_Util_Configuration($configFile, null, true);
+            // Store in config registry
+            PHP_Depend_Util_ConfigurationInstance::set($config);
+        }
+        
         return true;
     }
     
@@ -318,13 +341,15 @@ class PHP_Depend_TextUI_Command
         $suffixOption     = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
         $ignoreOption     = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
         $excludeOption    = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $configuation     = str_pad('--configuration=<file>', $l, ' ', STR_PAD_RIGHT);
         $noAnnotations    = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
         $badDocumentation = str_pad('--bad-documentation', $l, ' ', STR_PAD_RIGHT);
         $iniOption        = str_pad('-d key[=value]', $l, ' ', STR_PAD_RIGHT);
         $helpOption       = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
         $versionOption    = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
         
-        echo "  {$suffixOption} List of valid PHP file extensions.\n",
+        echo "  {$configuation} Optional PHP_Depend configuration file.\n\n",
+             "  {$suffixOption} List of valid PHP file extensions.\n",
              "  {$ignoreOption} List of exclude directories.\n",
              "  {$excludeOption} List of exclude packages.\n\n",
              "  {$noAnnotations} Do not parse doc comment annotations.\n",
