@@ -65,7 +65,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_Xml
+class PHP_Depend_Log_Summary_Xml 
        extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI
@@ -127,6 +127,20 @@ class PHP_Depend_Log_Summary_Xml
     public function __construct($fileName)
     {
         $this->fileName = $fileName;
+    }
+    
+    /**
+     * Returns an <b>array</b> with accepted analyzer types. These types can be
+     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     *
+     * @return array(string)
+     */
+    public function getAcceptedAnalyzers()
+    {
+        return array(
+            'PHP_Depend_Metrics_NodeAwareI',
+            'PHP_Depend_Metrics_ProjectAwareI'
+        );
     }
     
     /**
