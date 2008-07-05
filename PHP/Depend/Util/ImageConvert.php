@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Util/ConfigurationInstance.php';
+
 /**
  * Simple utility class that is used to create different image formats. This 
  * class can use the ImageMagick cli tool <b>convert</b> and the pecl extension
@@ -72,8 +74,12 @@ class PHP_Depend_Util_ImageConvert
      */
     public static function convert($input, $output)
     {
-        $inputType  = pathinfo($input, PATHINFO_EXTENSION);
-        $outputType = pathinfo($output, PATHINFO_EXTENSION);
+        $inputType  = strtolower(pathinfo($input, PATHINFO_EXTENSION));
+        $outputType = strtolower(pathinfo($output, PATHINFO_EXTENSION));
+        
+        if ($inputType === 'svg') {
+            self::prepareSVG($input);
+        }
         
         if ($inputType === $outputType) {
             file_put_contents($output, file_get_contents($input));
@@ -126,5 +132,58 @@ class PHP_Depend_Util_ImageConvert
         }
         return false;
         // @codeCoverageIgnoreEnd
+    }
+    
+    /**
+     * Utility method for svg input files.
+     * 
+     * If the input file has the mime type svg and a configuration file with
+     * imageConvert options exists, this method will prepare the input image 
+     * file.
+     *
+     * @param string $input The input svg file.
+     * 
+     * @return void
+     */
+    protected static function prepareSVG($input)
+    {
+        // Check for a configuration instance
+        if (($config = PHP_Depend_Util_ConfigurationInstance::get()) === null) {
+            return;
+        }
+        
+        $svg = file_get_contents($input); 
+        
+        // Check for font family
+        if (isset($config->imageConvert->fontFamily)) {
+            // Get font family
+            $fontFamily = (string) $config->imageConvert->fontFamily;
+            // Replace CSS separators
+            $fontReplace = 'font-family:' . strtr($fontFamily, ';:', '  ');
+            $fontPattern = '/font-family:\s*Arial/';
+            
+            $svg = preg_replace($fontPattern, $fontReplace, $svg);
+        }
+        
+        // Check for font size
+        if (isset($config->imageConvert->fontSize)) {
+            // Get font size
+            $fontSize = abs((float) $config->imageConvert->fontSize);
+            
+            // Fetch all font-size expressions
+            preg_match_all('/font-size:\s*(\d+)/', $svg, $fontSizes);
+            $fontSizes = array_unique($fontSizes[1]);
+            
+            $resize = ($fontSize - max($fontSizes));
+            foreach ($fontSizes as $fontSize) {
+                // Calculate resize value
+                $fontReplace = 'font-size:' . ($fontSize + $resize);
+                $fontPattern = "/font-size:\s*{$fontSize}/"; 
+                
+                $svg = preg_replace($fontPattern, $fontReplace, $svg);
+            }
+        }
+        
+        file_put_contents($input, $svg);
     }
 }
