@@ -127,6 +127,23 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         
         parent::tearDown();
     }
+
+    /**
+     * Tests that the logger returns the expected set of analyzers.
+     *
+     * @return void
+     */
+    public function testReturnsExceptedAnalyzers()
+    {
+        $logger    = new PHP_Depend_Log_Summary_Xml(__FILE__);
+        $actual    = $logger->getAcceptedAnalyzers();
+        $exptected = array(
+            'PHP_Depend_Metrics_NodeAwareI',
+            'PHP_Depend_Metrics_ProjectAwareI'
+        );
+        
+        $this->assertEquals($exptected, $actual);
+    }
     
     /**
      * Tests that {@link PHP_Depend_Log_Summary_Xml::write()} generates the 

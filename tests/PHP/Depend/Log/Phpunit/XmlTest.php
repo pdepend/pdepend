@@ -109,6 +109,23 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         
         parent::tearDown();
     }
+
+    /**
+     * Tests that the logger returns the expected set of analyzers.
+     *
+     * @return void
+     */
+    public function testReturnsExceptedAnalyzers()
+    {
+        $logger    = new PHP_Depend_Log_Phpunit_Xml(__FILE__);
+        $actual    = $logger->getAcceptedAnalyzers();
+        $exptected = array(
+            'PHP_Depend_Metrics_NodeAwareI',
+            'PHP_Depend_Metrics_ProjectAwareI'
+        );
+        
+        $this->assertEquals($exptected, $actual);
+    }
     
     /**
      * Tests the result of the phpunit logger with some real analyzers.
