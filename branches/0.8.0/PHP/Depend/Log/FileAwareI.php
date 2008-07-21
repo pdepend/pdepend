@@ -46,12 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/Log/LoggerFactory.php';
-
 /**
- * Test case for the logger factory.
+ * Marker interface for a log file aware logger.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,52 +58,14 @@ require_once 'PHP/Depend/Log/LoggerFactory.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_LoggerFactoryTest extends PHP_Depend_AbstractTest
+interface PHP_Depend_Log_FileAwareI
 {
     /**
-     * Tests that {@link PHP_Depend_Log_LoggerFactory::createLogger()} returns
-     * the expected instance for a valid identifier.
+     * Sets the output log file.
      *
+     * @param string $logFile The output log file.
+     * 
      * @return void
      */
-    public function testCreateLoggerWithValidIdentifier()
-    {
-        $factory = new PHP_Depend_Log_LoggerFactory();
-        $logger  = $factory->createLogger('summary-xml', 'pdepend.xml');
-        
-        $this->assertType('PHP_Depend_Log_Summary_Xml', $logger);
-    }
-    
-    /**
-     * Tests the singleton behaviour of the logger factory method 
-     * {@link PHP_Depend_Log_LoggerFactory::createLogger()}.
-     *
-     * @return void
-     */
-    public function testCreateLoggerSingletonBehaviour()
-    {
-        $factory = new PHP_Depend_Log_LoggerFactory();
-        $logger1 = $factory->createLogger('summary-xml', 'pdepend1.xml');
-        $logger2 = $factory->createLogger('summary-xml', 'pdepend2.xml');
-
-        $this->assertType('PHP_Depend_Log_Summary_Xml', $logger1);
-        $this->assertSame($logger1, $logger2);
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Log_LoggerFactory::createLogger()} fails with
-     * an exception for an invalid logger identifier.
-     *
-     * @return void
-     */
-    public function testCreateLoggerWithInvalidIdentifierFail()
-    {
-        $this->setExpectedException(
-            'RuntimeException',
-            "Unknown logger class 'PHP_Depend_Log_FooBar_Xml'."
-        );
-        
-        $factory = new PHP_Depend_Log_LoggerFactory();
-        $factory->createLogger('foo-bar-xml', 'pdepend.xml');
-    }
+    function setLogFile($logFile);
 }

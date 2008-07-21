@@ -48,6 +48,7 @@
 
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
+require_once 'PHP/Depend/Log/FileAwareI.php';
 
 /**
  * Dummy logger for testing
@@ -63,15 +64,16 @@ require_once 'PHP/Depend/Log/CodeAwareI.php';
  */
 class PHP_Depend_Log_Dummy_Logger 
     implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI
+               PHP_Depend_Log_CodeAwareI,
+               PHP_Depend_Log_FileAwareI
 {
     /**
      * The output file name.
      *
      * @type string
-     * @var string $_fileName
+     * @var string $_logFile
      */
-    private $_fileName = null;
+    private $_logFile = null;
     
     /**
      * The logger input data.
@@ -86,12 +88,21 @@ class PHP_Depend_Log_Dummy_Logger
     
     /**
      * Constructs a new logger for the given output file.
-     *
-     * @param string $fileName The log output file
      */
-    public function __construct($fileName)
+    public function __construct()
     {
-        $this->_fileName = $fileName;
+    }
+    
+    /**
+     * Sets the output log file.
+     *
+     * @param string $logFile The output log file.
+     * 
+     * @return void
+     */
+    public function setLogFile($logFile)
+    {
+        $this->_logFile = $logFile;
     }
     
     /**
@@ -138,6 +149,6 @@ class PHP_Depend_Log_Dummy_Logger
      */
     public function close()
     {
-        file_put_contents($this->_fileName, serialize($this->_input));
+        file_put_contents($this->_logFile, serialize($this->_input));
     }
 }

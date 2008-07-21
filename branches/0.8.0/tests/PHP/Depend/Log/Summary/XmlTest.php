@@ -135,7 +135,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testReturnsExceptedAnalyzers()
     {
-        $logger    = new PHP_Depend_Log_Summary_Xml(__FILE__);
+        $logger    = new PHP_Depend_Log_Summary_Xml();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array(
             'PHP_Depend_Metrics_NodeAwareI',
@@ -143,6 +143,23 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         );
         
         $this->assertEquals($exptected, $actual);
+    }
+    
+    /**
+     * Tests that the logger throws an exception if the log target wasn't 
+     * configured.
+     *
+     * @return void
+     */
+    public function testThrowsExceptionForInvalidLogTarget()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Log_NoLogOutputException',
+            "The log target is not configured for 'PHP_Depend_Log_Summary_Xml'."
+        );
+        
+        $logger = new PHP_Depend_Log_Summary_Xml();
+        $logger->close();
     }
     
     /**
@@ -154,7 +171,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
-        $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
+        $log = new PHP_Depend_Log_Summary_Xml();
+        $log->setLogFile($this->resultFile);
         $log->setCode($this->packages);
         $log->close();
         
@@ -179,7 +197,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $metricsTwo = array('ncloc'  =>  1742, 'loc'  =>  4217);
         $resultTwo  = new PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy($metricsTwo);
         
-        $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
+        $log = new PHP_Depend_Log_Summary_Xml();
+        $log->setLogFile($this->resultFile);
         $log->setCode(new PHP_Depend_Code_NodeIterator(array()));
         $this->assertTrue($log->log($resultOne));
         $this->assertTrue($log->log($resultTwo));
@@ -231,7 +250,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $resultOne = new PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy($metricsOne);
         $resultTwo = new PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy($metricsTwo);
         
-        $log = new PHP_Depend_Log_Summary_Xml($this->resultFile);
+        $log = new PHP_Depend_Log_Summary_Xml();
+        $log->setLogFile($this->resultFile);
         $log->setCode($this->packages);
         $this->assertTrue($log->log($resultOne));
         $this->assertTrue($log->log($resultTwo));

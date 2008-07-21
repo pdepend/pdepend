@@ -47,6 +47,8 @@
  */
 
 require_once 'PHP/Depend/Log/LoggerI.php';
+require_once 'PHP/Depend/Log/FileAwareI.php';
+require_once 'PHP/Depend/Log/NoLogOutputException.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
 
 /**
@@ -64,15 +66,17 @@ require_once 'PHP/Depend/Util/ImageConvert.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
+class PHP_Depend_Log_Overview_Pyramid 
+    implements PHP_Depend_Log_LoggerI,
+               PHP_Depend_Log_FileAwareI
 {
     /**
      * The output file name.
      *
      * @type string
-     * @var string $_fileName
+     * @var string $_logFile
      */
-    private $_fileName = null;
+    private $_logFile = null;
     
     /**
      * The used coupling analyzer.
@@ -133,13 +137,15 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
     );
     
     /**
-     * Constructs a new chart logger.
+     * Sets the output log file.
      *
-     * @param string $fileName The output file name.
+     * @param string $logFile The output log file.
+     * 
+     * @return void
      */
-    public function __construct($fileName)
+    public function setLogFile($logFile)
     {
-        $this->_fileName = $fileName;
+        $this->_logFile = $logFile;
     }
     
     /**
@@ -192,6 +198,11 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
      */
     public function close()
     {
+        // Check for configured log file
+        if ($this->_logFile === null) {
+            throw new PHP_Depend_Log_NoLogOutputException($this);
+        }
+        
         $metrics     = $this->_collectMetrics();
         $proportions = $this->_computeProportions($metrics);
         
@@ -221,7 +232,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_LoggerI
         $temp = sys_get_temp_dir() . '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
         
-        PHP_Depend_Util_ImageConvert::convert($temp, $this->_fileName);
+        PHP_Depend_Util_ImageConvert::convert($temp, $this->_logFile);
         
         // Remove temp file
         unlink($temp);

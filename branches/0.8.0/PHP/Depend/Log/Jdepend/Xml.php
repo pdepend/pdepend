@@ -50,6 +50,8 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
+require_once 'PHP/Depend/Log/FileAwareI.php';
+require_once 'PHP/Depend/Log/NoLogOutputException.php';
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -67,9 +69,16 @@ require_once 'PHP/Depend/Log/CodeAwareI.php';
 class PHP_Depend_Log_Jdepend_Xml 
        extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI
+               PHP_Depend_Log_CodeAwareI,
+               PHP_Depend_Log_FileAwareI
 {
-    protected $fileName = '';
+    /**
+     * The output log file.
+     *
+     * @type string
+     * @var string $_logFile
+     */
+    protected $_logFile = null;
     
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
@@ -144,13 +153,15 @@ class PHP_Depend_Log_Jdepend_Xml
     protected $abstractClasses = null;
     
     /**
-     * Constructs a new logger for the given output file.
+     * Sets the output log file.
      *
-     * @param string $fileName The log output file
+     * @param string $logFile The output log file.
+     * 
+     * @return void
      */
-    public function __construct($fileName)
+    public function setLogFile($logFile)
     {
-        $this->fileName = $fileName;
+        $this->_logFile = $logFile;
     }
     
     /**
@@ -198,9 +209,15 @@ class PHP_Depend_Log_Jdepend_Xml
      * Closes the logger process and writes the output file.
      *
      * @return void
+     * @throws PHP_Depend_Log_NoLogOutputException If the no log target exists.
      */
     public function close()
     {
+        // Check for configured output
+        if ($this->_logFile === null) {
+            throw new PHP_Depend_Log_NoLogOutputException($this);
+        }
+        
         $dom = new DOMDocument('1.0', 'UTF-8');
         
         $dom->formatOutput = true;
@@ -215,7 +232,7 @@ class PHP_Depend_Log_Jdepend_Xml
         }
         
         $dom->appendChild($jdepend);
-        $dom->save($this->fileName);
+        $dom->save($this->_logFile);
     }
     
     /**

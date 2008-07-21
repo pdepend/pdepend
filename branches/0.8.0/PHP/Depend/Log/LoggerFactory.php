@@ -110,7 +110,16 @@ class PHP_Depend_Log_LoggerFactory
                 throw new RuntimeException("Unknown logger class '{$className}'.");
             }
             
-            $this->instances[$identifier] = new $className($fileName);
+            // Create a new logger instance.
+            $logger = new $className();
+            
+            // TODO: Refactor this into an external log configurator or a similar
+            //       concept.
+            if ($logger instanceof PHP_Depend_Log_FileAwareI) {
+                $logger->setLogFile($fileName);
+            }
+            
+            $this->instances[$identifier] = $logger;
         }
         return $this->instances[$identifier];
     }

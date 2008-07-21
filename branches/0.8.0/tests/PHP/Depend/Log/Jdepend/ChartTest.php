@@ -76,16 +76,33 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      */
     public function testReturnsExceptedAnalyzers()
     {
-        $logger    = new PHP_Depend_Log_Jdepend_Chart(__FILE__);
+        $logger    = new PHP_Depend_Log_Jdepend_Chart();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array('PHP_Depend_Metrics_Dependency_Analyzer');
         
         $this->assertEquals($exptected, $actual);
     }
     
+    /**
+     * Tests that the logger throws an exception if the log target wasn't 
+     * configured.
+     *
+     * @return void
+     */
+    public function testThrowsExceptionForInvalidLogTarget()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Log_NoLogOutputException',
+            "The log target is not configured for 'PHP_Depend_Log_Jdepend_Chart'."
+        );
+        
+        $logger = new PHP_Depend_Log_Jdepend_Chart();
+        $logger->close();
+    }
+    
     public function testChartLogAcceptsOnlyTheCorrectAnalyzer()
     {
-        $logger = new PHP_Depend_Log_Jdepend_Chart(__FILE__);
+        $logger = new PHP_Depend_Log_Jdepend_Chart();
         
         $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
         $this->assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
@@ -111,7 +128,8 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $analyzer->analyze($nodes);
         
-        $logger = new PHP_Depend_Log_Jdepend_Chart($fileName);
+        $logger = new PHP_Depend_Log_Jdepend_Chart();
+        $logger->setLogFile($fileName);
         $logger->setCode($nodes);
         $logger->log($analyzer);
         
@@ -163,7 +181,8 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         
         $nodes = new PHP_Depend_Code_NodeIterator($nodes);
         
-        $logger = new PHP_Depend_Log_Jdepend_Chart($fileName);
+        $logger = new PHP_Depend_Log_Jdepend_Chart();
+        $logger->setLogFile($fileName);
         $logger->setCode($nodes);
         $logger->log($analyzer);
         
@@ -216,7 +235,8 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $analyzer->analyze($nodes);
         
-        $logger = new PHP_Depend_Log_Jdepend_Chart($fileName);
+        $logger = new PHP_Depend_Log_Jdepend_Chart();
+        $logger->setLogFile($fileName);
         $logger->setCode($nodes);
         $logger->log($analyzer);
         

@@ -49,6 +49,8 @@
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
+require_once 'PHP/Depend/Log/FileAwareI.php';
+require_once 'PHP/Depend/Log/NoLogOutputException.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
 
 /**
@@ -66,15 +68,16 @@ require_once 'PHP/Depend/Util/ImageConvert.php';
 class PHP_Depend_Log_Jdepend_Chart
        extends PHP_Depend_Code_NodeVisitor_AbstractVisitor 
     implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI
+               PHP_Depend_Log_CodeAwareI,
+               PHP_Depend_Log_FileAwareI
 {
     /**
      * The output file name.
      *
      * @type string
-     * @var string $_fileName
+     * @var string $_logFile
      */
-    private $_fileName = null;
+    private $_logFile = null;
     
     /**
      * The context source code.
@@ -93,13 +96,15 @@ class PHP_Depend_Log_Jdepend_Chart
     private $_analyzer = null;
     
     /**
-     * Constructs a new chart logger.
+     * Sets the output log file.
      *
-     * @param string $fileName The output file name.
+     * @param string $logFile The output log file.
+     * 
+     * @return void
      */
-    public function __construct($fileName)
+    public function setLogFile($logFile)
     {
-        $this->_fileName = $fileName;
+        $this->_logFile = $logFile;
     }
     
     /**
@@ -147,9 +152,15 @@ class PHP_Depend_Log_Jdepend_Chart
      * Closes the logger process and writes the output file.
      *
      * @return void
+     * @throws PHP_Depend_Log_NoLogOutputException If the no log target exists.
      */
     public function close()
     {
+        // Check for configured log file
+        if ($this->_logFile === null) {
+            throw new PHP_Depend_Log_NoLogOutputException($this);
+        }
+        
         $bias = 0.1;
 
         $svg = new DOMDocument('1.0', 'UTF-8');
@@ -218,7 +229,7 @@ class PHP_Depend_Log_Jdepend_Chart
         $temp = sys_get_temp_dir() . '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
         
-        PHP_Depend_Util_ImageConvert::convert($temp, $this->_fileName);
+        PHP_Depend_Util_ImageConvert::convert($temp, $this->_logFile);
         
         // Remove temp file
         unlink($temp);
