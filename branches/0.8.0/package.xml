@@ -12,9 +12,9 @@ software JDepend and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2008-06-20</date>
+  <date>2008-07-21</date>
   <version>
-    <release>0.8.0beta3</release>
+    <release>0.8.0beta4</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -23,10 +23,10 @@ software JDepend and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- #25 + PHP_Depend should print an error if no @package information is available.
-- #26 + Handle class and interface names case insensitive.
-- #27 + Handle internal classes and interfaces.
-- #28 + Add option --bad-documentation.
+- #29 + Tooltip for the Overview Pyramid.
+- #34 + Support for pattern based package filter.
+- #37 + Remove Logger - XML Config dependency.
+- #38 + The Logger interface should not force a default ctor-signature.
   </notes>
   <contents>
     <dir name="/">
@@ -166,17 +166,6 @@ software JDepend and the NDepend metric tool.
             </file>
           </dir>
           <dir name="Log">
-            <dir name="Overview">
-              <file name="pyramid.svg" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="Pyramid.xml" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="Pyramid.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
             <dir name="Summary">
               <file name="Xml.xml" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -202,13 +191,33 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <dir name="Overview">
+              <file name="pyramid.svg" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Pyramid.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Pyramid.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="FileAwareI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="LoggerI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="LoggerFactory.php" role="php">
+            <file name="NoLogOutputException.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="CodeAwareI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NoLogInputException.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="LoggerFactory.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -619,6 +628,9 @@ software JDepend and the NDepend metric tool.
             </file>
           </dir>
           <dir name="coderank">
+            <file name="method.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="property.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -713,6 +725,9 @@ software JDepend and the NDepend metric tool.
             </file>
           </dir>
           <dir name="CodeRank">
+            <file name="MethodStrategyTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="AnalyzerTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -752,6 +767,9 @@ software JDepend and the NDepend metric tool.
         </dir>
         <dir name="TextUI">
           <file name="RunnerTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ResultPrinterTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="AllTests.php" role="test">
@@ -916,6 +934,31 @@ software JDepend and the NDepend metric tool.
 - #18 + Introduce a CodeAware interface for loggers.
 - #23 + Use an SVG-Template for the jdepend chart.
 - #24 + There is an endless loop for inline html.
+      </notes>
+    </release>
+    
+    <release>
+      <lead>
+        <name>Manuel Pichler</name>
+        <user>mapi</user>
+        <email>mapi@pdepend.org</email>
+        <active>yes</active>
+      </lead>
+      <version>
+        <release>0.8.0beta3</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>beta</api>
+      </stability>
+      <date>2008-06-20</date>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- #25 + PHP_Depend should print an error if no @package information is available.
+- #26 + Handle class and interface names case insensitive.
+- #27 + Handle internal classes and interfaces.
+- #28 + Add option --bad-documentation.
       </notes>
     </release>
   </changelog>
