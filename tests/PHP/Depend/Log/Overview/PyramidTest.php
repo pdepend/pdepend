@@ -77,7 +77,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      */
     public function testReturnsExceptedAnalyzers()
     {
-        $logger    = new PHP_Depend_Log_Overview_Pyramid(__FILE__);
+        $logger    = new PHP_Depend_Log_Overview_Pyramid();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array(
             'PHP_Depend_Metrics_Coupling_Analyzer',
@@ -91,13 +91,30 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the logger throws an exception if the log target wasn't 
+     * configured.
+     *
+     * @return void
+     */
+    public function testThrowsExceptionForInvalidLogTarget()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Log_NoLogOutputException',
+            "The log target is not configured for 'PHP_Depend_Log_Overview_Pyramid'."
+        );
+        
+        $logger = new PHP_Depend_Log_Overview_Pyramid();
+        $logger->close();
+    }
+    
+    /**
      * Tests that the log method returns <b>false</b> for an invalid logger.
      *
      * @return void
      */
     public function testPyramidDoesntAcceptInvalidAnalyzer()
     {
-        $logger = new PHP_Depend_Log_Overview_Pyramid(__FILE__);
+        $logger = new PHP_Depend_Log_Overview_Pyramid();
         $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
     }
     
@@ -113,7 +130,8 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
             'Missing Coupling analyzer.'
         );
         
-        $log = new PHP_Depend_Log_Overview_Pyramid('temp.svg');
+        $log = new PHP_Depend_Log_Overview_Pyramid();
+        $log->setLogFile(sys_get_temp_dir() . '/_tmp_.svg');
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_NodeCountAnalyzer());
@@ -133,7 +151,8 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
             'Missing Cyclomatic Complexity analyzer.'
         );
         
-        $log = new PHP_Depend_Log_Overview_Pyramid('temp.svg');
+        $log = new PHP_Depend_Log_Overview_Pyramid();
+        $log->setLogFile(sys_get_temp_dir() . '/_tmp_.svg');
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_NodeCountAnalyzer());
@@ -153,7 +172,8 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
             'Missing Inheritance analyzer.'
         );
         
-        $log = new PHP_Depend_Log_Overview_Pyramid('temp.svg');
+        $log = new PHP_Depend_Log_Overview_Pyramid();
+        $log->setLogFile(sys_get_temp_dir() . '/_tmp_.svg');
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_NodeCountAnalyzer());
@@ -173,7 +193,8 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
             'Missing Node Count analyzer.'
         );
         
-        $log = new PHP_Depend_Log_Overview_Pyramid('temp.svg');
+        $log = new PHP_Depend_Log_Overview_Pyramid();
+        $log->setLogFile(sys_get_temp_dir() . '/_tmp_.svg');
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
@@ -192,8 +213,9 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
             'RuntimeException',
             'Missing Node LOC analyzer.'
         );
-        
-        $log = new PHP_Depend_Log_Overview_Pyramid('temp.svg');
+
+        $log = new PHP_Depend_Log_Overview_Pyramid();
+        $log->setLogFile(sys_get_temp_dir() . '/_tmp_.svg');
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
@@ -208,7 +230,8 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
             unlink($output);
         }
         
-        $log = new PHP_Depend_Log_Overview_Pyramid($output);
+        $log = new PHP_Depend_Log_Overview_Pyramid();
+        $log->setLogFile($output);
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());

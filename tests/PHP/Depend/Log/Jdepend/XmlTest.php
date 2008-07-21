@@ -154,11 +154,28 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testReturnsExceptedAnalyzers()
     {
-        $logger    = new PHP_Depend_Log_Jdepend_Xml(__FILE__);
+        $logger    = new PHP_Depend_Log_Jdepend_Xml();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array('PHP_Depend_Metrics_Dependency_Analyzer');
         
         $this->assertEquals($exptected, $actual);
+    }
+    
+    /**
+     * Tests that the logger throws an exception if the log target wasn't 
+     * configured.
+     *
+     * @return void
+     */
+    public function testThrowsExceptionForInvalidLogTarget()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Log_NoLogOutputException',
+            "The log target is not configured for 'PHP_Depend_Log_Jdepend_Xml'."
+        );
+        
+        $logger = new PHP_Depend_Log_Jdepend_Xml();
+        $logger->close();
     }
     
     /**
@@ -170,9 +187,10 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
-        $log = new PHP_Depend_Log_Jdepend_Xml($this->resultFile);
-        $log->log($this->analyzer);
+        $log = new PHP_Depend_Log_Jdepend_Xml();
+        $log->setLogFile($this->resultFile);
         $log->setCode($this->packages);
+        $log->log($this->analyzer);
         $log->close();
         
         $fileName = 'pdepend-log.xml';
@@ -184,7 +202,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     
     public function testXmlLogAcceptsOnlyTheCorrectAnalyzer()
     {
-        $logger = new PHP_Depend_Log_Jdepend_Xml($this->resultFile);
+        $logger = new PHP_Depend_Log_Jdepend_Xml();
         
         $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
         $this->assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
