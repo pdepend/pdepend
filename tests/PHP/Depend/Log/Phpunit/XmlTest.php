@@ -128,6 +128,23 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the logger throws an exception if the log target wasn't 
+     * configured.
+     *
+     * @return void
+     */
+    public function testThrowsExceptionForInvalidLogTarget()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Log_NoLogOutputException',
+            "The log target is not configured for 'PHP_Depend_Log_Phpunit_Xml'."
+        );
+        
+        $logger = new PHP_Depend_Log_Phpunit_Xml();
+        $logger->close();
+    }
+    
+    /**
      * Tests the result of the phpunit logger with some real analyzers.
      *
      * @return void
@@ -140,7 +157,8 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         $packages->addFilter(new PHP_Depend_Code_NodeIterator_DefaultPackageFilter());
         $packages->addFilter(new PHP_Depend_Code_NodeIterator_InternalPackageFilter());
         
-        $logger = new PHP_Depend_Log_Phpunit_Xml($this->_tempFile);
+        $logger = new PHP_Depend_Log_Phpunit_Xml();
+        $logger->setLogFile($this->_tempFile);
         $logger->setCode($packages);
         
         $analyzer0 = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();

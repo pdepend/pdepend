@@ -61,13 +61,6 @@
 interface PHP_Depend_Log_LoggerI
 {
     /**
-     * Constructs a new logger for the given output file.
-     *
-     * @param string $fileName The log output file
-     */
-    function __construct($fileName);
-    
-    /**
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
@@ -81,6 +74,7 @@ interface PHP_Depend_Log_LoggerI
      * Closes the logger process and writes the output file.
      *
      * @return void
+     * @throws PHP_Depend_Log_NoLogOutputException If the no log target exists.
      */
     function close();
     
