@@ -46,12 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/CodeAwareI.php';
-require_once 'PHP/Depend/Log/FileAwareI.php';
-
 /**
- * Dummy logger for testing
+ * This type of exception is thrown, if a required log target/log file wasn't
+ * configured for the current logger instance.  
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,93 +59,18 @@ require_once 'PHP/Depend/Log/FileAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Dummy_Logger 
-    implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI,
-               PHP_Depend_Log_FileAwareI
+class PHP_Depend_Log_NoLogOutputException extends LogicException
 {
     /**
-     * The output file name.
+     * Creates a new log target exception for the given log instance.
      *
-     * @type string
-     * @var string $_logFile
+     * @param PHP_Depend_Log_LoggerI $logger The context log instance.
      */
-    private $_logFile = null;
-    
-    /**
-     * The logger input data.
-     * 
-     * @type array<mixed>
-     * @var array(string=>mixed) $_input
-     */
-    private $_input = array(
-        'code'       =>  null,
-        'analyzers'  =>  array()
-    );
-    
-    /**
-     * Constructs a new logger for the given output file.
-     */
-    public function __construct()
+    public function __construct(PHP_Depend_Log_LoggerI $logger)
     {
-    }
-    
-    /**
-     * Sets the output log file.
-     *
-     * @param string $logFile The output log file.
-     * 
-     * @return void
-     */
-    public function setLogFile($logFile)
-    {
-        $this->_logFile = $logFile;
-    }
-    
-    /**
-     * Returns an <b>array</b> with accepted analyzer types. These types can be
-     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
-     *
-     * @return array(string)
-     */
-    public function getAcceptedAnalyzers()
-    {
-        return array('PHP_Depend_Metrics_NodeAwareI');
-    }
-    
-    /**
-     * Sets the context code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
-     * 
-     * @return void
-     */
-    public function setCode(PHP_Depend_Code_NodeIterator $code)
-    {
-        $this->_input['code'] = $code;
-    }
-    
-    /**
-     * Adds an analyzer to log. If this logger accepts the given analyzer it
-     * with return <b>true</b>, otherwise the return value is <b>false</b>.
-     *
-     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
-     * 
-     * @return boolean
-     */
-    public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
-    {
-        $this->_input['analyzers'][] = $analyzer;
-        return true;
-    }
-    
-    /**
-     * Closes the logger process and writes the output file.
-     *
-     * @return void
-     */
-    public function close()
-    {
-        file_put_contents($this->_logFile, serialize($this->_input));
+        $className = get_class($logger);
+        $message   = "The log target is not configured for '{$className}'.";
+        
+        parent::__construct($message);
     }
 }

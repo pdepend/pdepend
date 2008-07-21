@@ -49,6 +49,8 @@
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
+require_once 'PHP/Depend/Log/FileAwareI.php';
+require_once 'PHP/Depend/Log/NoLogOutputException.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
@@ -69,15 +71,16 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 class PHP_Depend_Log_Phpunit_Xml
        extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI
+               PHP_Depend_Log_CodeAwareI,
+               PHP_Depend_Log_FileAwareI
 {
     /**
      * The log output file.
      *
      * @type string
-     * @var string $fileName
+     * @var string $_logFile
      */
-    protected $fileName = '';
+    private $_logFile = null;
     
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
@@ -148,16 +151,6 @@ class PHP_Depend_Log_Phpunit_Xml
     );
     
     /**
-     * Constructs a new logger for the given output file.
-     *
-     * @param string $fileName The log output file
-     */
-    public function __construct($fileName)
-    {
-        $this->fileName = $fileName;
-    }
-    
-    /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
      * concrete analyzer classes or one of the descriptive analyzer interfaces. 
      *
@@ -169,6 +162,18 @@ class PHP_Depend_Log_Phpunit_Xml
             'PHP_Depend_Metrics_NodeAwareI',
             'PHP_Depend_Metrics_ProjectAwareI'
         );
+    }
+    
+    /**
+     * Sets the output log file.
+     *
+     * @param string $logFile The output log file.
+     * 
+     * @return void
+     */
+    public function setLogFile($logFile)
+    {
+        $this->_logFile = $logFile;
     }
     
     /**
@@ -216,9 +221,14 @@ class PHP_Depend_Log_Phpunit_Xml
      * Closes the logger process and writes the output file.
      *
      * @return void
+     * @throws PHP_Depend_Log_NoLogOutputException If the no log target exists.
      */
     public function close()
     {
+        if ($this->_logFile === null) {
+            throw new PHP_Depend_Log_NoLogOutputException($this);
+        }
+        
         $dom = new DOMDocument('1.0', 'UTF-8');
         
         $dom->formatOutput = true;
@@ -247,7 +257,7 @@ class PHP_Depend_Log_Phpunit_Xml
             $metricsXml->setAttribute($name, $value);
         }
         
-        $dom->save($this->fileName);
+        $dom->save($this->_logFile);
     }
     
     /**
