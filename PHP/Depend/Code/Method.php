@@ -90,6 +90,14 @@ class PHP_Depend_Code_Method
     protected $parent = null;
     
     /**
+     * Method position within its parent class or interface.
+     *
+     * @type integer
+     * @var integer $_position
+     */
+    private $_position = 0;
+    
+    /**
      * Returns <b>true</b> if this is an abstract method.
      *
      * @return boolean
@@ -192,6 +200,28 @@ class PHP_Depend_Code_Method
     public function setParent(PHP_Depend_Code_AbstractType $parent = null)
     {
         $this->parent = $parent;
+    }
+    
+    /**
+     * Returns the position of this method within the parent class or interface.
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->_position;
+    }
+    
+    /**
+     * Sets the source position of this method.
+     *
+     * @param integer $position Position within the parent class or interface.
+     * 
+     * @return void
+     */
+    public function setPosition($position)
+    {
+        $this->_position = (int) $position;
     }
     
     /**
