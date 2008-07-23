@@ -67,22 +67,6 @@ abstract class PHP_Depend_Code_AbstractType
     implements PHP_Depend_Code_DependencyNodeI
 {
     /**
-     * The parent package for this class.
-     *
-     * @type PHP_Depend_Code_Package
-     * @var PHP_Depend_Code_Package $package
-     */
-    protected $package = null;
-    
-    /**
-     * List of {@link PHP_Depend_Code_Method} objects in this class.
-     *
-     * @type array<PHP_Depend_Code_Method>
-     * @var array(PHP_Depend_Code_Method) $methods
-     */
-    protected $methods = array();
-    
-    /**
      * List of {@link PHP_Depend_Code_AbstractType} objects this type depends on.
      *
      * @type array<PHP_Depend_Code_AbstractType>
@@ -100,6 +84,22 @@ abstract class PHP_Depend_Code_AbstractType
     protected $children = array();
     
     /**
+     * The parent package for this class.
+     *
+     * @type PHP_Depend_Code_Package
+     * @var PHP_Depend_Code_Package $_package
+     */
+    private $_package = null;
+    
+    /**
+     * List of {@link PHP_Depend_Code_Method} objects in this class.
+     *
+     * @type array<PHP_Depend_Code_Method>
+     * @var array(PHP_Depend_Code_Method) $_methods
+     */
+    private $_methods = array();
+    
+    /**
      * The tokens for this type.
      *
      * @type array<array>
@@ -112,9 +112,17 @@ abstract class PHP_Depend_Code_AbstractType
      * type. 
      *
      * @type array<PHP_Depend_Code_TypeConstant>
-     * @var array(PHP_Depend_Code_TypeConstant) $children
+     * @var array(PHP_Depend_Code_TypeConstant) $_constants
      */
     private $_constants = array();
+    
+    /**
+     * Type position within the source code file.
+     *
+     * @type integer
+     * @var integer $_position
+     */
+    private $_position = 0;
     
     /**
      * Returns all {@link PHP_Depend_Code_TypeConstant} objects in this type.
@@ -170,7 +178,7 @@ abstract class PHP_Depend_Code_AbstractType
      */
     public function getMethods()
     {
-        return new PHP_Depend_Code_NodeIterator($this->methods);
+        return new PHP_Depend_Code_NodeIterator($this->_methods);
     }
     
     /**
@@ -188,7 +196,7 @@ abstract class PHP_Depend_Code_AbstractType
         // Set this as owner type
         $method->setParent($this);
         // Store method
-        $this->methods[] = $method;
+        $this->_methods[] = $method;
         
         return $method;
     }
@@ -202,11 +210,11 @@ abstract class PHP_Depend_Code_AbstractType
      */
     public function removeMethod(PHP_Depend_Code_Method $method)
     {
-        if (($i = array_search($method, $this->methods, true)) !== false) {
+        if (($i = array_search($method, $this->_methods, true)) !== false) {
             // Remove this as owner
             $method->setParent(null);
             // Remove from internal list
-            unset($this->methods[$i]);
+            unset($this->_methods[$i]);
         }
     }
     
@@ -329,7 +337,7 @@ abstract class PHP_Depend_Code_AbstractType
      */
     public function getPackage()
     {
-        return $this->package;
+        return $this->_package;
     }
     
     /**
@@ -341,7 +349,29 @@ abstract class PHP_Depend_Code_AbstractType
      */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
-        $this->package = $package;
+        $this->_package = $package;
+    }
+    
+    /**
+     * Returns the position of this type within the source file.
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->_position;
+    }
+    
+    /**
+     * Sets the source position of this type.
+     *
+     * @param integer $position Position within the source file.
+     * 
+     * @return void
+     */
+    public function setPosition($position)
+    {
+        $this->_position = (int) $position;
     }
     
     /**
