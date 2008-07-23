@@ -196,6 +196,9 @@ class PHP_Depend_Parser
         $this->reset();
         
         $comment = null;
+        
+        // Position of the context type within the analyzed file.
+        $typePosition = 0;
 
         while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
@@ -232,6 +235,7 @@ class PHP_Depend_Parser
                 $interface->setSourceFile($this->tokenizer->getSourceFile());
                 $interface->setStartLine($token[2]);
                 $interface->setDocComment($comment);
+                $interface->setPosition($typePosition++);
                 
                 $this->parseInterfaceSignature($interface);
 
@@ -254,6 +258,7 @@ class PHP_Depend_Parser
                 $class->setStartLine($token[2]);
                 $class->setAbstract($this->abstract);
                 $class->setDocComment($comment);
+                $class->setPosition($typePosition++);
                 
                 $this->parseClassSignature($class);
 
@@ -367,9 +372,12 @@ class PHP_Depend_Parser
         // If type is an interface all methods are abstract
         $abstractDefault = ($type instanceof PHP_Depend_Code_Interface);
         
-        $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;;
+        $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
         $comment   = null;
         $abstract  = $abstractDefault;
+        
+        // Method position within the type body
+        $methodPosition = 0;
         
         while ($token !== PHP_Depend_Code_TokenizerI::T_EOF) {
             
@@ -379,6 +387,7 @@ class PHP_Depend_Parser
                 $method->setDocComment($comment);
                 $method->setAbstract($abstract);
                 $method->setVisibility($visibilty);
+                $method->setPosition($methodPosition++);
                 
                 $this->_prepareCallable($method);
                 
@@ -423,12 +432,12 @@ class PHP_Depend_Parser
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
                 ++$curly;
-                $comment = null; 
+                $comment = null;
                 break;
                     
             case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
                 --$curly;
-                $comment = null; 
+                $comment = null;
                 break;
                 
             case PHP_Depend_Code_TokenizerI::T_ABSTRACT:
