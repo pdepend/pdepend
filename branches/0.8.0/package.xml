@@ -12,9 +12,9 @@ software JDepend and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2008-07-21</date>
+  <date>2008-07-27</date>
   <version>
-    <release>0.8.0beta4</release>
+    <release>0.8.0</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -23,10 +23,7 @@ software JDepend and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- #29 + Tooltip for the Overview Pyramid.
-- #34 + Support for pattern based package filter.
-- #37 + Remove Logger - XML Config dependency.
-- #38 + The Logger interface should not force a default ctor-signature.
+- No more features or bug fixes, beta4 seems to be stable.
   </notes>
   <contents>
     <dir name="/">
@@ -936,7 +933,6 @@ software JDepend and the NDepend metric tool.
 - #24 + There is an endless loop for inline html.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -959,6 +955,31 @@ software JDepend and the NDepend metric tool.
 - #26 + Handle class and interface names case insensitive.
 - #27 + Handle internal classes and interfaces.
 - #28 + Add option --bad-documentation.
+      </notes>
+    </release>
+    <release>
+      <lead>
+        <name>Manuel Pichler</name>
+        <user>mapi</user>
+        <email>mapi@pdepend.org</email>
+        <active>yes</active>
+      </lead>
+      <date>2008-07-21</date>
+      <version>
+        <release>0.8.0beta4</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>beta</api>
+      </stability>
+      <date>2008-07-21</date>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- #29 + Tooltip for the Overview Pyramid.
+- #34 + Support for pattern based package filter.
+- #37 + Remove Logger - XML Config dependency.
+- #38 + The Logger interface should not force a default ctor-signature.
       </notes>
     </release>
   </changelog>

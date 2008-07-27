@@ -1,3 +1,16 @@
+PHP_Depend 0.8.0
+----------------
+
+- No more features or bug fixes, beta4 seems to be stable.
+
+PHP_Depend 0.8.0beta4
+---------------------
+
+- #29 + Tooltip for the Overview Pyramid.
+- #34 + Support for pattern based package filter.
+- #37 + Remove Logger - XML Config dependency.
+- #38 + The Logger interface should not force a default ctor-signature.
+
 PHP_Depend 0.8.0beta3
 ---------------------
 
