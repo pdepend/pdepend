@@ -76,6 +76,12 @@ class PHP_Depend_Util_ImageConvert
     {
         $inputType  = strtolower(pathinfo($input, PATHINFO_EXTENSION));
         $outputType = strtolower(pathinfo($output, PATHINFO_EXTENSION));
+    
+        // Check for output file without extension and reuse input type
+        if ($outputType === '') {
+            $outputType  = $inputType;
+            $output     .= ".{$outputType}"; 
+        }
         
         if ($inputType === 'svg') {
             self::prepareSVG($input);
