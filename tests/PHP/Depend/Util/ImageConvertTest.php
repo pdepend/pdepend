@@ -126,6 +126,29 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the image convert util appends the default extension as fallback.
+     *
+     * @return void
+     */
+    public function testConvertAppendDefaultFileExtensionAsFallback()
+    {
+        if (extension_loaded('imagick') === false) {
+            $this->markTestSkipped('No pecl/imagick extension.');
+        }
+        
+        $input      = dirname(__FILE__) . '/_input/pyramid.svg';
+        $this->_out = sys_get_temp_dir() . '/pdepend';
+        
+        $this->assertFileNotExists($this->_out);
+        PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
+        $this->assertFileNotExists($this->_out);
+        
+        $this->_out .= '.svg';
+        
+        $this->assertFileExists($this->_out);
+    }
+    
+    /**
      * Tests that the convert util recognizes the imageConvert configuration
      * for the font-family:
      *
