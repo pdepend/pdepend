@@ -144,7 +144,5 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         $this->_out .= '.svg';
         
         $this->assertFileExists($this->_out);
-        
-        
     }
 }
