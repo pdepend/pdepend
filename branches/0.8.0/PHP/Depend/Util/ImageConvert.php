@@ -75,6 +75,12 @@ class PHP_Depend_Util_ImageConvert
         $inputType  = pathinfo($input, PATHINFO_EXTENSION);
         $outputType = pathinfo($output, PATHINFO_EXTENSION);
         
+        // Check for output file without extension and reuse input type
+        if ($outputType === '') {
+            $outputType  = $inputType;
+            $output     .= ".{$outputType}"; 
+        }
+        
         if ($inputType === $outputType) {
             file_put_contents($output, file_get_contents($input));
         } else if (extension_loaded('imagick') === true) {
