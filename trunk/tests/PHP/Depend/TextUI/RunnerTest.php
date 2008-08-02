@@ -73,14 +73,34 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
     {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setSourceDirectories(array('foo/bar'));
+        
         $this->setExpectedException(
             'RuntimeException',
             "Invalid directory 'foo/bar' added.",
             PHP_Depend_TextUI_Runner::EXCEPTION_EXIT
         );
         
+        $runner->run();
+    }
+    
+    /**
+     * Tests that the runner stops processing if no logger is specified.
+     *
+     * @return void
+     */
+    public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
+    {
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array('foo/bar'));
+        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
+        
+        $this->setExpectedException(
+            'RuntimeException', 
+            'No output specified', 
+            PHP_Depend_TextUI_Runner::EXCEPTION_EXIT
+        );
+        
         $runner->run();
     }
     

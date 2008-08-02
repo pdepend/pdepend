@@ -289,6 +289,10 @@ class PHP_Depend_TextUI_Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
         
+        if (count($this->_loggerMap) === 0) {
+            throw new RuntimeException('No output specified.', self::EXCEPTION_EXIT);
+        }
+        
         $loggerFactory = new PHP_Depend_Log_LoggerFactory();
         
         // To append all registered loggers.
@@ -303,6 +307,7 @@ class PHP_Depend_TextUI_Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
         
+        // TODO: Make the result printer class configurable
         $resultPrinter = new PHP_Depend_TextUI_ResultPrinter();
         
         $pdepend->addProcessListener($resultPrinter);
