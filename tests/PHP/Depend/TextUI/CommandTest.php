@@ -310,6 +310,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '-d',
             'html_errors',
+            '--dummy-logger=' . sys_get_temp_dir() . '/pdepend.dummy',
             dirname(__FILE__)
         );
         
@@ -336,6 +337,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '-d',
             'html_errors=off',
+            '--dummy-logger=' . sys_get_temp_dir() . '/pdepend.dummy',
             dirname(__FILE__)
         );
         
@@ -368,6 +370,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         
         $argv = array(
             '--configuration=' . $configFile,
+            '--dummy-logger=' . sys_get_temp_dir() . '/pdepend.dummy',
             dirname(__FILE__)
         );
         
