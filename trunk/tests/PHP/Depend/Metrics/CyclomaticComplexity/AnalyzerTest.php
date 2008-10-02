@@ -72,22 +72,17 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateFunctionCCNAndCNN2()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/ccn/function.php');
+        $packages = self::parseSource('/metrics/ccn/function.php');
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
-        
-        $packages->rewind();
-        
-        $this->assertEquals(2, $packages->count()); // +global & +standard
-        $functions = $packages->current()->getFunctions();
-        $this->assertEquals(2, $functions->count());
         
         $expected = array(
             'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
             'pdepend2'  =>  array('ccn'  =>  7, 'ccn2'  =>  10)
         );
         
-        foreach ($functions as $function) {
+        $packages->rewind();
+        foreach ($packages->current()->getFunctions() as $function) {
             $metrics = $analyzer->getNodeMetrics($function);
             
             $this->assertEquals(
@@ -111,24 +106,18 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateMethodCCNAndCNN2()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/ccn/method.php');
+        $packages = self::parseSource('/metrics/ccn/method.php');
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
-        
-        $packages->rewind();
-        
-        $this->assertEquals(2, $packages->count()); // +global & +standard
-        $classes = $packages->current()->getClasses();
-        $this->assertEquals(1, $classes->count());
-        $methods = $classes->current()->getMethods();
-        $this->assertEquals(2, $methods->count());
         
         $expected = array(
             'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
             'pdepend2'  =>  array('ccn'  =>  7, 'ccn2'  =>  10)
         );
         
-        foreach ($methods as $method) {
+        
+        $packages->rewind();
+        foreach ($packages->current()->getClasses()->current()->getMethods() as $method) {
             $metrics = $analyzer->getNodeMetrics($method);
             
             $this->assertEquals(
@@ -145,7 +134,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateProjectMetrics()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/ccn');
+        $packages = self::parseSource('/metrics/ccn/');
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
         

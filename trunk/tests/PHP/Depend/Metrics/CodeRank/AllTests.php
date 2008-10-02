@@ -89,9 +89,9 @@ class PHP_Depend_Metrics_CodeRank_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics_CodeRank - AllTests');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_MethodStrategyTest');
         $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_PropertyStrategyTest');
+        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
         
         return $suite;
     }

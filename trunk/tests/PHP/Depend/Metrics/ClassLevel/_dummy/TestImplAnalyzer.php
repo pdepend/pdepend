@@ -36,67 +36,43 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilterI.php';
+require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 
 /**
- * Dummy filter.
+ * Test case for the class level analyzer.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_DummyFilter implements PHP_Depend_Util_FileFilterI
+class PHP_Depend_Metrics_ClassLevel_TestImplAnalyzer
+    extends PHP_Depend_Metrics_AbstractAnalyzer
 {
     /**
-     * The return value for this filter.
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
      *
-     * @type boolean
-     * @var boolean $returnValue
-     */
-    public $returnValue = false;
-    
-    /**
-     * Was this filter invoked?
-     *
-     * @type boolean
-     * @var boolean $invoked
-     */
-    public $invoked = false;
-    
-    /**
-     * Constructs a new dummy filter
-     *
-     * @param boolean $returnValue The pre defined return value for this filter.
-     */
-    public function __construct($returnValue)
-    {
-        $this->returnValue = $returnValue;
-    }
-    
-    /**
-     * Returns <b>true</b> if this filter accepts the file instance.
-     *
-     * @param SplFileInfo $fileInfo The context file instance.
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
      * 
-     * @return boolean
+     * @return void
      */
-    public function accept(SplFileInfo $fileInfo)
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
     {
-        $this->invoked = true;
         
-        return $this->returnValue;
     }
 }
+?>

@@ -76,8 +76,8 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterOutputForSingleEntry()
     {
         // Create dummy objects
-        $builder   = new PHP_Depend_Code_DefaultBuilder();
-        $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer(__FILE__);
+        $builder   = new PHP_Reflection_Builder_Default();
+        $tokenizer = new PHP_Reflection_Tokenizer_Internal(__FILE__);
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();
         
@@ -100,8 +100,8 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterOutputForMultipleEntries()
     {
         // Create dummy objects
-        $builder   = new PHP_Depend_Code_DefaultBuilder();
-        $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer(__FILE__);
+        $builder   = new PHP_Reflection_Builder_Default();
+        $tokenizer = new PHP_Reflection_Tokenizer_Internal(__FILE__);
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();
         
@@ -127,7 +127,7 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterForMultipleEntries()
     {
         // Create dummy objects
-        $method   = new PHP_Depend_Code_Method('method');
+        $method   = new PHP_Reflection_Ast_Method('method');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();
@@ -154,7 +154,7 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterForCompleteLine()
     {
         // Create dummy objects
-        $method   = new PHP_Depend_Code_Method('method');
+        $method   = new PHP_Reflection_Ast_Method('method');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();

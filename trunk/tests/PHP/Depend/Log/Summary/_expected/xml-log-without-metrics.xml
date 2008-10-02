@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metrics>
   <files>
-    <file name="???"/>
+    <file name="packages.php"/>
   </files>
   <package name="+global">
     <class name="BarFoo"/>
     <function name="bar">
-      <file name="???"/>
+      <file name="packages.php"/>
     </function>
   </package>
   <package name="pkg1">
     <class name="FooBar">
-      <file name="???"/>
+      <file name="packages.php"/>
       <method name="x"/>
       <method name="y"/>
     </class>
     <function name="foo">
-      <file name="???"/>
+      <file name="packages.php"/>
     </function>
   </package>
   <package name="pkg2"/>
   <package name="pkg3">
     <class name="Bar">
-      <file name="???"/>
+      <file name="packages.php"/>
       <method name="y"/>
     </class>
   </package>

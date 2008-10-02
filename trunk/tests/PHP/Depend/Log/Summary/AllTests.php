@@ -46,10 +46,17 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
+if (defined('PHPUnit_MAIN_METHOD') === false) {
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_Summary_AllTests::main');
+}
+
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+require_once dirname(__FILE__) . '/XmlTest.php';
 
 /**
- * A dummy dependency analyzer.
+ * Main test suite for the PHP_Depend_Log_Summary package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,29 +67,32 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Jdepend_DependencyAnalyzer
-    extends PHP_Depend_Metrics_Dependency_Analyzer
+class PHP_Depend_Log_Summary_AllTests
 {
     /**
-     * Dummy package statistics
+     * Test suite main method.
      *
-     * @type array<array>
-     * @var array(string=>array) $stats
+     * @return void
      */
-    public $stats = array();
+    public static function main()
+    {
+        PHPUnit_TextUI_TestRunner::run(self::suite());
+    }
     
     /**
-     * Returns the statistics for the requested node.
+     * Creates the phpunit test suite for this package.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
-     * @return array
+     * @return PHPUnit_Framework_TestSuite
      */
-    public function getStats(PHP_Depend_Code_NodeI $node)
+    public static function suite()
     {
-        if (isset($this->stats[$node->getUUID()])) {
-            return $this->stats[$node->getUUID()];
-        }
-        return array();
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log_Summary - AllTests');
+        $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
+        
+        return $suite;
     }
+}
+
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_Summary_AllTests::main') {
+    PHP_Depend_Log_Summary_AllTests::main();
 }

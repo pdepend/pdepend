@@ -47,16 +47,9 @@
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/_dummy/TestImplAnalyzer.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Property.php';
 require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
-require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
 require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 
 /**
@@ -81,8 +74,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
-        $package  = new PHP_Depend_Code_Package('package1');
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/simple-package');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         
         $this->setExpectedException('RuntimeException', 'Missing required CC analyzer.');
@@ -99,10 +91,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
     {
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        
         $this->setExpectedException('InvalidArgumentException', 'CC Analyzer required.');
-
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CodeRank_Analyzer());
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_ClassLevel_TestImplAnalyzer());
     }
     
     /**
@@ -112,49 +102,30 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateDITMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package1');
-        $interfs = $package->addType(new PHP_Depend_Code_Interface('interfs'));
-        $classA  = $package->addType(new PHP_Depend_Code_Class('classA'));
-        $classB  = $package->addType(new PHP_Depend_Code_Class('classB'));
-        $classC  = $package->addType(new PHP_Depend_Code_Class('classC'));
-        $classD  = $package->addType(new PHP_Depend_Code_Class('classD'));
-        $classE  = $package->addType(new PHP_Depend_Code_Class('classE'));
-        $classF  = $package->addType(new PHP_Depend_Code_Class('classF'));
-        
-        $interfs->setSourceFile($file);
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-        $classD->setSourceFile($file);
-        $classE->setSourceFile($file);
-        $classF->setSourceFile($file);
-        
-        $interfs->addChildType($classA); // class A implements I // DIT = 0 
-        $classA->addChildType($classB);  // class B extends A {} // DIT = 1
-        $classB->addChildType($classC);  // class C extends B {} // DIT = 2
-        $classC->addChildType($classD);  // class D extends C {} // DIT = 3
-        $classC->addChildType($classE);  // class E extends C {} // DIT = 3
-        $classE->addChildType($classF);  // class F extends E {} // DIT = 4
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/dit/');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(0, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(1, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(2, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classD);
-        $this->assertEquals(3, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classE);
-        $this->assertEquals(3, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classF);
-        $this->assertEquals(4, $m['dit']);
+        $packages->rewind();
+        
+        $expected = array('A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 3, 'F' => 4);
+        foreach ($packages->current()->getClasses() as $class) {
+            // Get class name
+            $name = $class->getName();
+            // Check name is valid
+            $this->assertArrayHasKey($name, $expected);
+            // Fetch class metric
+            $metric = $analyzer->getNodeMetrics($class);
+            // Check dit exists
+            $this->assertArrayHasKey('dit', $metric);
+            // Compare values
+            $this->assertEquals($expected[$name], $metric['dit']);
+            // Remove offset
+            unset($expected[$name]);
+        }
+        // Check that we test all
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -164,58 +135,30 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateIMPLMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package1 = new PHP_Depend_Code_Package('package1');
-        $interfsA = $package1->addType(new PHP_Depend_Code_Interface('A'));
-        $interfsB = $package1->addType(new PHP_Depend_Code_Interface('B'));
-        $interfsC = $package1->addType(new PHP_Depend_Code_Interface('C'));
-        $interfsD = $package1->addType(new PHP_Depend_Code_Interface('D'));
-        $interfsE = $package1->addType(new PHP_Depend_Code_Interface('E'));
-        $interfsF = $package1->addType(new PHP_Depend_Code_Interface('F'));
-        
-        $package2 = new PHP_Depend_Code_Package('package2');
-        $classA   = $package2->addType(new PHP_Depend_Code_Class('A'));
-        $classB   = $package2->addType(new PHP_Depend_Code_Class('B'));
-        $classC   = $package2->addType(new PHP_Depend_Code_Class('C'));
-        
-        $interfsA->setSourceFile($file);
-        $interfsB->setSourceFile($file);
-        $interfsC->setSourceFile($file);
-        $interfsD->setSourceFile($file);
-        $interfsE->setSourceFile($file);
-        $interfsF->setSourceFile($file);
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-        
-        $interfsA->addChildType($interfsB); // interface B extends A {}
-        $interfsA->addChildType($interfsC); // interface C extends A {}
-        $interfsB->addChildType($interfsD); // interface D extends B, E
-        $interfsE->addChildType($interfsD); // interface D extends B, E
-        $interfsF->addChildType($interfsE); // interface E extends F
-        
-        $interfsE->addChildType($classA); // class A implements E, C {}
-        $interfsC->addChildType($classA); // class A implements E, C {}
-        
-        $interfsD->addChildType($classB); // class B extends C implements D, A {}
-        $interfsA->addChildType($classB); // class B extends C implements D, A {}
-        
-        $interfsC->addChildType($classC); // class C implements C {}
-        
-        $classC->addChildType($classB); // class B extends C implements D, A {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package1, $package2));
+        $packages = self::parseSource('/metrics/class-level/impl/');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(4, $m['impl']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(6, $m['impl']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(2, $m['impl']);
+        $expected = array('A' => 4, 'B' => 6, 'C' => 2);
+        foreach ($packages as $package) {
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for impl key
+                $this->assertArrayHasKey('impl', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['impl']);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that we catch all
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -225,70 +168,30 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateCISMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
-        $classC->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classC->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classC->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classC->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classC->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-               
-        $classB->addChildType($classA); // class A extends B {}
-        $classC->addChildType($classB); // class B extends C {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/cis/');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(2, $m['cis']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(2, $m['cis']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(2, $m['cis']);
+        $expected = array('A' => 2, 'B' => 2, 'C' => 3);
+        foreach ($packages as $package) {
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for cis key
+                $this->assertArrayHasKey('cis', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['cis']);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that we catch all
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -298,52 +201,44 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateCSZMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classB->addChildType($classA); // class A extends B {}
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/csz');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(6, $m['csz']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(6, $m['csz']);
+        $expected = array('A' => 3, 'B' => 5, 'C' => 1, 'I' => true);
+        foreach ($packages as $package) {
+            // Check classes
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for csz key
+                $this->assertArrayHasKey('csz', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['csz']);
+                // Remove offset
+                unset($expected[$name]);
+            }
+            // Check interfaces
+            foreach ($package->getInterfaces() as $interface) {
+                // Get interface name
+                $name = $interface->getName();
+                // Check for valid interface name
+                $this->assertArrayHasKey($name, $expected);
+                // Get empty metric
+                $metric = $analyzer->getNodeMetrics($interface);
+                // Check that empty is array
+                $this->assertEquals(array(), $metric);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that all match
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -353,42 +248,44 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classB = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        
-        $classB->addChildType($classA); // class A extends B {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/vars');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(3, $m['vars']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(1, $m['vars']);
+        $expected = array('A' => 2, 'B' => 3, 'C' => 0, 'I' => 0);
+        foreach ($packages as $package) {
+            // Check classes
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for vars key
+                $this->assertArrayHasKey('vars', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['vars']);
+                // Remove offset
+                unset($expected[$name]);
+            }
+            // Check interfaces
+            foreach ($package->getInterfaces() as $interface) {
+                // Get interface name
+                $name = $interface->getName();
+                // Check for valid interface name
+                $this->assertArrayHasKey($name, $expected);
+                // Get empty metric
+                $metric = $analyzer->getNodeMetrics($interface);
+                // Check that empty is array
+                $this->assertEquals(array(), $metric);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that all match
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -398,48 +295,44 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSiMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classB = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$d'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$e'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addProperty(new PHP_Depend_Code_Property('$f'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        
-        $classB->addChildType($classA); // class A extends B {}
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/varsi');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(5, $m['varsi']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(4, $m['varsi']);
+
+        $expected = array('A' => 2, 'B' => 4, 'C' => 4, 'I' => 0);
+        foreach ($packages as $package) {
+            // Check classes
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for varsi key
+                $this->assertArrayHasKey('varsi', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['varsi'], $name);
+                // Remove offset
+                unset($expected[$name]);
+            }
+            // Check interfaces
+            foreach ($package->getInterfaces() as $interface) {
+                // Get interface name
+                $name = $interface->getName();
+                // Check for valid interface name
+                $this->assertArrayHasKey($name, $expected);
+                // Get empty metric
+                $metric = $analyzer->getNodeMetrics($interface);
+                // Check that empty is array
+                $this->assertEquals(array(), $metric);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that all match
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -449,48 +342,44 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSnpMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classB = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classB->addProperty(new PHP_Depend_Code_Property('$d'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$e'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addProperty(new PHP_Depend_Code_Property('$f'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        
-        $classB->addChildType($classA); // class A extends B {}
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/varsnp/');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(1, $m['varsnp']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(2, $m['varsnp']);
+        $expected = array('A' => 1, 'B' => 2, 'C' => 0, 'I' => 0);
+        foreach ($packages as $package) {
+            // Check classes
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for varsnp key
+                $this->assertArrayHasKey('varsnp', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['varsnp'], $name);
+                // Remove offset
+                unset($expected[$name]);
+            }
+            // Check interfaces
+            foreach ($package->getInterfaces() as $interface) {
+                // Get interface name
+                $name = $interface->getName();
+                // Check for valid interface name
+                $this->assertArrayHasKey($name, $expected);
+                // Get empty metric
+                $metric = $analyzer->getNodeMetrics($interface);
+                // Check that empty is array
+                $this->assertEquals(array(), $metric);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that all match
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -500,56 +389,44 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateWMCMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
-        $classC->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classC->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classC->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classB->addChildType($classA); // class A extends B {}
-        $classC->addChildType($classB); // class B extends C {}
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/wmc/');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(3, $m['wmc']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(3, $m['wmc']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(3, $m['wmc']);
+        $expected = array('A' => 2, 'B' => 4, 'C' => 4, 'I' => 0);
+        foreach ($packages as $package) {
+            // Check classes
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for wmc key
+                $this->assertArrayHasKey('wmc', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['wmc'], $name);
+                // Remove offset
+                unset($expected[$name]);
+            }
+            // Check interfaces
+            foreach ($package->getInterfaces() as $interface) {
+                // Get interface name
+                $name = $interface->getName();
+                // Check for valid interface name
+                $this->assertArrayHasKey($name, $expected);
+                // Get empty metric
+                $metric = $analyzer->getNodeMetrics($interface);
+                // Check that empty is array
+                $this->assertEquals(array(), $metric);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that all match
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -559,56 +436,44 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */    
     public function testCalculateWMCiMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
-        $classC->addMethod(new PHP_Depend_Code_Method('a3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classC->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classC->addMethod(new PHP_Depend_Code_Method('c2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-               
-        $classB->addChildType($classA); // class A extends B {}
-        $classC->addChildType($classB); // class B extends C {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/wmci/');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(5, $m['wmci']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(4, $m['wmci']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(3, $m['wmci']);
+        $expected = array('A' => 2, 'B' => 4, 'C' => 5, 'I' => 0);
+        foreach ($packages as $package) {
+            // Check classes
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for wmci key
+                $this->assertArrayHasKey('wmci', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['wmci'], $name);
+                // Remove offset
+                unset($expected[$name]);
+            }
+            // Check interfaces
+            foreach ($package->getInterfaces() as $interface) {
+                // Get interface name
+                $name = $interface->getName();
+                // Check for valid interface name
+                $this->assertArrayHasKey($name, $expected);
+                // Get empty metric
+                $metric = $analyzer->getNodeMetrics($interface);
+                // Check that empty is array
+                $this->assertEquals(array(), $metric);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that all match
+        $this->assertEquals(0, count($expected));
     }
     
     /**
@@ -618,55 +483,43 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */    
     public function testCalculateWMCnpMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classB->addMethod(new PHP_Depend_Code_Method('c2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
-        $classC->addMethod(new PHP_Depend_Code_Method('a3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
-        $classC->addMethod(new PHP_Depend_Code_Method('b3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
-        $classC->addMethod(new PHP_Depend_Code_Method('c3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-        $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-               
-        $classB->addChildType($classA); // class A extends B {}
-        $classC->addChildType($classB); // class B extends C {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseSource('/metrics/class-level/wmcnp/');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
         
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(1, $m['wmcnp']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(2, $m['wmcnp']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(1, $m['wmcnp']);
+        $expected = array('A' => 0, 'B' => 3, 'C' => 4, 'I' => 0);
+        foreach ($packages as $package) {
+            // Check classes
+            foreach ($package->getClasses() as $class) {
+                // Get class name
+                $name = $class->getName();
+                // Check for valid class name
+                $this->assertArrayHasKey($name, $expected);
+                // Get class metric
+                $metric = $analyzer->getNodeMetrics($class);
+                // Check for wmcnp key
+                $this->assertArrayHasKey('wmcnp', $metric);
+                // Compare values
+                $this->assertEquals($expected[$name], $metric['wmcnp'], $name);
+                // Remove offset
+                unset($expected[$name]);
+            }
+            // Check interfaces
+            foreach ($package->getInterfaces() as $interface) {
+                // Get interface name
+                $name = $interface->getName();
+                // Check for valid interface name
+                $this->assertArrayHasKey($name, $expected);
+                // Get empty metric
+                $metric = $analyzer->getNodeMetrics($interface);
+                // Check that empty is array
+                $this->assertEquals(array(), $metric);
+                // Remove offset
+                unset($expected[$name]);
+            }
+        }
+        // Check that all match
+        $this->assertEquals(0, count($expected));
     }
 }

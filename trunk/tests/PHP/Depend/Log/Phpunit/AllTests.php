@@ -46,11 +46,17 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+if (defined('PHPUnit_MAIN_METHOD') === false) {
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_Phpunit_AllTests::main');
+}
+
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+require_once dirname(__FILE__) . '/XmlTest.php';
 
 /**
- * Dummy implementation of an analyzer.
+ * Main test suite for the PHP_Depend_Log_Phpunit package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,73 +67,32 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_NodeAwareI
-{    
+class PHP_Depend_Log_Phpunit_AllTests
+{
     /**
-     * Dummy node metrics.
+     * Test suite main method.
      *
-     * @type array<mixed>
-     * @var array(string=>array) $nodeMetrics
+     * @return void
      */
-    protected $nodeMetrics = null;
+    public static function main()
+    {
+        PHPUnit_TextUI_TestRunner::run(self::suite());
+    }
     
     /**
-     * Constructs a new analyzer dummy instance.
+     * Creates the phpunit test suite for this package.
      *
-     * @param array(string=>array) $nodeMetrics Dummy node metrics.
+     * @return PHPUnit_Framework_TestSuite
      */
-    public function __construct(array $nodeMetrics = array())
+    public static function suite()
     {
-        $this->nodeMetrics = $nodeMetrics;
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log_Phpunit - AllTests');
+        $suite->addTestSuite('PHP_Depend_Log_Phpunit_XmlTest');
+        
+        return $suite;
     }
+}
 
-    /**
-     * Adds a listener to this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
-    }
-    
-    /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
-    }
-    
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
-    {
-    }
-    
-    /**
-     * Returns an array with metrics for the requested node.
-     *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
-     * @return array(string=>mixed)
-     * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
-     */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
-    {
-        if (isset($this->nodeMetrics[$node->getUUID()])) {
-            return $this->nodeMetrics[$node->getUUID()];
-        }
-        return array();
-    }
-
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_Phpunit_AllTests::main') {
+    PHP_Depend_Log_Phpunit_AllTests::main();
 }
