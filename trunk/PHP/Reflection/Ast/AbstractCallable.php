@@ -221,27 +221,27 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     /**
      * Adds an exception to the list of thrown exception types.
      *
-     * @param PHP_Reflection_Ast_AbstractType $exceptionType Thrown exception.
+     * @param PHP_Reflection_Ast_AbstractType $exception Thrown exception.
      *
      * @return void
      */
-    public function addExceptionType(PHP_Reflection_Ast_AbstractType $exceptionType)
+    public function addExceptionType(PHP_Reflection_Ast_AbstractType $exception)
     {
-        if (in_array($exceptionType, $this->_exceptionTypes, true) === false) {
-            $this->_exceptionTypes[] = $exceptionType;
+        if (in_array($exception, $this->_exceptionTypes, true) === false) {
+            $this->_exceptionTypes[] = $exception;
         }
     }
 
     /**
      * Removes an exception from the list of thrown exception types.
      *
-     * @param PHP_Reflection_Ast_AbstractType $exceptionType Thrown exception.
+     * @param PHP_Reflection_Ast_AbstractType $exception Thrown exception.
      *
      * @return void
      */
-    public function removeExceptionType(PHP_Reflection_Ast_AbstractType $exceptionType)
+    public function removeExceptionType(PHP_Reflection_Ast_AbstractType $exception)
     {
-        if (($i = array_search($exceptionType, $this->_exceptionTypes, true))) {
+        if (($i = array_search($exception, $this->_exceptionTypes, true))) {
             unset($this->_exceptionTypes[$i]);
         }
     }

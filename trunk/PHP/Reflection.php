@@ -197,6 +197,14 @@ class PHP_Reflection
         $this->_withoutAnnotations = true;
     }
     
+    /**
+     * This method parses different directories with php source files and generates
+     * a object of the source. 
+     *
+     * @param string $fileOrDirectory Optional file or directory to parse. 
+     * 
+     * @return Iterator
+     */
     public function parse($fileOrDirectory = null)
     {
         if ($fileOrDirectory !== null) {
@@ -218,6 +226,11 @@ class PHP_Reflection
         return $builder->getPackages();
     }
     
+    /**
+     * Creates an iterator will for all registered input directories and files.
+     *
+     * @return Iterator
+     */
     private function _createInputIterator()
     {
         // Create new append iterator
@@ -232,10 +245,7 @@ class PHP_Reflection
                 new PHP_Reflection_Input_FileFilterIterator(
                     new RecursiveIteratorIterator(
                         new RecursiveDirectoryIterator($directory)
-                    ), 
-                    $filter
-                )
-            );
+            ), $filter));
         }
         
         // Append single files
@@ -244,17 +254,25 @@ class PHP_Reflection
         return $iterator;
     }
     
+    /**
+     * Creates an input filter based on the registered file extensions and 
+     * exclude directories.
+     *
+     * @return PHP_Reflection_Input_FilterI
+     */
     private function _createInputFilter()
     {
         $composite = new PHP_Reflection_Input_CompositeFilter();
         
-        if (count($this->_extensions) > 0) {
-            $filter = new PHP_Reflection_Input_FileExtensionFilter($this->_extensions);
+        $extensions = $this->_extensions;
+        if (count($extensions) > 0) {
+            $filter = new PHP_Reflection_Input_FileExtensionFilter($extensions);
             $composite->append($filter);
         }
         
-        if (count($this->_excludePaths) > 0) {
-            $filter = new PHP_Reflection_Input_ExcludePathFilter($this->_excludePaths);
+        $excludePaths = $this->_excludePaths;
+        if (count($excludePaths) > 0) {
+            $filter = new PHP_Reflection_Input_ExcludePathFilter($excludePaths);
             $composite->append($filter);
         }
         

@@ -132,7 +132,8 @@ class PHP_Reflection_Ast_Interface extends PHP_Reflection_Ast_AbstractType
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type The possible parent type instance.
+     * @param PHP_Reflection_Ast_AbstractType $type The possible parent type 
+     *                                              instance.
      * 
      * @return boolean
      */

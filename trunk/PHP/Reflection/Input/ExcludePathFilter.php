@@ -60,7 +60,8 @@ require_once 'PHP/Reflection/Input/FileFilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Input_ExcludePathFilter implements PHP_Reflection_Input_FileFilterI
+class PHP_Reflection_Input_ExcludePathFilter 
+    implements PHP_Reflection_Input_FileFilterI
 {
     /**
      * Regular expression that should not match against the file path.

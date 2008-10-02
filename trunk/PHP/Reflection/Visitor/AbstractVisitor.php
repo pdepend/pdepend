@@ -61,7 +61,8 @@ require_once 'PHP/Reflection/VisitorI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_Visitor_AbstractVisitor implements PHP_Reflection_VisitorI
+abstract class PHP_Reflection_Visitor_AbstractVisitor 
+    implements PHP_Reflection_VisitorI
 {
     /**
      * List of all registered listeners.
@@ -366,7 +367,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor implements PHP_Reflection_
     /**
      * Sends a start interface event.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context interface instance.
+     * @param PHP_Reflection_Ast_Interface $interface The context interface.
      * 
      * @return void
      */
@@ -380,7 +381,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor implements PHP_Reflection_
     /**
      * Sends an end interface event.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context interface instance.
+     * @param PHP_Reflection_Ast_Interface $interface The context interface.
      * 
      * @return void
      */
@@ -506,28 +507,28 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor implements PHP_Reflection_
     /**
      * Sends a start constant event. 
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The context constant instance.
+     * @param PHP_Reflection_Ast_TypeConstant $const The context constant.
      * 
      * @return void
      */
-    protected function fireStartTypeConstant(PHP_Reflection_Ast_TypeConstant $constant)
+    protected function fireStartTypeConstant(PHP_Reflection_Ast_TypeConstant $const)
     {
         foreach ($this->_listeners as $listener) {
-            $listener->startVisitTypeConstant($constant);
+            $listener->startVisitTypeConstant($const);
         }
     }
     
     /**
      * Sends an end constant event.
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The context constant instance.
+     * @param PHP_Reflection_Ast_TypeConstant $const The context constant.
      * 
      * @return void
      */
-    protected function fireEndTypeConstant(PHP_Reflection_Ast_TypeConstant $constant)
+    protected function fireEndTypeConstant(PHP_Reflection_Ast_TypeConstant $const)
     {
         foreach ($this->_listeners as $listener) {
-            $listener->endVisitTypeConstant($constant);
+            $listener->endVisitTypeConstant($const);
         }
     }
 }
