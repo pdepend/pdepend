@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,45 +46,88 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-
-require_once 'PHP/Depend/Code/NodeBuilderI.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
 /**
- * Test case for the default package filter.
+ * Dummy implementation of an analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_DefaultPackageFilterTest extends PHP_Depend_AbstractTest
-{
-    public function testFilterDefaultPackage()
+class PHP_Depend_Log_Summary_TestImplAnalyzerNodeAware
+    implements PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_NodeAwareI
+{    
+    /**
+     * Dummy node metrics.
+     *
+     * @type array<mixed>
+     * @var array(string=>array) $nodeMetrics
+     */
+    protected $nodeMetrics = null;
+    
+    /**
+     * Constructs a new analyzer dummy instance.
+     *
+     * @param array(string=>array) $nodeMetrics Dummy node metrics.
+     */
+    public function __construct(array $nodeMetrics = array())
     {
-        $in1 = new PHP_Depend_Code_Package('in1');
-        $in2 = new PHP_Depend_Code_Package('in2');
-        $out = new PHP_Depend_Code_Package(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE);
-        
-        $packages = array($in1, $in2, $out);
-        $iterator = new PHP_Depend_Code_NodeIterator($packages);
-        
-        $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
-        $iterator->addFilter($filter);
-        
-        $expected = array('in1'  =>  true, 'in2'  =>  true);
-        
-        foreach ($iterator as $pkg) {
-            $this->assertArrayHasKey($pkg->getName(), $expected);
-            unset($expected[$pkg->getName()]);
-        }
-        $this->assertEquals(0, count($expected));
+        $this->nodeMetrics = $nodeMetrics;
     }
+
+    /**
+     * Adds a listener to this analyzer.
+     *
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * 
+     * @return void
+     */
+    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
+    }
+    
+    /**
+     * Removes the listener from this analyzer.
+     *
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * 
+     * @return void
+     */
+    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
+    }
+    
+    /**
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     *
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * 
+     * @return void
+     */
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    {
+    }
+    
+    /**
+     * Returns an array with metrics for the requested node.
+     *
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * 
+     * @return array(string=>mixed)
+     * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
+     */
+    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
+    {
+        if (isset($this->nodeMetrics[$node->getUUID()])) {
+            return $this->nodeMetrics[$node->getUUID()];
+        }
+        return array();
+    }
+
 }

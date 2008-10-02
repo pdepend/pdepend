@@ -1532,11 +1532,11 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
      *
      * @return void
      */
-    public function testParserResetsDefaultPackageForANewFileBug44()
+    public function testParserResetsDefaultPackageForANewFileBug46()
     {
         $expected = array('a' => true, 'b' => true);
         
-        $packages = self::parseSource('/bugs/44');
+        $packages = self::parseSource('/bugs/46');
         $this->assertEquals(2, $packages->count());
         
         foreach ($packages as $package) {

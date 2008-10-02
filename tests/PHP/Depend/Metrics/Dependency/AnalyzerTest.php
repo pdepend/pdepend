@@ -63,12 +63,11 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
-     * The used node builder.
+     * List of source packages.
      *
-     * @type PHP_Depend_Code_DefaultBuilder
-     * @var PHP_Depend_Code_DefaultBuilder $builder
+     * @var PHP_Reflection_Ast_Iterator $_packages
      */
-    protected $builder = null;
+    private $_packages = null;
     
     /**
      * Input test data.
@@ -114,16 +113,10 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
         
-        $source        = dirname(__FILE__) . '/../../_code/mixed_code.php';
-        $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($source);
-        $this->builder = new PHP_Depend_Code_DefaultBuilder();
-        $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
-        
-        $parser->parse();
-        
-        foreach ($this->builder as $pkg) {
-            if (isset($this->_input[$pkg->getUUID()])) {
-                $this->_expected[$pkg->getUUID()] = $this->_input[$pkg->getName()];
+        $this->_packages = self::parseSource('/metrics/dependency/functions_classes_and_interfaces.php');
+        foreach ($this->_packages as $package) {
+            if (isset($this->_input[$package->getUUID()])) {
+                $this->_expected[$package->getUUID()] = $this->_input[$package->getName()];
             }
         }
     }
@@ -136,11 +129,11 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     public function testGenerateMetrics()
     {
         $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
-        foreach ($this->builder->getPackages() as $package) {
+        foreach ($this->_packages as $package) {
             $package->accept($visitor);
         }
          
-        foreach ($this->builder->getPackages() as $package) {
+        foreach ($this->_packages as $package) {
             
             $uuid = $package->getUUID();
             

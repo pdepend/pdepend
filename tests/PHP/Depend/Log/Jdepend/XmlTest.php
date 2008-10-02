@@ -47,17 +47,18 @@
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
-require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
+require_once dirname(__FILE__) . '/../_dummy/TestImplAnalyzer.php';
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
 require_once 'PHP/Depend/Log/Jdepend/Xml.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
+
+require_once 'PHP/Reflection/Parser.php';
+require_once 'PHP/Reflection/Ast/Iterator/GlobalPackageFilter.php';
+require_once 'PHP/Reflection/Ast/Iterator/InternalPackageFilter.php';
+require_once 'PHP/Reflection/Builder/Default.php';
+require_once 'PHP/Reflection/Input/FileExtensionFilter.php';
+require_once 'PHP/Reflection/Input/FileFilterIterator.php';
+require_once 'PHP/Reflection/Tokenizer/Internal.php';
 
 /**
  * Test case for the jdepend xml logger.
@@ -73,80 +74,6 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
  */
 class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
 {
-    /**
-     * Test code structure.
-     *
-     * @type PHP_Depend_Code_NodeIterator
-     * @var PHP_Depend_Code_NodeIterator $packages
-     */
-    protected $packages = null;
-    
-    /**
-     * Test dependency analyzer.
-     *
-     * @type PHP_Depend_Metrics_Dependency_Analyzer
-     * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
-     */
-    protected $analyzer = null;
-    
-    /**
-     * The temporary file name for the logger result.
-     *
-     * @type string
-     * @var string $resultFile
-     */
-    protected $resultFile = null;
-    
-    /**
-     * Creates the package structure from a test source file.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-        
-        $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
-        $files  = new PHP_Depend_Util_FileFilterIterator(
-            new DirectoryIterator($source),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
-        
-        $builder = new PHP_Depend_Code_DefaultBuilder();
-        
-        foreach ($files as $file) {
-            $path = $file->getRealPath();
-            $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
-            
-            $parser = new PHP_Depend_Parser($tokz, $builder);
-            $parser->parse();
-        }
-        
-        $this->packages = $builder->getPackages();
-        
-        $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
-        $this->analyzer->analyze($this->packages);
-        
-        $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
-        $this->packages->addFilter($filter);
-        $filter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
-        $this->packages->addFilter($filter);
-        
-        $this->resultFile = tempnam(sys_get_temp_dir(), 'pdepend-log.xml');
-    }
-    
-    /**
-     * Removes the temporary log files.
-     *
-     * @return void
-     */
-    protected function tearDown()
-    {
-        @unlink($this->resultFile);
-        
-        parent::tearDown();
-    }
-    
     /**
      * Tests that the logger returns the expected set of analyzers.
      *
@@ -187,24 +114,32 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
+        $expectedFile = self::getNormalizedPathXml('/_expected/pdepend-log.xml');
+        $actualFile   = self::createRunResourceURI('/pdepend-log.xml');
+        
+        $packages = self::parseSource('/log/jdepend/complex/');
+        $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
+        $analyzer->analyze($packages);
+        
+        $filter = new PHP_Reflection_Ast_Iterator_GlobalPackageFilter();
+        $packages->addFilter($filter);
+        $filter = new PHP_Reflection_Ast_Iterator_InternalPackageFilter();
+        $packages->addFilter($filter);
+        
         $log = new PHP_Depend_Log_Jdepend_Xml();
-        $log->setLogFile($this->resultFile);
-        $log->setCode($this->packages);
-        $log->log($this->analyzer);
+        $log->setLogFile($actualFile);
+        $log->setCode($packages);
+        $log->log($analyzer);
         $log->close();
         
-        $fileName = 'pdepend-log.xml';
-        $this->assertXmlStringEqualsXmlString(
-            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
-            file_get_contents($this->resultFile)
-        );
+        $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
     }
     
     public function testXmlLogAcceptsOnlyTheCorrectAnalyzer()
     {
         $logger = new PHP_Depend_Log_Jdepend_Xml();
         
-        $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
+        $this->assertFalse($logger->log(new PHP_Depend_Log_TestImplAnalyzer()));
         $this->assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
     }
     
@@ -213,18 +148,18 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      *
      * @param string $fileName File name of the expected result document.
      * 
-     * @return string The prepared xml document
+     * @return string The uri of the result document.
      */
-    protected function getNormalizedPathXml($fileName)
+    protected static function getNormalizedPathXml($fileName)
     {
         $expected                     = new DOMDocument('1.0', 'UTF-8');
         $expected->preserveWhiteSpace = false;
-        $expected->load($fileName);
+        $expected->load(dirname(__FILE__) . $fileName);
         
         $xpath = new DOMXPath($expected);
         $result = $xpath->query('//Class[@sourceFile]');
         
-        $path = realpath(dirname(__FILE__) . '/../../_code/code-5.2.x') . '/';
+        $path = self::createResourceURI('/log/jdepend/complex') . '/';
         
         // Adjust file path
         foreach ($result as $class) {
@@ -234,7 +169,10 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
             $class->setAttribute('sourceFile', $sourceFile);
         }
         
-        return $expected->saveXML();
+        $tempFile = self::createRunResourceURI('/expected.xml');
+        $expected->save($tempFile);
+        
+        return $tempFile;
     }
     
 }

@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
+class PHP_Depend_Log_Summary_TestImplAnalyzerProjectAware
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_ProjectAwareI
 {
@@ -104,13 +104,13 @@ class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
     }
     
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
     {
     }
     

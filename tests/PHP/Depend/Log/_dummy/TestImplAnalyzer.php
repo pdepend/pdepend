@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,33 +46,106 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
- * Test case for the static filter.
+ * Simple dummy analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_StaticFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Log_TestImplAnalyzer 
+    implements PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_NodeAwareI,
+               PHP_Depend_Metrics_ProjectAwareI
 {
-    public function testStaticFilterClear()
+    /**
+     * Test project metrics
+     *
+     * @var array $projectMetrics
+     */
+    public $projectMetrics = array();
+    
+    /**
+     * Test node metrics.
+     *
+     * @var array $nodeMetrics
+     */
+    public $nodeMetrics = array();
+    
+    /**
+     * Constructs a new analyzer instance.
+     *
+     * @param array(string=>mixed) $options Global option array, every analyzer
+     *                                      can extract the required options.
+     */
+    public function __construct(array $options = array())
     {
-        $filter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
-        $this->assertEquals(0, $filter->getIterator()->count());
-        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array()));
-        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array()));
-        $this->assertEquals(2, $filter->getIterator()->count());
-        $filter->clear();
-        $this->assertEquals(0, $filter->getIterator()->count());
+        
     }
+    
+    /**
+     * Returns the project metrics.
+     *
+     * @return array
+     */
+    public function getProjectMetrics()
+    {
+        return $this->projectMetrics;
+    }
+    
+    /**
+     * Returns the node metrics.
+     *
+     * @param PHP_Reflection_Ast_NodeI $node context npde.
+     * 
+     * @return array
+     */
+    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
+    {
+        if (isset($this->nodeMetrics[$node->getName()])) {
+            return $this->nodeMetrics[$node->getName()];
+        }
+        return array();
+    }
+    
+    /**
+     * Adds a listener to this analyzer.
+     *
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * 
+     * @return void
+     */
+    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
+    }
+    
+    /**
+     * Removes the listener from this analyzer.
+     *
+     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * 
+     * @return void
+     */
+    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
+    }
+    
+    /**
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     *
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * 
+     * @return void
+     */
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    {
+    }
+    
 }

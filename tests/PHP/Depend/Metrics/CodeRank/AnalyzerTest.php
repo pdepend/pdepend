@@ -47,15 +47,7 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
-require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Test case for the code metric analyzer class.
@@ -71,12 +63,12 @@ require_once 'PHP/Depend/Util/UUID.php';
 class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test input data.
+     * The expected test data.
      *
      * @type array<array>
-     * @var array(string=>array) $_input
+     * @var array(string=>array) $_expected
      */
-    private $_input = array(
+    private $_expected = array(
         'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
         'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
         'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
@@ -97,60 +89,6 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     );
     
     /**
-     * The expected test data.
-     *
-     * @type array<array>
-     * @var array(string=>array) $_expected
-     */
-    private $_expected = array();
-    
-    /**
-     * The code rank analyzer.
-     *
-     * @type PHP_Depend_Metrics_CodeRank_Analyzer
-     * @var PHP_Depend_Metrics_CodeRank_Analyzer $_analyzer
-     */
-    private $_analyzer = null;
-    
-    /**
-     * Creates the expected metrics array.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-        
-        $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
-        $files  = new PHP_Depend_Util_FileFilterIterator(
-            new DirectoryIterator($source),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
-        
-        $builder = new PHP_Depend_Code_DefaultBuilder();
-        
-        foreach ($files as $file) {
-            
-            $path = $file->getRealPath();
-            $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
-            
-            $parser = new PHP_Depend_Parser($tokz, $builder);
-            $parser->parse();
-        }
-        
-        $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
-        $this->_analyzer->analyze($builder->getPackages());
-
-        $this->_expected = array();
-        foreach ($builder->getPackages() as $package) {
-            $this->_expected[] = array($package, $this->_input[$package->getName()]);
-            foreach ($package->getTypes() as $type) {
-                $this->_expected[] = array($type, $this->_input[$type->getName()]);
-            }
-        }
-    }
-    
-    /**
      * Tests the result of the class rank calculation against previous computed
      * values.
      *
@@ -158,29 +96,37 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testGetNodeMetrics()
     {
-        foreach ($this->_expected as $key => $info) {
-            $metrics = $this->_analyzer->getNodeMetrics($info[0]);
+        $packages = self::parseSource('/metrics/coderank/metrics/');
+        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $analyzer->analyze($packages);
+        
+        foreach ($packages as $package) {
+            // Get package name
+            $name = $package->getName();
+            // Check that key exists
+            $this->assertArrayHasKey($name, $this->_expected);
+            // Get metric
+            $metric = $analyzer->getNodeMetrics($package);
+            // Compare values
+            $this->assertEquals($this->_expected[$name]['cr'], $metric['cr'], '', 0.00005);
+            $this->assertEquals($this->_expected[$name]['rcr'], $metric['rcr'], '', 0.00005);
+            // Remove package offset
+            unset($this->_expected[$name]);
             
-            $this->assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
-            $this->assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
-            
-            unset($this->_expected[$key]);
+            foreach ($package->getTypes() as $type) {
+                // Get type name
+                $name = $type->getName();
+                // Check that key exists
+                $this->assertArrayHasKey($name, $this->_expected);
+                // Get metric
+                $metric = $analyzer->getNodeMetrics($type);
+                // Compare values
+                $this->assertEquals($this->_expected[$name]['cr'], $metric['cr'], '', 0.00005);
+                $this->assertEquals($this->_expected[$name]['rcr'], $metric['rcr'], '', 0.00005);
+                // Remove type offset
+                unset($this->_expected[$name]);                
+            }
         }
         $this->assertEquals(0, count($this->_expected));
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Metrics_CodeRank_Analyzer::getNodeMetrics()}
-     * returns an empty <b>array</b> for an unknown identifier.
-     *
-     * @return void
-     */
-    public function testGetNodeMetricsInvalidIdentifier()
-    {
-        $class   = new PHP_Depend_Code_Class('PDepend');
-        $metrics = $this->_analyzer->getNodeMetrics($class);
-        
-        $this->assertType('array', $metrics);
-        $this->assertEquals(0, count($metrics));
     }
 }
