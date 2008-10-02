@@ -46,12 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
+require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -67,7 +66,7 @@ require_once 'PHP/Depend/Log/NoLogOutputException.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Log_Jdepend_Xml 
-       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
+       extends PHP_Reflection_Visitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
@@ -78,21 +77,21 @@ class PHP_Depend_Log_Jdepend_Xml
      * @type string
      * @var string $_logFile
      */
-    protected $_logFile = null;
+    private $_logFile = null;
     
     /**
-     * The raw {@link PHP_Depend_Code_Package} instances.
+     * The raw {@link PHP_Reflection_Ast_Package} instances.
      *
-     * @type PHP_Depend_Code_NodeIterator
-     * @var PHP_Depend_Code_NodeIterator $code
+     * @type PHP_Reflection_Ast_Iterator
+     * @var PHP_Reflection_Ast_Iterator $code
      */
     protected $code = null;
     
     /**
      * Set of all analyzed files.
      *
-     * @type array<PHP_Depend_Code_File>
-     * @var array(string=>PHP_Depend_Code_File) $fileSet
+     * @type array<PHP_Reflection_Ast_File>
+     * @var array(string=>PHP_Reflection_Ast_File) $fileSet
      */
     protected $fileSet = array();
     
@@ -178,11 +177,11 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
      * 
      * @return void
      */
-    public function setCode(PHP_Depend_Code_NodeIterator $code)
+    public function setCode(PHP_Reflection_Ast_Iterator $code)
     {
         $this->code = $code;
     }
@@ -238,12 +237,12 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a class node. 
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param PHP_Reflection_Ast_Class $class The current class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(PHP_Reflection_Ast_Class $class)
     {
         $doc = $this->packages->ownerDocument;
         
@@ -261,12 +260,12 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
     {
         $doc = $this->abstractClasses->ownerDocument;
         
@@ -280,12 +279,12 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a package node. 
      *
-     * @param PHP_Depend_Code_Class $package The package class node.
+     * @param PHP_Reflection_Ast_Class $package The package class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
+     * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Depend_Code_Package $package)
+    public function visitPackage(PHP_Reflection_Ast_Package $package)
     {
         $doc = $this->packages->ownerDocument;
         

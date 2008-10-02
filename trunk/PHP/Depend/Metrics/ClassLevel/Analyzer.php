@@ -104,13 +104,13 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     private $_cyclomaticAnalyzer = null;
     
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
     {
         if ($this->_nodeMetrics === null) {
             // First check for the require cc analyzer
@@ -168,11 +168,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * for the given <b>$node</b>. If there are no metrics for the requested 
      * node, this method will return an empty <b>array</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
     {
         $metrics = array();
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
@@ -184,12 +184,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a class node. 
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param PHP_Reflection_Ast_Class $class The current class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitClass()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(PHP_Reflection_Ast_Class $class)
     {
         $this->fireStartClass($class);
         
@@ -219,12 +219,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
     {
         // Empty visit method, we don't want interface metrics
     }
@@ -232,12 +232,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
+     * @param PHP_Reflection_Ast_Class $method The method class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_Method $method)
     {
         $this->fireStartMethod($method);
         
@@ -265,12 +265,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a property node. 
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
+     * @param PHP_Reflection_Ast_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
+     * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(PHP_Reflection_Ast_Property $property)
     {
         $this->fireStartProperty($property);
         
@@ -296,11 +296,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Returns the depth of inheritance tree value for the given class.
      *
-     * @param PHP_Depend_Code_Class $class The context code class instance.
+     * @param PHP_Reflection_Ast_Class $class The context code class instance.
      * 
      * @return integer
      */
-    private function _calculateDIT(PHP_Depend_Code_Class $class)
+    private function _calculateDIT(PHP_Reflection_Ast_Class $class)
     {
         $dit = 0;
         while (($class = $class->getParentClass()) !== null) {
@@ -313,11 +313,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Calculates the Variables Inheritance of a class metric, this method only 
      * counts protected and public properties of parent classes.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param PHP_Reflection_Ast_Class $class The context class instance.
      * 
      * @return integer
      */
-    private function _calculateVARSi(PHP_Depend_Code_Class $class)
+    private function _calculateVARSi(PHP_Reflection_Ast_Class $class)
     {
         // List of properties, this method only counts not overwritten properties
         $properties = array();
@@ -328,7 +328,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         
         // Get parent class and collect all non private properties
         $parent = $class->getParentClass();
-        
+
         while ($parent !== null) {
             // Get all parent properties
             foreach ($parent->getProperties() as $prop) {
@@ -346,11 +346,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Calculates the Weight Method Per Class metric, this method only counts 
      * protected and public methods of parent classes.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param PHP_Reflection_Ast_Class $class The context class instance.
      * 
      * @return integer
      */
-    private function _calculateWMCi(PHP_Depend_Code_Class $class)
+    private function _calculateWMCi(PHP_Reflection_Ast_Class $class)
     {
         // List of methods, this method only counts not overwritten methods. 
         $methods = array();

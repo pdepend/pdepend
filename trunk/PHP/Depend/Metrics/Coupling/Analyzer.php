@@ -122,13 +122,13 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     }
     
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
     {
         // Check for previous run
         if ($this->_calls === -1) {
@@ -151,12 +151,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a function node. 
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
+     * @param PHP_Reflection_Ast_Function $function The current function node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_Function $function)
     {
         $this->fireStartFunction($function);
         
@@ -185,12 +185,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
+     * @param PHP_Reflection_Ast_Class $method The method class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_Method $method)
     {
         $this->fireStartMethod($method);
         
@@ -230,12 +230,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a property node. 
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
+     * @param PHP_Reflection_Ast_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
+     * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(PHP_Reflection_Ast_Property $property)
     {
         $this->fireStartProperty($property);
         
@@ -255,19 +255,19 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Counts all calls within the given <b>$callable</b>
      *
-     * @param PHP_Depend_Code_AbstractCallable $callable Context callable.
+     * @param PHP_Reflection_Ast_AbstractCallable $callable Context callable.
      * 
      * @return void
      */
-    private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
+    private function _countCalls(PHP_Reflection_Ast_AbstractCallable $callable)
     {
         $callT  = array(
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE
+            PHP_Reflection_TokenizerI::T_STRING,
+            PHP_Reflection_TokenizerI::T_VARIABLE
         );
         $chainT = array(
-            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
-            PHP_Depend_Code_TokenizerI::T_OBJECT_OPERATOR,
+            PHP_Reflection_TokenizerI::T_DOUBLE_COLON,
+            PHP_Reflection_TokenizerI::T_OBJECT_OPERATOR,
         );
         
         $called = array();
@@ -275,7 +275,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $tokens = $callable->getTokens();
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             // Skip non parenthesis tokens
-            if ($tokens[$i][0] !== PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN) {
+            if ($tokens[$i][0] !== PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN) {
                 continue;
             }
             // Skip first token
@@ -302,7 +302,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                     $called[$identifier] = true;
                     ++$this->_calls;
                 }
-            } else if ($tokens[$i - 2][0] !== PHP_Depend_Code_TokenizerI::T_NEW) {
+            } else if ($tokens[$i - 2][0] !== PHP_Reflection_TokenizerI::T_NEW) {
                 $called[$tokens[$i - 1][1]] = true;
                 ++$this->_calls;
             }
