@@ -48,7 +48,7 @@
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
+require_once 'PHP/Reflection/Input/FileExtensionFilter.php';
 
 /**
  * Test case for PHP_Depend facade.
@@ -98,21 +98,22 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyze()
     {
+        $sources = self::createResourceURI('/pdepend/complex/');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
-        $pdepend->addFileFilter(new PHP_Depend_Util_FileExtensionFilter(array('php')));
+        $pdepend->addDirectory($sources);
+        $pdepend->addExtension('php');
         
         $metrics = $pdepend->analyze();
         
         $expected = array(
-            'package1'                                     =>  true,
-            'package2'                                     =>  true,
-            'package3'                                     =>  true
+            'package1'  =>  true,
+            'package2'  =>  true,
+            'package3'  =>  true
         );
         
         $this->assertType('Iterator', $metrics);
         foreach ($metrics as $metric) {
-            $this->assertType('PHP_Depend_Code_Package', $metric);
+            $this->assertType('PHP_Reflection_Ast_Package', $metric);
             
             unset($expected[$metric->getName()]);
         }
@@ -141,8 +142,9 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerThrowsAnExceptionIfTheParserDoesntDetectCustomPackages()
     {
+        $sources = self::createResourceURI('/pdepend/bad-documentation/');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
+        $pdepend->addDirectory($sources);
         
         $message = "The parser doesn't detect package informations within the "
                  . "analyzed project, please check the documentation blocks for "
@@ -161,9 +163,10 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzeSetsWithoutAnnotations()
     {
+        $sources = self::createResourceURI('/pdepend/without-annotations/');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code');
-        $pdepend->addFileFilter(new PHP_Depend_Util_FileExtensionFilter(array('inc')));
+        $pdepend->addDirectory($sources);
+        $pdepend->addExtension('inc');
         $pdepend->setWithoutAnnotations();
         $packages = $pdepend->analyze();
         
@@ -185,8 +188,9 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testCountClasses()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory($sources);
         $pdepend->analyze();
         
         $this->assertEquals(10, $pdepend->countClasses());
@@ -200,13 +204,15 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testCountClassesWithoutAnalyzeFail()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory($sources);
+        
         $this->setExpectedException(
             'RuntimeException', 
             'countClasses() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->countClasses();
     }
     
@@ -218,8 +224,9 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testCountPackages()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory($sources);
         $pdepend->analyze();
         
         $this->assertEquals(3, $pdepend->countPackages());
@@ -233,26 +240,29 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testCountPackagesWithoutAnalyzeFail()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory($sources);
+        
         $this->setExpectedException(
             'RuntimeException', 
             'countPackages() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->countPackages();
     }
     
     /**
      * Tests that the {@link PHP_Depend::getPackage()} method returns the 
-     * expected {@link PHP_Depend_Code_Package} objects.
+     * expected {@link PHP_Reflection_Ast_Package} objects.
      *
      * @return void
      */
     public function testGetPackage()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory($sources);
         $pdepend->analyze();
         
         $packages = array(
@@ -261,7 +271,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'package3'
         );
         
-        $className = 'PHP_Depend_Code_Package';
+        $className = 'PHP_Reflection_Ast_Package';
         
         foreach ($packages as $package) {
             $this->assertType($className, $pdepend->getPackage($package));
@@ -276,13 +286,15 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testGetPackageWithoutAnalyzeFail()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory($sources);
+        
         $this->setExpectedException(
             'RuntimeException', 
             'getPackage() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackage('package1');
     }
     
@@ -294,28 +306,31 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testGetPackageWithUnknownPackageFail()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory($sources);
+        $pdepend->analyze();
+        
         $this->setExpectedException(
             'OutOfBoundsException', 
             'Unknown package "package0".'
         );
         
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
-        $pdepend->analyze();
         $pdepend->getPackage('package0');
     }
     
     /**
      * Tests that the {@link PHP_Depend::getPackages()} method returns the 
-     * expected {@link PHP_Depend_Code_Package} objects and reuses the result of
+     * expected {@link PHP_Reflection_Ast_Package} objects and reuses the result of
      * {@link PHP_Depend::analyze()}.
      *
      * @return void
      */
     public function testGetPackages()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory($sources);
         
         $package1 = $pdepend->analyze();
         $package2 = $pdepend->getPackages();
@@ -334,13 +349,15 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testGetPackagesWithoutAnalyzeFail()
     {
+        $sources = self::createResourceURI('/pdepend/counting');
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory($sources);
+        
         $this->setExpectedException(
             'RuntimeException', 
             'getPackages() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackages();
     }
     
@@ -351,8 +368,9 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testSupportBadDocumentation()
     {
+        $sources = self::createResourceURI('/pdepend/bad-documentation/');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
+        $pdepend->addDirectory($sources);
         $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
         $this->assertEquals(1, $pdepend->getPackages()->count());

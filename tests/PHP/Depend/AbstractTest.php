@@ -61,14 +61,33 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Removes test contents of a previous crached test run.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // Remove old test contents
+        self::_clearRun();
+    }
+    
+    /**
      * Resets the global iterator filter.
      *
      * @return void
      */
     protected function tearDown()
     {
-        PHP_Depend_Code_NodeIterator_StaticFilter::getInstance()->clear();
+        // Reset code filter
+        // TODO: PHP_Reflection code should not be needed here
+        PHP_Reflection_Ast_Iterator_StaticFilter::getInstance()->clear();
         
+        // Remove test contents
+        self::_clearRun();
+        
+        // Call parent tear down
         parent::tearDown();
     }
     
@@ -95,7 +114,40 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
         
-        include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+        include_once 'PHP/Reflection/Ast/Iterator/StaticFilter.php';
+    }
+    
+    /**
+     * Creates a resource uri for a file or directory within the test code
+     * directory.
+     *
+     * @param string $fileOrDirectory A file or directory name.
+     * 
+     * @return string
+     */
+    protected static function createResourceURI($fileOrDirectory)
+    {
+        $uri = dirname(__FILE__) . '/_code/' . $fileOrDirectory;
+        if (file_exists($uri) === false) {
+            throw new ErrorException("Unknown file or directory '{$fileOrDirectory}'.");
+        }
+        return realpath($uri);
+    }
+    
+    /**
+     * Creates a temporary resource for the given file name.
+     *
+     * @param string $fileName The temporary file name.
+     * 
+     * @return string
+     */
+    protected static function createRunResourceURI($fileName)
+    {
+        $uri = dirname(__FILE__) . '/_run/' . $fileName;
+        if (file_exists($uri) === true) {
+            throw new ErrorException("File '{$fileName}' already exists.");
+        }
+        return $uri;
     }
     
     /**
@@ -105,41 +157,51 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string  $fileOrDirectory   A source file or a source directory.
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
      * 
-     * @return PHP_Depend_Code_NodeIterator
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
+    protected static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
-        include_once 'PHP/Depend/Parser.php';
-        include_once 'PHP/Depend/Code/DefaultBuilder.php';
-        include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
-        include_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
-        include_once 'PHP/Depend/Util/ExcludePathFilter.php';
-        include_once 'PHP/Depend/Util/FileFilterIterator.php';
+        // Include the reflection facade
+        include_once 'PHP/Reflection.php';
         
-        if (is_dir($fileOrDirectory)) {
-            $it = new PHP_Depend_Util_FileFilterIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($fileOrDirectory)
-                ),
-                new PHP_Depend_Util_ExcludePathFilter(array('.svn'))
-            );
-        } else {
-            $it = new ArrayIterator(array($fileOrDirectory));
+        // Create a new clean reflection facade instance
+        $reflection = new PHP_Reflection();
+        
+        // Should we ignore annotations?
+        if ($ignoreAnnotations === true) {
+            $reflection->setWithoutAnnotations();
         }
-        
-        $builder = new PHP_Depend_Code_DefaultBuilder();
-        
+        // Parse source and return result
+        return $reflection->parse(self::createResourceURI($fileOrDirectory));
+    }
+    
+    /**
+     * Removes all contents from the test temp run directory.
+     *
+     * @return void
+     */
+    private static function _clearRun()
+    {
+        $it = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(dirname(__FILE__) . '/_run/')
+        );
+        // Remove all files, links etc.
         foreach ($it as $file) {
-            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file);
-            
-            $parser = new PHP_Depend_Parser($tokenizer, $builder);
-            if ($ignoreAnnotations === true) {
-                $parser->setIgnoreAnnotations();
+            if ($file->isDir() === false) {
+                unlink($file->getPathname());
             }
-
-            $parser->parse();
         }
-        return $builder->getPackages();
+        // Remove all directories
+        foreach ($it as $file) {
+            if ($file->isDir() === false) {
+                continue;
+            }
+            $name = $file->getFilename();
+            if ($name === '.' || $name === '..' || $name === '.svn') {
+                continue;
+            }
+            rmdir($name);
+        }
     }
 }
 
