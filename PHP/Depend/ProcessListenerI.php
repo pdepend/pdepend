@@ -62,44 +62,44 @@ require_once 'PHP/Depend/Metrics/ListenerI.php';
  * @link      http://www.manuel-pichler.de/
  */
 interface PHP_Depend_ProcessListenerI
-    extends PHP_Depend_Code_NodeVisitor_ListenerI,
+    extends PHP_Reflection_Visitor_ListenerI,
             PHP_Depend_Metrics_ListenerI
 {
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    function startParseProcess(PHP_Depend_Code_NodeBuilderI $builder);
+    function startParseProcess(PHP_Reflection_BuilderI $builder);
     
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    function endParseProcess(PHP_Depend_Code_NodeBuilderI $builder);
+    function endParseProcess(PHP_Reflection_BuilderI $builder);
     
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    function startFileParsing(PHP_Depend_Code_TokenizerI $tokenizer);
+    function startFileParsing(PHP_Reflection_TokenizerI $tokenizer);
     
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    function endFileParsing(PHP_Depend_Code_TokenizerI $tokenizer);
+    function endFileParsing(PHP_Reflection_TokenizerI $tokenizer);
     
     /**
      * Is called when PDepend starts the analyzing process.

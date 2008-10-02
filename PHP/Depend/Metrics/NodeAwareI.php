@@ -73,9 +73,9 @@ interface PHP_Depend_Metrics_NodeAwareI
      * )
      * </code>
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    function getNodeMetrics(PHP_Depend_Code_NodeI $node);
+    function getNodeMetrics(PHP_Reflection_Ast_NodeI $node);
 }

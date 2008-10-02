@@ -89,11 +89,11 @@ interface PHP_Depend_Metrics_AnalyzerI
     function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener);
     
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
      * 
      * @return void
      */
-    function analyze(PHP_Depend_Code_NodeIterator $packages);
+    function analyze(PHP_Reflection_Ast_Iterator $packages);
 }

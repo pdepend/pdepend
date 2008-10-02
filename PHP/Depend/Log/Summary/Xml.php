@@ -68,7 +68,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Log_Summary_Xml 
-       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
+       extends PHP_Reflection_Visitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
@@ -82,18 +82,18 @@ class PHP_Depend_Log_Summary_Xml
     protected $_logFile = null;
     
     /**
-     * The raw {@link PHP_Depend_Code_Package} instances.
+     * The raw {@link PHP_Reflection_Ast_Package} instances.
      *
-     * @type PHP_Depend_Code_NodeIterator
-     * @var PHP_Depend_Code_NodeIterator $code
+     * @type PHP_Reflection_Ast_Iterator
+     * @var PHP_Reflection_Ast_Iterator $code
      */
     protected $code = null;
     
     /**
      * Set of all analyzed files.
      *
-     * @type array<PHP_Depend_Code_File>
-     * @var array(string=>PHP_Depend_Code_File) $fileSet
+     * @type array<PHP_Reflection_Ast_File>
+     * @var array(string=>PHP_Reflection_Ast_File) $fileSet
      */
     protected $fileSet = array();
     
@@ -151,11 +151,11 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
      * 
      * @return void
      */
-    public function setCode(PHP_Depend_Code_NodeIterator $code)
+    public function setCode(PHP_Reflection_Ast_Iterator $code)
     {
         $this->code = $code;
     }
@@ -240,12 +240,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a class node. 
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param PHP_Reflection_Ast_Class $class The current class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(PHP_Reflection_Ast_Class $class)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -273,12 +273,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a function node. 
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
+     * @param PHP_Reflection_Ast_Function $function The current function node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_Function $function)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -295,12 +295,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
     {
         // Empty implementation, because we don't want interface methods.
     }
@@ -308,12 +308,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a method node. 
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
+     * @param PHP_Reflection_Ast_Class $method The method class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_Method $method)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -329,12 +329,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a package node. 
      *
-     * @param PHP_Depend_Code_Class $package The package class node.
+     * @param PHP_Reflection_Ast_Class $package The package class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
+     * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Depend_Code_Package $package)
+    public function visitPackage(PHP_Reflection_Ast_Package $package)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -363,11 +363,11 @@ class PHP_Depend_Log_Summary_Xml
      * to the <b>DOMElement</b>
      *
      * @param DOMElement            $xml  DOM Element that represents <b>$node</b>.
-     * @param PHP_Depend_Code_NodeI $node The context code node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context code node instance.
      * 
      * @return void
      */
-    protected function writeNodeMetrics(DOMElement $xml, PHP_Depend_Code_NodeI $node)
+    protected function writeNodeMetrics(DOMElement $xml, PHP_Reflection_Ast_NodeI $node)
     {
         $metrics = array();
         foreach ($this->_nodeAwareAnalyzers as $analyzer) {
@@ -390,12 +390,12 @@ class PHP_Depend_Log_Summary_Xml
      * </code>
      *
      * @param DOMElement           $xml  The parent xml element.
-     * @param PHP_Depend_Code_File $file The code file instance.
+     * @param PHP_Reflection_Ast_File $file The code file instance.
      * 
      * @return void
      */
     protected function writeFileReference(DOMElement $xml, 
-                                          PHP_Depend_Code_File $file = null)
+                                          PHP_Reflection_Ast_File $file = null)
     {
         if ($file === null || $file->getFileName() === null) {
             return;
