@@ -61,7 +61,8 @@ require_once 'PHP/Reflection/Input/FileFilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Input_CompositeFilter implements PHP_Reflection_Input_FileFilterI
+class PHP_Reflection_Input_CompositeFilter 
+    implements PHP_Reflection_Input_FileFilterI
 {
     /**
      * List of aggregated {@link PHP_Reflection_Input_FileFilterI} objects.

@@ -69,7 +69,7 @@ require_once 'PHP/Reflection/Ast/AbstractItem.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_TypeConstant extends PHP_Reflection_Ast_AbstractItem 
+class PHP_Reflection_Ast_TypeConstant extends PHP_Reflection_Ast_AbstractItem
 {
     /**
      * The parent type object.

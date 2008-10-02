@@ -490,9 +490,9 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * Builds a new function instance.
      *
-     * @param string               $name       The function name.
-     * @param integer              $line       The line number with the function 
-     *                                         declaration.
+     * @param string                  $name       The function name.
+     * @param integer                 $line       The line number with the 
+     *                                            function declaration.
      * @param PHP_Reflection_Ast_File $sourceFile The source file for the function.
      * 
      * @return PHP_Reflection_Ast_Function The function instance.
@@ -639,20 +639,20 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *   // }
      * </code>
      *
-     * @param PHP_Reflection_Ast_Class     $class     The old context class instance.
-     * @param PHP_Reflection_Ast_Interface $interface The new interface instance.
+     * @param PHP_Reflection_Ast_Class     $class The old context class instance.
+     * @param PHP_Reflection_Ast_Interface $iface The new interface instance.
      * 
      * @return void
      */
     protected function replaceClassReferences(PHP_Reflection_Ast_Class $class,
-                                              PHP_Reflection_Ast_Interface $interface)
+                                              PHP_Reflection_Ast_Interface $iface)
     {
         foreach ($this->classes as $types) {
             foreach ($types as $type) {
                 foreach ($type->getDependencies() as $dependency) {
                     if ($dependency === $class) {
                         $type->removeDependency($class);
-                        $type->addDependency($interface);
+                        $type->addDependency($iface);
                     }
                 }
             }
@@ -663,7 +663,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
                 foreach ($type->getDependencies() as $dependency) {
                     if ($dependency === $class) {
                         $type->removeDependency($class);
-                        $type->addDependency($interface);
+                        $type->addDependency($iface);
                     }
                 }
             }
@@ -673,17 +673,17 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             foreach ($function->getDependencies() as $dependency) {
                 if ($dependency === $class) {
                     $function->removeDependency($class);
-                    $function->addDependency($interface);
+                    $function->addDependency($iface);
                 }
             }
             foreach ($function->getExceptionTypes() as $exceptionType) {
                 if ($exceptionType === $class) {
                     $function->removeExceptionType($class);
-                    $function->addExceptionType($interface);
+                    $function->addExceptionType($iface);
                 }
             }
             if ($function->getReturnType() === $class) {
-                $function->setReturnType($interface);
+                $function->setReturnType($iface);
             }
         }
     
@@ -691,29 +691,29 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             foreach ($method->getDependencies() as $dependency) {
                 if ($dependency === $class) {
                     $method->removeDependency($class);
-                    $method->addDependency($interface);
+                    $method->addDependency($iface);
                 }
             }
             foreach ($method->getExceptionTypes() as $exceptionType) {
                 if ($exceptionType === $class) {
                     $method->removeExceptionType($class);
-                    $method->addExceptionType($interface);
+                    $method->addExceptionType($iface);
                 }
             }
             if ($method->getReturnType() === $class) {
-                $method->setReturnType($interface);
+                $method->setReturnType($iface);
             }
         }
         
         foreach ($this->_properties as $property) {
             if ($property->getType() === $class) {
-                $property->setType($interface);
+                $property->setType($iface);
             }
         }
         
         foreach ($this->_parameters as $parameter) {
             if ($parameter->getType() === $class) {
-                $parameter->setType($interface);
+                $parameter->setType($iface);
             }
         }
     }

@@ -69,6 +69,7 @@ final class PHP_Reflection_Ast_Iterator_InternalPackageFilter
      */
     public function __construct()
     {
-        parent::__construct(PHP_Reflection_InternalTypes::getInstance()->getInternalPackages());
+        $types = PHP_Reflection_InternalTypes::getInstance()->getInternalPackages();
+        parent::__construct($types);
     }
 }
