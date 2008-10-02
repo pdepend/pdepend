@@ -68,7 +68,8 @@ abstract class PHP_Reflection_Ast_AbstractType
                PHP_Reflection_Ast_DependencyAwareI
 {
     /**
-     * List of {@link PHP_Reflection_Ast_AbstractType} objects this type depends on.
+     * List of {@link PHP_Reflection_Ast_AbstractType} objects this type depends
+     * on.
      *
      * @type array<PHP_Reflection_Ast_AbstractType>
      * @var array(PHP_Reflection_Ast_AbstractType) $dependencies
@@ -76,8 +77,8 @@ abstract class PHP_Reflection_Ast_AbstractType
     protected $dependencies = array();
     
     /**
-     * List of {@link PHP_Reflection_Ast_AbstractType} objects that extend or implement 
-     * this type. 
+     * List of {@link PHP_Reflection_Ast_AbstractType} objects that extend or 
+     * implement this type. 
      *
      * @type array<PHP_Reflection_Ast_AbstractType>
      * @var array(PHP_Reflection_Ast_AbstractType) $children
@@ -109,8 +110,8 @@ abstract class PHP_Reflection_Ast_AbstractType
     private $_tokens = array();
     
     /**
-     * List of {@link PHP_Reflection_Ast_TypeConstant} objects that belong to this 
-     * type. 
+     * List of {@link PHP_Reflection_Ast_TypeConstant} objects that belong to 
+     * this type. 
      *
      * @type array<PHP_Reflection_Ast_TypeConstant>
      * @var array(PHP_Reflection_Ast_TypeConstant) $_constants
@@ -220,7 +221,8 @@ abstract class PHP_Reflection_Ast_AbstractType
     }
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this type depends on.
+     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this type 
+     * depends on.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
@@ -385,7 +387,8 @@ abstract class PHP_Reflection_Ast_AbstractType
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type The possible parent type instance.
+     * @param PHP_Reflection_Ast_AbstractType $type The possible parent type 
+     *                                              instance.
      * 
      * @return boolean
      */

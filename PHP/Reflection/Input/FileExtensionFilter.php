@@ -60,7 +60,8 @@ require_once 'PHP/Reflection/Input/FileFilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Input_FileExtensionFilter implements PHP_Reflection_Input_FileFilterI
+class PHP_Reflection_Input_FileExtensionFilter 
+    implements PHP_Reflection_Input_FileFilterI
 {
     /**
      * Whitelist of accepted file extensions.

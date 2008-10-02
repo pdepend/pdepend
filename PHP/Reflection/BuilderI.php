@@ -158,9 +158,9 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * Builds a new function instance.
      *
-     * @param string               $name       The function name.
-     * @param integer              $line       The line number with the function 
-     *                                         declaration.
+     * @param string                  $name       The function name.
+     * @param integer                 $line       The line number with the 
+     *                                            function declaration.
      * @param PHP_Reflection_Ast_File $sourceFile The source file for the function.
      * 
      * @return PHP_Reflection_Ast_Function The function instance

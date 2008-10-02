@@ -61,7 +61,7 @@ require_once 'PHP/Reflection/VisibilityI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Reflection_Ast_VisibilityAwareI extends PHP_Reflection_VisibilityI
-{   
+{
     /**
      * Sets the visibility for this node. 
      * 
