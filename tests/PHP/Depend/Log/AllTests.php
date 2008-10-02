@@ -54,11 +54,10 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
-require_once dirname(__FILE__) . '/Jdepend/ChartTest.php';
-require_once dirname(__FILE__) . '/Jdepend/XmlTest.php';
-require_once dirname(__FILE__) . '/Overview/PyramidTest.php';
-require_once dirname(__FILE__) . '/Phpunit/XmlTest.php';
-require_once dirname(__FILE__) . '/Summary/XmlTest.php';
+require_once dirname(__FILE__) . '/Jdepend/AllTests.php';
+require_once dirname(__FILE__) . '/Overview/AllTests.php';
+require_once dirname(__FILE__) . '/Phpunit/AllTests.php';
+require_once dirname(__FILE__) . '/Summary/AllTests.php';
 
 /**
  * Main test suite for the PHP_Depend_Log package.
@@ -92,12 +91,13 @@ class PHP_Depend_Log_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log - AllTests');
+        
+        $suite->addTest(PHP_Depend_Log_Jdepend_AllTests::suite());
+        $suite->addTest(PHP_Depend_Log_Overview_AllTests::suite());
+        $suite->addTest(PHP_Depend_Log_Phpunit_AllTests::suite());
+        $suite->addTest(PHP_Depend_Log_Summary_AllTests::suite());
+        
         $suite->addTestSuite('PHP_Depend_Log_LoggerFactoryTest');
-        $suite->addTestSuite('PHP_Depend_Log_Jdepend_ChartTest');
-        $suite->addTestSuite('PHP_Depend_Log_Jdepend_XmlTest');
-        $suite->addTestSuite('PHP_Depend_Log_Overview_PyramidTest');
-        $suite->addTestSuite('PHP_Depend_Log_Phpunit_XmlTest');
-        $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
         
         return $suite;
     }

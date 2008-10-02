@@ -46,12 +46,18 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
+if (defined('PHPUnit_MAIN_METHOD') === false) {
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_Jdepend_AllTests::main');
+}
+
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+require_once dirname(__FILE__) . '/ChartTest.php';
+require_once dirname(__FILE__) . '/XmlTest.php';
 
 /**
- * Simple dummy analyzer.
+ * Main test suite for the PHP_Depend_Log_Jdepend package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,90 +68,33 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_DummyAnalyzer 
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_ProjectAwareI
+class PHP_Depend_Log_Jdepend_AllTests
 {
     /**
-     * Test project metrics
+     * Test suite main method.
      *
-     * @var array $projectMetrics
+     * @return void
      */
-    public $projectMetrics = array();
-    
-    /**
-     * Test node metrics.
-     *
-     * @var array $nodeMetrics
-     */
-    public $nodeMetrics = array();
-    
-    /**
-     * Constructs a new analyzer instance.
-     *
-     * @param array(string=>mixed) $options Global option array, every analyzer
-     *                                      can extract the required options.
-     */
-    public function __construct(array $options = array())
+    public static function main()
     {
+        PHPUnit_TextUI_TestRunner::run(self::suite());
+    }
+    
+    /**
+     * Creates the phpunit test suite for this package.
+     *
+     * @return PHPUnit_Framework_TestSuite
+     */
+    public static function suite()
+    {
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Log_Jdepend - AllTests');
+        $suite->addTestSuite('PHP_Depend_Log_Jdepend_ChartTest');
+        $suite->addTestSuite('PHP_Depend_Log_Jdepend_XmlTest');
         
+        return $suite;
     }
-    
-    /**
-     * Returns the project metrics.
-     *
-     * @return array
-     */
-    public function getProjectMetrics()
-    {
-        return $this->projectMetrics;
-    }
-    
-    /**
-     * Returns the node metrics.
-     *
-     * @param PHP_Depend_Code_NodeI $node context npde.
-     * 
-     * @return array
-     */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
-    {
-        if (isset($this->nodeMetrics[$node->getName()])) {
-            return $this->nodeMetrics[$node->getName()];
-        }
-        return array();
-    }
-    
-    /**
-     * Adds a listener to this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
-    }
-    
-    /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
-    }
-    
-    /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
-     *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
-     * @return void
-     */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
-    {
-    }
-    
+}
+
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_Jdepend_AllTests::main') {
+    PHP_Depend_Log_Jdepend_AllTests::main();
 }

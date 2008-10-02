@@ -48,7 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeBuilderI.php';
 require_once 'PHP/Depend/Metrics/CodeRank/PropertyStrategy.php';
 
 /**
@@ -68,8 +67,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
 {
     public function testStrategyCountsCorrectTypes()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coderank/property.php';
-        $packages = self::parseSource($source);
+        $packages = self::parseSource('/metrics/coderank/property.php');
         
         $uuidMap = array(
             'PDepend::CodeRankA'       =>  null,
@@ -99,7 +97,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassC']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassA',
-                'type'  =>  'PHP_Depend_Code_Class'
+                'type'  =>  'PHP_Reflection_Ast_Class'
             ),
             $uuidMap['PDepend_CodeRank_ClassB']  =>  array(
                 'in'  =>  array(
@@ -110,7 +108,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassA']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassB',
-                'type'  =>  'PHP_Depend_Code_Class'
+                'type'  =>  'PHP_Reflection_Ast_Class'
             ),
             $uuidMap['PDepend_CodeRank_ClassC']  =>  array(
                 'in'  =>  array(
@@ -122,7 +120,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassB']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassC',
-                'type'  =>  'PHP_Depend_Code_Class'
+                'type'  =>  'PHP_Reflection_Ast_Class'
             ),
             $uuidMap['PDepend::CodeRankA']  =>  array(
                 'in'  =>  array(
@@ -134,7 +132,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend::CodeRankB'],
                 ),
                 'name'  =>  'PDepend::CodeRankA',
-                'type'  =>  'PHP_Depend_Code_Package'
+                'type'  =>  'PHP_Reflection_Ast_Package'
             ),
             $uuidMap['PDepend::CodeRankB']  =>  array(
                 'in'  =>  array(
@@ -146,7 +144,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend::CodeRankA']
                 ),
                 'name'  =>  'PDepend::CodeRankB',
-                'type'  =>  'PHP_Depend_Code_Package'
+                'type'  =>  'PHP_Reflection_Ast_Package'
             ),
         );
     

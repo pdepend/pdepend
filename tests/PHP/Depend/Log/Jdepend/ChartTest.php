@@ -47,11 +47,8 @@
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
-require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
-require_once dirname(__FILE__) . '/DependencyAnalyzer.php';
+require_once dirname(__FILE__) . '/../_dummy/TestImplAnalyzer.php';
 
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Log/Jdepend/Chart.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 
@@ -104,7 +101,7 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
     {
         $logger = new PHP_Depend_Log_Jdepend_Chart();
         
-        $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
+        $this->assertFalse($logger->log(new PHP_Depend_Log_TestImplAnalyzer()));
         $this->assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
     }
     
@@ -115,22 +112,14 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      */
     public function testGeneratesCorrectSVGImageFile()
     {
-        $fileName = sys_get_temp_dir() . '/jdepend-test-out.svg';
-        if (file_exists($fileName)) {
-            @unlink($fileName);
-        }
-        
-        $nodes = new PHP_Depend_Code_NodeIterator(array(
-            new PHP_Depend_Code_Package('packageA'),
-            new PHP_Depend_Code_Package('packageB')
-        ));
-        
+        $fileName = self::createRunResourceURI('/jdepend-test-out.svg');
+        $packages = self::parseSource('/log/jdepend/simple');
         $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
-        $analyzer->analyze($nodes);
+        $analyzer->analyze($packages);
         
         $logger = new PHP_Depend_Log_Jdepend_Chart();
         $logger->setLogFile($fileName);
-        $logger->setCode($nodes);
+        $logger->setCode($packages);
         $logger->log($analyzer);
         
         $this->assertFileNotExists($fileName);
@@ -143,47 +132,20 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
         
-        $this->assertEquals(1, $xpath->query("//s:ellipse[@title='packageA']")->length);
-        $this->assertEquals(1, $xpath->query("//s:ellipse[@title='packageB']")->length);
-        
-        unlink($fileName);
+        $this->assertEquals(1, $xpath->query("//s:ellipse[@title='a']")->length);
+        $this->assertEquals(1, $xpath->query("//s:ellipse[@title='b']")->length);
     }
     
     public function testCalculateCorrectEllipseSize()
     {
-        $fileName = sys_get_temp_dir() . '/jdepend-test-out.svg';
-        if (file_exists($fileName)) {
-            @unlink($fileName);
-        }
-        
-        $nodes = array(
-            new PHP_Depend_Code_Package('packageA'),
-            new PHP_Depend_Code_Package('packageB')
-        );
-        
-        $analyzer = new PHP_Depend_Log_Jdepend_DependencyAnalyzer();
-        $analyzer->stats = array(
-            $nodes[0]->getUUID()  =>  array(
-                'a'   =>  0,
-                'i'   =>  0,
-                'd'   =>  0,
-                'cc'  =>  250,
-                'ac'  =>  250
-            ),
-            $nodes[1]->getUUID()  =>  array(
-                'a'   =>  0,
-                'i'   =>  0,
-                'd'   =>  0,
-                'cc'  =>  50,
-                'ac'  =>  50
-            ),
-        );
-        
-        $nodes = new PHP_Depend_Code_NodeIterator($nodes);
-        
+        $fileName = self::createRunResourceURI('/jdepend-test-out.svg');
+        $packages = self::parseSource('/log/jdepend/simple');
+        $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
+        $analyzer->analyze($packages);
+
         $logger = new PHP_Depend_Log_Jdepend_Chart();
         $logger->setLogFile($fileName);
-        $logger->setCode($nodes);
+        $logger->setCode($packages);
         $logger->log($analyzer);
         
         $this->assertFileNotExists($fileName);
@@ -196,19 +158,18 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
         
-        $ellipseA = $xpath->query("//s:ellipse[@title='packageA']")->item(0);
+        $ellipseA = $xpath->query("//s:ellipse[@title='a']")->item(0);
         $matrixA  = $ellipseA->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixA, $matches);
         $this->assertEquals(1, $matches[1]);
         $this->assertEquals(1, $matches[4]);
-        
-        $ellipseB = $xpath->query("//s:ellipse[@title='packageB']")->item(0);
+
+        $ellipseB = $xpath->query("//s:ellipse[@title='b']")->item(0);
         $matrixB  = $ellipseB->getAttribute('transform');
+
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
         $this->assertEquals(0.3333333, $matches[1], null, 0.000001);
         $this->assertEquals(0.3333333, $matches[4], null, 0.000001);
-                
-        unlink($fileName);
     }
     
     /**
@@ -222,22 +183,14 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('No pecl/imagick extension.');
         }
         
-        $fileName = sys_get_temp_dir() . '/jdepend-test-out.png';
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
-        
-        $nodes = new PHP_Depend_Code_NodeIterator(array(
-            new PHP_Depend_Code_Package('packageA'),
-            new PHP_Depend_Code_Package('packageB')
-        ));
-        
+        $fileName = self::createRunResourceURI('/jdepend-test-out.png');
+        $packages = self::parseSource('/log/jdepend/simple/');
         $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
-        $analyzer->analyze($nodes);
+        $analyzer->analyze($packages);
         
         $logger = new PHP_Depend_Log_Jdepend_Chart();
         $logger->setLogFile($fileName);
-        $logger->setCode($nodes);
+        $logger->setCode($packages);
         $logger->log($analyzer);
         
         $this->assertFileNotExists($fileName);
@@ -249,7 +202,5 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $this->assertEquals(390, $info[0]);
         $this->assertEquals(250, $info[1]);
         $this->assertEquals('image/png', $info['mime']);
-        
-        unlink($fileName);
     }
 }

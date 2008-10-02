@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
 require_once 'PHP/Depend/Log/Phpunit/Xml.php';
 require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
@@ -59,6 +57,9 @@ require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
 require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
 require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
 require_once 'PHP/Depend/Metrics/NodeLoc/Analyzer.php';
+// @TODO: Refactor this away
+require_once 'PHP/Reflection/Ast/Iterator/GlobalPackageFilter.php';
+require_once 'PHP/Reflection/Ast/Iterator/InternalPackageFilter.php';
 
 /**
  * Test case for the phpunit logger.
@@ -75,49 +76,13 @@ require_once 'PHP/Depend/Metrics/NodeLoc/Analyzer.php';
 class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
 {
     /**
-     * The temp log file.
-     *
-     * @type string
-     * @var string $_tempFile
-     */
-    private $_tempFile = null;
-    
-    /**
-     * Creates the temp log file name.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-        
-        $this->_tempFile = sys_get_temp_dir() . '/pdepend.phpunit-log.xml';
-        if (file_exists($this->_tempFile)) {
-            unlink($this->_tempFile);
-        }
-    }
-    
-    /**
-     * Removes the temp log file
-     *
-     */
-    protected function tearDown()
-    {
-        if (file_exists($this->_tempFile)) {
-            unlink($this->_tempFile);
-        }
-        
-        parent::tearDown();
-    }
-
-    /**
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
      */
     public function testReturnsExceptedAnalyzers()
     {
-        $logger    = new PHP_Depend_Log_Phpunit_Xml(__FILE__);
+        $logger    = new PHP_Depend_Log_Phpunit_Xml();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array(
             'PHP_Depend_Metrics_NodeAwareI',
@@ -151,14 +116,16 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testPHPUnitLoggerResult()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling';
-        $packages = self::parseSource($source);
+        $expectedFile = self::getNormalizedPathXml('/phpunit-log.xml');
+        $actualFile   = self::createRunResourceURI('/phpunit.xml');
         
-        $packages->addFilter(new PHP_Depend_Code_NodeIterator_DefaultPackageFilter());
-        $packages->addFilter(new PHP_Depend_Code_NodeIterator_InternalPackageFilter());
+        $packages = self::parseSource('/log/phpunit/');
+        
+        $packages->addFilter(new PHP_Reflection_Ast_Iterator_GlobalPackageFilter());
+        $packages->addFilter(new PHP_Reflection_Ast_Iterator_InternalPackageFilter());
         
         $logger = new PHP_Depend_Log_Phpunit_Xml();
-        $logger->setLogFile($this->_tempFile);
+        $logger->setLogFile($actualFile);
         $logger->setCode($packages);
         
         $analyzer0 = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
@@ -195,39 +162,42 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         $logger->log($analyzer6);
         $logger->log($analyzer7);
         
+        $this->assertFileNotExists($actualFile);
         $logger->close();
+        $this->assertFileExists($actualFile);
         
-        $this->assertFileExists($this->_tempFile);
-        
-        $actual   = file_get_contents($this->_tempFile);
-        $expected = $this->_loadExpected('phpunit-log.xml');
-        
-        $this->assertXmlStringEqualsXmlString($expected, $actual);
+        $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
     }
     
     /**
-     * Loads the expected log file and adjusts the file@name attribute. 
+     * Normalizes the file references within the expected result document.
      *
-     * @param string $file The log file name.
+     * @param string $fileName File name of the expected result document.
      * 
-     * @return string
+     * @return string The uri of the result document.
      */
-    private function _loadExpected($file)
+    protected static function getNormalizedPathXml($fileName)
     {
-        $path = realpath(dirname(__FILE__) . '/../../_code');
-        
         $dom = new DOMDocument('1.0', 'UTF-8');
         
         $dom->formatOutput       = true;
         $dom->preserveWhiteSpace = false;
         
-        $dom->load(dirname(__FILE__) . "/_expected/{$file}");
+        $dom->load(dirname(__FILE__) . "/_expected/{$fileName}");
+        
+        $path = self::createResourceURI('/log/phpunit/') . '/';
+        
+        // Adjust path
         foreach ($dom->getElementsByTagName('file') as $fileXml) {
-            $name = $fileXml->getAttribute('name');
-            $name = substr($name, strrpos($name, '_code') + 5);
+            $sourceFile = $fileXml->getAttribute('name');
+            $sourceFile = $path . basename($sourceFile);
 
-            $fileXml->setAttribute('name', realpath("{$path}{$name}"));
+            $fileXml->setAttribute('name', $sourceFile);
         }
-        return $dom->saveXML();
+        
+        $expected = self::createRunResourceURI('/phpunit.expected.xml');
+        $dom->save($expected);
+        
+        return $expected;
     }
 }

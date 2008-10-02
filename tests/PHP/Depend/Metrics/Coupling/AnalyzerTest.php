@@ -72,24 +72,12 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectFunctionCoupling()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling/function.php';
-        $packages = self::parseSource($source);
-        
-        $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
-        $this->assertEquals(2, $packages->current()->getFunctions()->count());
-        
+        $packages = self::parseSource('/metrics/coupling/function.php');
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('fanout', $project);
         $this->assertEquals(7, $project['fanout']);
         
@@ -105,20 +93,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectMethodCoupling()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling/method.php';
-        $packages = self::parseSource($source);
-        
-        $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
-        $this->assertEquals(1, $packages->current()->getClasses()->count());
-        $this->assertEquals(1, $packages->current()->getInterfaces()->count());
-        
+        $packages = self::parseSource('/metrics/coupling/method.php');
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
         
@@ -139,19 +114,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectPropertyCoupling()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling/property.php';
-        $packages = self::parseSource($source);
-        
-        $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
-        $this->assertEquals(1, $packages->current()->getClasses()->count());
-        
+        $packages = self::parseSource('/metrics/coupling/property.php');
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
         
@@ -172,20 +135,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectClassCoupling()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling/class.php';
-        $packages = self::parseSource($source);
-        
-        $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
-        $this->assertEquals(1, $packages->current()->getClasses()->count());
-        $this->assertEquals(1, $packages->current()->getInterfaces()->count());
-        
+        $packages = self::parseSource('/metrics/coupling/class.php');
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
         
@@ -206,21 +156,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectCoupling()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling';
-        $packages = self::parseSource($source);
-        
-        $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
-        $this->assertEquals(3, $packages->current()->getClasses()->count());
-        $this->assertEquals(2, $packages->current()->getInterfaces()->count());
-        $this->assertEquals(2, $packages->current()->getFunctions()->count());
-        
+        $packages = self::parseSource('/metrics/coupling');
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
         
@@ -242,12 +178,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerExecutionChainBug14()
     {
-        $source   = dirname(__FILE__) . '/../../_code/bugs/14.php';
-        $packages = self::parseSource($source);
-        
-        $this->assertEquals(1, $packages->count());
-        $this->assertEquals(1, $packages->current()->getFunctions()->count());
-        
+        $packages = self::parseSource('/bugs/14.php');
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
         

@@ -119,11 +119,11 @@ class PHP_Depend_Log_Dummy_Logger
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
      * 
      * @return void
      */
-    public function setCode(PHP_Depend_Code_NodeIterator $code)
+    public function setCode(PHP_Reflection_Ast_Iterator $code)
     {
         $this->_input['code'] = $code;
     }

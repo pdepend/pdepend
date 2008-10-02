@@ -159,29 +159,24 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandStartsProcessWithDummyLogger()
     {
-        $logFile = sys_get_temp_dir() . '/pdepend.dummy';
-        $source  = realpath(dirname(__FILE__) . '/../_code');
+        $logFile = self::createRunResourceURI('/pdepend.dummy');
+        $source  = self::createResourceURI('/textui/without-annotations');
         
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
         
         $argv = array(
-            '--suffix=inc',
+            '--suffix=php',
             '--ignore=code-5.2.x',
             '--exclude=pdepend.test2',
             '--dummy-logger=' . $logFile,
             $source
         );
         
-        if (file_exists($logFile)) {
-            unlink($logFile);
-        }
-        
+        $this->assertFileNotExists($logFile);
         list($exitCode, $actual) = $this->_executeCommand($argv);
-        
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
         $this->assertFileExists($logFile);
         
-        unlink($logFile);
+        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
     }
     
     /**
@@ -204,52 +199,46 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandHandlesWithoutAnnotationsOptionCorrect()
     {
-        $logFile = sys_get_temp_dir() . '/pdepend.dummy';
-        $source  = realpath(dirname(__FILE__) . '/../_code');
+        $logFile = self::createRunResourceURI('/pdepend.dummy');
+        $source  = self::createResourceURI('/textui/without-annotations/');
         
         $argv = array(
-            '--suffix=inc',
+            '--suffix=php',
             '--without-annotations',
             '--coderank-mode=property',
             '--dummy-logger=' . $logFile,
             $source
         );
         
-        if (file_exists($logFile)) {
-            unlink($logFile);
-        }
-        
+        $this->assertFileNotExists($logFile);
         list($exitCode, $actual) = $this->_executeCommand($argv);
-        
         $this->assertFileExists($logFile);
         
         $data = unserialize(file_get_contents($logFile));
         
         $code = $data['code'];
-        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
         $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
         
         $this->assertEquals(1, $package->getFunctions()->count());
         $this->assertEquals(1, $package->getClasses()->count());
         
         $function = $package->getFunctions()->current();
-        $this->assertType('PHP_Depend_Code_Function', $function);
+        $this->assertType('PHP_Reflection_Ast_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionTypes()->count());
         
         $code->next();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
         $this->assertEquals('pdepend.test2', $package->getName());
-        
-        unlink($logFile);
     }
     
     /**
@@ -260,8 +249,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandHandlesBadDocumentationOptionCorrect()
     {
-        $logFile = sys_get_temp_dir() . '/pdepend.dummy';
-        $source  = realpath(dirname(__FILE__) . '/../_code/code-without-comments');
+        $logFile = self::createRunResourceURI('/pdepend.dummy');
+        $source  = self::createResourceURI('/textui/bad-documentation/');
         
         $argv = array(
             '--bad-documentation',
@@ -269,30 +258,24 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             $source
         );
         
-        if (file_exists($logFile)) {
-            unlink($logFile);
-        }
-        
+        $this->assertFileNotExists($logFile);
         list($exitCode, $actual) = $this->_executeCommand($argv);
-        
         $this->assertFileExists($logFile);
         
         $data = unserialize(file_get_contents($logFile));
         
         $code = $data['code'];
-        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
         $this->assertEquals(1, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
-        $this->assertEquals(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE, $package->getName());
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
+        $this->assertEquals(PHP_Reflection_BuilderI::GLOBAL_PACKAGE, $package->getName());
         
         $this->assertEquals(8, $package->getClasses()->count());
         $this->assertEquals(3, $package->getInterfaces()->count());
-        
-        unlink($logFile);
     }
     
     /**
@@ -307,10 +290,11 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Cannot alter ini setting "html_errors".');
         }
         
+        $file = self::createRunResourceURI('/pdepend.dummy');
         $argv = array(
             '-d',
             'html_errors',
-            '--dummy-logger=' . sys_get_temp_dir() . '/pdepend.dummy',
+            '--dummy-logger=' . $file,
             dirname(__FILE__)
         );
         
@@ -334,10 +318,11 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Cannot alter ini setting "html_errors".');
         }
         
+        $file = self::createRunResourceURI('/pdepend.dummy');
         $argv = array(
             '-d',
             'html_errors=off',
-            '--dummy-logger=' . sys_get_temp_dir() . '/pdepend.dummy',
+            '--dummy-logger=' . $file,
             dirname(__FILE__)
         );
         
@@ -358,7 +343,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testCommandHandlesConfigurationFileCorrect()
     {
         // Sample config file
-        $configFile = sys_get_temp_dir() . '/config.xml';
+        $configFile = self::createRunResourceURI('/config.xml');
         // Write a dummy config file.
         file_put_contents(
             $configFile, 
@@ -368,9 +353,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
              </configuration>'
         );
         
+        $file = self::createRunResourceURI('/pdepend.dummy');
         $argv = array(
             '--configuration=' . $configFile,
-            '--dummy-logger=' . sys_get_temp_dir() . '/pdepend.dummy',
+            '--dummy-logger=' . $file,
             dirname(__FILE__)
         );
         
@@ -378,9 +364,6 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         PHP_Depend_Util_ConfigurationInstance::set(null);
         
         list($exitCode, $actual) = $this->_executeCommand($argv);
-        
-        // Remove temp config file
-        unlink($configFile);
         
         $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
         $this->assertNotNull(PHP_Depend_Util_ConfigurationInstance::get());
@@ -396,19 +379,15 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
     {
-        $configFile = sys_get_temp_dir() . '/config.xml';
-        if (file_exists($configFile) === true) {
-            unlink($configFile);
-        }
-        
+        $file = self::createRunResourceURI('/config.xml');
         $argv = array(
-            '--configuration=' . $configFile,
+            '--configuration=' . $file,
             dirname(__FILE__)
         );
         
         list($exitCode, $actual) = $this->_executeCommand($argv);
         
-        $expected = "The configuration file '{$configFile}' doesn't exist.\n\n";
+        $expected = "The configuration file '{$file}' doesn't exist.\n\n";
         $this->assertTrue(strpos($actual, $expected) === 0);
         $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
     }
