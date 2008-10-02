@@ -46,12 +46,12 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
+require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * Generates a chart with the aggregated metrics. 
@@ -66,7 +66,7 @@ require_once 'PHP/Depend/Util/ImageConvert.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Log_Jdepend_Chart
-       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor 
+       extends PHP_Reflection_Visitor_AbstractVisitor 
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
@@ -82,8 +82,8 @@ class PHP_Depend_Log_Jdepend_Chart
     /**
      * The context source code.
      *
-     * @type PHP_Depend_Code_NodeIterator
-     * @var PHP_Depend_Code_NodeIterator $_code
+     * @type PHP_Reflection_Ast_Iterator
+     * @var PHP_Reflection_Ast_Iterator $_code
      */
     private $_code = null;
     
@@ -121,11 +121,11 @@ class PHP_Depend_Log_Jdepend_Chart
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
      * 
      * @return void
      */
-    public function setCode(PHP_Depend_Code_NodeIterator $code)
+    public function setCode(PHP_Reflection_Ast_Iterator $code)
     {
         $this->_code = $code;
     }

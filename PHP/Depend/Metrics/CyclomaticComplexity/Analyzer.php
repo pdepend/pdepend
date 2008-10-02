@@ -112,13 +112,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     private $_ccn2 = 0;
     
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
     {
         if ($this->_nodeMetrics === null) {
             
@@ -139,11 +139,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Returns the cyclomatic complexity for the given <b>$node</b> instance.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return integer
      */
-    public function getCCN(PHP_Depend_Code_NodeI $node)
+    public function getCCN(PHP_Reflection_Ast_NodeI $node)
     {
         $ccn = 0;
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
@@ -156,11 +156,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * Returns the extended cyclomatic complexity for the given <b>$node</b> 
      * instance.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return integer
      */
-    public function getCCN2(PHP_Depend_Code_NodeI $node)
+    public function getCCN2(PHP_Reflection_Ast_NodeI $node)
     {
         $ccn2 = 0;
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
@@ -174,11 +174,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * for the given <b>$node</b>. If there are no metrics for the requested 
      * node, this method will return an empty <b>array</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
     {
         $metrics = array();
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
@@ -203,12 +203,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a function node. 
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
+     * @param PHP_Reflection_Ast_Function $function The current function node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_Function $function)
     {
         $this->fireStartFunction($function);
         
@@ -234,12 +234,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
     {
         // Empty visit method, we don't want interface metrics
     }
@@ -247,12 +247,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
+     * @param PHP_Reflection_Ast_Class $method The method class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_Method $method)
     {
         $this->fireStartMethod($method);
         
@@ -286,14 +286,14 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         // List of tokens
         $countingTokens = array(
-            PHP_Depend_Code_TokenizerI::T_CASE,
-            PHP_Depend_Code_TokenizerI::T_CATCH,
-            PHP_Depend_Code_TokenizerI::T_ELSEIF,
-            PHP_Depend_Code_TokenizerI::T_FOR,
-            PHP_Depend_Code_TokenizerI::T_FOREACH,
-            PHP_Depend_Code_TokenizerI::T_IF,
-            PHP_Depend_Code_TokenizerI::T_QUESTION_MARK,
-            PHP_Depend_Code_TokenizerI::T_WHILE
+            PHP_Reflection_TokenizerI::T_CASE,
+            PHP_Reflection_TokenizerI::T_CATCH,
+            PHP_Reflection_TokenizerI::T_ELSEIF,
+            PHP_Reflection_TokenizerI::T_FOR,
+            PHP_Reflection_TokenizerI::T_FOREACH,
+            PHP_Reflection_TokenizerI::T_IF,
+            PHP_Reflection_TokenizerI::T_QUESTION_MARK,
+            PHP_Reflection_TokenizerI::T_WHILE
         );
         
         $ccn = 1;
@@ -318,18 +318,18 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         // List of tokens
         $countingTokens = array(
-            PHP_Depend_Code_TokenizerI::T_BOOLEAN_AND,
-            PHP_Depend_Code_TokenizerI::T_BOOLEAN_OR,
-            PHP_Depend_Code_TokenizerI::T_CASE,
-            PHP_Depend_Code_TokenizerI::T_CATCH,
-            PHP_Depend_Code_TokenizerI::T_ELSEIF,
-            PHP_Depend_Code_TokenizerI::T_FOR,
-            PHP_Depend_Code_TokenizerI::T_FOREACH,
-            PHP_Depend_Code_TokenizerI::T_IF,
-            PHP_Depend_Code_TokenizerI::T_LOGICAL_AND,
-            PHP_Depend_Code_TokenizerI::T_LOGICAL_OR,
-            PHP_Depend_Code_TokenizerI::T_QUESTION_MARK,
-            PHP_Depend_Code_TokenizerI::T_WHILE
+            PHP_Reflection_TokenizerI::T_BOOLEAN_AND,
+            PHP_Reflection_TokenizerI::T_BOOLEAN_OR,
+            PHP_Reflection_TokenizerI::T_CASE,
+            PHP_Reflection_TokenizerI::T_CATCH,
+            PHP_Reflection_TokenizerI::T_ELSEIF,
+            PHP_Reflection_TokenizerI::T_FOR,
+            PHP_Reflection_TokenizerI::T_FOREACH,
+            PHP_Reflection_TokenizerI::T_IF,
+            PHP_Reflection_TokenizerI::T_LOGICAL_AND,
+            PHP_Reflection_TokenizerI::T_LOGICAL_OR,
+            PHP_Reflection_TokenizerI::T_QUESTION_MARK,
+            PHP_Reflection_TokenizerI::T_WHILE
         );
         
         $ccn2 = 1;

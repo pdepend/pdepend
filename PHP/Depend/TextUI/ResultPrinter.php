@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend/ProcessListenerI.php';
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractListener.php';
+require_once 'PHP/Reflection/Visitor/AbstractListener.php';
 
 /**
  * Prints current the PDepend status informations.
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/NodeVisitor/AbstractListener.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_TextUI_ResultPrinter
-       extends PHP_Depend_Code_NodeVisitor_AbstractListener
+       extends PHP_Reflection_Visitor_AbstractListener
     implements PHP_Depend_ProcessListenerI
 {
     /**
@@ -81,11 +81,11 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    public function startParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    public function startParseProcess(PHP_Reflection_BuilderI $builder)
     {
         $this->_count = 0;
         
@@ -95,11 +95,11 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    public function endParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    public function endParseProcess(PHP_Reflection_BuilderI $builder)
     {
         $this->finish();
     }
@@ -107,11 +107,11 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    public function startFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    public function startFileParsing(PHP_Reflection_TokenizerI $tokenizer)
     {
         $this->step();
     }
@@ -119,11 +119,11 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    public function endFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    public function endFileParsing(PHP_Reflection_TokenizerI $tokenizer)
     {
         
     }
@@ -198,12 +198,12 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::startVisitNode()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::startVisitNode()
      */
-    public function startVisitNode(PHP_Depend_Code_NodeI $node)
+    public function startVisitNode(PHP_Reflection_Ast_NodeI $node)
     {
         $this->step(self::STEP_SIZE);
     }

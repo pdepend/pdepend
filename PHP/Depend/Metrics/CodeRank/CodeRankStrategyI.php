@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
-    extends PHP_Depend_Code_NodeVisitorI
+    extends PHP_Reflection_VisitorI
 {
     /**
      * Returns the collected nodes.

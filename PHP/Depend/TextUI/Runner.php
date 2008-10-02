@@ -47,11 +47,12 @@
  */
 
 require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
 require_once 'PHP/Depend/Log/LoggerFactory.php';
 require_once 'PHP/Depend/TextUI/ResultPrinter.php';
 require_once 'PHP/Depend/Util/ExcludePathFilter.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
+
+require_once 'PHP/Reflection/Ast/Iterator/PackageFilter.php';
 
 /**
  * The command line runner starts a PDepend process.
@@ -255,21 +256,18 @@ class PHP_Depend_TextUI_Runner
     {
         $pdepend = new PHP_Depend();
         $pdepend->setOptions($this->_options);
-        
-        if (count($this->_extensions) > 0) {
-            $filter = new PHP_Depend_Util_FileExtensionFilter($this->_extensions);
-            $pdepend->addFileFilter($filter);
+
+        foreach ($this->_extensions as $extension) {
+            $pdepend->addExtension($extension);
         }
-        
-        if (count($this->_excludeDirectories) > 0) {
-            $exclude = $this->_excludeDirectories;
-            $filter  = new PHP_Depend_Util_ExcludePathFilter($exclude);
-            $pdepend->addFileFilter($filter);
+
+        foreach ($this->_excludeDirectories as $excludeDirectory) {
+            $pdepend->addExcludeDirectory($excludeDirectory);
         }
         
         if (count($this->_excludePackages) > 0) {
             $exclude = $this->_excludePackages;
-            $filter  = new PHP_Depend_Code_NodeIterator_PackageFilter($exclude);
+            $filter  = new PHP_Reflection_Ast_Iterator_PackageFilter($exclude);
             $pdepend->addCodeFilter($filter);
         }
         

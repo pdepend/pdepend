@@ -45,17 +45,13 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
-require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-require_once 'PHP/Depend/Util/CompositeFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
+
+require_once 'PHP/Reflection.php';
+// TODO: Refactor and remove these dependencies
+require_once 'PHP/Reflection/Ast/Iterator/GlobalPackageFilter.php';
+require_once 'PHP/Reflection/Ast/Iterator/InternalPackageFilter.php';
 
 /**
  * PHP_Depend analyzes php class files and generates metrics.
@@ -84,13 +80,13 @@ class PHP_Depend
     /**
      * The used code node builder.
      *
-     * @type PHP_Depend_Code_NodeBuilderI
-     * @var PHP_Depend_Code_NodeBuilderI $nodeBuilder
+     * @type PHP_Reflection_BuilderI
+     * @var PHP_Reflection_BuilderI $nodeBuilder
      */
     protected $nodeBuilder = null;
     
     /**
-     * Generated {@link PHP_Depend_Code_Package} objects.
+     * Generated {@link PHP_Reflection_Ast_Package} objects.
      *
      * @type Iterator
      * @var Iterator $packages
@@ -106,6 +102,20 @@ class PHP_Depend
     protected $loggers = array();
     
     /**
+     * List of accepted source file extensions.
+     *
+     * @var array(string) $_extensions
+     */
+    private $_extensions = array();
+    
+    /**
+     * List of exclude directories and directory patterns.
+     *
+     * @var array(string) $_excludeDirectories
+     */
+    private $_excludeDirectories = array();
+    
+    /**
      * A composite filter for input files.
      *
      * @type PHP_Depend_Util_CompositeFilter
@@ -116,8 +126,8 @@ class PHP_Depend
     /**
      * A composite filter for source packages.
      *
-     * @type PHP_Depend_Code_NodeIterator_CompositeFilter
-     * @var PHP_Depend_Code_NodeIterator_CompositeFilter $_codeFilter
+     * @type PHP_Reflection_Ast_Iterator_CompositeFilter
+     * @var PHP_Reflection_Ast_Iterator_CompositeFilter $_codeFilter
      */
     private $_codeFilter = null;
     
@@ -158,8 +168,8 @@ class PHP_Depend
      */
     public function __construct()
     {
-        $this->_codeFilter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
-        $this->_fileFilter = new PHP_Depend_Util_CompositeFilter();
+        $this->_codeFilter = new PHP_Reflection_Ast_Iterator_CompositeFilter();
+        $this->_fileFilter = new PHP_Reflection_Input_CompositeFilter();
     }
 
     /**
@@ -181,6 +191,34 @@ class PHP_Depend
     }
     
     /**
+     * Adds a valid extension for source files, for example <b>php</b>.
+     *
+     * @param string $extension The file extension.
+     * 
+     * @return void
+     */
+    public function addExtension($extension)
+    {
+        if (in_array($extension, $this->_extensions) === false) {
+            $this->_extensions[] = $extension;
+        }
+    }
+    
+    /**
+     * Adds a directory or a directory pattern to the list of exclude paths.
+     *
+     * @param string $excludeDirectory The exclude directory.
+     * 
+     * @return void
+     */
+    public function addExcludeDirectory($excludeDirectory)
+    {
+        if (in_array($excludeDirectory, $this->_excludeDirectories) === false) {
+            $this->_excludeDirectories[] = $excludeDirectory;
+        }
+    }
+    
+    /**
      * Adds a logger to the output list.
      *
      * @param PHP_Depend_Log_LoggerI $logger The logger instance.
@@ -193,26 +231,14 @@ class PHP_Depend
     }
     
     /**
-     * Adds a new input/file filter.
-     *
-     * @param PHP_Depend_Util_FileFilterI $filter New input/file filter instance.
-     * 
-     * @return void
-     */
-    public function addFileFilter(PHP_Depend_Util_FileFilterI $filter)
-    {
-        $this->_fileFilter->append($filter);
-    }
-    
-    /**
      * Adds an additional code filter. These filters could be used to hide 
      * external libraries and global stuff from the PDepend output.  
      *
-     * @param PHP_Depend_Code_NodeIterator_FilterI $filter The code filter.
+     * @param PHP_Reflection_Ast_Iterator_FilterI $filter The code filter.
      * 
      * @return void
      */
-    public function addCodeFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
+    public function addCodeFilter(PHP_Reflection_Ast_Iterator_FilterI $filter)
     {
         $this->_codeFilter->addFilter($filter);
     }
@@ -269,7 +295,7 @@ class PHP_Depend
      * Analyzes the registered directories and returns the collection of 
      * analyzed packages.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return PHP_Reflection_Ast_Iterator
      */
     public function analyze()
     {
@@ -277,54 +303,42 @@ class PHP_Depend
             throw new RuntimeException('No source directory set.');
         }
         
-        $accepted = $this->_createAnalyzerList();
-        $loader   = new PHP_Depend_Metrics_AnalyzerLoader($accepted, $this->_options);
+        $list   = $this->_createAnalyzerList();
+        $loader = new PHP_Depend_Metrics_AnalyzerLoader($list, $this->_options);
         
-        $iterator = new AppendIterator();
-        
+        $reflection = new PHP_Reflection();
+        if ($this->_withoutAnnotations === true) {
+            $reflection->setWithoutAnnotations();
+        }
+
         foreach ($this->directories as $directory) {
-            $iterator->append(new PHP_Depend_Util_FileFilterIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($directory)
-                ), $this->_fileFilter
-            ));
+            $reflection->addInputSource($directory);
         }
         
-        $this->nodeBuilder = new PHP_Depend_Code_DefaultBuilder();
-        
-        $this->fireStartParseProcess($this->nodeBuilder);
-
-        foreach ($iterator as $file) {
-            
-            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file); 
-            $parser    = new PHP_Depend_Parser($tokenizer, $this->nodeBuilder);
-            
-            // Disable annotation parsing?
-            if ($this->_withoutAnnotations === true) {
-                $parser->setIgnoreAnnotations();
-            }
-            
-            $this->fireStartFileParsing($tokenizer);
-            $parser->parse();
-            $this->fireEndFileParsing($tokenizer);
+        // Set valid file extensions
+        if (count($this->_extensions) > 0) {
+            $reflection->setExtensions($this->_extensions);
+        }
+        // Set exclude paths
+        if (count($this->_excludeDirectories) > 0) {
+            $reflection->setExcludePaths($this->_excludeDirectories);
         }
         
-        $this->fireEndParseProcess($this->nodeBuilder);
-
         // Initialize defaul filters
         if ($this->_supportBadDocumentation === false) {
-            $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
+            $filter = new PHP_Reflection_Ast_Iterator_GlobalPackageFilter();
             $this->_codeFilter->addFilter($filter);
         }
         
-        $filter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
+        $filter = new PHP_Reflection_Ast_Iterator_InternalPackageFilter();
         $this->_codeFilter->addFilter($filter);
         
         // Get global filter collection
-        $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+        $staticFilter = PHP_Reflection_Ast_Iterator_StaticFilter::getInstance();
         $staticFilter->addFilter($this->_codeFilter);
         
-        if ($this->nodeBuilder->getPackages()->count() === 0) {
+        $packages = $reflection->parse();
+        if ($packages->count() === 0) {
             $message = "The parser doesn't detect package informations "
                      . "within the analyzed project, please check the "
                      . "documentation blocks for @package-annotations or use "
@@ -340,7 +354,7 @@ class PHP_Depend
             foreach ($this->_listeners as $listener) {
                 $analyzer->addAnalyzeListener($listener);
                 
-                if ($analyzer instanceof PHP_Depend_Code_NodeVisitorI) {
+                if ($analyzer instanceof PHP_Reflection_VisitorI) {
                     $analyzer->addVisitListener($listener);
                 }
             }
@@ -354,7 +368,7 @@ class PHP_Depend
                 $staticFilter->addFilter($this->_codeFilter);
             }
             
-            $analyzer->analyze($this->nodeBuilder->getPackages());
+            $analyzer->analyze($packages);
             
             // Remove filters if this analyzer is filter aware
             if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
@@ -371,8 +385,6 @@ class PHP_Depend
         // Set global filter for logging
         $staticFilter->addFilter($this->_codeFilter);
 
-        $packages = $this->nodeBuilder->getPackages();
-        
         $this->fireStartLogProcess();
 
         foreach ($this->loggers as $logger) {
@@ -433,7 +445,7 @@ class PHP_Depend
      *
      * @param string $name The package name.
      * 
-     * @return PHP_Depend_Code_Package
+     * @return PHP_Reflection_Ast_Package
      */
     public function getPackage($name)
     {
@@ -466,11 +478,11 @@ class PHP_Depend
     /**
      * Send the start parsing process event.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    protected function fireStartParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    protected function fireStartParseProcess(PHP_Reflection_BuilderI $builder)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startParseProcess($builder);
@@ -480,11 +492,11 @@ class PHP_Depend
     /**
      * Send the end parsing process event.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    protected function fireEndParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    protected function fireEndParseProcess(PHP_Reflection_BuilderI $builder)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endParseProcess($builder);
@@ -494,11 +506,11 @@ class PHP_Depend
     /**
      * Sends the start file parsing event.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    protected function fireStartFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    protected function fireStartFileParsing(PHP_Reflection_TokenizerI $tokenizer)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startFileParsing($tokenizer);
@@ -508,11 +520,11 @@ class PHP_Depend
     /**
      * Sends the end file parsing event.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    protected function fireEndFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    protected function fireEndFileParsing(PHP_Reflection_TokenizerI $tokenizer)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endFileParsing($tokenizer);
