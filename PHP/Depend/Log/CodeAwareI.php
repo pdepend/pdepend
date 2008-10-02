@@ -63,9 +63,9 @@ interface PHP_Depend_Log_CodeAwareI
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
      * 
      * @return void
      */
-    function setCode(PHP_Depend_Code_NodeIterator $code);
+    function setCode(PHP_Reflection_Ast_Iterator $code);
 }

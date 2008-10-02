@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_CodeRank_PropertyStrategy
-       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
+       extends PHP_Reflection_Visitor_AbstractVisitor
     implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
 {
     /**
@@ -86,12 +86,12 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Visits a property node. 
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
+     * @param PHP_Reflection_Ast_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitProperty()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitProperty()
      */
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(PHP_Reflection_Ast_Property $property)
     {
         $this->fireStartProperty($property);
         
@@ -127,11 +127,11 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return void
      */
-    protected function initNode(PHP_Depend_Code_NodeI $node)
+    protected function initNode(PHP_Reflection_Ast_NodeI $node)
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(

@@ -120,11 +120,11 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * )
      * </code>
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
     {
         $metrics = array();
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
@@ -152,13 +152,13 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     }
     
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(PHP_Reflection_Ast_Iterator $packages)
     {
         // Check for previous run
         if ($this->_nodeMetrics === null) {
@@ -180,12 +180,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a class node. 
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param PHP_Reflection_Ast_Class $class The current class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitClass()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(PHP_Reflection_Ast_Class $class)
     {
         $this->fireStartClass($class);
         
@@ -219,12 +219,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a file node. 
      *
-     * @param PHP_Depend_Code_File $file The current file node.
+     * @param PHP_Reflection_Ast_File $file The current file node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitFile()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitFile()
      */
-    public function visitFile(PHP_Depend_Code_File $file)
+    public function visitFile(PHP_Reflection_Ast_File $file)
     {
         // Skip for dummy files
         if ($file->getFileName() === null) {
@@ -262,12 +262,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a function node. 
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
+     * @param PHP_Reflection_Ast_Function $function The current function node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitFunction()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitFunction()
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_Function $function)
     {
         $this->fireStartFunction($function);
         
@@ -291,12 +291,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitInterface()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitInterface()
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
     {
         $this->fireStartInterface($interface);
         
@@ -327,12 +327,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
+     * @param PHP_Reflection_Ast_Class $method The method class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitMethod()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitMethod()
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_Method $method)
     {
         $this->fireStartMethod($method);
         
@@ -354,12 +354,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a property node. 
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
+     * @param PHP_Reflection_Ast_Property $property The property class node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitProperty()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitProperty()
      */
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(PHP_Reflection_Ast_Property $property)
     {
         $this->fireStartProperty($property);
         
@@ -376,12 +376,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
+     * @param PHP_Reflection_Ast_TypeConstant $constant The current constant node.
      * 
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitTypeConstant()
+     * @see PHP_Reflection_Visitor_AbstractVisitor::visitTypeConstant()
      */
-    public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
+    public function visitTypeConstant(PHP_Reflection_Ast_TypeConstant $constant)
     {
         $this->fireStartTypeConstant($constant);
                 
@@ -418,8 +418,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $elines = array();
 
         $comment = array(
-            PHP_Depend_Code_TokenizerI::T_COMMENT,
-            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT
+            PHP_Reflection_TokenizerI::T_COMMENT,
+            PHP_Reflection_TokenizerI::T_DOC_COMMENT
         );
         
         foreach ($tokens as $token) {
