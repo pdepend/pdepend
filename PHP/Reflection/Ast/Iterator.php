@@ -127,7 +127,8 @@ class PHP_Reflection_Ast_Iterator implements Iterator, Countable
     }
     
     /**
-     * Returns the number of {@link PHP_Reflection_Ast_NodeI} objects in this iterator.
+     * Returns the number of {@link PHP_Reflection_Ast_NodeI} objects in this 
+     * iterator.
      *
      * @return integer
      * @todo TODO: Find a better way to implement counting

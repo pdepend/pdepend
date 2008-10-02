@@ -259,7 +259,7 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor starts a new constant instance.
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The context constant instance.
+     * @param PHP_Reflection_Ast_TypeConstant $constant The context constant.
      * 
      * @return void
      */
@@ -271,7 +271,7 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor ends with a constant instance.
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The context constant instance.
+     * @param PHP_Reflection_Ast_TypeConstant $constant The context constant.
      * 
      * @return void
      */

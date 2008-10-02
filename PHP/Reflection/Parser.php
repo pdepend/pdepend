@@ -188,13 +188,15 @@ class PHP_Reflection_Parser
     /**
      * Parses the contents of the tokenizer and generates a node tree based on
      * the found tokens.
+     * 
+     * @param Iterator $files Iterator with file names to parse.
      *
      * @return void
      */
     public function parse(Iterator $files)
     {
-        foreach ($files as $file)
-        {
+        foreach ($files as $file) {
+            
             $this->reset();
             
             // Set next source file
@@ -507,7 +509,8 @@ class PHP_Reflection_Parser
      * Parses a function or a method and adds it to the parent context node.
      * 
      * @param array(array)                    &$tokens Collected tokens.
-     * @param PHP_Reflection_Ast_AbstractType $parent An optional parent interface of class.
+     * @param PHP_Reflection_Ast_AbstractType $parent  An optional parent 
+     *                                                 interface of class.
      * 
      * @return PHP_Reflection_Ast_AbstractCallable
      */
@@ -550,7 +553,7 @@ class PHP_Reflection_Parser
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @param array(array)                         &$tokens  Collected tokens.
+     * @param array(array)                        &$tokens  Collected tokens.
      * @param PHP_Reflection_Ast_AbstractCallable $callable The context callable.
      * 
      * @return void
@@ -639,7 +642,7 @@ class PHP_Reflection_Parser
     /**
      * Extracts all dependencies from a callable body.
      *
-     * @param array(array)                         &$outTokens Collected tokens.
+     * @param array(array)                        &$outTokens Collected tokens.
      * @param PHP_Reflection_Ast_AbstractCallable $callable   The context callable.
      * 
      * @return void
@@ -918,14 +921,16 @@ class PHP_Reflection_Parser
         $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
         // Append all exception types
         foreach ($throws as $type) {
-            $callable->addExceptionType($this->builder->buildClassOrInterface($type));
+            $exceptionType = $this->builder->buildClassOrInterface($type);
+            $callable->addExceptionType($exceptionType);
         }
         
         // Get return annotation
         $type = $this->_parseTypeAnnotation($callable->getDocComment(), 'return');
         
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
-            $callable->setReturnType($this->builder->buildClassOrInterface($type[0]));
+            $returnType = $this->builder->buildClassOrInterface($type[0]);
+            $callable->setReturnType($returnType);
         }
     }
 }

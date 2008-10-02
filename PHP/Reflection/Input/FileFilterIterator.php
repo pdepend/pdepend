@@ -73,14 +73,14 @@ class PHP_Reflection_Input_FileFilterIterator extends FilterIterator
     /**
      * Constructs a new file filter iterator.
      *
-     * @param Iterator                    $it     The inner iterator.
-     * @param PHP_Reflection_Input_FileFilterI $filter The filter object.
+     * @param Iterator                         $it The inner iterator.
+     * @param PHP_Reflection_Input_FileFilterI $fi The filter object.
      */
-    public function __construct(Iterator $it, PHP_Reflection_Input_FileFilterI $filter)
+    public function __construct(Iterator $it, PHP_Reflection_Input_FileFilterI $fi)
     {
         parent::__construct($it);
         
-        $this->filter = $filter;
+        $this->filter = $fi;
     }
     
     /**
