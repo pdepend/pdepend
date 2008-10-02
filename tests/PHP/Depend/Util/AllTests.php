@@ -52,10 +52,6 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/CompositeFilterTest.php';
-require_once dirname(__FILE__) . '/ExcludePathFilterTest.php';
-require_once dirname(__FILE__) . '/FileExtensionFilterTest.php';
-require_once dirname(__FILE__) . '/FileFilterIteratorTest.php';
 require_once dirname(__FILE__) . '/ImageConvertTest.php';
 
 /**
@@ -89,10 +85,6 @@ class PHP_Depend_Util_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util - AllTests');
-        $suite->addTestSuite('PHP_Depend_Util_CompositeFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_ExcludePathFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_FileExtensionFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_FileFilterIteratorTest');
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
         
         return $suite;

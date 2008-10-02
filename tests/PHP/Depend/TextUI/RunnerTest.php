@@ -106,39 +106,37 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     
     public function testRunnerUsesCorrectFileFilter()
     {
-        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
-        
+        $logFile = self::createRunResourceURI('/pdepend.dummy');
+        $sources = self::createResourceURI('/textui/extension-filter/');
+
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
+        $runner->setSourceDirectories(array($sources));
         $runner->setFileExtensions(array('inc'));
-        $runner->addLogger('dummy-logger', $fileName);
-        
+        $runner->addLogger('dummy-logger', $logFile);
+  
+        $this->assertFileNotExists($logFile);
         ob_start();
         $runner->run();
         ob_end_clean();
-        
-        $this->assertFileExists($fileName);
-        
-        $data = unserialize(file_get_contents($fileName));
+        $this->assertFileExists($logFile);
+
+        $data = unserialize(file_get_contents($logFile));
         
         $code = $data['code'];
-        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
         $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
         
         $this->assertEquals(1, $package->getFunctions()->count());
         $this->assertEquals(1, $package->getClasses()->count());
         
         $function = $package->getFunctions()->current();
-        $this->assertType('PHP_Depend_Code_Function', $function);
+        $this->assertType('PHP_Reflection_Ast_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(1, $function->getExceptionTypes()->count());
         $this->assertEquals('MyException', $function->getExceptionTypes()->current()->getName());
@@ -146,13 +144,11 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $code->next();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
         $this->assertEquals('pdepend.test2', $package->getName());
         
-        $sourceFile = realpath(dirname(__FILE__). '/../_code/function.inc');
+        $sourceFile = $sources . '/extension-filter.inc';
         $this->assertEquals($sourceFile, $function->getSourceFile()->getName());
-        
-        unlink($fileName);
     }
     
     /**
@@ -183,27 +179,27 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $data = unserialize(file_get_contents($fileName));
         
         $code = $data['code'];
-        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
         $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
         
         $this->assertEquals(1, $package->getFunctions()->count());
         $this->assertEquals(1, $package->getClasses()->count());
         
         $function = $package->getFunctions()->current();
-        $this->assertType('PHP_Depend_Code_Function', $function);
+        $this->assertType('PHP_Reflection_Ast_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionTypes()->count());
         
         $code->next();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
         $this->assertEquals('pdepend.test2', $package->getName());
         
         unlink($fileName);
@@ -211,37 +207,33 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     
     public function testSupportBadDocumentation()
     {
-        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
+        $logFile = self::createRunResourceURI('/pdepend.dummy');
+        $sources = self::createResourceURI('/textui/bad-documentation/');
         
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
+        $runner->setSourceDirectories(array($sources));
         $runner->setSupportBadDocumentation();
-        $runner->addLogger('dummy-logger', $fileName);
-        
+        $runner->addLogger('dummy-logger', $logFile);
+
+        $this->assertFileNotExists($logFile);
         ob_start();
         $runner->run();
         ob_end_clean();
+        $this->assertFileExists($logFile);
         
-        $this->assertFileExists($fileName);
-        
-        $data = unserialize(file_get_contents($fileName));
+        $data = unserialize(file_get_contents($logFile));
         
         $code = $data['code'];
-        $this->assertType('PHP_Depend_Code_NodeIterator', $code);
+        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
         $this->assertEquals(1, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
-        $this->assertEquals(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE, $package->getName());
+        $this->assertType('PHP_Reflection_Ast_Package', $package);
+        $this->assertEquals(PHP_Reflection_BuilderI::GLOBAL_PACKAGE, $package->getName());
         
         $this->assertEquals(8, $package->getClasses()->count());
         $this->assertEquals(3, $package->getInterfaces()->count());
-        
-        unlink($fileName);
     }
 }

@@ -72,9 +72,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectFunctionAndFileLoc()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/function.php';
-        $packages = self::parseSource($source);
-
+        $packages = self::parseSource('/metrics/node-loc/function_and_file_loc.php');
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);
         
@@ -125,10 +123,10 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getNodeMetrics($file);
         $expected = array(
-            'loc'    =>  31,
+            'loc'    =>  32,
             'cloc'   =>  15,
-            'eloc'   =>  13,
-            'ncloc'  =>  16
+            'eloc'   =>  14,
+            'ncloc'  =>  17
         );
         $this->assertEquals($expected, $actual);
     }
@@ -141,9 +139,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectMethodAndClassAndFileLoc()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/method.php';
-        $packages = self::parseSource($source);
-
+        $packages = self::parseSource('/metrics/node-loc/method_and_class_and_file_loc.php');
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);
         
@@ -202,10 +198,10 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getNodeMetrics($class->getSourceFile());
         $expected = array(
-            'loc'    =>  34,
+            'loc'    =>  35,
             'cloc'   =>  15,
-            'eloc'   =>  16,
-            'ncloc'  =>  19
+            'eloc'   =>  17,
+            'ncloc'  =>  20
         );
         
         $this->assertEquals($expected, $actual);
@@ -220,9 +216,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectMethodAndInterfaceAndFileLoc()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/method2.php';
-        $packages = self::parseSource($source);
-
+        $packages = self::parseSource('/metrics/node-loc/method_and_interface_and_file_loc.php');
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);
         
@@ -281,10 +275,10 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getNodeMetrics($interface->getSourceFile());
         $expected = array(
-            'loc'    =>  25,
+            'loc'    =>  26,
             'cloc'   =>  13,
-            'eloc'   =>  9,
-            'ncloc'  =>  12
+            'eloc'   =>  10,
+            'ncloc'  =>  13
         );
         
         $this->assertEquals($expected, $actual);
@@ -298,9 +292,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectPropertyAndClassAndFileLoc()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/property.php';
-        $packages = self::parseSource($source);
-
+        $packages = self::parseSource('/metrics/node-loc/property_and_class_and_file_loc.php');
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);
         
@@ -359,10 +351,10 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getNodeMetrics($class->getSourceFile());
         $expected = array(
-            'loc'    =>  21,
+            'loc'    =>  22,
             'cloc'   =>  10,
-            'eloc'   =>  8,
-            'ncloc'  =>  11
+            'eloc'   =>  9,
+            'ncloc'  =>  12
         );
         
         $this->assertEquals($expected, $actual);
@@ -376,9 +368,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectConstantAndClassAndFileLoc()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/constant.php';
-        $packages = self::parseSource($source);
-
+        $packages = self::parseSource('/metrics/node-loc/constant_and_class_and_file_loc.php');
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);
         
@@ -431,10 +421,10 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getNodeMetrics($class->getSourceFile());
         $expected = array(
-            'loc'    =>  21,
+            'loc'    =>  22,
             'cloc'   =>  10,
-            'eloc'   =>  8,
-            'ncloc'  =>  11
+            'eloc'   =>  9,
+            'ncloc'  =>  12
         );
         
         $this->assertEquals($expected, $actual);
@@ -448,9 +438,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectConstantAndInterfaceAndFileLoc()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/constant1.php';
-        $packages = self::parseSource($source);
-
+        $packages = self::parseSource('/metrics/node-loc/constant_and_interface_and_file_loc.php');
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);
         
@@ -499,10 +487,10 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $actual   = $analyzer->getNodeMetrics($interface->getSourceFile());
         $expected = array(
-            'loc'    =>  21,
+            'loc'    =>  22,
             'cloc'   =>  10,
-            'eloc'   =>  8,
-            'ncloc'  =>  11
+            'eloc'   =>  9,
+            'ncloc'  =>  12
         );
         
         $this->assertEquals($expected, $actual);
@@ -515,18 +503,16 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectProjectMetrics()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/';
-        $packages = self::parseSource($source);
-
+        $packages = self::parseSource('/metrics/node-loc/');
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);
         
         $actual   = $analyzer->getProjectMetrics();
         $expected = array(
-            'loc'    =>  260,
-            'cloc'   =>  144,
-            'eloc'   =>  89,
-            'ncloc'  =>  116
+            'loc'    =>  159,
+            'cloc'   =>  73,
+            'eloc'   =>  68,
+            'ncloc'  =>  86
         );
         
         $this->assertEquals($expected, $actual);
