@@ -45,10 +45,12 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeBuilderI.php';
-require_once 'PHP/Depend/Code/TokenizerI.php';
-require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
 require_once 'PHP/Depend/Metrics/ListenerI.php';
+
+// TODO: Refactor this reflection depedency
+require_once 'PHP/Reflection/BuilderI.php';
+require_once 'PHP/Reflection/TokenizerI.php';
+require_once 'PHP/Reflection/Visitor/ListenerI.php';
 
 /**
  * This listener can be used to get informations about the current pdepend process.

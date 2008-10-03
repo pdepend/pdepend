@@ -324,6 +324,8 @@ class PHP_Depend
             $reflection->setExcludePaths($this->_excludeDirectories);
         }
         
+        $packages = $reflection->parse();
+        
         // Initialize defaul filters
         if ($this->_supportBadDocumentation === false) {
             $filter = new PHP_Reflection_Ast_Iterator_GlobalPackageFilter();
@@ -337,7 +339,6 @@ class PHP_Depend
         $staticFilter = PHP_Reflection_Ast_Iterator_StaticFilter::getInstance();
         $staticFilter->addFilter($this->_codeFilter);
         
-        $packages = $reflection->parse();
         if ($packages->count() === 0) {
             $message = "The parser doesn't detect package informations "
                      . "within the analyzed project, please check the "
