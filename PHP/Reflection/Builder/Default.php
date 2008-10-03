@@ -286,7 +286,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             // Append to class package
             $this->buildPackage($pkg)->addType($class);
         }
-        
         return $class;
     }
     
@@ -630,7 +629,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * 
      *   $builder->buildInterface('PHP_ReflectionI');
      * 
-     *   var_dump($class->getDependencies());
+     *   var_dump($class1->getDependencies());
      *   // Results in
      *   // array(1) {
      *   //   [0]=>

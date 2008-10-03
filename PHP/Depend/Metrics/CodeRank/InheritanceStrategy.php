@@ -46,8 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
+// TODO: Refactory this reflection dependency
+require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * Collects class and package metrics based on inheritance.
