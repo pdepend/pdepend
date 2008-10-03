@@ -93,34 +93,46 @@ class PHP_Reflection_Ast_Property
     private $_type = null;
     
     /**
-     * Sets the visibility for this node. 
+     * Declared modifiers for this method.
      * 
-     * The given <b>$visibility</b> value must equal to one of the defined 
-     * constants, otherwith this method will fail with an exception.
+     * <ul>
+     *   <li>ReflectionMethod::IS_ABSTRACT</li>
+     *   <li>ReflectionMethod::IS_FINAL</li>
+     *   <li>ReflectionMethod::IS_PUBLIC</li>
+     *   <li>ReflectionMethod::IS_PROTECTED</li>
+     *   <li>ReflectionMethod::IS_PRIVATE</li>
+     *   <li>ReflectionMethod::IS_STATIC</li>
+     * </ul>
      *
-     * @param integer $visibility The node visibility.
+     * @var unknown_type
+     */
+    private $_modifiers = ReflectionMethod::IS_PUBLIC;
+    
+    /**
+     * Sets the modifiers for this method.
+     *
+     * @param integer $modifiers The method modifiers.
      * 
      * @return void
-     * @throws InvalidArgumentException If the given visibility is not equal to
-     *                                  one of the defined visibility constants.
      */
-    public function setVisibility($visibility)
+    public function setModifiers($modifiers)
     {
-        // List of allowed visibility values
-        $allowed = array(
-            ReflectionProperty::IS_PUBLIC, 
-            ReflectionProperty::IS_PROTECTED, 
-            ReflectionProperty::IS_PRIVATE
-        );
+        $this->_modifiers = (int) $modifiers;
         
-        // Check for a valid value
-        if (in_array($visibility, $allowed, true) === false) {
-            throw new InvalidArgumentException('Invalid visibility value given.');
+        // Check visibility
+        if ($this->isPrivate() === false && $this->isProtected() === false) {
+            $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
         }
-        // Check for previous value
-        if ($this->_visibility === -1) {
-            $this->_visibility = $visibility;
-        }
+    }
+    
+    /**
+     * Returns the declared modifiers for this method.
+     *
+     * @return integer
+     */
+    public function getModifiers()
+    {
+        return $this->_modifiers;
     }
     
     /**
@@ -131,7 +143,9 @@ class PHP_Reflection_Ast_Property
      */
     public function isPublic()
     {
-        return ($this->_visibility === ReflectionProperty::IS_PUBLIC);
+        return (ReflectionMethod::IS_PUBLIC === (
+            $this->_modifiers & ReflectionMethod::IS_PUBLIC
+        ));
     }
     
     /**
@@ -142,7 +156,9 @@ class PHP_Reflection_Ast_Property
      */
     public function isProtected()
     {
-        return ($this->_visibility === ReflectionProperty::IS_PROTECTED);
+        return (ReflectionMethod::IS_PROTECTED === (
+            $this->_modifiers & ReflectionMethod::IS_PROTECTED
+        ));
     }
     
     /**
@@ -153,7 +169,9 @@ class PHP_Reflection_Ast_Property
      */
     public function isPrivate()
     {
-        return ($this->_visibility === ReflectionProperty::IS_PRIVATE);
+        return (ReflectionMethod::IS_PRIVATE === (
+            $this->_modifiers & ReflectionMethod::IS_PRIVATE
+        ));
     }
     
     /**
