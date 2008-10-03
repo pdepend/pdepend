@@ -47,7 +47,6 @@
 
 require_once 'PHP/Reflection/BuilderI.php';
 require_once 'PHP/Reflection/TokenizerI.php';
-require_once 'PHP/Reflection/VisibilityI.php';
 
 /**
  * The php source parser.
@@ -81,14 +80,6 @@ require_once 'PHP/Reflection/VisibilityI.php';
 class PHP_Reflection_Parser
 {
     /**
-     * Last parsed package tag.
-     *
-     * @type string
-     * @var string $package
-     */
-    protected $package = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
-    
-    /**
      * The package defined in the file level comment.
      *
      * @type string
@@ -108,9 +99,33 @@ class PHP_Reflection_Parser
      * Marks the current class as abstract.
      *
      * @type boolean
-     * @var boolean $abstract
+     * @var boolean $_abstract
      */
-    protected $abstract = false;
+    private $_abstract = false;
+    
+    /**
+     * The last doc comment block.
+     *
+     * @type string
+     * @var string $_comment
+     */
+    private $_comment = null;
+    
+    /**
+     * Last parsed package tag.
+     *
+     * @type string
+     * @var string $_package
+     */
+    private $_package = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
+    
+    /**
+     * Position of the context type within the analyzed file.
+     *
+     * @type integer
+     * @var integer $_typePosition
+     */
+    private $_typePosition = 0;
     
     /**
      * The used code tokenizer.
@@ -201,104 +216,109 @@ class PHP_Reflection_Parser
             
             // Set next source file
             $this->tokenizer->setSourceFile($file);
-        
-            $comment = null;
-        
-            // Position of the context type within the analyzed file.
-            $typePosition = 0;
 
             while (($token = $this->tokenizer->next()) !== PHP_Reflection_TokenizerI::T_EOF) {
             
                 switch ($token[0]) {
                 case PHP_Reflection_TokenizerI::T_ABSTRACT:
-                    $this->abstract = true;
+                    $this->_abstract = true;
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
-                    $comment       = $token[1];
-                    $this->package = $this->parsePackage($token[1]);
+                    $this->_comment = $token[1];
+                    $this->_package = $this->parsePackage($token[1]);
                     
                     // Check for doc level comment
                     if ($this->globalPackage === PHP_Reflection_BuilderI::GLOBAL_PACKAGE 
                      && $this->isFileComment() === true) {
     
-                        $this->globalPackage = $this->package;
+                        $this->globalPackage = $this->_package;
                         
                         $this->tokenizer->getSourceFile()->setDocComment($token[1]);
-                        
-                        // TODO: What happens if there is no file comment, we will
-                        //       reuse the same comment for a class, interface or
-                        //       function?
                     }
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_INTERFACE:
-                    // Get interface name
-                    $token = $this->tokenizer->next();
-                        
-                    $qualifiedName = "{$this->package}::{$token[1]}";
-    
-                    $interface = $this->builder->buildInterface($qualifiedName, $token[2]);
-                    $interface->setSourceFile($this->tokenizer->getSourceFile());
-                    $interface->setStartLine($token[2]);
-                    $interface->setDocComment($comment);
-                    $interface->setPosition($typePosition++);
-                    
-                    $this->parseInterfaceSignature($interface);
-    
-                    $this->builder->buildPackage($this->package)->addType($interface);
-    
-                    $this->parseTypeBody($interface);
-                    $this->reset();
-                    
-                    $comment = null;
+                    $this->_parseInterface();
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_CLASS:
-                    // Get class name
-                    $token = $this->tokenizer->next();
-                        
-                    $qualifiedName = "{$this->package}::{$token[1]}";
-    
-                    $class = $this->builder->buildClass($qualifiedName, $token[2]);
-                    $class->setSourceFile($this->tokenizer->getSourceFile());
-                    $class->setStartLine($token[2]);
-                    $class->setAbstract($this->abstract);
-                    $class->setDocComment($comment);
-                    $class->setPosition($typePosition++);
-                    
-                    $this->parseClassSignature($class);
-    
-                    $this->builder->buildPackage($this->package)->addType($class);
-    
-                    $this->parseTypeBody($class);
-                    $this->reset();
-                    
-                    $comment = null;
+                    $this->_parseClass();
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_FUNCTION:
                     $function = $this->parseCallable();
                     $function->setSourceFile($this->tokenizer->getSourceFile());
-                    $function->setDocComment($comment);
+                    $function->setDocComment($this->_comment);
                     
                     $this->_prepareCallable($function);
                     
                     $this->reset();
-                    
-                    $comment = null;
                     break;
                         
                 default:
                     // TODO: Handle/log unused tokens
-                    $comment = null;
                     break;
                 }
             }
             
-            // Reset global package information
+            // Reset global package and type position
             $this->globalPackage = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
+            $this->_typePosition = 0;
         }
+    }
+    
+    /**
+     * Parses a class node.
+     *
+     * @return void
+     */
+    private function _parseClass()
+    {
+        // Get class name
+        $token = $this->tokenizer->next();
+
+        $qualifiedName = "{$this->_package}::{$token[1]}";
+    
+        $class = $this->builder->buildClass($qualifiedName, $token[2]);
+        $class->setSourceFile($this->tokenizer->getSourceFile());
+        $class->setStartLine($token[2]);
+        $class->setAbstract($this->_abstract);
+        $class->setDocComment($this->_comment);
+        $class->setPosition($this->_typePosition++);
+                    
+        $this->parseClassSignature($class);
+    
+        $this->builder->buildPackage($this->_package)->addType($class);
+    
+        $this->parseTypeBody($class);
+        $this->reset();
+    }
+    
+    /**
+     * Parses an interface node.
+     *
+     * @return void
+     */
+    private function _parseInterface()
+    {
+        // Get interface name
+        $token = $this->tokenizer->next();
+                        
+        $qualifiedName = "{$this->_package}::{$token[1]}";
+    
+        $interface = $this->builder->buildInterface($qualifiedName, $token[2]);
+        $interface->setSourceFile($this->tokenizer->getSourceFile());
+        $interface->setStartLine($token[2]);
+        $interface->setDocComment($this->_comment);
+        $interface->setPosition($this->_typePosition++);
+                    
+        $this->parseInterfaceSignature($interface);
+
+        $this->builder->buildPackage($this->_package)->addType($interface);
+
+        $this->parseTypeBody($interface);
+        $this->reset();
     }
     
     /**
@@ -308,8 +328,9 @@ class PHP_Reflection_Parser
      */
     protected function reset()
     {
-        $this->package  = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
-        $this->abstract = false;
+        $this->_abstract = false;
+        $this->_comment  = null;
+        $this->_package  = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
     }
     
     /**
@@ -383,9 +404,10 @@ class PHP_Reflection_Parser
         // If type is an interface all methods are abstract
         $abstractDefault = ($type instanceof PHP_Reflection_Ast_Interface);
         
-        $visibilty = PHP_Reflection_VisibilityI::IS_PUBLIC;
+        $visibilty = ReflectionMethod::IS_PUBLIC;
         $comment   = null;
         $abstract  = $abstractDefault;
+        $modifiers = 0;
         
         // Method position within the type body
         $methodPosition = 0;
@@ -397,14 +419,15 @@ class PHP_Reflection_Parser
                 $method = $this->parseCallable($tokens, $type);
                 $method->setDocComment($comment);
                 $method->setAbstract($abstract);
-                $method->setVisibility($visibilty);
                 $method->setPosition($methodPosition++);
+                $method->setModifiers($modifiers);
                 
                 $this->_prepareCallable($method);
                 
-                $visibilty = PHP_Reflection_VisibilityI::IS_PUBLIC;
+                $visibilty = ReflectionMethod::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
+                $modifiers = 0;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_VARIABLE:
@@ -420,9 +443,10 @@ class PHP_Reflection_Parser
                 //       code is correct?
                 $type->addProperty($property);
                 
-                $visibilty = PHP_Reflection_VisibilityI::IS_PUBLIC;
+                $visibilty = ReflectionMethod::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
+                $modifiers = 0;
                 break;
             
             case PHP_Reflection_TokenizerI::T_CONST:
@@ -436,9 +460,10 @@ class PHP_Reflection_Parser
                 
                 $type->addConstant($constant);
                 
-                $visibilty = PHP_Reflection_VisibilityI::IS_PUBLIC;
+                $visibilty = ReflectionMethod::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
+                $modifiers = 0;
                 break;
                     
             case PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN:
@@ -453,24 +478,34 @@ class PHP_Reflection_Parser
                 
             case PHP_Reflection_TokenizerI::T_ABSTRACT:
                 $abstract = true;
+                $modifiers |= ReflectionMethod::IS_ABSTRACT;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_PUBLIC:
-                $visibilty = PHP_Reflection_VisibilityI::IS_PUBLIC;
+                assert(ReflectionProperty::IS_PUBLIC === ReflectionMethod::IS_PUBLIC);
+                $visibilty  = ReflectionMethod::IS_PUBLIC;
+                $modifiers |= ReflectionMethod::IS_PUBLIC;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_PRIVATE:
-                $visibilty = PHP_Reflection_VisibilityI::IS_PRIVATE;
+                assert(ReflectionProperty::IS_PRIVATE === ReflectionMethod::IS_PRIVATE);
+                $visibilty  = ReflectionMethod::IS_PRIVATE;
+                $modifiers |= ReflectionMethod::IS_PRIVATE;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_PROTECTED:
-                $visibilty = PHP_Reflection_VisibilityI::IS_PROTECTED;
+                assert(ReflectionProperty::IS_PROTECTED === ReflectionMethod::IS_PROTECTED);
+                $visibilty  = ReflectionMethod::IS_PROTECTED;
+                $modifiers |= ReflectionMethod::IS_PROTECTED;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_STATIC:
+                assert(ReflectionMethod::IS_STATIC === ReflectionProperty::IS_STATIC);
+                $modifiers |= ReflectionMethod::IS_STATIC;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_FINAL:
+                $modifiers |= ReflectionMethod::IS_FINAL;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
@@ -529,8 +564,8 @@ class PHP_Reflection_Parser
             $callable = $this->builder->buildFunction($token[1], $token[2]);
             
             $package = $this->globalPackage;
-            if ($this->package !== PHP_Reflection_BuilderI::GLOBAL_PACKAGE) {
-                $package = $this->package;
+            if ($this->_package !== PHP_Reflection_BuilderI::GLOBAL_PACKAGE) {
+                $package = $this->_package;
             }
 
             $this->builder->buildPackage($package)->addFunction($callable); 

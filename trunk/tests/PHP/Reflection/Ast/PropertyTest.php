@@ -48,7 +48,6 @@
 
 require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
-require_once 'PHP/Reflection/VisibilityI.php';
 require_once 'PHP/Reflection/Ast/Class.php';
 require_once 'PHP/Reflection/Ast/Property.php';
 
@@ -90,9 +89,9 @@ class PHP_Reflection_Ast_PropertyTest extends PHP_Reflection_Ast_AbstractItemTes
     {
         $property = $this->createItem();
         $this->assertFalse($property->isPublic());
-        $property->setVisibility(PHP_Reflection_VisibilityI::IS_PUBLIC);
+        $property->setVisibility(ReflectionMethod::IS_PUBLIC);
         $this->assertTrue($property->isPublic());
-        $property->setVisibility(PHP_Reflection_VisibilityI::IS_PRIVATE);
+        $property->setVisibility(ReflectionMethod::IS_PRIVATE);
         $this->assertTrue($property->isPublic());
         $this->assertFalse($property->isPrivate());
     }

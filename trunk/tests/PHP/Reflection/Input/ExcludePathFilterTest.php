@@ -71,7 +71,7 @@ class PHP_Reflection_Input_ExcludePathFilterTest extends PHP_Reflection_Abstract
      */
     public function testExcludePathFilterWithFile()
     {
-        $files  = array('input/exclude-path/file_j.php');
+        $files  = array('input/exclude-path/file_j.php', '.svn');
         $filter = new PHP_Reflection_Input_ExcludePathFilter($files);
         
         $it = new RecursiveIteratorIterator(
@@ -104,7 +104,7 @@ class PHP_Reflection_Input_ExcludePathFilterTest extends PHP_Reflection_Abstract
      */
     public function testExcludePathFilterWithDirectory()
     {
-        $files  = array('input/exclude-path');
+        $files  = array('input/exclude-path', '.svn');
         $filter = new PHP_Reflection_Input_ExcludePathFilter($files);
         
         $it = new RecursiveIteratorIterator(
@@ -148,6 +148,7 @@ class PHP_Reflection_Input_ExcludePathFilterTest extends PHP_Reflection_Abstract
                 '/exclude-path/',
                 '/*.php',
                 '/*.inc',
+                '.svn',
             )
         );
             
