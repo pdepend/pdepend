@@ -49,9 +49,8 @@
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Log/LoggerFactory.php';
 require_once 'PHP/Depend/TextUI/ResultPrinter.php';
-require_once 'PHP/Depend/Util/ExcludePathFilter.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
 
+// TODO: Refactory this reflection dependency
 require_once 'PHP/Reflection/Ast/Iterator/PackageFilter.php';
 
 /**
@@ -270,7 +269,7 @@ class PHP_Depend_TextUI_Runner
             $filter  = new PHP_Reflection_Ast_Iterator_PackageFilter($exclude);
             $pdepend->addCodeFilter($filter);
         }
-        
+
         if ($this->_withoutAnnotations === true) {
             $pdepend->setWithoutAnnotations();
         }

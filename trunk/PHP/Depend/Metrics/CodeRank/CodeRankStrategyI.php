@@ -46,7 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+// TODO: Refactory this reflection dependency
+require_once 'PHP/Reflection/VisitorI.php';
 
 /**
  * The code rank strategy provides an interface for dependency collection. 

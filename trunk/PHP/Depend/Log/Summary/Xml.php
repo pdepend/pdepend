@@ -46,13 +46,14 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
+// TODO: Refactor this reflection dependency
+require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * This logger generates a summary xml document with aggregated project, class,
