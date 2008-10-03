@@ -98,6 +98,49 @@ class PHP_Reflection_Ast_Method
     private $_position = 0;
     
     /**
+     * Declared modifiers for this method.
+     * 
+     * <ul>
+     *   <li>ReflectionMethod::IS_ABSTRACT</li>
+     *   <li>ReflectionMethod::IS_FINAL</li>
+     *   <li>ReflectionMethod::IS_PUBLIC</li>
+     *   <li>ReflectionMethod::IS_PROTECTED</li>
+     *   <li>ReflectionMethod::IS_PRIVATE</li>
+     *   <li>ReflectionMethod::IS_STATIC</li>
+     * </ul>
+     *
+     * @var unknown_type
+     */
+    private $_modifiers = ReflectionMethod::IS_PUBLIC;
+    
+    /**
+     * Sets the modifiers for this method.
+     *
+     * @param integer $modifiers The method modifiers.
+     * 
+     * @return void
+     */
+    public function setModifiers($modifiers)
+    {
+        $this->_modifiers = (int) $modifiers;
+        
+        // Check visibility
+        if ($this->isPrivate() === false && $this->isProtected() === false) {
+            $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
+        }
+    }
+    
+    /**
+     * Returns the declared modifiers for this method.
+     *
+     * @return integer
+     */
+    public function getModifiers()
+    {
+        return $this->_modifiers;
+    }
+    
+    /**
      * Returns <b>true</b> if this is an abstract method.
      *
      * @return boolean
@@ -120,33 +163,6 @@ class PHP_Reflection_Ast_Method
     }
     
     /**
-     * Sets the visibility for this node. 
-     * 
-     * The given <b>$visibility</b> value must equal to one of the defined 
-     * constants, otherwith this method will fail with an exception.
-     *
-     * @param integer $visibility The node visibility.
-     * 
-     * @return void
-     * @throws InvalidArgumentException If the given visibility is not equal to
-     *                                  one of the defined visibility constants.
-     */
-    public function setVisibility($visibility)
-    {
-        // List of allowed visibility values
-        $allowed = array(self::IS_PUBLIC, self::IS_PROTECTED, self::IS_PRIVATE);
-        
-        // Check for a valid value
-        if (in_array($visibility, $allowed, true) === false) {
-            throw new InvalidArgumentException('Invalid visibility value given.');
-        }
-        // Check for previous value
-        if ($this->visibility === -1) {
-            $this->visibility = $visibility;
-        }
-    }
-    
-    /**
      * Returns <b>true</b> if this node is marked as public, otherwise the 
      * returned value will be <b>false</b>.
      *
@@ -154,7 +170,9 @@ class PHP_Reflection_Ast_Method
      */
     public function isPublic()
     {
-        return ($this->visibility === self::IS_PUBLIC);
+        return (ReflectionMethod::IS_PUBLIC === (
+            $this->_modifiers & ReflectionMethod::IS_PUBLIC
+        ));
     }
     
     /**
@@ -165,7 +183,9 @@ class PHP_Reflection_Ast_Method
      */
     public function isProtected()
     {
-        return ($this->visibility === self::IS_PROTECTED);
+        return (ReflectionMethod::IS_PROTECTED === (
+            $this->_modifiers & ReflectionMethod::IS_PROTECTED
+        ));
     }
     
     /**
@@ -176,7 +196,9 @@ class PHP_Reflection_Ast_Method
      */
     public function isPrivate()
     {
-        return ($this->visibility === self::IS_PRIVATE);
+        return (ReflectionMethod::IS_PRIVATE === (
+            $this->_modifiers & ReflectionMethod::IS_PRIVATE
+        ));
     }
     
     
