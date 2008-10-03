@@ -403,8 +403,8 @@ class PHP_Reflection_Parser
         
         // If type is an interface all methods are abstract
         $abstractDefault = ($type instanceof PHP_Reflection_Ast_Interface);
+        $defaultModifier = 0;
         
-        $visibilty = ReflectionMethod::IS_PUBLIC;
         $comment   = null;
         $abstract  = $abstractDefault;
         $modifiers = 0;
@@ -423,8 +423,7 @@ class PHP_Reflection_Parser
                 $method->setModifiers($modifiers);
                 
                 $this->_prepareCallable($method);
-                
-                $visibilty = ReflectionMethod::IS_PUBLIC;
+
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 $modifiers = 0;
@@ -433,7 +432,7 @@ class PHP_Reflection_Parser
             case PHP_Reflection_TokenizerI::T_VARIABLE:
                 $property = $this->builder->buildProperty($token[1], $token[2]);
                 $property->setDocComment($comment);
-                $property->setVisibility($visibilty);
+                $property->setModifiers($modifiers);
                 $property->setEndLine($token[2]);
                 
                 $this->_prepareProperty($property);
@@ -442,8 +441,7 @@ class PHP_Reflection_Parser
                 //       PHP_Reflection_Ast_Class instance or do we believe the 
                 //       code is correct?
                 $type->addProperty($property);
-                
-                $visibilty = ReflectionMethod::IS_PUBLIC;
+
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 $modifiers = 0;
@@ -460,7 +458,6 @@ class PHP_Reflection_Parser
                 
                 $type->addConstant($constant);
                 
-                $visibilty = ReflectionMethod::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 $modifiers = 0;
@@ -483,19 +480,16 @@ class PHP_Reflection_Parser
                 
             case PHP_Reflection_TokenizerI::T_PUBLIC:
                 assert(ReflectionProperty::IS_PUBLIC === ReflectionMethod::IS_PUBLIC);
-                $visibilty  = ReflectionMethod::IS_PUBLIC;
                 $modifiers |= ReflectionMethod::IS_PUBLIC;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_PRIVATE:
                 assert(ReflectionProperty::IS_PRIVATE === ReflectionMethod::IS_PRIVATE);
-                $visibilty  = ReflectionMethod::IS_PRIVATE;
                 $modifiers |= ReflectionMethod::IS_PRIVATE;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_PROTECTED:
                 assert(ReflectionProperty::IS_PROTECTED === ReflectionMethod::IS_PROTECTED);
-                $visibilty  = ReflectionMethod::IS_PROTECTED;
                 $modifiers |= ReflectionMethod::IS_PROTECTED;
                 break;
                 
