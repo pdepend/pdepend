@@ -76,9 +76,9 @@ class PHP_Depend_Log_LoggerFactory
      * Set of created logger instances.
      *
      * @type array<PHP_Depend_Log_LoggerI>
-     * @var array(string=>PHP_Depend_Log_LoggerI) $instances
+     * @var array(string=>PHP_Depend_Log_LoggerI) $_instances
      */
-    protected $instances = array();
+    private $_instances = array();
     
     /**
      * Creates a new logger or returns an existing instance for the given 
@@ -91,7 +91,7 @@ class PHP_Depend_Log_LoggerFactory
      */
     public function createLogger($identifier, $fileName)
     {
-        if (!isset($this->instances[$identifier])) {
+        if (!isset($this->_instances[$identifier])) {
             // Extract all parts from the logger identifier
             $words = explode('-', $identifier);
             
@@ -106,9 +106,10 @@ class PHP_Depend_Log_LoggerFactory
             $className = sprintf('PHP_Depend_Log_%s_%s', $package, $class);
             $classFile = sprintf('PHP/Depend/Log/%s/%s.php', $package, $class);
             
-            if ((@include_once $classFile) === false) {
+            if ($this->_fileExists($classFile) === false) {
                 throw new RuntimeException("Unknown logger class '{$className}'.");
             }
+            include_once $classFile;
             
             // Create a new logger instance.
             $logger = new $className();
@@ -119,8 +120,32 @@ class PHP_Depend_Log_LoggerFactory
                 $logger->setLogFile($fileName);
             }
             
-            $this->instances[$identifier] = $logger;
+            $this->_instances[$identifier] = $logger;
         }
-        return $this->instances[$identifier];
+        return $this->_instances[$identifier];
+    }
+    
+    /**
+     * This method checks that the given file exists within the include_path.
+     *
+     * @param string $file A relative file uri.
+     * 
+     * @return boolean
+     */
+    private function _fileExists($file)
+    {
+        // Check default
+        if (file_exists($file) === true) {
+            return true;
+        }
+        // Get configured include_path 
+        $paths = explode(PATH_SEPARATOR, get_include_path());
+        // Check each path for the given file
+        foreach ($paths as $path) {
+            if (realpath($path . DIRECTORY_SEPARATOR . $file) !== false) {
+                return true;
+            }
+        }
+        return false;
     }
 }
