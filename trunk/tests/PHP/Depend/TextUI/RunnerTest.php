@@ -92,8 +92,9 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
-        $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
+        $sources = self::createResourceURI('/textui/bad-documentation');
+        $runner  = new PHP_Depend_TextUI_Runner();
+        $runner->setSourceDirectories(array($sources));
         
         $this->setExpectedException(
             'RuntimeException', 
