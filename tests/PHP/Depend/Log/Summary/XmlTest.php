@@ -50,9 +50,6 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once dirname(__FILE__) . '/_dummy/TestImplAnalyzerNodeAware.php';
 require_once dirname(__FILE__) . '/_dummy/TestImplAnalyzerProjectAware.php';
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Log/Summary/Xml.php';
 
 /**
