@@ -403,7 +403,7 @@ class PHP_Depend
 
         $this->packages = $packages;
         
-        return $packages;
+        return $this->getPackages();
     }
     
     /**
@@ -473,6 +473,9 @@ class PHP_Depend
             $msg = 'getPackages() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
+        // Rewind internal pointer
+        $this->packages->rewind();
+
         return $this->packages;
     }
     
