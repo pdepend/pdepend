@@ -94,8 +94,6 @@ abstract class PHP_Reflection_AbstractTest extends PHPUnit_Framework_TestCase
         $path  = realpath(dirname(__FILE__) . '/../..') ;
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
-        
-//        include_once 'PHP/Depend/Code/Iterator/StaticFilter.php';
     }
     
     /**
