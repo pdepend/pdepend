@@ -87,8 +87,9 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAddDirectory()
     {
+        $sources = self::createResourceURI('/pdepend/complex');
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory($sources);
     }
     
     /**
