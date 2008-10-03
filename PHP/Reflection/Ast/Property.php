@@ -107,7 +107,11 @@ class PHP_Reflection_Ast_Property
     public function setVisibility($visibility)
     {
         // List of allowed visibility values
-        $allowed = array(self::IS_PUBLIC, self::IS_PROTECTED, self::IS_PRIVATE);
+        $allowed = array(
+            ReflectionProperty::IS_PUBLIC, 
+            ReflectionProperty::IS_PROTECTED, 
+            ReflectionProperty::IS_PRIVATE
+        );
         
         // Check for a valid value
         if (in_array($visibility, $allowed, true) === false) {
@@ -127,7 +131,7 @@ class PHP_Reflection_Ast_Property
      */
     public function isPublic()
     {
-        return ($this->_visibility === self::IS_PUBLIC);
+        return ($this->_visibility === ReflectionProperty::IS_PUBLIC);
     }
     
     /**
@@ -138,7 +142,7 @@ class PHP_Reflection_Ast_Property
      */
     public function isProtected()
     {
-        return ($this->_visibility === self::IS_PROTECTED);
+        return ($this->_visibility === ReflectionProperty::IS_PROTECTED);
     }
     
     /**
@@ -149,7 +153,7 @@ class PHP_Reflection_Ast_Property
      */
     public function isPrivate()
     {
-        return ($this->_visibility === self::IS_PRIVATE);
+        return ($this->_visibility === ReflectionProperty::IS_PRIVATE);
     }
     
     /**

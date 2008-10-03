@@ -110,21 +110,45 @@ class PHP_Reflection_Ast_MethodTest extends PHP_Reflection_Ast_AbstractDependenc
     }
     
     /**
-     * Tests that the {@link PHP_Reflection_Ast_Method::setVisibility()} method
-     * fails with an exception for an invalid visibility type.
+     * Tests that the default visibility modifier is public.
      *
      * @return void
      */
-    public function testSetInvalidVisibilityFail()
+    public function testDefaultModifierIsPublic()
     {
-        $this->setExpectedException('InvalidArgumentException');
-        
-        $method = new PHP_Reflection_Ast_Method('method');
-        $method->setVisibility(0);
+        $method  = new PHP_Reflection_Ast_Method('method', 0);
+        $this->assertEquals($method->getModifiers(), ReflectionMethod::IS_PUBLIC);
     }
     
     /**
-     * Tests that the {@link PHP_Reflection_Ast_Method::setVisibility()} method
+     * Tests that the default behavior of a method applies the public modifier
+     * when no other visibility modifier was set.
+     *
+     */
+    public function testPublicModifierIsAppliedWhenNoVisibilityWasSet()
+    {
+        $method  = new PHP_Reflection_Ast_Method('method', 0);
+        $method->setModifiers(ReflectionMethod::IS_ABSTRACT);
+
+        $this->assertTrue(($method->getModifiers() & ReflectionMethod::IS_ABSTRACT) === ReflectionMethod::IS_ABSTRACT);
+        $this->assertTrue(($method->getModifiers() & ReflectionMethod::IS_PUBLIC) === ReflectionMethod::IS_PUBLIC);        
+    }
+    
+    /**
+     * Tests that the default visibility of a method is public.
+     *
+     * @return void
+     */
+    public function testSetVisibilityDefaultIsPublicValue()
+    {
+        $method = new PHP_Reflection_Ast_Method('method');
+        $this->assertTrue($method->isPublic());
+        $this->assertFalse($method->isProtected());
+        $this->assertFalse($method->isPrivate());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Reflection_Ast_Method::setModifiers()} method
      * accepts the defined visibility value.
      *
      * @return void
@@ -132,14 +156,14 @@ class PHP_Reflection_Ast_MethodTest extends PHP_Reflection_Ast_AbstractDependenc
     public function testSetVisibilityAcceptsPublicValue()
     {
         $method = new PHP_Reflection_Ast_Method('method');
-        $method->setVisibility(PHP_Reflection_Ast_VisibilityAwareI::IS_PUBLIC);
+        $method->setModifiers(ReflectionMethod::IS_PUBLIC);
         $this->assertTrue($method->isPublic());
         $this->assertFalse($method->isProtected());
         $this->assertFalse($method->isPrivate());
     }
     
     /**
-     * Tests that the {@link PHP_Reflection_Ast_Method::setVisibility()} method
+     * Tests that the {@link PHP_Reflection_Ast_Method::setModifiers()} method
      * accepts the defined visibility value.
      *
      * @return void
@@ -147,14 +171,14 @@ class PHP_Reflection_Ast_MethodTest extends PHP_Reflection_Ast_AbstractDependenc
     public function testSetVisibilityAcceptsProtectedValue()
     {
         $method = new PHP_Reflection_Ast_Method('method');
-        $method->setVisibility(PHP_Reflection_Ast_VisibilityAwareI::IS_PROTECTED);
+        $method->setModifiers(ReflectionMethod::IS_PROTECTED);
         $this->assertTrue($method->isProtected());
         $this->assertFalse($method->isPublic());
         $this->assertFalse($method->isPrivate());
     }
     
     /**
-     * Tests that the {@link PHP_Reflection_Ast_Method::setVisibility()} method
+     * Tests that the {@link PHP_Reflection_Ast_Method::setModifiers()} method
      * accepts the defined visibility value.
      *
      * @return void
@@ -162,26 +186,10 @@ class PHP_Reflection_Ast_MethodTest extends PHP_Reflection_Ast_AbstractDependenc
     public function testSetVisibilityAcceptsPrivateValue()
     {
         $method = new PHP_Reflection_Ast_Method('method');
-        $method->setVisibility(PHP_Reflection_Ast_VisibilityAwareI::IS_PRIVATE);
+        $method->setModifiers(ReflectionMethod::IS_PRIVATE);
         $this->assertTrue($method->isPrivate());
         $this->assertFalse($method->isPublic());
         $this->assertFalse($method->isProtected());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Reflection_Ast_Method::setVisibility()} method
-     * ignores repeated calls if the internal value is set.
-     *
-     * @return void
-     */
-    public function testSetVisibilityOnlyAcceptsTheFirstValue()
-    {
-        $method = new PHP_Reflection_Ast_Method('method');
-        $this->assertFalse($method->isPublic());
-        $method->setVisibility(PHP_Reflection_Ast_VisibilityAwareI::IS_PUBLIC);
-        $this->assertTrue($method->isPublic());
-        $method->setVisibility(PHP_Reflection_Ast_VisibilityAwareI::IS_PROTECTED);
-        $this->assertTrue($method->isPublic());
     }
     
     /**
