@@ -46,8 +46,6 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/VisibilityI.php';
-
 /**
  * Contains the available visiblity constants for methods and class properties.
  *
@@ -60,22 +58,8 @@ require_once 'PHP/Reflection/VisibilityI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_Ast_VisibilityAwareI extends PHP_Reflection_VisibilityI
+interface PHP_Reflection_Ast_VisibilityAwareI
 {
-    /**
-     * Sets the visibility for this node. 
-     * 
-     * The given <b>$visibility</b> value must equal to one of the defined 
-     * constants, otherwith this method will fail with an exception.
-     *
-     * @param integer $visibility The node visibility.
-     * 
-     * @return void
-     * @throws InvalidArgumentException If the given visibility is not equal to
-     *                                  one of the defined visibility constants.
-     */
-    function setVisibility($visibility);
-    
     /**
      * Returns <b>true</b> if this node is marked as public, otherwise the 
      * returned value will be <b>false</b>.
