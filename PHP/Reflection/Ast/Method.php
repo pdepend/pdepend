@@ -74,20 +74,12 @@ class PHP_Reflection_Ast_Method
     protected $abstract = false;
     
     /**
-     * Set defined visibility for this method.
-     *
-     * @type integer
-     * @var integer $visibility
-     */
-    protected $visibility = -1;
-    
-    /**
      * The parent type object.
      *
      * @type PHP_Reflection_Ast_AbstractType
-     * @var PHP_Reflection_Ast_AbstractType $parent
+     * @var PHP_Reflection_Ast_AbstractType $_parent
      */
-    protected $parent = null;
+    private $_parent = null;
     
     /**
      * Method position within its parent class or interface.
@@ -209,7 +201,7 @@ class PHP_Reflection_Ast_Method
      */
     public function getParent()
     {
-        return $this->parent;
+        return $this->_parent;
     }
     
     /**
@@ -221,7 +213,7 @@ class PHP_Reflection_Ast_Method
      */
     public function setParent(PHP_Reflection_Ast_AbstractType $parent = null)
     {
-        $this->parent = $parent;
+        $this->_parent = $parent;
     }
     
     /**
