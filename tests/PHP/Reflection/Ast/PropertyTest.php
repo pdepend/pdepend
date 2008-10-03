@@ -66,34 +66,86 @@ require_once 'PHP/Reflection/Ast/Property.php';
 class PHP_Reflection_Ast_PropertyTest extends PHP_Reflection_Ast_AbstractItemTest
 {
     /**
-     * Tests that {@link PHP_Reflection_Ast_Property::setVisibility()} fails with
-     * an exception for invalid visibility values.
+     * Tests that the default visibility modifier is public.
      *
      * @return void
      */
-    public function testSetVisibilityWithInvalidVisibilityTypeFail()
+    public function testDefaultModifierIsPublic()
     {
-        $this->setExpectedException('InvalidArgumentException');
-        
-        $property = $this->createItem();
-        $property->setVisibility(-1);
+        $property = new PHP_Reflection_Ast_Property('$prop', 0);
+        $this->assertEquals($property->getModifiers(), ReflectionProperty::IS_PUBLIC);
     }
     
     /**
-     * Tests that {@link PHP_Reflection_Ast_Property::setVisibility()} only accepts
-     * the first set value, later method calls will be ignored.
+     * Tests that the default behavior of a property applies the public modifier
+     * when no other visibility modifier was set.
+     *
+     */
+    public function testPublicModifierIsAppliedWhenNoVisibilityWasSet()
+    {
+        $property = new PHP_Reflection_Ast_Property('$prop', 0);
+        $property->setModifiers(ReflectionProperty::IS_STATIC);
+
+        $this->assertTrue(($property->getModifiers() & ReflectionProperty::IS_STATIC) === ReflectionProperty::IS_STATIC);
+        $this->assertTrue(($property->getModifiers() & ReflectionProperty::IS_PUBLIC) === ReflectionProperty::IS_PUBLIC);        
+    }
+    
+    /**
+     * Tests that the default visibility of a property is public.
      *
      * @return void
      */
-    public function testSetVisibilityOnlyAcceptsTheFirstValue()
+    public function testSetVisibilityDefaultIsPublicValue()
     {
-        $property = $this->createItem();
-        $this->assertFalse($property->isPublic());
-        $property->setVisibility(ReflectionMethod::IS_PUBLIC);
+        $property = new PHP_Reflection_Ast_Property('$prop');
         $this->assertTrue($property->isPublic());
-        $property->setVisibility(ReflectionMethod::IS_PRIVATE);
-        $this->assertTrue($property->isPublic());
+        $this->assertFalse($property->isProtected());
         $this->assertFalse($property->isPrivate());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Reflection_Ast_Property::setModifiers()} method
+     * accepts the defined visibility value.
+     *
+     * @return void
+     */
+    public function testSetVisibilityAcceptsPublicValue()
+    {
+        $property = new PHP_Reflection_Ast_Property('$prop');
+        $property->setModifiers(ReflectionProperty::IS_PUBLIC);
+        $this->assertTrue($property->isPublic());
+        $this->assertFalse($property->isProtected());
+        $this->assertFalse($property->isPrivate());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Reflection_Ast_Property::setModifiers()} method
+     * accepts the defined visibility value.
+     *
+     * @return void
+     */
+    public function testSetVisibilityAcceptsProtectedValue()
+    {
+        $property = new PHP_Reflection_Ast_Property('$prop');
+        $property->setModifiers(ReflectionProperty::IS_PROTECTED);
+        $this->assertTrue($property->isProtected());
+        $this->assertFalse($property->isPublic());
+        $this->assertFalse($property->isPrivate());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Reflection_Ast_Property::setModifiers()} method
+     * accepts the defined visibility value.
+     *
+     * @return void
+     */
+    public function testSetVisibilityAcceptsPrivateValue()
+    {
+        $property = new PHP_Reflection_Ast_Property('$prop');
+        $property->setModifiers(ReflectionProperty::IS_PRIVATE);
+        $this->assertTrue($property->isPrivate());
+        $this->assertFalse($property->isPublic());
+        $this->assertFalse($property->isProtected());
     }
     
     /**
