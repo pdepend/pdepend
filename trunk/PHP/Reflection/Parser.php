@@ -48,6 +48,8 @@
 require_once 'PHP/Reflection/BuilderI.php';
 require_once 'PHP/Reflection/TokenizerI.php';
 
+require_once 'PHP/Reflection/Exceptions/UnclosedBodyException.php';
+
 /**
  * The php source parser.
  * 
@@ -407,9 +409,8 @@ class PHP_Reflection_Parser
         }
         
         if ($curly !== 0) {
-            $fileName = (string) $this->tokenizer->getSourceFile();
-            $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
-            throw new RuntimeException($message);
+            $file = $this->tokenizer->getSourceFile();
+            throw new PHP_Reflection_Exceptions_UnclosedBodyException($file);
         }
         
         return $tokens;
@@ -518,9 +519,8 @@ class PHP_Reflection_Parser
         }
         
         if ($curly !== 0) {
-            $fileName = (string) $this->tokenizer->getSourceFile();
-            $message  = "Invalid state, unclosed interface body in file '{$fileName}'.";
-            throw new RuntimeException($message);
+            $file = $this->tokenizer->getSourceFile();
+            throw new PHP_Reflection_Exceptions_UnclosedBodyException($file);
         }
         
         return $tokens;
