@@ -101,6 +101,23 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
     }
     
     /**
+     * Tests that the default {@link PHP_Reflection_Ast_Class::isFinal()}
+     * value is <b>false</b> but could be changed.
+     *
+     * @return void
+     */
+    public function testMarkClassInstanceAsFinal()
+    {
+        $class = new PHP_Reflection_Ast_Class('clazz', 0);
+        
+        $this->assertFalse($class->isFinal());
+        $class->setModifiers(ReflectionClass::IS_FINAL);
+        $this->assertTrue($class->isFinal());
+        $class->setModifiers(0);
+        $this->assertFalse($class->isFinal());
+    }
+    
+    /**
      * Tests that a new {@link PHP_Reflection_Ast_Class} object returns an empty
      * {@link PHP_Reflection_Ast_Iterator} instance for methods.
      *

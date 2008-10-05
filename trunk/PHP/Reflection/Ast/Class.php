@@ -127,6 +127,18 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
     }
     
     /**
+     * Returns <b>true</b> if this class is markes as final.
+     *
+     * @return boolean
+     */
+    public function isFinal()
+    {
+        return (ReflectionClass::IS_FINAL === (
+            $this->_modifiers & ReflectionClass::IS_FINAL
+        ));
+    }
+    
+    /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
      * @return PHP_Reflection_Ast_Class

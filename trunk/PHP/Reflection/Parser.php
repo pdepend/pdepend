@@ -240,8 +240,11 @@ class PHP_Reflection_Parser
             
                 switch ($token[0]) {
                 case PHP_Reflection_TokenizerI::T_ABSTRACT:
-                    $this->_abstract = true;
                     $this->_modifiers |= ReflectionClass::IS_EXPLICIT_ABSTRACT;
+                    break;
+                    
+                case PHP_Reflection_TokenizerI::T_FINAL:
+                    $this->_modifiers |= ReflectionClass::IS_FINAL;
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
@@ -634,7 +637,6 @@ class PHP_Reflection_Parser
      */
     protected function reset()
     {
-        $this->_abstract  = false;
         $this->_comment   = null;
         $this->_modifiers = 0;
         $this->_package   = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
