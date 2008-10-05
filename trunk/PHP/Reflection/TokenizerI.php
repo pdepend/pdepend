@@ -846,4 +846,12 @@ interface PHP_Reflection_TokenizerI
      * @return integer
      */
     function prev();
+    
+    /**
+     * Returns the current token array or {@link PHP_Reflection_TokenizerI::T_EOF}
+     * if there is no current token.
+     *
+     * @return array|integer
+     */
+    function token();
 }
