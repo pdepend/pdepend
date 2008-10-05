@@ -1516,6 +1516,35 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertFalse($types->current());
     }
     
+    /**
+     * Tests that the parse handles the final modifier for classes correct.
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=52&project=5
+     *
+     * @return void
+     */
+    public function testParserHandlesFinalClassesIssue52()
+    {
+        $packages = self::parseSource('/issues/52.php');
+        $classes  = $packages->current()->getTypes();
+        
+        $this->assertEquals(3, $classes->count());
+        
+        $expected = array('Bar' => true, 'Foo' => false, 'Foobar' => true);
+        foreach ($classes as $class) {
+            // Get class name
+            $name = $class->getName();
+            // Check valid name
+            $this->assertArrayHasKey($name, $expected);
+            // Compare results
+            $this->assertEquals($expected[$name], $class->isFinal());
+            // Remove offset
+            unset($expected[$name]);
+        }
+        // Check everything was found
+        $this->assertEquals(0, count($expected));
+    }
+    
     public function testParserSetsCorrectMethodPositionIssue39()
     {
         $this->markTestIncomplete('Test not implemented yet.');
