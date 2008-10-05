@@ -112,6 +112,15 @@ class PHP_Reflection_Parser
     private $_comment = null;
     
     /**
+     * Object modifiers likes <b>IS_ABSTRACT</b>, <b>IS_FINAL</b>, <b>IS_PUBLIC</b>
+     * etc.
+     * 
+     * @type integer
+     * @var integer $_modifiers
+     */
+    private $_modifiers = 0;
+    
+    /**
      * Last parsed package tag.
      *
      * @type string
@@ -126,6 +135,14 @@ class PHP_Reflection_Parser
      * @var integer $_typePosition
      */
     private $_typePosition = 0;
+    
+    /**
+     * Position of the method within the analyzed context type.
+     *
+     * @type integer
+     * @var integer $_methodPosition
+     */
+    private $_methodPosition = 0;
     
     /**
      * The used code tokenizer.
@@ -239,11 +256,11 @@ class PHP_Reflection_Parser
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_INTERFACE:
-                    $this->_parseInterface();
+                    $this->_parseInterfaceDeclaration();
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_CLASS:
-                    $this->_parseClass();
+                    $this->_parseClassDeclaration();
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_FUNCTION:
@@ -273,7 +290,7 @@ class PHP_Reflection_Parser
      *
      * @return void
      */
-    private function _parseClass()
+    private function _parseClassDeclaration()
     {
         // Get class name
         $token = $this->tokenizer->next();
@@ -291,8 +308,111 @@ class PHP_Reflection_Parser
     
         $this->builder->buildPackage($this->_package)->addType($class);
     
-        $this->parseTypeBody($class);
         $this->reset();
+        $this->_parseClassDeclarationBody($class);
+    }
+    
+    /**
+     * Parses a class body.
+     * 
+     * @param PHP_Reflection_Ast_Class $class The context class instance.
+     *
+     * @return array(array)
+     */
+    private function _parseClassDeclarationBody(PHP_Reflection_Ast_Class $class)
+    {
+        $token = $this->tokenizer->next();
+        $curly = 0;
+        
+        $tokens = array($token);
+        
+        // Method position within the type body
+        $this->_methodPosition = 0;
+        
+        while ($token !== PHP_Reflection_TokenizerI::T_EOF) {
+            
+            switch ($token[0]) {
+            case PHP_Reflection_TokenizerI::T_FUNCTION:
+                $class->addMethod($this->_parseMethodDeclaration($tokens));
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_VARIABLE:
+                $class->addProperty($this->_parsePropertyDeclaration($tokens));
+                break;
+            
+            case PHP_Reflection_TokenizerI::T_CONST:
+                $class->addConstant($this->_parseConstantDeclaration($tokens));
+                break;
+                    
+            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN:
+                ++$curly;
+                $this->reset();
+                break;
+                    
+            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE:
+                --$curly;
+                $this->reset();
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_ABSTRACT:
+                $this->_modifiers |= ReflectionMethod::IS_ABSTRACT;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_VAR:
+            case PHP_Reflection_TokenizerI::T_PUBLIC:
+                assert(ReflectionProperty::IS_PUBLIC === ReflectionMethod::IS_PUBLIC);
+                $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_PRIVATE:
+                assert(ReflectionProperty::IS_PRIVATE === ReflectionMethod::IS_PRIVATE);
+                $this->_modifiers |= ReflectionMethod::IS_PRIVATE;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_PROTECTED:
+                assert(ReflectionProperty::IS_PROTECTED === ReflectionMethod::IS_PROTECTED);
+                $this->_modifiers |= ReflectionMethod::IS_PROTECTED;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_STATIC:
+                assert(ReflectionMethod::IS_STATIC === ReflectionProperty::IS_STATIC);
+                $this->_modifiers |= ReflectionMethod::IS_STATIC;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_FINAL:
+                $this->_modifiers |= ReflectionMethod::IS_FINAL;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
+                $this->_comment = $token[1];
+                break;
+            
+            default:
+                // TODO: Handle/log unused tokens
+                $this->reset();
+                break;
+            }
+            
+            if ($curly === 0) {
+                // Set end line number 
+                $class->setEndLine($token[2]);
+                // Set type tokens
+                $class->setTokens($tokens);
+                // Stop processing
+                break;
+            } else {
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
+            }
+        }
+        
+        if ($curly !== 0) {
+            $fileName = (string) $this->tokenizer->getSourceFile();
+            $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
+            throw new RuntimeException($message);
+        }
+        
+        return $tokens;
     }
     
     /**
@@ -300,7 +420,7 @@ class PHP_Reflection_Parser
      *
      * @return void
      */
-    private function _parseInterface()
+    private function _parseInterfaceDeclaration()
     {
         // Get interface name
         $token = $this->tokenizer->next();
@@ -316,9 +436,194 @@ class PHP_Reflection_Parser
         $this->parseInterfaceSignature($interface);
 
         $this->builder->buildPackage($this->_package)->addType($interface);
-
-        $this->parseTypeBody($interface);
+        
         $this->reset();
+        $this->_parseInterfaceDeclarationBody($interface);
+    }
+    
+    /**
+     * Parses a interface body.
+     * 
+     * @param PHP_Reflection_Ast_Interface $interface The context interface instance.
+     *
+     * @return array(array)
+     */
+    private function _parseInterfaceDeclarationBody(
+                                        PHP_Reflection_Ast_Interface $interface)
+    {
+        $token = $this->tokenizer->next();
+        $curly = 0;
+        
+        $tokens = array($token);
+        
+        // Method position within the type body
+        $this->_methodPosition = 0;
+        
+        while ($token !== PHP_Reflection_TokenizerI::T_EOF) {
+            
+            switch ($token[0]) {
+            case PHP_Reflection_TokenizerI::T_FUNCTION:
+                // We know all interface methods are abstract and public
+                $this->_modifiers |= ReflectionMethod::IS_ABSTRACT;
+                $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
+                
+                $interface->addMethod($this->_parseMethodDeclaration($tokens));
+                break;
+            
+            case PHP_Reflection_TokenizerI::T_CONST:
+                $interface->addConstant($this->_parseConstantDeclaration($tokens));
+                break;
+                    
+            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN:
+                ++$curly;
+                $this->reset();
+                break;
+                    
+            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE:
+                --$curly;
+                $this->reset();
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_PUBLIC:
+                assert(ReflectionProperty::IS_PUBLIC === ReflectionMethod::IS_PUBLIC);
+                $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_STATIC:
+                assert(ReflectionMethod::IS_STATIC === ReflectionProperty::IS_STATIC);
+                $this->_modifiers |= ReflectionMethod::IS_STATIC;
+                break;
+                
+            case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
+                $this->_comment = $token[1];
+                break;
+            
+            default:
+                // TODO: Handle/log unused tokens
+                $this->reset();
+                break;
+            }
+            
+            if ($curly === 0) {
+                // Set end line number 
+                $interface->setEndLine($token[2]);
+                // Set type tokens
+                $interface->setTokens($tokens);
+                // Stop processing
+                break;
+            } else {
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
+            }
+        }
+        
+        if ($curly !== 0) {
+            $fileName = (string) $this->tokenizer->getSourceFile();
+            $message  = "Invalid state, unclosed interface body in file '{$fileName}'.";
+            throw new RuntimeException($message);
+        }
+        
+        return $tokens;
+    }
+    
+    
+    
+    /**
+     * Parses a class or interface constant declaration.
+     * 
+     * <code>
+     * interface PHP_Reflection_Tokens {
+     *     const T_PUBLIC = 42;
+     * }
+     * </code>
+     *
+     * @param array &$tokens List of parsed tokens.
+     * 
+     * @return PHP_Reflection_Ast_TypeConstant
+     */
+    private function _parseConstantDeclaration(array &$tokens)
+    {
+        // Get constant identifier
+        $token    = $this->tokenizer->next();
+        $tokens[] = $token;
+
+        $constant = $this->builder->buildTypeConstant($token[1]);
+        $constant->setDocComment($this->_comment);
+        $constant->setStartLine($token[2]);
+        $constant->setEndLine($token[2]);
+
+        $this->reset();
+        
+        return $constant;
+    }
+    
+    /**
+     * Parses a class property declaration.
+     * 
+     * <code>
+     * class PHP_Reflection_Parser {
+     *     private $_package = 'php::reflection';
+     * }
+     * </code>
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     * 
+     * @return PHP_Reflection_Ast_Property
+     */
+    private function _parsePropertyDeclaration(array &$tokens)
+    {
+        // Get property identifier
+        $token    = $this->tokenizer->token();
+        $tokens[] = $token;
+        
+        $property = $this->builder->buildProperty($token[1], $token[2]);
+        $property->setDocComment($this->_comment);
+        $property->setModifiers($this->_modifiers);
+        $property->setEndLine($token[2]);
+                
+        $this->_prepareProperty($property);
+                
+        $this->reset();
+
+        return $property;
+    }
+    
+    /**
+     * Parses a class or interface method declaration.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     * 
+     * @return PHP_Reflection_Ast_Method
+     */
+    private function _parseMethodDeclaration(array &$tokens)
+    {
+        $token    = $this->tokenizer->next();
+        $tokens[] = $token;
+        
+        if ($token[0] === PHP_Reflection_TokenizerI::T_BITWISE_AND) {
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+        }
+        
+        $method = $this->builder->buildMethod($token[1], $token[2]);
+
+        $this->parseCallableSignature($tokens, $method);
+        if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
+            // Get function body dependencies 
+            $this->parseCallableBody($tokens, $method);
+        } else {
+            $method->setEndLine($token[2]);
+        }
+
+        $method->setDocComment($this->_comment);
+        $method->setPosition($this->_methodPosition++);
+        $method->setModifiers($this->_modifiers);
+                
+        $this->_prepareCallable($method);
+                
+        $this->reset();
+        
+        return $method;
     }
     
     /**
@@ -328,9 +633,10 @@ class PHP_Reflection_Parser
      */
     protected function reset()
     {
-        $this->_abstract = false;
-        $this->_comment  = null;
-        $this->_package  = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
+        $this->_abstract  = false;
+        $this->_comment   = null;
+        $this->_modifiers = 0;
+        $this->_package   = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
     }
     
     /**
@@ -382,153 +688,6 @@ class PHP_Reflection_Parser
                 // Set class dependency
                 $class->addDependency($dependency);
             }
-        }
-        
-        return $tokens;
-    }
-    
-    /**
-     * Parses a class/interface body.
-     * 
-     * @param PHP_Reflection_Ast_AbstractType $type The context type instance.
-     *
-     * @return array(array)
-     */
-    protected function parseTypeBody(PHP_Reflection_Ast_AbstractType $type)
-    {
-        $token = $this->tokenizer->next();
-        $curly = 0;
-        
-        $tokens = array($token);
-        
-        // If type is an interface all methods are abstract
-        $abstractDefault = ($type instanceof PHP_Reflection_Ast_Interface);
-        $defaultModifier = 0;
-        
-        $comment   = null;
-        $abstract  = $abstractDefault;
-        $modifiers = 0;
-        
-        // Method position within the type body
-        $methodPosition = 0;
-        
-        while ($token !== PHP_Reflection_TokenizerI::T_EOF) {
-            
-            switch ($token[0]) {
-            case PHP_Reflection_TokenizerI::T_FUNCTION:
-                $method = $this->parseCallable($tokens, $type);
-                $method->setDocComment($comment);
-                $method->setAbstract($abstract);
-                $method->setPosition($methodPosition++);
-                $method->setModifiers($modifiers);
-                
-                $this->_prepareCallable($method);
-
-                $comment   = null;
-                $abstract  = $abstractDefault;
-                $modifiers = 0;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_VARIABLE:
-                $property = $this->builder->buildProperty($token[1], $token[2]);
-                $property->setDocComment($comment);
-                $property->setModifiers($modifiers);
-                $property->setEndLine($token[2]);
-                
-                $this->_prepareProperty($property);
-                
-                // TODO: Do we need an instanceof, to check that $type is a
-                //       PHP_Reflection_Ast_Class instance or do we believe the 
-                //       code is correct?
-                $type->addProperty($property);
-
-                $comment   = null;
-                $abstract  = $abstractDefault;
-                $modifiers = 0;
-                break;
-            
-            case PHP_Reflection_TokenizerI::T_CONST:
-                $token    = $this->tokenizer->next();
-                $tokens[] = $token;
-                
-                $constant = $this->builder->buildTypeConstant($token[1]);
-                $constant->setDocComment($comment);
-                $constant->setStartLine($token[2]);
-                $constant->setEndLine($token[2]);
-                
-                $type->addConstant($constant);
-                
-                $comment   = null;
-                $abstract  = $abstractDefault;
-                $modifiers = 0;
-                break;
-                    
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN:
-                ++$curly;
-                $comment = null;
-                break;
-                    
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE:
-                --$curly;
-                $comment = null;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_ABSTRACT:
-                $abstract = true;
-                $modifiers |= ReflectionMethod::IS_ABSTRACT;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_PUBLIC:
-                assert(ReflectionProperty::IS_PUBLIC === ReflectionMethod::IS_PUBLIC);
-                $modifiers |= ReflectionMethod::IS_PUBLIC;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_PRIVATE:
-                assert(ReflectionProperty::IS_PRIVATE === ReflectionMethod::IS_PRIVATE);
-                $modifiers |= ReflectionMethod::IS_PRIVATE;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_PROTECTED:
-                assert(ReflectionProperty::IS_PROTECTED === ReflectionMethod::IS_PROTECTED);
-                $modifiers |= ReflectionMethod::IS_PROTECTED;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_STATIC:
-                assert(ReflectionMethod::IS_STATIC === ReflectionProperty::IS_STATIC);
-                $modifiers |= ReflectionMethod::IS_STATIC;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_FINAL:
-                $modifiers |= ReflectionMethod::IS_FINAL;
-                break;
-                
-            case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
-                $comment = $token[1];
-                break;
-            
-            default:
-                // TODO: Handle/log unused tokens
-                $comment = null; 
-                break;
-            }
-            
-            if ($curly === 0) {
-                // Set end line number 
-                $type->setEndLine($token[2]);
-                // Set type tokens
-                $type->setTokens($tokens);
-                // Stop processing
-                break;
-            } else {
-                $token    = $this->tokenizer->next();
-                $tokens[] = $token;
-            }
-        }
-        
-        if ($curly !== 0) {
-            $fileName = (string) $this->tokenizer->getSourceFile();
-            $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
-            throw new RuntimeException($message);
         }
         
         return $tokens;
