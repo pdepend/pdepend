@@ -267,6 +267,14 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
     protected $tokens = array();
     
     /**
+     * The current token array or {@link PHP_Reflection_Tokenizer::T_EOF}.
+     *
+     * @type mixed
+     * @var array|integer $_current
+     */
+    private $_token = self::T_EOF;
+    
+    /**
      * The next free identifier for unknown string tokens.
      *
      * @type integer
@@ -319,9 +327,11 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
     public function next()
     {
         if ($this->index < $this->count) {
-            return $this->tokens[$this->index++];
+            $this->_token = $this->tokens[$this->index++];
+        } else {
+            $this->_token = self::T_EOF;
         }
-        return self::T_EOF;
+        return $this->_token;
     }
     
     /**
@@ -350,6 +360,17 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
             return $this->tokens[$this->index - 2][0];
         }
         return self::T_BOF;
+    }
+    
+    /**
+     * Returns the current token array or {@link PHP_Reflection_TokenizerI::T_EOF}
+     * if there is no current token.
+     *
+     * @return array|integer
+     */
+    public function token()
+    {
+        return $this->_token;
     }
     
     /**
@@ -443,6 +464,11 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         }
         
         $this->count = count($this->tokens);
+        if ($this->count > 0) {
+            $this->_token = $this->tokens[0];
+        } else {
+            $this->_token = self::T_EOF;
+        }
     }
     
     /**

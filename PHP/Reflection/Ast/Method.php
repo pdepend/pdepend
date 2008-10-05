@@ -139,7 +139,9 @@ class PHP_Reflection_Ast_Method
      */
     public function isAbstract()
     {
-        return $this->abstract;
+        return (ReflectionMethod::IS_ABSTRACT === (
+            $this->_modifiers & ReflectionMethod::IS_ABSTRACT
+        ));
     }
     
     /**
@@ -151,7 +153,7 @@ class PHP_Reflection_Ast_Method
      */
     public function setAbstract($abstract)
     {
-        $this->abstract = $abstract;
+
     }
     
     /**
