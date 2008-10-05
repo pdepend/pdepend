@@ -241,6 +241,7 @@ class PHP_Reflection_Parser
                 switch ($token[0]) {
                 case PHP_Reflection_TokenizerI::T_ABSTRACT:
                     $this->_abstract = true;
+                    $this->_modifiers |= ReflectionClass::IS_EXPLICIT_ABSTRACT;
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
@@ -302,7 +303,7 @@ class PHP_Reflection_Parser
         $class = $this->builder->buildClass($qualifiedName, $token[2]);
         $class->setSourceFile($this->tokenizer->getSourceFile());
         $class->setStartLine($token[2]);
-        $class->setAbstract($this->_abstract);
+        $class->setModifiers($this->_modifiers);
         $class->setDocComment($this->_comment);
         $class->setPosition($this->_typePosition++);
                     

@@ -72,6 +72,19 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
     protected $abstract = false;
     
     /**
+     * Declared modifiers for this class.
+     * 
+     * <ul>
+     *   <li>ReflectionMethod::IS_EXPLICIT_ABSTRACT</li>
+     *   <li>ReflectionMethod::IS_FINAL</li>
+     *   <li>ReflectionMethod::IS_IMPLICIT_ABSTRACT</li>
+     * </ul>
+     *
+     * @var unknown_type
+     */
+    private $_modifiers = 0;
+    
+    /**
      * List of associated properties.
      *
      * @type array<PHP_Reflection_Ast_Property>
@@ -80,25 +93,37 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
     protected $properties = array();
     
     /**
+     * Sets the modifiers for this class.
+     *
+     * @param integer $modifiers The class modifiers.
+     * 
+     * @return void
+     */
+    public function setModifiers($modifiers)
+    {
+        $this->_modifiers = (int) $modifiers;
+    }
+    
+    /**
+     * Returns the declared modifiers for this class.
+     *
+     * @return integer
+     */
+    public function getModifiers()
+    {
+        return $this->_modifiers;
+    }
+    
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
      */
     public function isAbstract()
     {
-        return $this->abstract;
-    }
-    
-    /**
-     * Marks this as an abstract class or interface.
-     *
-     * @param boolean $abstract Set this to <b>true</b> for an abstract class.
-     * 
-     * @return void
-     */
-    public function setAbstract($abstract)
-    {
-        $this->abstract = $abstract;
+        return (ReflectionClass::IS_EXPLICIT_ABSTRACT === (
+            $this->_modifiers & ReflectionClass::IS_EXPLICIT_ABSTRACT
+        ));
     }
     
     /**

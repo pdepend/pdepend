@@ -94,9 +94,9 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
         $class = new PHP_Reflection_Ast_Class('clazz', 0);
         
         $this->assertFalse($class->isAbstract());
-        $class->setAbstract(true);
+        $class->setModifiers(ReflectionClass::IS_EXPLICIT_ABSTRACT);
         $this->assertTrue($class->isAbstract());
-        $class->setAbstract(false);
+        $class->setModifiers(0);
         $this->assertFalse($class->isAbstract());
     }
     
