@@ -270,13 +270,7 @@ class PHP_Reflection_Parser
                     break;
                         
                 case PHP_Reflection_TokenizerI::T_FUNCTION:
-                    $function = $this->parseCallable();
-                    $function->setSourceFile($this->tokenizer->getSourceFile());
-                    $function->setDocComment($this->_comment);
-                    
-                    $this->_prepareCallable($function);
-                    
-                    $this->reset();
+                    $this->_parseFunctionDeclaration();
                     break;
                         
                 default:
@@ -289,6 +283,45 @@ class PHP_Reflection_Parser
             $this->globalPackage = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
             $this->_typePosition = 0;
         }
+    }
+    
+    /**
+     * Parses a function node.
+     *
+     * @return void
+     */
+    private function _parseFunctionDeclaration()
+    {
+        $token    = $this->tokenizer->next();
+        $tokens[] = $token;
+        
+        if ($token[0] === PHP_Reflection_TokenizerI::T_BITWISE_AND) {
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+        }
+        
+        $function = $this->builder->buildFunction($token[1], $token[2]);
+            
+        $package = $this->globalPackage;
+        if ($this->_package !== PHP_Reflection_BuilderI::GLOBAL_PACKAGE) {
+            $package = $this->_package;
+        }
+        $this->builder->buildPackage($package)->addFunction($function);
+        
+        $this->parseCallableSignature($tokens, $function);
+        if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
+            // Get function body dependencies 
+            $this->parseCallableBody($tokens, $function);
+        } else {
+            $function->setEndLine($token[2]);
+        }
+        
+        $function->setSourceFile($this->tokenizer->getSourceFile());
+        $function->setDocComment($this->_comment);
+        
+        $this->_prepareCallable($function);
+                    
+        $this->reset();        
     }
     
     /**
@@ -694,51 +727,6 @@ class PHP_Reflection_Parser
         }
         
         return $tokens;
-    }
-    
-    /**
-     * Parses a function or a method and adds it to the parent context node.
-     * 
-     * @param array(array)                    &$tokens Collected tokens.
-     * @param PHP_Reflection_Ast_AbstractType $parent  An optional parent 
-     *                                                 interface of class.
-     * 
-     * @return PHP_Reflection_Ast_AbstractCallable
-     */
-    protected function parseCallable(array &$tokens = array(), PHP_Reflection_Ast_AbstractType $parent = null)
-    {
-        $token    = $this->tokenizer->next();
-        $tokens[] = $token;
-        
-        if ($token[0] === PHP_Reflection_TokenizerI::T_BITWISE_AND) {
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-        }
-        
-        $callable = null;
-        if ($parent === null) {
-            $callable = $this->builder->buildFunction($token[1], $token[2]);
-            
-            $package = $this->globalPackage;
-            if ($this->_package !== PHP_Reflection_BuilderI::GLOBAL_PACKAGE) {
-                $package = $this->_package;
-            }
-
-            $this->builder->buildPackage($package)->addFunction($callable); 
-        } else {
-            $callable = $this->builder->buildMethod($token[1], $token[2]);
-            $parent->addMethod($callable);
-        }
-        
-        $this->parseCallableSignature($tokens, $callable);
-        if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
-            // Get function body dependencies 
-            $this->parseCallableBody($tokens, $callable);
-        } else {
-            $callable->setEndLine($token[2]);
-        }
-        
-        return $callable;
     }
 
     /**
