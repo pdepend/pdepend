@@ -1,0 +1,9 @@
+<?php
+/**
+ * @package bar
+ */
+class /* Strip comment */ Foo extends bar::foo::Bar // Strip comment
+implements /* Strip comment */ foobar::FooBar, foo::ooF {
+
+}  
+?>
