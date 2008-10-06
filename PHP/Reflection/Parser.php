@@ -46,9 +46,12 @@
  */
 
 require_once 'PHP/Reflection/BuilderI.php';
+require_once 'PHP/Reflection/ParserConstantsI.php';
 require_once 'PHP/Reflection/TokenizerI.php';
 
+require_once 'PHP/Reflection/Exceptions/IdentifierExpectedException.php';
 require_once 'PHP/Reflection/Exceptions/UnclosedBodyException.php';
+require_once 'PHP/Reflection/Exceptions/UnexpectedTokenException.php';
 
 /**
  * The php source parser.
@@ -79,7 +82,7 @@ require_once 'PHP/Reflection/Exceptions/UnclosedBodyException.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Parser
+class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
 {
     /**
      * The package defined in the file level comment.
@@ -96,14 +99,6 @@ class PHP_Reflection_Parser
      * @var string $packageSeparator
      */
     protected $packageSeparator = '::';
-    
-    /**
-     * Marks the current class as abstract.
-     *
-     * @type boolean
-     * @var boolean $_abstract
-     */
-    private $_abstract = false;
     
     /**
      * The last doc comment block.
@@ -331,6 +326,8 @@ class PHP_Reflection_Parser
      */
     private function _parseClassDeclaration()
     {
+        // Skip comment tokens
+        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         // Get class name
         $token = $this->tokenizer->next();
 
@@ -342,8 +339,44 @@ class PHP_Reflection_Parser
         $class->setModifiers($this->_modifiers);
         $class->setDocComment($this->_comment);
         $class->setPosition($this->_typePosition++);
+        
+        // Skip comment tokens
+        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Check for parent class
+        if ($this->tokenizer->peek() === self::T_EXTENDS) {
+            // Skip extends token
+            $this->tokenizer->next();
+            // Parse parent class name
+            $qualifiedName = $this->_parseStaticQualifiedTypeName();
+            // Add parent class
+            $class->addDependency($this->builder->buildClass($qualifiedName));
+
+            // Skip comment tokens
+            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        }
+    
+        // Check for parent interfaces
+        if ($this->tokenizer->peek() === self::T_IMPLEMENTS) {
+            // Skip 'implements' token
+            $this->tokenizer->next();
+            // Parse interface list
+            foreach ($this->_parseInterfaceList() as $parent) {
+                $class->addDependency($parent);
+            }
+        
+            // Skip comment tokens
+            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        }
+        
+        // Next token must be an open curly brace
+        if ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
+            $file  = $this->tokenizer->getFile();
+            $token = $this->tokenizer->next();
+            throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
+        }
                     
-        $this->parseClassSignature($class);
+        //$this->parseClassSignature($class);
     
         $this->builder->buildPackage($this->_package)->addType($class);
     
@@ -460,6 +493,8 @@ class PHP_Reflection_Parser
      */
     private function _parseInterfaceDeclaration()
     {
+        // Skip comment tokens
+        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         // Get interface name
         $token = $this->tokenizer->next();
                         
@@ -470,8 +505,30 @@ class PHP_Reflection_Parser
         $interface->setStartLine($token[2]);
         $interface->setDocComment($this->_comment);
         $interface->setPosition($this->_typePosition++);
-                    
-        $this->parseInterfaceSignature($interface);
+        
+        // Skip comment tokens
+        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+    
+        // Check for parent interfaces
+        if ($this->tokenizer->peek() === self::T_EXTENDS) {
+            // Skip 'extends' token
+            $this->tokenizer->next();
+            // Parse interface list
+            foreach ($this->_parseInterfaceList() as $parent) {
+                $interface->addDependency($parent);
+            }
+        
+            // Skip comment tokens
+            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        }
+        
+        // Next token must be an open curly brace
+        if ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
+            $file  = $this->tokenizer->getFile();
+            $token = $this->tokenizer->next();
+            throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
+        }
+        
 
         $this->builder->buildPackage($this->_package)->addType($interface);
         
@@ -661,6 +718,126 @@ class PHP_Reflection_Parser
         $this->reset();
         
         return $method;
+    }
+    
+    /**
+     * Parses an interface list found with in class or interface signatures.
+     * 
+     * <code>
+     * class Foo implements Interface, List, Items {}
+     * 
+     * interface Foo extends Interface, List, Items {}
+     * </code>
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     * 
+     * @return array(PHP_Reflection_Ast_Interface)
+     */
+    private function _parseInterfaceList()
+    {
+        $nameList = array();
+        do {
+            // Get qualified interface name
+            $nameList[] = $this->_parseStaticQualifiedTypeName();
+            
+            // Skip comment tokens
+            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+            // Get next token id
+            $tokenId = $this->tokenizer->peek();
+            
+            // Check for another interface identifier
+            if ($tokenId === PHP_Reflection_TokenizerI::T_COMMA) {
+                // Skip comma token
+                $this->tokenizer->next();
+                // Continue processing
+                continue;
+            }
+            // Check for opening interface body
+            if ($tokenId === PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
+                break;
+            }
+            
+            // Get source file and invalid token
+            $file  = $this->tokenizer->getSourceFile();
+            $token = $this->tokenizer->next();
+            
+            // Throw an exception
+            throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
+            
+        } while (true);
+        
+        // Create a list of interfaces
+        $interfaceList = array();
+        foreach ($nameList as $name) {
+            $interfaceList[] = $this->builder->buildInterface($name);
+        }
+        
+        return $interfaceList;
+    }
+    
+    /**
+     * Parses a full qualified class or interface name.
+     * 
+     * <ul>
+     *   <li>foo::bar::FooBar</li>
+     *   <li>::FooBar</li>
+     *   <li>FooBar</li>
+     * </ul>
+     *
+     * @return string
+     */
+    private function _parseStaticQualifiedTypeName()
+    {
+        $expectedTokens = array(
+            PHP_Reflection_TokenizerI::T_DOUBLE_COLON,
+            PHP_Reflection_TokenizerI::T_STRING
+        );
+        
+        // Skip comment tokens
+        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Stack of matching tokens
+        $tokenStack = array();
+        
+        $tokenId = $this->tokenizer->peek();
+        while (in_array($tokenId, $expectedTokens) === true) {
+            // Fetch next token
+            $token = $this->tokenizer->next();
+            
+            // Check for invalid syntax like '::' + '::' 
+            if (end($tokenStack) === $token[1]) {
+                throw new RuntimeException();
+            }
+            // Store token value
+            $tokenStack[] = $token[1];
+            
+            $tokenId = $this->tokenizer->peek();
+        }
+        
+        if (count($tokenStack) === 0) {
+            $file = $this->tokenizer->getSourceFile();
+            throw new PHP_Reflection_Exceptions_IdentifierExpectedException($file);
+        }
+        return implode('', $tokenStack);
+    }
+    
+    /**
+     * This method will consume all tokens that match the given token identifiers.
+     * This method accepts a variable list of token identifiers/types as argument.
+     * 
+     * <code>
+     * $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+     * </code>
+     *
+     * @return void
+     */
+    private function _consumeTokens()
+    {
+        $consumeTokens = func_get_args();
+        
+        while (in_array($this->tokenizer->peek(), $consumeTokens) === true) {
+            $this->tokenizer->next();
+        }
     }
     
     /**

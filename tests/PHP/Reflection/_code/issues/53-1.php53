@@ -1,0 +1,6 @@
+<?php
+/**
+ * @package bar
+ */
+interface Foo extends /*Hello*/ foo::Bar, foo::bar::FooBar {}
+?>
