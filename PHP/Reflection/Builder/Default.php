@@ -601,6 +601,16 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *   var_dump($packageName);
      *   // Results in:
      *   // string(6) "+global"
+     * 
+     *   $packageName = $this->extractPackageName('::foobar');
+     *   var_dump($packageName);
+     *   // Results in:
+     *   // string(6) "+global"
+     * 
+     *   $packageName = $this->extractPackageName('::Iterator');
+     *   var_dump($packageName);
+     *   // Results in:
+     *   // string(6) "+spl"
      * </code>
      * 
      * @param string $qualifiedName The qualified PHP 5.3 class identifier.
@@ -609,10 +619,15 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     protected function extractPackageName($qualifiedName)
     {
-        if (($pos = strrpos($qualifiedName, '::')) !== false) {
-            return substr($qualifiedName, 0, $pos);
-        } else if ($this->_internalTypes->isInternal($qualifiedName)) {
-            return $this->_internalTypes->getTypePackage($qualifiedName);
+        $name = $qualifiedName;
+        if (preg_match('#^::[a-z_][a-z0-9_]+$#i', $name)) {
+            $name = substr($name, 2);
+        }
+        
+        if (($pos = strrpos($name, '::')) !== false) {
+            return substr($name, 0, $pos);
+        } else if ($this->_internalTypes->isInternal($name)) {
+            return $this->_internalTypes->getTypePackage($name);
         }
         return self::GLOBAL_PACKAGE; 
     }

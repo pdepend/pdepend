@@ -738,4 +738,36 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         
         $this->assertSame($classA, $classB);
     }
+    
+    /**
+     * Tests that the node build handles PHP 5.3's syntax for the global 
+     * package correct.
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=54&project=5
+     *
+     * @return void
+     */
+    public function testBuildClassWithPHP53DefaultNamespaceSyntaxAndInternalClassNameIssue54()
+    {
+        $builder = new PHP_Reflection_Builder_Default();
+        
+        $class = $builder->buildClass('::OutOfRangeException');
+        $this->assertEquals('+spl', $class->getPackage()->getName());
+    }
+    
+    /**
+     * Tests that the node build handles PHP 5.3's syntax for the global 
+     * package correct.
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=54&project=5
+     *
+     * @return void
+     */
+    public function testBuildClassWithPHP53DefaultNamespaceSyntaxAndCustomClassNameIssue54()
+    {
+        $builder = new PHP_Reflection_Builder_Default();
+        
+        $class = $builder->buildClass('::MyClass');
+        $this->assertEquals('+global', $class->getPackage()->getName());
+    }
 }
