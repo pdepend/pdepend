@@ -989,6 +989,30 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that parser adds parent interfaces to a parsed interface.
+     *
+     * @return void
+     */
+    public function testParserAddsParentInterfacesToInterface()
+    {
+        $packages = self::parseSource('/parser/interface_with_parents.php');
+        
+        $this->assertEquals(1, $packages->count());
+        $interfaces = $packages->current()->getInterfaces();
+        $this->assertEquals(3, $interfaces->count());
+        
+        $expected = array('FooBar' => 2, 'Bar' => 0, 'Foo' => 1);
+        foreach ($interfaces as $interface) {
+            // Get interface name
+            $name = $interface->getName();
+            // Check for valid name
+            $this->assertArrayHasKey($name, $expected);
+            // Check parent count
+            $this->assertEquals($expected[$name], $interface->getParentInterfaces()->count());
+        }
+    }
+    
+    /**
      * Test case for parser bug 01 that doesn't add dependencies for static
      * method calls.
      * 
@@ -1544,6 +1568,67 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         // Check everything was found
         $this->assertEquals(0, count($expected));
     }
+    
+    /**
+     * Tests that the parser handles full qualified PHP 5.3 names within an
+     * interface signature.
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=53&project=5
+     *
+     * @return void
+     */
+    public function testParserHandlesPHP53NamesInInterfaceSignatureIssue53()
+    {
+        $packages = self::parseSource('/issues/53-1.php53');
+        $this->assertEquals(3, $packages->count());
+        
+        $expected = array('Foo' => 'bar', 'Bar' => 'foo', 'FooBar' => 'foo::bar');
+        foreach ($packages as $package) {
+            // Check number of interfaces
+            $this->assertEquals(1, $package->getInterfaces()->count());
+            // Get current interface
+            $interface = $package->getInterfaces()->current();
+            // Check that name exists
+            $this->assertArrayHasKey($interface->getName(), $expected);
+            // Compare package names
+            $this->assertEquals($expected[$interface->getName()], $package->getName());
+            // Remove offset
+            unset($expected[$interface->getName()]);
+        }
+        $this->assertEquals(0, count($expected));
+    }
+    
+    /**
+     * Tests that the parser handles full qualified PHP 5.3 names within class
+     * and interface names of class signature.
+     * 
+     * http://bugs.pdepend.org/index.php?do=details&task_id=53&project=5
+     *
+     * @return void
+     */
+    public function testParserHandlesPHP533NamesInClassSignatureIssue53()
+    {
+        $packages = self::parseSource('/issues/53-2.php53');
+        $this->assertEquals(4, $packages->count());
+        
+        $expected = array(
+            'Foo'    => 'bar',
+            'Bar'    => 'bar::foo',
+            'FooBar' => 'foobar',
+            'ooF'    => 'foo',  
+        );
+        foreach ($packages as $package) {
+            foreach ($package->getTypes() as $type) {
+                // Check that name exists
+                $this->assertArrayHasKey($type->getName(), $expected);
+                // Compare package names
+                $this->assertEquals($expected[$type->getName()], $package->getName());
+                // Remove offset
+                unset($expected[$type->getName()]);
+            }
+        }
+        $this->assertEquals(0, count($expected));
+    }   
     
     public function testParserSetsCorrectMethodPositionIssue39()
     {
