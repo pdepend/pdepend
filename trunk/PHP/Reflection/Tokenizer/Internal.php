@@ -337,13 +337,15 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
     /**
      * Returns the next token type or {@link PHP_Reflection_TokenizerI::T_EOF} if 
      * there is no next token.
+     * 
+     * @param integer $la Number of lookahead tokens.
      *
      * @return integer
      */
-    public function peek()
+    public function peek($la = 0)
     {
-        if ($this->index < $this->count) {
-            return $this->tokens[$this->index][0];
+        if (($this->index + $la) < $this->count) {
+            return $this->tokens[($this->index + $la)][0];
         }
         return self::T_EOF;
     }

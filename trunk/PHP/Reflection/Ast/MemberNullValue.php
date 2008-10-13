@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,56 +46,47 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Builder_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/DefaultTest.php';
-require_once dirname(__FILE__) . '/DefaultMemberValueTest.php';
+require_once 'PHP/Reflection/Ast/MemberScalarValue.php';
 
 /**
- * Main test suite for the PHP_Reflection_Builder package.
+ * This class represents a null value.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Builder_AllTests
+class PHP_Reflection_Ast_MemberNullValue extends PHP_Reflection_Ast_MemberScalarValue
 {
     /**
-     * Test suite main method.
+     * A GoF flyweight instance of null.
      *
-     * @return void
+     * @var PHP_Reflection_Ast_MemberNullValue $_flyweight
      */
-    public static function main()
+    private static $_flyweight = null;
+    
+    /**
+     * Helper method to realize a static final null instance.
+     *
+     * @return PHP_Reflection_Ast_MemberNullValue
+     */
+    public static function flyweight()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        if (self::$_flyweight === null) {
+            self::$_flyweight = new PHP_Reflection_Ast_MemberNullValue();
+        }
+        return self::$_flyweight;
     }
     
     /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
+     * Constructs a new null value instance.
      */
-    public static function suite()
+    public function __construct() 
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Builder - AllTests');
-        
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultMemberValueTest');
-
-        return $suite;
+        parent::__construct(self::IS_NULL, null);        
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Builder_AllTests::main') {
-    PHP_Reflection_Builder_AllTests::main();
 }

@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/AbstractNode.php';
+require_once 'PHP/Reflection/Ast/ClassOrInterfaceI.php';
 
 /**
- * Abstract base class for code item.
+ * This is a proxy implementation of the class or interface node interface.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,145 +60,127 @@ require_once 'PHP/Reflection/Ast/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_Ast_AbstractItem 
-    extends PHP_Reflection_Ast_AbstractNode
+class PHP_Reflection_Ast_ClassOrInterfaceProxy
+    implements PHP_Reflection_Ast_ClassOrInterfaceI
 {
     /**
-     * The line number where the item declaration starts.
+     * The creating node builder instance.
      *
-     * @type integer
-     * @var integer $startLine
+     * @var PHP_Reflection_BuilderI $_builder
      */
-    protected $startLine = 0;
+    private $_builder = null;
     
     /**
-     * The line number where the item declaration ends.
+     * The identifier for the underlying class or interface instance.
      *
-     * @type integer
-     * @var integer $endLine
+     * @var string $_identifier
      */
-    protected $endLine = 0;
-    
+    private $_identifier = null;
+
     /**
-     * The source file for this item.
+     * Constructs a new class or interface proxy.
      *
-     * @type PHP_Reflection_Ast_File
-     * @var PHP_Reflection_Ast_File $sourceFile
+     * @param PHP_Reflection_BuilderI $builder The creating node builder instance.
+     * @param unknown_type $identifier
      */
-    protected $sourceFile = null;
-    
-    /**
-     * The comment for this type.
-     *
-     * @type string
-     * @var string $docComment
-     */
-    protected $docComment = null;
-    
-    /**
-     * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
-     *
-     * @param string  $name      The item name.
-     * @param integer $startLine The item declaration line number.
-     */
-    public function __construct($name, $startLine = 0)
+    public function __construct(PHP_Reflection_BuilderI $builder, $identifier)
     {
-        parent::__construct($name);
-        
-        $this->startLine = $startLine;
+        $this->_builder    = $builder;
+        $this->_identifier = $identifier;
     }
     
     /**
-     * Returns the line number where the item declaration can be found.
+     * Returns the real subject behind this proxy. 
      *
-     * @return integer
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI
      */
-    public function getStartLine()
+    public function getRealSubject()
     {
-        return $this->startLine;
+        return $this->_builder->buildClassOrInterface($this->_identifier);
     }
     
     /**
-     * Sets the start line for this item.
+     * Returns an iterator with all child classes/interfaces for this class or
+     * interface node.
      *
-     * @param integer $startLine The start line for this item.
-     * 
-     * @return void
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function setStartLine($startLine)
+    public function getChildTypes()
     {
-        if ($this->startLine === 0) {
-            $this->startLine = $startLine;
-        }
+        return $this->getRealSubject()->getChildTypes();
     }
     
     /**
-     * Returns the line number where the item declaration ends.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceConstant} objects 
+     * in this class or interface node.
      *
-     * @return integer The last source line for this item.
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function getEndLine()
+    public function getConstants()
     {
-        return $this->endLine;
+        return $this->getRealSubject()->getConstants();
     }
     
     /**
-     * Sets the end line for this item.
+     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this node 
+     * depends on.
      *
-     * @param integer $endLine The end line for this item
-     * 
-     * @return void
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function setEndLine($endLine)
+    public function getDependencies()
     {
-        if ($this->endLine === 0) {
-            $this->endLine = $endLine;
-        }
+        return $this->getRealSubject()->getDependencies();
     }
     
     /**
-     * Returns the source file for this item.
+     * Returns all {@link PHP_Reflection_Ast_Method} objects in this type.
      *
-     * @return PHP_Reflection_Ast_File
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function getSourceFile()
+    public function getMethods()
     {
-        return $this->sourceFile;
+        return $this->getRealSubject()->getMethods();
     }
     
     /**
-     * Sets the source file for this item.
-     * 
-     * @param PHP_Reflection_Ast_File $sourceFile The item source file.
+     * Returns the parent package for this class.
      *
-     * @return void
+     * @return PHP_Reflection_Ast_Package
      */
-    public function setSourceFile(PHP_Reflection_Ast_File $sourceFile)
+    public function getPackage()
     {
-        if ($this->sourceFile === null || $this->sourceFile->getName() === null) {
-            $this->sourceFile = $sourceFile;
-        }
+        return $this->getRealSubject()->getPackage();
     }
     
     /**
-     * Returns the doc comment for this item or <b>null</b>.
+     * Returns the name for this code node.
      *
      * @return string
      */
-    public function getDocComment()
+    public function getName()
     {
-        return $this->docComment;
+        return $this->_identifier;
     }
     
     /**
-     * Sets the doc comment for this item.
+     * Returns a uuid for this code node.
      *
-     * @param string $docComment The doc comment block.
+     * @return string
+     */
+    public function getUUID()
+    {
+        return $this->getRealSubject()->getUUID();
+    }
+    
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
      * 
      * @return void
      */
-    public function setDocComment($docComment)
+    public function accept(PHP_Reflection_VisitorI $visitor)
     {
-        $this->docComment = $docComment;
+        $this->getRealSubject()->accept($visitor);
     }
 }

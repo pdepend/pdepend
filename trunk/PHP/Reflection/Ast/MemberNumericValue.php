@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,56 +46,61 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Builder_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/DefaultTest.php';
-require_once dirname(__FILE__) . '/DefaultMemberValueTest.php';
+require_once 'PHP/Reflection/Ast/MemberScalarValue.php';
 
 /**
- * Main test suite for the PHP_Reflection_Builder package.
+ * This class represents a numeric value.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Builder_AllTests
+class PHP_Reflection_Ast_MemberNumericValue 
+    extends PHP_Reflection_Ast_MemberScalarValue
 {
     /**
-     * Test suite main method.
+     * Is this numeric value negative?
      *
-     * @return void
+     * @var boolean $_negative
      */
-    public static function main()
+    private $_negative = false;
+    
+    /**
+     * Constructs a new numeric value instance.
+     * 
+     * @param integer $type     The type of this numeric value.
+     * @param string  $value    The raw string representation of this value.
+     * @param boolean $negative Is this numeric value negative?
+     */
+    public function __construct($type, $value, $negative) 
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        parent::__construct($type, $value);
+
+        $this->_negative = (boolean) $negative;
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Returns the value. 
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return mixed
      */
-    public static function suite()
+    public function getValue()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Builder - AllTests');
-        
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultMemberValueTest');
-
-        return $suite;
+        return ($this->_negative ? -1 : 1) * parent::getValue();
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Builder_AllTests::main') {
-    PHP_Reflection_Builder_AllTests::main();
+    
+    /**
+     * Is this numeric value negative?
+     *
+     * @return boolean
+     */
+    public function isNegative()
+    {
+        return $this->_negative;
+    }
 }

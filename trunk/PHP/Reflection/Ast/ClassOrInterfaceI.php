@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,56 +46,57 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Builder_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/DefaultTest.php';
-require_once dirname(__FILE__) . '/DefaultMemberValueTest.php';
+require_once 'PHP/Reflection/Ast/NodeI.php';
 
 /**
- * Main test suite for the PHP_Reflection_Builder package.
+ * Base interface for a class or interface node.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Builder_AllTests
+interface PHP_Reflection_Ast_ClassOrInterfaceI extends PHP_Reflection_Ast_NodeI
 {
     /**
-     * Test suite main method.
+     * Returns an iterator with all child classes/interfaces for this class or
+     * interface node.
      *
-     * @return void
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
+    function getChildTypes();
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceConstant} objects 
+     * in this class or interface node.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Builder - AllTests');
-        
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultMemberValueTest');
-
-        return $suite;
-    }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Builder_AllTests::main') {
-    PHP_Reflection_Builder_AllTests::main();
+    function getConstants();
+    
+    /**
+     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this node 
+     * depends on.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    function getDependencies();
+    
+    /**
+     * Returns all {@link PHP_Reflection_Ast_Method} objects in this type.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    function getMethods();
+    
+    /**
+     * Returns the parent package for this class.
+     *
+     * @return PHP_Reflection_Ast_Package
+     */
+    function getPackage();
 }

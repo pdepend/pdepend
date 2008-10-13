@@ -47,8 +47,7 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractItem.php';
-require_once 'PHP/Reflection/Ast/DependencyAwareI.php';
-require_once 'PHP/Reflection/Util/UUID.php';
+require_once 'PHP/Reflection/Ast/ClassOrInterfaceI.php';
 
 /**
  * Represents an interface or a class type.
@@ -64,8 +63,7 @@ require_once 'PHP/Reflection/Util/UUID.php';
  */
 abstract class PHP_Reflection_Ast_AbstractType
        extends PHP_Reflection_Ast_AbstractItem 
-    implements PHP_Reflection_Ast_NodeI,
-               PHP_Reflection_Ast_DependencyAwareI
+    implements PHP_Reflection_Ast_ClassOrInterfaceI
 {
     /**
      * List of {@link PHP_Reflection_Ast_AbstractType} objects this type depends
@@ -110,11 +108,11 @@ abstract class PHP_Reflection_Ast_AbstractType
     private $_tokens = array();
     
     /**
-     * List of {@link PHP_Reflection_Ast_TypeConstant} objects that belong to 
+     * List of {@link PHP_Reflection_Ast_ClassOrInterfaceConstant} objects that belong to 
      * this type. 
      *
-     * @type array<PHP_Reflection_Ast_TypeConstant>
-     * @var array(PHP_Reflection_Ast_TypeConstant) $_constants
+     * @type array<PHP_Reflection_Ast_ClassOrInterfaceConstant>
+     * @var array(PHP_Reflection_Ast_ClassOrInterfaceConstant) $_constants
      */
     private $_constants = array();
     
@@ -127,7 +125,7 @@ abstract class PHP_Reflection_Ast_AbstractType
     private $_position = 0;
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_TypeConstant} objects in this type.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceConstant} objects in this type.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
@@ -139,11 +137,11 @@ abstract class PHP_Reflection_Ast_AbstractType
     /**
      * Adds the given constant to this type.
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant A new type constant.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $constant A new type constant.
      * 
-     * @return PHP_Reflection_Ast_TypeConstant
+     * @return PHP_Reflection_Ast_ClassOrInterfaceConstant
      */
-    public function addConstant(PHP_Reflection_Ast_TypeConstant $constant)
+    public function addConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $constant)
     {
         if ($constant->getParent() !== null) {
             $constant->getParent()->removeConstant($constant);
@@ -159,11 +157,11 @@ abstract class PHP_Reflection_Ast_AbstractType
     /**
      * Removes the given constant from this type.
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The constant to remove.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $constant The constant to remove.
      * 
      * @return void
      */
-    public function removeConstant(PHP_Reflection_Ast_TypeConstant $constant)
+    public function removeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $constant)
     {
         if (($i = array_search($constant, $this->_constants, true)) !== false) {
             // Remove this as owner

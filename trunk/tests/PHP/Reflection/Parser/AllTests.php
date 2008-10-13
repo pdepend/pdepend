@@ -36,43 +36,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  PHP
- * @package   PHP_Reflection
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   PHP
+ * @package    PHP_Reflection
+ * @subpackage Parser
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Parser_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/Ast/AllTests.php';
-require_once dirname(__FILE__) . '/Builder/AllTests.php';
-require_once dirname(__FILE__) . '/Input/AllTests.php';
-require_once dirname(__FILE__) . '/Parser/AllTests.php';
-require_once dirname(__FILE__) . '/Tokenizer/AllTests.php';
-require_once dirname(__FILE__) . '/Visitor/AllTests.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/ReflectionTest.php';
+require_once dirname(__FILE__) . '/MemberValueTest.php';
 
 /**
- * Main test suite for the PHP_Reflection package.
+ * Main test suite for the PHP_Reflection_Parser class.
  *
- * @category  PHP
- * @package   PHP_Reflection
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   PHP
+ * @package    PHP_Reflection
+ * @subpackage Parser
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AllTests
+class PHP_Reflection_Parser_AllTests
 {
     /**
      * Test suite main method.
@@ -91,22 +86,13 @@ class PHP_Reflection_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection - AllTests');
-        
-        $suite->addTest(PHP_Reflection_Ast_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Builder_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Input_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Parser_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Tokenizer_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Visitor_AllTests::suite());
-        
-        $suite->addTestSuite('PHP_Reflection_ParserTest');
-        $suite->addTestSuite('PHP_Reflection_ReflectionTest');
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Parser - AllTests');
+        $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_AllTests::main') {
-    PHP_Reflection_AllTests::main();
+if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Parser_AllTests::main') {
+    PHP_Reflection_Parser_AllTests::main();
 }
