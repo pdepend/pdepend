@@ -101,10 +101,12 @@ interface PHP_Reflection_TokenizerI extends PHP_Reflection_ParserConstantsI
     /**
      * Returns the next token type or {@link PHP_Reflection_TokenizerI::T_EOF} if 
      * there is no next token.
+     * 
+     * @param integer $la Number of lookahead tokens.
      *
      * @return integer
      */
-    function peek();
+    function peek($la = 0);
     
     /**
      * Returns the previous token type or {@link PHP_Reflection_TokenizerI::T_BOF} 

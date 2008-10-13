@@ -121,8 +121,8 @@ class PHP_Reflection_Ast_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * The last visited type constant instance.
      *
-     * @type PHP_Reflection_Ast_TypeConstant
-     * @var PHP_Reflection_Ast_TypeConstant $typeConstant
+     * @type PHP_Reflection_Ast_ClassOrInterfaceConstant
+     * @var PHP_Reflection_Ast_ClassOrInterfaceConstant $typeConstant
      */
     public $typeConstant = null;
     
@@ -249,12 +249,74 @@ class PHP_Reflection_Ast_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The current constant node.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $constant The current constant node.
      * 
      * @return void
      */
-    public function visitTypeConstant(PHP_Reflection_Ast_TypeConstant $constant)
+    public function visitTypeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $constant)
     {
         $this->typeConstant = $constant;
+    }
+    
+    /**
+     * Visits an array expression node
+     *
+     * @param PHP_Reflection_Ast_ArrayExpression $expr The current array expression.
+     * 
+     * @return void
+     */
+    public function visitArrayExpression(PHP_Reflection_Ast_ArrayExpression $expr)
+    {
+        // TODO Implement this empty stub.
+    }
+    
+    /**
+     * Visits an array element node.
+     *
+     * @param PHP_Reflection_Ast_ArrayElement $elem The current array element.
+     * 
+     * @return void
+     */
+    public function visitArrayElement(PHP_Reflection_Ast_ArrayElement $elem)
+    {
+        // TODO Implement this empty stub.
+    }
+    
+    /**
+     * Visits a constant reference node.
+     *
+     * @param PHP_Reflection_Ast_ConstantValue $constRef The current const ref.
+     * 
+     * @return void
+     */
+    public function visitConstantValue(PHP_Reflection_Ast_ConstantValue $constRef)
+    {
+        // TODO Implement this empty stub.
+    }
+    
+    /**
+     * Visits a class or interface constant reference
+     *
+     * @param PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constRef
+     *        The reference instance.
+     * 
+     * @return void
+     */
+    public function visitClassOrInterfaceConstantValue(
+                PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constRef)
+    {
+        // TODO Implement this empty stub.
+    }
+                
+    /**
+     * Visits a general value.
+     *
+     * @param PHP_Reflection_Ast_MemberValueI $value The value instance.
+     * 
+     * @return void
+     */
+    public function visitValue(PHP_Reflection_Ast_MemberValueI $value)
+    {
+        // TODO Implement this empty stub.
     }
 }

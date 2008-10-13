@@ -48,6 +48,7 @@
 require_once 'PHP/Reflection/BuilderI.php';
 require_once 'PHP/Reflection/ParserConstantsI.php';
 require_once 'PHP/Reflection/TokenizerI.php';
+require_once 'PHP/Reflection/PHPValueTypesI.php';
 
 require_once 'PHP/Reflection/Exceptions/IdentifierExpectedException.php';
 require_once 'PHP/Reflection/Exceptions/UnclosedBodyException.php';
@@ -82,8 +83,25 @@ require_once 'PHP/Reflection/Exceptions/UnexpectedTokenException.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
+class PHP_Reflection_Parser
+    implements PHP_Reflection_ParserConstantsI,
+               PHP_Reflection_PHPValueTypesI
 {
+    /**
+     * Maps between tokenizer token ids and scalar type identifiers
+     *
+     * @var unknown_type
+     */
+    private static $_scalarTypeMap = array(
+        self::T_NULL                     => self::IS_NULL,
+        self::T_TRUE                     => self::IS_BOOLEAN,
+        self::T_FALSE                    => self::IS_BOOLEAN,
+        self::T_DNUMBER                  => self::IS_DOUBLE,
+        self::T_LNUMBER                  => self::IS_INTEGER,
+        self::T_NUM_STRING               => self::IS_DOUBLE,
+        self::T_CONSTANT_ENCAPSED_STRING => self::IS_STRING    
+    ); 
+    
     /**
      * The package defined in the file level comment.
      *
@@ -140,6 +158,13 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
      * @var integer $_methodPosition
      */
     private $_methodPosition = 0;
+    
+    /**
+     * The currently parsed class or interface instance or <b>null</b>.
+     *
+     * @var PHP_Reflection_Ast_ClassOrInterfaceI $_classOrInterface
+     */
+    private $_classOrInterface = null;
     
     /**
      * The used code tokenizer.
@@ -327,7 +352,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
     private function _parseClassDeclaration()
     {
         // Skip comment tokens
-        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         // Get class name
         $token = $this->tokenizer->next();
 
@@ -341,19 +366,19 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         $class->setPosition($this->_typePosition++);
         
         // Skip comment tokens
-        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         
         // Check for parent class
         if ($this->tokenizer->peek() === self::T_EXTENDS) {
             // Skip extends token
             $this->tokenizer->next();
             // Parse parent class name
-            $qualifiedName = $this->_parseStaticQualifiedTypeName();
+            $qualifiedName = $this->_parseStaticQualifiedIdentifier();
             // Add parent class
             $class->addDependency($this->builder->buildClass($qualifiedName));
 
             // Skip comment tokens
-            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         }
     
         // Check for parent interfaces
@@ -366,7 +391,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
             }
         
             // Skip comment tokens
-            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         }
         
         // Next token must be an open curly brace
@@ -375,9 +400,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
             $token = $this->tokenizer->next();
             throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
         }
-                    
-        //$this->parseClassSignature($class);
-    
+
         $this->builder->buildPackage($this->_package)->addType($class);
     
         $this->reset();
@@ -393,6 +416,9 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
      */
     private function _parseClassDeclarationBody(PHP_Reflection_Ast_Class $class)
     {
+        // Set context class instance
+        $this->_classOrInterface = $class;
+        
         $token = $this->tokenizer->next();
         $curly = 0;
         
@@ -478,6 +504,9 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
             }
         }
         
+        // Reset context class reference
+        $this->_classOrInterface = null;
+        
         if ($curly !== 0) {
             $file = $this->tokenizer->getSourceFile();
             throw new PHP_Reflection_Exceptions_UnclosedBodyException($file);
@@ -494,7 +523,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
     private function _parseInterfaceDeclaration()
     {
         // Skip comment tokens
-        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         // Get interface name
         $token = $this->tokenizer->next();
                         
@@ -507,7 +536,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         $interface->setPosition($this->_typePosition++);
         
         // Skip comment tokens
-        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
     
         // Check for parent interfaces
         if ($this->tokenizer->peek() === self::T_EXTENDS) {
@@ -519,7 +548,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
             }
         
             // Skip comment tokens
-            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         }
         
         // Next token must be an open curly brace
@@ -546,6 +575,9 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
     private function _parseInterfaceDeclarationBody(
                                         PHP_Reflection_Ast_Interface $interface)
     {
+        // Set current context interface
+        $this->_classOrInterface = $interface;
+        
         $token = $this->tokenizer->next();
         $curly = 0;
         
@@ -612,6 +644,9 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
             }
         }
         
+        // Reset context interface reference
+        $this->_classOrInterface = null;
+        
         if ($curly !== 0) {
             $file = $this->tokenizer->getSourceFile();
             throw new PHP_Reflection_Exceptions_UnclosedBodyException($file);
@@ -619,8 +654,6 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         
         return $tokens;
     }
-    
-    
     
     /**
      * Parses a class or interface constant declaration.
@@ -633,7 +666,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
      *
      * @param array &$tokens List of parsed tokens.
      * 
-     * @return PHP_Reflection_Ast_TypeConstant
+     * @return PHP_Reflection_Ast_ClassOrInterfaceConstant
      */
     private function _parseConstantDeclaration(array &$tokens)
     {
@@ -647,6 +680,29 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         $constant->setEndLine($token[2]);
 
         $this->reset();
+        
+        // Skip comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        $token    = $this->tokenizer->next();
+        $tokens[] = $token;
+        
+        // Next token must be an equal character
+        if ($token[0] !== self::T_EQUAL) {
+            $this->_throwUnexpectedToken($token);
+        }
+        
+        // Skip comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Parse static scalar value
+        $constant->setValue($this->_parseStaticScalarValue($tokens));
+        
+        // Skip comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Next token must be a semicolon character
+        $this->_consumeToken(self::T_SEMICOLON, $tokens);
         
         return $constant;
     }
@@ -678,6 +734,28 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         $this->_prepareProperty($property);
                 
         $this->reset();
+        
+        // Skip all comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Check for an equal sign
+        if ($this->tokenizer->peek() !== self::T_EQUAL) {
+            return $property;
+        }
+        // Fetch equal token
+        $tokens[] = $this->tokenizer->next();
+        
+        // Skip all comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Parse a scalar value
+        $property->setValue($this->_parseStaticValue($tokens));
+        
+        // Skip comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Next token must be a semicolon character
+        $this->_consumeToken(self::T_SEMICOLON, $tokens);
 
         return $property;
     }
@@ -738,10 +816,10 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         $nameList = array();
         do {
             // Get qualified interface name
-            $nameList[] = $this->_parseStaticQualifiedTypeName();
+            $nameList[] = $this->_parseStaticQualifiedIdentifier();
             
             // Skip comment tokens
-            $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
             // Get next token id
             $tokenId = $this->tokenizer->peek();
             
@@ -757,12 +835,8 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
                 break;
             }
             
-            // Get source file and invalid token
-            $file  = $this->tokenizer->getSourceFile();
-            $token = $this->tokenizer->next();
-            
             // Throw an exception
-            throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
+            $this->_throwUnexpectedToken();
             
         } while (true);
         
@@ -784,9 +858,11 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
      *   <li>FooBar</li>
      * </ul>
      *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
      * @return string
      */
-    private function _parseStaticQualifiedTypeName()
+    private function _parseStaticQualifiedIdentifier(array &$tokens = array())
     {
         $expectedTokens = array(
             PHP_Reflection_TokenizerI::T_DOUBLE_COLON,
@@ -794,7 +870,7 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         );
         
         // Skip comment tokens
-        $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         
         // Stack of matching tokens
         $tokenStack = array();
@@ -802,11 +878,12 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         $tokenId = $this->tokenizer->peek();
         while (in_array($tokenId, $expectedTokens) === true) {
             // Fetch next token
-            $token = $this->tokenizer->next();
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
             
             // Check for invalid syntax like '::' + '::' 
             if (end($tokenStack) === $token[1]) {
-                throw new RuntimeException();
+                $this->_throwUnexpectedToken($token);
             }
             // Store token value
             $tokenStack[] = $token[1];
@@ -822,22 +899,325 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
     }
     
     /**
+     * This method parses a static scalar expression, like it is allowed for
+     * class and interface constants or as default property value.
+     * 
+     * <code>
+     * class PHP_Reflection {
+     *     private $_its = array(42, 23.0);
+     *     const T_MA = 23;
+     *     const T_NU = 42.0;
+     *     const T_EL = 'Hello World';
+     * }
+     * interface PHP_Reflection_VisitorI {
+     *     const T_PI = PHP_Reflection::T_CO;
+     *     const T_CH = true;
+     *     const T_LE = PATH_SEPARATOR;
+     *     const T_R  = null;
+     * }
+     * </code>
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_Ast_StaticScalarValueI
+     */
+    private function _parseStaticScalarValue(array &$tokens)
+    {
+        switch ($this->tokenizer->peek()) {
+        // Simple scalar types
+        case self::T_NULL:
+            // Get current token
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+                
+            return $this->builder->buildNullValue();
+                
+        case self::T_TRUE:
+            // Get current token
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+
+            return $this->builder->buildTrueValue();
+                
+        case self::T_FALSE:
+            // Get current token
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+                
+            return $this->builder->buildFalseValue();
+                
+        case self::T_CONSTANT_ENCAPSED_STRING:
+            // Get current token
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+        
+            // Get scalar type
+            $type = self::$_scalarTypeMap[$token[0]];
+            // Create scalar value
+            return $this->builder->buildScalarValue($type, $token[1]);
+                
+        case self::T_STRING:
+        case self::T_FILE:
+        case self::T_LINE:
+        case self::T_NS_C:
+        case self::T_FUNC_C:
+        case self::T_CLASS_C:
+        case self::T_METHOD_C:
+            if ($this->tokenizer->peek(1) !== self::T_DOUBLE_COLON) {
+                // Get current token
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
+                
+                return $this->builder->buildConstantValue($token[1]);
+            }
+            
+        case self::T_DOUBLE_COLON:
+            $identifier = $this->_parseStaticQualifiedIdentifier($tokens);
+            $className  = substr($identifier, 0, strrpos($identifier, '::'));
+            $constName  = substr($identifier, strrpos($identifier, '::') + 2);
+
+            $proxy = $this->builder->buildClassOrInterfaceProxy($className);
+            return $this->builder->buildClassOrInterfaceConstantValue($proxy, $constName);
+            
+        case self::T_SELF:
+            // Consume self and following double colon
+            $this->_consumeToken(self::T_SELF, $tokens);
+            $this->_consumeToken(self::T_DOUBLE_COLON, $tokens);
+            
+            // Last token must be string
+            $token    = $this->tokenizer->next();
+            $tokens[] = $token;
+
+            // Check last token
+            if ($token[0] !== self::T_STRING) {
+                $this->_throwUnexpectedToken($token);
+            }
+            
+            return $this->builder->buildClassOrInterfaceConstantValue($this->_classOrInterface, $token[1]);
+                
+        default:
+            return $this->_parseNumericValue($tokens);
+        }
+        
+        $this->_throwUnexpectedToken();
+    }
+    
+    /**
+     * This method parses a static value expression, like it is allowed as a 
+     * class property initializer.
+     * 
+     * <code>
+     * class PHP_Reflection {
+     *     private $_hello = array(
+     *         array(17, 23, 42)
+     *     );
+     *     protected $world = 'foo';
+     *     public $bar = 3.14;
+     * }
+     * </code>
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_Ast_MemberNumericValue
+     */
+    private function _parseStaticValue(array &$tokens)
+    {
+        if ($this->tokenizer->peek() === self::T_ARRAY) {
+            return $this->_parseStaticArray($tokens);
+        }
+        return $this->_parseStaticScalarValue($tokens);
+    }
+    
+    /**
+     * Parses php arrays that are allowed as class property initializers, which
+     * means all arrays with static key and value values.
+     * 
+     * <code>
+     * class PHP_Reflection {
+     *     private $_tokens = array('Hello', 'World');
+     *     protected $values = array(23 => 'Hello', 42 => array('World'));
+     *     public $results = array(self::T_TEST,);
+     * }
+     * </code>
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_Ast_ArrayExpression
+     */
+    private function _parseStaticArray(array &$tokens)
+    {
+        // Consume 'array' token
+        $this->_consumeToken(self::T_ARRAY, $tokens);
+        // Skip all comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        // Consume open parenthesis
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        // Skip all comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Offset for array values without key
+        $offset = 0;
+        // Create an array instance
+        $array  = $this->builder->buildArrayExpression();
+        
+        do {
+            // Stop for open parenthesis
+            if ($this->tokenizer->peek() === self::T_PARENTHESIS_CLOSE) {
+                break;
+            }
+            
+            // Parse static key or value
+            $keyOrValue = $this->_parseStaticValue($tokens);
+            // Skip all comment tokens
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+            
+            // Create an array element
+            $element = $this->builder->buildArrayElement();
+            
+            // Check for double arrow token
+            if ($this->tokenizer->peek() === self::T_DOUBLE_ARROW) {
+                // Previous static value was the key
+                $element->setKey($keyOrValue);
+                // Consume double arrow token
+                $this->_consumeToken(self::T_DOUBLE_ARROW, $tokens);
+                // Skip all following comment tokens
+                $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+                // Fetch value
+                $element->setValue($this->_parseStaticValue($tokens));
+                // Skip all following comment tokens
+                $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+                
+                // Create a key value instance
+                
+            } else {
+                // Build implicit numeric key and store previous as value
+                $key = $this->builder->buildNumericValue(self::IS_INTEGER, $offset++, false);
+                $element->setKey($key);
+                $element->setValue($keyOrValue);
+                $element->setImplicit();
+            }
+            
+            $array->addElement($element);
+            
+            // Skip if no comma follows
+            if ($this->tokenizer->peek() !== self::T_COMMA) {
+                break;
+            }
+            // Consume comma token
+            $this->_consumeToken(self::T_COMMA, $tokens);
+            // Skip all comment tokens after comma
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);            
+        } while(true);
+        
+        // Skip all comment tokens
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        // Consume close parenthesis
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+        
+        return $array;
+    }
+    
+    /**
+     * This method parses a numeric value expression, like it is allowed for
+     * class and interface constants or as default property value.
+     * 
+     * <code>
+     * class PHP_Reflection {
+     *     private $_its = array(42, 23.0);
+     *     const T_MA = 23;
+     *     const T_NU = 42.0;
+     * }
+     * interface PHP_Reflection_VisitorI {
+     *     const T_EL = 0x23;
+     * }
+     * </code>
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_Ast_MemberNumericValue
+     */
+    private function _parseNumericValue(array &$tokens)
+    {
+        $negative = false;
+        
+        // Check for signed numbers
+        switch ($this->tokenizer->peek()) {
+            case self::T_MINUS:
+                $negative = true;
+                
+            case self::T_PLUS:
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
+                break;
+        }
+        
+        // Remove comments
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        switch ($this->tokenizer->peek()) {
+            case self::T_DNUMBER:
+            case self::T_LNUMBER:
+            case self::T_NUM_STRING:
+                // Get current token
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
+        
+                // Get scalar type
+                $type  = self::$_scalarTypeMap[$token[0]];
+                $value = $token[1];
+                
+                // Create scalar value
+                return $this->builder->buildNumericValue($type, $value, $negative);
+        }
+        
+        $this->_throwUnexpectedToken();
+    }
+    
+    /**
      * This method will consume all tokens that match the given token identifiers.
      * This method accepts a variable list of token identifiers/types as argument.
      * 
      * <code>
-     * $this->_consumeTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+     * $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
      * </code>
      *
      * @return void
      */
-    private function _consumeTokens()
+    private function _skipTokens()
     {
         $consumeTokens = func_get_args();
         
         while (in_array($this->tokenizer->peek(), $consumeTokens) === true) {
             $this->tokenizer->next();
         }
+    }
+    
+    /**
+     * Expects a token of <b>$type</b>, removes this from the tokenizer stream,
+     * adds it to <b>$tokens</b> and returns the token.
+     *
+     * @param integer $type    The expected token type.
+     * @param array   &$tokens Reference array for parsed tokens.
+     * 
+     * @return array
+     */
+    private function _consumeToken($type, array &$tokens = array())
+    {
+        if ($this->tokenizer->peek() !== $type) {
+            $this->_throwUnexpectedToken();
+        }
+        // Get next token
+        $tokens[] = $this->tokenizer->next();
+        // Return last token
+        return end($tokens);
+    }
+    
+    private function _throwUnexpectedToken(array $token = null)
+    {
+        $file  = $this->tokenizer->getSourceFile();
+        $token = ($token === null ? $this->tokenizer->next() : $token);
+        
+        throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
     }
     
     /**
@@ -850,60 +1230,6 @@ class PHP_Reflection_Parser implements PHP_Reflection_ParserConstantsI
         $this->_comment   = null;
         $this->_modifiers = 0;
         $this->_package   = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
-    }
-    
-    /**
-     * Parses the dependencies in a interface signature.
-     * 
-     * @param PHP_Reflection_Ast_Interface $interface The context interface instance.
-     *
-     * @return array(array)
-     */
-    protected function parseInterfaceSignature(PHP_Reflection_Ast_Interface $interface)
-    {
-        $tokens = array();
-        while ($this->tokenizer->peek() !== PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-            
-            if ($token[0] === PHP_Reflection_TokenizerI::T_STRING) {
-                $dependency = $this->builder->buildInterface($token[1]);
-                $interface->addDependency($dependency);
-            }
-        }
-        return $tokens;
-    }
-    
-    /**
-     * Parses the dependencies in a class signature.
-     * 
-     * @param PHP_Reflection_Ast_Class $class The context class instance.
-     *
-     * @return void
-     */
-    protected function parseClassSignature(PHP_Reflection_Ast_Class $class)
-    {
-        $tokens     = array();
-        $implements = false;
-        
-        while ($this->tokenizer->peek() !== PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-            
-            if ($token[0] === PHP_Reflection_TokenizerI::T_IMPLEMENTS) {
-                $implements = true;
-            } else if ($token[0] === PHP_Reflection_TokenizerI::T_STRING) {
-                if ($implements) {
-                    $dependency = $this->builder->buildInterface($token[1]);
-                } else {
-                    $dependency = $this->builder->buildClass($token[1]);
-                }
-                // Set class dependency
-                $class->addDependency($dependency);
-            }
-        }
-        
-        return $tokens;
     }
 
     /**

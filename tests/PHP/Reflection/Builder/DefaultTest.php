@@ -527,7 +527,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder  = new PHP_Reflection_Builder_Default();
         $constant = $builder->buildTypeConstant('CONSTANT', 0);
         
-        $this->assertType('PHP_Reflection_Ast_TypeConstant', $constant);
+        $this->assertType('PHP_Reflection_Ast_ClassOrInterfaceConstant', $constant);
     }
     
     /**
@@ -625,43 +625,6 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         
         $this->assertSame($function1->getPackage(), $function2->getPackage());
         $this->assertEquals($defaultPackage, $function1->getPackage()->getName());
-    }
-    
-    /**
-     * Tests that build function updates the source file information for null
-     * values.
-     *
-     * @return void
-     */
-    public function testBuildFunctionSetsSourceFileInformationForNull()
-    {
-        $file = new PHP_Reflection_Ast_File('FooBar.php');
-        
-        $builder  = new PHP_Reflection_Builder_Default();
-        $function = $builder->buildFunction('foobar');
-        
-        $this->assertNull($function->getSourceFile()->getName());
-        $builder->buildFunction('foobar', 0, $file);
-        $this->assertSame($file, $function->getSourceFile());
-    }
-    
-    /**
-     * Tests that the build function method doesn't update an existing source
-     * file info.
-     *
-     * @return void
-     */
-    public function testBuildFunctionDoesntSetSourceFileInformationForNotNullValues()
-    {
-        $file1 = new PHP_Reflection_Ast_File('FooBar.php');
-        $file2 = new PHP_Reflection_Ast_File('HelloWorld.php');
-        
-        $builder  = new PHP_Reflection_Builder_Default();
-        $function = $builder->buildFunction('foobar', 0, $file1);
-        
-        $this->assertSame($file1, $function->getSourceFile());
-        $builder->buildFunction('foobar', 0, $file2);
-        $this->assertSame($file1, $function->getSourceFile());
     }
     
     /**

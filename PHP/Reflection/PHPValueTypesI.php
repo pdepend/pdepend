@@ -45,24 +45,8 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/Ast/AllTests.php';
-require_once dirname(__FILE__) . '/Builder/AllTests.php';
-require_once dirname(__FILE__) . '/Input/AllTests.php';
-require_once dirname(__FILE__) . '/Parser/AllTests.php';
-require_once dirname(__FILE__) . '/Tokenizer/AllTests.php';
-require_once dirname(__FILE__) . '/Visitor/AllTests.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/ReflectionTest.php';
-
 /**
- * Main test suite for the PHP_Reflection package.
+ * Helper interface that holds all constants for php/ast types.
  *
  * @category  PHP
  * @package   PHP_Reflection
@@ -72,41 +56,46 @@ require_once dirname(__FILE__) . '/ReflectionTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AllTests
+interface PHP_Reflection_PHPValueTypesI
 {
     /**
-     * Test suite main method.
-     *
-     * @return void
+     * Marks a <b>array</b> value.
      */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
+    const IS_ARRAY = 1;
     
     /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
+     * Marks a <b>null</b> value.
      */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection - AllTests');
-        
-        $suite->addTest(PHP_Reflection_Ast_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Builder_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Input_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Parser_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Tokenizer_AllTests::suite());
-        $suite->addTest(PHP_Reflection_Visitor_AllTests::suite());
-        
-        $suite->addTestSuite('PHP_Reflection_ParserTest');
-        $suite->addTestSuite('PHP_Reflection_ReflectionTest');
-
-        return $suite;
-    }
+    const IS_NULL = 2;
+    
+    /**
+     * Marks a constant string value.
+     */
+    const IS_STRING = 3;
+    
+    /**
+     * Marks a double/float value.
+     */
+    const IS_DOUBLE = 4;
+    
+    /**
+     * Marks a boolean value.
+     */
+    const IS_BOOLEAN = 5;
+    
+    /**
+     * Marks an integer value.
+     */
+    const IS_INTEGER = 6;
+    
+    /**
+     * Marks a global constant value declared with <b>define()</b>.
+     */
+    const IS_CONSTANT = 7;
+    
+    /**
+     * Marks a type constant value.
+     */
+    const IS_CLASS_OR_INTERFACE_CONSTANT = 8;
 }
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_AllTests::main') {
-    PHP_Reflection_AllTests::main();
-}
+?>

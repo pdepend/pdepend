@@ -102,7 +102,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      *
      * @param string $name The constant name.
      * 
-     * @return PHP_Reflection_Ast_TypeConstant The created constant object.
+     * @return PHP_Reflection_Ast_ClassOrInterfaceConstant The created constant object.
      */
     function buildTypeConstant($name);
     
@@ -158,14 +158,95 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * Builds a new function instance.
      *
-     * @param string                  $name       The function name.
-     * @param integer                 $line       The line number with the 
-     *                                            function declaration.
-     * @param PHP_Reflection_Ast_File $sourceFile The source file for the function.
+     * @param string  $name The function name.
+     * @param integer $line The line number with the function declaration.
      * 
-     * @return PHP_Reflection_Ast_Function The function instance
+     * @return PHP_Reflection_Ast_Function The function instance.
      */
-    function buildFunction($name, 
-                           $line = 0, 
-                           PHP_Reflection_Ast_File $sourceFile = null);
+    function buildFunction($name, $line = 0);
+    
+    /**
+     * Builds a new array value instance.
+     *
+     * @return PHP_Reflection_Ast_ArrayExpression
+     */
+    function buildArrayExpression();
+    
+    /**
+     * Builds an array element instance.
+     *
+     * @return PHP_Reflection_Ast_ArrayElement
+     */
+    function buildArrayElement();
+    
+    /**
+     * Builds a constant reference instance.
+     * 
+     * @param string $identifier The constant identifier.
+     *
+     * @return PHP_Reflection_Ast_ConstantValue
+     */
+    function buildConstantValue($identifier);
+    
+    /**
+     * Builds a class or interface constant reference instance.
+     *
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $owner      The owner node.
+     * @param string                               $identifier The constant name.
+     * 
+     * @return PHP_Reflection_Ast_ClassOrInterfaceConstantValue
+     */
+    function buildClassOrInterfaceConstantValue(
+            PHP_Reflection_Ast_ClassOrInterfaceI $owner, $identifier);
+    
+    /**
+     * Builds a class or interface proxy instance.
+     *
+     * The identifier of the proxied class or interface.
+     * 
+     * @return PHP_Reflection_Ast_ClassOrInterfaceProxy
+     */
+    function buildClassOrInterfaceProxy($identifier);
+    
+    /**
+     * Builds a new null value instance.
+     *
+     * @return PHP_Reflection_Ast_MemberNullValue
+     */
+    function buildNullValue();
+    
+    /**
+     * Builds a new true value instance.
+     *
+     * @return PHP_Reflection_Ast_MemberTrueValue
+     */
+    function buildTrueValue();
+    
+    /**
+     * Builds a new false value instance.
+     *
+     * @return PHP_Reflection_Ast_MemberFalseValue
+     */
+    function buildFalseValue();
+
+    /**
+     * Builds a new numeric value instance.
+     *
+     * @param integer $type     The type of this value.
+     * @param string  $value    The string representation of the php value.
+     * @param boolean $negative Is this numeric value negative?
+     * 
+     * @return PHP_Reflection_Ast_MemberNumericValue
+     */
+    function buildNumericValue($type, $value, $negative);
+
+    /**
+     * Builds a new scalar value instance.
+     *
+     * @param integer $type  The type of this value.
+     * @param string  $value The string representation of the php value.
+     * 
+     * @return PHP_Reflection_Ast_MemberScalarValue
+     */
+    function buildScalarValue($type, $value = null);
 }

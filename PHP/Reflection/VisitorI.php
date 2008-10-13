@@ -153,9 +153,56 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The current constant node.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $const The current constant node.
      * 
      * @return void
      */
-    function visitTypeConstant(PHP_Reflection_Ast_TypeConstant $constant);
+    function visitTypeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $const);
+    
+    /**
+     * Visits an array expression node
+     *
+     * @param PHP_Reflection_Ast_ArrayExpression $expr The current array expression.
+     * 
+     * @return void
+     */
+    function visitArrayExpression(PHP_Reflection_Ast_ArrayExpression $expr);
+    
+    /**
+     * Visits an array element node.
+     *
+     * @param PHP_Reflection_Ast_ArrayElement $elem The current array element.
+     * 
+     * @return void
+     */
+    function visitArrayElement(PHP_Reflection_Ast_ArrayElement $elem);
+    
+    /**
+     * Visits a constant reference node.
+     *
+     * @param PHP_Reflection_Ast_ConstantValue $constRef The current const ref.
+     * 
+     * @return void
+     */
+    function visitConstantValue(PHP_Reflection_Ast_ConstantValue $constRef);
+    
+    /**
+     * Visits a class or interface constant value
+     *
+     * @param PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constValue
+     *        The reference instance.
+     * 
+     * @return void
+     */
+    function visitClassOrInterfaceConstantValue(
+                PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constValue);
+                
+    /**
+     * Visits a general value.
+     *
+     * @param PHP_Reflection_Ast_MemberValueI $value The value instance.
+     * 
+     * @return void
+     */
+    function visitValue(PHP_Reflection_Ast_MemberValueI $value);
 }

@@ -109,6 +109,13 @@ class PHP_Reflection_Ast_Property
     private $_modifiers = ReflectionMethod::IS_PUBLIC;
     
     /**
+     * The value of this property instance.
+     *
+     * @var PHP_Reflection_Ast_MemberValueI $_value
+     */
+    private $_value = null;
+    
+    /**
      * Sets the modifiers for this method.
      *
      * @param integer $modifiers The method modifiers.
@@ -217,6 +224,28 @@ class PHP_Reflection_Ast_Property
     public function setType(PHP_Reflection_Ast_AbstractType $type)
     {
         $this->_type = $type;
+    }
+    
+    /**
+     * Returns the value of this property.
+     *
+     * @return PHP_Reflection_Ast_MemberValueI
+     */
+    public function getValue()
+    {
+        return $this->_value;
+    }
+    
+    /**
+     * Sets the declared value for this property.
+     *
+     * @param PHP_Reflection_Ast_MemberValueI $value The value instance.
+     * 
+     * @return void
+     */
+    public function setValue(PHP_Reflection_Ast_MemberValueI $value)
+    {
+        $this->_value = $value;
     }
     
     /**

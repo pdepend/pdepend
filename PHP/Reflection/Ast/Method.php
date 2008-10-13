@@ -66,14 +66,6 @@ class PHP_Reflection_Ast_Method
     implements PHP_Reflection_Ast_VisibilityAwareI
 {
     /**
-     * Marks this method as abstract.
-     *
-     * @type boolean
-     * @var boolean $abstract
-     */
-    protected $abstract = false;
-    
-    /**
      * The parent type object.
      *
      * @type PHP_Reflection_Ast_AbstractType
