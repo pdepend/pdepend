@@ -1628,7 +1628,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             }
         }
         $this->assertEquals(0, count($expected));
-    }   
+    }
     
     public function testParserSetsCorrectMethodPositionIssue39()
     {

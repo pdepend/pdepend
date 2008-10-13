@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,56 +46,75 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Builder_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/DefaultTest.php';
-require_once dirname(__FILE__) . '/DefaultMemberValueTest.php';
+require_once 'PHP/Reflection/Ast/AbstractNode.php';
+require_once 'PHP/Reflection/Ast/StaticScalarValueI.php';
 
 /**
- * Main test suite for the PHP_Reflection_Builder package.
+ * This class represents a class or interface constant reference.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Builder_AllTests
+class PHP_Reflection_Ast_ClassOrInterfaceConstantValue
+       extends PHP_Reflection_Ast_AbstractNode 
+    implements PHP_Reflection_Ast_StaticScalarValueI
 {
     /**
-     * Test suite main method.
+     * The reference class or interface instance.
      *
-     * @return void
+     * @var PHP_Reflection_Ast_ClassOrInterfaceI $_reference
      */
-    public static function main()
+    private $_reference = null;
+    
+    /**
+     * Constructs a new class or interface constant value instance.
+     *
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $reference  The reference node.
+     * @param string                               $identifier The constant name.
+     */
+    public function __construct(PHP_Reflection_Ast_ClassOrInterfaceI $reference,
+                                $identifier)
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        parent::__construct($identifier);
+        
+        $this->_reference = $reference;
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Returns the owning class or interface instance.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI
      */
-    public static function suite()
+    public function getReference()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Builder - AllTests');
-        
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultMemberValueTest');
-
-        return $suite;
+        return $this->_reference;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Builder_AllTests::main') {
-    PHP_Reflection_Builder_AllTests::main();
+    
+    /**
+     * Returns the php type of this value.
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return self::IS_CLASS_OR_INTERFACE_CONSTANT;
+    }
+    
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     * 
+     * @return void
+     */
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        $visitor->visitClassOrInterfaceConstantValue($this);
+    }
 }

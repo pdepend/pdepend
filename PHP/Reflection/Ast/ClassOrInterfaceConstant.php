@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,56 +46,99 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Builder_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/DefaultTest.php';
-require_once dirname(__FILE__) . '/DefaultMemberValueTest.php';
+require_once 'PHP/Reflection/Ast/AbstractItem.php';
 
 /**
- * Main test suite for the PHP_Reflection_Builder package.
+ * An instance of this class represents a class or interface constant within the
+ * analyzed source code.
+ * 
+ * <code>
+ * <?php
+ * class PHP_Reflection_BuilderI
+ * {
+ *     const GLOBAL_PACKAGE = '+global';
+ * }
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Builder
+ * @subpackage Ast
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Builder_AllTests
+class PHP_Reflection_Ast_ClassOrInterfaceConstant 
+    extends PHP_Reflection_Ast_AbstractItem
 {
     /**
-     * Test suite main method.
+     * The parent type object.
      *
-     * @return void
+     * @var PHP_Reflection_Ast_AbstractType $_parent
      */
-    public static function main()
+    private $_parent = null;
+    
+    /**
+     * The scalar value of this constant
+     *
+     * @var PHP_Reflection_Ast_StaticScalarValueI $_value
+     */
+    private $_value = null;
+
+    /**
+     * Returns the parent type object or <b>null</b>
+     *
+     * @return PHP_Reflection_Ast_AbstractType|null
+     */
+    public function getParent()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        return $this->_parent;
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Sets the parent type object.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_Reflection_Ast_AbstractType $parent The parent class.
+     * 
+     * @return void
      */
-    public static function suite()
+    public function setParent(PHP_Reflection_Ast_AbstractType $parent = null)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Builder - AllTests');
-        
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultMemberValueTest');
-
-        return $suite;
+        $this->_parent = $parent;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Builder_AllTests::main') {
-    PHP_Reflection_Builder_AllTests::main();
+    
+    /**
+     * Returns the value representation for this constant.
+     *
+     * @return PHP_Reflection_Ast_StaticScalarValueI
+     */
+    public function getValue()
+    {
+        return $this->_value;
+    }
+    
+    /**
+     * Sets the value representation for this constant.
+     *
+     * @param PHP_Reflection_Ast_StaticScalarValueI $value The scalar value object.
+     * 
+     * @return void
+     */
+    public function setValue(PHP_Reflection_Ast_StaticScalarValueI $value)
+    {
+        $this->_value = $value;
+    }
+    
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     * 
+     * @return void
+     */
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        $visitor->visitTypeConstant($this);
+    }
 }

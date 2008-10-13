@@ -46,18 +46,12 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Builder_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/DefaultTest.php';
-require_once dirname(__FILE__) . '/DefaultMemberValueTest.php';
+require_once 'PHP/Reflection/Builder/Default.php';
 
 /**
- * Main test suite for the PHP_Reflection_Builder package.
+ * Test case for the member value methods of the default builder instance.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -68,34 +62,50 @@ require_once dirname(__FILE__) . '/DefaultMemberValueTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Builder_AllTests
+class PHP_Reflection_Builder_DefaultMemberValueTest extends PHP_Reflection_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the {@link PHP_Reflection_Builder_Default::buildNullValue()}
+     * method returns a flyweight instance.
      *
      * @return void
      */
-    public static function main()
+    public function testBuildNullValueReturnsFlyweightInstance()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-    
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Builder - AllTests');
+        $builder = new PHP_Reflection_Builder_Default();
         
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Reflection_Builder_DefaultMemberValueTest');
-
-        return $suite;
+        $nullValue = $builder->buildNullValue();
+        $this->assertType('PHP_Reflection_Ast_MemberNullValue', $nullValue);
+        $this->assertSame(PHP_Reflection_Ast_MemberNullValue::flyweight(), $nullValue);
     }
-}
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Builder_AllTests::main') {
-    PHP_Reflection_Builder_AllTests::main();
+    /**
+     * Tests that the {@link PHP_Reflection_Builder_Default::buildTrueValue()}
+     * method returns a flyweight instance.
+     *
+     * @return void
+     */
+    public function testBuildTrueValueReturnsFlyweightInstance()
+    {
+        $builder = new PHP_Reflection_Builder_Default();
+        
+        $trueValue = $builder->buildTrueValue();
+        $this->assertType('PHP_Reflection_Ast_MemberTrueValue', $trueValue);
+        $this->assertSame(PHP_Reflection_Ast_MemberTrueValue::flyweight(), $trueValue);
+    }
+
+    /**
+     * Tests that the {@link PHP_Reflection_Builder_Default::buildFalseValue()}
+     * method returns a flyweight instance.
+     *
+     * @return void
+     */
+    public function testBuildFalseValueReturnsFlyweightInstance()
+    {
+        $builder = new PHP_Reflection_Builder_Default();
+        
+        $falseValue = $builder->buildFalseValue();
+        $this->assertType('PHP_Reflection_Ast_MemberFalseValue', $falseValue);
+        $this->assertSame(PHP_Reflection_Ast_MemberFalseValue::flyweight(), $falseValue);
+    }
 }

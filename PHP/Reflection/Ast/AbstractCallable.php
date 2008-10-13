@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractItem.php';
-require_once 'PHP/Reflection/Ast/DependencyAwareI.php';
 
 /**
  * Abstract base class for callable objects.
@@ -65,8 +64,6 @@ require_once 'PHP/Reflection/Ast/DependencyAwareI.php';
  */
 abstract class PHP_Reflection_Ast_AbstractCallable
        extends PHP_Reflection_Ast_AbstractItem
-    implements PHP_Reflection_Ast_NodeI,
-               PHP_Reflection_Ast_DependencyAwareI
 {
     /**
      * The tokens for this function.

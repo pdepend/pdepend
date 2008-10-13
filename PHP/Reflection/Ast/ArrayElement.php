@@ -49,7 +49,7 @@
 require_once 'PHP/Reflection/Ast/AbstractNode.php';
 
 /**
- * Abstract base class for code item.
+ * This class represents the key value pair for a single array element.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,145 +60,115 @@ require_once 'PHP/Reflection/Ast/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_Ast_AbstractItem 
-    extends PHP_Reflection_Ast_AbstractNode
+class PHP_Reflection_Ast_ArrayElement extends PHP_Reflection_Ast_AbstractNode
 {
     /**
-     * The line number where the item declaration starts.
-     *
-     * @type integer
-     * @var integer $startLine
+     * Identifier for this node type.
      */
-    protected $startLine = 0;
+    const NODE_NAME = '#array-element';
     
     /**
-     * The line number where the item declaration ends.
+     * The key for this array element.
      *
-     * @type integer
-     * @var integer $endLine
+     * @var PHP_Reflection_Ast_ExpressionI $_key
      */
-    protected $endLine = 0;
+    private $_key = null;
     
     /**
-     * The source file for this item.
+     * The value for this array element.
      *
-     * @type PHP_Reflection_Ast_File
-     * @var PHP_Reflection_Ast_File $sourceFile
+     * @var PHP_Reflection_Ast_ExpressionI $_value
      */
-    protected $sourceFile = null;
+    private $_value = null;
     
     /**
-     * The comment for this type.
+     * Was the key definition implicit. 
      *
-     * @type string
-     * @var string $docComment
+     * @var boolean $_implicit
      */
-    protected $docComment = null;
+    private $_implicit = false;
     
     /**
-     * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
-     *
-     * @param string  $name      The item name.
-     * @param integer $startLine The item declaration line number.
+     * Constructs a new array element node.
      */
-    public function __construct($name, $startLine = 0)
+    public function __construct()
     {
-        parent::__construct($name);
-        
-        $this->startLine = $startLine;
+        parent::__construct(self::NODE_NAME);
     }
     
     /**
-     * Returns the line number where the item declaration can be found.
+     * Returns the key of this array element.
      *
-     * @return integer
+     * @return PHP_Reflection_Ast_ExpressionI
      */
-    public function getStartLine()
+    public function getKey()
     {
-        return $this->startLine;
+        return $this->_key;
     }
     
     /**
-     * Sets the start line for this item.
+     * Sets the key of this array element.
      *
-     * @param integer $startLine The start line for this item.
+     * @param PHP_Reflection_Ast_ExpressionI $key The key expression.
      * 
      * @return void
      */
-    public function setStartLine($startLine)
+    public function setKey(PHP_Reflection_Ast_ExpressionI $key)
     {
-        if ($this->startLine === 0) {
-            $this->startLine = $startLine;
-        }
+        $this->_key = $key;
     }
     
     /**
-     * Returns the line number where the item declaration ends.
+     * Returns the value of this array element.
      *
-     * @return integer The last source line for this item.
+     * @return PHP_Reflection_Ast_ExpressionI
      */
-    public function getEndLine()
+    public function getValue()
     {
-        return $this->endLine;
+        return $this->_value;
     }
     
     /**
-     * Sets the end line for this item.
+     * Sets the value of this array element.
      *
-     * @param integer $endLine The end line for this item
+     * @param PHP_Reflection_Ast_ExpressionI $value The value expression.
      * 
      * @return void
      */
-    public function setEndLine($endLine)
+    public function setValue(PHP_Reflection_Ast_ExpressionI $value)
     {
-        if ($this->endLine === 0) {
-            $this->endLine = $endLine;
-        }
+        $this->_value = $value;
     }
     
     /**
-     * Returns the source file for this item.
+     * Is the key definition for this array element implicit.
      *
-     * @return PHP_Reflection_Ast_File
+     * @return boolean
      */
-    public function getSourceFile()
+    public function isImplicit()
     {
-        return $this->sourceFile;
+        return $this->_implicit;
     }
     
     /**
-     * Sets the source file for this item.
-     * 
-     * @param PHP_Reflection_Ast_File $sourceFile The item source file.
+     * Marks the key definition for this array element as implicit.
      *
      * @return void
      */
-    public function setSourceFile(PHP_Reflection_Ast_File $sourceFile)
+    public function setImplicit()
     {
-        if ($this->sourceFile === null || $this->sourceFile->getName() === null) {
-            $this->sourceFile = $sourceFile;
-        }
+        $this->_implicit = true;
     }
     
     /**
-     * Returns the doc comment for this item or <b>null</b>.
+     * Visitor method for node tree traversal.
      *
-     * @return string
-     */
-    public function getDocComment()
-    {
-        return $this->docComment;
-    }
-    
-    /**
-     * Sets the doc comment for this item.
-     *
-     * @param string $docComment The doc comment block.
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
      * 
      * @return void
      */
-    public function setDocComment($docComment)
+    public function accept(PHP_Reflection_VisitorI $visitor)
     {
-        $this->docComment = $docComment;
+        $visitor->visitArrayElement($this);
     }
 }
