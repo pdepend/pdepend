@@ -54,7 +54,7 @@ require_once 'PHP/Reflection/Ast/Interface.php';
 require_once 'PHP/Reflection/Ast/Method.php';
 require_once 'PHP/Reflection/Ast/Package.php';
 require_once 'PHP/Reflection/Ast/Property.php';
-require_once 'PHP/Reflection/Ast/TypeConstant.php';
+require_once 'PHP/Reflection/Ast/ClassOrInterfaceConstant.php';
 
 /**
  * Test case implementation for the PHP_Reflection_Ast_Class class.
@@ -371,7 +371,7 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
         $a = new PHP_Reflection_Ast_Class('a');
         
         $this->assertEquals(0, $a->getConstants()->count());
-        $c = $a->addConstant(new PHP_Reflection_Ast_TypeConstant('FOO_BAR'));
+        $c = $a->addConstant(new PHP_Reflection_Ast_ClassOrInterfaceConstant('FOO_BAR'));
         $this->assertEquals(1, $a->getConstants()->count());
         $a->removeConstant($c);
         $this->assertEquals(0, $a->getConstants()->count());
@@ -388,7 +388,7 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
         $a = new PHP_Reflection_Ast_Class('a');
         $b = new PHP_Reflection_Ast_Class('b');
         
-        $c = $a->addConstant(new PHP_Reflection_Ast_TypeConstant('FOO_BAR'));
+        $c = $a->addConstant(new PHP_Reflection_Ast_ClassOrInterfaceConstant('FOO_BAR'));
         $this->assertSame($a, $c->getParent());
         $b->addConstant($c);
         $this->assertSame($b, $c->getParent());

@@ -46,8 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/PHPValueTypesI.php';
+require_once 'PHP/Reflection/Ast/ExpressionI.php';
+
 /**
- * Base interface for all nodes that can handle dependencies.
+ * Base interface for a property or constant value.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -58,32 +61,14 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_Ast_DependencyAwareI
+interface PHP_Reflection_Ast_MemberValueI
+    extends PHP_Reflection_Ast_ExpressionI,
+            PHP_Reflection_PHPValueTypesI
 {
     /**
-     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this node 
-     * depends on.
+     * Returns the php type of this value.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return integer
      */
-    function getDependencies();
-    
-    /**
-     * Adds the given {@link PHP_Reflection_Ast_AbstractType} object as dependency.
-     *
-     * @param PHP_Reflection_Ast_AbstractType $type A type this node depends on.
-     * 
-     * @return void
-     */
-    function addDependency(PHP_Reflection_Ast_AbstractType $type);
-    
-    /**
-     * Removes the given {@link PHP_Reflection_Ast_AbstractType} object from the 
-     * dependency list.
-     *
-     * @param PHP_Reflection_Ast_AbstractType $type A type to remove.
-     * 
-     * @return void
-     */
-    function removeDependency(PHP_Reflection_Ast_AbstractType $type);
+    function getType();
 }

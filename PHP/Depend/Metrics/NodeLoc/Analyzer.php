@@ -376,12 +376,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_Ast_TypeConstant $constant The current constant node.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $constant The current constant node.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitTypeConstant()
      */
-    public function visitTypeConstant(PHP_Reflection_Ast_TypeConstant $constant)
+    public function visitTypeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $constant)
     {
         $this->fireStartTypeConstant($constant);
                 

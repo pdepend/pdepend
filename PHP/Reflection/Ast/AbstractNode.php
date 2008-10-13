@@ -46,19 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/AbstractItem.php';
+require_once 'PHP/Reflection/Ast/NodeI.php';
 
 /**
- * An instance of this class represents a class or interface constant within the
- * analyzed source code.
- * 
- * <code>
- * <?php
- * class PHP_Reflection_BuilderI
- * {
- *     const GLOBAL_PACKAGE = '+global';
- * }
- * </code>
+ * This is a base implementation of the node interface.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -69,47 +60,50 @@ require_once 'PHP/Reflection/Ast/AbstractItem.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_TypeConstant extends PHP_Reflection_Ast_AbstractItem
+abstract class PHP_Reflection_Ast_AbstractNode implements PHP_Reflection_Ast_NodeI
 {
     /**
-     * The parent type object.
+     * The name of this node.
      *
-     * @type PHP_Reflection_Ast_AbstractType
-     * @var PHP_Reflection_Ast_AbstractType $_parent
+     * @var string $_name
      */
-    private $_parent = null;
-
+    private $_name = null;
+    
     /**
-     * Returns the parent type object or <b>null</b>
+     * The unique identifier of this node.
      *
-     * @return PHP_Reflection_Ast_AbstractType|null
+     * @var PHP_Reflection_Util_UUID $_uuid
      */
-    public function getParent()
+    private $_uuid = null;
+    
+    /**
+     * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
+     *
+     * @param string $name The item name.
+     */
+    public function __construct($name)
     {
-        return $this->_parent;
+        $this->_name = $name;
+        $this->_uuid = new PHP_Reflection_Util_UUID();
     }
     
     /**
-     * Sets the parent type object.
+     * Returns the item name.
      *
-     * @param PHP_Reflection_Ast_AbstractType $parent The parent class.
-     * 
-     * @return void
+     * @return string
      */
-    public function setParent(PHP_Reflection_Ast_AbstractType $parent = null)
+    public final function getName()
     {
-        $this->_parent = $parent;
+        return $this->_name;
     }
     
     /**
-     * Visitor method for node tree traversal.
+     * Returns a uuid for this code node.
      *
-     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
-     * @return void
+     * @return string
      */
-    public function accept(PHP_Reflection_VisitorI $visitor)
+    public final function getUUID()
     {
-        $visitor->visitTypeConstant($this);
+        return (string) $this->_uuid;
     }
 }
