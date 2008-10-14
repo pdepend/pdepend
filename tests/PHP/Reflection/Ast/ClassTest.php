@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractDependencyAwareTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/_dummy/TestImplAstVisitor.php';
 
 require_once 'PHP/Reflection/Ast/Class.php';
@@ -68,7 +68,7 @@ require_once 'PHP/Reflection/Ast/ClassOrInterfaceConstant.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependencyAwareTest
+class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractItemTest
 {
     /**
      * Tests the ctor with and the {@link PHP_Reflection_Ast_Class::getName()} and
@@ -219,22 +219,22 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
         $classA = new PHP_Reflection_Ast_Class('A');
         $classB = new PHP_Reflection_Ast_Class('B');
         $classC = new PHP_Reflection_Ast_Class('C');
+
+        $interfsA->addChildInterface($interfsB); // interface B extends A {}
+        $interfsA->addChildInterface($interfsC); // interface C extends A {}
+        $interfsB->addChildInterface($interfsD); // interface D extends B, E
+        $interfsE->addChildInterface($interfsD); // interface D extends B, E
+        $interfsF->addChildInterface($interfsE); // interface E extends F
         
-        $interfsA->addChildType($interfsB); // interface B extends A {}
-        $interfsA->addChildType($interfsC); // interface C extends A {}
-        $interfsB->addChildType($interfsD); // interface D extends B, E
-        $interfsE->addChildType($interfsD); // interface D extends B, E
-        $interfsF->addChildType($interfsE); // interface E extends F
+        $interfsE->addImplementingClass($classA); // class A implements E, C {}
+        $interfsC->addImplementingClass($classA); // class A implements E, C {}
         
-        $interfsE->addChildType($classA); // class A implements E, C {}
-        $interfsC->addChildType($classA); // class A implements E, C {}
+        $interfsD->addImplementingClass($classB); // class B extends C implements D, A {}
+        $interfsA->addImplementingClass($classB); // class B extends C implements D, A {}
         
-        $interfsD->addChildType($classB); // class B extends C implements D, A {}
-        $interfsA->addChildType($classB); // class B extends C implements D, A {}
+        $interfsC->addImplementingClass($classC); // class C implements C {}
         
-        $interfsC->addChildType($classC); // class C implements C {}
-        
-        $classC->addChildType($classB); // class B extends C implements D, A {}
+        $classC->addChildClass($classB); // class B extends C implements D, A {}
         
         $interfaces = $classA->getImplementedInterfaces();
         $this->assertEquals(4, $interfaces->count());
@@ -268,52 +268,6 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
     }
     
     /**
-     * Tests that {@link PHP_Reflection_Ast_Class::addDependency()} also adds the
-     * dependent classes as child types.
-     *
-     * @return void
-     */
-    public function testAddDependencyAlsoAddsChildType()
-    {
-        $a = new PHP_Reflection_Ast_Class('a');
-        $b = new PHP_Reflection_Ast_Class('b');
-        $c = new PHP_Reflection_Ast_Class('c');
-        $d = new PHP_Reflection_Ast_Class('d');
-        
-        $b->addDependency($a);
-        $c->addDependency($a);
-        
-        $d->addDependency($c);
-        
-        $typesA = $a->getChildTypes();
-        $this->assertEquals(2, $typesA->count());
-        $this->assertSame($b, $typesA->current());
-        $typesA->next();
-        $this->assertSame($c, $typesA->current());
-
-        $typesC = $c->getChildTypes();
-        $this->assertEquals(1, $typesC->count());
-        $this->assertSame($d, $typesC->current());
-    }
-    
-    /**
-     * Tests that {@link PHP_Reflection_Ast_Class::removeDependency()} also removes
-     * the dependent child type.
-     *
-     * @return void
-     */
-    public function testRemoveDependencyAlsoRemovesChildType()
-    {
-        $a = new PHP_Reflection_Ast_Class('a');
-        $b = new PHP_Reflection_Ast_Class('b');
-        
-        $a->addDependency($b);
-        $this->assertEquals(1, $b->getChildTypes()->count());
-        $a->removeDependency($b);
-        $this->assertEquals(0, $b->getChildTypes()->count());
-    }
-    
-    /**
      * Tests that {@link PHP_Reflection_Ast_Class::addChildType()} also adds the
      * dependent classes as dependencies.
      *
@@ -326,10 +280,10 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
         $c = new PHP_Reflection_Ast_Class('c');
         $d = new PHP_Reflection_Ast_Class('d');
         
-        $a->addChildType($b);
-        $a->addChildType($c);
+        $a->addChildClass($b);
+        $a->addChildClass($c);
         
-        $c->addChildType($d);
+        $c->addChildClass($d);
         
         $depB = $b->getDependencies();
         $this->assertEquals(1, $depB->count());
@@ -342,23 +296,6 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
         $depD = $d->getDependencies();
         $this->assertEquals(1, $depD->count());
         $this->assertSame($c, $depD->current());
-    }
-    
-    /**
-     * Tests that {@link PHP_Reflection_Ast_Class::removeChildType()} also removes
-     * the dependency instance.
-     *
-     * @return void
-     */
-    public function testRemoveChildTypeAlsoRemovesDependency()
-    {
-        $a = new PHP_Reflection_Ast_Class('a');
-        $b = new PHP_Reflection_Ast_Class('b');
-        
-        $a->addChildType($b);
-        $this->assertEquals(1, $b->getDependencies()->count());
-        $a->removeChildType($b);
-        $this->assertEquals(0, $b->getDependencies()->count());
     }
     
     /**
@@ -432,13 +369,13 @@ class PHP_Reflection_Ast_ClassTest extends PHP_Reflection_Ast_AbstractDependency
         $interfsE = new PHP_Reflection_Ast_Interface('E');
         $interfsF = new PHP_Reflection_Ast_Interface('F');
         
-        $interfsD->addChildType($classA); // class A implements D, E
-        $interfsE->addChildType($classA); // class A implements D, E
+        $interfsD->addImplementingClass($classA); // class A implements D, E
+        $interfsE->addImplementingClass($classA); // class A implements D, E
 
-        $interfsF->addChildType($classC); // class C extends B implements F {}
+        $interfsF->addImplementingClass($classC); // class C extends B implements F {}
         
-        $classA->addChildType($classB); // class B extends A {} 
-        $classB->addChildType($classC); // class C extends B implements F {}
+        $classA->addChildClass($classB); // class B extends A {} 
+        $classB->addChildClass($classC); // class C extends B implements F {}
         
         $this->assertTrue($classA->isSubtypeOf($classA));
         $this->assertFalse($classA->isSubtypeOf($classB));

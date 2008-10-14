@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractType.php';
+require_once 'PHP/Reflection/Ast/ClassI.php';
 require_once 'PHP/Reflection/Ast/Iterator.php';
 
 /**
@@ -61,23 +62,17 @@ require_once 'PHP/Reflection/Ast/Iterator.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
+class PHP_Reflection_Ast_Class 
+       extends PHP_Reflection_Ast_AbstractType
+    implements PHP_Reflection_Ast_ClassI
 {
-    /**
-     * Marks this class as abstract.
-     *
-     * @type boolean
-     * @var boolean $abstract
-     */
-    protected $abstract = false;
-    
     /**
      * Declared modifiers for this class.
      * 
      * <ul>
-     *   <li>ReflectionMethod::IS_EXPLICIT_ABSTRACT</li>
-     *   <li>ReflectionMethod::IS_FINAL</li>
-     *   <li>ReflectionMethod::IS_IMPLICIT_ABSTRACT</li>
+     *   <li>ReflectionClass::IS_EXPLICIT_ABSTRACT</li>
+     *   <li>ReflectionClass::IS_FINAL</li>
+     *   <li>ReflectionClass::IS_IMPLICIT_ABSTRACT</li>
      * </ul>
      *
      * @var unknown_type
@@ -85,12 +80,32 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
     private $_modifiers = 0;
     
     /**
+     * The parent class instance for this class.
+     *
+     * @var PHP_Reflection_Ast_Class $_parentClass
+     */
+    private $_parentClass = null;
+    
+    /**
+     * List of direct child classes of this class.
+     *
+     * @var array(PHP_Reflection_Ast_Class) $_childClasses
+     */
+    private $_childClasses = array();
+    
+    /**
+     * List of implemented interfaces for this class.
+     *
+     * @var array(PHP_Reflection_Ast_Interface) $_implementedInterfaces
+     */
+    private $_implementedInterfaces = array();
+    
+    /**
      * List of associated properties.
      *
-     * @type array<PHP_Reflection_Ast_Property>
-     * @var array(PHP_Reflection_Ast_Property) $properties
+     * @var array(PHP_Reflection_Ast_Property) $_properties
      */
-    protected $properties = array();
+    private $_properties = array();
     
     /**
      * Sets the modifiers for this class.
@@ -121,9 +136,15 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
      */
     public function isAbstract()
     {
-        return (ReflectionClass::IS_EXPLICIT_ABSTRACT === (
-            $this->_modifiers & ReflectionClass::IS_EXPLICIT_ABSTRACT
-        ));
+        return (
+            self::IS_EXPLICIT_ABSTRACT === (
+                $this->_modifiers & self::IS_EXPLICIT_ABSTRACT
+            ) || (
+                self::IS_IMPLICIT_ABSTRACT === (
+                    $this->_modifiers & self::IS_IMPLICIT_ABSTRACT
+                )
+            )
+        );
     }
     
     /**
@@ -133,25 +154,30 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
      */
     public function isFinal()
     {
-        return (ReflectionClass::IS_FINAL === (
-            $this->_modifiers & ReflectionClass::IS_FINAL
-        ));
+        return (self::IS_FINAL === ($this->_modifiers & self::IS_FINAL));
     }
     
     /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
-     * @return PHP_Reflection_Ast_Class
+     * @return PHP_Reflection_Ast_ClassI
      */
     public function getParentClass()
     {
-        // We know that a class has only 'extends' and 'implements' dependencies
-        foreach ($this->getDependencies() as $dependency) {
-            if ($dependency instanceof PHP_Reflection_Ast_Class) {
-                return $dependency;
-            }
-        }
-        return null;
+        return $this->filterNode($this->_parentClass);
+    }
+    
+    /**
+     * Sets the parent class node for this class.
+     *
+     * @param PHP_Reflection_Ast_Class $parentClass The parent class.
+     */
+    public function setParentClass(PHP_Reflection_Ast_Class $parentClass)
+    {
+        // Store parent class reference
+        $this->_parentClass = $parentClass;
+        // Set this as child class
+        $this->_parentClass->addChildClass($this);
     }
     
     /**
@@ -161,6 +187,21 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
      */
     public function getImplementedInterfaces()
     {
+        /*
+        $implemented = $this->_implementedInterfaces;
+        foreach ($implemented as $interface) {
+            // Append all parent interfaces
+            foreach ($interface->getParentInterface() as $parentInterface) {
+                // Add interface only one time
+                if (in_array($parentInterface, $implemented, true) === false) {
+                    $implemented[] = $parentInterface;
+                }
+            }
+        }
+        
+        // Append interfaces of parent class
+        
+        */
         $type   = 'PHP_Reflection_Ast_Interface';
         $filter = new PHP_Reflection_Ast_Iterator_TypeFilter($type);
         
@@ -188,13 +229,69 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
     }
     
     /**
-     * Returns an iterator with all child classes.
+     * Adds an interface node to the list of implemented interfaces.
+     *
+     * @param PHP_Reflection_Ast_Interface $interface The implemented interface node.
+     * 
+     * @return void
+     */
+    public function addImplementedInterface(PHP_Reflection_Ast_Interface $interface)
+    {
+        // Each class can implement an interface only one time
+        if (in_array($interface, $this->_implementedInterfaces, true) === false) {
+            // Store interface reference
+            $this->_implementedInterfaces[] = $interface;
+            // Set this as implementing class
+            $interface->addImplementingClass($this);
+        }
+    }
+    
+    /**
+     * Returns an iterator with all {@link PHP_Reflection_Ast_ClassI} nodes
+     * that extend this class.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
     public function getChildClasses()
     {
-        return new PHP_Reflection_Ast_Iterator($this->children);
+        return new PHP_Reflection_Ast_Iterator($this->_childClasses);
+    }
+    
+    /**
+     * Adds a child class to this class.
+     *
+     * @param PHP_Reflection_Ast_Class $childClass The child class instance.
+     * 
+     * @return void
+     */
+    public function addChildClass(PHP_Reflection_Ast_Class $childClass)
+    {
+        // Add a child class only one time
+        if (in_array($childClass, $this->_childClasses, true) === false) {
+            // Append given class to child list
+            $this->_childClasses[] = $childClass;
+            // Check for parent class
+            if ($childClass->getParentClass() === null) {
+                // Set this as parent
+                $childClass->setParentClass($this);
+            }
+        }
+    }
+    
+    /**
+     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this type 
+     * depends on.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    public function getDependencies()
+    {
+        $dependencies = $this->_implementedInterfaces;
+        if ($this->_parentClass !== null) {
+            $dependencies[] = $this->_parentClass;
+        }
+
+        return new PHP_Reflection_Ast_Iterator($dependencies);
     }
     
     /**
@@ -204,7 +301,7 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
      */
     public function getProperties()
     {
-        return new PHP_Reflection_Ast_Iterator($this->properties);
+        return new PHP_Reflection_Ast_Iterator($this->_properties);
     }
     
     /**
@@ -216,9 +313,9 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
      */
     public function addProperty(PHP_Reflection_Ast_Property $property)
     {
-        if (in_array($property, $this->properties, true) === false) {
+        if (in_array($property, $this->_properties, true) === false) {
             // Add to internal list
-            $this->properties[] = $property;
+            $this->_properties[] = $property;
             // Set this as parent
             $property->setParent($this);
         }
@@ -234,36 +331,38 @@ class PHP_Reflection_Ast_Class extends PHP_Reflection_Ast_AbstractType
      */
     public function removeProperty(PHP_Reflection_Ast_Property $property)
     {
-        if (($i = array_search($property, $this->properties, true)) !== false) {
+        if (($i = array_search($property, $this->_properties, true)) !== false) {
             // Remove this as parent
             $property->setParent(null);
             // Remove from internal property list
-            unset($this->properties[$i]);
+            unset($this->_properties[$i]);
         }
     }
     
     /**
-     * Checks that this user type is a subtype of the given <b>$type</b> instance.
+     * Checks that this user type is a subtype of the given <b>$classOrInterface</b>
+     * instance.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type The possible parent type.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $classOrInterface 
+     *        The possible parent node.
      * 
      * @return boolean
      */
-    public function isSubtypeOf(PHP_Reflection_Ast_AbstractType $type)
+    public function isSubtypeOf(PHP_Reflection_Ast_ClassOrInterfaceI $classOrInterface)
     {
-        if ($type === $this) {
+        if ($classOrInterface === $this) {
             return true;
-        } else if ($type instanceof PHP_Reflection_Ast_Interface) {
+        } else if ($classOrInterface instanceof PHP_Reflection_Ast_Interface) {
             foreach ($this->getImplementedInterfaces() as $interface) {
-                if ($interface === $type) {
+                if ($interface === $classOrInterface) {
                     return true;
                 }
             }
         } else if (($parent = $this->getParentClass()) !== null) {
-            if ($parent === $type) {
+            if ($parent === $classOrInterface) {
                 return true;
             }
-            return $parent->isSubtypeOf($type);
+            return $parent->isSubtypeOf($classOrInterface);
         }
         return false;
     }

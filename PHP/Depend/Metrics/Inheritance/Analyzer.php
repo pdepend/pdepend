@@ -169,12 +169,12 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_Class $class)
+    public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
         $this->fireStartClass($class);
         
         // Count all derived classes
-        $this->_derivedClasses[] = $class->getChildTypes()->count();
+        $this->_derivedClasses[] = $class->getChildClasses()->count();
         
         // Is this a root class?
         if ($class->getParentClass() === null) {
@@ -193,7 +193,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      */
     private function _calculateHIT(PHP_Reflection_Ast_Class $class)
     {
-        $childTypes = $class->getChildTypes();
+        $childTypes = $class->getChildClasses();
         if ($childTypes->count() === 0) {
             return 0;
         }

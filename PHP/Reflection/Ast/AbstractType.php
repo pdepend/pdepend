@@ -219,80 +219,6 @@ abstract class PHP_Reflection_Ast_AbstractType
     }
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this type 
-     * depends on.
-     *
-     * @return PHP_Reflection_Ast_Iterator
-     */
-    public function getDependencies()
-    {
-        return new PHP_Reflection_Ast_Iterator($this->dependencies);
-    }
-    
-    /**
-     * Adds the given {@link PHP_Reflection_Ast_AbstractType} object as dependency.
-     *
-     * @param PHP_Reflection_Ast_AbstractType $type A type this function depends on.
-     * 
-     * @return void
-     */
-    public function addDependency(PHP_Reflection_Ast_AbstractType $type)
-    {
-        if (array_search($type, $this->dependencies, true) === false) {
-            // Store type dependency
-            $this->dependencies[] = $type;
-            // Add this as child type
-            $type->addChildType($this);
-        }
-    }
-    
-    /**
-     * Removes the given {@link PHP_Reflection_Ast_AbstractType} object from the 
-     * dependency list.
-     *
-     * @param PHP_Reflection_Ast_AbstractType $type A type to remove.
-     * 
-     * @return void
-     */
-    public function removeDependency(PHP_Reflection_Ast_AbstractType $type)
-    {
-        if (($i = array_search($type, $this->dependencies, true)) !== false) {
-            // Remove from internal list
-            unset($this->dependencies[$i]);
-            // Remove this as child type
-            $type->removeChildType($this);
-        }
-    }
-    
-    /**
-     * Returns an iterator with all child types for this type.
-     *
-     * @return PHP_Reflection_Ast_Iterator
-     */
-    public function getChildTypes()
-    {
-        return new PHP_Reflection_Ast_Iterator($this->children);
-    }
-    
-    /**
-     * Adds a type instance that extends or implements this type.
-     *
-     * @param PHP_Reflection_Ast_AbstractType $type The child type instance.
-     * 
-     * @return PHP_Reflection_Ast_AbstractType
-     */
-    public function addChildType(PHP_Reflection_Ast_AbstractType $type)
-    {
-        if (array_search($type, $this->children, true) === false) {
-            // First add the type as child
-            $this->children[] = $type;
-            // Try to add this as dependency...
-            $type->addDependency($this);
-        }
-        return $type;
-    }
-    
-    /**
      * Removes the given type from the list of known children.
      *
      * @param PHP_Reflection_Ast_AbstractType $type The child type instance.
@@ -374,21 +300,4 @@ abstract class PHP_Reflection_Ast_AbstractType
     {
         $this->_position = (int) $position;
     }
-    
-    /**
-     * Returns <b>true</b> if this is an abstract class or an interface.
-     *
-     * @return boolean
-     */
-    public abstract function isAbstract();
-    
-    /**
-     * Checks that this user type is a subtype of the given <b>$type</b> instance.
-     *
-     * @param PHP_Reflection_Ast_AbstractType $type The possible parent type 
-     *                                              instance.
-     * 
-     * @return boolean
-     */
-    public abstract function isSubtypeOf(PHP_Reflection_Ast_AbstractType $type);
 }
