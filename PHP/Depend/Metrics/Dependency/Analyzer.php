@@ -315,11 +315,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Generic visit method for classes and interfaces. Both visit methods 
      * delegate calls to this method.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type The context type instance.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $type The context type instance.
      * 
      * @return void
      */
-    protected function visitType(PHP_Reflection_Ast_AbstractType $type)
+    protected function visitType(PHP_Reflection_Ast_ClassOrInterfaceI $type)
     {
         // Get context package uuid
         $pkgUUID = $type->getPackage()->getUUID();

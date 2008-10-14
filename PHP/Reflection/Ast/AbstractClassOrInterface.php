@@ -61,28 +61,10 @@ require_once 'PHP/Reflection/Ast/ClassOrInterfaceI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_Ast_AbstractType
+abstract class PHP_Reflection_Ast_AbstractClassOrInterface
        extends PHP_Reflection_Ast_AbstractItem 
     implements PHP_Reflection_Ast_ClassOrInterfaceI
 {
-    /**
-     * List of {@link PHP_Reflection_Ast_AbstractType} objects this type depends
-     * on.
-     *
-     * @type array<PHP_Reflection_Ast_AbstractType>
-     * @var array(PHP_Reflection_Ast_AbstractType) $dependencies
-     */
-    protected $dependencies = array();
-    
-    /**
-     * List of {@link PHP_Reflection_Ast_AbstractType} objects that extend or 
-     * implement this type. 
-     *
-     * @type array<PHP_Reflection_Ast_AbstractType>
-     * @var array(PHP_Reflection_Ast_AbstractType) $children
-     */
-    protected $children = array();
-    
     /**
      * The parent package for this class.
      *
@@ -215,23 +197,6 @@ abstract class PHP_Reflection_Ast_AbstractType
             $method->setParent(null);
             // Remove from internal list
             unset($this->_methods[$i]);
-        }
-    }
-    
-    /**
-     * Removes the given type from the list of known children.
-     *
-     * @param PHP_Reflection_Ast_AbstractType $type The child type instance.
-     * 
-     * @return void
-     */
-    public function removeChildType(PHP_Reflection_Ast_AbstractType $type)
-    {
-        if (($i = array_search($type, $this->children, true)) !== false) {
-            // First remove this child
-            unset($this->children[$i]);
-            // Try to remove this as dependency
-            $type->removeDependency($this);
         }
     }
     

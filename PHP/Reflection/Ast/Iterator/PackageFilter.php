@@ -102,7 +102,7 @@ class PHP_Reflection_Ast_Iterator_PackageFilter
         //       errors.
         if ($node instanceof PHP_Reflection_Ast_Package) {
             $package = $node->getName();
-        } else if ($node instanceof PHP_Reflection_Ast_AbstractType) {
+        } else if ($node instanceof PHP_Reflection_Ast_ClassOrInterfaceI) {
             $package = $node->getPackage()->getName();
         } else if ($node instanceof PHP_Reflection_Ast_Function) {
             $package = $node->getPackage()->getName();

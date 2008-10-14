@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/AbstractType.php';
+require_once 'PHP/Reflection/Ast/AbstractClassOrInterface.php';
 require_once 'PHP/Reflection/Ast/ClassI.php';
 require_once 'PHP/Reflection/Ast/Iterator.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/Ast/Iterator.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_Ast_Class 
-       extends PHP_Reflection_Ast_AbstractType
+       extends PHP_Reflection_Ast_AbstractClassOrInterface
     implements PHP_Reflection_Ast_ClassI
 {
     /**
@@ -279,8 +279,8 @@ class PHP_Reflection_Ast_Class
     }
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this type 
-     * depends on.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects this 
+     * type depends on.
      *
      * @return PHP_Reflection_Ast_Iterator
      */

@@ -78,7 +78,7 @@ interface PHP_Reflection_Ast_ClassOrInterfaceI extends PHP_Reflection_Ast_NodeI
     function getConstants();
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this node 
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects this node 
      * depends on.
      *
      * @return PHP_Reflection_Ast_Iterator

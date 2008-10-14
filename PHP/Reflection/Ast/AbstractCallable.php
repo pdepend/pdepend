@@ -68,17 +68,15 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     /**
      * The tokens for this function.
      *
-     * @type array<mixed>
      * @var array(mixed) $tokens
      */
     protected $tokens = array();
 
     /**
-     * List of {@link PHP_Reflection_Ast_AbstractType} objects this function
+     * List of {@link PHP_Reflection_Ast_AbstractClassOrInterface} objects this function
      * depends on.
      *
-     * @type array<PHP_Reflection_Ast_AbstractType>
-     * @var array(PHP_Reflection_Ast_AbstractType) $dependencies
+     * @var array(PHP_Reflection_Ast_AbstractClassOrInterface) $dependencies
      */
     protected $dependencies = array();
 
@@ -86,16 +84,14 @@ abstract class PHP_Reflection_Ast_AbstractCallable
      * The return type for this callable. By default and for scalar types this
      * will be <b>null</b>.
      *
-     * @type PHP_Reflection_Ast_AbstractType
-     * @var PHP_Reflection_Ast_AbstractType $_returnType
+     * @var AbstractClassOrInterface $_returnType
      */
     private $_returnType = null;
 
     /**
      * A list of all thrown exception types.
      *
-     * @type array<PHP_Reflection_Ast_AbstractType>
-     * @var array(PHP_Reflection_Ast_AbstractType) $_exceptionTypes
+     * @var array(AbstractClassOrInterface) $_exceptionTypes
      */
     private $_exceptionTypes = array();
 
@@ -130,8 +126,8 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     }
 
     /**
-     * Returns all {@link PHP_Reflection_Ast_AbstractType} objects this function
-     * depends on.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects this 
+     * function depends on.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
@@ -153,13 +149,14 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     }
 
     /**
-     * Adds the given {@link PHP_Reflection_Ast_AbstractType} object as dependency.
+     * Adds the given {@link PHP_Reflection_Ast_AbstractClassOrInterface} object
+     * as dependency.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type A type this function depends on.
+     * @param PHP_Reflection_Ast_AbstractClassOrInterface $type A type this function depends on.
      *
      * @return void
      */
-    public function addDependency(PHP_Reflection_Ast_AbstractType $type)
+    public function addDependency(PHP_Reflection_Ast_AbstractClassOrInterface $type)
     {
         if (in_array($type, $this->dependencies, true) === false) {
             $this->dependencies[] = $type;
@@ -167,14 +164,14 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     }
 
     /**
-     * Removes the given {@link PHP_Reflection_Ast_AbstractType} object from the
-     * dependency list.
+     * Removes the given {@link PHP_Reflection_Ast_AbstractClassOrInterface} 
+     * object from the dependency list.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type A type to remove.
+     * @param PHP_Reflection_Ast_AbstractClassOrInterface $type A type to remove.
      *
      * @return void
      */
-    public function removeDependency(PHP_Reflection_Ast_AbstractType $type)
+    public function removeDependency(PHP_Reflection_Ast_AbstractClassOrInterface $type)
     {
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list
@@ -186,7 +183,7 @@ abstract class PHP_Reflection_Ast_AbstractCallable
      * Returns the return type of this callable. By default and for scalar types
      * this will be <b>null</b>.
      *
-     * @return PHP_Reflection_Ast_AbstractType
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI
      */
     public function getReturnType()
     {
@@ -196,11 +193,11 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     /**
      * Sets the return type of this callable.
      *
-     * @param PHP_Reflection_Ast_AbstractType $returnType The return type of this.
+     * @param PHP_Reflection_Ast_AbstractClassOrInterface $returnType The return type of this.
      *
      * @return void
      */
-    public function setReturnType(PHP_Reflection_Ast_AbstractType $returnType)
+    public function setReturnType(PHP_Reflection_Ast_AbstractClassOrInterface $returnType)
     {
         $this->_returnType = $returnType;
     }
@@ -218,11 +215,11 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     /**
      * Adds an exception to the list of thrown exception types.
      *
-     * @param PHP_Reflection_Ast_AbstractType $exception Thrown exception.
+     * @param PHP_Reflection_Ast_AbstractClassOrInterface $exception Thrown exception.
      *
      * @return void
      */
-    public function addExceptionType(PHP_Reflection_Ast_AbstractType $exception)
+    public function addExceptionType(PHP_Reflection_Ast_AbstractClassOrInterface $exception)
     {
         if (in_array($exception, $this->_exceptionTypes, true) === false) {
             $this->_exceptionTypes[] = $exception;
@@ -232,11 +229,11 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     /**
      * Removes an exception from the list of thrown exception types.
      *
-     * @param PHP_Reflection_Ast_AbstractType $exception Thrown exception.
+     * @param PHP_Reflection_Ast_AbstractClassOrInterface $exception Thrown exception.
      *
      * @return void
      */
-    public function removeExceptionType(PHP_Reflection_Ast_AbstractType $exception)
+    public function removeExceptionType(PHP_Reflection_Ast_AbstractClassOrInterface $exception)
     {
         if (($i = array_search($exception, $this->_exceptionTypes, true))) {
             unset($this->_exceptionTypes[$i]);

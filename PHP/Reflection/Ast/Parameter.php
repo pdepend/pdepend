@@ -98,8 +98,7 @@ class PHP_Reflection_Ast_Parameter
      * The type for this property. This value is <b>null</b> by default and for
      * scalar types.
      *
-     * @type PHP_Reflection_Ast_AbstractType
-     * @var PHP_Reflection_Ast_AbstractType $_type
+     * @var PHP_Reflection_Ast_AbstractClassOrInterface $_type
      */
     private $_type = null;
 
@@ -151,7 +150,7 @@ class PHP_Reflection_Ast_Parameter
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
-     * @return PHP_Reflection_Ast_AbstractType
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI
      */
     public function getType()
     {
@@ -161,11 +160,11 @@ class PHP_Reflection_Ast_Parameter
     /**
      * Sets the type of this property.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type The property type.
+     * @param PHP_Reflection_Ast_AbstractClassOrInterface $type The property type.
      * 
      * @return void
      */
-    public function setType(PHP_Reflection_Ast_AbstractType $type)
+    public function setType(PHP_Reflection_Ast_AbstractClassOrInterface $type)
     {
         $this->_type = $type;
     }
