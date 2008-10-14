@@ -66,8 +66,7 @@ class PHP_Reflection_Ast_Method
     /**
      * The parent type object.
      *
-     * @type PHP_Reflection_Ast_AbstractType
-     * @var PHP_Reflection_Ast_AbstractType $_parent
+     * @var PHP_Reflection_Ast_AbstractClassOrInterface $_parent
      */
     private $_parent = null;
     
@@ -189,7 +188,7 @@ class PHP_Reflection_Ast_Method
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return PHP_Reflection_Ast_AbstractType|null
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI|null
      */
     public function getParent()
     {
@@ -199,11 +198,11 @@ class PHP_Reflection_Ast_Method
     /**
      * Sets the parent type object.
      *
-     * @param PHP_Reflection_Ast_AbstractType $parent The parent type.
+     * @param PHP_Reflection_Ast_AbstractClassOrInterface $parent The parent type.
      * 
      * @return void
      */
-    public function setParent(PHP_Reflection_Ast_AbstractType $parent = null)
+    public function setParent(PHP_Reflection_Ast_AbstractClassOrInterface $parent = null)
     {
         $this->_parent = $parent;
     }
