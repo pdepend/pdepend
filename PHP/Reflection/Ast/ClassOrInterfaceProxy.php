@@ -100,14 +100,13 @@ class PHP_Reflection_Ast_ClassOrInterfaceProxy
     }
     
     /**
-     * Returns an iterator with all child classes/interfaces for this class or
-     * interface node.
+     * Returns <b>true</b> if this is an abstract class or an interface.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return boolean
      */
-    public function getChildTypes()
+    public function isAbstract()
     {
-        return $this->getRealSubject()->getChildTypes();
+        return $this->getRealSubject()->isAbstract();
     }
     
     /**
@@ -150,6 +149,20 @@ class PHP_Reflection_Ast_ClassOrInterfaceProxy
     public function getPackage()
     {
         return $this->getRealSubject()->getPackage();
+    }
+    
+    /**
+     * Checks that this user type is a subtype of the given <b>$classOrInterface</b>
+     * instance.
+     *
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $classOrInterface 
+     *        The possible parent node.
+     * 
+     * @return boolean
+     */
+    public function isSubtypeOf(PHP_Reflection_Ast_ClassOrInterfaceI $classOrInterface)
+    {
+        return $this->getRealSubject()->isSubtypeOf($classOrInterface);
     }
     
     /**

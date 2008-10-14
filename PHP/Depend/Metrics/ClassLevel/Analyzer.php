@@ -189,7 +189,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_Class $class)
+    public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
         $this->fireStartClass($class);
         

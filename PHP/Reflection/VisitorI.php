@@ -85,7 +85,7 @@ interface PHP_Reflection_VisitorI
      * 
      * @return void
      */
-    function visitClass(PHP_Reflection_Ast_Class $class);
+    function visitClass(PHP_Reflection_Ast_ClassI $class);
     
     /**
      * Visits a file node. 

@@ -106,4 +106,27 @@ abstract class PHP_Reflection_Ast_AbstractNode implements PHP_Reflection_Ast_Nod
     {
         return (string) $this->_uuid;
     }
+    
+    /**
+     * Returns the input <b>$node</b> when the given node instance is not 
+     * affected by a user defined filter, otherwise the return value will be
+     * <b>null</b>. 
+     *
+     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * 
+     * @return PHP_Reflection_Ast_NodeI|null
+     */
+    protected final function filterNode(PHP_Reflection_Ast_NodeI $node = null)
+    {
+        // Ignore null nodes
+        if ($node === null) {
+            return null;
+        }
+        
+        // TODO: Refactor this iterator filter stuff
+        if (PHP_Reflection_Ast_Iterator_StaticFilter::getInstance()->accept($node)) {
+            return $node;
+        }
+        return null;
+    }
 }
