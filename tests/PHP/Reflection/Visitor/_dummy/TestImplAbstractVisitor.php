@@ -78,7 +78,7 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_Class $class)
+    public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
         $this->visits[] = $class->getName();
         

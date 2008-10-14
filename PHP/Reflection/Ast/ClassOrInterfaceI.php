@@ -63,12 +63,11 @@ require_once 'PHP/Reflection/Ast/NodeI.php';
 interface PHP_Reflection_Ast_ClassOrInterfaceI extends PHP_Reflection_Ast_NodeI
 {
     /**
-     * Returns an iterator with all child classes/interfaces for this class or
-     * interface node.
+     * Returns <b>true</b> if this is an abstract class or an interface.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return boolean
      */
-    function getChildTypes();
+    function isAbstract();
     
     /**
      * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceConstant} objects 
@@ -99,4 +98,15 @@ interface PHP_Reflection_Ast_ClassOrInterfaceI extends PHP_Reflection_Ast_NodeI
      * @return PHP_Reflection_Ast_Package
      */
     function getPackage();
+    
+    /**
+     * Checks that this user type is a subtype of the given <b>$classOrInterface</b>
+     * instance.
+     *
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $classOrInterface 
+     *        The possible parent node.
+     * 
+     * @return boolean
+     */
+    function isSubtypeOf(PHP_Reflection_Ast_ClassOrInterfaceI $classOrInterface);
 }

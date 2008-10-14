@@ -93,7 +93,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * @see PHP_Reflection_VisitorI::visitClass()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
-    public function visitClass(PHP_Reflection_Ast_Class $class)
+    public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
         $this->fireStartClass($class);
         $this->visitType($class);

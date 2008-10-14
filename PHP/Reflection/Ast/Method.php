@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractCallable.php';
-require_once 'PHP/Reflection/Ast/VisibilityAwareI.php';
 
 /**
  * Represents a php method node.
@@ -63,7 +62,6 @@ require_once 'PHP/Reflection/Ast/VisibilityAwareI.php';
  */
 class PHP_Reflection_Ast_Method 
     extends PHP_Reflection_Ast_AbstractCallable
-    implements PHP_Reflection_Ast_VisibilityAwareI
 {
     /**
      * The parent type object.

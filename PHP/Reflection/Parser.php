@@ -374,8 +374,8 @@ class PHP_Reflection_Parser
             $this->tokenizer->next();
             // Parse parent class name
             $qualifiedName = $this->_parseStaticQualifiedIdentifier();
-            // Add parent class
-            $class->addDependency($this->builder->buildClass($qualifiedName));
+            // Set  parent class
+            $class->setParentClass($this->builder->buildClass($qualifiedName));
 
             // Skip comment tokens
             $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
@@ -386,8 +386,8 @@ class PHP_Reflection_Parser
             // Skip 'implements' token
             $this->tokenizer->next();
             // Parse interface list
-            foreach ($this->_parseInterfaceList() as $parent) {
-                $class->addDependency($parent);
+            foreach ($this->_parseInterfaceList() as $interface) {
+                $class->addImplementedInterface($interface);
             }
         
             // Skip comment tokens
@@ -544,7 +544,7 @@ class PHP_Reflection_Parser
             $this->tokenizer->next();
             // Parse interface list
             foreach ($this->_parseInterfaceList() as $parent) {
-                $interface->addDependency($parent);
+                $interface->addParentInterface($parent);
             }
         
             // Skip comment tokens

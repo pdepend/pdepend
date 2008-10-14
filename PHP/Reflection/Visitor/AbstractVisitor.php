@@ -118,7 +118,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_Class $class)
+    public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
         $this->fireStartClass($class);
         

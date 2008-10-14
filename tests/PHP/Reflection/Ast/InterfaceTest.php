@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractDependencyAwareTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
 require_once 'PHP/Reflection/Ast/Class.php';
 require_once 'PHP/Reflection/Ast/Interface.php';
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/Ast/Interface.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_InterfaceTest extends PHP_Reflection_Ast_AbstractDependencyAwareTest
+class PHP_Reflection_Ast_InterfaceTest extends PHP_Reflection_Ast_AbstractItemTest 
 {
     /**
      * Tests that {@link PHP_Reflection_Ast_Interface::getImplementingClasses()}
@@ -79,10 +79,10 @@ class PHP_Reflection_Ast_InterfaceTest extends PHP_Reflection_Ast_AbstractDepend
         $c0 = new PHP_Reflection_Ast_Class('c0');
         $c1 = new PHP_Reflection_Ast_Class('c1');
         
-        $i0->addChildType($i1);
-        $i0->addChildType($i2);
-        $i0->addChildType($c0);
-        $i0->addChildType($c1);
+        $i0->addChildInterface($i1);
+        $i0->addChildInterface($i2);
+        $i0->addImplementingClass($c0);
+        $i0->addImplementingClass($c1);
         
         $classes = $i0->getImplementingClasses();
         $this->assertEquals(2, $classes->count());
@@ -105,10 +105,10 @@ class PHP_Reflection_Ast_InterfaceTest extends PHP_Reflection_Ast_AbstractDepend
         $c0 = new PHP_Reflection_Ast_Class('c0');
         $c1 = new PHP_Reflection_Ast_Class('c1');
         
-        $i0->addChildType($i1);
-        $i0->addChildType($i2);
-        $i0->addChildType($c0);
-        $i0->addChildType($c1);
+        $i0->addChildInterface($i1);
+        $i0->addChildInterface($i2);
+        $i0->addImplementingClass($c0);
+        $i0->addImplementingClass($c1);
         
         $interfaces = $i0->getChildInterfaces();
         $this->assertEquals(2, $interfaces->count());
@@ -131,11 +131,11 @@ class PHP_Reflection_Ast_InterfaceTest extends PHP_Reflection_Ast_AbstractDepend
         $interfsE = new PHP_Reflection_Ast_Interface('interfsE');
         $interfsF = new PHP_Reflection_Ast_Interface('interfsF');
         
-        $interfsA->addChildType($interfsB); // interface B extends A {}
-        $interfsA->addChildType($interfsC); // interface C extends A {}
-        $interfsC->addChildType($interfsD); // interface D extends C, E
-        $interfsE->addChildType($interfsD); // interface D extends C, E
-        $interfsF->addChildType($interfsE); // interface E extends F
+        $interfsA->addChildInterface($interfsB); // interface B extends A {}
+        $interfsA->addChildInterface($interfsC); // interface C extends A {}
+        $interfsC->addChildInterface($interfsD); // interface D extends C, E
+        $interfsE->addChildInterface($interfsD); // interface D extends C, E
+        $interfsF->addChildInterface($interfsE); // interface E extends F
         
         $this->assertEquals(0, $interfsA->getParentInterfaces()->count());
         
@@ -179,7 +179,7 @@ class PHP_Reflection_Ast_InterfaceTest extends PHP_Reflection_Ast_AbstractDepend
         $this->assertFalse($interfsA->isSubtypeOf($interfsB));
         
         // TODO: This should be fixed in the code and throw an exception.
-        $classC->addChildType($interfsA); // interface A extends C {}
+        $classC->addImplementedInterface($interfsA); // interface A extends C {}
         $this->assertFalse($interfsA->isSubtypeOf($classC));
     }
     
@@ -197,11 +197,11 @@ class PHP_Reflection_Ast_InterfaceTest extends PHP_Reflection_Ast_AbstractDepend
         $interfsE = new PHP_Reflection_Ast_Interface('E');
         $interfsF = new PHP_Reflection_Ast_Interface('F');
         
-        $interfsA->addChildType($interfsB); // interface B extends A, C {}
-        $interfsC->addChildType($interfsB); // interface B extends A, C {}
-        $interfsD->addChildType($interfsC); // interface C extends D, E {}
-        $interfsE->addChildType($interfsC); // interface C extends D, E {}
-        $interfsF->addChildType($interfsA); // interface A extends F
+        $interfsA->addChildInterface($interfsB); // interface B extends A, C {}
+        $interfsC->addChildInterface($interfsB); // interface B extends A, C {}
+        $interfsD->addChildInterface($interfsC); // interface C extends D, E {}
+        $interfsE->addChildInterface($interfsC); // interface C extends D, E {}
+        $interfsF->addChildInterface($interfsA); // interface A extends F
         
         $this->assertTrue($interfsA->isSubtypeOf($interfsA));
         $this->assertFalse($interfsA->isSubtypeOf($interfsB));

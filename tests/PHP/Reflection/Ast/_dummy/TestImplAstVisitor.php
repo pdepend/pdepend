@@ -155,7 +155,7 @@ class PHP_Reflection_Ast_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * 
      * @return void
      */
-    public function visitClass(PHP_Reflection_Ast_Class $class)
+    public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
         $this->class = $class;
     }
