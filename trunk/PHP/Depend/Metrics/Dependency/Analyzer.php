@@ -286,7 +286,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_Class $class The current class node.
+     * @param PHP_Reflection_Ast_ClassI $class The current class node.
      * 
      * @return void
      */
@@ -300,11 +300,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits an interface node. 
      *
-     * @param PHP_Reflection_Ast_Interface $interface The current interface node.
+     * @param PHP_Reflection_Ast_InterfaceI $interface The current interface node.
      * 
      * @return void
      */
-    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
