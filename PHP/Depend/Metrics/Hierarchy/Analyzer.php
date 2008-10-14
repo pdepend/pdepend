@@ -235,7 +235,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Calculates metrics for the given <b>$class</b> instance.
      *
-     * @param PHP_Reflection_Ast_Class $class The context class instance.
+     * @param PHP_Reflection_Ast_ClassI $class The context class instance.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
@@ -291,12 +291,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Calculates metrics for the given <b>$interface</b> instance.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context interface instance.
+     * @param PHP_Reflection_Ast_InterfaceI $interface The context interface instance.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
         

@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractType.php';
-require_once 'PHP/Reflection/Ast/Iterator/TypeFilter.php';
+require_once 'PHP/Reflection/Ast/InterfaceI.php';
 
 /**
  * Representation of a code interface.  
@@ -61,7 +61,9 @@ require_once 'PHP/Reflection/Ast/Iterator/TypeFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Interface extends PHP_Reflection_Ast_AbstractType
+class PHP_Reflection_Ast_Interface 
+       extends PHP_Reflection_Ast_AbstractType
+    implements PHP_Reflection_Ast_InterfaceI
 {
     /**
      * List of implementing class instances.
@@ -127,7 +129,8 @@ class PHP_Reflection_Ast_Interface extends PHP_Reflection_Ast_AbstractType
     }
     
     /**
-     * Returns an iterator with all parent, parent parent etc. interfaces.
+     * Returns an iterator with all {@link PHP_Reflection_Ast_InterfaceI} nodes
+     * that are a parent, parent parent etc. interface of this interface.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
@@ -164,7 +167,8 @@ class PHP_Reflection_Ast_Interface extends PHP_Reflection_Ast_AbstractType
     }
     
     /**
-     * Returns an iterator with all child interfaces.
+     * Returns an iterator with all {@link PHP_Reflection_Ast_InterfaceI} nodes
+     * that are a child of this interface.
      *
      * @return PHP_Reflection_Ast_Iterator
      */

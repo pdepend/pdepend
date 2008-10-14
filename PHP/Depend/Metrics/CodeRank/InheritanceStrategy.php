@@ -87,7 +87,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Visits a code class object.
      *
-     * @param PHP_Reflection_Ast_Class $class The context code class.
+     * @param PHP_Reflection_Ast_ClassI $class The context code class.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
@@ -103,13 +103,13 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
-    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);        
