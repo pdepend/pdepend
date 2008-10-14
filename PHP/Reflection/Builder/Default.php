@@ -778,28 +778,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     protected function replaceClassReferences(PHP_Reflection_Ast_Class $class,
                                               PHP_Reflection_Ast_Interface $iface)
     {
-        foreach ($this->classes as $types) {
-            foreach ($types as $type) {
-                foreach ($type->getDependencies() as $dependency) {
-                    if ($dependency === $class) {
-                        $type->removeDependency($class);
-                        $type->addDependency($iface);
-                    }
-                }
-            }
-        }
-    
-        foreach ($this->interfaces as $types) {
-            foreach ($types as $type) {
-                foreach ($type->getDependencies() as $dependency) {
-                    if ($dependency === $class) {
-                        $type->removeDependency($class);
-                        $type->addDependency($iface);
-                    }
-                }
-            }
-        }
-    
         foreach ($this->functions as $function) {
             foreach ($function->getDependencies() as $dependency) {
                 if ($dependency === $class) {

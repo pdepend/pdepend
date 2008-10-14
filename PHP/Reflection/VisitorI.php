@@ -81,7 +81,7 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_Class $class The current class node.
+     * @param PHP_Reflection_Ast_ClassI $class The current class node.
      * 
      * @return void
      */
@@ -108,11 +108,11 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
      * 
      * @return void
      */
-    function visitInterface(PHP_Reflection_Ast_Interface $interface);
+    function visitInterface(PHP_Reflection_Ast_InterfaceI $interface);
     
     /**
      * Visits a method node. 
