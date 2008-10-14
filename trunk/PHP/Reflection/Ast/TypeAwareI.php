@@ -65,7 +65,7 @@ interface PHP_Reflection_Ast_TypeAwareI
      * Returns the type of this node. This method will return <b>null</b> for 
      * all scalar types, only classes or interfaces will be returned.
      *
-     * @return PHP_Reflection_Ast_AbstractType
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI
      */
     function getType();
 }

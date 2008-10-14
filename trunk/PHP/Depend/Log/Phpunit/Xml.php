@@ -380,11 +380,11 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Generic visit method for classes and interfaces.
      *
-     * @param PHP_Reflection_Ast_AbstractType $type The context type.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $type The context type.
      * 
      * @return void
      */
-    private function _visitType(PHP_Reflection_Ast_AbstractType $type)
+    private function _visitType(PHP_Reflection_Ast_ClassOrInterfaceI $type)
     {
         $type->getSourceFile()->accept($this);
         
