@@ -46,8 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/Ast/ClassOrInterfaceI.php';
+
 /**
- * Contains the available visiblity constants for methods and class properties.
+ * This interface represents a class node within the syntax tree.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -58,29 +60,65 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_Ast_VisibilityAwareI
+interface PHP_Reflection_Ast_ClassI extends PHP_Reflection_Ast_ClassOrInterfaceI
 {
     /**
-     * Returns <b>true</b> if this node is marked as public, otherwise the 
-     * returned value will be <b>false</b>.
-     *
-     * @return boolean
+     * Has this class the final modifier.
      */
-    function isPublic();
+    const IS_FINAL = ReflectionClass::IS_FINAL;
     
     /**
-     * Returns <b>true</b> if this node is marked as protected, otherwise the 
-     * returned value will be <b>false</b>.
-     *
-     * @return boolean
+     * Is this class explicit marked with the abstract modifier.
      */
-    function isProtected();
+    const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
     
     /**
-     * Returns <b>true</b> if this node is marked as private, otherwise the 
-     * returned value will be <b>false</b>.
+     * Is this class implicit marked due to its children.
+     */
+    const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
+    
+    /**
+     * Returns the declared modifiers for this class.
+     *
+     * @return integer
+     */
+    function getModifiers();
+    
+    /**
+     * Returns <b>true</b> if this class is markes as final.
      *
      * @return boolean
      */
-    function isPrivate();
+    function isFinal();
+    
+    /**
+     * Returns the parent class or <b>null</b> if this class has no parent.
+     *
+     * @return PHP_Reflection_Ast_ClassI
+     */
+    function getParentClass();
+    
+    /**
+     * Returns a node iterator with all {@link PHP_Reflection_Ast_InterfaceI}
+     * nodes this class implements.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    function getImplementedInterfaces();
+    
+    /**
+     * Returns an iterator with all {@link PHP_Reflection_Ast_ClassI} nodes
+     * that extend this class.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    function getChildClasses();
+    
+    /**
+     * Returns a node iterator with all {@link PHP_Reflection_Ast_PropertyI}
+     * nodes for this class.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    function getProperties();
 }

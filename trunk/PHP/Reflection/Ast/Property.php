@@ -48,7 +48,6 @@
 
 require_once 'PHP/Reflection/Ast/AbstractItem.php';
 require_once 'PHP/Reflection/Ast/TypeAwareI.php';
-require_once 'PHP/Reflection/Ast/VisibilityAwareI.php';
 
 /**
  * This code class represents a class property.
@@ -64,8 +63,7 @@ require_once 'PHP/Reflection/Ast/VisibilityAwareI.php';
  */
 class PHP_Reflection_Ast_Property
        extends PHP_Reflection_Ast_AbstractItem
-    implements PHP_Reflection_Ast_TypeAwareI,
-               PHP_Reflection_Ast_VisibilityAwareI
+    implements PHP_Reflection_Ast_TypeAwareI
 {
     /**
      * Set defined visibility for this method.

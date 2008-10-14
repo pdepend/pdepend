@@ -290,7 +290,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * 
      * @return void
      */
-    public function visitClass(PHP_Reflection_Ast_Class $class)
+    public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
