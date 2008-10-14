@@ -180,7 +180,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_Class $class The current class node.
+     * @param PHP_Reflection_Ast_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
@@ -291,12 +291,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context code interface.
+     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_Interface $interface)
+    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
         

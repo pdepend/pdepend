@@ -164,7 +164,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_Class $class The current class node.
+     * @param PHP_Reflection_Ast_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
