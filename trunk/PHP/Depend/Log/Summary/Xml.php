@@ -279,7 +279,7 @@ class PHP_Depend_Log_Summary_Xml
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
