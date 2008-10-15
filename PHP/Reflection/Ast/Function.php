@@ -68,10 +68,9 @@ class PHP_Reflection_Ast_Function
     /**
      * The parent package for this function.
      *
-     * @type PHP_Reflection_Ast_Package
-     * @var PHP_Reflection_Ast_Package $package
+     * @var PHP_Reflection_Ast_Package $_package
      */
-    protected $package = null;
+    protected $_package = null;
     
     /**
      * Returns the parent package for this function.
@@ -80,7 +79,7 @@ class PHP_Reflection_Ast_Function
      */
     public function getPackage()
     {
-        return $this->package;
+        return $this->_package;
     }
     
     /**
@@ -92,7 +91,7 @@ class PHP_Reflection_Ast_Function
      */
     public function setPackage(PHP_Reflection_Ast_Package $package = null)
     {
-        $this->package = $package;
+        $this->_package = $package;
     }
     
     /**
