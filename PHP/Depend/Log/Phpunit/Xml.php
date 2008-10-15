@@ -321,7 +321,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
     {
         // First visit function file
         $function->getSourceFile()->accept($this);

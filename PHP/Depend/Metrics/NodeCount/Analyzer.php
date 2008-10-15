@@ -233,7 +233,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
     {
         $this->fireStartFunction($function);
         
