@@ -203,7 +203,8 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     }
 
     /**
-     * Returns an iterator with all thrown exception types.
+     * Returns an iterator with {@link PHP_Reflection_Ast_ClassOrInterfaceI}
+     * nodes thrown by this function or method.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
