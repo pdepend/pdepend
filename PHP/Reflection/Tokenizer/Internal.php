@@ -78,6 +78,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         T_SL                        =>  self::T_SL,
         T_SR                        =>  self::T_SR,
         T_DEC                       =>  self::T_DEC,
+        T_DIR                       =>  self::T_DIR,
         T_FOR                       =>  self::T_FOR,
         T_INC                       =>  self::T_INC,
         T_NEW                       =>  self::T_NEW,
@@ -231,6 +232,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         'array'          =>  self::T_ARRAY,
         'false'          =>  self::T_FALSE,
         'parent'         =>  self::T_PARENT,
+        '__DIR__'        =>  self::T_DIR,
         '__NAMESPACE__'  =>  self::T_NS_C,
     );
     
