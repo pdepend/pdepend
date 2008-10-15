@@ -1330,17 +1330,17 @@ class PHP_Reflection_Parser
         $curly  = 0;
         $tokens = array();
 
-        while ($this->tokenizer->peek() !== PHP_Reflection_TokenizerI::T_EOF) {
+        while ($this->tokenizer->peek() !== self::T_EOF) {
 
             $tokens[] = $token = $this->tokenizer->next();
 
             switch ($token[0]) {
-            case PHP_Reflection_TokenizerI::T_CATCH:
+            case self::T_CATCH:
                 // Skip open parenthesis
                 $tokens[] = $this->tokenizer->next();
                 
-            case PHP_Reflection_TokenizerI::T_NEW:
-            case PHP_Reflection_TokenizerI::T_INSTANCEOF:
+            case self::T_NEW:
+            case self::T_INSTANCEOF:
                 $parts = $this->_parseClassNameChain($tokens);
                                 
                 // If this is a dynamic instantiation, do not add dependency.
@@ -1353,11 +1353,11 @@ class PHP_Reflection_Parser
                 break;
                     
             case PHP_Reflection_TokenizerI::T_STRING:
-                if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_DOUBLE_COLON) {
+                if ($this->tokenizer->peek() === self::T_DOUBLE_COLON) {
                     // Skip double colon
                     $tokens[] = $this->tokenizer->next();
                     // Check for method call
-                    if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_STRING) {
+                    if ($this->tokenizer->peek() === self::T_STRING) {
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
                         // Create a dependency class
@@ -1368,16 +1368,16 @@ class PHP_Reflection_Parser
                 }
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN:
+            case self::T_CURLY_BRACE_OPEN:
                 ++$curly;
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE:
+            case self::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 break;
 
-            case PHP_Reflection_TokenizerI::T_DOUBLE_QUOTE:
-            case PHP_Reflection_TokenizerI::T_BACKTICK:
+            case self::T_DOUBLE_QUOTE:
+            case self::T_BACKTICK:
                 $this->_skipEncapsultedBlock($tokens, $token[0]);
                 break;
 
