@@ -267,7 +267,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_Function $function)
+    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
     {
         $this->fireStartFunction($function);
         
