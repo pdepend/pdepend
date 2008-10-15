@@ -161,8 +161,8 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $fileName = dirname(__FILE__) . '/_code/parser/method_with_invalid_signature.php.fail';
         $this->setExpectedException(
-            'RuntimeException', 
-            "Invalid token \"Bar\" on line 3 in file: {$fileName}."
+            'PHP_Reflection_Exceptions_UnexpectedTokenException', 
+            "There is an unexpected token \"Bar\" on line 3 in file \"{$fileName}\"."
         );
         
         self::parseSource('parser/method_with_invalid_signature.php.fail');
