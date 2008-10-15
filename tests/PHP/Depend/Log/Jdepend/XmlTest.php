@@ -154,6 +154,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     {
         $expected                     = new DOMDocument('1.0', 'UTF-8');
         $expected->preserveWhiteSpace = false;
+        $expected->formatOutput       = true;
         $expected->load(dirname(__FILE__) . $fileName);
         
         $xpath = new DOMXPath($expected);

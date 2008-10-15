@@ -70,6 +70,13 @@ if (!defined('T_NAMESPACE')) {
 }
 
 /**
+ * Define PHP 5.3 '__DIR__' token constant.
+ */
+if (!defined('T_DIR')) {
+    define('T_DIR', 379);
+}
+
+/**
  * Base interface for all php code tokenizers.
  *
  * @category   PHP

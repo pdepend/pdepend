@@ -956,6 +956,7 @@ class PHP_Reflection_Parser
             // Create scalar value
             return $this->builder->buildScalarValue($type, $token[1]);
                 
+        case self::T_DIR:
         case self::T_STRING:
         case self::T_FILE:
         case self::T_LINE:
@@ -1580,7 +1581,8 @@ class PHP_Reflection_Parser
         $type = $this->_parseTypeAnnotation($property->getDocComment(), 'var');
         
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
-            $property->setType($this->builder->buildClassOrInterface($type[0]));
+            $classOrInterface = $this->builder->buildClassOrInterfaceProxy($type[0]);
+            $property->setType($classOrInterface);
         }
     }
     
@@ -1603,6 +1605,8 @@ class PHP_Reflection_Parser
         $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
         // Append all exception types
         foreach ($throws as $type) {
+            //$classOrInterface = $this->builder->buildClassOrInterfaceProxy($type);
+            //$callable->addExceptionType($classOrInterface);
             $exceptionType = $this->builder->buildClassOrInterface($type);
             $callable->addExceptionType($exceptionType);
         }

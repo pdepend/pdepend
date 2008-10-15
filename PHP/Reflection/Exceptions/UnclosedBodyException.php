@@ -84,7 +84,7 @@ class PHP_Reflection_Exceptions_UnclosedBodyException
     {
         return sprintf(
             'Unclosed body, missing closing "}" in file "%s".',
-            $file->getName()
+            $file->getFileName()
         );
     }
 }

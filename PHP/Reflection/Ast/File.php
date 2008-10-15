@@ -46,8 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/NodeI.php';
-require_once 'PHP/Reflection/Util/UUID.php';
+require_once 'PHP/Reflection/Ast/AbstractNode.php';
 
 /**
  * This class provides an interface to a single source file.
@@ -61,16 +60,8 @@ require_once 'PHP/Reflection/Util/UUID.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_File implements PHP_Reflection_Ast_NodeI
+class PHP_Reflection_Ast_File extends PHP_Reflection_Ast_AbstractNode
 {
-    /**
-     * The unique identifier for this function.
-     *
-     * @type PHP_Reflection_Util_UUID
-     * @var PHP_Reflection_Util_UUID $_uuid
-     */
-    private $_uuid = null;
-    
     /**
      * The source file name/path.
      *
@@ -118,21 +109,11 @@ class PHP_Reflection_Ast_File implements PHP_Reflection_Ast_NodeI
      */
     public function __construct($fileName)
     {
+        parent::__construct('#file');
+        
         if ($fileName !== null) {
             $this->_fileName = realpath($fileName);
         }
-        
-        $this->_uuid = new PHP_Reflection_Util_UUID();
-    }
-    
-    /**
-     * Returns the physical file name for this object.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->_fileName;
     }
     
     /**
@@ -143,16 +124,6 @@ class PHP_Reflection_Ast_File implements PHP_Reflection_Ast_NodeI
     public function getFileName()
     {
         return $this->_fileName;
-    }
-    
-    /**
-     * Returns a uuid for this code node.
-     *
-     * @return string
-     */
-    public function getUUID()
-    {
-        return (string) $this->_uuid;
     }
     
     /**

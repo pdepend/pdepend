@@ -175,7 +175,7 @@ abstract class PHP_Reflection_Ast_AbstractItem
      */
     public function setSourceFile(PHP_Reflection_Ast_File $sourceFile)
     {
-        if ($this->sourceFile === null || $this->sourceFile->getName() === null) {
+        if ($this->sourceFile === null || $this->sourceFile->getFileName() === null) {
             $this->sourceFile = $sourceFile;
         }
     }
