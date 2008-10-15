@@ -103,7 +103,7 @@ interface PHP_Reflection_VisitorI
      * 
      * @return void
      */
-    function visitFunction(PHP_Reflection_Ast_Function $function);
+    function visitFunction(PHP_Reflection_Ast_FunctionI $function);
     
     /**
      * Visits a code interface object.
