@@ -256,18 +256,18 @@ class PHP_Reflection_Parser
             // Set next source file
             $this->tokenizer->setSourceFile($file);
 
-            while (($token = $this->tokenizer->next()) !== PHP_Reflection_TokenizerI::T_EOF) {
+            while (($token = $this->tokenizer->next()) !== self::T_EOF) {
             
                 switch ($token[0]) {
-                case PHP_Reflection_TokenizerI::T_ABSTRACT:
+                case self::T_ABSTRACT:
                     $this->_modifiers |= ReflectionClass::IS_EXPLICIT_ABSTRACT;
                     break;
                     
-                case PHP_Reflection_TokenizerI::T_FINAL:
+                case self::T_FINAL:
                     $this->_modifiers |= ReflectionClass::IS_FINAL;
                     break;
                         
-                case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
+                case self::T_DOC_COMMENT:
                     $this->_comment = $token[1];
                     $this->_package = $this->parsePackage($token[1]);
                     
@@ -281,15 +281,15 @@ class PHP_Reflection_Parser
                     }
                     break;
                         
-                case PHP_Reflection_TokenizerI::T_INTERFACE:
+                case self::T_INTERFACE:
                     $this->_parseInterfaceDeclaration();
                     break;
                         
-                case PHP_Reflection_TokenizerI::T_CLASS:
+                case self::T_CLASS:
                     $this->_parseClassDeclaration();
                     break;
                         
-                case PHP_Reflection_TokenizerI::T_FUNCTION:
+                case self::T_FUNCTION:
                     $this->_parseFunctionDeclaration();
                     break;
                         
@@ -312,14 +312,20 @@ class PHP_Reflection_Parser
      */
     private function _parseFunctionDeclaration()
     {
-        $token    = $this->tokenizer->next();
-        $tokens[] = $token;
+        $tokens = array();
         
-        if ($token[0] === PHP_Reflection_TokenizerI::T_BITWISE_AND) {
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
+        // Skip comment tokens before function name or reference operator
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
+        // Check for reference operator
+        if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
+            // Consume bitwise and
+            $this->_consumeToken(self::T_BITWISE_AND, $tokens);
+            // Skip comments after reference operator
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         }
-        
+        // We expect a T_STRING token for function name
+        $token = $this->_consumeToken(self::T_STRING, $tokens);
         $function = $this->builder->buildFunction($token[1], $token[2]);
             
         $package = $this->globalPackage;
@@ -327,6 +333,9 @@ class PHP_Reflection_Parser
             $package = $this->_package;
         }
         $this->builder->buildPackage($package)->addFunction($function);
+        
+        // Skip comment tokens before function signature
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         
         $this->parseCallableSignature($tokens, $function);
         if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
@@ -1243,7 +1252,7 @@ class PHP_Reflection_Parser
      */
     protected function parseCallableSignature(array &$tokens, PHP_Reflection_Ast_AbstractCallable $callable)
     {
-        if ($this->tokenizer->peek() !== PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN) {
+        if ($this->tokenizer->peek() !== self::T_PARENTHESIS_OPEN) {
             // Load invalid token for line number
             $token    = $this->tokenizer->next();
             $tokens[] = $token;

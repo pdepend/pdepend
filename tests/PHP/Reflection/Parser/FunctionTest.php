@@ -46,18 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Parser_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/MemberValueTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Main test suite for the PHP_Reflection_Parser class.
+ * Parser test case related to function parsing.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -68,33 +60,60 @@ require_once dirname(__FILE__) . '/MemberValueTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Parser_AllTests
+class PHP_Reflection_Parser_FunctionTest extends PHP_Reflection_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the parser skips a comment tokens after 'function'.
      *
      * @return void
      */
-    public static function main()
+    public function testParserHandlesCommentAfterFunctionToken()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $function = self::_testParseFunction('comment_after_function_token.php');
+        $this->assertEquals('hello', $function->getName());
+    }
+    /**
+     * Tests that the parser skips a comment tokens after a function name.
+     *
+     * @return void
+     */
+    public function testParserHandlesCommentAfterFunctionName()
+    {
+        $function = self::_testParseFunction('comment_after_function_name.php');
+        $this->assertEquals(1, $function->getParameters()->count());
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Tests that the parser skips a comment between function token and reference
+     * operator.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testParserHandlesCommentBetweenFunctionTokenAndReturnByRefToken()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Parser - AllTests');
-        $suite->addTestSuite('PHP_Reflection_Parser_FunctionTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');
-
-        return $suite;
+        $function = self::_testParseFunction('comment_after_function_reference_token.php');
+        $this->assertEquals('world', $function->getName());
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Parser_AllTests::main') {
-    PHP_Reflection_Parser_AllTests::main();
+    
+    /**
+     * Parses a source file and extracts the first function instance.
+     *
+     * @param string $file The source file.
+     * 
+     * @return PHP_Reflection_Ast_FunctionI
+     */
+    private static function _testParseFunction($file)
+    {
+        $packages = self::parseSource("/parser/functions/{$file}");
+        self::assertEquals(1, $packages->count());
+        
+        $package = $packages->current();
+        self::assertEquals(1, $package->getFunctions()->count());
+        
+        $function = $package->getFunctions()->current();
+        self::assertNotNull($function);
+        self::assertType('PHP_Reflection_Ast_FunctionI', $function);
+        
+        return $function;
+    }
 }
