@@ -106,7 +106,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
         $class   = $property->getParent();
         $package = $class->getPackage();
 
-        if ($depClass !== $class) {
+        if (!$depClass->equals($class)) {
             $this->initNode($class);
             $this->initNode($depClass);
     
@@ -114,7 +114,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
             $this->_nodes[$depClass->getUUID()]['out'][] = $class->getUUID();
         }
             
-        if ($depPackage !== $package) {
+        if (!$depPackage->equals($package)) {
             $this->initNode($package);
             $this->initNode($depPackage);
     
@@ -139,7 +139,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),
-                'type'  =>  get_class($node)
+                //'type'  =>  get_class($node)
             );
         }
     }

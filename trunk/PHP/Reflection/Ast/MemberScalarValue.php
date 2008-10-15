@@ -46,6 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/Ast/AbstractNode.php';
 require_once 'PHP/Reflection/Ast/StaticScalarValueI.php';
 
 /**
@@ -60,7 +61,9 @@ require_once 'PHP/Reflection/Ast/StaticScalarValueI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_MemberScalarValue implements PHP_Reflection_Ast_StaticScalarValueI
+class PHP_Reflection_Ast_MemberScalarValue 
+       extends PHP_Reflection_Ast_AbstractNode
+    implements PHP_Reflection_Ast_StaticScalarValueI
 {
     /**
      * The type of this scalar value.
@@ -77,13 +80,6 @@ class PHP_Reflection_Ast_MemberScalarValue implements PHP_Reflection_Ast_StaticS
     private $_value = null;
     
     /**
-     * The unique identifier for this node.
-     *
-     * @var PHP_Reflection_Util_UUID $_uuid
-     */
-    private $_uuid = null;
-    
-    /**
      * Constructs a new scalar instance.
      *
      * @param integer $type  The type of this scalar instance.
@@ -91,11 +87,10 @@ class PHP_Reflection_Ast_MemberScalarValue implements PHP_Reflection_Ast_StaticS
      */
     public function __construct($type, $value = null)
     {
+        parent::__construct('#scalar-value');
+        
         $this->_value = $this->_castValue($type, $value);
         $this->_type  = $type;
-        
-        // Create a unique identifier for this node
-        $this->_uuid = new PHP_Reflection_Util_UUID();
     }
     
     /**
@@ -116,26 +111,6 @@ class PHP_Reflection_Ast_MemberScalarValue implements PHP_Reflection_Ast_StaticS
     public function getValue()
     {
         return $this->_value;
-    }
-    
-    /**
-     * Returns an identifier for this node.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return '#scalar-value';
-    }
-    
-    /**
-     * Returns a unique identifier for this node.
-     *
-     * @return string
-     */
-    public function getUUID()
-    {
-        return (string) $this->_uuid;
     }
     
     /**

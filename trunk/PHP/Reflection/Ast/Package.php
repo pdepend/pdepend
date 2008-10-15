@@ -46,10 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/NodeI.php';
+require_once 'PHP/Reflection/Ast/AbstractNode.php';
 require_once 'PHP/Reflection/Ast/Iterator.php';
 require_once 'PHP/Reflection/Ast/Iterator/TypeFilter.php';
-require_once 'PHP/Reflection/Util/UUID.php';
 
 /**
  * Represents a php package node.
@@ -63,24 +62,8 @@ require_once 'PHP/Reflection/Util/UUID.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Package implements PHP_Reflection_Ast_NodeI
+class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
 {
-    /**
-     * The package name.
-     *
-     * @type string
-     * @var string $name
-     */
-    protected $name = '';
-    
-    /**
-     * The unique identifier for this function.
-     *
-     * @type PHP_Reflection_Util_UUID
-     * @var PHP_Reflection_Util_UUID $uuid
-     */
-    protected $uuid = null;
-    
     /**
      * List of all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects for this package.
      *
@@ -95,38 +78,6 @@ class PHP_Reflection_Ast_Package implements PHP_Reflection_Ast_NodeI
      * @var array(PHP_Reflection_Ast_Function) $functions
      */
     protected $functions = array();
-    
-    /**
-     * Constructs a new package for the given <b>$name</b>
-     *
-     * @param string $name The package name.
-     */
-    public function __construct($name)
-    {
-        $this->name = $name;
-        
-        $this->uuid = new PHP_Reflection_Util_UUID();
-    }
-    
-    /**
-     * Returns the package name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * Returns a uuid for this code node.
-     *
-     * @return string
-     */
-    public function getUUID()
-    {
-        return (string) $this->uuid;
-    }
     
     /**
      * Returns an iterator with all {@link PHP_Reflection_Ast_Class} instances

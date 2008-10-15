@@ -149,7 +149,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $this->assertEquals('pdepend.test2', $package->getName());
         
         $sourceFile = $sources . '/extension-filter.inc';
-        $this->assertEquals($sourceFile, $function->getSourceFile()->getName());
+        $this->assertEquals($sourceFile, $function->getSourceFile()->getFileName());
     }
     
     /**

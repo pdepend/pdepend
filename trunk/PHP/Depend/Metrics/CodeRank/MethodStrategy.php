@@ -124,7 +124,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     private function _processType(PHP_Reflection_Ast_ClassOrInterfaceI $type,
                                   PHP_Reflection_Ast_ClassOrInterfaceI $depType)
     {
-        if ($type !== $depType) {
+        if (!$type->equals($depType)) {
             $this->_initNode($type);
             $this->_initNode($depType);
 
@@ -135,7 +135,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
         $package    = $type->getPackage();
         $depPackage = $depType->getPackage();
         
-        if ($package !== $depPackage) {
+        if (!$package->equals($depPackage)) {
             $this->_initNode($package);
             $this->_initNode($depPackage);
 
@@ -158,7 +158,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),
-                'type'  =>  get_class($node)
             );
         }
     }

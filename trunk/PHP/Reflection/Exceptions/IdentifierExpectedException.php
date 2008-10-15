@@ -85,7 +85,7 @@ class PHP_Reflection_Exceptions_IdentifierExpectedException
     {
         return sprintf(
             'Missing a class, interface, function identifier in file "%s".',
-            $file->getName()
+            $file->getFileName()
         );
     }
 }
