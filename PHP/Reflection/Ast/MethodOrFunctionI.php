@@ -46,11 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/AbstractCallable.php';
-require_once 'PHP/Reflection/Ast/FunctionI.php';
+require_once 'PHP/Reflection/Ast/NodeI.php';
 
 /**
- * Represents a php function node.
+ * Base interface for functions and classes.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -61,49 +60,48 @@ require_once 'PHP/Reflection/Ast/FunctionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Function 
-       extends PHP_Reflection_Ast_AbstractCallable
-    implements PHP_Reflection_Ast_FunctionI
+interface PHP_Reflection_Ast_MethodOrFunctionI extends PHP_Reflection_Ast_NodeI
 {
+
     /**
-     * The parent package for this function.
+     * Returns the tokens found in the function body.
      *
-     * @type PHP_Reflection_Ast_Package
-     * @var PHP_Reflection_Ast_Package $package
+     * @return array(mixed)
      */
-    protected $package = null;
-    
+    function getTokens();
+
     /**
-     * Returns the parent package for this function.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects this 
+     * function depends on.
      *
-     * @return PHP_Reflection_Ast_Package
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function getPackage()
-    {
-        return $this->package;
-    }
-    
+    function getDependencies();
+
     /**
-     * Sets the parent package for this function.
+     * Returns the return type of this callable. By default and for scalar types
+     * this will be <b>null</b>.
      *
-     * @param PHP_Reflection_Ast_Package $package The parent package.
-     * 
-     * @return void
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI
      */
-    public function setPackage(PHP_Reflection_Ast_Package $package = null)
-    {
-        $this->package = $package;
-    }
-    
+    function getReturnType();
+
     /**
-     * Visitor method for node tree traversal.
+     * Returns an iterator with {@link PHP_Reflection_Ast_ClassOrInterfaceI}
+     * nodes thrown by this function or method.
      *
-     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
-     * @return void
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function accept(PHP_Reflection_VisitorI $visitor)
-    {
-        $visitor->visitFunction($this);
-    }
+    function getExceptionTypes();
+
+    /**
+     * Returns an iterator with all method/function parameters.
+     *
+     * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
+     * nodes. Use the {@link PHP_Reflection_Ast_Parameter::getPosition()} for
+     * the correct parameter position.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    function getParameters();
 }
