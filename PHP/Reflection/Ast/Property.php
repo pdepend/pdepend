@@ -66,17 +66,8 @@ class PHP_Reflection_Ast_Property
     implements PHP_Reflection_Ast_TypeAwareI
 {
     /**
-     * Set defined visibility for this method.
-     *
-     * @type integer
-     * @var integer $_visibility
-     */
-    private $_visibility = -1;
-    
-    /**
      * The parent type object.
      *
-     * @type PHP_Reflection_Ast_Class
      * @var PHP_Reflection_Ast_Class $_parent
      */
     private $_parent = null;
@@ -212,13 +203,13 @@ class PHP_Reflection_Ast_Property
     }
     
     /**
-     * Sets the type of this property.
+     * Sets the class or interface type for this property node.
      *
-     * @param PHP_Reflection_Ast_AbstractClassOrInterface $type The property type.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $type The property type.
      * 
      * @return void
      */
-    public function setType(PHP_Reflection_Ast_AbstractClassOrInterface $type)
+    public function setType(PHP_Reflection_Ast_ClassOrInterfaceI $type)
     {
         $this->_type = $type;
     }

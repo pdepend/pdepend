@@ -792,4 +792,9 @@ interface PHP_Reflection_ParserConstantsI
      * Marks a '\' backslash token.
      */
     const T_BACKSLASH = 145;
+    
+    /**
+     * Marks a '__DIR__' token.
+     */
+    const T_DIR = 146;
 }

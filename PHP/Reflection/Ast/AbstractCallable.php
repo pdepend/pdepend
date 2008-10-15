@@ -215,11 +215,11 @@ abstract class PHP_Reflection_Ast_AbstractCallable
     /**
      * Adds an exception to the list of thrown exception types.
      *
-     * @param PHP_Reflection_Ast_AbstractClassOrInterface $exception Thrown exception.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $exception Thrown exception.
      *
      * @return void
      */
-    public function addExceptionType(PHP_Reflection_Ast_AbstractClassOrInterface $exception)
+    public function addExceptionType(PHP_Reflection_Ast_ClassOrInterfaceI $exception)
     {
         if (in_array($exception, $this->_exceptionTypes, true) === false) {
             $this->_exceptionTypes[] = $exception;

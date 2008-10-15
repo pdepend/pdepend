@@ -96,7 +96,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
                     $uuidMap['PDepend_CodeRank_ClassC']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassA',
-                'type'  =>  'PHP_Reflection_Ast_Class'
             ),
             $uuidMap['PDepend_CodeRank_ClassB']  =>  array(
                 'in'  =>  array(
@@ -107,7 +106,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
                     $uuidMap['PDepend_CodeRank_ClassA']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassB',
-                'type'  =>  'PHP_Reflection_Ast_Class'
             ),
             $uuidMap['PDepend_CodeRank_ClassC']  =>  array(
                 'in'  =>  array(
@@ -119,7 +117,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
                     $uuidMap['PDepend_CodeRank_ClassB']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassC',
-                'type'  =>  'PHP_Reflection_Ast_Class'
             ),
             $uuidMap['PDepend::CodeRankA']  =>  array(
                 'in'  =>  array(
@@ -131,7 +128,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
                     $uuidMap['PDepend::CodeRankB'],
                 ),
                 'name'  =>  'PDepend::CodeRankA',
-                'type'  =>  'PHP_Reflection_Ast_Package'
             ),
             $uuidMap['PDepend::CodeRankB']  =>  array(
                 'in'  =>  array(
@@ -143,7 +139,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
                     $uuidMap['PDepend::CodeRankA']
                 ),
                 'name'  =>  'PDepend::CodeRankB',
-                'type'  =>  'PHP_Reflection_Ast_Package'
             ),
         );
     

@@ -186,6 +186,20 @@ class PHP_Reflection_Ast_ClassOrInterfaceProxy
     }
     
     /**
+     * Compares two node instances to be equal. You should always use this method
+     * instead of a direct comparsion of two nodes, because the syntax tree uses
+     * proxy implementations to represent some items.
+     *
+     * @param PHP_Reflection_Ast_NodeI $node The node to compare to.
+     * 
+     * @return boolean
+     */
+    public function equals(PHP_Reflection_Ast_NodeI $node)
+    {
+        return ($this->getRealSubject()->getUUID() === $node->getUUID());
+    }
+    
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.

@@ -88,7 +88,7 @@ class PHP_Reflection_Exceptions_UnexpectedTokenException
             'There is an unexpected token "%s" on line %d in file "%s".',
             $token[1],
             $token[2],
-            $file->getName()
+            $file->getFileName()
         );
     }
 }

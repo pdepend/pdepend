@@ -91,7 +91,6 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
-     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitClass(PHP_Reflection_Ast_ClassI $class)
     {
@@ -107,7 +106,6 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
-     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
     {
@@ -142,7 +140,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
             $this->_nodes[$dep->getUUID()]['out'][] = $type->getUUID();
             
             // No self references
-            if ($pkg !== $depPkg) {
+            if (!$pkg->equals($depPkg)) {
                 $this->_nodes[$pkg->getUUID()]['in'][]     = $depPkg->getUUID();
                 $this->_nodes[$depPkg->getUUID()]['out'][] = $pkg->getUUID();
             }
@@ -162,8 +160,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
             $this->_nodes[$node->getUUID()] = array(
                 'in'   =>  array(),
                 'out'  =>  array(),
-                'name'  =>  $node->getName(),
-                'type'  =>  get_class($node)
+                'name'  =>  $node->getName()
             );
         }
     }

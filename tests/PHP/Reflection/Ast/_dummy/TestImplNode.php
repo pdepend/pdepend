@@ -85,6 +85,11 @@ class PHP_Reflection_Ast_TestImplNode implements PHP_Reflection_Ast_NodeI
         return md5($this->getName());
     }
     
+    public function equals(PHP_Reflection_Ast_NodeI $node)
+    {
+        return ($this->getUUID() === $node->getUUID()); 
+    }
+    
     public function accept(PHP_Reflection_VisitorI $visitor)
     {
         

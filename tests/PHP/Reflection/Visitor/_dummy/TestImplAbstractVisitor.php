@@ -95,7 +95,7 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
      */
     public function visitFile(PHP_Reflection_Ast_File $file)
     {
-        $this->visits[] = $file->getName();
+        $this->visits[] = $file->getFileName();
         
         parent::visitFile($file);
     }

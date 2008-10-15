@@ -74,7 +74,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The output log file.
      *
-     * @type string
      * @var string $_logFile
      */
     private $_logFile = null;
@@ -82,7 +81,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The raw {@link PHP_Reflection_Ast_Package} instances.
      *
-     * @type PHP_Reflection_Ast_Iterator
      * @var PHP_Reflection_Ast_Iterator $code
      */
     protected $code = null;
@@ -90,7 +88,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Set of all analyzed files.
      *
-     * @type array<PHP_Reflection_Ast_File>
      * @var array(string=>PHP_Reflection_Ast_File) $fileSet
      */
     protected $fileSet = array();
@@ -98,7 +95,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * List of all generated project metrics.
      *
-     * @type array<mixed>
      * @var array(string=>mixed) $projectMetrics
      */
     protected $projectMetrics = array();
@@ -106,7 +102,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * List of all collected node metrics.
      *
-     * @type array<array>
      * @var array(string=>array) $nodeMetrics
      */
     protected $nodeMetrics = array();
@@ -114,7 +109,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The depedency result set.
      *
-     * @type PHP_Depend_Metrics_Dependency_Analyzer
      * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
      */
     protected $analyzer = null;
@@ -279,7 +273,7 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Class $package The package class node.
+     * @param PHP_Reflection_Ast_Package $package The package class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
@@ -315,7 +309,11 @@ class PHP_Depend_Log_Jdepend_Xml
                  ->appendChild($doc->createTextNode($stats['d']));
                  
         $dependsUpon = $doc->createElement('DependsUpon');
-        foreach ($this->analyzer->getEfferents($package) as $efferent) {
+        
+        // TODO: Remove this ugly sorting stuff
+        $efferents = $this->analyzer->getEfferents($package);
+        usort($efferents, array($this, '_compareNodes'));
+        foreach ($efferents as $efferent) {
             $efferentXml = $doc->createElement('Package');
             $efferentXml->appendChild($doc->createTextNode($efferent->getName()));
             
@@ -323,7 +321,11 @@ class PHP_Depend_Log_Jdepend_Xml
         }
         
         $usedBy = $doc->createElement('UsedBy');
-        foreach ($this->analyzer->getAfferents($package) as $afferent) {
+        
+        // TODO: Remove this ugly sorting stuff
+        $afferents = $this->analyzer->getAfferents($package);
+        usort($afferents, array($this, '_compareNodes'));
+        foreach ($afferents as $afferent) {
             $afferentXml = $doc->createElement('Package');
             $afferentXml->appendChild($doc->createTextNode($afferent->getName()));
             
@@ -353,5 +355,11 @@ class PHP_Depend_Log_Jdepend_Xml
         }
             
         $this->packages->appendChild($packageXml);
+    }
+    
+    private function _compareNodes(PHP_Reflection_Ast_NodeI $node1,
+                                   PHP_Reflection_Ast_NodeI $node2)
+    {
+        return strcasecmp($node1->getName(), $node2->getName());
     }
 }

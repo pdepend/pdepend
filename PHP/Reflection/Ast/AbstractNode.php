@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Reflection/Ast/NodeI.php';
+require_once 'PHP/Reflection/Util/UUID.php';
 
 /**
  * This is a base implementation of the node interface.
@@ -105,6 +106,20 @@ abstract class PHP_Reflection_Ast_AbstractNode implements PHP_Reflection_Ast_Nod
     public final function getUUID()
     {
         return (string) $this->_uuid;
+    }
+    
+    /**
+     * Compares two node instances to be equal. You should always use this method
+     * instead of a direct comparsion of two nodes, because the syntax tree uses
+     * proxy implementations to represent some items.
+     *
+     * @param PHP_Reflection_Ast_NodeI $node The node to compare to.
+     * 
+     * @return boolean
+     */
+    public function equals(PHP_Reflection_Ast_NodeI $node)
+    {
+        return ($this->getUUID() === $node->getUUID());
     }
     
     /**
