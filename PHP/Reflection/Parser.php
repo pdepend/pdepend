@@ -1252,54 +1252,40 @@ class PHP_Reflection_Parser
      */
     protected function parseCallableSignature(array &$tokens, PHP_Reflection_Ast_AbstractCallable $callable)
     {
-        if ($this->tokenizer->peek() !== self::T_PARENTHESIS_OPEN) {
-            // Load invalid token for line number
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-            
-            // Throw a detailed exception message
-            throw new RuntimeException(
-                sprintf(
-                    'Invalid token "%s" on line %s in file: %s.',
-                    $token[1],
-                    $token[2],
-                    $this->tokenizer->getSourceFile()
-                )
-            );
-        }
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
         
         $parameterType     = null;
         $parameterPosition = 0;
 
-        $parenthesis = 0;
+        $parenthesis = 1;
         
-        while (($token = $this->tokenizer->next()) !== PHP_Reflection_TokenizerI::T_EOF) {
+        while (($token = $this->tokenizer->next()) !== self::T_EOF) {
 
             $tokens[] = $token;
             
             switch ($token[0]) {
-            case PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN:
+            case self::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
                 $parameterType = null;
                 break;
                  
-            case PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE:
+            case self::T_PARENTHESIS_CLOSE:
                 --$parenthesis;
                 $parameterType = null;
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_STRING:
+            case self::T_STRING:
                 // Check that the next token is a variable or next token is the
                 // reference operator and the fo
-                if ($this->tokenizer->peek() !== PHP_Reflection_TokenizerI::T_VARIABLE
-                 && $this->tokenizer->peek() !== PHP_Reflection_TokenizerI::T_BITWISE_AND) {
+                if ($this->tokenizer->peek() !== self::T_VARIABLE
+                 && $this->tokenizer->peek() !== self::T_BITWISE_AND) {
                     continue;
                 }
-                if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_BITWISE_AND) {
+                if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
                     // Store reference operator
                     $tokens[] = $this->tokenizer->next();
                     // Check next token
-                    if ($this->tokenizer->peek() !== PHP_Reflection_TokenizerI::T_VARIABLE) {
+                    if ($this->tokenizer->peek() !== self::T_VARIABLE) {
                         continue;
                     }
                 }
@@ -1308,7 +1294,7 @@ class PHP_Reflection_Parser
                 $parameterType = $this->builder->buildClassOrInterface($token[1]);
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_VARIABLE:
+            case self::T_VARIABLE:
                 $parameter = $this->builder->buildParameter($token[1], $token[2]);
                 $parameter->setPosition($parameterPosition++);
                 
