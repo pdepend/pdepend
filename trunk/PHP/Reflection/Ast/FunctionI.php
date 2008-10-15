@@ -46,11 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/AbstractCallable.php';
-require_once 'PHP/Reflection/Ast/FunctionI.php';
+require_once 'PHP/Reflection/Ast/MethodOrFunctionI.php';
 
 /**
- * Represents a php function node.
+ * Base interface for all function nodes.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -61,49 +60,12 @@ require_once 'PHP/Reflection/Ast/FunctionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Function 
-       extends PHP_Reflection_Ast_AbstractCallable
-    implements PHP_Reflection_Ast_FunctionI
+interface PHP_Reflection_Ast_FunctionI extends PHP_Reflection_Ast_MethodOrFunctionI
 {
-    /**
-     * The parent package for this function.
-     *
-     * @type PHP_Reflection_Ast_Package
-     * @var PHP_Reflection_Ast_Package $package
-     */
-    protected $package = null;
-    
     /**
      * Returns the parent package for this function.
      *
      * @return PHP_Reflection_Ast_Package
      */
-    public function getPackage()
-    {
-        return $this->package;
-    }
-    
-    /**
-     * Sets the parent package for this function.
-     *
-     * @param PHP_Reflection_Ast_Package $package The parent package.
-     * 
-     * @return void
-     */
-    public function setPackage(PHP_Reflection_Ast_Package $package = null)
-    {
-        $this->package = $package;
-    }
-    
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
-     * @return void
-     */
-    public function accept(PHP_Reflection_VisitorI $visitor)
-    {
-        $visitor->visitFunction($this);
-    }
+    function getPackage();
 }
