@@ -969,30 +969,23 @@ class PHP_Reflection_Parser
         // Simple scalar types
         case self::T_NULL:
             // Get current token
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-                
+            $this->_consumeToken(self::T_NULL, $tokens);
             return $this->builder->buildNullValue();
                 
         case self::T_TRUE:
             // Get current token
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-
+            $this->_consumeToken(self::T_TRUE, $tokens);
             return $this->builder->buildTrueValue();
-                
-        case self::T_FALSE:
+
+       case self::T_FALSE:
             // Get current token
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-                
+            $this->_consumeToken(self::T_FALSE, $tokens);
             return $this->builder->buildFalseValue();
-                
+
         case self::T_CONSTANT_ENCAPSED_STRING:
             // Get current token
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-        
+            $token = $this->_consumeToken(self::T_CONSTANT_ENCAPSED_STRING, $tokens);
+
             // Get scalar type
             $type = self::$_scalarTypeMap[$token[0]];
             // Create scalar value
@@ -1195,7 +1188,7 @@ class PHP_Reflection_Parser
         }
         
         // Remove comments
-        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_consumeComments($tokens);
         
         switch ($this->tokenizer->peek()) {
             case self::T_DNUMBER:
