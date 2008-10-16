@@ -309,12 +309,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -330,7 +330,7 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Class $package The package class node.
+     * @param PHP_Reflection_Ast_Package $package The package class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
@@ -363,7 +363,7 @@ class PHP_Depend_Log_Summary_Xml
      * Aggregates all metrics for the given <b>$node</b> instance and adds them
      * to the <b>DOMElement</b>
      *
-     * @param DOMElement            $xml  DOM Element that represents <b>$node</b>.
+     * @param DOMElement               $xml  DOM Element that represents <b>$node</b>.
      * @param PHP_Reflection_Ast_NodeI $node The context code node instance.
      * 
      * @return void

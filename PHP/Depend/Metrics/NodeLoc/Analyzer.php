@@ -327,12 +327,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $this->fireStartMethod($method);
         
