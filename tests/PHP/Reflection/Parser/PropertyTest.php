@@ -46,20 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Parser_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/MemberValueTest.php';
-require_once dirname(__FILE__) . '/MethodTest.php';
-require_once dirname(__FILE__) . '/PropertyTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Main test suite for the PHP_Reflection_Parser class.
+ * Test cases related to property parsing.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -70,35 +60,41 @@ require_once dirname(__FILE__) . '/PropertyTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Parser_AllTests
+class PHP_Reflection_Parser_PropertyTest extends PHP_Reflection_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the parser flags a property node as static.
      *
      * @return void
      */
-    public static function main()
+    public function testParserMarksPropertyAsStatic()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $property = self::_testParseProperty('modifiers_static.php');
+        $this->assertTrue($property->isStatic());
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Parses a source file and extracts the first class property instance.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param string $file The source file.
+     * 
+     * @return PHP_Reflection_Ast_PropertyI
      */
-    public static function suite()
+    private static function _testParseProperty($file)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Parser - AllTests');
-        $suite->addTestSuite('PHP_Reflection_Parser_FunctionTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_MethodTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_PropertyTest');
-
-        return $suite;
+        $packages = self::parseSource("/parser/properties/{$file}");
+        self::assertEquals(1, $packages->count());
+        
+        $package = $packages->current();
+        self::assertEquals(1, $package->getClasses()->count());
+        
+        $class = $package->getClasses()->current();
+        self::assertEquals(1, $class->getProperties()->count());
+        
+        $property = $class->getProperties()->current();
+        self::assertNotNull($property);
+        self::assertType('PHP_Reflection_Ast_PropertyI', $property);
+        
+        return $property;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Parser_AllTests::main') {
-    PHP_Reflection_Parser_AllTests::main();
 }
