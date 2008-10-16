@@ -220,11 +220,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      */
-    public function visitMethod(PHP_Reflection_Ast_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $this->fireStartMethod($method);
         
@@ -256,7 +256,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Class $package The package class node.
+     * @param PHP_Reflection_Ast_Package $package The package class node.
      * 
      * @return void
      */

@@ -81,8 +81,7 @@ class PHP_Reflection_Ast_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * The last visited method instance.
      *
-     * @type PHP_Reflection_Ast_Method
-     * @var PHP_Reflection_Ast_Method $method
+     * @var PHP_Reflection_Ast_MethodI $method
      */
     public $method = null;
     
@@ -175,11 +174,11 @@ class PHP_Reflection_Ast_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      */
-    public function visitMethod(PHP_Reflection_Ast_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $this->method = $method;
     }
@@ -187,7 +186,7 @@ class PHP_Reflection_Ast_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Class $package The package class node.
+     * @param PHP_Reflection_Ast_Package $package The package class node.
      * 
      * @return void
      */

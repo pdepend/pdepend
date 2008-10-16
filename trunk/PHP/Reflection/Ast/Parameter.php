@@ -81,15 +81,13 @@ class PHP_Reflection_Ast_Parameter
     /**
      * The parent function or method instance.
      *
-     * @type PHP_Reflection_Ast_AbstractCallable
-     * @var PHP_Reflection_Ast_AbstractCallable $_parent
+     * @var PHP_Reflection_Ast_AbstractMethodOrFunction $_parent
      */
     private $_parent = null;
     
     /**
      * The parameter position.
      *
-     * @type integer
      * @var integer $_position
      */
     private $_position = 0;
@@ -105,7 +103,7 @@ class PHP_Reflection_Ast_Parameter
     /**
      * Returns the parent function or method instance or <b>null</b>
      *
-     * @return PHP_Reflection_Ast_AbstractCallable|null
+     * @return PHP_Reflection_Ast_MethodOrFunctionI|null
      */
     public function getParent()
     {
@@ -115,11 +113,11 @@ class PHP_Reflection_Ast_Parameter
     /**
      * Sets the parent function or method object.
      *
-     * @param PHP_Reflection_Ast_AbstractCallable $parent The parent callable.
+     * @param PHP_Reflection_Ast_MethodOrFunctionI $parent The parent callable.
      * 
      * @return void
      */
-    public function setParent(PHP_Reflection_Ast_AbstractCallable $parent = null)
+    public function setParent(PHP_Reflection_Ast_MethodOrFunctionI $parent = null)
     {
         $this->_parent = $parent;
     }

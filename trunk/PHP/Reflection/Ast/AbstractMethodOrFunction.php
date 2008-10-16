@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractItem.php';
+require_once 'PHP/Reflection/Ast/MethodOrFunctionI.php';
 
 /**
  * Abstract base class for callable objects.
@@ -62,8 +63,9 @@ require_once 'PHP/Reflection/Ast/AbstractItem.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_Ast_AbstractCallable
+abstract class PHP_Reflection_Ast_AbstractMethodOrFunction 
        extends PHP_Reflection_Ast_AbstractItem
+    implements PHP_Reflection_Ast_MethodOrFunctionI
 {
     /**
      * The tokens for this function.

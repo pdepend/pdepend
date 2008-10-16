@@ -86,7 +86,7 @@ interface PHP_Reflection_Ast_ClassOrInterfaceI extends PHP_Reflection_Ast_NodeI
     function getDependencies();
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_Method} objects in this type.
+     * Returns all {@link PHP_Reflection_Ast_MethodI} objects in this type.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
