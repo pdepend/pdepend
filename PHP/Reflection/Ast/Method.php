@@ -46,7 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/AbstractCallable.php';
+require_once 'PHP/Reflection/Ast/AbstractMethodOrFunction.php';
+require_once 'PHP/Reflection/Ast/MethodI.php';
 
 /**
  * Represents a php method node.
@@ -61,7 +62,8 @@ require_once 'PHP/Reflection/Ast/AbstractCallable.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_Ast_Method 
-    extends PHP_Reflection_Ast_AbstractCallable
+       extends PHP_Reflection_Ast_AbstractMethodOrFunction
+    implements PHP_Reflection_Ast_MethodI
 {
     /**
      * The parent type object.
@@ -128,21 +130,7 @@ class PHP_Reflection_Ast_Method
      */
     public function isAbstract()
     {
-        return (ReflectionMethod::IS_ABSTRACT === (
-            $this->_modifiers & ReflectionMethod::IS_ABSTRACT
-        ));
-    }
-    
-    /**
-     * Marks this as an abstract method.
-     *
-     * @param boolean $abstract Set this to <b>true</b> for an abstract method.
-     * 
-     * @return void
-     */
-    public function setAbstract($abstract)
-    {
-
+        return (self::IS_ABSTRACT === ($this->_modifiers & self::IS_ABSTRACT));
     }
     
     /**
@@ -153,9 +141,7 @@ class PHP_Reflection_Ast_Method
      */
     public function isPublic()
     {
-        return (ReflectionMethod::IS_PUBLIC === (
-            $this->_modifiers & ReflectionMethod::IS_PUBLIC
-        ));
+        return (self::IS_PUBLIC === ($this->_modifiers & self::IS_PUBLIC));
     }
     
     /**
@@ -166,9 +152,7 @@ class PHP_Reflection_Ast_Method
      */
     public function isProtected()
     {
-        return (ReflectionMethod::IS_PROTECTED === (
-            $this->_modifiers & ReflectionMethod::IS_PROTECTED
-        ));
+        return (self::IS_PROTECTED === ($this->_modifiers & self::IS_PROTECTED));
     }
     
     /**
@@ -179,11 +163,30 @@ class PHP_Reflection_Ast_Method
      */
     public function isPrivate()
     {
-        return (ReflectionMethod::IS_PRIVATE === (
-            $this->_modifiers & ReflectionMethod::IS_PRIVATE
-        ));
+        return (self::IS_PRIVATE === ($this->_modifiers & self::IS_PRIVATE));
     }
     
+    /**
+     * Returns <b>true</b> if this node is marked as final, otherwise the return
+     * value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isFinal()
+    {
+        return (self::IS_FINAL === ($this->_modifiers & self::IS_FINAL));
+    }
+    
+    /**
+     * Returns <b>true</b> when this method node is marked as static, otherwise
+     * the return value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isStatic()
+    {
+        return (self::IS_STATIC === ($this->_modifiers & self::IS_STATIC));
+    }
     
     /**
      * Returns the parent type object or <b>null</b>

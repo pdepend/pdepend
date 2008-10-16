@@ -359,12 +359,12 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $classXml = end($this->_xmlStack);
         $document = $classXml->ownerDocument;

@@ -185,12 +185,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $this->fireStartMethod($method);
         
@@ -255,11 +255,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Counts all calls within the given <b>$callable</b>
      *
-     * @param PHP_Reflection_Ast_AbstractCallable $callable Context callable.
+     * @param PHP_Reflection_Ast_MethodOrFunctionI $callable Context callable.
      * 
      * @return void
      */
-    private function _countCalls(PHP_Reflection_Ast_AbstractCallable $callable)
+    private function _countCalls(PHP_Reflection_Ast_MethodOrFunctionI $callable)
     {
         $callT  = array(
             PHP_Reflection_TokenizerI::T_STRING,

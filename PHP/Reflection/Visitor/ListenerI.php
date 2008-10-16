@@ -135,20 +135,20 @@ interface PHP_Reflection_Visitor_ListenerI
     /**
      * Is called when the visitor starts a new method instance.
      *
-     * @param PHP_Reflection_Ast_Method $method The context method instance.
+     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
      * 
      * @return void
      */
-    function startVisitMethod(PHP_Reflection_Ast_Method $method);
+    function startVisitMethod(PHP_Reflection_Ast_MethodI $method);
     
     /**
      * Is called when the visitor ends with a method instance.
      *
-     * @param PHP_Reflection_Ast_Method $method The context method instance.
+     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
      * 
      * @return void
      */
-    function endVisitMethod(PHP_Reflection_Ast_Method $method);
+    function endVisitMethod(PHP_Reflection_Ast_MethodI $method);
     
     /**
      * Is called when the visitor starts a new package instance.

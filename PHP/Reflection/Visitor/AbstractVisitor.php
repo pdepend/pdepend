@@ -199,12 +199,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_Method $method)
+    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $this->fireStartMethod($method);
         
@@ -218,7 +218,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Class $package The package class node.
+     * @param PHP_Reflection_Ast_Package $package The package class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
@@ -480,11 +480,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start method event.
      *
-     * @param PHP_Reflection_Ast_Method $method The context method instance.
+     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
      * 
      * @return void
      */
-    protected function fireStartMethod(PHP_Reflection_Ast_Method $method)
+    protected function fireStartMethod(PHP_Reflection_Ast_MethodI $method)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitMethod($method);
@@ -494,11 +494,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end method event.
      *
-     * @param PHP_Reflection_Ast_Method $method The context method instance.
+     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
      * 
      * @return void
      */
-    protected function fireEndMethod(PHP_Reflection_Ast_Method $method)
+    protected function fireEndMethod(PHP_Reflection_Ast_MethodI $method)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitMethod($method);
