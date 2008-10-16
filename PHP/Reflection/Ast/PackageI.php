@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/Iterator/FilterI.php';
+require_once 'PHP/Reflection/Ast/NodeI.php';
 
 /**
- * This class implements a filter that is based on the package. 
+ * This interface represents a package within the analyzed source.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,55 +60,37 @@ require_once 'PHP/Reflection/Ast/Iterator/FilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Iterator_PackageFilter
-    implements PHP_Reflection_Ast_Iterator_FilterI
+interface PHP_Reflection_Ast_PackageI extends PHP_Reflection_Ast_NodeI
 {
     /**
-     * Regexp with ignorable package names and package name fragments. 
+     * Returns an iterator with all {@link PHP_Reflection_Ast_ClassI} instances
+     * within this package.
      *
-     * @type string
-     * @var string $_pattern
+     * @return PHP_Reflection_Ast_Iterator
      */
-    private $_pattern = array();
+    function getClasses();
     
     /**
-     * Constructs a new package filter for the given list of package names.
+     * Returns an iterator with all {@link PHP_Reflection_Ast_InterfaceI} 
+     * instances within this package.
      *
-     * @param array(string) $packages Package names.
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function __construct(array $packages)
-    {
-        $patterns = array();
-        foreach ($packages as $package) {
-            $patterns[] = str_replace('\*', '\S*', preg_quote($package));
-        }
-        $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
-    }
+    function getInterfaces();
     
     /**
-     * Returns <b>true</b> if the given node should be part of the node iterator,
-     * otherwise this method will return <b>false</b>.
-     * 
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects in this 
+     * package.
      *
-     * @return boolean
+     * @return PHP_Reflection_Ast_Iterator
      */
-    public function accept(PHP_Reflection_Ast_NodeI $node)
-    {
-        $package = null;
-        // NOTE: This looks a little bit ugly and it seems better to exclude
-        //       PHP_Reflection_Ast_MethodI and PHP_Reflection_Ast_Property, 
-        //       but when PDepend supports more node types, this could produce 
-        //       errors.
-        if ($node instanceof PHP_Reflection_Ast_Package) {
-            $package = $node->getName();
-        } else if ($node instanceof PHP_Reflection_Ast_ClassOrInterfaceI) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Reflection_Ast_FunctionI) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Reflection_Ast_MethodI) {
-            $package = $node->getParent()->getPackage()->getName();
-        }
-        return (preg_match($this->_pattern, $package) === 0);
-    }
+    function getTypes();
+    
+    /**
+     * Returns all {@link PHP_Reflection_Ast_FunctionI} objects in this package.
+     *
+     * @return PHP_Reflection_Ast_Iterator
+     */
+    function getFunctions();
+    
 }

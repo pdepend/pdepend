@@ -76,7 +76,6 @@ abstract class PHP_Reflection_Ast_AbstractClassOrInterface
     /**
      * List of {@link PHP_Reflection_Ast_Method} objects in this class.
      *
-     * @type array<PHP_Reflection_Ast_Method>
      * @var array(PHP_Reflection_Ast_Method) $_methods
      */
     private $_methods = array();
@@ -154,7 +153,7 @@ abstract class PHP_Reflection_Ast_AbstractClassOrInterface
     }
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_Method} objects in this type.
+     * Returns all {@link PHP_Reflection_Ast_MethodI} objects in this type.
      *
      * @return PHP_Reflection_Ast_Iterator
      */

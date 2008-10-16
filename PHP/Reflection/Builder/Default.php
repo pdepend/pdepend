@@ -126,7 +126,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_Ast_Function} instances.
      *
-     * @type array<PHP_Reflection_Ast_Function>
      * @var array(string=>PHP_Reflection_Ast_Function) $functions
      */
     protected $functions = array();
@@ -134,7 +133,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_Ast_Method} instances.
      *
-     * @type array<PHP_Reflection_Ast_Method>
      * @var array(PHP_Reflection_Ast_Method) $methods
      */
     protected $methods = array();
@@ -142,7 +140,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_Ast_Parameter} instances.
      *
-     * @type array<PHP_Reflection_Ast_Parameter>
      * @var array(PHP_Reflection_Ast_Parameter) $_parameters
      */
     private $_parameters = array();
@@ -150,7 +147,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_Ast_Property} instances.
      *
-     * @type array<PHP_Reflection_Ast_Property>
      * @var array(PHP_Reflection_Ast_Property) $_properties
      */
     private $_properties = array();

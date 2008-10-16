@@ -163,11 +163,11 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor starts a new method instance.
      *
-     * @param PHP_Reflection_Ast_Method $method The context method instance.
+     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
      * 
      * @return void
      */
-    public function startVisitMethod(PHP_Reflection_Ast_Method $method)
+    public function startVisitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $this->startVisitNode($method);
     }
@@ -175,11 +175,11 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor ends with a method instance.
      *
-     * @param PHP_Reflection_Ast_Method $method The context method instance.
+     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
      * 
      * @return void
      */
-    public function endVisitMethod(PHP_Reflection_Ast_Method $method)
+    public function endVisitMethod(PHP_Reflection_Ast_MethodI $method)
     {
         $this->endVisitNode($method);
     }

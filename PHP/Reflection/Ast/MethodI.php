@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/Iterator/FilterI.php';
+require_once 'PHP/Reflection/Ast/MethodOrFunctionI.php';
 
 /**
- * This class implements a filter that is based on the package. 
+ * Base interface for method nodes.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,55 +60,96 @@ require_once 'PHP/Reflection/Ast/Iterator/FilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Iterator_PackageFilter
-    implements PHP_Reflection_Ast_Iterator_FilterI
+interface PHP_Reflection_Ast_MethodI extends PHP_Reflection_Ast_MethodOrFunctionI
 {
     /**
-     * Regexp with ignorable package names and package name fragments. 
-     *
-     * @type string
-     * @var string $_pattern
+     * Marks the method as abstract.
      */
-    private $_pattern = array();
+    const IS_ABSTRACT = ReflectionMethod::IS_ABSTRACT;
     
     /**
-     * Constructs a new package filter for the given list of package names.
-     *
-     * @param array(string) $packages Package names.
+     * Marks the method as final
      */
-    public function __construct(array $packages)
-    {
-        $patterns = array();
-        foreach ($packages as $package) {
-            $patterns[] = str_replace('\*', '\S*', preg_quote($package));
-        }
-        $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
-    }
+    const IS_FINAL = ReflectionMethod::IS_FINAL;
     
     /**
-     * Returns <b>true</b> if the given node should be part of the node iterator,
-     * otherwise this method will return <b>false</b>.
-     * 
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * Marks the method as public.
+     */
+    const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
+    
+    /**
+     * Marks the method as protected.
+     */
+    const IS_PROTECTED = ReflectionMethod::IS_PROTECTED;
+    
+    /**
+     * Marks the method as private.
+     */
+    const IS_PRIVATE = ReflectionMethod::IS_PRIVATE;
+    
+    /**
+     * Marks the method as static.
+     */
+    const IS_STATIC = ReflectionMethod::IS_STATIC;
+    
+    /**
+     * Returns the declared modifiers for this method.
+     *
+     * @return integer
+     */
+    function getModifiers();
+    
+    /**
+     * Returns <b>true</b> if this is an abstract method.
      *
      * @return boolean
      */
-    public function accept(PHP_Reflection_Ast_NodeI $node)
-    {
-        $package = null;
-        // NOTE: This looks a little bit ugly and it seems better to exclude
-        //       PHP_Reflection_Ast_MethodI and PHP_Reflection_Ast_Property, 
-        //       but when PDepend supports more node types, this could produce 
-        //       errors.
-        if ($node instanceof PHP_Reflection_Ast_Package) {
-            $package = $node->getName();
-        } else if ($node instanceof PHP_Reflection_Ast_ClassOrInterfaceI) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Reflection_Ast_FunctionI) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Reflection_Ast_MethodI) {
-            $package = $node->getParent()->getPackage()->getName();
-        }
-        return (preg_match($this->_pattern, $package) === 0);
-    }
+    function isAbstract();
+    
+    /**
+     * Returns <b>true</b> if this node is marked as public, otherwise the 
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isPublic();
+    
+    /**
+     * Returns <b>true</b> if this node is marked as protected, otherwise the 
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isProtected();
+    
+    /**
+     * Returns <b>true</b> if this node is marked as private, otherwise the 
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isPrivate();
+    
+    /**
+     * Returns <b>true</b> if this node is marked as final, otherwise the return
+     * value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isFinal();
+    
+    /**
+     * Returns <b>true</b> when this method node is marked as static, otherwise
+     * the return value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isStatic();
+    
+    /**
+     * Returns the parent class or interface node.
+     *
+     * @return PHP_Reflection_Ast_ClassOrInterfaceI
+     */
+    function getParent();
 }

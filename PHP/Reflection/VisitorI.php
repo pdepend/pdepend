@@ -117,11 +117,11 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_Class $method The method class node.
+     * @param PHP_Reflection_Ast_MethodI $method The method class node.
      * 
      * @return void
      */
-    function visitMethod(PHP_Reflection_Ast_Method $method);
+    function visitMethod(PHP_Reflection_Ast_MethodI $method);
     
     /**
      * Visits a package node. 

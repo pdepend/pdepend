@@ -55,6 +55,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/MemberValueTest.php';
+require_once dirname(__FILE__) . '/MethodTest.php';
 
 /**
  * Main test suite for the PHP_Reflection_Parser class.
@@ -90,6 +91,7 @@ class PHP_Reflection_Parser_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Parser - AllTests');
         $suite->addTestSuite('PHP_Reflection_Parser_FunctionTest');
         $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');
+        $suite->addTestSuite('PHP_Reflection_Parser_MethodTest');
 
         return $suite;
     }

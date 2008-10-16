@@ -324,6 +324,7 @@ class PHP_Reflection_Parser
             // Skip comments after reference operator
             $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         }
+        
         // We expect a T_STRING token for function name
         $token = $this->_consumeToken(self::T_STRING, $tokens);
         $function = $this->builder->buildFunction($token[1], $token[2]);
@@ -337,13 +338,8 @@ class PHP_Reflection_Parser
         // Skip comment tokens before function signature
         $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         
-        $this->parseCallableSignature($tokens, $function);
-        if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
-            // Get function body dependencies 
-            $this->parseCallableBody($tokens, $function);
-        } else {
-            $function->setEndLine($token[2]);
-        }
+        $this->parseCallableSignature($tokens, $function); 
+        $this->parseCallableBody($tokens, $function);
         
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
@@ -562,12 +558,9 @@ class PHP_Reflection_Parser
         
         // Next token must be an open curly brace
         if ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
-            $file  = $this->tokenizer->getFile();
-            $token = $this->tokenizer->next();
-            throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
+            $this->_throwUnexpectedToken();
         }
         
-
         $this->builder->buildPackage($this->_package)->addType($interface);
         
         $this->reset();
@@ -587,56 +580,92 @@ class PHP_Reflection_Parser
         // Set current context interface
         $this->_classOrInterface = $interface;
         
-        $token = $this->tokenizer->next();
+        //$token = $this->tokenizer->next();
         $curly = 0;
         
-        $tokens = array($token);
+        $tokens = array();
         
         // Method position within the type body
         $this->_methodPosition = 0;
         
-        while ($token !== PHP_Reflection_TokenizerI::T_EOF) {
+        while ($this->tokenizer->peek() !== self::T_EOF) {
             
-            switch ($token[0]) {
-            case PHP_Reflection_TokenizerI::T_FUNCTION:
-                // We know all interface methods are abstract and public
-                $this->_modifiers |= ReflectionMethod::IS_ABSTRACT;
-                $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
+            switch ($this->tokenizer->peek()) {
+            case self::T_FUNCTION:
+                // Consume <function> token
+                $this->_consumeToken(self::T_FUNCTION, $tokens);
                 
+                // We know all interface methods are abstract and public
+                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_ABSTRACT;
+                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_PUBLIC;
+                
+                // Add interface method
                 $interface->addMethod($this->_parseMethodDeclaration($tokens));
+                
+                // Reset internal state
+                $this->reset();
                 break;
             
-            case PHP_Reflection_TokenizerI::T_CONST:
+            case self::T_CONST:
+                // Consume <const> token
+                $this->_consumeToken(self::T_CONST, $tokens);
+                
+                // Add constant node
                 $interface->addConstant($this->_parseConstantDeclaration($tokens));
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN:
+            case self::T_CURLY_BRACE_OPEN:
+                // Consume <{> token
+                $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+                
                 ++$curly;
                 $this->reset();
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE:
-                --$curly;
+            case self::T_CURLY_BRACE_CLOSE:
+                // Consume <}> token
+                $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
+                
                 $this->reset();
+                
+                // Check for end of declaration
+                if (--$curly === 0) {
+                    $interface->setEndLine($token[2]);
+                    $interface->setTokens($tokens);
+                    
+                    break 2;
+                }
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_PUBLIC:
-                assert(ReflectionProperty::IS_PUBLIC === ReflectionMethod::IS_PUBLIC);
-                $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
+            case self::T_PUBLIC:
+                // Consume <public> token
+                $this->_consumeToken(self::T_PUBLIC);
+                
+                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_PUBLIC;
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_STATIC:
-                assert(ReflectionMethod::IS_STATIC === ReflectionProperty::IS_STATIC);
-                $this->_modifiers |= ReflectionMethod::IS_STATIC;
+            case self::T_STATIC:
+                // Consume <static> token
+                $this->_consumeToken(self::T_STATIC);
+                
+                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_STATIC;
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
+            case self::T_DOC_COMMENT:
+                // Consume doc comment
+                $token = $this->_consumeToken(self::T_DOC_COMMENT, $tokens);
+                
                 $this->_comment = $token[1];
+                break;
+                
+            case self::T_COMMENT:
+                // Consume doc comment
+                $this->_consumeToken(self::T_COMMENT, $tokens);
                 break;
             
             default:
-                // TODO: Handle/log unused tokens
-                $this->reset();
+                // Throw exception
+                $this->_throwUnexpectedToken($token);
                 break;
             }
             
@@ -647,20 +676,13 @@ class PHP_Reflection_Parser
                 $interface->setTokens($tokens);
                 // Stop processing
                 break;
-            } else {
-                $token    = $this->tokenizer->next();
-                $tokens[] = $token;
             }
         }
         
         // Reset context interface reference
         $this->_classOrInterface = null;
         
-        if ($curly !== 0) {
-            $file = $this->tokenizer->getSourceFile();
-            throw new PHP_Reflection_Exceptions_UnclosedBodyException($file);
-        }
-        
+        // Return body tokens
         return $tokens;
     }
     
@@ -778,21 +800,32 @@ class PHP_Reflection_Parser
      */
     private function _parseMethodDeclaration(array &$tokens)
     {
+        // Skip comments after 'function' token
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        
         $token    = $this->tokenizer->next();
         $tokens[] = $token;
         
-        if ($token[0] === PHP_Reflection_TokenizerI::T_BITWISE_AND) {
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
+        // Check for reference return
+        if ($token[0] === self::T_BITWISE_AND) {
+            // Skip comments after reference return
+            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+            // Get next token, this should be the method name
+            $token = $this->_consumeToken(self::T_STRING, $tokens);
         }
+        
+        // Skip comment tokens after method name
+        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         
         $method = $this->builder->buildMethod($token[1], $token[2]);
 
         $this->parseCallableSignature($tokens, $method);
-        if ($this->tokenizer->peek() === PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN) {
+        if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies 
             $this->parseCallableBody($tokens, $method);
         } else {
+            // We expect a semicolon
+            $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
             $method->setEndLine($token[2]);
         }
 
@@ -1196,7 +1229,6 @@ class PHP_Reflection_Parser
     private function _skipTokens()
     {
         $consumeTokens = func_get_args();
-        
         while (in_array($this->tokenizer->peek(), $consumeTokens) === true) {
             $this->tokenizer->next();
         }
@@ -1222,6 +1254,21 @@ class PHP_Reflection_Parser
         return end($tokens);
     }
     
+    /**
+     * Consumes an variable amount of comment tokens.
+     * 
+     * @param array &$tokens Reference array for parsed tokens.
+     * 
+     * @return void
+     */
+    private function _consumeComments(array &$tokens = array())
+    {
+        $consumeTokens = array(self::T_COMMENT, self::T_DOC_COMMENT);
+        while (in_array($this->tokenizer->peek(), $consumeTokens) === true) {
+            $tokens[] = $this->tokenizer->next();
+        }
+    }
+    
     private function _throwUnexpectedToken(array $token = null)
     {
         $file  = $this->tokenizer->getSourceFile();
@@ -1245,13 +1292,14 @@ class PHP_Reflection_Parser
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @param array(array)                        &$tokens  Collected tokens.
-     * @param PHP_Reflection_Ast_AbstractCallable $callable The context callable.
+     * @param array(array)                                &$tokens  Collected tokens.
+     * @param PHP_Reflection_Ast_AbstractMethodOrFunction $callable The context callable.
      * 
      * @return void
      */
-    protected function parseCallableSignature(array &$tokens, PHP_Reflection_Ast_AbstractCallable $callable)
+    protected function parseCallableSignature(array &$tokens, PHP_Reflection_Ast_AbstractMethodOrFunction $callable)
     {
+        // Consume open '(' token
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
         
         $parameterType     = null;
@@ -1320,12 +1368,12 @@ class PHP_Reflection_Parser
     /**
      * Extracts all dependencies from a callable body.
      *
-     * @param array(array)                        &$outTokens Collected tokens.
-     * @param PHP_Reflection_Ast_AbstractCallable $callable   The context callable.
+     * @param array(array)                                &$outTokens Collected tokens.
+     * @param PHP_Reflection_Ast_AbstractMethodOrFunction $callable   The context callable.
      * 
      * @return void
      */
-    protected function parseCallableBody(array &$outTokens, PHP_Reflection_Ast_AbstractCallable $callable)
+    protected function parseCallableBody(array &$outTokens, PHP_Reflection_Ast_AbstractMethodOrFunction $callable)
     {
         $curly  = 0;
         $tokens = array();
@@ -1585,11 +1633,11 @@ class PHP_Reflection_Parser
      * Extracts documented <b>throws</b> and <b>return</b> types and sets them
      * to the given <b>$callable</b> instance.
      *
-     * @param PHP_Reflection_Ast_AbstractCallable $callable The context callable.
+     * @param PHP_Reflection_Ast_AbstractMethodOrFunction $callable The context callable.
      * 
      * @return void
      */
-    private function _prepareCallable(PHP_Reflection_Ast_AbstractCallable $callable)
+    private function _prepareCallable(PHP_Reflection_Ast_AbstractMethodOrFunction $callable)
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {

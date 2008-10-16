@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractNode.php';
+require_once 'PHP/Reflection/Ast/PackageI.php';
 require_once 'PHP/Reflection/Ast/Iterator.php';
 require_once 'PHP/Reflection/Ast/Iterator/TypeFilter.php';
 
@@ -62,25 +63,28 @@ require_once 'PHP/Reflection/Ast/Iterator/TypeFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
+class PHP_Reflection_Ast_Package 
+       extends PHP_Reflection_Ast_AbstractNode
+    implements PHP_Reflection_Ast_PackageI
 {
     /**
-     * List of all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects for this package.
+     * List of all {@link PHP_Reflection_Ast_AbstractClassOrInterface} nodes
+     * defined in this package.
      *
-     * @var array(PHP_Reflection_Ast_ClassOrInterfaceI) $types
+     * @var array(PHP_Reflection_Ast_AbstractClassOrInterface) $_classOrInterfaceList
      */
-    protected $types = array();
+    private $_classOrInterfaceList = array();
     
     /**
      * List of all standalone {@link PHP_Reflection_Ast_Function} objects in this
      * package.
      *
-     * @var array(PHP_Reflection_Ast_Function) $functions
+     * @var array(PHP_Reflection_Ast_Function) $_functionList
      */
-    protected $functions = array();
+    private $_functionList = array();
     
     /**
-     * Returns an iterator with all {@link PHP_Reflection_Ast_Class} instances
+     * Returns an iterator with all {@link PHP_Reflection_Ast_ClassI} instances
      * within this package.
      *
      * @return PHP_Reflection_Ast_Iterator
@@ -89,15 +93,15 @@ class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
     {
         $type = 'PHP_Reflection_Ast_Class';
         
-        $classes = new PHP_Reflection_Ast_Iterator($this->types);
+        $classes = new PHP_Reflection_Ast_Iterator($this->_classOrInterfaceList);
         $classes->addFilter(new PHP_Reflection_Ast_Iterator_TypeFilter($type));
         
         return $classes;
     }
     
     /**
-     * Returns an iterator with all {@link PHP_Reflection_Ast_Interface} instances
-     * within this package.
+     * Returns an iterator with all {@link PHP_Reflection_Ast_InterfaceI} 
+     * instances within this package.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
@@ -105,20 +109,21 @@ class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
     {
         $type = 'PHP_Reflection_Ast_Interface';
         
-        $classes = new PHP_Reflection_Ast_Iterator($this->types);
+        $classes = new PHP_Reflection_Ast_Iterator($this->_classOrInterfaceList);
         $classes->addFilter(new PHP_Reflection_Ast_Iterator_TypeFilter($type));
         
         return $classes;
     }
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects in this package.
+     * Returns all {@link PHP_Reflection_Ast_ClassOrInterfaceI} objects in this 
+     * package.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
     public function getTypes()
     {
-        return new PHP_Reflection_Ast_Iterator($this->types);
+        return new PHP_Reflection_Ast_Iterator($this->_classOrInterfaceList);
     }
     
     /**
@@ -131,7 +136,7 @@ class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
     public function addType(PHP_Reflection_Ast_AbstractClassOrInterface $type)
     {
         // Skip if this package already contains this type
-        if (in_array($type, $this->types, true)) {
+        if (in_array($type, $this->_classOrInterfaceList, true)) {
             return;
         }
         
@@ -142,7 +147,7 @@ class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
         // Set this as class package
         $type->setPackage($this);
         // Append class to internal list
-        $this->types[] = $type;
+        $this->_classOrInterfaceList[] = $type;
         
         return $type;
     }
@@ -156,22 +161,22 @@ class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
      */
     public function removeType(PHP_Reflection_Ast_AbstractClassOrInterface $type)
     {
-        if (($i = array_search($type, $this->types, true)) !== false) {
+        if (($i = array_search($type, $this->_classOrInterfaceList, true)) !== false) {
             // Remove class from internal list
-            unset($this->types[$i]);
+            unset($this->_classOrInterfaceList[$i]);
             // Remove this as parent
             $type->setPackage(null);
         }
     }
     
     /**
-     * Returns all {@link PHP_Reflection_Ast_Function} objects in this package.
+     * Returns all {@link PHP_Reflection_Ast_FunctionI} objects in this package.
      *
      * @return PHP_Reflection_Ast_Iterator
      */
     public function getFunctions()
     {
-        return new PHP_Reflection_Ast_Iterator($this->functions);
+        return new PHP_Reflection_Ast_Iterator($this->_functionList);
     }
     
     /**
@@ -190,7 +195,7 @@ class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
         // Set this as function package
         $function->setPackage($this);
         // Append function to internal list
-        $this->functions[] = $function;
+        $this->_functionList[] = $function;
         
         return $function;
     }
@@ -204,9 +209,9 @@ class PHP_Reflection_Ast_Package extends PHP_Reflection_Ast_AbstractNode
      */
     public function removeFunction(PHP_Reflection_Ast_Function $function)
     {
-        if (($i = array_search($function, $this->functions, true)) !== false) {
+        if (($i = array_search($function, $this->_functionList, true)) !== false) {
             // Remove function from internal list
-            unset($this->functions[$i]);
+            unset($this->_functionList[$i]);
             // Remove this as parent
             $function->setPackage(null);
         }
