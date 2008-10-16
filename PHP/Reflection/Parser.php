@@ -432,53 +432,49 @@ class PHP_Reflection_Parser
         // Method position within the type body
         $this->_methodPosition = 0;
         
-        while ($token !== PHP_Reflection_TokenizerI::T_EOF) {
+        while ($token !== self::T_EOF) {
             
             switch ($token[0]) {
-            case PHP_Reflection_TokenizerI::T_FUNCTION:
+            case self::T_FUNCTION:
                 $class->addMethod($this->_parseMethodDeclaration($tokens));
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_VARIABLE:
+            case self::T_VARIABLE:
                 $class->addProperty($this->_parsePropertyDeclaration($tokens));
                 break;
             
-            case PHP_Reflection_TokenizerI::T_CONST:
+            case self::T_CONST:
                 $class->addConstant($this->_parseConstantDeclaration($tokens));
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN:
+            case self::T_CURLY_BRACE_OPEN:
                 ++$curly;
                 $this->reset();
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE:
+            case self::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 $this->reset();
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_ABSTRACT:
+            case self::T_ABSTRACT:
                 $this->_modifiers |= ReflectionMethod::IS_ABSTRACT;
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_VAR:
-            case PHP_Reflection_TokenizerI::T_PUBLIC:
-                assert(ReflectionProperty::IS_PUBLIC === ReflectionMethod::IS_PUBLIC);
+            case self::T_VAR:
+            case self::T_PUBLIC:
                 $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_PRIVATE:
-                assert(ReflectionProperty::IS_PRIVATE === ReflectionMethod::IS_PRIVATE);
+            case self::T_PRIVATE:
                 $this->_modifiers |= ReflectionMethod::IS_PRIVATE;
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_PROTECTED:
-                assert(ReflectionProperty::IS_PROTECTED === ReflectionMethod::IS_PROTECTED);
+            case self::T_PROTECTED:
                 $this->_modifiers |= ReflectionMethod::IS_PROTECTED;
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_STATIC:
-                assert(ReflectionMethod::IS_STATIC === ReflectionProperty::IS_STATIC);
+            case self::T_STATIC:
                 $this->_modifiers |= ReflectionMethod::IS_STATIC;
                 break;
                 
@@ -486,7 +482,7 @@ class PHP_Reflection_Parser
                 $this->_modifiers |= ReflectionMethod::IS_FINAL;
                 break;
                 
-            case PHP_Reflection_TokenizerI::T_DOC_COMMENT:
+            case self::T_DOC_COMMENT:
                 $this->_comment = $token[1];
                 break;
             
@@ -580,13 +576,7 @@ class PHP_Reflection_Parser
         // Set current context interface
         $this->_classOrInterface = $interface;
         
-        //$token = $this->tokenizer->next();
-        $curly = 0;
-        
         $tokens = array();
-        
-        // Method position within the type body
-        $this->_methodPosition = 0;
         
         while ($this->tokenizer->peek() !== self::T_EOF) {
             
