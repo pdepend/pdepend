@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Reflection/Ast/AbstractItem.php';
+require_once 'PHP/Reflection/Ast/PropertyI.php';
 require_once 'PHP/Reflection/Ast/TypeAwareI.php';
 
 /**
@@ -63,7 +64,8 @@ require_once 'PHP/Reflection/Ast/TypeAwareI.php';
  */
 class PHP_Reflection_Ast_Property
        extends PHP_Reflection_Ast_AbstractItem
-    implements PHP_Reflection_Ast_TypeAwareI
+    implements PHP_Reflection_Ast_PropertyI,
+               PHP_Reflection_Ast_TypeAwareI
 {
     /**
      * The parent type object.
@@ -170,9 +172,20 @@ class PHP_Reflection_Ast_Property
     }
     
     /**
+     * Returns <b>true</b> if this property node is marked as static, otherwise
+     * the return value is <b>false</b>.
+     * 
+     * @return boolean
+     */
+    public function isStatic()
+    {
+        return (self::IS_STATIC === ($this->_modifiers & self::IS_STATIC));
+    }
+    
+    /**
      * Returns the parent class object or <b>null</b>
      *
-     * @return PHP_Reflection_Ast_Class|null
+     * @return PHP_Reflection_Ast_ClassI
      */
     public function getParent()
     {
