@@ -607,25 +607,18 @@ class PHP_Reflection_Parser
             case self::T_CURLY_BRACE_OPEN:
                 // Consume <{> token
                 $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
-                
-                ++$curly;
                 $this->reset();
                 break;
                     
             case self::T_CURLY_BRACE_CLOSE:
                 // Consume <}> token
                 $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
-                
                 $this->reset();
                 
                 // Check for end of declaration
-                if (--$curly === 0) {
-                    $interface->setEndLine($token[2]);
-                    $interface->setTokens($tokens);
-                    
-                    break 2;
-                }
-                break;
+                $interface->setEndLine($token[2]);
+                $interface->setTokens($tokens);
+                break 2;
                 
             case self::T_PUBLIC:
                 // Consume <public> token
@@ -656,15 +649,6 @@ class PHP_Reflection_Parser
             default:
                 // Throw exception
                 $this->_throwUnexpectedToken($token);
-                break;
-            }
-            
-            if ($curly === 0) {
-                // Set end line number 
-                $interface->setEndLine($token[2]);
-                // Set type tokens
-                $interface->setTokens($tokens);
-                // Stop processing
                 break;
             }
         }
