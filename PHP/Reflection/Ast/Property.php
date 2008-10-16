@@ -140,9 +140,7 @@ class PHP_Reflection_Ast_Property
      */
     public function isPublic()
     {
-        return (ReflectionMethod::IS_PUBLIC === (
-            $this->_modifiers & ReflectionMethod::IS_PUBLIC
-        ));
+        return (self::IS_PUBLIC === ($this->_modifiers & self::IS_PUBLIC));
     }
     
     /**
@@ -153,9 +151,7 @@ class PHP_Reflection_Ast_Property
      */
     public function isProtected()
     {
-        return (ReflectionMethod::IS_PROTECTED === (
-            $this->_modifiers & ReflectionMethod::IS_PROTECTED
-        ));
+        return (self::IS_PROTECTED === ($this->_modifiers & self::IS_PROTECTED));
     }
     
     /**
@@ -166,9 +162,7 @@ class PHP_Reflection_Ast_Property
      */
     public function isPrivate()
     {
-        return (ReflectionMethod::IS_PRIVATE === (
-            $this->_modifiers & ReflectionMethod::IS_PRIVATE
-        ));
+        return (self::IS_PRIVATE === ($this->_modifiers & self::IS_PRIVATE));
     }
     
     /**
