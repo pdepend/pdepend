@@ -143,9 +143,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
      */
     public function testParserMethodWithUnclosedParameterBlockFail()
     {
+        $fileName = dirname(__FILE__) . '/_code/parser/method_with_unclosed_parameter_block.php.fail';
         $this->setExpectedException(
-            'RuntimeException', 
-            'Invalid function signature.'
+            'PHP_Reflection_Exceptions_UnexpectedTokenException', 
+            "There is an unexpected token \"(\" on line 3 in file \"{$fileName}\"."
         );
         
         self::parseSource('parser/method_with_unclosed_parameter_block.php.fail');
@@ -224,9 +225,8 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectFileComment()
     {
         $packages = self::parseSource('parser/file_comment_is_set.php');
-        $this->assertEquals(4, $packages->count()); // default, +global, +spl & +standard
+        $this->assertEquals(3, $packages->count()); // default, +spl & +standard
         
-        $packages->next();
         $packages->next();
         $packages->next();
         
@@ -1411,9 +1411,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count()); // +global
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(2, $classes->count());
-        
-        $classes->next();
+        $this->assertEquals(1, $classes->count());
         
         $class = $classes->current();
         $this->assertEquals('PHP_Reflection_Parser', $class->getName());
@@ -1474,9 +1472,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count());
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(2, $classes->count());
-        
-        $classes->next();
+        $this->assertEquals(1, $classes->count());
         
         $class = $classes->current();
         $this->assertNotNull($class);

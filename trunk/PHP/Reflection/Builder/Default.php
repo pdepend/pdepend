@@ -168,6 +168,13 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     private $_internalTypes = null;
     
     /**
+     * Cache for already created class or interface proxy instances.
+     * 
+     * @var array(PHP_Reflection_Ast_ClassOrInterfaceProxy) $_proxyCache
+     */
+    private $_proxyCache = array();
+    
+    /**
      * Constructs a new builder instance.
      */
     public function __construct()
@@ -573,7 +580,14 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildClassOrInterfaceProxy($identifier)
     {
-        return new PHP_Reflection_Ast_ClassOrInterfaceProxy($this, $identifier);
+        $proxyID = strtolower($identifier);
+        if (!isset($this->_proxyCache[$proxyID])) {
+            // Create a new node proxy
+            $proxy = new PHP_Reflection_Ast_ClassOrInterfaceProxy($this, $identifier); 
+            // Cache proxy instance
+            $this->_proxyCache[$proxyID] = $proxy;
+        }
+        return $this->_proxyCache[$proxyID]; 
     }
     
     /**
