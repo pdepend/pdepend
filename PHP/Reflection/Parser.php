@@ -775,7 +775,7 @@ class PHP_Reflection_Parser
         foreach ($parameterList as $parameter) {
             $method->addParameter($parameter);
         }
-        //$this->parseCallableSignature($tokens, $method);
+
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies 
             $this->parseCallableBody($tokens, $method);
@@ -1310,85 +1310,9 @@ class PHP_Reflection_Parser
      */
     protected function reset()
     {
-        $this->_comment   = null;
         $this->_modifiers = 0;
+        $this->_comment   = null;
         $this->_package   = PHP_Reflection_BuilderI::GLOBAL_PACKAGE;
-    }
-
-    /**
-     * Extracts all dependencies from a callable signature.
-     *
-     * @param array(array)                                &$tokens  Collected tokens.
-     * @param PHP_Reflection_AST_AbstractMethodOrFunction $callable The context callable.
-     * 
-     * @return void
-     */
-    protected function parseCallableSignature(array &$tokens, PHP_Reflection_AST_AbstractMethodOrFunction $callable)
-    {
-        // Consume open '(' token
-        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
-        
-        $parameterType     = null;
-        $parameterPosition = 0;
-
-        $parenthesis = 1;
-        
-        while (($token = $this->tokenizer->next()) !== self::T_EOF) {
-
-            $tokens[] = $token;
-            
-            switch ($token[0]) {
-            case self::T_PARENTHESIS_OPEN:
-                ++$parenthesis;
-                $parameterType = null;
-                break;
-                 
-            case self::T_PARENTHESIS_CLOSE:
-                --$parenthesis;
-                $parameterType = null;
-                break;
-                    
-            case self::T_STRING:
-                // Check that the next token is a variable or next token is the
-                // reference operator and the fo
-                if ($this->tokenizer->peek() !== self::T_VARIABLE
-                 && $this->tokenizer->peek() !== self::T_BITWISE_AND) {
-                    continue;
-                }
-                if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
-                    // Store reference operator
-                    $tokens[] = $this->tokenizer->next();
-                    // Check next token
-                    if ($this->tokenizer->peek() !== self::T_VARIABLE) {
-                        continue;
-                    }
-                }
-                
-                // Create an instance for this parameter
-                $parameterType = $this->builder->buildClassOrInterface($token[1]);
-                break;
-                
-            case self::T_VARIABLE:
-                $parameter = $this->builder->buildParameter($token[1], $token[2]);
-                $parameter->setPosition($parameterPosition++);
-                
-                if ($parameterType !== null) {
-                    $parameter->setType($parameterType);
-                }
-                $callable->addParameter($parameter);
-                break;
-
-            default:
-                // TODO: Handle/log unused tokens
-                $parameterType = null;
-                break;
-            }
-            
-            if ($parenthesis === 0) {
-                return;
-            }
-        }
-        throw new RuntimeException('Invalid function signature.');
     }
     
     /**
@@ -1426,7 +1350,7 @@ class PHP_Reflection_Parser
                 }
                 break;
                     
-            case PHP_Reflection_TokenizerI::T_STRING:
+            case self::T_STRING:
                 if ($this->tokenizer->peek() === self::T_DOUBLE_COLON) {
                     // Skip double colon
                     $tokens[] = $this->tokenizer->next();
@@ -1511,16 +1435,16 @@ class PHP_Reflection_Parser
      */
     protected function isFileComment()
     {
-        if ($this->tokenizer->prev() !== PHP_Reflection_TokenizerI::T_OPEN_TAG) {
+        if ($this->tokenizer->prev() !== self::T_OPEN_TAG) {
             return false;
         }
         
         $notExpectedTags = array(
-            PHP_Reflection_TokenizerI::T_CLASS,
-            PHP_Reflection_TokenizerI::T_FINAL,
-            PHP_Reflection_TokenizerI::T_ABSTRACT,
-            PHP_Reflection_TokenizerI::T_FUNCTION,
-            PHP_Reflection_TokenizerI::T_INTERFACE
+            self::T_CLASS,
+            self::T_FINAL,
+            self::T_ABSTRACT,
+            self::T_FUNCTION,
+            self::T_INTERFACE
         );
         
         return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
@@ -1539,10 +1463,7 @@ class PHP_Reflection_Parser
      */
     private function _parseClassNameChain(&$tokens)
     {
-        $allowed = array(
-            PHP_Reflection_TokenizerI::T_DOUBLE_COLON,
-            PHP_Reflection_TokenizerI::T_STRING,
-        );
+        $allowed = array(self::T_DOUBLE_COLON, self::T_STRING);
         
         $parts = array();
         
@@ -1550,7 +1471,7 @@ class PHP_Reflection_Parser
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
-            if ($token[0] === PHP_Reflection_TokenizerI::T_STRING) {
+            if ($token[0] === self::T_STRING) {
                 $parts[] = $token[1];
             }
         }
