@@ -104,25 +104,25 @@ class PHP_Depend_Log_Summary_TestImplAnalyzerNodeAware
     }
     
     /**
-     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * @param PHP_Reflection_AST_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
     }
     
     /**
      * Returns an array with metrics for the requested node.
      *
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * @param PHP_Reflection_AST_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
      */
-    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
+    public function getNodeMetrics(PHP_Reflection_AST_NodeI $node)
     {
         if (isset($this->nodeMetrics[$node->getUUID()])) {
             return $this->nodeMetrics[$node->getUUID()];

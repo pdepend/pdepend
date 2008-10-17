@@ -124,20 +124,20 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $data = unserialize(file_get_contents($logFile));
         
         $code = $data['code'];
-        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
+        $this->assertType('PHP_Reflection_AST_Iterator', $code);
         $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Reflection_Ast_Package', $package);
+        $this->assertType('PHP_Reflection_AST_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
         
         $this->assertEquals(1, $package->getFunctions()->count());
         $this->assertEquals(1, $package->getClasses()->count());
         
         $function = $package->getFunctions()->current();
-        $this->assertType('PHP_Reflection_Ast_Function', $function);
+        $this->assertType('PHP_Reflection_AST_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(1, $function->getExceptionTypes()->count());
         $this->assertEquals('MyException', $function->getExceptionTypes()->current()->getName());
@@ -145,7 +145,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $code->next();
         
         $package = $code->current();
-        $this->assertType('PHP_Reflection_Ast_Package', $package);
+        $this->assertType('PHP_Reflection_AST_Package', $package);
         $this->assertEquals('pdepend.test2', $package->getName());
         
         $sourceFile = $sources . '/extension-filter.inc';
@@ -180,27 +180,27 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $data = unserialize(file_get_contents($fileName));
         
         $code = $data['code'];
-        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
+        $this->assertType('PHP_Reflection_AST_Iterator', $code);
         $this->assertEquals(2, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Reflection_Ast_Package', $package);
+        $this->assertType('PHP_Reflection_AST_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
         
         $this->assertEquals(1, $package->getFunctions()->count());
         $this->assertEquals(1, $package->getClasses()->count());
         
         $function = $package->getFunctions()->current();
-        $this->assertType('PHP_Reflection_Ast_Function', $function);
+        $this->assertType('PHP_Reflection_AST_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionTypes()->count());
         
         $code->next();
         
         $package = $code->current();
-        $this->assertType('PHP_Reflection_Ast_Package', $package);
+        $this->assertType('PHP_Reflection_AST_Package', $package);
         $this->assertEquals('pdepend.test2', $package->getName());
         
         unlink($fileName);
@@ -225,13 +225,13 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $data = unserialize(file_get_contents($logFile));
         
         $code = $data['code'];
-        $this->assertType('PHP_Reflection_Ast_Iterator', $code);
+        $this->assertType('PHP_Reflection_AST_Iterator', $code);
         $this->assertEquals(1, $code->count());
         
         $code->rewind();
         
         $package = $code->current();
-        $this->assertType('PHP_Reflection_Ast_Package', $package);
+        $this->assertType('PHP_Reflection_AST_Package', $package);
         $this->assertEquals(PHP_Reflection_BuilderI::GLOBAL_PACKAGE, $package->getName());
         
         $this->assertEquals(8, $package->getClasses()->count());

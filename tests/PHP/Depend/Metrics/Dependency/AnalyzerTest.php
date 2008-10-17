@@ -65,7 +65,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * List of source packages.
      *
-     * @var PHP_Reflection_Ast_Iterator $_packages
+     * @var PHP_Reflection_AST_Iterator $_packages
      */
     private $_packages = null;
     

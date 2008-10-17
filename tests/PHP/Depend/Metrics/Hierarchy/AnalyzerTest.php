@@ -123,7 +123,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testGetNodeMetricsForUnknownUUID()
     {
-        $class    = new PHP_Reflection_Ast_Class('PDepend');
+        $class    = new PHP_Reflection_AST_Class('PDepend');
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
         $metrics  = $analyzer->getNodeMetrics($class);
         
