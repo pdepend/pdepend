@@ -49,7 +49,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Reflection/Builder/Default.php';
-require_once 'PHP/Reflection/Ast/File.php';
+require_once 'PHP/Reflection/AST/File.php';
 
 /**
  * Test case implementation for the default node builder implementation.
@@ -75,8 +75,8 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $class1  = $builder->buildClass('clazz1');
         $class2  = $builder->buildClass('clazz1');
         
-        $this->assertType('PHP_Reflection_Ast_Class', $class1);
-        $this->assertType('PHP_Reflection_Ast_Class', $class2);
+        $this->assertType('PHP_Reflection_AST_Class', $class1);
+        $this->assertType('PHP_Reflection_AST_Class', $class2);
         
         $this->assertSame($class1, $class2);
     }
@@ -172,8 +172,8 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $interface1 = $builder->buildInterface('interface1');
         $interface2 = $builder->buildInterface('interface1');
         
-        $this->assertType('PHP_Reflection_Ast_Interface', $interface1);
-        $this->assertType('PHP_Reflection_Ast_Interface', $interface2);
+        $this->assertType('PHP_Reflection_AST_Interface', $interface1);
+        $this->assertType('PHP_Reflection_AST_Interface', $interface2);
         
         $this->assertSame($interface1, $interface2);
     }
@@ -189,11 +189,11 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $type0 = $builder->buildClassOrInterface('FooBar');
-        $this->assertType('PHP_Reflection_Ast_Class', $type0);
+        $this->assertType('PHP_Reflection_AST_Class', $type0);
         $type1 = $builder->buildInterface('FooBar');
-        $this->assertType('PHP_Reflection_Ast_Interface', $type1);
+        $this->assertType('PHP_Reflection_AST_Interface', $type1);
         $type2 = $builder->buildClassOrInterface('FooBar');
-        $this->assertType('PHP_Reflection_Ast_Interface', $type2);
+        $this->assertType('PHP_Reflection_AST_Interface', $type2);
     }
     
     public function testBuildInterfaceForcesRecreateTypeForExistingClassInDefaultPackage()
@@ -462,7 +462,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
     }
     
     /**
-     * Tests the PHP_Reflection_Ast_Method build method.
+     * Tests the PHP_Reflection_AST_Method build method.
      *
      * @return void
      */
@@ -471,7 +471,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         $method  = $builder->buildMethod('method', 0);
         
-        $this->assertType('PHP_Reflection_Ast_Method', $method);
+        $this->assertType('PHP_Reflection_AST_Method', $method);
     }
     
     /**
@@ -485,7 +485,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder  = new PHP_Reflection_Builder_Default();
         $constant = $builder->buildTypeConstant('CONSTANT', 0);
         
-        $this->assertType('PHP_Reflection_Ast_ClassOrInterfaceConstant', $constant);
+        $this->assertType('PHP_Reflection_AST_ClassOrInterfaceConstant', $constant);
     }
     
     /**
@@ -499,8 +499,8 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $package1 = $builder->buildPackage('package1');
         $package2 = $builder->buildPackage('package1');
         
-        $this->assertType('PHP_Reflection_Ast_Package', $package1);
-        $this->assertType('PHP_Reflection_Ast_Package', $package2);
+        $this->assertType('PHP_Reflection_AST_Package', $package1);
+        $this->assertType('PHP_Reflection_AST_Package', $package2);
         
         $this->assertSame($package1, $package2);
     }

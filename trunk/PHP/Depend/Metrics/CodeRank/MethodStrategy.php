@@ -87,12 +87,12 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_MethodI $method The method class node.
+     * @param PHP_Reflection_AST_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
+    public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->fireStartMethod($method);
         
@@ -116,13 +116,13 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      * Extracts the coupling information between the two given types and their
      * parent packages.
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceI $type    The context type instance.
-     * @param PHP_Reflection_Ast_ClassOrInterfaceI $depType The referenced type.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $type    The context type instance.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $depType The referenced type.
      * 
      * @return void
      */
-    private function _processType(PHP_Reflection_Ast_ClassOrInterfaceI $type,
-                                  PHP_Reflection_Ast_ClassOrInterfaceI $depType)
+    private function _processType(PHP_Reflection_AST_ClassOrInterfaceI $type,
+                                  PHP_Reflection_AST_ClassOrInterfaceI $depType)
     {
         if (!$type->equals($depType)) {
             $this->_initNode($type);
@@ -147,11 +147,11 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * @param PHP_Reflection_AST_NodeI $node The context node instance.
      * 
      * @return void
      */
-    private function _initNode(PHP_Reflection_Ast_NodeI $node)
+    private function _initNode(PHP_Reflection_AST_NodeI $node)
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(

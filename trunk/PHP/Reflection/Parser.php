@@ -162,7 +162,7 @@ class PHP_Reflection_Parser
     /**
      * The currently parsed class or interface instance or <b>null</b>.
      *
-     * @var PHP_Reflection_Ast_ClassOrInterfaceI $_classOrInterface
+     * @var PHP_Reflection_AST_ClassOrInterfaceI $_classOrInterface
      */
     private $_classOrInterface = null;
     
@@ -418,11 +418,11 @@ class PHP_Reflection_Parser
     /**
      * Parses a class body.
      * 
-     * @param PHP_Reflection_Ast_Class $class The context class instance.
+     * @param PHP_Reflection_AST_Class $class The context class instance.
      *
      * @return array(array)
      */
-    private function _parseClassDeclarationBody(PHP_Reflection_Ast_Class $class)
+    private function _parseClassDeclarationBody(PHP_Reflection_AST_Class $class)
     {
         // Set context class instance
         $this->_classOrInterface = $class;
@@ -569,12 +569,12 @@ class PHP_Reflection_Parser
     /**
      * Parses a interface body.
      * 
-     * @param PHP_Reflection_Ast_Interface $interface The context interface instance.
+     * @param PHP_Reflection_AST_Interface $interface The context interface instance.
      *
      * @return array(array)
      */
     private function _parseInterfaceDeclarationBody(
-                                        PHP_Reflection_Ast_Interface $interface)
+                                        PHP_Reflection_AST_Interface $interface)
     {
         // Set current context interface
         $this->_classOrInterface = $interface;
@@ -589,8 +589,8 @@ class PHP_Reflection_Parser
                 $this->_consumeToken(self::T_FUNCTION, $tokens);
                 
                 // We know all interface methods are abstract and public
-                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_ABSTRACT;
-                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_PUBLIC;
+                $this->_modifiers |= PHP_Reflection_AST_MethodI::IS_ABSTRACT;
+                $this->_modifiers |= PHP_Reflection_AST_MethodI::IS_PUBLIC;
                 
                 // Add interface method
                 $interface->addMethod($this->_parseMethodDeclaration($tokens));
@@ -627,14 +627,14 @@ class PHP_Reflection_Parser
                 // Consume <public> token
                 $this->_consumeToken(self::T_PUBLIC);
                 
-                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_PUBLIC;
+                $this->_modifiers |= PHP_Reflection_AST_MethodI::IS_PUBLIC;
                 break;
                 
             case self::T_STATIC:
                 // Consume <static> token
                 $this->_consumeToken(self::T_STATIC);
                 
-                $this->_modifiers |= PHP_Reflection_Ast_MethodI::IS_STATIC;
+                $this->_modifiers |= PHP_Reflection_AST_MethodI::IS_STATIC;
                 break;
                 
             case self::T_DOC_COMMENT:
@@ -674,7 +674,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens List of parsed tokens.
      * 
-     * @return PHP_Reflection_Ast_ClassOrInterfaceConstant
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstant
      */
     private function _parseConstantDeclaration(array &$tokens)
     {
@@ -712,7 +712,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      * 
-     * @return PHP_Reflection_Ast_Property
+     * @return PHP_Reflection_AST_Property
      */
     private function _parsePropertyDeclaration(array &$tokens)
     {
@@ -748,7 +748,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      * 
-     * @return PHP_Reflection_Ast_Method
+     * @return PHP_Reflection_AST_Method
      */
     private function _parseMethodDeclaration(array &$tokens)
     {
@@ -807,7 +807,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      * 
-     * @return array(PHP_Reflection_Ast_Interface)
+     * @return array(PHP_Reflection_AST_Interface)
      */
     private function _parseInterfaceList()
     {
@@ -835,7 +835,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      * 
-     * @return array(PHP_Reflection_Ast_Parameter)
+     * @return array(PHP_Reflection_AST_Parameter)
      */
     private function _parseParameterList(array &$tokens)
     {
@@ -877,7 +877,7 @@ class PHP_Reflection_Parser
      * 
      * @param array &$tokens Reference array for parsed tokens.
      * 
-     * @return PHP_Reflection_Ast_Parameter
+     * @return PHP_Reflection_AST_Parameter
      */
     private function _parseParameter(array &$tokens)
     {
@@ -994,7 +994,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      *
-     * @return PHP_Reflection_Ast_StaticScalarValueI
+     * @return PHP_Reflection_AST_StaticScalarValueI
      */
     private function _parseStaticScalarValue(array &$tokens)
     {
@@ -1087,7 +1087,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      *
-     * @return PHP_Reflection_Ast_MemberNumericValue
+     * @return PHP_Reflection_AST_MemberNumericValue
      */
     private function _parseStaticValue(array &$tokens)
     {
@@ -1111,7 +1111,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      *
-     * @return PHP_Reflection_Ast_ArrayExpression
+     * @return PHP_Reflection_AST_ArrayExpression
      */
     private function _parseStaticArray(array &$tokens)
     {
@@ -1203,7 +1203,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      *
-     * @return PHP_Reflection_Ast_MemberNumericValue
+     * @return PHP_Reflection_AST_MemberNumericValue
      */
     private function _parseNumericValue(array &$tokens)
     {
@@ -1319,11 +1319,11 @@ class PHP_Reflection_Parser
      * Extracts all dependencies from a callable signature.
      *
      * @param array(array)                                &$tokens  Collected tokens.
-     * @param PHP_Reflection_Ast_AbstractMethodOrFunction $callable The context callable.
+     * @param PHP_Reflection_AST_AbstractMethodOrFunction $callable The context callable.
      * 
      * @return void
      */
-    protected function parseCallableSignature(array &$tokens, PHP_Reflection_Ast_AbstractMethodOrFunction $callable)
+    protected function parseCallableSignature(array &$tokens, PHP_Reflection_AST_AbstractMethodOrFunction $callable)
     {
         // Consume open '(' token
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
@@ -1395,11 +1395,11 @@ class PHP_Reflection_Parser
      * Extracts all dependencies from a callable body.
      *
      * @param array(array)                                &$outTokens Collected tokens.
-     * @param PHP_Reflection_Ast_AbstractMethodOrFunction $callable   The context callable.
+     * @param PHP_Reflection_AST_AbstractMethodOrFunction $callable   The context callable.
      * 
      * @return void
      */
-    protected function parseCallableBody(array &$outTokens, PHP_Reflection_Ast_AbstractMethodOrFunction $callable)
+    protected function parseCallableBody(array &$outTokens, PHP_Reflection_AST_AbstractMethodOrFunction $callable)
     {
         $curly  = 0;
         $tokens = array();
@@ -1635,11 +1635,11 @@ class PHP_Reflection_Parser
      * Extracts non scalar types from the property doc comment and sets the
      * matching type instance. 
      *
-     * @param PHP_Reflection_Ast_Property $property The context property instance.
+     * @param PHP_Reflection_AST_Property $property The context property instance.
      * 
      * @return void
      */
-    private function _prepareProperty(PHP_Reflection_Ast_Property $property)
+    private function _prepareProperty(PHP_Reflection_AST_Property $property)
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {
@@ -1659,11 +1659,11 @@ class PHP_Reflection_Parser
      * Extracts documented <b>throws</b> and <b>return</b> types and sets them
      * to the given <b>$callable</b> instance.
      *
-     * @param PHP_Reflection_Ast_AbstractMethodOrFunction $callable The context callable.
+     * @param PHP_Reflection_AST_AbstractMethodOrFunction $callable The context callable.
      * 
      * @return void
      */
-    private function _prepareCallable(PHP_Reflection_Ast_AbstractMethodOrFunction $callable)
+    private function _prepareCallable(PHP_Reflection_AST_AbstractMethodOrFunction $callable)
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {

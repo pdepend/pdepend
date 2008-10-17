@@ -79,16 +79,16 @@ class PHP_Depend_Log_Jdepend_Xml
     private $_logFile = null;
     
     /**
-     * The raw {@link PHP_Reflection_Ast_Package} instances.
+     * The raw {@link PHP_Reflection_AST_Package} instances.
      *
-     * @var PHP_Reflection_Ast_Iterator $code
+     * @var PHP_Reflection_AST_Iterator $code
      */
     protected $code = null;
     
     /**
      * Set of all analyzed files.
      *
-     * @var array(string=>PHP_Reflection_Ast_File) $fileSet
+     * @var array(string=>PHP_Reflection_AST_File) $fileSet
      */
     protected $fileSet = array();
     
@@ -171,11 +171,11 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
+     * @param PHP_Reflection_AST_Iterator $code The code nodes.
      * 
      * @return void
      */
-    public function setCode(PHP_Reflection_Ast_Iterator $code)
+    public function setCode(PHP_Reflection_AST_Iterator $code)
     {
         $this->code = $code;
     }
@@ -231,12 +231,12 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_ClassI $class The current class node.
+     * @param PHP_Reflection_AST_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_ClassI $class)
+    public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $doc = $this->packages->ownerDocument;
         
@@ -254,12 +254,12 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
+     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
+    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $doc = $this->abstractClasses->ownerDocument;
         
@@ -273,12 +273,12 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Package $package The package class node.
+     * @param PHP_Reflection_AST_Package $package The package class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_Ast_Package $package)
+    public function visitPackage(PHP_Reflection_AST_Package $package)
     {
         $doc = $this->packages->ownerDocument;
         
@@ -357,8 +357,8 @@ class PHP_Depend_Log_Jdepend_Xml
         $this->packages->appendChild($packageXml);
     }
     
-    private function _compareNodes(PHP_Reflection_Ast_NodeI $node1,
-                                   PHP_Reflection_Ast_NodeI $node2)
+    private function _compareNodes(PHP_Reflection_AST_NodeI $node1,
+                                   PHP_Reflection_AST_NodeI $node2)
     {
         return strcasecmp($node1->getName(), $node2->getName());
     }

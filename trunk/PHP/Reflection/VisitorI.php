@@ -81,128 +81,128 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_ClassI $class The current class node.
+     * @param PHP_Reflection_AST_ClassI $class The current class node.
      * 
      * @return void
      */
-    function visitClass(PHP_Reflection_Ast_ClassI $class);
+    function visitClass(PHP_Reflection_AST_ClassI $class);
     
     /**
      * Visits a file node. 
      *
-     * @param PHP_Reflection_Ast_File $file The current file node.
+     * @param PHP_Reflection_AST_File $file The current file node.
      * 
      * @return void
      */
-    function visitFile(PHP_Reflection_Ast_File $file);
+    function visitFile(PHP_Reflection_AST_File $file);
     
     /**
      * Visits a function node. 
      *
-     * @param PHP_Reflection_Ast_Function $function The current function node.
+     * @param PHP_Reflection_AST_Function $function The current function node.
      * 
      * @return void
      */
-    function visitFunction(PHP_Reflection_Ast_FunctionI $function);
+    function visitFunction(PHP_Reflection_AST_FunctionI $function);
     
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
+     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
      * 
      * @return void
      */
-    function visitInterface(PHP_Reflection_Ast_InterfaceI $interface);
+    function visitInterface(PHP_Reflection_AST_InterfaceI $interface);
     
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_MethodI $method The method class node.
+     * @param PHP_Reflection_AST_MethodI $method The method class node.
      * 
      * @return void
      */
-    function visitMethod(PHP_Reflection_Ast_MethodI $method);
+    function visitMethod(PHP_Reflection_AST_MethodI $method);
     
     /**
      * Visits a package node. 
      *
-     * @param Reflection_Ast_Class $package The package class node.
+     * @param Reflection_AST_Class $package The package class node.
      * 
      * @return void
      */
-    function visitPackage(PHP_Reflection_Ast_Package $package);
+    function visitPackage(PHP_Reflection_AST_Package $package);
     
     /**
      * Visits a parameter node.
      *
-     * @param PHP_Reflection_Ast_Parameter $parameter The parameter node.
+     * @param PHP_Reflection_AST_Parameter $parameter The parameter node.
      * 
      * @return void
      */
-    function visitParameter(PHP_Reflection_Ast_Parameter $parameter);
+    function visitParameter(PHP_Reflection_AST_Parameter $parameter);
     
     /**
      * Visits a property node. 
      *
-     * @param PHP_Reflection_Ast_Property $property The property class node.
+     * @param PHP_Reflection_AST_Property $property The property class node.
      * 
      * @return void
      */
-    function visitProperty(PHP_Reflection_Ast_Property $property);
+    function visitProperty(PHP_Reflection_AST_Property $property);
     
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $const The current constant node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The current constant node.
      * 
      * @return void
      */
-    function visitTypeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $const);
+    function visitTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const);
     
     /**
      * Visits an array expression node
      *
-     * @param PHP_Reflection_Ast_ArrayExpression $expr The current array expression.
+     * @param PHP_Reflection_AST_ArrayExpression $expr The current array expression.
      * 
      * @return void
      */
-    function visitArrayExpression(PHP_Reflection_Ast_ArrayExpression $expr);
+    function visitArrayExpression(PHP_Reflection_AST_ArrayExpression $expr);
     
     /**
      * Visits an array element node.
      *
-     * @param PHP_Reflection_Ast_ArrayElement $elem The current array element.
+     * @param PHP_Reflection_AST_ArrayElement $elem The current array element.
      * 
      * @return void
      */
-    function visitArrayElement(PHP_Reflection_Ast_ArrayElement $elem);
+    function visitArrayElement(PHP_Reflection_AST_ArrayElement $elem);
     
     /**
      * Visits a constant reference node.
      *
-     * @param PHP_Reflection_Ast_ConstantValue $constRef The current const ref.
+     * @param PHP_Reflection_AST_ConstantValue $constRef The current const ref.
      * 
      * @return void
      */
-    function visitConstantValue(PHP_Reflection_Ast_ConstantValue $constRef);
+    function visitConstantValue(PHP_Reflection_AST_ConstantValue $constRef);
     
     /**
      * Visits a class or interface constant value
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constValue
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constValue
      *        The reference instance.
      * 
      * @return void
      */
     function visitClassOrInterfaceConstantValue(
-                PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constValue);
+                PHP_Reflection_AST_ClassOrInterfaceConstantValue $constValue);
                 
     /**
      * Visits a general value.
      *
-     * @param PHP_Reflection_Ast_MemberValueI $value The value instance.
+     * @param PHP_Reflection_AST_MemberValueI $value The value instance.
      * 
      * @return void
      */
-    function visitValue(PHP_Reflection_Ast_MemberValueI $value);
+    function visitValue(PHP_Reflection_AST_MemberValueI $value);
 }

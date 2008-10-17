@@ -133,11 +133,11 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      * )
      * </code>
      *
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * @param PHP_Reflection_AST_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
+    public function getNodeMetrics(PHP_Reflection_AST_NodeI $node)
     {
         $metrics = array();
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
@@ -173,13 +173,13 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     }
     
     /**
-     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * @param PHP_Reflection_AST_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
         // Check for previous run
         if ($this->_nodeMetrics === null) {
@@ -201,12 +201,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_ClassI $class The current class node.
+     * @param PHP_Reflection_AST_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_ClassI $class)
+    public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->fireStartClass($class);
         
@@ -228,12 +228,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a function node. 
      *
-     * @param PHP_Reflection_Ast_Function $function The current function node.
+     * @param PHP_Reflection_AST_Function $function The current function node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
+    public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         $this->fireStartFunction($function);
         
@@ -249,12 +249,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
+     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
+    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
         
@@ -276,12 +276,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_MethodI $method The method class node.
+     * @param PHP_Reflection_AST_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
+    public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->fireStartMethod($method);
         
@@ -301,12 +301,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Package $package The package class node.
+     * @param PHP_Reflection_AST_Package $package The package class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_Ast_Package $package)
+    public function visitPackage(PHP_Reflection_AST_Package $package)
     {
         $this->fireStartPackage($package);
         

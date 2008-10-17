@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Ast/File.php';
+require_once 'PHP/Reflection/AST/File.php';
 require_once 'PHP/Reflection/TokenizerI.php';
 
 /**
@@ -239,8 +239,8 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
     /**
      * The source file instance.
      *
-     * @type PHP_Reflection_Ast_File
-     * @var PHP_Reflection_Ast_File $sourceFile
+     * @type PHP_Reflection_AST_File
+     * @var PHP_Reflection_AST_File $sourceFile
      */
     protected $sourceFile = '';
     
@@ -299,7 +299,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
     /**
      * Returns the name of the source file.
      *
-     * @return PHP_Reflection_Ast_File
+     * @return PHP_Reflection_AST_File
      */
     public function getSourceFile()
     {
@@ -315,7 +315,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
      */
     public function setSourceFile($sourceFile)
     {
-        $this->sourceFile = new PHP_Reflection_Ast_File($sourceFile);
+        $this->sourceFile = new PHP_Reflection_AST_File($sourceFile);
         $this->tokenize();
         $this->sourceFile->setTokens($this->tokens);
     }

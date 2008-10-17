@@ -122,13 +122,13 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     }
     
     /**
-     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * @param PHP_Reflection_AST_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
         // Check for previous run
         if ($this->_calls === -1) {
@@ -151,12 +151,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a function node. 
      *
-     * @param PHP_Reflection_Ast_Function $function The current function node.
+     * @param PHP_Reflection_AST_Function $function The current function node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
+    public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         $this->fireStartFunction($function);
         
@@ -185,12 +185,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_MethodI $method The method class node.
+     * @param PHP_Reflection_AST_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
+    public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->fireStartMethod($method);
         
@@ -230,12 +230,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a property node. 
      *
-     * @param PHP_Reflection_Ast_Property $property The property class node.
+     * @param PHP_Reflection_AST_Property $property The property class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_Ast_Property $property)
+    public function visitProperty(PHP_Reflection_AST_Property $property)
     {
         $this->fireStartProperty($property);
         
@@ -255,11 +255,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Counts all calls within the given <b>$callable</b>
      *
-     * @param PHP_Reflection_Ast_MethodOrFunctionI $callable Context callable.
+     * @param PHP_Reflection_AST_MethodOrFunctionI $callable Context callable.
      * 
      * @return void
      */
-    private function _countCalls(PHP_Reflection_Ast_MethodOrFunctionI $callable)
+    private function _countCalls(PHP_Reflection_AST_MethodOrFunctionI $callable)
     {
         $callT  = array(
             PHP_Reflection_TokenizerI::T_STRING,

@@ -100,7 +100,7 @@ class PHP_Reflection_Parser_FunctionTest extends PHP_Reflection_AbstractTest
      *
      * @param string $file The source file.
      * 
-     * @return PHP_Reflection_Ast_FunctionI
+     * @return PHP_Reflection_AST_FunctionI
      */
     private static function _testParseFunction($file)
     {
@@ -112,7 +112,7 @@ class PHP_Reflection_Parser_FunctionTest extends PHP_Reflection_AbstractTest
         
         $function = $package->getFunctions()->current();
         self::assertNotNull($function);
-        self::assertType('PHP_Reflection_Ast_FunctionI', $function);
+        self::assertType('PHP_Reflection_AST_FunctionI', $function);
         
         return $function;
     }

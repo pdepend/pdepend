@@ -118,13 +118,13 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     private $_nodeMetrics = null;
     
     /**
-     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * @param PHP_Reflection_AST_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
         if ($this->_nodeMetrics === null) {
             
@@ -175,11 +175,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * for the given <b>$node</b>. If there are no metrics for the requested 
      * node, this method will return an empty <b>array</b>.
      *
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * @param PHP_Reflection_AST_NodeI $node The context node instance.
      * 
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
+    public function getNodeMetrics(PHP_Reflection_AST_NodeI $node)
     {
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
             return $this->_nodeMetrics[$node->getUUID()];

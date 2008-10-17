@@ -198,12 +198,12 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * @param PHP_Reflection_AST_NodeI $node The context node instance.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::startVisitNode()
      */
-    public function startVisitNode(PHP_Reflection_Ast_NodeI $node)
+    public function startVisitNode(PHP_Reflection_AST_NodeI $node)
     {
         $this->step(self::STEP_SIZE);
     }

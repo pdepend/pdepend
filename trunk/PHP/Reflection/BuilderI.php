@@ -67,22 +67,22 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * Generic build class for classes and interfaces. This method should be used
      * in cases when it is not clear what type is used in the current situation.
      * This could happen if the parser analyzes a method signature. The default 
-     * return type is {@link PHP_Reflection_Ast_Class}, but if there is already an 
+     * return type is {@link PHP_Reflection_AST_Class}, but if there is already an 
      * interface for this name, the method will return this instance.
      * 
      * <code>
      *   $builder->buildInterface('PHP_ReflectionI');
      * 
-     *   // Returns an instance of PHP_Reflection_Ast_Interface
+     *   // Returns an instance of PHP_Reflection_AST_Interface
      *   $builder->buildClassOrInterface('PHP_ReflectionI');
      * 
-     *   // Returns an instance of PHP_Reflection_Ast_Class
+     *   // Returns an instance of PHP_Reflection_AST_Class
      *   $builder->buildClassOrInterface('PHP_Reflection');
      * </code>
      *
      * @param string $name The class name.
      * 
-     * @return PHP_Reflection_Ast_Class|PHP_Reflection_Ast_Interface 
+     * @return PHP_Reflection_AST_Class|PHP_Reflection_AST_Interface 
      *         The created class or interface instance.
      */
     function buildClassOrInterface($name);
@@ -93,7 +93,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param string  $name The class name.
      * @param integer $line The line number for the class declaration.
      * 
-     * @return PHP_Reflection_Ast_Class The created class object.
+     * @return PHP_Reflection_AST_Class The created class object.
      */
     function buildClass($name, $line = 0);
     
@@ -102,7 +102,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      *
      * @param string $name The constant name.
      * 
-     * @return PHP_Reflection_Ast_ClassOrInterfaceConstant The created constant object.
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstant The created constant object.
      */
     function buildTypeConstant($name);
     
@@ -112,7 +112,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param string  $name The interface name.
      * @param integer $line The line number for the interface declaration.
      * 
-     * @return PHP_Reflection_Ast_Interface The created interface object.
+     * @return PHP_Reflection_AST_Interface The created interface object.
      */
     function buildInterface($name, $line = 0);
     
@@ -121,7 +121,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      *
      * @param string $name The package name.
      * 
-     * @return PHP_Reflection_Ast_Package The created package object.
+     * @return PHP_Reflection_AST_Package The created package object.
      */
     function buildPackage($name);
     
@@ -131,7 +131,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param string  $name The parameter variable name.
      * @param integer $line The line number with the parameter declaration.
      * 
-     * @return PHP_Reflection_Ast_Parameter The created parameter instance.
+     * @return PHP_Reflection_AST_Parameter The created parameter instance.
      */
     function buildParameter($name, $line = 0);
     
@@ -141,7 +141,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param string  $name The property variable name.
      * @param integer $line The line number with the property declaration.
      * 
-     * @return PHP_Reflection_Ast_Property The created property instance.
+     * @return PHP_Reflection_AST_Property The created property instance.
      */
     function buildProperty($name, $line = 0);
     
@@ -151,7 +151,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param string  $name The method name.
      * @param integer $line The line number with the method declaration.
      * 
-     * @return PHP_Reflection_Ast_Method The created class method object.
+     * @return PHP_Reflection_AST_Method The created class method object.
      */
     function buildMethod($name, $line = 0);
     
@@ -161,21 +161,21 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param string  $name The function name.
      * @param integer $line The line number with the function declaration.
      * 
-     * @return PHP_Reflection_Ast_Function The function instance.
+     * @return PHP_Reflection_AST_Function The function instance.
      */
     function buildFunction($name, $line = 0);
     
     /**
      * Builds a new array value instance.
      *
-     * @return PHP_Reflection_Ast_ArrayExpression
+     * @return PHP_Reflection_AST_ArrayExpression
      */
     function buildArrayExpression();
     
     /**
      * Builds an array element instance.
      *
-     * @return PHP_Reflection_Ast_ArrayElement
+     * @return PHP_Reflection_AST_ArrayElement
      */
     function buildArrayElement();
     
@@ -184,48 +184,48 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * 
      * @param string $identifier The constant identifier.
      *
-     * @return PHP_Reflection_Ast_ConstantValue
+     * @return PHP_Reflection_AST_ConstantValue
      */
     function buildConstantValue($identifier);
     
     /**
      * Builds a class or interface constant reference instance.
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceI $owner      The owner node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $owner      The owner node.
      * @param string                               $identifier The constant name.
      * 
-     * @return PHP_Reflection_Ast_ClassOrInterfaceConstantValue
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstantValue
      */
     function buildClassOrInterfaceConstantValue(
-            PHP_Reflection_Ast_ClassOrInterfaceI $owner, $identifier);
+            PHP_Reflection_AST_ClassOrInterfaceI $owner, $identifier);
     
     /**
      * Builds a class or interface proxy instance.
      *
      * The identifier of the proxied class or interface.
      * 
-     * @return PHP_Reflection_Ast_ClassOrInterfaceProxy
+     * @return PHP_Reflection_AST_ClassOrInterfaceProxy
      */
     function buildClassOrInterfaceProxy($identifier);
     
     /**
      * Builds a new null value instance.
      *
-     * @return PHP_Reflection_Ast_MemberNullValue
+     * @return PHP_Reflection_AST_MemberNullValue
      */
     function buildNullValue();
     
     /**
      * Builds a new true value instance.
      *
-     * @return PHP_Reflection_Ast_MemberTrueValue
+     * @return PHP_Reflection_AST_MemberTrueValue
      */
     function buildTrueValue();
     
     /**
      * Builds a new false value instance.
      *
-     * @return PHP_Reflection_Ast_MemberFalseValue
+     * @return PHP_Reflection_AST_MemberFalseValue
      */
     function buildFalseValue();
 
@@ -236,7 +236,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param string  $value    The string representation of the php value.
      * @param boolean $negative Is this numeric value negative?
      * 
-     * @return PHP_Reflection_Ast_MemberNumericValue
+     * @return PHP_Reflection_AST_MemberNumericValue
      */
     function buildNumericValue($type, $value, $negative);
 
@@ -246,7 +246,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @param integer $type  The type of this value.
      * @param string  $value The string representation of the php value.
      * 
-     * @return PHP_Reflection_Ast_MemberScalarValue
+     * @return PHP_Reflection_AST_MemberScalarValue
      */
     function buildScalarValue($type, $value = null);
 }
