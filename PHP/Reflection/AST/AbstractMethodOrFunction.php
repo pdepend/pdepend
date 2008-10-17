@@ -266,11 +266,11 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      */
     public function addParameter(PHP_Reflection_AST_Parameter $parameter)
     {
-        if ($parameter->getParent() !== null) {
-            $parameter->getParent()->removeParameter($parameter);
+        if ($parameter->getDeclaringMethodOrFunction() !== null) {
+            $parameter->getDeclaringMethodOrFunction()->removeParameter($parameter);
         }
         // Set this as parent
-        $parameter->setParent($this);
+        $parameter->setDeclaringMethodOrFunction($this);
         // Store reference
         $this->_parameters[] = $parameter;
 
@@ -288,7 +288,7 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     {
         if (($i = array_search($parameter, $this->_parameters, true)) !== false) {
             // Remove this parent
-            $parameter->setParent(null);
+            $parameter->setDeclaringMethodOrFunction(null);
             // Remove internal reference
             unset($this->_parameters[$i]);
         }
