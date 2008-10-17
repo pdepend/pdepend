@@ -158,11 +158,11 @@ class PHP_Reflection_Ast_Parameter
     /**
      * Sets the type of this property.
      *
-     * @param PHP_Reflection_Ast_AbstractClassOrInterface $type The property type.
+     * @param PHP_Reflection_Ast_ClassOrInterfaceI $type The property type.
      * 
      * @return void
      */
-    public function setType(PHP_Reflection_Ast_AbstractClassOrInterface $type)
+    public function setType(PHP_Reflection_Ast_ClassOrInterfaceI $type)
     {
         $this->_type = $type;
     }
