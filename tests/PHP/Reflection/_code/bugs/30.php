@@ -28,7 +28,7 @@ abstract class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     /**
      * Returns all packages in the mixed code example.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     protected abstract function parseMixedCode(); 
 }

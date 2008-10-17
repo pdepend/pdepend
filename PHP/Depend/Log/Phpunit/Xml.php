@@ -84,10 +84,10 @@ class PHP_Depend_Log_Phpunit_Xml
     private $_logFile = null;
     
     /**
-     * The raw {@link PHP_Reflection_Ast_Package} instances.
+     * The raw {@link PHP_Reflection_AST_Package} instances.
      *
-     * @type PHP_Reflection_Ast_Iterator
-     * @var PHP_Reflection_Ast_Iterator $code
+     * @type PHP_Reflection_AST_Iterator
+     * @var PHP_Reflection_AST_Iterator $code
      */
     protected $code = null;
     
@@ -180,11 +180,11 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
+     * @param PHP_Reflection_AST_Iterator $code The code nodes.
      * 
      * @return void
      */
-    public function setCode(PHP_Reflection_Ast_Iterator $code)
+    public function setCode(PHP_Reflection_AST_Iterator $code)
     {
         $this->code = $code;
     }
@@ -264,12 +264,12 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_ClassI $class The current class node.
+     * @param PHP_Reflection_AST_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_ClassI $class)
+    public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->_visitType($class);
     }
@@ -277,12 +277,12 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Visits a file node. 
      *
-     * @param PHP_Reflection_Ast_File $file The current file node.
+     * @param PHP_Reflection_AST_File $file The current file node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFile()
      */
-    public function visitFile(PHP_Reflection_Ast_File $file)
+    public function visitFile(PHP_Reflection_AST_File $file)
     {
         $metricsXml = end($this->_xmlStack);
         $document   = $metricsXml->ownerDocument;
@@ -316,12 +316,12 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Visits a function node. 
      *
-     * @param PHP_Reflection_Ast_Function $function The current function node.
+     * @param PHP_Reflection_AST_Function $function The current function node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
+    public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         // First visit function file
         $function->getSourceFile()->accept($this);
@@ -346,12 +346,12 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
+     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
+    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->_visitType($interface);
     }
@@ -359,12 +359,12 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_MethodI $method The method class node.
+     * @param PHP_Reflection_AST_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
+    public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $classXml = end($this->_xmlStack);
         $document = $classXml->ownerDocument;
@@ -380,11 +380,11 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Generic visit method for classes and interfaces.
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceI $type The context type.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $type The context type.
      * 
      * @return void
      */
-    private function _visitType(PHP_Reflection_Ast_ClassOrInterfaceI $type)
+    private function _visitType(PHP_Reflection_AST_ClassOrInterfaceI $type)
     {
         $type->getSourceFile()->accept($this);
         
@@ -418,13 +418,13 @@ class PHP_Depend_Log_Phpunit_Xml
      * to the <b>DOMElement</b>
      *
      * @param DOMElement            $xml     DOM Element that represents $node.
-     * @param PHP_Reflection_Ast_NodeI $node    The context code node instance.
+     * @param PHP_Reflection_AST_NodeI $node    The context code node instance.
      * @param array(string=>mixed)  $metrics Set of additional node metrics
      * 
      * @return void
      */
     private function _appendMetrics(DOMElement $xml, 
-                                    PHP_Reflection_Ast_NodeI $node,
+                                    PHP_Reflection_AST_NodeI $node,
                                     array $metrics = array())
     {
         // Collect all node metrics

@@ -87,12 +87,12 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Visits a code class object.
      *
-     * @param PHP_Reflection_Ast_ClassI $class The context code class.
+     * @param PHP_Reflection_AST_ClassI $class The context code class.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_ClassI $class)
+    public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
@@ -102,12 +102,12 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
+     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
+    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);        
@@ -118,11 +118,11 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceI $type The context type instance.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $type The context type instance.
      * 
      * @return void
      */
-    protected function visitType(PHP_Reflection_Ast_ClassOrInterfaceI $type)
+    protected function visitType(PHP_Reflection_AST_ClassOrInterfaceI $type)
     {
         $pkg = $type->getPackage();
 
@@ -150,11 +150,11 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * @param PHP_Reflection_AST_NodeI $node The context node instance.
      * 
      * @return void
      */
-    protected function initNode(PHP_Reflection_Ast_NodeI $node)
+    protected function initNode(PHP_Reflection_AST_NodeI $node)
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(

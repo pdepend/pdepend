@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Ast
+ * @subpackage AST
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -61,7 +61,7 @@ require_once dirname(__FILE__) . '/ImplAbstractVisitorTest.php';
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Ast
+ * @subpackage AST
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License

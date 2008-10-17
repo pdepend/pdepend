@@ -130,13 +130,13 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     }
     
     /**
-     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * @param PHP_Reflection_AST_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
         if ($this->_derivedClasses === null) {
             
@@ -164,12 +164,12 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_ClassI $class The current class node.
+     * @param PHP_Reflection_AST_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_ClassI $class)
+    public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->fireStartClass($class);
         
@@ -187,11 +187,11 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Calculates the maximum HIT for the given class.
      *
-     * @param PHP_Reflection_Ast_Class $class The context class instance.
+     * @param PHP_Reflection_AST_Class $class The context class instance.
      * 
      * @return integer
      */
-    private function _calculateHIT(PHP_Reflection_Ast_Class $class)
+    private function _calculateHIT(PHP_Reflection_AST_Class $class)
     {
         $childTypes = $class->getChildClasses();
         if ($childTypes->count() === 0) {

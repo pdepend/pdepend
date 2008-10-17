@@ -66,10 +66,10 @@ class PHP_Reflection_Exceptions_UnexpectedTokenException
     /**
      * Creates a new exception for the given context file and token. 
      *
-     * @param PHP_Reflection_Ast_File $file  The context file object.
+     * @param PHP_Reflection_AST_File $file  The context file object.
      * @param array                   $token The unexpected token.
      */
-    public function __construct(PHP_Reflection_Ast_File $file, array $token)
+    public function __construct(PHP_Reflection_AST_File $file, array $token)
     {
         parent::__construct($this->_createMessage($file, $token));
     }
@@ -77,12 +77,12 @@ class PHP_Reflection_Exceptions_UnexpectedTokenException
     /**
      * Creates the exception message for the given context file and token.
      *
-     * @param PHP_Reflection_Ast_File $file The context file object.
+     * @param PHP_Reflection_AST_File $file The context file object.
      * @param array                   $token The unexpected token.
      * 
      * @return string
      */
-    private function _createMessage(PHP_Reflection_Ast_File $file, array $token)
+    private function _createMessage(PHP_Reflection_AST_File $file, array $token)
     {
         return sprintf(
             'There is an unexpected token "%s" on line %d in file "%s".',

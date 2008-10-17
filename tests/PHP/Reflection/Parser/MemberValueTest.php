@@ -72,7 +72,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('class_null_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_NULL, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_NULL, $value->getType());
         $this->assertNull($value->getValue());
     }
     
@@ -86,7 +86,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('interface_true_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_BOOLEAN, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_BOOLEAN, $value->getType());
         $this->assertTrue($value->getValue());
     }
     
@@ -100,7 +100,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('interface_false_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_BOOLEAN, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_BOOLEAN, $value->getType());
         $this->assertFalse($value->getValue());        
     }
     
@@ -114,7 +114,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('class_double_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_DOUBLE, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_DOUBLE, $value->getType());
         $this->assertType('float', $value->getValue());
         $this->assertEquals(3.14, $value->getValue());
     }
@@ -129,7 +129,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('interface_double_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_DOUBLE, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_DOUBLE, $value->getType());
         $this->assertType('float', $value->getValue());
         $this->assertEquals(-3.14, $value->getValue());
     }
@@ -144,7 +144,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('interface_integer_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_INTEGER, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_INTEGER, $value->getType());
         $this->assertType('integer', $value->getValue());
         $this->assertEquals(23, $value->getValue());
     }
@@ -159,7 +159,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('interface_integer_signed_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_INTEGER, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_INTEGER, $value->getType());
         $this->assertType('integer', $value->getValue());
         $this->assertEquals(-42, $value->getValue());
     }
@@ -174,7 +174,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('class_string_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_STRING, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_STRING, $value->getType());
         $this->assertType('string', $value->getValue());
         $this->assertEquals('Hello World', $value->getValue());        
     }
@@ -189,7 +189,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('interface_string_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_STRING, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_STRING, $value->getType());
         $this->assertType('string', $value->getValue());
         $this->assertEquals('Hello World', $value->getValue());        
     }
@@ -204,7 +204,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('class_integer_constant.php');
         
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_INTEGER, $value->getType());
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_INTEGER, $value->getType());
         $this->assertType('integer', $value->getValue());
         $this->assertEquals(-23, $value->getValue());
     }
@@ -219,8 +219,8 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     {
         $value = $this->_testParserHandlesConstantValue('interface_constant_constant.php');
         
-        $this->assertType('PHP_Reflection_Ast_ConstantValue', $value);
-        $this->assertEquals(PHP_Reflection_Ast_ConstantValue::IS_CONSTANT, $value->getType());
+        $this->assertType('PHP_Reflection_AST_ConstantValue', $value);
+        $this->assertEquals(PHP_Reflection_AST_ConstantValue::IS_CONSTANT, $value->getType());
         $this->assertEquals('T_NAMESPACE', $value->getName());
     }
     
@@ -247,12 +247,12 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
             
             // Get element key and compare result
             $key = $element->getKey();
-            $this->assertType('PHP_Reflection_Ast_MemberNumericValue', $key);
+            $this->assertType('PHP_Reflection_AST_MemberNumericValue', $key);
             $this->assertEquals($test['key'], $key->getValue());
             
             // Get element value and compare result
             $value = $element->getValue();
-            $this->assertType('PHP_Reflection_Ast_MemberNumericValue', $value);
+            $this->assertType('PHP_Reflection_AST_MemberNumericValue', $value);
             $this->assertEquals($test['value'], $value->getValue());
             
             $this->assertEquals($test['implicit'], $element->isImplicit());
@@ -284,12 +284,12 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
             
             // Get element key and compare result
             $key = $element->getKey();
-            $this->assertType('PHP_Reflection_Ast_MemberNumericValue', $key);
+            $this->assertType('PHP_Reflection_AST_MemberNumericValue', $key);
             $this->assertEquals($test['key'], $key->getValue());
             
             // Get element value and compare result
             $value = $element->getValue();
-            $this->assertType('PHP_Reflection_Ast_MemberValueI', $value);
+            $this->assertType('PHP_Reflection_AST_MemberValueI', $value);
             $this->assertEquals($test['value'], $value->getValue());
             
             $this->assertEquals($test['implicit'], $element->isImplicit());
@@ -320,11 +320,11 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
             $test = array_shift($expected);
 
             $key = $element->getKey();
-            $this->assertType('PHP_Reflection_Ast_ConstantValue', $key);
+            $this->assertType('PHP_Reflection_AST_ConstantValue', $key);
             $this->assertEquals($test['key'], $key->getName());
             
             $value = $element->getValue();
-            $this->assertType('PHP_Reflection_Ast_ConstantValue', $value);
+            $this->assertType('PHP_Reflection_AST_ConstantValue', $value);
             $this->assertEquals($test['value'], $value->getName());
             
             $this->assertEquals($test['implicit'], $element->isImplicit());
@@ -342,13 +342,13 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesPropertyWithInternalClassOrInterfaceConstantValue()
     {
         $value = $this->_testParserHandlesStaticScalarValue('class_property_internal_class_or_interface_constant.php');
-        $this->assertType('PHP_Reflection_Ast_ClassOrInterfaceConstantValue', $value);
+        $this->assertType('PHP_Reflection_AST_ClassOrInterfaceConstantValue', $value);
         
         $constName = $value->getName();
         $this->assertEquals('IS_PUBLIC', $constName);
         
         $classOrInterface = $value->getReference();
-        $this->assertType('PHP_Reflection_Ast_ClassOrInterfaceProxy', $classOrInterface);
+        $this->assertType('PHP_Reflection_AST_ClassOrInterfaceProxy', $classOrInterface);
         $this->assertEquals('ReflectionProperty', $classOrInterface->getName());
         
         $package = $classOrInterface->getPackage();
@@ -364,13 +364,13 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesPropertyWithUserlandClassOrInterfaceConstantValue()
     {
         $value = $this->_testParserHandlesStaticScalarValue('class_property_userland_class_or_interface_constant.php');
-        $this->assertType('PHP_Reflection_Ast_ClassOrInterfaceConstantValue', $value);
+        $this->assertType('PHP_Reflection_AST_ClassOrInterfaceConstantValue', $value);
         
         $constName = $value->getName();
         $this->assertEquals('IS_PUBLIC', $constName);
         
         $classOrInterface = $value->getReference();
-        $this->assertType('PHP_Reflection_Ast_ClassOrInterfaceProxy', $classOrInterface);
+        $this->assertType('PHP_Reflection_AST_ClassOrInterfaceProxy', $classOrInterface);
         $this->assertEquals('ReflectionProperty', $classOrInterface->getName());
         
         $package = $classOrInterface->getPackage();
@@ -386,13 +386,13 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesPropertyWithSelfClassConstantValue()
     {
         $value = $this->_testParserHandlesConstantValue('class_property_self_class_constant.php');
-        $this->assertType('PHP_Reflection_Ast_ClassOrInterfaceConstantValue', $value);
+        $this->assertType('PHP_Reflection_AST_ClassOrInterfaceConstantValue', $value);
         
         $constName = $value->getName();
         $this->assertEquals('T_TEST', $constName);
         
         $class = $value->getReference();
-        $this->assertType('PHP_Reflection_Ast_Class', $class);
+        $this->assertType('PHP_Reflection_AST_Class', $class);
         $this->assertEquals('PHP_Reflection', $class->getName());
         
         $package = $class->getPackage();
@@ -405,7 +405,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
      *
      * @param string $file The test source file.
      * 
-     * @return PHP_Reflection_Ast_StaticScalarValueI
+     * @return PHP_Reflection_AST_StaticScalarValueI
      */
     private function _testParserHandlesConstantValue($file)
     {
@@ -421,7 +421,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
          
         $value = $const->getValue();
         $this->assertNotNull($value);
-        $this->assertType('PHP_Reflection_Ast_StaticScalarValueI', $value);
+        $this->assertType('PHP_Reflection_AST_StaticScalarValueI', $value);
         
         return $value;
     }
@@ -432,7 +432,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
      *
      * @param string $file The test source file.
      * 
-     * @return PHP_Reflection_Ast_ArrayExpression
+     * @return PHP_Reflection_AST_ArrayExpression
      */
     private function _testParserHandlesArrayValue($file)
     {
@@ -448,8 +448,8 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
          
         $value = $prop->getValue();
         $this->assertNotNull($value);
-        $this->assertType('PHP_Reflection_Ast_ArrayExpression', $value);
-        $this->assertEquals(PHP_Reflection_Ast_MemberValueI::IS_ARRAY, $value->getType());
+        $this->assertType('PHP_Reflection_AST_ArrayExpression', $value);
+        $this->assertEquals(PHP_Reflection_AST_MemberValueI::IS_ARRAY, $value->getType());
         
         return $value;
     }
@@ -460,7 +460,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
      *
      * @param string $file The test source file.
      * 
-     * @return PHP_Reflection_Ast_StaticScalarValue
+     * @return PHP_Reflection_AST_StaticScalarValue
      */
     private function _testParserHandlesStaticScalarValue($file)
     {
@@ -476,7 +476,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
          
         $value = $prop->getValue();
         $this->assertNotNull($value);
-        $this->assertType('PHP_Reflection_Ast_StaticScalarValueI', $value);
+        $this->assertType('PHP_Reflection_AST_StaticScalarValueI', $value);
         
         return $value;
     }

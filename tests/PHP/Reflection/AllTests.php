@@ -52,7 +52,7 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/Ast/AllTests.php';
+require_once dirname(__FILE__) . '/AST/AllTests.php';
 require_once dirname(__FILE__) . '/Builder/AllTests.php';
 require_once dirname(__FILE__) . '/Input/AllTests.php';
 require_once dirname(__FILE__) . '/Parser/AllTests.php';
@@ -93,7 +93,7 @@ class PHP_Reflection_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection - AllTests');
         
-        $suite->addTest(PHP_Reflection_Ast_AllTests::suite());
+        $suite->addTest(PHP_Reflection_AST_AllTests::suite());
         $suite->addTest(PHP_Reflection_Builder_AllTests::suite());
         $suite->addTest(PHP_Reflection_Input_AllTests::suite());
         $suite->addTest(PHP_Reflection_Parser_AllTests::suite());
