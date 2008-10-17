@@ -669,12 +669,18 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         // Create a package array copy
         $packages = $this->packages;
         
+        // Finally realize proxies
+        foreach ($this->_proxyCache as $proxy) {
+            $proxy->getPackage();
+        }
+        
         // Remove default package if empty
         if ($this->defaultPackage->getTypes()->count() === 0  
          && $this->defaultPackage->getFunctions()->count() === 0) {
 
             unset($packages[self::GLOBAL_PACKAGE]);
         }
+        
         return new PHP_Reflection_Ast_Iterator($packages);
     }
     
