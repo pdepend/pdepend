@@ -75,8 +75,8 @@ class PHP_Reflection_Builder_DefaultMemberValueTest extends PHP_Reflection_Abstr
         $builder = new PHP_Reflection_Builder_Default();
         
         $nullValue = $builder->buildNullValue();
-        $this->assertType('PHP_Reflection_Ast_MemberNullValue', $nullValue);
-        $this->assertSame(PHP_Reflection_Ast_MemberNullValue::flyweight(), $nullValue);
+        $this->assertType('PHP_Reflection_AST_MemberNullValue', $nullValue);
+        $this->assertSame(PHP_Reflection_AST_MemberNullValue::flyweight(), $nullValue);
     }
 
     /**
@@ -90,8 +90,8 @@ class PHP_Reflection_Builder_DefaultMemberValueTest extends PHP_Reflection_Abstr
         $builder = new PHP_Reflection_Builder_Default();
         
         $trueValue = $builder->buildTrueValue();
-        $this->assertType('PHP_Reflection_Ast_MemberTrueValue', $trueValue);
-        $this->assertSame(PHP_Reflection_Ast_MemberTrueValue::flyweight(), $trueValue);
+        $this->assertType('PHP_Reflection_AST_MemberTrueValue', $trueValue);
+        $this->assertSame(PHP_Reflection_AST_MemberTrueValue::flyweight(), $trueValue);
     }
 
     /**
@@ -105,7 +105,7 @@ class PHP_Reflection_Builder_DefaultMemberValueTest extends PHP_Reflection_Abstr
         $builder = new PHP_Reflection_Builder_Default();
         
         $falseValue = $builder->buildFalseValue();
-        $this->assertType('PHP_Reflection_Ast_MemberFalseValue', $falseValue);
-        $this->assertSame(PHP_Reflection_Ast_MemberFalseValue::flyweight(), $falseValue);
+        $this->assertType('PHP_Reflection_AST_MemberFalseValue', $falseValue);
+        $this->assertSame(PHP_Reflection_AST_MemberFalseValue::flyweight(), $falseValue);
     }
 }

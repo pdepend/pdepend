@@ -73,12 +73,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_ClassI $class The current class node.
+     * @param PHP_Reflection_AST_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_ClassI $class)
+    public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->visits[] = $class->getName();
         
@@ -88,12 +88,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a file node. 
      *
-     * @param PHP_Reflection_Ast_File $file The current file node.
+     * @param PHP_Reflection_AST_File $file The current file node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFile()
      */
-    public function visitFile(PHP_Reflection_Ast_File $file)
+    public function visitFile(PHP_Reflection_AST_File $file)
     {
         $this->visits[] = $file->getFileName();
         
@@ -103,12 +103,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a function node. 
      *
-     * @param PHP_Reflection_Ast_Function $function The current function node.
+     * @param PHP_Reflection_AST_Function $function The current function node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
+    public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         $this->visits[] = $function->getName();
         
@@ -118,12 +118,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
+     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
+    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->visits[] = $interface->getName();
         
@@ -133,12 +133,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_MethodI $method The method class node.
+     * @param PHP_Reflection_AST_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
+    public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->visits[] = $method->getName();
         
@@ -148,12 +148,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Package $package The package class node.
+     * @param PHP_Reflection_AST_Package $package The package class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_Ast_Package $package)
+    public function visitPackage(PHP_Reflection_AST_Package $package)
     {
         $this->visits[] = $package->getName();
         
@@ -163,12 +163,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a property node. 
      *
-     * @param PHP_Reflection_Ast_Property $property The property class node.
+     * @param PHP_Reflection_AST_Property $property The property class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_Ast_Property $property)
+    public function visitProperty(PHP_Reflection_AST_Property $property)
     {
         $this->visits[] = $property->getName();
         

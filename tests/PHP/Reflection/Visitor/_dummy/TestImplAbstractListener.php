@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Ast
+ * @subpackage AST
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -53,7 +53,7 @@ require_once 'PHP/Reflection/Visitor/AbstractListener.php';
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Ast
+ * @subpackage AST
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -65,14 +65,14 @@ class PHP_Reflection_Visitor_TestImplAbstractListener
 {
     public $nodes = array();
     
-    public function startVisitNode(PHP_Reflection_Ast_NodeI $node)
+    public function startVisitNode(PHP_Reflection_AST_NodeI $node)
     {
         $this->nodes[$node->getUUID() . '#start'] = $node;
         
         parent::startVisitNode($node);
     }
 
-    public function endVisitNode(PHP_Reflection_Ast_NodeI $node)
+    public function endVisitNode(PHP_Reflection_AST_NodeI $node)
     {
         $this->nodes[$node->getUUID() . '#end'] = $node;
         

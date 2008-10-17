@@ -66,9 +66,9 @@ class PHP_Reflection_Exceptions_UnclosedBodyException
     /**
      * Creates a new exception for the given context file. 
      *
-     * @param PHP_Reflection_Ast_File $file The context file object.
+     * @param PHP_Reflection_AST_File $file The context file object.
      */
-    public function __construct(PHP_Reflection_Ast_File $file)
+    public function __construct(PHP_Reflection_AST_File $file)
     {
         parent::__construct($this->_createMessage($file));
     }
@@ -76,11 +76,11 @@ class PHP_Reflection_Exceptions_UnclosedBodyException
     /**
      * Creates the exception message for the given context file.
      *
-     * @param PHP_Reflection_Ast_File $file The context file object.
+     * @param PHP_Reflection_AST_File $file The context file object.
      * 
      * @return string
      */
-    private function _createMessage(PHP_Reflection_Ast_File $file)
+    private function _createMessage(PHP_Reflection_AST_File $file)
     {
         return sprintf(
             'Unclosed body, missing closing "}" in file "%s".',

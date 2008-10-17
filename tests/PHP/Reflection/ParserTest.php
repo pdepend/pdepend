@@ -1662,7 +1662,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     /**
      * Returns all packages in the mixed code example.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     protected function parseMixedCode()
     {
@@ -1672,7 +1672,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     /**
      * Returns an interface instance from the mixed code test file.
      *
-     * @return PHP_Reflection_Ast_Interface
+     * @return PHP_Reflection_AST_Interface
      */
     protected function getMixedCodeInterface()
     {
@@ -1686,7 +1686,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     /**
      * Returns the methods of an interface from the mixed code test file.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     protected function getMixedCodeInterfaceMethods()
     {
@@ -1696,7 +1696,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     /**
      * Returns a class instance from the mixed code test file.
      *
-     * @return PHP_Reflection_Ast_Class
+     * @return PHP_Reflection_AST_Class
      */
     protected function getMixedCodeClass()
     {
@@ -1709,7 +1709,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     /**
      * Returns the methods of a class from the mixed code test file.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     protected function getMixedCodeClassMethods()
     {
@@ -1719,13 +1719,13 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     /**
      * Generic comment test method.
      *
-     * @param PHP_Reflection_Ast_Iterator $nodes  The context nodes.
+     * @param PHP_Reflection_AST_Iterator $nodes  The context nodes.
      * @param integer                     $indent How deep is the commend indented.
      * 
      * @return void
      */
     protected function doTestParserSetsCorrectDocComment(
-                                            PHP_Reflection_Ast_Iterator $nodes,
+                                            PHP_Reflection_AST_Iterator $nodes,
                                             $indent = 1)
     {
         $ws = str_repeat(" ", 4 * $indent);

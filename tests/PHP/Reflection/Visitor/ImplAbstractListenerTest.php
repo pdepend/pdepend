@@ -50,13 +50,13 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/_dummy/TestImplAbstractVisitor.php';
 require_once dirname(__FILE__) . '/_dummy/TestImplAbstractListener.php';
 
-require_once 'PHP/Reflection/Ast/Class.php';
-require_once 'PHP/Reflection/Ast/File.php';
-require_once 'PHP/Reflection/Ast/Function.php';
-require_once 'PHP/Reflection/Ast/Interface.php';
-require_once 'PHP/Reflection/Ast/Method.php';
-require_once 'PHP/Reflection/Ast/Package.php';
-require_once 'PHP/Reflection/Ast/Property.php';
+require_once 'PHP/Reflection/AST/Class.php';
+require_once 'PHP/Reflection/AST/File.php';
+require_once 'PHP/Reflection/AST/Function.php';
+require_once 'PHP/Reflection/AST/Interface.php';
+require_once 'PHP/Reflection/AST/Method.php';
+require_once 'PHP/Reflection/AST/Package.php';
+require_once 'PHP/Reflection/AST/Property.php';
 
 /**
  * Test case for the default visit listener implementation.
@@ -74,17 +74,17 @@ class PHP_Reflection_Visitor_ImplAbstractListenerTest extends PHP_Reflection_Abs
 {
     public function testDefaultImplementationCallsListeners()
     {
-        $file = new PHP_Reflection_Ast_File(null);
+        $file = new PHP_Reflection_AST_File(null);
         
-        $package   = new PHP_Reflection_Ast_Package('package');
-        $class     = $package->addType(new PHP_Reflection_Ast_Class('clazz'));
-        $method1   = $class->addMethod(new PHP_Reflection_Ast_Method('m1'));
-        $method2   = $class->addMethod(new PHP_Reflection_Ast_Method('m2'));
-        $property  = $class->addProperty(new PHP_Reflection_Ast_Property('$p1'));
-        $interface = $package->addType(new PHP_Reflection_Ast_Interface('interfs'));
-        $method3   = $interface->addMethod(new PHP_Reflection_Ast_Method('m3'));
-        $method4   = $interface->addMethod(new PHP_Reflection_Ast_Method('m4'));
-        $function  = $package->addFunction(new PHP_Reflection_Ast_Function('func'));
+        $package   = new PHP_Reflection_AST_Package('package');
+        $class     = $package->addType(new PHP_Reflection_AST_Class('clazz'));
+        $method1   = $class->addMethod(new PHP_Reflection_AST_Method('m1'));
+        $method2   = $class->addMethod(new PHP_Reflection_AST_Method('m2'));
+        $property  = $class->addProperty(new PHP_Reflection_AST_Property('$p1'));
+        $interface = $package->addType(new PHP_Reflection_AST_Interface('interfs'));
+        $method3   = $interface->addMethod(new PHP_Reflection_AST_Method('m3'));
+        $method4   = $interface->addMethod(new PHP_Reflection_AST_Method('m4'));
+        $function  = $package->addFunction(new PHP_Reflection_AST_Function('func'));
         
         $class->setSourceFile($file);
         $function->setSourceFile($file);

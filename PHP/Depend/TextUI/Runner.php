@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Log/LoggerFactory.php';
 require_once 'PHP/Depend/TextUI/ResultPrinter.php';
 
 // TODO: Refactory this reflection dependency
-require_once 'PHP/Reflection/Ast/Iterator/PackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/PackageFilter.php';
 
 /**
  * The command line runner starts a PDepend process.
@@ -266,7 +266,7 @@ class PHP_Depend_TextUI_Runner
         
         if (count($this->_excludePackages) > 0) {
             $exclude = $this->_excludePackages;
-            $filter  = new PHP_Reflection_Ast_Iterator_PackageFilter($exclude);
+            $filter  = new PHP_Reflection_AST_Iterator_PackageFilter($exclude);
             $pdepend->addCodeFilter($filter);
         }
 

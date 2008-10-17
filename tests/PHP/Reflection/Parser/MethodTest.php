@@ -156,7 +156,7 @@ class PHP_Reflection_Parser_MethodTest extends PHP_Reflection_AbstractTest
      *
      * @param string $file The source file.
      * 
-     * @return PHP_Reflection_Ast_MethodI
+     * @return PHP_Reflection_AST_MethodI
      */
     private static function _testParseMethod($file)
     {
@@ -171,7 +171,7 @@ class PHP_Reflection_Parser_MethodTest extends PHP_Reflection_AbstractTest
         
         $method = $type->getMethods()->current();
         self::assertNotNull($method);
-        self::assertType('PHP_Reflection_Ast_MethodI', $method);
+        self::assertType('PHP_Reflection_AST_MethodI', $method);
         
         return $method;
     }
