@@ -347,7 +347,7 @@ class PHP_Reflection_Parser
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
         
-        $this->_prepareCallable($function);
+        $this->_prepareMOF($function);
                     
         $this->reset();        
     }
@@ -789,7 +789,7 @@ class PHP_Reflection_Parser
         $method->setPosition($this->_methodPosition++);
         $method->setModifiers($this->_modifiers);
                 
-        $this->_prepareCallable($method);
+        $this->_prepareMOF($method);
                 
         $this->reset();
         
@@ -1659,11 +1659,11 @@ class PHP_Reflection_Parser
      * Extracts documented <b>throws</b> and <b>return</b> types and sets them
      * to the given <b>$callable</b> instance.
      *
-     * @param PHP_Reflection_AST_AbstractMethodOrFunction $callable The context callable.
+     * @param PHP_Reflection_AST_AbstractMethodOrFunction $mof The context callable.
      * 
      * @return void
      */
-    private function _prepareCallable(PHP_Reflection_AST_AbstractMethodOrFunction $callable)
+    private function _prepareMOF(PHP_Reflection_AST_AbstractMethodOrFunction $mof)
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {
@@ -1671,21 +1671,21 @@ class PHP_Reflection_Parser
         }
         
         // Get all @throws Types
-        $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
+        $throws = $this->_parseThrowsAnnotations($mof->getDocComment());
         // Append all exception types
         foreach ($throws as $type) {
             //$classOrInterface = $this->builder->buildClassOrInterfaceProxy($type);
-            //$callable->addExceptionType($classOrInterface);
+            //$mof->addExceptionType($classOrInterface);
             $exceptionType = $this->builder->buildClassOrInterface($type);
-            $callable->addExceptionType($exceptionType);
+            $mof->addExceptionType($exceptionType);
         }
         
         // Get return annotation
-        $type = $this->_parseTypeAnnotation($callable->getDocComment(), 'return');
+        $type = $this->_parseTypeAnnotation($mof->getDocComment(), 'return');
         
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
             $returnType = $this->builder->buildClassOrInterface($type[0]);
-            $callable->setReturnType($returnType);
+            $mof->setReturnType($returnType);
         }
     }
 }
