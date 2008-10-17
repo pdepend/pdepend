@@ -107,6 +107,13 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
             $this->assertArrayHasKey($name, $this->_expected);
             // Get metric
             $metric = $analyzer->getNodeMetrics($package);
+if (empty($metric)) {
+    echo PHP_EOL, 'leer: ', $name;
+}
+
+            $this->assertArrayHasKey('cr', $metric, 'Missing cr value for: ' . $name);
+            $this->assertArrayHasKey('rcr', $metric, 'Missing rcr value for: ' . $name);
+            
             // Compare values
             $this->assertEquals($this->_expected[$name]['cr'], $metric['cr'], '', 0.00005);
             $this->assertEquals($this->_expected[$name]['rcr'], $metric['rcr'], '', 0.00005);
