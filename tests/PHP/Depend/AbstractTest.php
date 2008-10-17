@@ -82,7 +82,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         // Reset code filter
         // TODO: PHP_Reflection code should not be needed here
-        PHP_Reflection_Ast_Iterator_StaticFilter::getInstance()->clear();
+        PHP_Reflection_AST_Iterator_StaticFilter::getInstance()->clear();
         
         // Remove test contents
         self::_clearRun();
@@ -114,7 +114,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
         
-        include_once 'PHP/Reflection/Ast/Iterator/StaticFilter.php';
+        include_once 'PHP/Reflection/AST/Iterator/StaticFilter.php';
     }
     
     /**
@@ -157,7 +157,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string  $fileOrDirectory   A source file or a source directory.
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
      * 
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     protected static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {

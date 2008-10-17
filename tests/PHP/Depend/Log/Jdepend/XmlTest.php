@@ -53,8 +53,8 @@ require_once 'PHP/Depend/Log/Jdepend/Xml.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 
 require_once 'PHP/Reflection/Parser.php';
-require_once 'PHP/Reflection/Ast/Iterator/GlobalPackageFilter.php';
-require_once 'PHP/Reflection/Ast/Iterator/InternalPackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/GlobalPackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/InternalPackageFilter.php';
 require_once 'PHP/Reflection/Builder/Default.php';
 require_once 'PHP/Reflection/Input/FileExtensionFilter.php';
 require_once 'PHP/Reflection/Input/FileFilterIterator.php';
@@ -121,9 +121,9 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $analyzer->analyze($packages);
         
-        $filter = new PHP_Reflection_Ast_Iterator_GlobalPackageFilter();
+        $filter = new PHP_Reflection_AST_Iterator_GlobalPackageFilter();
         $packages->addFilter($filter);
-        $filter = new PHP_Reflection_Ast_Iterator_InternalPackageFilter();
+        $filter = new PHP_Reflection_AST_Iterator_InternalPackageFilter();
         $packages->addFilter($filter);
         
         $log = new PHP_Depend_Log_Jdepend_Xml();

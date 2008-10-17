@@ -114,7 +114,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         
         $this->assertType('Iterator', $metrics);
         foreach ($metrics as $metric) {
-            $this->assertType('PHP_Reflection_Ast_Package', $metric);
+            $this->assertType('PHP_Reflection_AST_Package', $metric);
             
             unset($expected[$metric->getName()]);
         }
@@ -255,7 +255,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     
     /**
      * Tests that the {@link PHP_Depend::getPackage()} method returns the 
-     * expected {@link PHP_Reflection_Ast_Package} objects.
+     * expected {@link PHP_Reflection_AST_Package} objects.
      *
      * @return void
      */
@@ -272,7 +272,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'package3'
         );
         
-        $className = 'PHP_Reflection_Ast_Package';
+        $className = 'PHP_Reflection_AST_Package';
         
         foreach ($packages as $package) {
             $this->assertType($className, $pdepend->getPackage($package));
@@ -322,7 +322,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     
     /**
      * Tests that the {@link PHP_Depend::getPackages()} method returns the 
-     * expected {@link PHP_Reflection_Ast_Package} objects and reuses the result of
+     * expected {@link PHP_Reflection_AST_Package} objects and reuses the result of
      * {@link PHP_Depend::analyze()}.
      *
      * @return void
