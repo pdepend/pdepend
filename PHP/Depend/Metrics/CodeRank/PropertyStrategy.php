@@ -87,12 +87,12 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Visits a property node. 
      *
-     * @param PHP_Reflection_Ast_Property $property The property class node.
+     * @param PHP_Reflection_AST_Property $property The property class node.
      * 
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_Ast_Property $property)
+    public function visitProperty(PHP_Reflection_AST_Property $property)
     {
         $this->fireStartProperty($property);
         
@@ -128,11 +128,11 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Reflection_Ast_NodeI $node The context node instance.
+     * @param PHP_Reflection_AST_NodeI $node The context node instance.
      * 
      * @return void
      */
-    protected function initNode(PHP_Reflection_Ast_NodeI $node)
+    protected function initNode(PHP_Reflection_AST_NodeI $node)
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(

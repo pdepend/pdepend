@@ -78,7 +78,7 @@ class PHP_Reflection_Parser_PropertyTest extends PHP_Reflection_AbstractTest
      *
      * @param string $file The source file.
      * 
-     * @return PHP_Reflection_Ast_PropertyI
+     * @return PHP_Reflection_AST_PropertyI
      */
     private static function _testParseProperty($file)
     {
@@ -93,7 +93,7 @@ class PHP_Reflection_Parser_PropertyTest extends PHP_Reflection_AbstractTest
         
         $property = $class->getProperties()->current();
         self::assertNotNull($property);
-        self::assertType('PHP_Reflection_Ast_PropertyI', $property);
+        self::assertType('PHP_Reflection_AST_PropertyI', $property);
         
         return $property;
     }

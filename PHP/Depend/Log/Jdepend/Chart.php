@@ -82,8 +82,8 @@ class PHP_Depend_Log_Jdepend_Chart
     /**
      * The context source code.
      *
-     * @type PHP_Reflection_Ast_Iterator
-     * @var PHP_Reflection_Ast_Iterator $_code
+     * @type PHP_Reflection_AST_Iterator
+     * @var PHP_Reflection_AST_Iterator $_code
      */
     private $_code = null;
     
@@ -121,11 +121,11 @@ class PHP_Depend_Log_Jdepend_Chart
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $code The code nodes.
+     * @param PHP_Reflection_AST_Iterator $code The code nodes.
      * 
      * @return void
      */
-    public function setCode(PHP_Reflection_Ast_Iterator $code)
+    public function setCode(PHP_Reflection_AST_Iterator $code)
     {
         $this->_code = $code;
     }

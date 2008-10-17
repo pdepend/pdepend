@@ -113,12 +113,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a class node. 
      *
-     * @param PHP_Reflection_Ast_ClassI $class The current class node.
+     * @param PHP_Reflection_AST_ClassI $class The current class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_Ast_ClassI $class)
+    public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->fireStartClass($class);
         
@@ -140,12 +140,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a file node. 
      *
-     * @param PHP_Reflection_Ast_File $file The current file node.
+     * @param PHP_Reflection_AST_File $file The current file node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFile()
      */
-    public function visitFile(PHP_Reflection_Ast_File $file)
+    public function visitFile(PHP_Reflection_AST_File $file)
     {
         $this->fireStartFile($file);
         $this->fireEndFile($file);
@@ -154,12 +154,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a function node. 
      *
-     * @param PHP_Reflection_Ast_Function $function The current function node.
+     * @param PHP_Reflection_AST_Function $function The current function node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_Ast_FunctionI $function)
+    public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         $this->fireStartFunction($function);
         
@@ -175,12 +175,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_Ast_InterfaceI $interface The context code interface.
+     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_Ast_InterfaceI $interface)
+    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
         
@@ -199,12 +199,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a method node. 
      *
-     * @param PHP_Reflection_Ast_MethodI $method The method class node.
+     * @param PHP_Reflection_AST_MethodI $method The method class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_Ast_MethodI $method)
+    public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->fireStartMethod($method);
         
@@ -218,12 +218,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a package node. 
      *
-     * @param PHP_Reflection_Ast_Package $package The package class node.
+     * @param PHP_Reflection_AST_Package $package The package class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_Ast_Package $package)
+    public function visitPackage(PHP_Reflection_AST_Package $package)
     {
         $this->fireStartPackage($package);
         
@@ -243,11 +243,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a parameter node.
      *
-     * @param PHP_Reflection_Ast_Parameter $parameter The parameter node.
+     * @param PHP_Reflection_AST_Parameter $parameter The parameter node.
      * 
      * @return void
      */
-    public function visitParameter(PHP_Reflection_Ast_Parameter $parameter)
+    public function visitParameter(PHP_Reflection_AST_Parameter $parameter)
     {
         $this->fireStartParameter($parameter);
         $this->fireEndParameter($parameter);
@@ -256,12 +256,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a property node. 
      *
-     * @param PHP_Reflection_Ast_Property $property The property class node.
+     * @param PHP_Reflection_AST_Property $property The property class node.
      * 
      * @return void
      * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_Ast_Property $property)
+    public function visitProperty(PHP_Reflection_AST_Property $property)
     {
         $this->fireStartProperty($property);
         
@@ -275,11 +275,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $const The current constant node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The current constant node.
      * 
      * @return void
      */
-    public function visitTypeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $const)
+    public function visitTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const)
     {
         $this->fireStartTypeConstant($const);
         
@@ -293,11 +293,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits an array expression node
      *
-     * @param PHP_Reflection_Ast_ArrayExpression $expr The current array expression.
+     * @param PHP_Reflection_AST_ArrayExpression $expr The current array expression.
      * 
      * @return void
      */
-    public function visitArrayExpression(PHP_Reflection_Ast_ArrayExpression $expr)
+    public function visitArrayExpression(PHP_Reflection_AST_ArrayExpression $expr)
     {
         // TODO Implement fireStartArrayExpression()
         foreach ($expr->getElements() as $element) {
@@ -309,11 +309,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits an array element node.
      *
-     * @param PHP_Reflection_Ast_ArrayElement $elem The current array element.
+     * @param PHP_Reflection_AST_ArrayElement $elem The current array element.
      * 
      * @return void
      */
-    public function visitArrayElement(PHP_Reflection_Ast_ArrayElement $elem)
+    public function visitArrayElement(PHP_Reflection_AST_ArrayElement $elem)
     {
         // TODO Implement fireStartArrayElement()
         $elem->getKey()->accept($this);
@@ -324,11 +324,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a constant reference node.
      *
-     * @param PHP_Reflection_Ast_ConstantValue $constRef The current const ref.
+     * @param PHP_Reflection_AST_ConstantValue $constRef The current const ref.
      * 
      * @return void
      */
-    public function visitConstantValue(PHP_Reflection_Ast_ConstantValue $constRef)
+    public function visitConstantValue(PHP_Reflection_AST_ConstantValue $constRef)
     {
         // TODO Implement fireStartConstantValue()
         
@@ -338,13 +338,13 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a class or interface constant reference
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constRef
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constRef
      *        The reference instance.
      * 
      * @return void
      */
     public function visitClassOrInterfaceConstantValue(
-                PHP_Reflection_Ast_ClassOrInterfaceConstantValue $constRef)
+                PHP_Reflection_AST_ClassOrInterfaceConstantValue $constRef)
     {
         // TODO Implement fireStartClassOrInterfaceConstantValue()
 
@@ -354,11 +354,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a general value.
      *
-     * @param PHP_Reflection_Ast_MemberValueI $value The value instance.
+     * @param PHP_Reflection_AST_MemberValueI $value The value instance.
      * 
      * @return void
      */
-    public function visitValue(PHP_Reflection_Ast_MemberValueI $value)
+    public function visitValue(PHP_Reflection_AST_MemberValueI $value)
     {
         // TODO Implement fireStartValue()
 
@@ -368,11 +368,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start class event.
      *
-     * @param PHP_Reflection_Ast_Class $class The context class instance.
+     * @param PHP_Reflection_AST_Class $class The context class instance.
      * 
      * @return void
      */
-    protected function fireStartClass(PHP_Reflection_Ast_Class $class)
+    protected function fireStartClass(PHP_Reflection_AST_Class $class)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitClass($class);
@@ -382,11 +382,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end class event.
      *
-     * @param PHP_Reflection_Ast_Class $class The context class instance.
+     * @param PHP_Reflection_AST_Class $class The context class instance.
      * 
      * @return void
      */
-    protected function fireEndClass(PHP_Reflection_Ast_Class $class)
+    protected function fireEndClass(PHP_Reflection_AST_Class $class)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitClass($class);
@@ -396,11 +396,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start file event.
      *
-     * @param PHP_Reflection_Ast_File $file The context file.
+     * @param PHP_Reflection_AST_File $file The context file.
      * 
      * @return void
      */
-    protected function fireStartFile(PHP_Reflection_Ast_File $file)
+    protected function fireStartFile(PHP_Reflection_AST_File $file)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitFile($file);
@@ -410,11 +410,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end file event.
      *
-     * @param PHP_Reflection_Ast_File $file The context file instance.
+     * @param PHP_Reflection_AST_File $file The context file instance.
      * 
      * @return void
      */
-    protected function fireEndFile(PHP_Reflection_Ast_File $file)
+    protected function fireEndFile(PHP_Reflection_AST_File $file)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitFile($file);
@@ -424,11 +424,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start function event.
      *
-     * @param PHP_Reflection_Ast_Function $function The context function instance.
+     * @param PHP_Reflection_AST_Function $function The context function instance.
      * 
      * @return void
      */
-    protected function fireStartFunction(PHP_Reflection_Ast_Function $function)
+    protected function fireStartFunction(PHP_Reflection_AST_Function $function)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitFunction($function);
@@ -438,11 +438,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end function event.
      *
-     * @param PHP_Reflection_Ast_Function $function The context function instance.
+     * @param PHP_Reflection_AST_Function $function The context function instance.
      * 
      * @return void
      */
-    protected function fireEndFunction(PHP_Reflection_Ast_Function $function)
+    protected function fireEndFunction(PHP_Reflection_AST_Function $function)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitFunction($function);
@@ -452,11 +452,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start interface event.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context interface.
+     * @param PHP_Reflection_AST_Interface $interface The context interface.
      * 
      * @return void
      */
-    protected function fireStartInterface(PHP_Reflection_Ast_Interface $interface)
+    protected function fireStartInterface(PHP_Reflection_AST_Interface $interface)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitInterface($interface);
@@ -466,11 +466,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end interface event.
      *
-     * @param PHP_Reflection_Ast_Interface $interface The context interface.
+     * @param PHP_Reflection_AST_Interface $interface The context interface.
      * 
      * @return void
      */
-    protected function fireEndInterface(PHP_Reflection_Ast_Interface $interface)
+    protected function fireEndInterface(PHP_Reflection_AST_Interface $interface)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitInterface($interface);
@@ -480,11 +480,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start method event.
      *
-     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
+     * @param PHP_Reflection_AST_MethodI $method The context method instance.
      * 
      * @return void
      */
-    protected function fireStartMethod(PHP_Reflection_Ast_MethodI $method)
+    protected function fireStartMethod(PHP_Reflection_AST_MethodI $method)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitMethod($method);
@@ -494,11 +494,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end method event.
      *
-     * @param PHP_Reflection_Ast_MethodI $method The context method instance.
+     * @param PHP_Reflection_AST_MethodI $method The context method instance.
      * 
      * @return void
      */
-    protected function fireEndMethod(PHP_Reflection_Ast_MethodI $method)
+    protected function fireEndMethod(PHP_Reflection_AST_MethodI $method)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitMethod($method);
@@ -508,11 +508,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start package event. 
      *
-     * @param PHP_Reflection_Ast_Package $package The context package instance.
+     * @param PHP_Reflection_AST_Package $package The context package instance.
      * 
      * @return void
      */
-    protected function fireStartPackage(PHP_Reflection_Ast_Package $package)
+    protected function fireStartPackage(PHP_Reflection_AST_Package $package)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitPackage($package);
@@ -522,11 +522,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end package event.
      *
-     * @param PHP_Reflection_Ast_Package $package The context package instance.
+     * @param PHP_Reflection_AST_Package $package The context package instance.
      * 
      * @return void
      */
-    protected function fireEndPackage(PHP_Reflection_Ast_Package $package)
+    protected function fireEndPackage(PHP_Reflection_AST_Package $package)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitPackage($package);
@@ -536,11 +536,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start parameter event. 
      *
-     * @param PHP_Reflection_Ast_Parameter $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_Parameter $parameter The context parameter instance.
      * 
      * @return void
      */
-    protected function fireStartParameter(PHP_Reflection_Ast_Parameter $parameter)
+    protected function fireStartParameter(PHP_Reflection_AST_Parameter $parameter)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitParameter($parameter);
@@ -550,11 +550,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a end parameter event. 
      *
-     * @param PHP_Reflection_Ast_Parameter $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_Parameter $parameter The context parameter instance.
      * 
      * @return void
      */
-    protected function fireEndParameter(PHP_Reflection_Ast_Parameter $parameter)
+    protected function fireEndParameter(PHP_Reflection_AST_Parameter $parameter)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitParameter($parameter);
@@ -564,11 +564,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start property event. 
      *
-     * @param PHP_Reflection_Ast_Property $property The context property instance.
+     * @param PHP_Reflection_AST_Property $property The context property instance.
      * 
      * @return void
      */
-    protected function fireStartProperty(PHP_Reflection_Ast_Property $property)
+    protected function fireStartProperty(PHP_Reflection_AST_Property $property)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitProperty($property);
@@ -578,11 +578,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end property event.
      *
-     * @param PHP_Reflection_Ast_Property $property The context property instance.
+     * @param PHP_Reflection_AST_Property $property The context property instance.
      * 
      * @return void
      */
-    protected function fireEndProperty(PHP_Reflection_Ast_Property $property)
+    protected function fireEndProperty(PHP_Reflection_AST_Property $property)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitProperty($property);
@@ -592,11 +592,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start constant event. 
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $const The context constant.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The context constant.
      * 
      * @return void
      */
-    protected function fireStartTypeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $const)
+    protected function fireStartTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitTypeConstant($const);
@@ -606,11 +606,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end constant event.
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceConstant $const The context constant.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The context constant.
      * 
      * @return void
      */
-    protected function fireEndTypeConstant(PHP_Reflection_Ast_ClassOrInterfaceConstant $const)
+    protected function fireEndTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitTypeConstant($const);

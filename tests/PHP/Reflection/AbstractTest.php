@@ -67,7 +67,7 @@ abstract class PHP_Reflection_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        PHP_Reflection_Ast_Iterator_StaticFilter::getInstance()->clear();
+        PHP_Reflection_AST_Iterator_StaticFilter::getInstance()->clear();
         
         parent::tearDown();
     }
@@ -103,13 +103,13 @@ abstract class PHP_Reflection_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string  $fileOrDirectory   A source file or a source directory.
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
      * 
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     protected static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
         include_once 'PHP/Reflection/Parser.php';
         include_once 'PHP/Reflection/Builder/Default.php';
-        include_once 'PHP/Reflection/Ast/Iterator/StaticFilter.php';
+        include_once 'PHP/Reflection/AST/Iterator/StaticFilter.php';
         include_once 'PHP/Reflection/Tokenizer/Internal.php';
         include_once 'PHP/Reflection/Input/ExcludePathFilter.php';
         include_once 'PHP/Reflection/Input/FileFilterIterator.php';

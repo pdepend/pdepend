@@ -48,25 +48,25 @@
 
 require_once 'PHP/Reflection/InternalTypes.php';
 require_once 'PHP/Reflection/BuilderI.php'; 
-require_once 'PHP/Reflection/Ast/ArrayExpression.php';
-require_once 'PHP/Reflection/Ast/ArrayElement.php';
-require_once 'PHP/Reflection/Ast/Class.php';
-require_once 'PHP/Reflection/Ast/ClassOrInterfaceConstant.php';
-require_once 'PHP/Reflection/Ast/ClassOrInterfaceConstantValue.php';
-require_once 'PHP/Reflection/Ast/ClassOrInterfaceProxy.php';
-require_once 'PHP/Reflection/Ast/ConstantValue.php';
-require_once 'PHP/Reflection/Ast/Interface.php';
-require_once 'PHP/Reflection/Ast/Iterator.php';
-require_once 'PHP/Reflection/Ast/Function.php';
-require_once 'PHP/Reflection/Ast/MemberFalseValue.php';
-require_once 'PHP/Reflection/Ast/MemberNullValue.php';
-require_once 'PHP/Reflection/Ast/MemberNumericValue.php';
-require_once 'PHP/Reflection/Ast/MemberScalarValue.php';
-require_once 'PHP/Reflection/Ast/MemberTrueValue.php';
-require_once 'PHP/Reflection/Ast/Method.php';
-require_once 'PHP/Reflection/Ast/Package.php';
-require_once 'PHP/Reflection/Ast/Parameter.php';
-require_once 'PHP/Reflection/Ast/Property.php';
+require_once 'PHP/Reflection/AST/ArrayExpression.php';
+require_once 'PHP/Reflection/AST/ArrayElement.php';
+require_once 'PHP/Reflection/AST/Class.php';
+require_once 'PHP/Reflection/AST/ClassOrInterfaceConstant.php';
+require_once 'PHP/Reflection/AST/ClassOrInterfaceConstantValue.php';
+require_once 'PHP/Reflection/AST/ClassOrInterfaceProxy.php';
+require_once 'PHP/Reflection/AST/ConstantValue.php';
+require_once 'PHP/Reflection/AST/Interface.php';
+require_once 'PHP/Reflection/AST/Iterator.php';
+require_once 'PHP/Reflection/AST/Function.php';
+require_once 'PHP/Reflection/AST/MemberFalseValue.php';
+require_once 'PHP/Reflection/AST/MemberNullValue.php';
+require_once 'PHP/Reflection/AST/MemberNumericValue.php';
+require_once 'PHP/Reflection/AST/MemberScalarValue.php';
+require_once 'PHP/Reflection/AST/MemberTrueValue.php';
+require_once 'PHP/Reflection/AST/Method.php';
+require_once 'PHP/Reflection/AST/Package.php';
+require_once 'PHP/Reflection/AST/Parameter.php';
+require_once 'PHP/Reflection/AST/Property.php';
 
 /**
  * Default code tree builder implementation.
@@ -86,76 +86,76 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * Default package which contains all functions and classes with an unknown 
      * scope. 
      *
-     * @type PHP_Reflection_Ast_Package
-     * @var PHP_Reflection_Ast_Package $defaultPackage
+     * @type PHP_Reflection_AST_Package
+     * @var PHP_Reflection_AST_Package $defaultPackage
      */
     protected $defaultPackage = null;
     
     /**
      * Default source file that acts as a dummy.
      *
-     * @type PHP_Reflection_Ast_File
-     * @var PHP_Reflection_Ast_File $defaultFile
+     * @type PHP_Reflection_AST_File
+     * @var PHP_Reflection_AST_File $defaultFile
      */
     protected $defaultFile = null;
     
     /**
-     * All generated {@link PHP_Reflection_Ast_Class} objects
+     * All generated {@link PHP_Reflection_AST_Class} objects
      *
-     * @type array<PHP_Reflection_Ast_Class>
-     * @var array(string=>PHP_Reflection_Ast_Class) $classes
+     * @type array<PHP_Reflection_AST_Class>
+     * @var array(string=>PHP_Reflection_AST_Class) $classes
      */
     protected $classes = array();
     
     /**
-     * All generated {@link PHP_Reflection_Ast_Interface} instances.
+     * All generated {@link PHP_Reflection_AST_Interface} instances.
      *
-     * @type array<PHP_Reflection_Ast_Interface>
-     * @var array(string=>PHP_Reflection_Ast_Interface) $interfaces
+     * @type array<PHP_Reflection_AST_Interface>
+     * @var array(string=>PHP_Reflection_AST_Interface) $interfaces
      */
     protected $interfaces = array();
     
     /**
-     * All generated {@link PHP_Reflection_Ast_Package} objects
+     * All generated {@link PHP_Reflection_AST_Package} objects
      *
-     * @type array<PHP_Reflection_Ast_Package>
-     * @var array(string=>PHP_Reflection_Ast_Package) $packages
+     * @type array<PHP_Reflection_AST_Package>
+     * @var array(string=>PHP_Reflection_AST_Package) $packages
      */
     protected $packages = array();
     
     /**
-     * All generated {@link PHP_Reflection_Ast_Function} instances.
+     * All generated {@link PHP_Reflection_AST_Function} instances.
      *
-     * @var array(string=>PHP_Reflection_Ast_Function) $functions
+     * @var array(string=>PHP_Reflection_AST_Function) $functions
      */
     protected $functions = array();
     
     /**
-     * All generated {@link PHP_Reflection_Ast_Method} instances.
+     * All generated {@link PHP_Reflection_AST_Method} instances.
      *
-     * @var array(PHP_Reflection_Ast_Method) $methods
+     * @var array(PHP_Reflection_AST_Method) $methods
      */
     protected $methods = array();
     
     /**
-     * All generated {@link PHP_Reflection_Ast_Parameter} instances.
+     * All generated {@link PHP_Reflection_AST_Parameter} instances.
      *
-     * @var array(PHP_Reflection_Ast_Parameter) $_parameters
+     * @var array(PHP_Reflection_AST_Parameter) $_parameters
      */
     private $_parameters = array();
     
     /**
-     * All generated {@link PHP_Reflection_Ast_Property} instances.
+     * All generated {@link PHP_Reflection_AST_Property} instances.
      *
-     * @var array(PHP_Reflection_Ast_Property) $_properties
+     * @var array(PHP_Reflection_AST_Property) $_properties
      */
     private $_properties = array();
     
     /**
-     * All generated {@link PHP_Reflection_Ast_ClassOrInterfaceConstant} instances.
+     * All generated {@link PHP_Reflection_AST_ClassOrInterfaceConstant} instances.
      *
-     * @type array<PHP_Reflection_Ast_ClassOrInterfaceConstant>
-     * @var array(PHP_Reflection_Ast_ClassOrInterfaceConstant) $_typeConstants
+     * @type array<PHP_Reflection_AST_ClassOrInterfaceConstant>
+     * @var array(PHP_Reflection_AST_ClassOrInterfaceConstant) $_typeConstants
      */
     private $_typeConstants = array();
     
@@ -170,7 +170,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * Cache for already created class or interface proxy instances.
      * 
-     * @var array(PHP_Reflection_Ast_ClassOrInterfaceProxy) $_proxyCache
+     * @var array(PHP_Reflection_AST_ClassOrInterfaceProxy) $_proxyCache
      */
     private $_proxyCache = array();
     
@@ -179,8 +179,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function __construct()
     {
-        $this->defaultPackage = new PHP_Reflection_Ast_Package(self::GLOBAL_PACKAGE);
-        $this->defaultFile    = new PHP_Reflection_Ast_File(null);
+        $this->defaultPackage = new PHP_Reflection_AST_Package(self::GLOBAL_PACKAGE);
+        $this->defaultFile    = new PHP_Reflection_AST_File(null);
         
         $this->packages[self::GLOBAL_PACKAGE] = $this->defaultPackage;
         
@@ -191,22 +191,22 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * Generic build class for classes and interfaces. This method should be used
      * in cases when it is not clear what type is used in the current situation.
      * This could happen if the parser analyzes a method signature. The default 
-     * return type is {@link PHP_Reflection_Ast_Class}, but if there is already
+     * return type is {@link PHP_Reflection_AST_Class}, but if there is already
      * an interface for this name, the method will return this instance.
      * 
      * <code>
      *   $builder->buildInterface('PHP_ReflectionI');
      * 
-     *   // Returns an instance of PHP_Reflection_Ast_Interface
+     *   // Returns an instance of PHP_Reflection_AST_Interface
      *   $builder->buildClassOrInterface('PHP_ReflectionI');
      * 
-     *   // Returns an instance of PHP_Reflection_Ast_Class
+     *   // Returns an instance of PHP_Reflection_AST_Class
      *   $builder->buildClassOrInterface('PHP_Reflection');
      * </code>
      *
      * @param string $name The class name.
      * 
-     * @return PHP_Reflection_Ast_Class|PHP_Reflection_Ast_Interface 
+     * @return PHP_Reflection_AST_Class|PHP_Reflection_AST_Interface 
      *         The created class or interface instance.
      */
     public function buildClassOrInterface($name)
@@ -257,7 +257,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param string  $name The class name.
      * @param integer $line The line number for the class declaration.
      * 
-     * @return PHP_Reflection_Ast_Class The created class object.
+     * @return PHP_Reflection_AST_Class The created class object.
      */
     public function buildClass($name, $line = 0)
     {
@@ -290,7 +290,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         } else {
             
             // Create a new class instance
-            $class = new PHP_Reflection_Ast_Class($cls, $line);
+            $class = new PHP_Reflection_AST_Class($cls, $line);
             $class->setSourceFile($this->defaultFile);
             
             // Store class reference
@@ -307,12 +307,12 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *
      * @param string $name The constant name.
      * 
-     * @return PHP_Reflection_Ast_ClassOrInterfaceConstant The created constant object.
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstant The created constant object.
      */
     public function buildTypeConstant($name)
     {
         // Create new constant instance.
-        $constant = new PHP_Reflection_Ast_ClassOrInterfaceConstant($name);
+        $constant = new PHP_Reflection_AST_ClassOrInterfaceConstant($name);
         
         // Store local reference
         $this->_typeConstants[] = $constant;
@@ -353,7 +353,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param string  $name The interface name.
      * @param integer $line The line number for the interface declaration.
      * 
-     * @return PHP_Reflection_Ast_Interface The created interface object.
+     * @return PHP_Reflection_AST_Interface The created interface object.
      */
     public function buildInterface($name, $line = 0)
     {
@@ -410,7 +410,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             // 4) Create a new interface for the given package
         } else {
             // Create a new interface instance
-            $interface = new PHP_Reflection_Ast_Interface($ife, $line);
+            $interface = new PHP_Reflection_AST_Interface($ife, $line);
             $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
@@ -433,12 +433,12 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param string  $name The method name.
      * @param integer $line The line number with the method declaration.
      * 
-     * @return PHP_Reflection_Ast_Method The created class method object.
+     * @return PHP_Reflection_AST_Method The created class method object.
      */
     public function buildMethod($name, $line = 0)
     {
         // Create a new method instance
-        $method = new PHP_Reflection_Ast_Method($name, $line);
+        $method = new PHP_Reflection_AST_Method($name, $line);
         
         // Store instance an local map
         $this->methods[] = $method;
@@ -451,12 +451,12 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *
      * @param string $name The package name.
      * 
-     * @return PHP_Reflection_Ast_Package The created package object.
+     * @return PHP_Reflection_AST_Package The created package object.
      */
     public function buildPackage($name)
     {
         if (!isset($this->packages[$name])) {
-            $this->packages[$name] = new PHP_Reflection_Ast_Package($name);
+            $this->packages[$name] = new PHP_Reflection_AST_Package($name);
         }
         return $this->packages[$name];
     }
@@ -467,12 +467,12 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param string  $name The parameter variable name.
      * @param integer $line The line number with the parameter declaration.
      * 
-     * @return PHP_Reflection_Ast_Parameter The created parameter instance.
+     * @return PHP_Reflection_AST_Parameter The created parameter instance.
      */
     public function buildParameter($name, $line = 0)
     {
         // Create a new parameter instance
-        $parameter = new PHP_Reflection_Ast_Parameter($name, $line);
+        $parameter = new PHP_Reflection_AST_Parameter($name, $line);
         
         // Store local reference 
         $this->_parameters[] = $parameter;
@@ -486,12 +486,12 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param string  $name The property variable name.
      * @param integer $line The line number with the property declaration.
      * 
-     * @return PHP_Reflection_Ast_Property The created property instance.
+     * @return PHP_Reflection_AST_Property The created property instance.
      */
     public function buildProperty($name, $line = 0)
     {
         // Create new property instance.
-        $property = new PHP_Reflection_Ast_Property($name, $line);
+        $property = new PHP_Reflection_AST_Property($name, $line);
         
         // Store local reference
         $this->_properties[] = $property;
@@ -505,7 +505,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param string  $name The function name.
      * @param integer $line The line number with the function declaration.
      * 
-     * @return PHP_Reflection_Ast_Function The function instance.
+     * @return PHP_Reflection_AST_Function The function instance.
      */
     public function buildFunction($name, $line = 0)
     {
@@ -513,7 +513,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $function = $this->functions[$name];
         } else {
             // Create new function
-            $function = new PHP_Reflection_Ast_Function($name, $line);
+            $function = new PHP_Reflection_AST_Function($name, $line);
             $function->setSourceFile($this->defaultFile);
             
             // Add to default package
@@ -528,21 +528,21 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * Builds a new array value instance.
      *
-     * @return PHP_Reflection_Ast_ArrayExpression
+     * @return PHP_Reflection_AST_ArrayExpression
      */
     public function buildArrayExpression()
     {
-        return new PHP_Reflection_Ast_ArrayExpression();
+        return new PHP_Reflection_AST_ArrayExpression();
     }
     
     /**
      * Builds an array element instance.
      *
-     * @return PHP_Reflection_Ast_ArrayElement
+     * @return PHP_Reflection_AST_ArrayElement
      */
     public function buildArrayElement()
     {
-        return new PHP_Reflection_Ast_ArrayElement();
+        return new PHP_Reflection_AST_ArrayElement();
     }
     
     /**
@@ -550,25 +550,25 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * 
      * @param string $identifier The constant identifier.
      *
-     * @return PHP_Reflection_Ast_ConstantValue
+     * @return PHP_Reflection_AST_ConstantValue
      */
     public function buildConstantValue($identifier)
     {
-        return new PHP_Reflection_Ast_ConstantValue($identifier);
+        return new PHP_Reflection_AST_ConstantValue($identifier);
     }
     
     /**
      * Builds a class or interface constant reference instance.
      *
-     * @param PHP_Reflection_Ast_ClassOrInterfaceI $owner      The owner node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $owner      The owner node.
      * @param string                               $identifier The constant name.
      * 
-     * @return PHP_Reflection_Ast_ClassOrInterfaceConstantValue
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstantValue
      */
     public function buildClassOrInterfaceConstantValue(
-                    PHP_Reflection_Ast_ClassOrInterfaceI $owner, $identifier)
+                    PHP_Reflection_AST_ClassOrInterfaceI $owner, $identifier)
     {
-        return new PHP_Reflection_Ast_ClassOrInterfaceConstantValue($owner, $identifier);
+        return new PHP_Reflection_AST_ClassOrInterfaceConstantValue($owner, $identifier);
     }
     
     /**
@@ -576,14 +576,14 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *
      * The identifier of the proxied class or interface.
      * 
-     * @return PHP_Reflection_Ast_ClassOrInterfaceProxy
+     * @return PHP_Reflection_AST_ClassOrInterfaceProxy
      */
     public function buildClassOrInterfaceProxy($identifier)
     {
         $proxyID = strtolower($identifier);
         if (!isset($this->_proxyCache[$proxyID])) {
             // Create a new node proxy
-            $proxy = new PHP_Reflection_Ast_ClassOrInterfaceProxy($this, $identifier); 
+            $proxy = new PHP_Reflection_AST_ClassOrInterfaceProxy($this, $identifier); 
             // Cache proxy instance
             $this->_proxyCache[$proxyID] = $proxy;
         }
@@ -593,31 +593,31 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * Builds a new null value instance.
      *
-     * @return PHP_Reflection_Ast_MemberNullValue
+     * @return PHP_Reflection_AST_MemberNullValue
      */
     public function buildNullValue()
     {
-        return PHP_Reflection_Ast_MemberNullValue::flyweight();
+        return PHP_Reflection_AST_MemberNullValue::flyweight();
     }
     
     /**
      * Builds a new true value instance.
      *
-     * @return PHP_Reflection_Ast_MemberTrueValue
+     * @return PHP_Reflection_AST_MemberTrueValue
      */
     public function buildTrueValue()
     {
-        return PHP_Reflection_Ast_MemberTrueValue::flyweight();
+        return PHP_Reflection_AST_MemberTrueValue::flyweight();
     }
     
     /**
      * Builds a new false value instance.
      *
-     * @return PHP_Reflection_Ast_MemberFalseValue
+     * @return PHP_Reflection_AST_MemberFalseValue
      */
     public function buildFalseValue()
     {
-        return PHP_Reflection_Ast_MemberFalseValue::flyweight();
+        return PHP_Reflection_AST_MemberFalseValue::flyweight();
     }
 
     /**
@@ -627,11 +627,11 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param string  $value    The string representation of the php value.
      * @param boolean $negative Is this numeric value negative?
      * 
-     * @return PHP_Reflection_Ast_MemberNumericValue
+     * @return PHP_Reflection_AST_MemberNumericValue
      */
     public function buildNumericValue($type, $value, $negative)
     {
-        return new PHP_Reflection_Ast_MemberNumericValue($type, $value, $negative);
+        return new PHP_Reflection_AST_MemberNumericValue($type, $value, $negative);
     }
     
     /**
@@ -640,18 +640,18 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @param integer $type  The type of this value.
      * @param string  $value The string representation of the php value.
      * 
-     * @return PHP_Reflection_Ast_MemberScalarValue
+     * @return PHP_Reflection_AST_MemberScalarValue
      */
     public function buildScalarValue($type, $value = null)
     {
-        return new PHP_Reflection_Ast_MemberScalarValue($type, $value);
+        return new PHP_Reflection_AST_MemberScalarValue($type, $value);
     }
     
     /**
-     * Returns an iterator with all generated {@link PHP_Reflection_Ast_Package}
+     * Returns an iterator with all generated {@link PHP_Reflection_AST_Package}
      * objects.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     public function getIterator()
     {
@@ -659,10 +659,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     }
     
     /**
-     * Returns an iterator with all generated {@link PHP_Reflection_Ast_Package}
+     * Returns an iterator with all generated {@link PHP_Reflection_AST_Package}
      * objects.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     public function getPackages()
     {
@@ -681,7 +681,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             unset($packages[self::GLOBAL_PACKAGE]);
         }
         
-        return new PHP_Reflection_Ast_Iterator($packages);
+        return new PHP_Reflection_AST_Iterator($packages);
     }
     
     /**
@@ -781,18 +781,18 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *   // Results in
      *   // array(1) {
      *   //   [0]=>
-     *   //   object(PHP_Reflection_Ast_Interface)#1 (0) {
+     *   //   object(PHP_Reflection_AST_Interface)#1 (0) {
      *   //   }
      *   // }
      * </code>
      *
-     * @param PHP_Reflection_Ast_Class     $class The old context class instance.
-     * @param PHP_Reflection_Ast_Interface $iface The new interface instance.
+     * @param PHP_Reflection_AST_Class     $class The old context class instance.
+     * @param PHP_Reflection_AST_Interface $iface The new interface instance.
      * 
      * @return void
      */
-    protected function replaceClassReferences(PHP_Reflection_Ast_Class $class,
-                                              PHP_Reflection_Ast_Interface $iface)
+    protected function replaceClassReferences(PHP_Reflection_AST_Class $class,
+                                              PHP_Reflection_AST_Interface $iface)
     {
         foreach ($this->functions as $function) {
             foreach ($function->getDependencies() as $dependency) {

@@ -49,14 +49,14 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/_dummy/TestImplAbstractVisitor.php';
 
-require_once 'PHP/Reflection/Ast/Class.php';
-require_once 'PHP/Reflection/Ast/File.php';
-require_once 'PHP/Reflection/Ast/Function.php';
-require_once 'PHP/Reflection/Ast/Interface.php';
-require_once 'PHP/Reflection/Ast/Method.php';
-require_once 'PHP/Reflection/Ast/Iterator.php';
-require_once 'PHP/Reflection/Ast/Package.php';
-require_once 'PHP/Reflection/Ast/Property.php';
+require_once 'PHP/Reflection/AST/Class.php';
+require_once 'PHP/Reflection/AST/File.php';
+require_once 'PHP/Reflection/AST/Function.php';
+require_once 'PHP/Reflection/AST/Interface.php';
+require_once 'PHP/Reflection/AST/Method.php';
+require_once 'PHP/Reflection/AST/Iterator.php';
+require_once 'PHP/Reflection/AST/Package.php';
+require_once 'PHP/Reflection/AST/Property.php';
 
 /**
  * Test case for the default visitor implementation.
@@ -79,34 +79,34 @@ class PHP_Reflection_Visitor_ImplAbstractVisitorTest extends PHP_Reflection_Abst
      */
     public function testDefaultVisitOrder()
     {
-        $file = new PHP_Reflection_Ast_File(__FILE__);
+        $file = new PHP_Reflection_AST_File(__FILE__);
         
-        $package1 = new PHP_Reflection_Ast_Package('pkgA');
+        $package1 = new PHP_Reflection_AST_Package('pkgA');
         
-        $class2 = $package1->addType(new PHP_Reflection_Ast_Class('classB'));
+        $class2 = $package1->addType(new PHP_Reflection_AST_Class('classB'));
         $class2->setSourceFile($file);
-        $class2->addMethod(new PHP_Reflection_Ast_Method('methodBB'));
-        $class2->addMethod(new PHP_Reflection_Ast_Method('methodBA'));
-        $class2->addProperty(new PHP_Reflection_Ast_Property('propBB'));
-        $class2->addProperty(new PHP_Reflection_Ast_Property('propBA'));
+        $class2->addMethod(new PHP_Reflection_AST_Method('methodBB'));
+        $class2->addMethod(new PHP_Reflection_AST_Method('methodBA'));
+        $class2->addProperty(new PHP_Reflection_AST_Property('propBB'));
+        $class2->addProperty(new PHP_Reflection_AST_Property('propBA'));
         
-        $class1 = $package1->addType(new PHP_Reflection_Ast_Class('classA'));
+        $class1 = $package1->addType(new PHP_Reflection_AST_Class('classA'));
         $class1->setSourceFile($file);
-        $class1->addMethod(new PHP_Reflection_Ast_Method('methodAB'));
-        $class1->addMethod(new PHP_Reflection_Ast_Method('methodAA'));
-        $class1->addProperty(new PHP_Reflection_Ast_Property('propAB'));
-        $class1->addProperty(new PHP_Reflection_Ast_Property('propAA'));
+        $class1->addMethod(new PHP_Reflection_AST_Method('methodAB'));
+        $class1->addMethod(new PHP_Reflection_AST_Method('methodAA'));
+        $class1->addProperty(new PHP_Reflection_AST_Property('propAB'));
+        $class1->addProperty(new PHP_Reflection_AST_Property('propAA'));
         
-        $package2 = new PHP_Reflection_Ast_Package('pkgB');
+        $package2 = new PHP_Reflection_AST_Package('pkgB');
         
-        $interface1 = $package2->addType(new PHP_Reflection_Ast_Interface('interfsC'));
+        $interface1 = $package2->addType(new PHP_Reflection_AST_Interface('interfsC'));
         
-        $function1 = $package2->addFunction(new PHP_Reflection_Ast_Function('funcD'));
+        $function1 = $package2->addFunction(new PHP_Reflection_AST_Function('funcD'));
         $function1->setSourceFile($file);
         
         $interface1->setSourceFile($file);
-        $interface1->addMethod(new PHP_Reflection_Ast_Method('methodCB'));
-        $interface1->addMethod(new PHP_Reflection_Ast_Method('methodCA'));
+        $interface1->addMethod(new PHP_Reflection_AST_Method('methodCB'));
+        $interface1->addMethod(new PHP_Reflection_AST_Method('methodCA'));
         
         $visitor = new PHP_Reflection_Visitor_TestImplAbstractVisitor();        
         foreach (array($package1, $package2) as $package) {

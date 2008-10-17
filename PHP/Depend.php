@@ -50,8 +50,8 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 
 require_once 'PHP/Reflection.php';
 // TODO: Refactor and remove these dependencies
-require_once 'PHP/Reflection/Ast/Iterator/GlobalPackageFilter.php';
-require_once 'PHP/Reflection/Ast/Iterator/InternalPackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/GlobalPackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/InternalPackageFilter.php';
 
 /**
  * PHP_Depend analyzes php class files and generates metrics.
@@ -86,7 +86,7 @@ class PHP_Depend
     protected $nodeBuilder = null;
     
     /**
-     * Generated {@link PHP_Reflection_Ast_Package} objects.
+     * Generated {@link PHP_Reflection_AST_Package} objects.
      *
      * @type Iterator
      * @var Iterator $packages
@@ -126,8 +126,8 @@ class PHP_Depend
     /**
      * A composite filter for source packages.
      *
-     * @type PHP_Reflection_Ast_Iterator_CompositeFilter
-     * @var PHP_Reflection_Ast_Iterator_CompositeFilter $_codeFilter
+     * @type PHP_Reflection_AST_Iterator_CompositeFilter
+     * @var PHP_Reflection_AST_Iterator_CompositeFilter $_codeFilter
      */
     private $_codeFilter = null;
     
@@ -168,7 +168,7 @@ class PHP_Depend
      */
     public function __construct()
     {
-        $this->_codeFilter = new PHP_Reflection_Ast_Iterator_CompositeFilter();
+        $this->_codeFilter = new PHP_Reflection_AST_Iterator_CompositeFilter();
         $this->_fileFilter = new PHP_Reflection_Input_CompositeFilter();
     }
 
@@ -234,11 +234,11 @@ class PHP_Depend
      * Adds an additional code filter. These filters could be used to hide 
      * external libraries and global stuff from the PDepend output.  
      *
-     * @param PHP_Reflection_Ast_Iterator_FilterI $filter The code filter.
+     * @param PHP_Reflection_AST_Iterator_FilterI $filter The code filter.
      * 
      * @return void
      */
-    public function addCodeFilter(PHP_Reflection_Ast_Iterator_FilterI $filter)
+    public function addCodeFilter(PHP_Reflection_AST_Iterator_FilterI $filter)
     {
         $this->_codeFilter->addFilter($filter);
     }
@@ -295,7 +295,7 @@ class PHP_Depend
      * Analyzes the registered directories and returns the collection of 
      * analyzed packages.
      *
-     * @return PHP_Reflection_Ast_Iterator
+     * @return PHP_Reflection_AST_Iterator
      */
     public function analyze()
     {
@@ -328,15 +328,15 @@ class PHP_Depend
         
         // Initialize defaul filters
         if ($this->_supportBadDocumentation === false) {
-            $filter = new PHP_Reflection_Ast_Iterator_GlobalPackageFilter();
+            $filter = new PHP_Reflection_AST_Iterator_GlobalPackageFilter();
             $this->_codeFilter->addFilter($filter);
         }
         
-        $filter = new PHP_Reflection_Ast_Iterator_InternalPackageFilter();
+        $filter = new PHP_Reflection_AST_Iterator_InternalPackageFilter();
         $this->_codeFilter->addFilter($filter);
         
         // Get global filter collection
-        $staticFilter = PHP_Reflection_Ast_Iterator_StaticFilter::getInstance();
+        $staticFilter = PHP_Reflection_AST_Iterator_StaticFilter::getInstance();
         $staticFilter->addFilter($this->_codeFilter);
         
         if ($packages->count() === 0) {
@@ -446,7 +446,7 @@ class PHP_Depend
      *
      * @param string $name The package name.
      * 
-     * @return PHP_Reflection_Ast_Package
+     * @return PHP_Reflection_AST_Package
      */
     public function getPackage($name)
     {
