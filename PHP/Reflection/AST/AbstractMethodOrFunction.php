@@ -247,7 +247,7 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      * Returns an iterator with all method/function parameters.
      *
      * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
-     * nodes. Use the {@link PHP_Reflection_AST_Parameter::getPosition()} for
+     * nodes. Use the {@link PHP_Reflection_AST_ParameterI::getPosition()} for
      * the correct parameter position.
      *
      * @return PHP_Reflection_AST_Iterator
