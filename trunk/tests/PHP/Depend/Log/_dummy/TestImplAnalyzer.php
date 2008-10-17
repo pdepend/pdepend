@@ -105,11 +105,11 @@ class PHP_Depend_Log_TestImplAnalyzer
     /**
      * Returns the node metrics.
      *
-     * @param PHP_Reflection_Ast_NodeI $node context npde.
+     * @param PHP_Reflection_AST_NodeI $node context npde.
      * 
      * @return array
      */
-    public function getNodeMetrics(PHP_Reflection_Ast_NodeI $node)
+    public function getNodeMetrics(PHP_Reflection_AST_NodeI $node)
     {
         if (isset($this->nodeMetrics[$node->getName()])) {
             return $this->nodeMetrics[$node->getName()];
@@ -138,13 +138,13 @@ class PHP_Depend_Log_TestImplAnalyzer
     }
     
     /**
-     * Processes all {@link PHP_Reflection_Ast_Package} code nodes.
+     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
-     * @param PHP_Reflection_Ast_Iterator $packages All code packages.
+     * @param PHP_Reflection_AST_Iterator $packages All code packages.
      * 
      * @return void
      */
-    public function analyze(PHP_Reflection_Ast_Iterator $packages)
+    public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
     }
     

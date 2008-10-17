@@ -48,8 +48,8 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Reflection/Ast/Iterator/PackageFilter.php';
-require_once 'PHP/Reflection/Ast/Iterator/StaticFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/PackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/StaticFilter.php';
 require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
 
 /**
@@ -75,8 +75,8 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
     public function testAnalyzerCalculatesCorrectANDCValue()
     {
         // TODO: Refactory this code into PHP_Reflection and remove this dependency
-        $filter = PHP_Reflection_Ast_Iterator_StaticFilter::getInstance();
-        $filter->addFilter(new PHP_Reflection_Ast_Iterator_PackageFilter(array('library')));
+        $filter = PHP_Reflection_AST_Iterator_StaticFilter::getInstance();
+        $filter->addFilter(new PHP_Reflection_AST_Iterator_PackageFilter(array('library')));
         
         $packages = self::parseSource('/metrics/inheritance/andc');
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
@@ -96,8 +96,8 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
     public function testAnalyzerCalculatesCorrectAHHValue()
     {        
         // TODO: Refactory this code into PHP_Reflection and remove this dependency
-        $filter = PHP_Reflection_Ast_Iterator_StaticFilter::getInstance();
-        $filter->addFilter(new PHP_Reflection_Ast_Iterator_PackageFilter(array('library')));
+        $filter = PHP_Reflection_AST_Iterator_StaticFilter::getInstance();
+        $filter->addFilter(new PHP_Reflection_AST_Iterator_PackageFilter(array('library')));
         
         $packages = self::parseSource('/metrics/inheritance/ahh');
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();

@@ -58,8 +58,8 @@ require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
 require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
 require_once 'PHP/Depend/Metrics/NodeLoc/Analyzer.php';
 // @TODO: Refactor this away
-require_once 'PHP/Reflection/Ast/Iterator/GlobalPackageFilter.php';
-require_once 'PHP/Reflection/Ast/Iterator/InternalPackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/GlobalPackageFilter.php';
+require_once 'PHP/Reflection/AST/Iterator/InternalPackageFilter.php';
 
 /**
  * Test case for the phpunit logger.
@@ -121,8 +121,8 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         
         $packages = self::parseSource('/log/phpunit/');
         
-        $packages->addFilter(new PHP_Reflection_Ast_Iterator_GlobalPackageFilter());
-        $packages->addFilter(new PHP_Reflection_Ast_Iterator_InternalPackageFilter());
+        $packages->addFilter(new PHP_Reflection_AST_Iterator_GlobalPackageFilter());
+        $packages->addFilter(new PHP_Reflection_AST_Iterator_InternalPackageFilter());
         
         $logger = new PHP_Depend_Log_Phpunit_Xml();
         $logger->setLogFile($actualFile);

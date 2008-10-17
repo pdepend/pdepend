@@ -124,7 +124,7 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterForMultipleEntries()
     {
         // Create dummy objects
-        $method   = new PHP_Reflection_Ast_Method('method');
+        $method   = new PHP_Reflection_AST_Method('method');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();
@@ -151,7 +151,7 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterForCompleteLine()
     {
         // Create dummy objects
-        $method   = new PHP_Reflection_Ast_Method('method');
+        $method   = new PHP_Reflection_AST_Method('method');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();

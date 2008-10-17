@@ -245,7 +245,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     /**
      * Creates an array with dummy node analyzers
      *
-     * @param PHP_Reflection_Ast_Iterator $packages The package iterator
+     * @param PHP_Reflection_AST_Iterator $packages The package iterator
      * 
      * @return array(PHP_Depend_Metrics_NodeAwareI)
      */
