@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Reflection/AST/AbstractItem.php';
-require_once 'PHP/Reflection/AST/TypeAwareI.php';
+require_once 'PHP/Reflection/AST/ParameterI.php';
 
 /**
  * An instance of this class represents a function or method parameter within 
@@ -76,7 +76,7 @@ require_once 'PHP/Reflection/AST/TypeAwareI.php';
  */
 class PHP_Reflection_AST_Parameter 
        extends PHP_Reflection_AST_AbstractItem
-    implements PHP_Reflection_AST_TypeAwareI
+    implements PHP_Reflection_AST_ParameterI
 {
     /**
      * The parent function or method instance.
@@ -103,9 +103,9 @@ class PHP_Reflection_AST_Parameter
     /**
      * Returns the parent function or method instance or <b>null</b>
      *
-     * @return PHP_Reflection_AST_MethodOrFunctionI|null
+     * @return PHP_Reflection_AST_MethodOrFunctionI
      */
-    public function getParent()
+    public function getDeclaringMethodOrFunction()
     {
         return $this->_parent;
     }
@@ -117,7 +117,7 @@ class PHP_Reflection_AST_Parameter
      * 
      * @return void
      */
-    public function setParent(PHP_Reflection_AST_MethodOrFunctionI $parent = null)
+    public function setDeclaringMethodOrFunction(PHP_Reflection_AST_MethodOrFunctionI $parent = null)
     {
         $this->_parent = $parent;
     }
