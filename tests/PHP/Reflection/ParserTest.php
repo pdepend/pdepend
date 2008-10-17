@@ -1411,7 +1411,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count()); // +global
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(1, $classes->count());
+        $this->assertEquals(2, $classes->count());
+        
+        $classes->next();
         
         $class = $classes->current();
         $this->assertEquals('PHP_Reflection_Parser', $class->getName());
@@ -1472,7 +1474,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count());
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(1, $classes->count());
+        $this->assertEquals(2, $classes->count());
+        
+        $classes->next();
         
         $class = $classes->current();
         $this->assertNotNull($class);
