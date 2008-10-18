@@ -1123,9 +1123,7 @@ class PHP_Reflection_Parser
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
         // Skip all comment tokens
         $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
-        
-        // Offset for array values without key
-        $offset = 0;
+
         // Create an array instance
         $array  = $this->builder->buildArrayExpression();
         
@@ -1155,15 +1153,8 @@ class PHP_Reflection_Parser
                 $element->setValue($this->_parseStaticValue($tokens));
                 // Skip all following comment tokens
                 $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
-                
-                // Create a key value instance
-                
             } else {
-                // Build implicit numeric key and store previous as value
-                $key = $this->builder->buildNumericValue(self::IS_INTEGER, $offset++, false);
-                $element->setKey($key);
                 $element->setValue($keyOrValue);
-                $element->setImplicit();
             }
             
             $array->addElement($element);
