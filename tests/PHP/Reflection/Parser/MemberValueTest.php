@@ -233,9 +233,9 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesArrayWithoutKeysAndJustStaticScalarsClassProperty()
     {
         $expected = array(
-            array('key' => 0, 'value' => 42, 'implicit' => true),
-            array('key' => 1, 'value' => 23, 'implicit' => true),
-            array('key' => 2, 'value' => 17, 'implicit' => true),
+            array('key' => null, 'value' => 42),
+            array('key' => null, 'value' => 23),
+            array('key' => null, 'value' => 17),
         );
         
         $value = $this->_testParserHandlesArrayValue('class_array_no_keys_static_values_property.php');
@@ -247,15 +247,17 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
             
             // Get element key and compare result
             $key = $element->getKey();
-            $this->assertType('PHP_Reflection_AST_MemberNumericValue', $key);
-            $this->assertEquals($test['key'], $key->getValue());
+            if ($key === null) {
+                $this->assertNull($key);
+            } else {
+                $this->assertType('PHP_Reflection_AST_MemberNumericValue', $key);
+                $this->assertEquals($test['key'], $key->getValue());
+            }
             
             // Get element value and compare result
             $value = $element->getValue();
             $this->assertType('PHP_Reflection_AST_MemberNumericValue', $value);
             $this->assertEquals($test['value'], $value->getValue());
-            
-            $this->assertEquals($test['implicit'], $element->isImplicit());
         }
         
         $this->assertEquals(0, count($expected));
@@ -269,10 +271,10 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesAMixOfImplicitAndExpicitArrayKeysCorrect()
     {
         $expected = array(
-            array('key' => 42, 'value' => 'a', 'implicit' => false),
-            array('key' => 23, 'value' => true, 'implicit' => false),
-            array('key' => 17, 'value' => false, 'implicit' => false),
-            array('key' => 0,  'value' => 0.5, 'implicit' => true),
+            array('key' => 42,   'value' => 'a'),
+            array('key' => 23,   'value' => true),
+            array('key' => 17,   'value' => false),
+            array('key' => null, 'value' => 0.5),
         );
         
         $array = $this->_testParserHandlesArrayValue('class_array_static_keys_static_values_property.php');
@@ -284,15 +286,17 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
             
             // Get element key and compare result
             $key = $element->getKey();
-            $this->assertType('PHP_Reflection_AST_MemberNumericValue', $key);
-            $this->assertEquals($test['key'], $key->getValue());
+            if ($key === null) {
+                $this->assertNull($key);
+            } else {
+                $this->assertType('PHP_Reflection_AST_MemberNumericValue', $key);
+                $this->assertEquals($test['key'], $key->getValue());
+            }
             
             // Get element value and compare result
             $value = $element->getValue();
             $this->assertType('PHP_Reflection_AST_MemberValueI', $value);
             $this->assertEquals($test['value'], $value->getValue());
-            
-            $this->assertEquals($test['implicit'], $element->isImplicit());
         }
         
         $this->assertEquals(0, count($expected));
@@ -307,9 +311,9 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesArrayWithConstantKeyValuePairsCorrect()
     {
         $expected = array(
-            array('key' => 'T_NAMESPACE', 'value' => '__LINE__',  'implicit' => false),
-            array('key' => 'T_STRING',    'value' => '__FILE__',  'implicit' => false),
-            array('key' => 'T_ARRAY',     'value' => '__CLASS__', 'implicit' => false)
+            array('key' => 'T_NAMESPACE', 'value' => '__LINE__'),
+            array('key' => 'T_STRING',    'value' => '__FILE__'),
+            array('key' => 'T_ARRAY',     'value' => '__CLASS__')
         );
         
         $array = $this->_testParserHandlesArrayValue('class_array_constant_keys_and_values_property.php');
@@ -326,8 +330,6 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
             $value = $element->getValue();
             $this->assertType('PHP_Reflection_AST_ConstantValue', $value);
             $this->assertEquals($test['value'], $value->getName());
-            
-            $this->assertEquals($test['implicit'], $element->isImplicit());
         }
         
         $this->assertEquals(0, count($expected));
