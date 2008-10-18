@@ -316,8 +316,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     public function visitArrayElement(PHP_Reflection_AST_ArrayElement $elem)
     {
         // TODO Implement fireStartArrayElement()
-        $elem->getKey()->accept($this);
-        $elem->getValue()->accept($this);
+
         // TODO Implement fireEndArrayElement()
     }
     
