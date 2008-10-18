@@ -82,13 +82,6 @@ class PHP_Reflection_AST_ArrayElement extends PHP_Reflection_AST_AbstractNode
     private $_value = null;
     
     /**
-     * Was the key definition implicit. 
-     *
-     * @var boolean $_implicit
-     */
-    private $_implicit = false;
-    
-    /**
      * Constructs a new array element node.
      */
     public function __construct()
@@ -138,26 +131,6 @@ class PHP_Reflection_AST_ArrayElement extends PHP_Reflection_AST_AbstractNode
     public function setValue(PHP_Reflection_AST_ExpressionI $value)
     {
         $this->_value = $value;
-    }
-    
-    /**
-     * Is the key definition for this array element implicit.
-     *
-     * @return boolean
-     */
-    public function isImplicit()
-    {
-        return $this->_implicit;
-    }
-    
-    /**
-     * Marks the key definition for this array element as implicit.
-     *
-     * @return void
-     */
-    public function setImplicit()
-    {
-        $this->_implicit = true;
     }
     
     /**
