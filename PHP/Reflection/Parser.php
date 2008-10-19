@@ -1350,7 +1350,7 @@ class PHP_Reflection_Parser
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
                         // Create a dependency class
-                        $dependency = $this->builder->buildClassOrInterface($token[1]);
+                        $dependency = $this->builder->buildProxySubject($token[1]);
 
                         $callable->addDependency($dependency);
                     }
@@ -1594,7 +1594,7 @@ class PHP_Reflection_Parser
         $type = $this->_parseTypeAnnotation($mof->getDocComment(), 'return');
         
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
-            $returnType = $this->builder->buildClassOrInterface($type[0]);
+            $returnType = $this->builder->buildProxySubject($type[0]);
             $mof->setReturnType($returnType);
         }
     }

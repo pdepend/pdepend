@@ -209,7 +209,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @return PHP_Reflection_AST_Class|PHP_Reflection_AST_Interface 
      *         The created class or interface instance.
      */
-    public function buildClassOrInterface($name)
+    public function buildProxySubject($name)
     {
         $cls = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
