@@ -85,7 +85,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @return PHP_Reflection_AST_Class|PHP_Reflection_AST_Interface 
      *         The created class or interface instance.
      */
-    function buildClassOrInterface($name);
+    function buildProxySubject($name);
     
     /**
      * Builds a new code class instance.
