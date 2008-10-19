@@ -50,6 +50,8 @@ require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
+require_once 'PHP/Depend/Util/NodeSet.php';
+
 /**
  * This analyzer collects coupling values for the hole project. It calculates 
  * all function and method <b>calls</b> and the <b>fanout</b>, that means the 
@@ -160,23 +162,19 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     {
         $this->fireStartFunction($function);
         
-        $fanouts = array();
-        if (($type = $function->getReturnType()) !== null) {
-            $fanouts[] = $type;
-            ++$this->_fanout;
+        $fanoutSet = new PHP_Depend_Util_NodeSet();
+        
+        if (($returnType = $function->getReturnType()) !== null) {
+            $fanoutSet->add($returnType);
         }
-        foreach ($function->getExceptionTypes() as $type) {
-            if (in_array($type, $fanouts, true) === false) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
-            }
+        foreach ($function->getExceptionTypes() as $exceptionType) {
+            $fanoutSet->add($exceptionType);
         }
-        foreach ($function->getDependencies() as $type) {
-            if (in_array($type, $fanouts, true) === false) {
-                ++$this->_fanout;
-            }
+        foreach ($function->getDependencies() as $dependency) {
+            $fanoutSet->add($dependency);
         }
         
+        $this->_fanout += $fanoutSet->size();
         $this->_countCalls($function);
         
         $this->fireEndFunction($function);
@@ -194,34 +192,32 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     {
         $this->fireStartMethod($method);
         
-        $parent = $method->getParent();
+        $parentNode = $method->getParent();
+        $fanoutSet  = new PHP_Depend_Util_NodeSet();
         
-        $fanouts = array();
         if (($type = $method->getReturnType()) !== null) {
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
+            if (!$type->isSubtypeOf($parentNode) && 
+                !$parentNode->isSubtypeOf($type)) {
+
+                $fanoutSet->add($type);
             }
         }
         foreach ($method->getExceptionTypes() as $type) {
-            if (in_array($type, $fanouts, true) === true) {
-                continue;
-            }
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
+            if (!$type->isSubtypeOf($parentNode) && 
+                !$parentNode->isSubtypeOf($type)) {
+
+                $fanoutSet->add($type);
             }
         }
         foreach ($method->getDependencies() as $type) {
-            if (in_array($type, $fanouts, true) === true) {
-                continue;
-            }
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
+            if (!$type->isSubtypeOf($parentNode) && 
+                !$parentNode->isSubtypeOf($type)) {
+                
+                $fanoutSet->add($type);
             }
         }
         
+        $this->_fanout += $fanoutSet->size();
         $this->_countCalls($method);
         
         $this->fireEndMethod($method);
@@ -245,7 +241,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         
             // Only increment if these types are not part of the same hierarchy
             if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                ++$this->_fanout;
+                ++$this->_fanout; 
             }
         }
         
