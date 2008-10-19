@@ -441,14 +441,9 @@ class PHP_Reflection_Parser
                 break;
                 
             case self::T_VARIABLE:
-                foreach ($this->_parsePropertyList($tokens) as $property) {
-                    $class->addProperty($property);
+                foreach ($this->_parsePropertyDeclarationList($tokens) as $prop) {
+                    $class->addProperty($prop);
                 }
-/*                
-                while ($this->tokenizer->peek() === self::T_COMMA) {
-                    $this->_consumeToken(self::T_COMMA);
-                }
-*/
                 break;
             
             case self::T_CONST:
@@ -738,7 +733,7 @@ class PHP_Reflection_Parser
      * 
      * @return PHP_Reflection_AST_Property
      */
-    private function _parsePropertyList(array &$tokens)
+    private function _parsePropertyDeclarationList(array &$tokens)
     {
         $properties = array($this->_parsePropertyDeclaration($tokens));
         
