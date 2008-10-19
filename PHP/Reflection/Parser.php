@@ -347,7 +347,7 @@ class PHP_Reflection_Parser
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
         
-        $this->_prepareMOF($function);
+        $this->_prepareMethodOrFunction($function);
                     
         $this->reset();        
     }
@@ -789,7 +789,7 @@ class PHP_Reflection_Parser
         $method->setPosition($this->_methodPosition++);
         $method->setModifiers($this->_modifiers);
                 
-        $this->_prepareMOF($method);
+        $this->_prepareMethodOrFunction($method);
                 
         $this->reset();
         
@@ -1575,23 +1575,21 @@ class PHP_Reflection_Parser
      * 
      * @return void
      */
-    private function _prepareMOF(PHP_Reflection_AST_AbstractMethodOrFunction $mof)
+    private function _prepareMethodOrFunction(
+                                PHP_Reflection_AST_AbstractMethodOrFunction $mof)
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {
             return; 
         }
-        
+ 
         // Get all @throws Types
         $throws = $this->_parseThrowsAnnotations($mof->getDocComment());
         // Append all exception types
         foreach ($throws as $type) {
-            //$classOrInterface = $this->builder->buildClassOrInterfaceProxy($type);
-            //$mof->addExceptionType($classOrInterface);
-            $exceptionType = $this->builder->buildClassOrInterface($type);
-            $mof->addExceptionType($exceptionType);
+            $classOrInterface = $this->builder->buildClassOrInterfaceProxy($type);
+            $mof->addExceptionType($classOrInterface);
         }
-        
         // Get return annotation
         $type = $this->_parseTypeAnnotation($mof->getDocComment(), 'return');
         
