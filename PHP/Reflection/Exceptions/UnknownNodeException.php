@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage AST
+ * @subpackage Exceptions
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,91 +46,28 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ClassOrInterfaceI.php';
-
 /**
- * This interface represents a class node within the syntax tree.
+ * This type of exception is thrown when someone tries to access a child node 
+ * directly, that doesn't exist.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage AST
+ * @subpackage Exceptions
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_ClassI extends PHP_Reflection_AST_ClassOrInterfaceI
+class PHP_Reflection_Exceptions_UnknownNodeException extends RuntimeException
 {
     /**
-     * Has this class the final modifier.
-     */
-    const IS_FINAL = ReflectionClass::IS_FINAL;
-    
-    /**
-     * Is this class explicit marked with the abstract modifier.
-     */
-    const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
-    
-    /**
-     * Is this class implicit marked due to its children.
-     */
-    const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
-    
-    /**
-     * Returns the declared modifiers for this class.
+     * Constructs a new unknown node exception.
      *
-     * @return integer
+     * @param string $name The name of the unknown node.
      */
-    function getModifiers();
-    
-    /**
-     * Returns <b>true</b> if this class is markes as final.
-     *
-     * @return boolean
-     */
-    function isFinal();
-    
-    /**
-     * Returns the parent class or <b>null</b> if this class has no parent.
-     *
-     * @return PHP_Reflection_AST_ClassI
-     */
-    function getParentClass();
-    
-    /**
-     * Returns a node iterator with all {@link PHP_Reflection_AST_InterfaceI}
-     * nodes this class implements.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     */
-    function getImplementedInterfaces();
-    
-    /**
-     * Returns an iterator with all {@link PHP_Reflection_AST_ClassI} nodes
-     * that extend this class.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     */
-    function getChildClasses();
-    
-    /**
-     * Will return a class property for the given node. Please note that this
-     * method requires a property name without leading '$' character.
-     *
-     * @param string $name The property name.
-     * 
-     * @return PHP_Reflection_AST_PropertyI The property instance.
-     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
-     *                                                        for the given name.
-     */
-    function getProperty($name);
-    
-    /**
-     * Returns a node iterator with all {@link PHP_Reflection_AST_PropertyI}
-     * nodes for this class.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     */
-    function getProperties();
+    public function __construct($name)
+    {
+        parent::__construct(sprintf('Unknown child node requested: %s', $name));
+    }
 }
