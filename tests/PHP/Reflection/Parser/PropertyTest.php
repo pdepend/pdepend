@@ -74,6 +74,48 @@ class PHP_Reflection_Parser_PropertyTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that the parser handles a comma separated list of properties correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesCommaSeparatedProperties()
+    {
+        $packages = self::parseSource("/parser/properties/comma_separated_list.php");
+        self::assertEquals(1, $packages->count());
+        
+        $package = $packages->current();
+        self::assertEquals(1, $package->getClasses()->count());
+        
+        $class = $package->getClasses()->current();
+        self::assertEquals(7, $class->getProperties()->count());
+        
+        $staticPrivate = PHP_Reflection_AST_PropertyI::IS_PRIVATE | PHP_Reflection_AST_PropertyI::IS_STATIC;
+        $protected     = PHP_Reflection_AST_PropertyI::IS_PROTECTED; 
+        
+        $expected = array(
+            array('name' => '_a', 'value' => 0, 'modifiers' => $staticPrivate, 'comment' => '/** Test comment private. */'),
+            array('name' => '_b', 'value' => 1, 'modifiers' => $staticPrivate, 'comment' => '/** Test comment private. */'),
+            array('name' => '_c', 'value' => 2, 'modifiers' => $staticPrivate, 'comment' => '/** Test comment private. */'),
+            array('name' => 'foo', 'value' => 0, 'modifiers' => $protected, 'comment' => '/** Test comment $foo. */'),
+            array('name' => 'bar', 'value' => null, 'modifiers' => $protected, 'comment' => '/** Test comment $foo. */'),
+            array('name' => 'foobar', 'modifiers' => $protected, 'comment' => '/** Test comment $foo. */'),
+            array('name' => 'barfoo', 'modifiers' => $protected, 'comment' => '/** Test comment $foo. */'),
+        );
+        
+        foreach ($expected as $info)
+        {
+            $property = $class->getProperty($info['name']);
+            $this->assertNotNull($property);
+            $this->assertEquals($info['modifiers'], $property->getModifiers());
+            $this->assertEquals($info['comment'], $property->getDocComment());
+            
+            if (array_key_exists('value', $info)) {
+                $this->assertEquals($info['value'], $property->getValue()->getValue());
+            }
+        }
+    }
+    
+    /**
      * Parses a source file and extracts the first class property instance.
      *
      * @param string $file The source file.

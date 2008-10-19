@@ -441,7 +441,9 @@ class PHP_Reflection_Parser
                 break;
                 
             case self::T_VARIABLE:
-                $class->addProperty($this->_parsePropertyDeclaration($tokens));
+                foreach ($this->_parsePropertyList($tokens) as $property) {
+                    $class->addProperty($property);
+                }
 /*                
                 while ($this->tokenizer->peek() === self::T_COMMA) {
                     $this->_consumeToken(self::T_COMMA);
@@ -714,6 +716,48 @@ class PHP_Reflection_Parser
     }
     
     /**
+     * Parses a single class property declaration:
+     * 
+     * <code>
+     * class PHP_Reflection_Parser {
+     *     private $_package = 'php::reflection';
+     * }
+     * </code>
+     * 
+     * or a list of class properties:
+     * 
+     * <code>
+     * class PHP_Reflection_Parser {
+     *     private $_package = null,
+     *             $_class = null,
+     *             $_interface = null;
+     * }
+     * </code>
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     * 
+     * @return PHP_Reflection_AST_Property
+     */
+    private function _parsePropertyList(array &$tokens)
+    {
+        $properties = array($this->_parsePropertyDeclaration($tokens));
+        
+        while ($this->tokenizer->peek() === self::T_COMMA) {
+            $this->_consumeToken(self::T_COMMA, $tokens);
+            $this->_consumeComments($tokens);
+            
+            $properties[] = $this->_parsePropertyDeclaration($tokens);
+            
+            $this->_consumeComments($tokens);
+        }
+        
+        $this->_consumeToken(self::T_SEMICOLON, $tokens);
+        $this->reset();
+        
+        return $properties;
+    }
+    
+    /**
      * Parses a class property declaration.
      * 
      * <code>
@@ -741,8 +785,6 @@ class PHP_Reflection_Parser
                 
         $this->_prepareProperty($property);
         
-        $this->reset();
-        
         $this->_consumeComments($tokens);
         
         // Check for an equal sign
@@ -754,8 +796,6 @@ class PHP_Reflection_Parser
         
             $this->_consumeComments($tokens);
         }
-        
-        $this->_consumeToken(self::T_SEMICOLON, $tokens);
         
         return $property;
     }
