@@ -540,7 +540,7 @@ class PHP_Reflection_Parser
         $interface->setPosition($this->_typePosition++);
         
         // Skip comment tokens
-        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_consumeComments();
     
         // Check for parent interfaces
         if ($this->tokenizer->peek() === self::T_EXTENDS) {
@@ -719,7 +719,10 @@ class PHP_Reflection_Parser
         // Get property identifier
         $token = $this->tokenizer->token();
         
-        $property = $this->builder->buildProperty($token[1], $token[2]);
+        $name = substr($token[1], 1);
+        $line = $token[2];
+        
+        $property = $this->builder->buildProperty($name, $line);
         $property->setDocComment($this->_comment);
         $property->setModifiers($this->_modifiers);
         $property->setEndLine($token[2]);
@@ -738,8 +741,10 @@ class PHP_Reflection_Parser
             $property->setValue($this->_parseStaticValue($tokens));
         
             $this->_consumeComments($tokens);
-            $this->_consumeToken(self::T_SEMICOLON, $tokens);
         }
+        
+        $this->_consumeToken(self::T_SEMICOLON, $tokens);
+        
         return $property;
     }
     
