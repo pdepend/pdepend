@@ -188,11 +188,11 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
     {
         $builder = new PHP_Reflection_Builder_Default();
         
-        $type0 = $builder->buildClassOrInterface('FooBar');
+        $type0 = $builder->buildProxySubject('FooBar');
         $this->assertType('PHP_Reflection_AST_Class', $type0);
         $type1 = $builder->buildInterface('FooBar');
         $this->assertType('PHP_Reflection_AST_Interface', $type1);
-        $type2 = $builder->buildClassOrInterface('FooBar');
+        $type2 = $builder->buildProxySubject('FooBar');
         $this->assertType('PHP_Reflection_AST_Interface', $type2);
     }
     
@@ -246,7 +246,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $function = $builder->buildFunction('bar', 0);
-        $type0    = $builder->buildClassOrInterface('FooBar');
+        $type0    = $builder->buildProxySubject('FooBar');
         
         $function->addDependency($type0);
         $this->assertEquals(1, $function->getDependencies()->count());
@@ -267,7 +267,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $method = $builder->buildMethod('bar', 0);
-        $type0  = $builder->buildClassOrInterface('FooBar');
+        $type0  = $builder->buildProxySubject('FooBar');
         
         $method->addDependency($type0);
         $this->assertEquals(1, $method->getDependencies()->count());
@@ -288,7 +288,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $param  = $builder->buildParameter('$bar', 0);
-        $type0  = $builder->buildClassOrInterface('FooBar');
+        $type0  = $builder->buildProxySubject('FooBar');
         
         $this->assertNull($param->getType());
         $param->setType($type0);
@@ -368,7 +368,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $property = $builder->buildProperty('$bar', 0);
-        $type0    = $builder->buildClassOrInterface('PDepend');
+        $type0    = $builder->buildProxySubject('PDepend');
         
         $property->setType($type0);
         $this->assertSame($type0, $property->getType());
@@ -388,7 +388,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $method = $builder->buildMethod('bar', 0);
-        $type0  = $builder->buildClassOrInterface('PDepend');
+        $type0  = $builder->buildProxySubject('PDepend');
         
         $method->setReturnType($type0);
         $this->assertSame($type0, $method->getReturnType());
@@ -408,7 +408,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $method = $builder->buildMethod('bar', 0);
-        $type0  = $builder->buildClassOrInterface('PDepend');
+        $type0  = $builder->buildProxySubject('PDepend');
         
         $method->addExceptionType($type0);
         $this->assertEquals(1, $method->getExceptionTypes()->count());
@@ -430,7 +430,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $function = $builder->buildFunction('bar', 0);
-        $type0    = $builder->buildClassOrInterface('PDepend');
+        $type0    = $builder->buildProxySubject('PDepend');
         
         $function->setReturnType($type0);
         $this->assertSame($type0, $function->getReturnType());
@@ -450,7 +450,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $function = $builder->buildFunction('bar', 0);
-        $type0    = $builder->buildClassOrInterface('PDepend');
+        $type0    = $builder->buildProxySubject('PDepend');
         
         $function->addExceptionType($type0);
         $this->assertEquals(1, $function->getExceptionTypes()->count());
@@ -625,7 +625,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $interfaceA = $builder->buildInterface('PHP_Reflection_TokenizerI');
-        $interfaceB = $builder->buildClassOrInterface('PHP_Reflection_tokenizeri');
+        $interfaceB = $builder->buildProxySubject('PHP_Reflection_tokenizeri');
         
         $this->assertSame($interfaceA, $interfaceB);
     }
@@ -640,7 +640,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $classA = $builder->buildClass('PHP_Reflection_Parser');
-        $classB = $builder->buildClassOrInterface('PHP_Reflection_parser');
+        $classB = $builder->buildProxySubject('PHP_Reflection_parser');
         
         $this->assertSame($classA, $classB);
     }
@@ -654,8 +654,8 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
     {
         $builder = new PHP_Reflection_Builder_Default();
         
-        $classA = $builder->buildClassOrInterface('PHP_Reflection_Parser');
-        $classB = $builder->buildClassOrInterface('PHP_Reflection_parser');
+        $classA = $builder->buildProxySubject('PHP_Reflection_Parser');
+        $classB = $builder->buildProxySubject('PHP_Reflection_parser');
         
         $this->assertSame($classA, $classB);
     }
