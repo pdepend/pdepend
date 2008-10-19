@@ -427,23 +427,26 @@ class PHP_Reflection_Parser
         // Set context class instance
         $this->_classOrInterface = $class;
         
-        $token = $this->tokenizer->next();
-        $curly = 0;
-        
-        $tokens = array($token);
+        $curly  = 0;
+        $tokens = array();
         
         // Method position within the type body
         $this->_methodPosition = 0;
         
-        while ($token !== self::T_EOF) {
+        while ($this->tokenizer->peek() !== self::T_EOF) {
             
-            switch ($token[0]) {
+            switch ($this->tokenizer->peek()) {
             case self::T_FUNCTION:
                 $class->addMethod($this->_parseMethodDeclaration($tokens));
                 break;
                 
             case self::T_VARIABLE:
                 $class->addProperty($this->_parsePropertyDeclaration($tokens));
+/*                
+                while ($this->tokenizer->peek() === self::T_COMMA) {
+                    $this->_consumeToken(self::T_COMMA);
+                }
+*/
                 break;
             
             case self::T_CONST:
@@ -452,44 +455,60 @@ class PHP_Reflection_Parser
                     
             case self::T_CURLY_BRACE_OPEN:
                 ++$curly;
+                $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
                 $this->reset();
                 break;
                     
             case self::T_CURLY_BRACE_CLOSE:
                 --$curly;
+                $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
                 $this->reset();
                 break;
                 
             case self::T_ABSTRACT:
+                $this->_consumeToken(self::T_ABSTRACT, $tokens);
                 $this->_modifiers |= ReflectionMethod::IS_ABSTRACT;
                 break;
                 
             case self::T_VAR:
+                $this->_consumeToken(self::T_VAR, $tokens);
+                $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
+                break;
+                
             case self::T_PUBLIC:
+                $this->_consumeToken(self::T_PUBLIC, $tokens);
                 $this->_modifiers |= ReflectionMethod::IS_PUBLIC;
                 break;
                 
             case self::T_PRIVATE:
+                $this->_consumeToken(self::T_PRIVATE, $tokens);
                 $this->_modifiers |= ReflectionMethod::IS_PRIVATE;
                 break;
                 
             case self::T_PROTECTED:
+                $this->_consumeToken(self::T_PROTECTED, $tokens);
                 $this->_modifiers |= ReflectionMethod::IS_PROTECTED;
                 break;
                 
             case self::T_STATIC:
+                $this->_consumeToken(self::T_STATIC, $tokens);
                 $this->_modifiers |= ReflectionMethod::IS_STATIC;
                 break;
                 
             case PHP_Reflection_TokenizerI::T_FINAL:
+                $this->_consumeToken(self::T_FINAL, $tokens);
                 $this->_modifiers |= ReflectionMethod::IS_FINAL;
                 break;
                 
             case self::T_DOC_COMMENT:
+                $token = $this->_consumeToken(self::T_DOC_COMMENT, $tokens);
                 $this->_comment = $token[1];
                 break;
             
             default:
+                $token    = $this->tokenizer->next();
+                $tokens[] = $token;
+                
                 // TODO: Handle/log unused tokens
                 $this->reset();
                 break;
@@ -502,9 +521,6 @@ class PHP_Reflection_Parser
                 $class->setTokens($tokens);
                 // Stop processing
                 break;
-            } else {
-                $token    = $this->tokenizer->next();
-                $tokens[] = $token;
             }
         }
         
@@ -585,9 +601,6 @@ class PHP_Reflection_Parser
             
             switch ($this->tokenizer->peek()) {
             case self::T_FUNCTION:
-                // Consume <function> token
-                $this->_consumeToken(self::T_FUNCTION, $tokens);
-                
                 // We know all interface methods are abstract and public
                 $this->_modifiers |= PHP_Reflection_AST_MethodI::IS_ABSTRACT;
                 $this->_modifiers |= PHP_Reflection_AST_MethodI::IS_PUBLIC;
@@ -600,9 +613,6 @@ class PHP_Reflection_Parser
                 break;
             
             case self::T_CONST:
-                // Consume <const> token
-                $this->_consumeToken(self::T_CONST, $tokens);
-                
                 // Add constant node
                 $interface->addConstant($this->_parseConstantDeclaration($tokens));
                 break;
@@ -678,7 +688,9 @@ class PHP_Reflection_Parser
      */
     private function _parseConstantDeclaration(array &$tokens)
     {
-        // Get constant identifier
+        $this->_consumeToken(self::T_CONST, $tokens);
+        $this->_consumeComments($tokens);
+        
         $token = $this->_consumeToken(self::T_STRING, $tokens);
 
         $constant = $this->builder->buildTypeConstant($token[1]);
@@ -717,7 +729,7 @@ class PHP_Reflection_Parser
     private function _parsePropertyDeclaration(array &$tokens)
     {
         // Get property identifier
-        $token = $this->tokenizer->token();
+        $token = $this->_consumeToken(self::T_VARIABLE);
         
         $name = substr($token[1], 1);
         $line = $token[2];
@@ -757,6 +769,9 @@ class PHP_Reflection_Parser
      */
     private function _parseMethodDeclaration(array &$tokens)
     {
+        // Consume <function> token
+        $this->_consumeToken(self::T_FUNCTION, $tokens);
+                
         // Skip comments after 'function' token
         $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         
