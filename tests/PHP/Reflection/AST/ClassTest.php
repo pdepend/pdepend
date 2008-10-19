@@ -355,6 +355,41 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
     }
     
     /**
+     * Tests the getProperty() method.
+     *
+     * @return void
+     */
+    public function testGetProperyName()
+    {
+        $class = new PHP_Reflection_AST_Class('clazz');
+        $class->addProperty(new PHP_Reflection_AST_Property('a'));
+        $class->addProperty(new PHP_Reflection_AST_Property('b'));
+        
+        $property = $class->getProperty('b');
+        $this->assertNotNull($property);
+        $this->assertEquals('b', $property->getName());
+    }
+    
+    /**
+     * Tests that {@link PHP_Reflection_AST_Class::getProperty()} throws an 
+     * exception for an unknown property name.
+     *
+     * @return void
+     */
+    public function testGetPropertyWithInvalidNameThrowsExceptionFail()
+    {
+        $class = new PHP_Reflection_AST_Class('clazz');
+        $class->addProperty(new PHP_Reflection_AST_Property('a'));
+        
+        $this->setExpectedException(
+            'PHP_Reflection_Exceptions_UnknownNodeException',
+            'Unknown child node requested: b'
+        );
+        
+        $property = $class->getProperty('b');
+    }
+    
+    /**
      * Checks the {@link PHP_Reflection_AST_Class::isSubtypeOf()} method.
      *
      * @return void

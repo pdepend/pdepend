@@ -49,6 +49,7 @@
 require_once 'PHP/Reflection/AST/AbstractClassOrInterface.php';
 require_once 'PHP/Reflection/AST/ClassI.php';
 require_once 'PHP/Reflection/AST/Iterator.php';
+require_once 'PHP/Reflection/Exceptions/UnknownNodeException.php';
 
 /**
  * Represents a php class node.
@@ -292,6 +293,26 @@ class PHP_Reflection_AST_Class
         }
 
         return new PHP_Reflection_AST_Iterator($dependencies);
+    }
+    
+    /**
+     * Will return a class property for the given node. Please note that this
+     * method requires a property name without leading '$' character.
+     *
+     * @param string $name The property name.
+     * 
+     * @return PHP_Reflection_AST_PropertyI The property instance.
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    public function getProperty($name)
+    {
+        foreach ($this->_properties as $property) {
+            if ($property->getName() === $name) {
+                return $property;
+            }
+        }
+        throw new PHP_Reflection_Exceptions_UnknownNodeException($name);
     }
     
     /**
