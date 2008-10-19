@@ -151,14 +151,14 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     }
 
     /**
-     * Adds the given {@link PHP_Reflection_AST_AbstractClassOrInterface} object
+     * Adds the given {@link PHP_Reflection_AST_ClassOrInterfaceI} object
      * as dependency.
      *
-     * @param PHP_Reflection_AST_AbstractClassOrInterface $type A type this function depends on.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $type A type this function depends on.
      *
      * @return void
      */
-    public function addDependency(PHP_Reflection_AST_AbstractClassOrInterface $type)
+    public function addDependency(PHP_Reflection_AST_ClassOrInterfaceI $type)
     {
         if (in_array($type, $this->dependencies, true) === false) {
             $this->dependencies[] = $type;
@@ -166,14 +166,14 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     }
 
     /**
-     * Removes the given {@link PHP_Reflection_AST_AbstractClassOrInterface} 
+     * Removes the given {@link PHP_Reflection_AST_ClassOrInterfaceI} 
      * object from the dependency list.
      *
-     * @param PHP_Reflection_AST_AbstractClassOrInterface $type A type to remove.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $type A type to remove.
      *
      * @return void
      */
-    public function removeDependency(PHP_Reflection_AST_AbstractClassOrInterface $type)
+    public function removeDependency(PHP_Reflection_AST_ClassOrInterfaceI $type)
     {
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list
