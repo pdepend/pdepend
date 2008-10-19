@@ -310,25 +310,25 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $this->assertEquals($expected, $actual);
         
         $expectedValues = array(
-            '$property_with_comment'  =>  array(
+            'property_with_comment'  =>  array(
                 'loc'    =>  1,
                 'cloc'   =>  0,
                 'eloc'   =>  0,
                 'ncloc'  =>  1,
             ),
-            '$property_without_doc_comment'  =>  array(
+            'property_without_doc_comment'  =>  array(
                 'loc'    =>  1,
                 'cloc'   =>  0,
                 'eloc'   =>  0,
                 'ncloc'  =>  1,
             ),
-            '$property_without_comment'  =>  array(
+            'property_without_comment'  =>  array(
                 'loc'    =>  1,
                 'cloc'   =>  0,
                 'eloc'   =>  0,
                 'ncloc'  =>  1,
             ),
-            '$another_property_with_comment'  =>  array(
+            'another_property_with_comment'  =>  array(
                 'loc'    =>  1,
                 'cloc'   =>  0,
                 'eloc'   =>  0,
