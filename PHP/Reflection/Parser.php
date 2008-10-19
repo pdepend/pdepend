@@ -1350,7 +1350,7 @@ class PHP_Reflection_Parser
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
                         // Create a dependency class
-                        $dependency = $this->builder->buildProxySubject($token[1]);
+                        $dependency = $this->builder->buildClassOrInterfaceProxy($token[1]);
 
                         $callable->addDependency($dependency);
                     }

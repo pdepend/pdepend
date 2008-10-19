@@ -195,11 +195,11 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     /**
      * Sets the return type of this callable.
      *
-     * @param PHP_Reflection_AST_AbstractClassOrInterface $returnType The return type of this.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $returnType The return type of this.
      *
      * @return void
      */
-    public function setReturnType(PHP_Reflection_AST_AbstractClassOrInterface $returnType)
+    public function setReturnType(PHP_Reflection_AST_ClassOrInterfaceI $returnType)
     {
         $this->_returnType = $returnType;
     }
@@ -232,11 +232,11 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     /**
      * Removes an exception from the list of thrown exception types.
      *
-     * @param PHP_Reflection_AST_AbstractClassOrInterface $exception Thrown exception.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $exception Thrown exception.
      *
      * @return void
      */
-    public function removeExceptionType(PHP_Reflection_AST_AbstractClassOrInterface $exception)
+    public function removeExceptionType(PHP_Reflection_AST_ClassOrInterfaceI $exception)
     {
         if (($i = array_search($exception, $this->_exceptionTypes, true))) {
             unset($this->_exceptionTypes[$i]);
@@ -260,11 +260,11 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     /**
      * Adds a parameter to the list of method/function parameters.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The parameter instance.
      *
-     * @return PHP_Reflection_AST_Parameter
+     * @return PHP_Reflection_AST_ParameterI
      */
-    public function addParameter(PHP_Reflection_AST_Parameter $parameter)
+    public function addParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         if ($parameter->getDeclaringMethodOrFunction() !== null) {
             $parameter->getDeclaringMethodOrFunction()->removeParameter($parameter);
@@ -280,11 +280,11 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     /**
      * Removes the parameter from this callable.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The parameter instance.
      *
      * @return void
      */
-    public function removeParameter(PHP_Reflection_AST_Parameter $parameter)
+    public function removeParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         if (($i = array_search($parameter, $this->_parameters, true)) !== false) {
             // Remove this parent
