@@ -215,15 +215,18 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         $pkg = $this->extractPackageName($name);
         
         $typeID = strtolower($cls);
-        
         if (isset($this->classes[$typeID][$pkg])) {
             $instance = $this->classes[$typeID][$pkg];
         } else if (isset($this->interfaces[$typeID][$pkg])) {
             $instance = $this->interfaces[$typeID][$pkg];
-        } else if (isset($this->classes[$typeID])) {
-            $instance = reset($this->classes[$typeID]);
-        } else if (isset($this->interfaces[$typeID])) {
-            $instance = reset($this->interfaces[$typeID]);
+        } else if ($pkg === self::GLOBAL_PACKAGE) {
+            if (isset($this->classes[$typeID])) {
+                $instance = reset($this->classes[$typeID]);
+            } else if (isset($this->interfaces[$typeID])) {
+                $instance = reset($this->interfaces[$typeID]);
+            } else {
+                $instance = $this->buildClass($name);
+            }
         } else {
             $instance = $this->buildClass($name);
         }
@@ -277,7 +280,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $class = $this->classes[$typeID][self::GLOBAL_PACKAGE];
             
             unset($this->classes[$typeID][self::GLOBAL_PACKAGE]);
-            
+
             $this->classes[$typeID][$pkg] = $class;
             
             $this->buildPackage($pkg)->addType($class);
@@ -666,13 +669,16 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function getPackages()
     {
-        // Create a package array copy
-        $packages = $this->packages;
-        
         // Finally realize proxies
         foreach ($this->_proxyCache as $proxy) {
-            $proxy->getPackage();
+            $package = $proxy->getPackage();
+            if (in_array($package, $this->packages, true) === false) {
+                $this->packages[] = $package;
+            }
         }
+        
+        // Create a package array copy
+        $packages = $this->packages;
         
         // Remove default package if empty
         if ($this->defaultPackage->getTypes()->count() === 0  
@@ -753,7 +759,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     protected function extractPackageName($qualifiedName)
     {
         $name = $qualifiedName;
-        if (preg_match('#^::[a-z_][a-z0-9_]+$#i', $name)) {
+        if (preg_match('#^::[a-z_][a-z0-9_]*$#i', $name)) {
             $name = substr($name, 2);
         }
         
@@ -794,6 +800,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     protected function replaceClassReferences(PHP_Reflection_AST_Class $class,
                                               PHP_Reflection_AST_Interface $iface)
     {
+echo 'Replace(class: ', $class->getName(), ', interface: ', $iface->getName(), ')', PHP_EOL;
         foreach ($this->functions as $function) {
             foreach ($function->getDependencies() as $dependency) {
                 if ($dependency === $class) {

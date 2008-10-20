@@ -3,13 +3,13 @@
  * @package php::reflection
  */
 class PHP_Reflection {
-    private $_property = ReflectionProperty::IS_PUBLIC;
+    private $_property = myReflectionProperty::IS_PUBLIC;
 }
 
 /**
  * @package php::reflection
  */
-class ReflectionProperty {
+class myReflectionProperty {
     const IS_PUBLIC = 16;
 }
 ?>
