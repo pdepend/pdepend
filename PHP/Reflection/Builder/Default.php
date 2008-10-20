@@ -363,28 +363,21 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         $ife = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
         
-        $typeID = strtolower($ife);
+        $localName = strtolower($ife);
         
         $class = null;
-        if (isset($this->classes[$typeID][$pkg])) {
-            $class = $this->classes[$typeID][$pkg];
-        } else if (isset($this->classes[$typeID][self::GLOBAL_PACKAGE])) {
-            // TODO: Implement something like: allwaysIsClass(),
-            //       This could be usefull for class names detected by 'new ...'
-            $class = $this->classes[$typeID][self::GLOBAL_PACKAGE];
-        }
-        
-        if ($class !== null) {
+        if (isset($this->classes[$localName][$pkg])) {
+            $class   = $this->classes[$localName][$pkg];
             $package = $class->getPackage();
             
             // Only reparent if the found class is part of the default package
             if ($package === $this->defaultPackage) {
                 $package->removeType($class);
             
-                unset($this->classes[$typeID][$package->getName()]);
+                unset($this->classes[$localName][$package->getName()]);
                 
-                if (count($this->classes[$typeID]) === 0) {
-                    unset($this->classes[$typeID]);
+                if (count($this->classes[$localName]) === 0) {
+                    unset($this->classes[$localName]);
                 }
             } else {
                 // Unset class reference
@@ -393,22 +386,22 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         }
         
         // 1) check for an equal interface version
-        if (isset($this->interfaces[$typeID][$pkg])) {
-            $interface = $this->interfaces[$typeID][$pkg];
+        if (isset($this->interfaces[$localName][$pkg])) {
+            $interface = $this->interfaces[$localName][$pkg];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->interfaces[$typeID][self::GLOBAL_PACKAGE])) {
-            $interface = $this->interfaces[$typeID][self::GLOBAL_PACKAGE];
+        } else if (isset($this->interfaces[$localName][self::GLOBAL_PACKAGE])) {
+            $interface = $this->interfaces[$localName][self::GLOBAL_PACKAGE];
             
-            unset($this->interfaces[$typeID][self::GLOBAL_PACKAGE]);
+            unset($this->interfaces[$localName][self::GLOBAL_PACKAGE]);
             
-            $this->interfaces[$typeID][$pkg] = $interface;
+            $this->interfaces[$localName][$pkg] = $interface;
             
             $this->buildPackage($pkg)->addType($interface);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->interfaces[$typeID]) && $this->isDefault($pkg)) {
-            $interface = reset($this->interfaces[$typeID]);
+        } else if (isset($this->interfaces[$localName]) && $this->isDefault($pkg)) {
+            $interface = reset($this->interfaces[$localName]);
             
             // 4) Create a new interface for the given package
         } else {
@@ -417,14 +410,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
-            $this->interfaces[$typeID][$pkg] = $interface;
+            $this->interfaces[$localName][$pkg] = $interface;
             
             // Append interface to package
             $this->buildPackage($pkg)->addType($interface);
-        }
-        
-        if ($class !== null) {
-            $this->replaceClassReferences($class, $interface);
         }
         
         return $interface;
@@ -769,84 +758,5 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             return $this->_internalTypes->getTypePackage($name);
         }
         return self::GLOBAL_PACKAGE; 
-    }
-    
-    /**
-     * This method will replace all existing references to the given <b>$class</b>
-     * instance with the interface instance. 
-     * 
-     * <code>
-     *   $class1 = $builder->buildClass('PHP_Reflection');
-     *   $class2 = $builder->buildClassOrInterface('PHP_ReflectionI');
-     * 
-     *   $class1->addDependency($class2);
-     * 
-     *   $builder->buildInterface('PHP_ReflectionI');
-     * 
-     *   var_dump($class1->getDependencies());
-     *   // Results in
-     *   // array(1) {
-     *   //   [0]=>
-     *   //   object(PHP_Reflection_AST_Interface)#1 (0) {
-     *   //   }
-     *   // }
-     * </code>
-     *
-     * @param PHP_Reflection_AST_Class     $class The old context class instance.
-     * @param PHP_Reflection_AST_Interface $iface The new interface instance.
-     * 
-     * @return void
-     */
-    protected function replaceClassReferences(PHP_Reflection_AST_Class $class,
-                                              PHP_Reflection_AST_Interface $iface)
-    {
-echo 'Replace(class: ', $class->getName(), ', interface: ', $iface->getName(), ')', PHP_EOL;
-        foreach ($this->functions as $function) {
-            foreach ($function->getDependencies() as $dependency) {
-                if ($dependency === $class) {
-                    $function->removeDependency($class);
-                    $function->addDependency($iface);
-                }
-            }
-            foreach ($function->getExceptionTypes() as $exceptionType) {
-                if ($exceptionType === $class) {
-                    $function->removeExceptionType($class);
-                    $function->addExceptionType($iface);
-                }
-            }
-            if ($function->getReturnType() === $class) {
-                $function->setReturnType($iface);
-            }
-        }
-    
-        foreach ($this->methods as $method) {
-            foreach ($method->getDependencies() as $dependency) {
-                if ($dependency === $class) {
-                    $method->removeDependency($class);
-                    $method->addDependency($iface);
-                }
-            }
-            foreach ($method->getExceptionTypes() as $exceptionType) {
-                if ($exceptionType === $class) {
-                    $method->removeExceptionType($class);
-                    $method->addExceptionType($iface);
-                }
-            }
-            if ($method->getReturnType() === $class) {
-                $method->setReturnType($iface);
-            }
-        }
-        
-        foreach ($this->_properties as $property) {
-            if ($property->getType() === $class) {
-                $property->setType($iface);
-            }
-        }
-        
-        foreach ($this->_parameters as $parameter) {
-            if ($parameter->getType() === $class) {
-                $parameter->setType($iface);
-            }
-        }
     }
 }
