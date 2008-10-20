@@ -200,7 +200,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *
      * @param string $name The class name.
      * 
-     * @return PHP_Reflection_AST_Class|PHP_Reflection_AST_Interface 
+     * @return PHP_Reflection_AST_ClassOrInterfaceI 
      *         The created class or interface instance.
      */
     public function buildProxySubject($name)

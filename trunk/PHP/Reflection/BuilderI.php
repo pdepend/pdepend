@@ -82,7 +82,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      *
      * @param string $name The class name.
      * 
-     * @return PHP_Reflection_AST_Class|PHP_Reflection_AST_Interface 
+     * @return PHP_Reflection_AST_ClassOrInterfaceI 
      *         The created class or interface instance.
      */
     function buildProxySubject($name);
