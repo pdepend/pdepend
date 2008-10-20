@@ -371,9 +371,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             
                 unset($this->classes[$normalizedName][$package->getName()]);
                 
-                if (count($this->classes[$normalizedName]) === 0) {
-                    unset($this->classes[$normalizedName]);
-                }
+                $this->classes = array_filter($this->classes);
             }
         }
         
