@@ -1390,8 +1390,7 @@ class PHP_Reflection_Parser
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: new $className('PDepend');
                 if (count($parts) > 0) {
-                    // Get last element of parts and create a class for it
-                    $class = $this->builder->buildClass(join('::', $parts));
+                    $class = $this->builder->buildClassOrInterfaceProxy(join('::', $parts));
                     $callable->addDependency($class);
                 }
                 break;
@@ -1649,7 +1648,7 @@ class PHP_Reflection_Parser
         $type = $this->_parseTypeAnnotation($mof->getDocComment(), 'return');
         
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
-            $returnType = $this->builder->buildProxySubject($type[0]);
+            $returnType = $this->builder->buildClassOrInterfaceProxy($type[0]);
             $mof->setReturnType($returnType);
         }
     }

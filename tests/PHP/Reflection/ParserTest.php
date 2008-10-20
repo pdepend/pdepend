@@ -225,8 +225,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectFileComment()
     {
         $packages = self::parseSource('parser/file_comment_is_set.php');
-        $this->assertEquals(3, $packages->count()); // default, +spl & +standard
+        $this->assertEquals(4, $packages->count()); // +global, +spl, +standard & default::package
         
+        $packages->next();
         $packages->next();
         $packages->next();
         
@@ -449,12 +450,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserParseNewInstancePHP53()
     {
         $packages = self::parseSource('parser/namespace-chain-new-operator.php.53');
-        
+
         $this->assertEquals(3, $packages->count());
         $packages->next();
-        $this->assertEquals('php::depend1', $packages->current()->getName());
+        $this->assertEquals('php::reflection1', $packages->current()->getName());
         $packages->next();
-        $this->assertEquals('php::depend2', $packages->current()->getName());
+        $this->assertEquals('php::reflection2', $packages->current()->getName());
     }
     
     /**

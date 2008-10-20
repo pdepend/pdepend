@@ -373,7 +373,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
         
         $classOrInterface = $value->getReference();
         $this->assertType('PHP_Reflection_AST_ClassOrInterfaceProxy', $classOrInterface);
-        $this->assertEquals('ReflectionProperty', $classOrInterface->getName());
+        $this->assertEquals('myReflectionProperty', $classOrInterface->getName());
         
         $package = $classOrInterface->getPackage();
         $this->assertEquals('php::reflection', $package->getName());        
@@ -471,7 +471,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
         $class = $packages->current()->getClasses()->current();
         $this->assertNotNull($class);
         $this->assertType('object', $class);
-        
+
         $prop = $class->getProperties()->current();
         $this->assertNotNull($prop);
         $this->assertType('object', $prop);
