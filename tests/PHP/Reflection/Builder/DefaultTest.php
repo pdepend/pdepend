@@ -177,39 +177,6 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         
         $this->assertSame($interface1, $interface2);
     }
-    
-    /**
-     * Tests that the build interface method recreates an existing class as 
-     * interface. 
-     *
-     * @return void
-     */
-    public function testBuildInterfaceForcesRecreateTypeForExistingClass()
-    {
-        $builder = new PHP_Reflection_Builder_Default();
-        
-        $type0 = $builder->buildProxySubject('FooBar');
-        $this->assertType('PHP_Reflection_AST_Class', $type0);
-        $type1 = $builder->buildInterface('FooBar');
-        $this->assertType('PHP_Reflection_AST_Interface', $type1);
-        $type2 = $builder->buildProxySubject('FooBar');
-        $this->assertType('PHP_Reflection_AST_Interface', $type2);
-    }
-    
-    public function testBuildInterfaceForcesRecreateTypeForExistingClassInDefaultPackage()
-    {
-        $builder = new PHP_Reflection_Builder_Default();
-        
-        $defaultClass   = $builder->buildClass('ParserI');
-        $defaultPackage = $defaultClass->getPackage();
-
-        $pdependInterface = $builder->buildInterface('php::depend::ParserI');
-        $pdependPackage   = $pdependInterface->getPackage();
-        
-        $this->assertNotSame($defaultClass, $pdependInterface);
-        $this->assertEquals(0, $defaultPackage->getClasses()->count());
-        $this->assertEquals(1, $pdependPackage->getInterfaces()->count());
-    }
 
     /**
      * Tests that the {@link PHP_Reflection_Builder_Default::buildInterface()}
@@ -237,65 +204,68 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
     }
     
     /**
-     * Tests that a type recreate forces all function dependencies to be updated.
+     * Tests that a class or interface proxy is handled correct as function 
+     * dependency.
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdateFunctionDependencies()
+    public function testBuildClassOrInterfaceAsFunctionDependency()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
         $function = $builder->buildFunction('bar', 0);
-        $type0    = $builder->buildProxySubject('FooBar');
+        $proxy    = $builder->buildClassOrInterfaceProxy('FooBar');
         
-        $function->addDependency($type0);
+        $function->addDependency($proxy);
         $this->assertEquals(1, $function->getDependencies()->count());
-        $this->assertEquals($type0, $function->getDependencies()->current());
+        $this->assertSame($proxy, $function->getDependencies()->current());
         
-        $type1 = $builder->buildInterface('FooBar');
+        $interface = $builder->buildInterface('FooBar');
         $this->assertEquals(1, $function->getDependencies()->count());
-        $this->assertEquals($type1, $function->getDependencies()->current());
+        $this->assertTrue($interface->equals($function->getDependencies()->current()));
     }
     
     /**
-     * Tests that a type recreate forces all method dependencies to be updated.
+     * Tests that a class or interface proxy is handled correct as method 
+     * dependency.
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdateMethodDependencies()
+    public function testBuildClassOrInterfaceAsMethodDependency()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
         $method = $builder->buildMethod('bar', 0);
-        $type0  = $builder->buildProxySubject('FooBar');
+        $proxy  = $builder->buildClassOrInterfaceProxy('FooBar');
         
-        $method->addDependency($type0);
+        $method->addDependency($proxy);
         $this->assertEquals(1, $method->getDependencies()->count());
-        $this->assertEquals($type0, $method->getDependencies()->current());
+        $this->assertSame($proxy, $method->getDependencies()->current());
         
-        $type1 = $builder->buildInterface('FooBar');
+        $interface = $builder->buildInterface('FooBar');
         $this->assertEquals(1, $method->getDependencies()->count());
-        $this->assertEquals($type1, $method->getDependencies()->current());
+        $this->assertTrue($interface->equals($method->getDependencies()->current()));
     }
     
     /**
-     * Tests that a type recreate forces the parameter type to be updated.
+     * Tests that a class/interface proxy is handled correct as a method/function
+     * parameter type.
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdateParameterType()
+    public function testBuildClassOrInterfaceAsParameterType()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
-        $param  = $builder->buildParameter('$bar', 0);
-        $type0  = $builder->buildProxySubject('FooBar');
+        $param = $builder->buildParameter('$bar', 0);
+        $proxy = $builder->buildClassOrInterfaceProxy('FooBar');
         
         $this->assertNull($param->getType());
-        $param->setType($type0);
-        $this->assertSame($type0, $param->getType());
+        $param->setType($proxy);
+        $this->assertSame($proxy, $param->getType());
         
-        $type1 = $builder->buildInterface('FooBar');
-        $this->assertSame($type1, $param->getType());
+        $interface = $builder->buildInterface('FooBar');
+        $this->assertTrue($interface->equals($param->getType()));
     }
     
     /**
@@ -363,102 +333,98 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdatePropertyType()
+    public function testBuildClassOrInterfaceAsPropertyType()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
-        $property = $builder->buildProperty('$bar', 0);
-        $type0    = $builder->buildProxySubject('PDepend');
+        $property = $builder->buildProperty('bar', 0);
+        $proxy    = $builder->buildClassOrInterfaceProxy('PDepend');
         
-        $property->setType($type0);
-        $this->assertSame($type0, $property->getType());
+        $property->setType($proxy);
+        $this->assertSame($proxy, $property->getType());
         
-        $type1 = $builder->buildInterface('PDepend');
-        $this->assertSame($type1, $property->getType());
+        $interface = $builder->buildInterface('PDepend');
+        $this->assertTrue($interface->equals($property->getType()));
     }
     
     /**
-     * Tests that the default builder updates an existing reference for a 
-     * method return type.
+     * Tests that a class/interface proxy works as a method return type.
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdateMethodReturnType()
+    public function testBuildClassOrInterfaceAsMethodReturnType()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
         $method = $builder->buildMethod('bar', 0);
-        $type0  = $builder->buildProxySubject('PDepend');
+        $proxy  = $builder->buildClassOrInterfaceProxy('PDepend');
         
-        $method->setReturnType($type0);
-        $this->assertSame($type0, $method->getReturnType());
+        $method->setReturnType($proxy);
+        $this->assertSame($proxy, $method->getReturnType());
         
-        $type1 = $builder->buildInterface('PDepend');
-        $this->assertSame($type1, $method->getReturnType());
+        $interface = $builder->buildInterface('PDepend');
+        $this->assertTrue($interface->equals($method->getReturnType()));
     }
     
     /**
-     * Tests that the default builder updates an existing reference for a 
-     * method exceptiion type.
+     * Tests that a class/interface proxy works as a method exception type.
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdateMethodExceptionType()
+    public function testBuildClassOrInterfaceAsMethodExceptionType()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
         $method = $builder->buildMethod('bar', 0);
-        $type0  = $builder->buildProxySubject('PDepend');
+        $proxy  = $builder->buildClassOrInterfaceProxy('PDepend');
         
-        $method->addExceptionType($type0);
+        $method->addExceptionType($proxy);
         $this->assertEquals(1, $method->getExceptionTypes()->count());
-        $this->assertSame($type0, $method->getExceptionTypes()->current());
+        $this->assertSame($proxy, $method->getExceptionTypes()->current());
         
-        $type1 = $builder->buildInterface('PDepend');
+        $interface = $builder->buildInterface('PDepend');
         $this->assertEquals(1, $method->getExceptionTypes()->count());
-        $this->assertSame($type1, $method->getExceptionTypes()->current());
+        $this->assertTrue($interface->equals($method->getExceptionTypes()->current()));
     }
     
     /**
-     * Tests that the default builder updates an existing reference for a 
-     * function return type.
+     * Tests that a class/interface proxy works a function return type.
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdateFunctionReturnType()
+    public function testBuildClassOrInterfaceAsFunctionReturnType()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
         $function = $builder->buildFunction('bar', 0);
-        $type0    = $builder->buildProxySubject('PDepend');
+        $proxy    = $builder->buildClassOrInterfaceProxy('PDepend');
         
-        $function->setReturnType($type0);
-        $this->assertSame($type0, $function->getReturnType());
+        $function->setReturnType($proxy);
+        $this->assertSame($proxy, $function->getReturnType());
         
-        $type1 = $builder->buildInterface('PDepend');
-        $this->assertSame($type1, $function->getReturnType());
+        $interface = $builder->buildInterface('PDepend');
+        $this->assertTrue($interface->equals($function->getReturnType()));
     }
     
     /**
-     * Tests that the default builder updates an existing reference for a 
-     * function exception type.
+     * Tests that a class/interface proxy works as a function exception type.
      *
      * @return void
      */
-    public function testBuildInterfaceForcesUpdateFunctionExceptionType()
+    public function testBuildClassOrInterfaceAsFunctionExceptionType()
     {
         $builder = new PHP_Reflection_Builder_Default();
         
         $function = $builder->buildFunction('bar', 0);
-        $type0    = $builder->buildProxySubject('PDepend');
+        $proxy    = $builder->buildClassOrInterfaceProxy('PDepend');
         
-        $function->addExceptionType($type0);
+        $function->addExceptionType($proxy);
         $this->assertEquals(1, $function->getExceptionTypes()->count());
-        $this->assertSame($type0, $function->getExceptionTypes()->current());
+        $this->assertSame($proxy, $function->getExceptionTypes()->current());
         
-        $type1 = $builder->buildInterface('PDepend');
+        $interface = $builder->buildInterface('PDepend');
         $this->assertEquals(1, $function->getExceptionTypes()->count());
-        $this->assertSame($type1, $function->getExceptionTypes()->current());
+        $this->assertTrue($interface->equals($function->getExceptionTypes()->current()));
     }
     
     /**
