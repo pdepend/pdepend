@@ -731,7 +731,7 @@ class PHP_Reflection_Parser
      *
      * @param array &$tokens Reference array for parsed tokens.
      * 
-     * @return PHP_Reflection_AST_Property
+     * @return array(PHP_Reflection_AST_Property)
      */
     private function _parsePropertyDeclarationList(array &$tokens)
     {
