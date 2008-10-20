@@ -205,19 +205,19 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildProxySubject($name)
     {
-        $localName = $this->extractTypeName($name);
-        $pkg = $this->extractPackageName($name);
+        $localName   = $this->extractTypeName($name);
+        $packageName = $this->extractPackageName($name);
         
-        $typeID = strtolower($localName);
-        if (isset($this->classes[$typeID][$pkg])) {
-            $instance = $this->classes[$typeID][$pkg];
-        } else if (isset($this->interfaces[$typeID][$pkg])) {
-            $instance = $this->interfaces[$typeID][$pkg];
-        } else if ($pkg === self::GLOBAL_PACKAGE) {
-            if (isset($this->classes[$typeID])) {
-                $instance = reset($this->classes[$typeID]);
-            } else if (isset($this->interfaces[$typeID])) {
-                $instance = reset($this->interfaces[$typeID]);
+        $normalizedName = strtolower($localName);
+        if (isset($this->classes[$normalizedName][$packageName])) {
+            $instance = $this->classes[$normalizedName][$packageName];
+        } else if (isset($this->interfaces[$normalizedName][$packageName])) {
+            $instance = $this->interfaces[$normalizedName][$packageName];
+        } else if ($packageName === self::GLOBAL_PACKAGE) {
+            if (isset($this->classes[$normalizedName])) {
+                $instance = reset($this->classes[$normalizedName]);
+            } else if (isset($this->interfaces[$normalizedName])) {
+                $instance = reset($this->interfaces[$normalizedName]);
             } else {
                 $instance = $this->buildClass($name);
             }
