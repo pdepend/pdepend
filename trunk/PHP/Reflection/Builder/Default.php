@@ -360,60 +360,58 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildInterface($name, $line = 0)
     {
-        $ife = $this->extractTypeName($name);
-        $pkg = $this->extractPackageName($name);
+        $localName   = $this->extractTypeName($name);
+        $packageName = $this->extractPackageName($name);
         
-        $localName = strtolower($ife);
+        $normalizedName = strtolower($localName);
         
-        $class = null;
-        if (isset($this->classes[$localName][$pkg])) {
-            $class   = $this->classes[$localName][$pkg];
+        if (isset($this->classes[$normalizedName][$packageName])) {
+            $class   = $this->classes[$normalizedName][$packageName];
             $package = $class->getPackage();
             
             // Only reparent if the found class is part of the default package
             if ($package === $this->defaultPackage) {
                 $package->removeType($class);
             
-                unset($this->classes[$localName][$package->getName()]);
+                unset($this->classes[$normalizedName][$package->getName()]);
                 
-                if (count($this->classes[$localName]) === 0) {
-                    unset($this->classes[$localName]);
+                if (count($this->classes[$normalizedName]) === 0) {
+                    unset($this->classes[$normalizedName]);
                 }
-            } else {
-                // Unset class reference
-                $class = null;
             }
         }
         
         // 1) check for an equal interface version
-        if (isset($this->interfaces[$localName][$pkg])) {
-            $interface = $this->interfaces[$localName][$pkg];
+        if (isset($this->interfaces[$normalizedName][$packageName])) {
+            $interface = $this->interfaces[$normalizedName][$packageName];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->interfaces[$localName][self::GLOBAL_PACKAGE])) {
-            $interface = $this->interfaces[$localName][self::GLOBAL_PACKAGE];
+        } else if (isset($this->interfaces[$normalizedName][self::GLOBAL_PACKAGE])) {
+            $interface = $this->interfaces[$normalizedName][self::GLOBAL_PACKAGE];
             
-            unset($this->interfaces[$localName][self::GLOBAL_PACKAGE]);
+            unset($this->interfaces[$normalizedName][self::GLOBAL_PACKAGE]);
             
-            $this->interfaces[$localName][$pkg] = $interface;
+            $this->interfaces[$normalizedName][$packageName] = $interface;
             
-            $this->buildPackage($pkg)->addType($interface);
+            $this->buildPackage($packageName)->addType($interface);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->interfaces[$localName]) && $this->isDefault($pkg)) {
-            $interface = reset($this->interfaces[$localName]);
+        } else if (isset($this->interfaces[$normalizedName]) 
+            && $this->isDefault($packageName)) {
+                
+            $interface = reset($this->interfaces[$normalizedName]);
             
             // 4) Create a new interface for the given package
         } else {
             // Create a new interface instance
-            $interface = new PHP_Reflection_AST_Interface($ife, $line);
+            $interface = new PHP_Reflection_AST_Interface($localName, $line);
             $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
-            $this->interfaces[$localName][$pkg] = $interface;
+            $this->interfaces[$normalizedName][$packageName] = $interface;
             
             // Append interface to package
-            $this->buildPackage($pkg)->addType($interface);
+            $this->buildPackage($packageName)->addType($interface);
         }
         
         return $interface;
