@@ -86,7 +86,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * Default package which contains all functions and classes with an unknown 
      * scope. 
      *
-     * @type PHP_Reflection_AST_Package
      * @var PHP_Reflection_AST_Package $defaultPackage
      */
     protected $defaultPackage = null;
@@ -94,7 +93,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * Default source file that acts as a dummy.
      *
-     * @type PHP_Reflection_AST_File
      * @var PHP_Reflection_AST_File $defaultFile
      */
     protected $defaultFile = null;
@@ -102,7 +100,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_AST_Class} objects
      *
-     * @type array<PHP_Reflection_AST_Class>
      * @var array(string=>PHP_Reflection_AST_Class) $classes
      */
     protected $classes = array();
@@ -110,7 +107,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_AST_Interface} instances.
      *
-     * @type array<PHP_Reflection_AST_Interface>
      * @var array(string=>PHP_Reflection_AST_Interface) $interfaces
      */
     protected $interfaces = array();
@@ -118,7 +114,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_AST_Package} objects
      *
-     * @type array<PHP_Reflection_AST_Package>
      * @var array(string=>PHP_Reflection_AST_Package) $packages
      */
     protected $packages = array();
@@ -154,7 +149,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_AST_ClassOrInterfaceConstant} instances.
      *
-     * @type array<PHP_Reflection_AST_ClassOrInterfaceConstant>
      * @var array(PHP_Reflection_AST_ClassOrInterfaceConstant) $_typeConstants
      */
     private $_typeConstants = array();
