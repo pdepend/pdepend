@@ -205,10 +205,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildProxySubject($name)
     {
-        $cls = $this->extractTypeName($name);
+        $localName = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
         
-        $typeID = strtolower($cls);
+        $typeID = strtolower($localName);
         if (isset($this->classes[$typeID][$pkg])) {
             $instance = $this->classes[$typeID][$pkg];
         } else if (isset($this->interfaces[$typeID][$pkg])) {
@@ -258,43 +258,45 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildClass($name, $line = 0)
     {
-        $cls = $this->extractTypeName($name);
-        $pkg = $this->extractPackageName($name);
+        $localName   = $this->extractTypeName($name);
+        $packageName = $this->extractPackageName($name);
         
-        $typeID = strtolower($cls);
+        $normalizedName = strtolower($localName);
         
         $class = null;
         
         // 1) check for an equal class version
-        if (isset($this->classes[$typeID][$pkg])) {
-            $class = $this->classes[$typeID][$pkg];
+        if (isset($this->classes[$normalizedName][$packageName])) {
+            $class = $this->classes[$normalizedName][$packageName];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->classes[$typeID][self::GLOBAL_PACKAGE])) {
-            $class = $this->classes[$typeID][self::GLOBAL_PACKAGE];
+        } else if (isset($this->classes[$normalizedName][self::GLOBAL_PACKAGE])) {
+            $class = $this->classes[$normalizedName][self::GLOBAL_PACKAGE];
             
-            unset($this->classes[$typeID][self::GLOBAL_PACKAGE]);
+            unset($this->classes[$normalizedName][self::GLOBAL_PACKAGE]);
 
-            $this->classes[$typeID][$pkg] = $class;
+            $this->classes[$normalizedName][$packageName] = $class;
             
-            $this->buildPackage($pkg)->addType($class);
+            $this->buildPackage($packageName)->addType($class);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->classes[$typeID]) && $this->isDefault($pkg)) {
-            $class = reset($this->classes[$typeID]);
+        } else if (isset($this->classes[$normalizedName]) 
+            && $this->isDefault($packageName)) {
+
+            $class = reset($this->classes[$normalizedName]);
             
             // 4) Create a new class for the given package
         } else {
             
             // Create a new class instance
-            $class = new PHP_Reflection_AST_Class($cls, $line);
+            $class = new PHP_Reflection_AST_Class($localName, $line);
             $class->setSourceFile($this->defaultFile);
             
             // Store class reference
-            $this->classes[$typeID][$pkg] = $class;
+            $this->classes[$normalizedName][$packageName] = $class;
             
             // Append to class package
-            $this->buildPackage($pkg)->addType($class);
+            $this->buildPackage($packageName)->addType($class);
         }
         return $class;
     }
