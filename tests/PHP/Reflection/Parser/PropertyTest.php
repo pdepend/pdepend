@@ -73,6 +73,13 @@ class PHP_Reflection_Parser_PropertyTest extends PHP_Reflection_AbstractTest
         $this->assertTrue($property->isStatic());
     }
     
+    public function testParserHandlesDeprecatedVarPropertyTagAsPublic()
+    {
+        $property = self::_testParseProperty('deprecated_var.php');
+        $this->assertEquals('_helloWorld', $property->getName());
+        $this->assertTrue($property->isPublic());
+    }
+    
     /**
      * Tests that the parser handles a comma separated list of properties correct.
      *
