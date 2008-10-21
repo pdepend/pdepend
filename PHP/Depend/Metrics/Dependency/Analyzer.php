@@ -401,14 +401,14 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             foreach ($metrics['ca'] as $caUUID) {
                 $this->_afferentNodes[$uuid][] = $this->nodeSet[$caUUID];
             }
-            sort($this->_afferentNodes[$uuid]);
+            ksort($this->_afferentNodes[$uuid]);
             
             // Store efferent nodes for uuid
             $this->_efferentNodes[$uuid] = array();
             foreach ($metrics['ce'] as $ceUUID) {
                 $this->_efferentNodes[$uuid][] = $this->nodeSet[$ceUUID];
             }
-            sort($this->_efferentNodes[$uuid]);
+            ksort($this->_efferentNodes[$uuid]);
             
             $this->_nodeMetrics[$uuid]['ca'] = count($metrics['ca']);
             $this->_nodeMetrics[$uuid]['ce'] = count($metrics['ce']);
@@ -426,7 +426,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             if ($metrics['tc'] !== 0) {
                 $this->_nodeMetrics[$uuid]['a'] = ($metrics['ac'] / $metrics['tc']);
             }
-            
         }
     }
     
@@ -496,7 +495,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             // Traverse all direct class dependencies
             foreach ($class->getDependencies() as $dependency) {
                 $pkg = $dependency->getPackage();
-                if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
+                if (!$pkg->equals($package) && $this->collectCycle($storage, $pkg)) {
                     return true;
                 }
             }
@@ -504,7 +503,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             foreach ($class->getMethods() as $method) {
                 foreach ($method->getDependencies() as $dependency) {
                     $pkg = $dependency->getPackage();
-                    if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
+                    if (!$pkg->equals($package) && $this->collectCycle($storage, $pkg)) {
                         return true;
                     }
                 }                
