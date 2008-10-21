@@ -441,15 +441,14 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
     }
     
     /**
-     * Tests the {@link PHP_Reflection_Builder_Default::buildTypeConstant()}
-     * method.
+     * Tests {@link PHP_Reflection_Builder_Default::buildClassOrInterfaceConstant()}
      * 
      * @return void
      */
     public function testBuildConstant()
     {
         $builder  = new PHP_Reflection_Builder_Default();
-        $constant = $builder->buildTypeConstant('CONSTANT', 0);
+        $constant = $builder->buildClassOrInterfaceConstant('CONSTANT', 0);
         
         $this->assertType('PHP_Reflection_AST_ClassOrInterfaceConstant', $constant);
     }
