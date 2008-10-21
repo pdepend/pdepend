@@ -344,7 +344,7 @@ class PHP_Reflection_Parser
         }
         
         $this->_consumeComments();
-        $this->parseCallableBody($tokens, $function);
+        $this->_parseMethodOrFunctionBody($tokens, $function);
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
         
@@ -813,7 +813,7 @@ class PHP_Reflection_Parser
 
         $this->_consumeComments(); 
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
-            $this->parseCallableBody($tokens, $method);
+            $this->_parseMethodOrFunctionBody($tokens, $method);
         } else {
             $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
             $method->setEndLine($token[2]);
@@ -1346,7 +1346,8 @@ class PHP_Reflection_Parser
      * 
      * @return void
      */
-    protected function parseCallableBody(array &$outTokens, PHP_Reflection_AST_AbstractMethodOrFunction $callable)
+    protected function _parseMethodOrFunctionBody(
+        array &$outTokens, PHP_Reflection_AST_AbstractMethodOrFunction $callable)
     {
         $curly  = 1;
         $tokens = array();
