@@ -152,6 +152,18 @@ class PHP_Reflection_Parser_MethodTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that the parse handles a/multipe comment(s) between method
+     * signature and opening curly brace.
+     *
+     * @return void
+     */
+    public function testParserHandlesCommentBetweenSignatureAndCurlyBodyBrace()
+    {
+        $method = self::_testParseMethod('comment_after_method_signatur.php');
+        $this->assertEquals('hello', $method->getName());
+    }
+    
+    /**
      * Parses a source file and extracts the first method instance.
      *
      * @param string $file The source file.
