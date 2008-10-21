@@ -1348,8 +1348,10 @@ class PHP_Reflection_Parser
      */
     protected function parseCallableBody(array &$outTokens, PHP_Reflection_AST_AbstractMethodOrFunction $callable)
     {
-        $curly  = 0;
+        $curly  = 1;
         $tokens = array();
+        
+        $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
 
         while ($this->tokenizer->peek() !== self::T_EOF) {
 
