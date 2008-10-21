@@ -401,13 +401,6 @@ class PHP_Reflection_Parser
             // Skip comment tokens
             $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         }
-        
-        // Next token must be an open curly brace
-        if ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
-            $file  = $this->tokenizer->getFile();
-            $token = $this->tokenizer->next();
-            throw new PHP_Reflection_Exceptions_UnexpectedTokenException($file, $token);
-        }
 
         $this->builder->buildPackage($this->_package)->addType($class);
     
@@ -427,8 +420,10 @@ class PHP_Reflection_Parser
         // Set context class instance
         $this->_classOrInterface = $class;
         
-        $curly  = 0;
+        $curly  = 1;
         $tokens = array();
+        
+        $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
         
         // Method position within the type body
         $this->_methodPosition = 0;
@@ -568,11 +563,6 @@ class PHP_Reflection_Parser
             $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
         }
         
-        // Next token must be an open curly brace
-        if ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
-            $this->_throwUnexpectedToken();
-        }
-        
         $this->builder->buildPackage($this->_package)->addType($interface);
         
         $this->reset();
@@ -594,6 +584,8 @@ class PHP_Reflection_Parser
         
         $tokens = array();
         
+        $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+        
         while ($this->tokenizer->peek() !== self::T_EOF) {
             
             switch ($this->tokenizer->peek()) {
@@ -612,12 +604,6 @@ class PHP_Reflection_Parser
             case self::T_CONST:
                 // Add constant node
                 $interface->addConstant($this->_parseConstantDeclaration($tokens));
-                break;
-                    
-            case self::T_CURLY_BRACE_OPEN:
-                // Consume <{> token
-                $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
-                $this->reset();
                 break;
                     
             case self::T_CURLY_BRACE_CLOSE:
@@ -690,7 +676,7 @@ class PHP_Reflection_Parser
         
         $token = $this->_consumeToken(self::T_STRING, $tokens);
 
-        $constant = $this->builder->buildTypeConstant($token[1]);
+        $constant = $this->builder->buildClassOrInterfaceConstant($token[1]);
         $constant->setDocComment($this->_comment);
         $constant->setStartLine($token[2]);
         $constant->setEndLine($token[2]);
@@ -804,25 +790,18 @@ class PHP_Reflection_Parser
      */
     private function _parseMethodDeclaration(array &$tokens)
     {
-        // Consume <function> token
         $this->_consumeToken(self::T_FUNCTION, $tokens);
-                
-        // Skip comments after 'function' token
-        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_consumeComments($tokens);
         
         $token    = $this->tokenizer->next();
         $tokens[] = $token;
         
         // Check for reference return
         if ($token[0] === self::T_BITWISE_AND) {
-            // Skip comments after reference return
-            $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
-            // Get next token, this should be the method name
+            $this->_consumeComments($tokens);
             $token = $this->_consumeToken(self::T_STRING, $tokens);
         }
-        
-        // Skip comment tokens after method name
-        $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
+        $this->_consumeComments($tokens);
         
         $method = $this->builder->buildMethod($token[1], $token[2]);
 
@@ -869,7 +848,7 @@ class PHP_Reflection_Parser
         $tokens = array();
         
         $interfaceList = array();
-        do {
+        while (true) {
             // Get qualified interface name
             $identifier      = $this->_parseStaticQualifiedIdentifier();
             $interfaceList[] = $this->builder->buildInterface($identifier);
@@ -878,11 +857,12 @@ class PHP_Reflection_Parser
         
             // Check for opening class or interface body
             if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
-                return $interfaceList;
+                break;
             }
-            
             $this->_consumeToken(self::T_COMMA, $tokens);
-        } while (true);
+        }
+        
+        return $interfaceList;
     }
     
     /**
@@ -1182,7 +1162,7 @@ class PHP_Reflection_Parser
         // Create an array instance
         $array  = $this->builder->buildArrayExpression();
         
-        do {
+        while(true) {
             // Stop for open parenthesis
             if ($this->tokenizer->peek() === self::T_PARENTHESIS_CLOSE) {
                 break;
@@ -1222,7 +1202,7 @@ class PHP_Reflection_Parser
             $this->_consumeToken(self::T_COMMA, $tokens);
             // Skip all comment tokens after comma
             $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);            
-        } while(true);
+        }
         
         // Skip all comment tokens
         $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);
@@ -1317,13 +1297,10 @@ class PHP_Reflection_Parser
      */
     private function _consumeToken($type, array &$tokens = array())
     {
-        if ($this->tokenizer->peek() !== $type) {
-            $this->_throwUnexpectedToken();
+        if ($this->tokenizer->peek() === $type) {
+            return $tokens[] = $this->tokenizer->next();
         }
-        // Get next token
-        $tokens[] = $this->tokenizer->next();
-        // Return last token
-        return end($tokens);
+        $this->_throwUnexpectedToken();
     }
     
     /**

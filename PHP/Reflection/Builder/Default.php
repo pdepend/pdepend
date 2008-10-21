@@ -126,47 +126,18 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     protected $functions = array();
     
     /**
-     * All generated {@link PHP_Reflection_AST_Method} instances.
-     *
-     * @var array(PHP_Reflection_AST_Method) $methods
-     */
-    protected $methods = array();
-    
-    /**
-     * All generated {@link PHP_Reflection_AST_Parameter} instances.
-     *
-     * @var array(PHP_Reflection_AST_Parameter) $_parameters
-     */
-    private $_parameters = array();
-    
-    /**
-     * All generated {@link PHP_Reflection_AST_Property} instances.
-     *
-     * @var array(PHP_Reflection_AST_Property) $_properties
-     */
-    private $_properties = array();
-    
-    /**
-     * All generated {@link PHP_Reflection_AST_ClassOrInterfaceConstant} instances.
-     *
-     * @var array(PHP_Reflection_AST_ClassOrInterfaceConstant) $_typeConstants
-     */
-    private $_typeConstants = array();
-    
-    /**
-     * The internal types class.
-     *
-     * @type PHP_Reflection_InternalTypes
-     * @var PHP_Reflection_InternalTypes $_internalTypes
-     */
-    private $_internalTypes = null;
-    
-    /**
      * Cache for already created class or interface proxy instances.
      * 
      * @var array(PHP_Reflection_AST_ClassOrInterfaceProxy) $_proxyCache
      */
     private $_proxyCache = array();
+    
+    /**
+     * The internal types class.
+     *
+     * @var PHP_Reflection_InternalTypes $_internalTypes
+     */
+    private $_internalTypes = null;
     
     /**
      * Constructs a new builder instance.
@@ -192,39 +163,26 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *   $builder->buildInterface('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Interface
-     *   $builder->buildClassOrInterface('PHP_ReflectionI');
+     *   $builder->buildProxySubject('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Class
-     *   $builder->buildClassOrInterface('PHP_Reflection');
+     *   $builder->buildProxySubject('PHP_Reflection');
      * </code>
      *
-     * @param string $name The class name.
+     * @param string $identifier The qualified class or interface identifier.
      * 
      * @return PHP_Reflection_AST_ClassOrInterfaceI 
      *         The created class or interface instance.
      */
-    public function buildProxySubject($name)
+    public function buildProxySubject($identifier)
     {
-        $localName   = $this->extractTypeName($name);
-        $packageName = $this->extractPackageName($name);
-        
-        $normalizedName = strtolower($localName);
-        if (isset($this->classes[$normalizedName][$packageName])) {
-            $instance = $this->classes[$normalizedName][$packageName];
-        } else if (isset($this->interfaces[$normalizedName][$packageName])) {
-            $instance = $this->interfaces[$normalizedName][$packageName];
-        } else if ($packageName === self::GLOBAL_PACKAGE) {
-            if (isset($this->classes[$normalizedName])) {
-                $instance = reset($this->classes[$normalizedName]);
-            } else if (isset($this->interfaces[$normalizedName])) {
-                $instance = reset($this->interfaces[$normalizedName]);
-            } else {
-                $instance = $this->buildClass($name);
-            }
-        } else {
-            $instance = $this->buildClass($name);
+        if ($instance = $this->_findClassOrInterfaceExactMatch($identifier)) {
+            return $instance;
         }
-        return $instance;
+        if ($instance = $this->_findClassOrInterfaceBestMatch($identifier)) {
+            return $instance;
+        }
+        return $this->buildClass($identifier);
     }
     
     /**
@@ -266,8 +224,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         $class = null;
         
         // 1) check for an equal class version
-        if (isset($this->classes[$normalizedName][$packageName])) {
-            $class = $this->classes[$normalizedName][$packageName];
+        if ($instance = $this->_findClassExactMatch($name)) {
+            return $instance;
             
             // 2) check for a default version that could be replaced
         } else if (isset($this->classes[$normalizedName][self::GLOBAL_PACKAGE])) {
@@ -304,19 +262,14 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * Builds a new code class constant instance.
      *
-     * @param string $name The constant name.
+     * @param string $identifier The unique identifier of the constant.
      * 
-     * @return PHP_Reflection_AST_ClassOrInterfaceConstant The created constant object.
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstant
      */
-    public function buildTypeConstant($name)
+    public function buildClassOrInterfaceConstant($identifier)
     {
         // Create new constant instance.
-        $constant = new PHP_Reflection_AST_ClassOrInterfaceConstant($name);
-        
-        // Store local reference
-        $this->_typeConstants[] = $constant;
-        
-        return $constant;
+        return new PHP_Reflection_AST_ClassOrInterfaceConstant($identifier);
     }
     
     /**
@@ -422,12 +375,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     public function buildMethod($name, $line = 0)
     {
         // Create a new method instance
-        $method = new PHP_Reflection_AST_Method($name, $line);
-        
-        // Store instance an local map
-        $this->methods[] = $method;
-        
-        return $method;
+        return new PHP_Reflection_AST_Method($name, $line);
     }
     
     /**
@@ -456,12 +404,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     public function buildParameter($name, $line = 0)
     {
         // Create a new parameter instance
-        $parameter = new PHP_Reflection_AST_Parameter($name, $line);
-        
-        // Store local reference 
-        $this->_parameters[] = $parameter;
-        
-        return $parameter;
+        return new PHP_Reflection_AST_Parameter($name, $line);
     }
     
     /**
@@ -475,12 +418,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     public function buildProperty($name, $line = 0)
     {
         // Create new property instance.
-        $property = new PHP_Reflection_AST_Property($name, $line);
-        
-        // Store local reference
-        $this->_properties[] = $property;
-        
-        return $property;
+        return new PHP_Reflection_AST_Property($name, $line);
     }
     
     /**
@@ -750,5 +688,97 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             return $this->_internalTypes->getTypePackage($name);
         }
         return self::GLOBAL_PACKAGE; 
+    }
+    
+    /**
+     * This method tries to find an exact matching class for the given identifier.
+     * This method will return <b>null</b> when no matching class node exists.
+     *
+     * @param string $identifier The qualified class identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassI
+     */
+    private function _findClassExactMatch($identifier)
+    {
+        $localName   = $this->extractTypeName($identifier);
+        $packageName = $this->extractPackageName($identifier);
+        
+        $normalizedName = strtolower($localName);
+        
+        if (isset($this->classes[$normalizedName][$packageName])) {
+            return $this->classes[$normalizedName][$packageName];
+        }
+        return null;
+    }
+    
+    /**
+     * This method tries to find the best matching class node for the given
+     * identifier. The return value will be <b>null</b> when no matching class
+     * node exists.
+     *
+     * @param string $identifier The qualified class identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassI
+     */
+    private function _findClassBestMatch($identifier)
+    {
+        $localName   = $this->extractTypeName($identifier);
+        $packageName = $this->extractPackageName($identifier);
+        
+        $normalizedName = strtolower($localName);
+        // FIXME: Implement this method...
+    }
+    
+    /**
+     * Tries to find a class or interface instance that exactly matches to the
+     * given identifier. If no class or interface exists for the given identifier
+     * this method will return <b>null</b>
+     *
+     * @param string $identifier The qualified class or interface identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassOrInterfaceI
+     */
+    private function _findClassOrInterfaceExactMatch($identifier)
+    {
+        $localName   = $this->extractTypeName($identifier);
+        $packageName = $this->extractPackageName($identifier);
+        
+        $normalizedName = strtolower($localName);
+        
+        $instance = null;
+        if (isset($this->classes[$normalizedName][$packageName])) {
+            $instance = $this->classes[$normalizedName][$packageName];
+        } else if (isset($this->interfaces[$normalizedName][$packageName])) {
+            $instance = $this->interfaces[$normalizedName][$packageName];
+        }
+        return $instance;
+    }
+    
+    /**
+     * This method tries to find the best match for the given class or interface
+     * identifier. If no record exists for the given identifier this method will
+     * return <b>null</b>.
+     *
+     * @param string $identifier The full qualified class or interface identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassOrInterface
+     */
+    private function _findClassOrInterfaceBestMatch($identifier)
+    {
+        $localName   = $this->extractTypeName($identifier);
+        $packageName = $this->extractPackageName($identifier);
+        
+        $normalizedName = strtolower($localName);
+        
+        $instance = null;
+        if ($packageName === self::GLOBAL_PACKAGE) {
+            if (isset($this->classes[$normalizedName])) {
+                $instance = reset($this->classes[$normalizedName]);
+            } else if (isset($this->interfaces[$normalizedName])) {
+                $instance = reset($this->interfaces[$normalizedName]);
+            }
+            
+        }
+        return $instance;
     }
 }
