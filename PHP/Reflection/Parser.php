@@ -342,8 +342,9 @@ class PHP_Reflection_Parser
         foreach ($parameters as $parameter) {
             $function->addParameter($parameter);
         }
-        $this->parseCallableBody($tokens, $function);
         
+        $this->_consumeComments();
+        $this->parseCallableBody($tokens, $function);
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
         
@@ -810,11 +811,10 @@ class PHP_Reflection_Parser
             $method->addParameter($parameter);
         }
 
+        $this->_consumeComments(); 
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
-            // Get function body dependencies 
             $this->parseCallableBody($tokens, $method);
         } else {
-            // We expect a semicolon
             $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
             $method->setEndLine($token[2]);
         }
