@@ -74,10 +74,10 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      *   $builder->buildInterface('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Interface
-     *   $builder->buildClassOrInterface('PHP_ReflectionI');
+     *   $builder->buildProxySubject('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Class
-     *   $builder->buildClassOrInterface('PHP_Reflection');
+     *   $builder->buildProxySubject('PHP_Reflection');
      * </code>
      *
      * @param string $name The class name.
@@ -104,7 +104,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * 
      * @return PHP_Reflection_AST_ClassOrInterfaceConstant The created constant object.
      */
-    function buildTypeConstant($name);
+    function buildClassOrInterfaceConstant($name);
     
     /**
      * Builds a new new interface instance.
