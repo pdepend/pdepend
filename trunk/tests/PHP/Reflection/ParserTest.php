@@ -126,10 +126,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
      */
     public function testParserWithUnclosedFunctionFail()
     {
-        $fileName = dirname(__FILE__) . '/_code/parser/function_with_unclosed_body_block.php.fail';
+        $file = dirname(__FILE__) . '/_code/parser/function_with_unclosed_body_block.php.fail';
+        $msg  = sprintf('Unclosed body, missing closing "}" in file "%s".', $file);
         $this->setExpectedException(
-            'RuntimeException', 
-            "Invalid state, unclosed function body in '{$fileName}'."
+            'PHP_Reflection_Exceptions_UnclosedBodyException', $msg
         );
         
         self::parseSource('parser/function_with_unclosed_body_block.php.fail');

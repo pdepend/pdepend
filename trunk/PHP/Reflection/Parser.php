@@ -1227,6 +1227,30 @@ class PHP_Reflection_Parser
     }
     
     /**
+     * 
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_CatchStatement
+     */
+    private function _parseCatchStatement(array &$tokens)
+    {
+        //$this->_consumeToken(self::T_CATCH, $tokens);
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        
+        $identifier = $this->_parseStaticQualifiedIdentifier($tokens);
+        
+        $this->_consumeToken(self::T_VARIABLE, $tokens);
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+        
+        $exception = $this->builder->buildClassOrInterfaceProxy($identifier);
+        $statement = $this->builder->buildCatchStatement();
+        $statement->setReference($exception);
+        
+        return $statement;
+    }
+    
+    /**
      * This method will consume all tokens that match the given token identifiers.
      * This method accepts a variable list of token identifiers/types as argument.
      * 
@@ -1323,8 +1347,10 @@ class PHP_Reflection_Parser
 
             switch ($token[0]) {
             case self::T_CATCH:
-                // Skip open parenthesis
-                $tokens[] = $this->tokenizer->next();
+                $statement = $this->_parseCatchStatement($tokens);
+                // FIXME: This should be something else
+                $callable->addDependency($statement->getReference());
+                break;
                 
             case self::T_NEW:
             case self::T_INSTANCEOF:
@@ -1383,9 +1409,8 @@ class PHP_Reflection_Parser
         }
         // Throw an exception for invalid states
         if ($curly !== 0) {
-            $fileName = (string) $this->tokenizer->getSourceFile();
-            $message  = "Invalid state, unclosed function body in '{$fileName}'.";
-            throw new RuntimeException($message);
+            $file = $this->tokenizer->getSourceFile();
+            throw new PHP_Reflection_Exceptions_UnclosedBodyException($file);
         }
         
         // Append all tokens
@@ -1596,3 +1621,4 @@ class PHP_Reflection_Parser
         }
     }
 }
+?>

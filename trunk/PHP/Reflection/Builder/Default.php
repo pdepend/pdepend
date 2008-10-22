@@ -50,6 +50,7 @@ require_once 'PHP/Reflection/InternalTypes.php';
 require_once 'PHP/Reflection/BuilderI.php'; 
 require_once 'PHP/Reflection/AST/ArrayExpression.php';
 require_once 'PHP/Reflection/AST/ArrayElement.php';
+require_once 'PHP/Reflection/AST/CatchStatement.php';
 require_once 'PHP/Reflection/AST/Class.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceConstant.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceConstantValue.php';
