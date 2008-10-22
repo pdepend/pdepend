@@ -1661,6 +1661,28 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that the parser ignores comments between identifiers and double
+     * colon tokens in a full qualified class name.
+     *
+     * @return void
+     */
+    public function testParserStripsCommentInQualifiedClassIdentifier()
+    {
+        $packages = self::parseSource('/parser/comments_in_qualified_identifier.php53');
+        $this->assertEquals(1, $packages->count());
+        
+        $classes = $packages->current()->getClasses();
+        $this->assertEquals(2, $classes->count());
+        
+        $class = $classes->current();
+        $this->assertEquals('Parser', $class->getName());
+        
+        $parent = $class->getParentClass();
+        $this->assertNotNull($parent);
+        $this->assertEquals('php::reflection', $parent->getPackage()->getName());
+    }
+    
+    /**
      * Returns all packages in the mixed code example.
      *
      * @return PHP_Reflection_AST_Iterator
