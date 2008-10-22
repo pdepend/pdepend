@@ -95,6 +95,18 @@ class PHP_Reflection_AST_CatchStatement
     }
     
     /**
+     * Sets the referenced exception class or interface.
+     *
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $reference The reference type.
+     * 
+     * @return void
+     */
+    public function setReference(PHP_Reflection_AST_ClassOrInterfaceI $reference)
+    {
+        $this->_reference = $reference;
+    }
+    
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
