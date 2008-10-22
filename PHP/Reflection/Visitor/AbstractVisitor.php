@@ -291,6 +291,19 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     }
     
     /**
+     * Visits an exception catch node.
+     *
+     * @param PHP_Reflection_AST_CatchStatementI $stmt The current catch statement.
+     * 
+     * @return void
+     */
+    public function visitCatchStatement(PHP_Reflection_AST_CatchStatementI $stmt)
+    {
+        // TODO: $this->fireStartCatchStatement($stmt);
+        // TODO: $this->fireEndCatchStatement($stmt);
+    }
+    
+    /**
      * Visits an array expression node
      *
      * @param PHP_Reflection_AST_ArrayExpression $expr The current array expression.

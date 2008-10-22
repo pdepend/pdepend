@@ -431,9 +431,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildFunction($name, $line = 0)
     {
-        if (isset($this->functions[$name])) {
-            $function = $this->functions[$name];
-        } else {
+        if (!isset($this->functions[$name])) {
             // Create new function
             $function = new PHP_Reflection_AST_Function($name, $line);
             $function->setSourceFile($this->defaultFile);
@@ -443,8 +441,17 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             // Store function reference
             $this->functions[$name] = $function;
         }
-        
-        return $function;
+        return $this->functions[$name];
+    }
+    
+    /**
+     * Builds a new catch statement instance.
+     *
+     * @return PHP_Reflection_AST_CatchStatement
+     */
+    public function buildCatchStatement()
+    {
+        return new PHP_Reflection_AST_CatchStatement();
     }
     
     /**
