@@ -166,6 +166,13 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildFunction($name, $line = 0);
     
     /**
+     * Builds a new catch statement instance.
+     *
+     * @return PHP_Reflection_AST_CatchStatement
+     */
+    function buildCatchStatement();
+    
+    /**
      * Builds a new array value instance.
      *
      * @return PHP_Reflection_AST_ArrayExpression
