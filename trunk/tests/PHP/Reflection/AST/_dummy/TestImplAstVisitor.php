@@ -258,6 +258,18 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     }
     
     /**
+     * Visits an exception catch node.
+     *
+     * @param PHP_Reflection_AST_CatchStatementI $stmt The current catch statement.
+     * 
+     * @return void
+     */
+    public function visitCatchStatement(PHP_Reflection_AST_CatchStatementI $stmt)
+    {
+        // TODO Implement this empty stub.
+    }
+    
+    /**
      * Visits an array expression node
      *
      * @param PHP_Reflection_AST_ArrayExpression $expr The current array expression.

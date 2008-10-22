@@ -160,6 +160,15 @@ interface PHP_Reflection_VisitorI
     function visitTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const);
     
     /**
+     * Visits an exception catch node.
+     *
+     * @param PHP_Reflection_AST_CatchStatementI $stmt The current catch statement.
+     * 
+     * @return void
+     */
+    function visitCatchStatement(PHP_Reflection_AST_CatchStatementI $stmt);
+    
+    /**
      * Visits an array expression node
      *
      * @param PHP_Reflection_AST_ArrayExpression $expr The current array expression.
