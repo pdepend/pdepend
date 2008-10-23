@@ -402,6 +402,21 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that the parser handles stupid signed numeric values.
+     *
+     * @return void
+     */
+    public function testParserHandlesPropertyValueWithMultipleSignedModifiers()
+    {
+        $value = $this->_testParserHandlesStaticScalarValue('class_property_signed_value.php');
+        $this->assertType('PHP_Reflection_AST_MemberNumericValue', $value);
+        
+        $this->assertFalse($value->isNegative());
+        $scalar = $value->getValue();
+          
+    }
+    
+    /**
      * Parses the source, extracts the first constant of a class or interface
      * and checks some basic constraints.
      *
