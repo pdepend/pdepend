@@ -438,8 +438,10 @@ class PHP_Reflection_Parser
                 break;
             
             case self::T_CONST:
-                $constant = $this->_parseConstantDeclaration($tokens);
-                $this->_classOrInterface->addConstant($constant);
+                $constants = $this->_parseConstantDeclarationList($tokens);
+                foreach ($constants as $constant) {
+                    $this->_classOrInterface->addConstant($constant);
+                }
                 break;
                 
             case self::T_ABSTRACT:
@@ -572,8 +574,10 @@ class PHP_Reflection_Parser
                 break;
             
             case self::T_CONST:
-                $constant = $this->_parseConstantDeclaration($tokens);
-                $this->_classOrInterface->addConstant($constant);
+                $constants = $this->_parseConstantDeclarationList($tokens);
+                foreach ($constants as $constant) {
+                    $this->_classOrInterface->addConstant($constant);
+                }
                 break;
                     
             case self::T_CURLY_BRACE_CLOSE:
@@ -621,6 +625,39 @@ class PHP_Reflection_Parser
     }
     
     /**
+     * Parses a list of class/interface constant declarations.
+     * 
+     * <code>
+     * class PHP_Reflection {
+     *     const C_HELLO = 1, C_WORLD = 2;
+     * }
+     * </code>
+     *
+     * @param array &$tokens List of parsed tokens.
+     * 
+     * @return array(PHP_Reflection_AST_ClassOrInterfaceConstant)
+     */
+    private function _parseConstantDeclarationList(array &$tokens)
+    {
+        $this->_consumeToken(self::T_CONST, $tokens);
+        
+        $constants = array();
+        while ($this->tokenizer->peek() !== self::T_EOF) {
+            $constants[] = $this->_parseConstantDeclaration($tokens);
+            
+            $this->_consumeComments($tokens);
+            if ($this->tokenizer->peek() !== self::T_COMMA) {
+                break;
+            }
+            $this->_consumeToken(self::T_COMMA, $tokens);
+        }
+        $this->_consumeToken(self::T_SEMICOLON, $tokens);
+        $this->reset();
+        
+        return $constants;
+    }
+    
+    /**
      * Parses a class or interface constant declaration.
      * 
      * <code>
@@ -635,8 +672,6 @@ class PHP_Reflection_Parser
      */
     private function _parseConstantDeclaration(array &$tokens)
     {
-        $this->_consumeToken(self::T_CONST, $tokens);
-        $this->_consumeComments($tokens);
         
         $token = $this->_consumeToken(self::T_STRING, $tokens);
 
@@ -644,18 +679,12 @@ class PHP_Reflection_Parser
         $constant->setDocComment($this->_comment);
         $constant->setStartLine($token[2]);
         $constant->setEndLine($token[2]);
-
-        $this->reset();
         
-        $this->_consumeComments($tokens);
         $this->_consumeToken(self::T_EQUAL, $tokens);
         $this->_consumeComments($tokens);
         
         // Parse static scalar value
         $constant->setValue($this->_parseStaticScalarValue($tokens));
-        
-        $this->_consumeComments($tokens);
-        $this->_consumeToken(self::T_SEMICOLON, $tokens);
         
         return $constant;
     }
@@ -1193,11 +1222,13 @@ class PHP_Reflection_Parser
         while ($this->tokenizer->peek() !== self::T_EOF) {
             switch ($this->tokenizer->peek()) {
             case self::T_MINUS:
-                $negative = true;
+                $this->_consumeToken(self::T_MINUS, $tokens);
+                $negative = !$negative;
+                break;
                 
             case self::T_PLUS:
-                $tokens[] = $this->tokenizer->next();
-                continue;
+                $this->_consumeToken(self::T_PLUS, $tokens);
+                break;
                 
             case self::T_DNUMBER:
             case self::T_LNUMBER:
@@ -1227,7 +1258,7 @@ class PHP_Reflection_Parser
     }
     
     /**
-     * 
+     * Parses an exception catch statement.
      *
      * @param array &$tokens Reference array for parsed tokens.
      *
@@ -1235,7 +1266,8 @@ class PHP_Reflection_Parser
      */
     private function _parseCatchStatement(array &$tokens)
     {
-        //$this->_consumeToken(self::T_CATCH, $tokens);
+        // FIXME: Comment the following statement in, when callable is clean      
+        $this->_consumeToken(self::T_CATCH, $tokens);
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
         
         $identifier = $this->_parseStaticQualifiedIdentifier($tokens);
@@ -1343,9 +1375,7 @@ class PHP_Reflection_Parser
         
         while ($this->tokenizer->peek() !== self::T_EOF) {
 
-            $tokens[] = $token = $this->tokenizer->next();
-
-            switch ($token[0]) {
+            switch ($this->tokenizer->peek()) {
             case self::T_CATCH:
                 $statement = $this->_parseCatchStatement($tokens);
                 // FIXME: This should be something else
@@ -1353,18 +1383,39 @@ class PHP_Reflection_Parser
                 break;
                 
             case self::T_NEW:
+                $this->_consumeToken(self::T_NEW, $tokens);
+                $this->_consumeComments($tokens);
+                if ($this->tokenizer->peek() === self::T_DOUBLE_COLON ||
+                    $this->tokenizer->peek() === self::T_STRING) {
+
+                    $name  = $this->_parseStaticQualifiedIdentifier($tokens);
+                    $proxy = $this->builder->buildClassOrInterfaceProxy($name);
+                    
+                    $callable->addDependency($proxy);
+                }
+                break;
+                         
             case self::T_INSTANCEOF:
-                $parts = $this->_parseClassNameChain($tokens);
-                                
-                // If this is a dynamic instantiation, do not add dependency.
-                // Something like: new $className('PDepend');
-                if (count($parts) > 0) {
-                    $class = $this->builder->buildClassOrInterfaceProxy(join('::', $parts));
-                    $callable->addDependency($class);
+                $this->_consumeToken(self::T_INSTANCEOF, $tokens);
+                $this->_consumeComments($tokens);
+                if ($this->tokenizer->peek() === self::T_DOUBLE_COLON ||
+                    $this->tokenizer->peek() === self::T_STRING) {
+
+                    $name  = $this->_parseStaticQualifiedIdentifier($tokens);
+                    $proxy = $this->builder->buildClassOrInterfaceProxy($name);
+                    
+                    $callable->addDependency($proxy);
                 }
                 break;
                     
             case self::T_STRING:
+                /*
+                $identifier = $this->_parseStaticQualifiedIdentifier($tokens);
+                if (strpos($identifier, '::') !== false) {
+                    $proxy = $this->builder->buildClassOrInterfaceProxy($identifier);
+                    $callable->addDependency($proxy);
+                }*/
+                $token = $this->_consumeToken(self::T_STRING, $tokens);
                 if ($this->tokenizer->peek() === self::T_DOUBLE_COLON) {
                     // Skip double colon
                     $tokens[] = $this->tokenizer->next();
@@ -1381,21 +1432,30 @@ class PHP_Reflection_Parser
                 break;
                     
             case self::T_CURLY_BRACE_OPEN:
+                $token = $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
                 ++$curly;
                 break;
                     
             case self::T_CURLY_BRACE_CLOSE:
+                $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
                 --$curly;
                 break;
 
             case self::T_DOUBLE_QUOTE:
+                $token = $this->_consumeToken(self::T_DOUBLE_QUOTE);
+                $this->_skipEncapsultedBlock($tokens, $token[0]);
+                break;
+                
             case self::T_BACKTICK:
+                $token = $this->_consumeToken(self::T_BACKTICK);
                 $this->_skipEncapsultedBlock($tokens, $token[0]);
                 break;
 
             default:
                 // throw new RuntimeException("Unknown token '{$token[1]}'.");
                 // TODO: Handle/log unused tokens
+                $tokens[] = $this->tokenizer->next();
+                break;
             }
             
             if ($curly === 0) {
