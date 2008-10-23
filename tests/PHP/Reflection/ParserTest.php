@@ -72,14 +72,13 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParseMixedCode()
     {
         $expected = array(
-            'pkg1'                                    =>  true, 
-            'pkg2'                                    =>  true, 
-            'pkg3'                                    =>  true,
+            'pkg1'                                   =>  true, 
+            'pkg2'                                   =>  true, 
+            'pkg3'                                   =>  true,
             PHP_Reflection_BuilderI::GLOBAL_PACKAGE  =>  true
         );
         
         $result = self::parseMixedCode();
-        
         $this->assertEquals(4, $result->count());
         
         $packages = array();
