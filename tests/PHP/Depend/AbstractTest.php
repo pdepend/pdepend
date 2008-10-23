@@ -69,12 +69,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         
-        echo 'Before: ', $this->toString(), PHP_EOL;
-        system('svn st ' . dirname(__FILE__) . '/_run');
         // Remove old test contents
         self::_clearRun();
-        echo 'After: ', $this->toString(), PHP_EOL;
-        system('svn st ' . dirname(__FILE__) . '/_run');
     }
     
     /**
@@ -191,7 +187,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         );
         // Remove all files, links etc.
         foreach ($it as $file) {
-            if ($file->isDir() === false) {
+            $path = $file->getPathname();
+            if ($file->isDir() === false && strpos($path, '.svn') === false) {
                 unlink($file->getPathname());
             }
         }
