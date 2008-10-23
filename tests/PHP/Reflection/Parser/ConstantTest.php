@@ -46,21 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Reflection_Parser_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/ConstantTest.php';
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/MemberValueTest.php';
-require_once dirname(__FILE__) . '/MethodTest.php';
-require_once dirname(__FILE__) . '/PropertyTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Main test suite for the PHP_Reflection_Parser class.
+ * Test cases related to constant parsing.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -71,36 +60,67 @@ require_once dirname(__FILE__) . '/PropertyTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Parser_AllTests
+class PHP_Reflection_Parser_ConstantTest extends PHP_Reflection_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the parser handles a comma separated list of constants correct.
      *
      * @return void
      */
-    public static function main()
+    public function testParserHandlesCommaSeparatedConstants()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $packages = self::parseSource("/parser/constants/comma_separated_list.php");
+        self::assertEquals(1, $packages->count());
+        
+        $package = $packages->current();
+        self::assertEquals(1, $package->getClasses()->count());
+        
+        $class = $package->getClasses()->current();
+        self::assertEquals(4, $class->getConstants()->count());
+        
+        $expected = array(
+            'C_FOO'    => array('value' => 0,    'comment' => '/** Test comment C_FOO */'),
+            'C_BAR'    => array('value' => null, 'comment' => '/** Test comment C_FOO */'),
+            'C_FOOBAR' => array('value' => 42,   'comment' => '/** Test comment C_FOO */'),
+            'C_BARFOO' => array('value' => 23,   'comment' => '/** Test comment C_FOO */'),
+        );
+        
+        foreach ($class->getConstants() as $constant)
+        {
+            $name = $constant->getName();
+            $this->assertArrayHasKey($name, $expected);
+
+            $value = $constant->getValue();
+
+            $this->assertEquals($expected[$name]['value'], $value->getValue());
+            
+            $comment = $constant->getDocComment();
+            $this->assertEquals($expected[$name]['comment'], $comment);
+        }
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Parses a source file and extracts the first class property instance.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param string $file The source file.
+     * 
+     * @return PHP_Reflection_AST_PropertyI
      */
-    public static function suite()
+    private static function _testParseProperty($file)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Parser - AllTests');
-        $suite->addTestSuite('PHP_Reflection_Parser_ConstantTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_FunctionTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_MethodTest');
-        $suite->addTestSuite('PHP_Reflection_Parser_PropertyTest');
-
-        return $suite;
+        $packages = self::parseSource("/parser/properties/{$file}");
+        self::assertEquals(1, $packages->count());
+        
+        $package = $packages->current();
+        self::assertEquals(1, $package->getClasses()->count());
+        
+        $class = $package->getClasses()->current();
+        self::assertEquals(1, $class->getProperties()->count());
+        
+        $property = $class->getProperties()->current();
+        self::assertNotNull($property);
+        self::assertType('PHP_Reflection_AST_PropertyI', $property);
+        
+        return $property;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Reflection_Parser_AllTests::main') {
-    PHP_Reflection_Parser_AllTests::main();
 }
