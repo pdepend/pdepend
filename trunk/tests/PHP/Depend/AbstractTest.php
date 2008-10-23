@@ -69,8 +69,12 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         
+        echo 'Before: ', $this->toString(), PHP_EOL;
+        system('svn st ' . dirname(__FILE__) . '/_run');
         // Remove old test contents
         self::_clearRun();
+        echo 'After: ', $this->toString(), PHP_EOL;
+        system('svn st ' . dirname(__FILE__) . '/_run');
     }
     
     /**
@@ -197,7 +201,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
                 continue;
             }
             $name = $file->getFilename();
-            if ($name === '.' || $name === '..' || $name === '.svn') {
+            $path = $file->getPathname();
+            if ($name === '.' || $name === '..' || strpos($path, '.svn') !== false) {
                 continue;
             }
             rmdir($name);
