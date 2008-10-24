@@ -85,6 +85,12 @@ class PHP_Reflection_AST_InterfaceProxy
         $this->_builder = $builder;
     }
     
+    /**
+     * Returns an iterator with all {@link PHP_Reflection_AST_InterfaceI} nodes
+     * that are a parent, parent parent etc. interface of this interface.
+     *
+     * @return PHP_Reflection_AST_Iterator
+     */
     public function getParentInterfaces()
     {
         return $this->getRealSubject()->getParentInterfaces();
@@ -97,6 +103,6 @@ class PHP_Reflection_AST_InterfaceProxy
      */
     protected function getRealSubject()
     {
-        return $this->_builder->findInterfaceSubject($this->getName());
+        return $this->_builder->findInterfaceSubject($this->getQualifiedName());
     }
 }
