@@ -74,18 +74,31 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      *   $builder->buildInterface('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Interface
-     *   $builder->buildProxySubject('PHP_ReflectionI');
+     *   $builder->findClassOrInterfaceSubject('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Class
-     *   $builder->buildProxySubject('PHP_Reflection');
+     *   $builder->findClassOrInterfaceSubject('PHP_Reflection');
      * </code>
      *
-     * @param string $name The class name.
+     * @param string $identifier The class name.
      * 
      * @return PHP_Reflection_AST_ClassOrInterfaceI 
      *         The created class or interface instance.
      */
-    function buildProxySubject($name);
+    function findClassOrInterfaceSubject($identifier);
+    
+    /**
+     * This method will return the best matching interface for the supplied
+     * identifier. First it looks for an exact match in the existing interface,
+     * if no result was found this method will look for a similar interface. 
+     * Finally this method will create a new interface instance, when the similar
+     * match test also fails.
+     *
+     * @param string $identifier The qualified interface identifier.
+     * 
+     * @return PHP_Reflection_AST_InterfaceI
+     */
+    function findInterfaceSubject($identifier);
     
     /**
      * Builds a new code class instance.
@@ -115,6 +128,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @return PHP_Reflection_AST_Interface The created interface object.
      */
     function buildInterface($name, $line = 0);
+    
+    /**
+     * Creates a proxy for an interface.
+     *
+     * @param string $identifier The qualified interface identifier.
+     * 
+     * @return PHP_Reflection_AST_InterfaceProxy
+     */
+    function buildInterfaceProxy($identifier);
     
     /**
      * Builds a new package instance.

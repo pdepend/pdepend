@@ -57,6 +57,7 @@ require_once 'PHP/Reflection/AST/ClassOrInterfaceConstantValue.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceProxy.php';
 require_once 'PHP/Reflection/AST/ConstantValue.php';
 require_once 'PHP/Reflection/AST/Interface.php';
+require_once 'PHP/Reflection/AST/InterfaceProxy.php';
 require_once 'PHP/Reflection/AST/Iterator.php';
 require_once 'PHP/Reflection/AST/Function.php';
 require_once 'PHP/Reflection/AST/MemberFalseValue.php';
@@ -129,7 +130,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * Cache for already created class or interface proxy instances.
      * 
-     * @var array(PHP_Reflection_AST_ClassOrInterfaceProxy) $_proxyCache
+     * @var array(PHP_Reflection_AST_ClassOrInterfaceI) $_proxyCache
      */
     private $_proxyCache = array();
     
@@ -164,10 +165,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *   $builder->buildInterface('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Interface
-     *   $builder->buildProxySubject('PHP_ReflectionI');
+     *   $builder->findClassOrInterfaceSubject('PHP_ReflectionI');
      * 
      *   // Returns an instance of PHP_Reflection_AST_Class
-     *   $builder->buildProxySubject('PHP_Reflection');
+     *   $builder->findClassOrInterfaceSubject('PHP_Reflection');
      * </code>
      *
      * @param string $identifier The qualified class or interface identifier.
@@ -175,7 +176,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @return PHP_Reflection_AST_ClassOrInterfaceI 
      *         The created class or interface instance.
      */
-    public function buildProxySubject($identifier)
+    public function findClassOrInterfaceSubject($identifier)
     {
         if ($instance = $this->_findClassOrInterfaceExactMatch($identifier)) {
             return $instance;
@@ -184,6 +185,28 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             return $instance;
         }
         return $this->buildClass($identifier);
+    }
+    
+    /**
+     * This method will return the best matching interface for the supplied
+     * identifier. First it looks for an exact match in the existing interface,
+     * if no result was found this method will look for a similar interface. 
+     * Finally this method will create a new interface instance, when the similar
+     * match test also fails.
+     *
+     * @param string $identifier The qualified interface identifier.
+     * 
+     * @return PHP_Reflection_AST_InterfaceI
+     */
+    public function findInterfaceSubject($identifier)
+    {
+        if ($instance = $this->_findInterfaceExactMatch($identifier)) {
+            return $instance;
+        }
+        if ($instance = $this->_findInterfaceBestMatch($identifier)) {
+            return $instance;
+        }
+        return $this->buildInterface($identifier);
     }
     
     /**
@@ -363,6 +386,25 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         }
         
         return $interface;
+    }
+    
+    /**
+     * Creates a proxy for an interface.
+     *
+     * @param string $identifier The qualified interface identifier.
+     * 
+     * @return PHP_Reflection_AST_InterfaceProxy
+     */
+    public function buildInterfaceProxy($identifier)
+    {
+        $proxyID = strtolower($identifier);
+        if (!isset($this->_proxyCache[$proxyID])) {
+            // Create a new node proxy
+            $proxy = new PHP_Reflection_AST_InterfaceProxy($this, $identifier); 
+            // Cache proxy instance
+            $this->_proxyCache[$proxyID] = $proxy;
+        }
+        return $this->_proxyCache[$proxyID]; 
     }
     
     /**
@@ -738,6 +780,50 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     }
     
     /**
+     * Tries to find an interface instance that excatly matches the given 
+     * identifier. This method will return <b>null</b> when no interface exists
+     * for this identifier.
+     *
+     * @param string $identifier The qualified interface identifier.
+     * 
+     * @return PHP_Reflection_AST_Interface
+     */
+    private function _findInterfaceExactMatch($identifier)
+    {
+        $localName   = $this->extractTypeName($identifier);
+        $packageName = $this->extractPackageName($identifier);
+        
+        $normalizedName = strtolower($localName);
+        
+        if (isset($this->interfaces[$normalizedName][$packageName])) {
+            return $this->interfaces[$normalizedName][$packageName];
+        }
+        return null;
+    }
+    
+    /**
+     * Tries to find an interface instances that best matches the given 
+     * identifier. This method will return <b>null</b> when no interface exists
+     * for the local name contained in <b>$identifier</b>.
+     *
+     * @param string $identifier The qualified interface identifier.
+     * 
+     * @return PHP_Reflection_AST_Interface
+     */
+    private function _findInterfaceBestMatch($identifier)
+    {
+        $packageName = $this->extractPackageName($identifier);
+        if ($packageName === self::GLOBAL_PACKAGE) {
+            
+            $normalizedName = strtolower($this->extractTypeName($identifier));
+            if (isset($this->interfaces[$normalizedName])) {
+                return reset($this->interfaces[$normalizedName]);
+            }
+        }
+        return null;        
+    }
+    
+    /**
      * Tries to find a class or interface instance that exactly matches to the
      * given identifier. If no class or interface exists for the given identifier
      * this method will return <b>null</b>
@@ -785,7 +871,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             } else if (isset($this->interfaces[$normalizedName])) {
                 $instance = reset($this->interfaces[$normalizedName]);
             }
-            
         }
         return $instance;
     }
