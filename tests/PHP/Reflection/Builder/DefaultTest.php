@@ -590,7 +590,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $interfaceA = $builder->buildInterface('PHP_Reflection_TokenizerI');
-        $interfaceB = $builder->buildProxySubject('PHP_Reflection_tokenizeri');
+        $interfaceB = $builder->findClassOrInterfaceSubject('PHP_Reflection_tokenizeri');
         
         $this->assertSame($interfaceA, $interfaceB);
     }
@@ -605,7 +605,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $classA = $builder->buildClass('PHP_Reflection_Parser');
-        $classB = $builder->buildProxySubject('PHP_Reflection_parser');
+        $classB = $builder->findClassOrInterfaceSubject('PHP_Reflection_parser');
         
         $this->assertSame($classA, $classB);
     }
@@ -619,8 +619,8 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
     {
         $builder = new PHP_Reflection_Builder_Default();
         
-        $classA = $builder->buildProxySubject('PHP_Reflection_Parser');
-        $classB = $builder->buildProxySubject('PHP_Reflection_parser');
+        $classA = $builder->findClassOrInterfaceSubject('PHP_Reflection_Parser');
+        $classB = $builder->findClassOrInterfaceSubject('PHP_Reflection_parser');
         
         $this->assertSame($classA, $classB);
     }
