@@ -90,14 +90,14 @@ class PHP_Reflection_AST_Class
     /**
      * List of direct child classes of this class.
      *
-     * @var array(PHP_Reflection_AST_Class) $_childClasses
+     * @var array(PHP_Reflection_AST_ClassI) $_childClasses
      */
     private $_childClasses = array();
     
     /**
      * List of implemented interfaces for this class.
      *
-     * @var array(PHP_Reflection_AST_Interface) $_implementedInterfaces
+     * @var array(PHP_Reflection_AST_InterfaceI) $_implementedInterfaces
      */
     private $_implementedInterfaces = array();
     
@@ -171,14 +171,12 @@ class PHP_Reflection_AST_Class
     /**
      * Sets the parent class node for this class.
      *
-     * @param PHP_Reflection_AST_Class $parentClass The parent class.
+     * @param PHP_Reflection_AST_ClassI $parentClass The parent class.
      */
-    public function setParentClass(PHP_Reflection_AST_Class $parentClass)
+    public function setParentClass(PHP_Reflection_AST_ClassI $parentClass)
     {
         // Store parent class reference
         $this->_parentClass = $parentClass;
-        // Set this as child class
-        $this->_parentClass->addChildClass($this);
     }
     
     /**
@@ -188,94 +186,39 @@ class PHP_Reflection_AST_Class
      */
     public function getImplementedInterfaces()
     {
-        /*
-        $implemented = $this->_implementedInterfaces;
-        foreach ($implemented as $interface) {
-            // Append all parent interfaces
-            foreach ($interface->getParentInterface() as $parentInterface) {
-                // Add interface only one time
-                if (in_array($parentInterface, $implemented, true) === false) {
-                    $implemented[] = $parentInterface;
-                }
-            }
-        }
-        
-        // Append interfaces of parent class
-        
-        */
-        $type   = 'PHP_Reflection_AST_Interface';
-        $filter = new PHP_Reflection_AST_Iterator_TypeFilter($type);
-        
-        $interfaces = $this->getDependencies();
-        $interfaces->addFilter($filter);
-        
-        $nodes = array();
-        foreach ($interfaces as $interface) {
+        $interfaces = array();
+        foreach ($this->_implementedInterfaces as $interface) {
             // Add this interface first
-            $nodes[] = $interface;
+            $interfaces[] = $interface;
             // Append all parent interfaces
             foreach ($interface->getParentInterfaces() as $parentInterface) {
-                if (in_array($parentInterface, $nodes, true) === false) {
-                    $nodes[] = $parentInterface;
+                if (in_array($parentInterface, $interfaces, true) === false) {
+                    $interfaces[] = $parentInterface;
                 }
             }
         }
         
         if (($parent = $this->getParentClass()) !== null) {
             foreach ($parent->getImplementedInterfaces() as $interface) {
-                $nodes[] = $interface;
+                $interfaces[] = $interface;
             }
         }
-        return new PHP_Reflection_AST_Iterator($nodes);
+        return new PHP_Reflection_AST_Iterator($interfaces);
     }
     
     /**
      * Adds an interface node to the list of implemented interfaces.
      *
-     * @param PHP_Reflection_AST_Interface $interface The implemented interface node.
+     * @param PHP_Reflection_AST_InterfaceI $interface The implemented interface node.
      * 
      * @return void
      */
-    public function addImplementedInterface(PHP_Reflection_AST_Interface $interface)
+    public function addImplementedInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         // Each class can implement an interface only one time
         if (in_array($interface, $this->_implementedInterfaces, true) === false) {
             // Store interface reference
             $this->_implementedInterfaces[] = $interface;
-            // Set this as implementing class
-            $interface->addImplementingClass($this);
-        }
-    }
-    
-    /**
-     * Returns an iterator with all {@link PHP_Reflection_AST_ClassI} nodes
-     * that extend this class.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     */
-    public function getChildClasses()
-    {
-        return new PHP_Reflection_AST_Iterator($this->_childClasses);
-    }
-    
-    /**
-     * Adds a child class to this class.
-     *
-     * @param PHP_Reflection_AST_Class $childClass The child class instance.
-     * 
-     * @return void
-     */
-    public function addChildClass(PHP_Reflection_AST_Class $childClass)
-    {
-        // Add a child class only one time
-        if (in_array($childClass, $this->_childClasses, true) === false) {
-            // Append given class to child list
-            $this->_childClasses[] = $childClass;
-            // Check for parent class
-            if ($childClass->getParentClass() === null) {
-                // Set this as parent
-                $childClass->setParentClass($this);
-            }
         }
     }
     

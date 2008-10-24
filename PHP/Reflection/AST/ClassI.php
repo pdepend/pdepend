@@ -107,14 +107,6 @@ interface PHP_Reflection_AST_ClassI extends PHP_Reflection_AST_ClassOrInterfaceI
     function getImplementedInterfaces();
     
     /**
-     * Returns an iterator with all {@link PHP_Reflection_AST_ClassI} nodes
-     * that extend this class.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     */
-    function getChildClasses();
-    
-    /**
      * Will return a class property for the given node. Please note that this
      * method requires a property name without leading '$' character.
      *
