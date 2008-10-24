@@ -77,40 +77,35 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * The log output file.
      *
-     * @type string
      * @var string $_logFile
      */
-    protected $_logFile = null;
+    private $_logFile = null;
     
     /**
      * The raw {@link PHP_Reflection_AST_Package} instances.
      *
-     * @type PHP_Reflection_AST_Iterator
-     * @var PHP_Reflection_AST_Iterator $code
+     * @var PHP_Reflection_AST_Iterator $_code
      */
-    protected $code = null;
+    private $_code = null;
     
     /**
      * Set of all analyzed files.
      *
-     * @type array<PHP_Reflection_AST_File>
-     * @var array(string=>PHP_Reflection_AST_File) $fileSet
+     * @var array(string=>PHP_Reflection_AST_File) $_fileSet
      */
-    protected $fileSet = array();
+    private $_fileSet = array();
     
     /**
      * List of all generated project metrics.
      *
-     * @type array<mixed>
-     * @var array(string=>mixed) $projectMetrics
+     * @var array(string=>mixed) $_projectMetrics
      */
-    protected $projectMetrics = array();
+    protected $_projectMetrics = array();
     
     /**
      * List of all analyzers that implement the node aware interface
      * {@link PHP_Depend_Metrics_NodeAwareI}.
      *
-     * @type array<PHP_Depend_Metrics_AnalyzerI>
      * @var array(PHP_Depend_Metrics_AnalyzerI) $_nodeAwareAnalyzers
      */
     private $_nodeAwareAnalyzers = array();
@@ -118,7 +113,6 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * The internal used xml stack.
      *
-     * @type array<DOMElement>
      * @var array(DOMElement) $_xmlStack
      */
     private $_xmlStack = array();
@@ -158,7 +152,7 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function setCode(PHP_Reflection_AST_Iterator $code)
     {
-        $this->code = $code;
+        $this->_code = $code;
     }
     
     /**
@@ -177,7 +171,7 @@ class PHP_Depend_Log_Summary_Xml
             // Get project metrics
             $metrics = $analyzer->getProjectMetrics();
             // Merge with existing metrics.
-            $this->projectMetrics = array_merge($this->projectMetrics, $metrics);
+            $this->_projectMetrics = array_merge($this->_projectMetrics, $metrics);
             
             $accept = true;
         }
@@ -206,23 +200,23 @@ class PHP_Depend_Log_Summary_Xml
         
         $dom->formatOutput = true;
         
-        ksort($this->projectMetrics);
+        ksort($this->_projectMetrics);
         
         $metrics = $dom->createElement('metrics');
         
-        foreach ($this->projectMetrics as $name => $value) {
+        foreach ($this->_projectMetrics as $name => $value) {
             $metrics->setAttribute($name, $value);
         }
         
         array_push($this->_xmlStack, $metrics);
         
-        foreach ($this->code as $node) {
+        foreach ($this->_code as $node) {
             $node->accept($this);
         }
         
-        if (count($this->fileSet) > 0) {
+        if (count($this->_fileSet) > 0) {
             $filesXml = $dom->createElement('files');
-            foreach ($this->fileSet as $file) {
+            foreach ($this->_fileSet as $file) {
                 $fileXml = $dom->createElement('file');
                 $fileXml->setAttribute('name', $file->getFileName());
                 
@@ -363,12 +357,13 @@ class PHP_Depend_Log_Summary_Xml
      * Aggregates all metrics for the given <b>$node</b> instance and adds them
      * to the <b>DOMElement</b>
      *
-     * @param DOMElement               $xml  DOM Element that represents <b>$node</b>.
+     * @param DOMElement               $xml  Element that represents <b>$node</b>.
      * @param PHP_Reflection_AST_NodeI $node The context code node instance.
      * 
      * @return void
      */
-    protected function writeNodeMetrics(DOMElement $xml, PHP_Reflection_AST_NodeI $node)
+    protected function writeNodeMetrics(DOMElement $xml, 
+                                        PHP_Reflection_AST_NodeI $node)
     {
         $metrics = array();
         foreach ($this->_nodeAwareAnalyzers as $analyzer) {
@@ -390,7 +385,7 @@ class PHP_Depend_Log_Summary_Xml
      *   </class>
      * </code>
      *
-     * @param DOMElement           $xml  The parent xml element.
+     * @param DOMElement              $xml  The parent xml element.
      * @param PHP_Reflection_AST_File $file The code file instance.
      * 
      * @return void
@@ -402,8 +397,8 @@ class PHP_Depend_Log_Summary_Xml
             return;
         }
         
-        if (in_array($file, $this->fileSet, true) === false) {
-            $this->fileSet[] = $file;
+        if (in_array($file, $this->_fileSet, true) === false) {
+            $this->_fileSet[] = $file;
         }
         
         $fileXml = $xml->ownerDocument->createElement('file');

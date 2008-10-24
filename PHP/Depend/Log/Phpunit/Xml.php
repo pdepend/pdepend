@@ -417,9 +417,9 @@ class PHP_Depend_Log_Phpunit_Xml
      * Aggregates all metrics for the given <b>$node</b> instance and adds them
      * to the <b>DOMElement</b>
      *
-     * @param DOMElement            $xml     DOM Element that represents $node.
+     * @param DOMElement               $xml     DOM Element that represents $node.
      * @param PHP_Reflection_AST_NodeI $node    The context code node instance.
-     * @param array(string=>mixed)  $metrics Set of additional node metrics
+     * @param array(string=>mixed)     $metrics Set of additional node metrics
      * 
      * @return void
      */
