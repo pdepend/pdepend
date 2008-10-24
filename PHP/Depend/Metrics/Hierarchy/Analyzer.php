@@ -51,6 +51,7 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
+require_once 'PHP/Depend/Util/NodeSet.php';
 
 /**
  * This analyzer calculates class/package hierarchy metrics.
@@ -151,6 +152,20 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     private $_maxDIT = 0;
     
     /**
+     * This property holds a set of all detected parent classes. All classes 
+     * that are parent of another class are not leaf, therefore we store a set
+     * of all parent classes and calculate the number of leafs with:
+     * 
+     * <code>
+     *   $leafClasses = $totalClasses - $parentClasses;
+     * </code>
+     * 
+     *
+     * @var PHP_Depend_Util_NodeSet $_parentSet
+     */
+    private $_parentSet = null;
+    
+    /**
      * Hash with all calculated node metrics.
      *
      * <code>
@@ -184,11 +199,11 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
         if ($this->_nodeMetrics === null) {
-            
             $this->fireStartAnalyzer();
             
-            // Init node metrics
+            // Init node metrics and parent class set
             $this->_nodeMetrics = array();
+            $this->_parentSet   = new PHP_Depend_Util_NodeSet();
             
             // Visit all nodes
             foreach ($packages as $package) {
@@ -210,7 +225,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             'clsa'     =>  $this->_clsa,
             'clsc'     =>  $this->_cls - $this->_clsa,
             'roots'    =>  $this->_roots,
-            'leafs'    =>  $this->_leafs,
+            'leafs'    =>  $this->_cls - $this->_parentSet->size(),
             'maxDIT'   =>  $this->_maxDIT,
         );
     }
@@ -250,10 +265,11 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             ++$this->_clsa;
         }
         
-        if ($class->getChildClasses()->count() === 0) {
-            ++$this->_leafs;
-        } else if ($class->getParentClass() === null) {
+        if ($class->getParentClass() === null) {
             ++$this->_roots;
+        } else {
+            // Add parent class to set of parents
+            $this->_parentSet->add($class->getParentClass());
         }
         
         // Get class dit value
