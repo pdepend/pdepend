@@ -202,6 +202,17 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     }
     
     /**
+     * Returns the full qualified name for this proxy. Qualified name means class
+     * or interface name, prefixed with package or namespace identifier.
+     *
+     * @return string
+     */
+    protected function getQualifiedName()
+    {
+        return $this->_identifier;
+    }
+    
+    /**
      * Returns the real subject behind this proxy. 
      *
      * @return PHP_Reflection_AST_ClassOrInterfaceI
