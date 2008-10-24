@@ -208,6 +208,6 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
      */
     protected function getRealSubject()
     {
-        return $this->_builder->buildClassOrInterfaceSubject($this->_identifier);
+        return $this->_builder->findClassOrInterfaceSubject($this->_identifier);
     }
 }
