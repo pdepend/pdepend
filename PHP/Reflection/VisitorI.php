@@ -153,7 +153,8 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The current constant node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const 
+     *        The current constant node.
      * 
      * @return void
      */
@@ -198,7 +199,7 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a class or interface constant value
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constValue
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constValue 
      *        The reference instance.
      * 
      * @return void
