@@ -220,21 +220,21 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
         $classB = new PHP_Reflection_AST_Class('B');
         $classC = new PHP_Reflection_AST_Class('C');
 
-        $interfsA->addChildInterface($interfsB); // interface B extends A {}
-        $interfsA->addChildInterface($interfsC); // interface C extends A {}
-        $interfsB->addChildInterface($interfsD); // interface D extends B, E
-        $interfsE->addChildInterface($interfsD); // interface D extends B, E
-        $interfsF->addChildInterface($interfsE); // interface E extends F
+        $interfsB->addParentInterface($interfsA); // interface B extends A {}
+        $interfsC->addParentInterface($interfsA); // interface C extends A {}
+        $interfsD->addParentInterface($interfsB); // interface D extends B, E
+        $interfsD->addParentInterface($interfsE); // interface D extends B, E
+        $interfsE->addParentInterface($interfsF); // interface E extends F
         
-        $interfsE->addImplementingClass($classA); // class A implements E, C {}
-        $interfsC->addImplementingClass($classA); // class A implements E, C {}
+        $classA->addImplementedInterface($interfsE); // class A implements E, C {}
+        $classA->addImplementedInterface($interfsC); // class A implements E, C {}
         
-        $interfsD->addImplementingClass($classB); // class B extends C implements D, A {}
-        $interfsA->addImplementingClass($classB); // class B extends C implements D, A {}
+        $classB->addImplementedInterface($interfsA); // class B extends C implements D, A {}
+        $classB->addImplementedInterface($interfsD); // class B extends C implements D, A {}
         
-        $interfsC->addImplementingClass($classC); // class C implements C {}
+        $classC->addImplementedInterface($interfsC); // class C implements C {}
         
-        $classC->addChildClass($classB); // class B extends C implements D, A {}
+        $classB->setParentClass($classC); // class B extends C implements D, A {}
         
         $interfaces = $classA->getImplementedInterfaces();
         $this->assertEquals(4, $interfaces->count());
@@ -280,10 +280,10 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
         $c = new PHP_Reflection_AST_Class('c');
         $d = new PHP_Reflection_AST_Class('d');
         
-        $a->addChildClass($b);
-        $a->addChildClass($c);
+        $b->setParentClass($a);
+        $c->setParentClass($a);
         
-        $c->addChildClass($d);
+        $d->setParentClass($c);
         
         $depB = $b->getDependencies();
         $this->assertEquals(1, $depB->count());
@@ -404,13 +404,13 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
         $interfsE = new PHP_Reflection_AST_Interface('E');
         $interfsF = new PHP_Reflection_AST_Interface('F');
         
-        $interfsD->addImplementingClass($classA); // class A implements D, E
-        $interfsE->addImplementingClass($classA); // class A implements D, E
+        $classA->addImplementedInterface($interfsD); // class A implements D, E
+        $classA->addImplementedInterface($interfsE); // class A implements D, E
 
-        $interfsF->addImplementingClass($classC); // class C extends B implements F {}
+        $classC->addImplementedInterface($interfsF); // class C extends B implements F {}
         
-        $classA->addChildClass($classB); // class B extends A {} 
-        $classB->addChildClass($classC); // class C extends B implements F {}
+        $classB->setParentClass($classA); // class B extends A {} 
+        $classC->setParentClass($classB); // class C extends B implements F {}
         
         $this->assertTrue($classA->isSubtypeOf($classA));
         $this->assertFalse($classA->isSubtypeOf($classB));

@@ -63,29 +63,10 @@ require_once 'PHP/Reflection/AST/ClassOrInterfaceI.php';
 interface PHP_Reflection_AST_InterfaceI extends PHP_Reflection_AST_ClassOrInterfaceI
 {
     /**
-     * Returns an iterator with all implementing {@link PHP_Reflection_AST_ClassI}
-     * nodes.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     * @todo TODO: Should we return all implementing classes? This would include
-     *             all classes that extend a implementing classes and all classes
-     *             that implement a child interface.
-     */
-    function getImplementingClasses();
-    
-    /**
      * Returns an iterator with all {@link PHP_Reflection_AST_InterfaceI} nodes
      * that are a parent, parent parent etc. interface of this interface.
      *
      * @return PHP_Reflection_AST_Iterator
      */
     function getParentInterfaces();
-    
-    /**
-     * Returns an iterator with all {@link PHP_Reflection_AST_InterfaceI} nodes
-     * that are a child of this interface.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     */
-    function getChildInterfaces();
 }
