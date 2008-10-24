@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Reflection/AST/AbstractNode.php';
-require_once 'PHP/Reflection/AST/NamespaceExpressionI.php';
+require_once 'PHP/Reflection/AST/NamespaceI.php';
 
 /**
  * This class represents a namespace node.
@@ -61,9 +61,9 @@ require_once 'PHP/Reflection/AST/NamespaceExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_NamespaceExpression
+class PHP_Reflection_AST_Namespace
        extends PHP_Reflection_AST_AbstractNode
-    implements PHP_Reflection_AST_NamespaceExpressionI
+    implements PHP_Reflection_AST_NamespaceI
 {
     /**
      * Visitor method for node tree traversal.
