@@ -48,6 +48,10 @@ class FooBar extends Bar {
     }   
 }
 
+class BarFoo extends Bar implements Foo {
+    
+}
+
 /**
  * Enter description here...
  *

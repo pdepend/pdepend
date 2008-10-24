@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metrics ahh="0" andc="0" calls="30" ccn="21" classes="3" cloc="217" clsa="0" clsc="3" fanout="31" files="4" functions="2" interfs="2" leafs="3" loc="336" locExecutable="101" maxdit="0" ncloc="119" nom="6" nop="1" roots="0">
+<metrics ahh="0" andc="0" calls="30" ccn="21" classes="3" cloc="217" clsa="0" clsc="3" fanout="31" files="4" functions="2" interfs="2" leafs="3" loc="336" locExecutable="101" maxdit="0" ncloc="119" nom="6" nop="1" roots="3">
   <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/coupling/class.php" classes="2" cloc="84" functions="0" loc="128" locExecutable="36" ncloc="44">
     <class name="MyCouplingClass" cis="8" cloc="46" cr="0.15" csz="11" dit="0" impl="0" loc="82" locExecutable="30" ncloc="36" nom="2" rcr="0.15" vars="4" varsi="4" varsnp="1" wmc="7" wmci="7" wmcnp="7">
       <method name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
