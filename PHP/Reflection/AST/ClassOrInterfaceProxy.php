@@ -90,16 +90,6 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     }
     
     /**
-     * Returns the real subject behind this proxy. 
-     *
-     * @return PHP_Reflection_AST_ClassOrInterfaceI
-     */
-    public function getRealSubject()
-    {
-        return $this->_builder->buildProxySubject($this->_identifier);
-    }
-    
-    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
@@ -209,5 +199,15 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     public function accept(PHP_Reflection_VisitorI $visitor)
     {
         $this->getRealSubject()->accept($visitor);
+    }
+    
+    /**
+     * Returns the real subject behind this proxy. 
+     *
+     * @return PHP_Reflection_AST_ClassOrInterfaceI
+     */
+    protected function getRealSubject()
+    {
+        return $this->_builder->buildClassOrInterfaceSubject($this->_identifier);
     }
 }
