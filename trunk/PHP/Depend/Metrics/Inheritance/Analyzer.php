@@ -174,11 +174,18 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
         $this->fireStartClass($class);
         
         // Count all derived classes
-        $this->_derivedClasses[] = $class->getChildClasses()->count();
+        if (!isset($this->_derivedClasses[$class->getUUID()])) {
+            $this->_derivedClasses[$class->getUUID()] = 0;
+        }
+        
+        $this->_calculateHIT($class);
         
         // Is this a root class?
-        if ($class->getParentClass() === null) {
-            $this->_rootClasses[] = $this->_calculateHIT($class);
+        if (($parent = $class->getParentClass()) !== null) {
+            if (!isset($this->_derivedClasses[$parent->getUUID()])) {
+                $this->_derivedClasses[$parent->getUUID()] = 0;
+            }
+            ++$this->_derivedClasses[$parent->getUUID()];
         }
         
         $this->fireEndClass($class);
@@ -191,19 +198,18 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * 
      * @return integer
      */
-    private function _calculateHIT(PHP_Reflection_AST_Class $class)
+    private function _calculateHIT(PHP_Reflection_AST_Class $class, $depth = 0)
     {
-        $childTypes = $class->getChildClasses();
-        if ($childTypes->count() === 0) {
-            return 0;
-        }
-        
-        $depth = 0;
-        foreach ($childTypes as $childType) {
-            if (($childDepth = $this->_calculateHIT($childType)) > $depth) {
-                $depth = $childDepth;
+        if (($parent = $class->getParentClass()) === null) {
+            if (!isset($this->_rootClasses[$class->getUUID()])) {
+                $this->_rootClasses[$class->getUUID()] = 0;
             }
+            if ($this->_rootClasses[$class->getUUID()] < $depth)
+            {
+                $this->_rootClasses[$class->getUUID()] = $depth;
+            }
+        } else {
+            $this->_calculateHIT($parent, $depth + 1);
         }
-        return $depth + 1;
     }
 }
