@@ -843,7 +843,7 @@ class PHP_Reflection_Parser
         while (true) {
             // Get qualified interface name
             $identifier      = $this->_parseStaticQualifiedIdentifier();
-            $interfaceList[] = $this->builder->buildInterface($identifier);
+            $interfaceList[] = $this->builder->buildInterfaceProxy($identifier);
             
             $this->_consumeComments($tokens);
         
@@ -1662,7 +1662,7 @@ class PHP_Reflection_Parser
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {
-            return; 
+            return;
         }
  
         // Get all @throws Types
