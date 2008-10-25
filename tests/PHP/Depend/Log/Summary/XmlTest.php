@@ -73,7 +73,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      */
     private static $_locData = array(
         array('loc'  =>  42),  array('ncloc'  =>  23),
-        array('loc'  =>  33),  array('ncloc'  =>  20),
         array('loc'  =>  9),   array('ncloc'  =>  7),
         array('loc'  =>  101), array('ncloc'  =>  99),
         array('loc'  =>  90),  array('ncloc'  =>  80),
@@ -141,7 +140,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $this->assertFileNotExists($actualFile);
         $log->close();
         $this->assertFileExists($actualFile);
-        
+
         $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
     }
     
@@ -199,7 +198,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $this->assertFileNotExists($actualFile);
         $log->close();
         $this->assertFileExists($actualFile);
-        
+copy($actualFile, '/tmp/summary.xml');        
         $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
     }
     

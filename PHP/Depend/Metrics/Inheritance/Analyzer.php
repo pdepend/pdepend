@@ -194,11 +194,11 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Calculates the maximum HIT for the given class.
      *
-     * @param PHP_Reflection_AST_Class $class The context class instance.
+     * @param PHP_Reflection_AST_ClassI $class The context class instance.
      * 
      * @return integer
      */
-    private function _calculateHIT(PHP_Reflection_AST_Class $class, $depth = 0)
+    private function _calculateHIT(PHP_Reflection_AST_ClassI $class, $depth = 0)
     {
         if (($parent = $class->getParentClass()) === null) {
             if (!isset($this->_rootClasses[$class->getUUID()])) {

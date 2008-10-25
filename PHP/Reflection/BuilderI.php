@@ -88,6 +88,19 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function findClassOrInterfaceSubject($identifier);
     
     /**
+     * This method will return the best matching class instance for the given
+     * qualified class identifier. First it looks for an exactly matching class
+     * instance, then it will look for a similar match, if no exact match exits.
+     * Finally this method creates a new class instance for this given identifier,
+     * when no existing class matches.
+     *
+     * @param string $identifier The qualified class identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassI
+     */
+    function findClassSubject($identifier);
+    
+    /**
      * This method will return the best matching interface for the supplied
      * identifier. First it looks for an exact match in the existing interface,
      * if no result was found this method will look for a similar interface. 
@@ -109,6 +122,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @return PHP_Reflection_AST_Class The created class object.
      */
     function buildClass($name, $line = 0);
+    
+    /**
+     * Creates a proxy for a class.
+     *
+     * @param string $identifier The qualified class identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassProxy
+     */
+    function buildClassProxy($identifier);
     
     /**
      * Builds a new code class constant instance.

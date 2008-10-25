@@ -274,7 +274,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Reflection_AST_Package', $package);
         $this->assertEquals(PHP_Reflection_BuilderI::GLOBAL_PACKAGE, $package->getName());
         
-        $this->assertEquals(8, $package->getClasses()->count());
+        $this->assertEquals(7, $package->getClasses()->count());
         $this->assertEquals(3, $package->getInterfaces()->count());
     }
     

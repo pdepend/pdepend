@@ -72,8 +72,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
         'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
         'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
-        '+standard'   =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
-        '+global'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.15),
+//        '+standard'   =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
+//        '+global'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.15),
         'pkg1Foo'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2FooI'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2Bar'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
@@ -84,8 +84,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         'pkg1FooI'    =>  array('cr'  =>  0.5325,     'rcr'  =>  0.15),
         'pkg1Bar'     =>  array('cr'  =>  0.59625,    'rcr'  =>  0.15),
         'pkg3FooI'    =>  array('cr'  =>  0.21375,    'rcr'  =>  0.2775),
-        'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
-        'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
+//        'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
+//        'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
     );
     
     /**
@@ -101,15 +101,17 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         $analyzer->analyze($packages);
         
         foreach ($packages as $package) {
+            // Check for any type info
+            if ($package->getTypes()->count() === 0) {
+                continue;
+            }
+            
             // Get package name
             $name = $package->getName();
             // Check that key exists
             $this->assertArrayHasKey($name, $this->_expected);
             // Get metric
             $metric = $analyzer->getNodeMetrics($package);
-if (empty($metric)) {
-    echo PHP_EOL, 'leer: ', $name;
-}
 
             $this->assertArrayHasKey('cr', $metric, 'Missing cr value for: ' . $name);
             $this->assertArrayHasKey('rcr', $metric, 'Missing rcr value for: ' . $name);
