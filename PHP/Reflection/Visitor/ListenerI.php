@@ -207,8 +207,8 @@ interface PHP_Reflection_Visitor_ListenerI
     /**
      * Is called when the visitor starts a new constant instance.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const 
-     *        The context constant.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * The context constant.
      * 
      * @return void
      */
@@ -218,11 +218,11 @@ interface PHP_Reflection_Visitor_ListenerI
     /**
      * Is called when the visitor ends with a constant instance.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const 
-     *        The context constant.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * The context constant.
      * 
      * @return void
      */
     function endVisitTypeConstant(
-                            PHP_Reflection_AST_ClassOrInterfaceConstant $const);
+                        PHP_Reflection_AST_ClassOrInterfaceConstant $constant);
 }

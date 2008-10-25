@@ -275,11 +275,13 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The current constant node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * The current constant node.
      * 
      * @return void
      */
-    public function visitTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const)
+    public function visitTypeConstant(
+                        PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
     {
         $this->fireStartTypeConstant($const);
         
@@ -351,7 +353,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
      * Visits a class or interface constant reference
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constRef
-     *        The reference instance.
+     * The reference instance.
      * 
      * @return void
      */
@@ -604,11 +606,13 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start constant event. 
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The context constant.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * The context constant.
      * 
      * @return void
      */
-    protected function fireStartTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const)
+    protected function fireStartTypeConstant(
+                        PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitTypeConstant($const);
@@ -618,11 +622,13 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end constant event.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const The context constant.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * The context constant.
      * 
      * @return void
      */
-    protected function fireEndTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const)
+    protected function fireEndTypeConstant(
+                        PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitTypeConstant($const);

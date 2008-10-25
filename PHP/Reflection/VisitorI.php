@@ -153,12 +153,13 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const 
-     *        The current constant node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant 
+     * The current constant node.
      * 
      * @return void
      */
-    function visitTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $const);
+    function visitTypeConstant(
+                        PHP_Reflection_AST_ClassOrInterfaceConstant $constant);
     
     /**
      * Visits an exception catch node.
