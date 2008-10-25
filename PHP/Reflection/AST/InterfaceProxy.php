@@ -50,7 +50,9 @@ require_once 'PHP/Reflection/AST/ClassOrInterfaceProxy.php';
 require_once 'PHP/Reflection/AST/InterfaceI.php';
 
 /**
- * 
+ * This class is a proxy for interface nodes. Instances of this class will be 
+ * used whenever it is clear that the context node is an interface, but the 
+ * source of this node (project or external library) is unclear. 
  *
  * @category   PHP
  * @package    PHP_Reflection
