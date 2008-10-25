@@ -237,34 +237,46 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
         $classB->setParentClass($classC); // class B extends C implements D, A {}
         
         $interfaces = $classA->getImplementedInterfaces();
-        $this->assertEquals(4, $interfaces->count());
-        $this->assertSame($interfsA, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsC, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsE, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsF, $interfaces->current());
+        $expected   = array($interfsE, $interfsF, $interfsA, $interfsC);
+        
+        $this->assertEquals(count($expected), $interfaces->count());
+        foreach ($interfaces as $interface) {
+            $idx = array_search($interface, $expected, true);
+            $this->assertTrue(is_int($idx));
+            $this->assertSame($expected[$idx], $interface);
+            
+            unset($expected[$idx]);
+        }
+        $this->assertEquals(0, count($expected));
         
         $interfaces = $classB->getImplementedInterfaces();
-        $this->assertEquals(6, $interfaces->count());
-        $this->assertSame($interfsA, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsB, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsC, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsD, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsE, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsF, $interfaces->current());
+        $expected   = array(
+            $interfsA, $interfsB, $interfsC, 
+            $interfsD, $interfsE, $interfsF,
+        );
+        
+        $this->assertEquals(count($expected), $interfaces->count());
+        foreach ($interfaces as $interface) {
+            $idx = array_search($interface, $expected, true);
+            $this->assertTrue(is_int($idx));
+            $this->assertSame($expected[$idx], $interface);
+            
+            unset($expected[$idx]);
+        }
+        $this->assertEquals(0, count($expected));
         
         $interfaces = $classC->getImplementedInterfaces();
-        $this->assertEquals(2, $interfaces->count());
-        $this->assertSame($interfsA, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsC, $interfaces->current());
+        $expected   = array($interfsA, $interfsC);
+        
+        $this->assertEquals(count($expected), $interfaces->count());
+        foreach ($interfaces as $interface) {
+            $idx = array_search($interface, $expected, true);
+            $this->assertTrue(is_int($idx));
+            $this->assertSame($expected[$idx], $interface);
+            
+            unset($expected[$idx]);
+        }
+        $this->assertEquals(0, count($expected));
     }
     
     /**

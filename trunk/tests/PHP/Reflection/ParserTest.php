@@ -528,9 +528,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals('func2', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(2, $ex->count());
-        $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
-        $ex->next();
         $this->assertEquals('OutOfRangeException', $ex->current()->getName());
+        $ex->next();
+        $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
         
         $nodes->next();
         
@@ -633,9 +633,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals('method1', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(2, $ex->count());
-        $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
-        $ex->next();
         $this->assertEquals('OutOfRangeException', $ex->current()->getName());
+        $ex->next();
+        $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
         
         $nodes->next();
         
@@ -702,14 +702,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                              ->getTypes()
                              ->current()
                              ->getProperties();
-                         
-        $this->assertTrue($nodes->current()->isProtected());
-        $nodes->next();
+                       
         $this->assertTrue($nodes->current()->isPrivate());
-        $nodes->next();  
-        $this->assertTrue($nodes->current()->isProtected());
         $nodes->next();
         $this->assertTrue($nodes->current()->isPublic());
+        $nodes->next();  
+        $this->assertTrue($nodes->current()->isProtected());
+        $nodes->next();  
+        $this->assertTrue($nodes->current()->isProtected());
     }
     
     /**
@@ -798,9 +798,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectTypeDocComment()
     {   
         $expected = array(
-            null,
-            null,
             "/**\n * Sample comment.\n */",
+            null,
+            null,
             "/**\n * A second comment...\n */",
         );
         
@@ -924,12 +924,13 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $constants = $class->getConstants();
         
         $this->assertEquals(2, $constants->count());
-        $this->assertEquals('BAR', $constants->current()->getName());
+        
+        $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertSame($class, $constants->current()->getParent());
         
         $constants->next();
         
-        $this->assertEquals('FOO', $constants->current()->getName());
+        $this->assertEquals('BAR', $constants->current()->getName());
         $this->assertSame($class, $constants->current()->getParent());
     }
     
@@ -944,13 +945,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $constants = $class->getConstants();
         
         $this->assertEquals(2, $constants->count());
-        $this->assertEquals('BAR', $constants->current()->getName());
-        $this->assertEquals(36, $constants->current()->getStartLine());
-        
-        $constants->next();
         
         $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertEquals(31, $constants->current()->getStartLine());
+        
+        $constants->next();
+        
+        $this->assertEquals('BAR', $constants->current()->getName());
+        $this->assertEquals(36, $constants->current()->getStartLine());
     }
     
     /**
@@ -964,13 +966,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $constants = $class->getConstants();
         
         $this->assertEquals(2, $constants->count());
-        $this->assertEquals('BAR', $constants->current()->getName());
-        $this->assertEquals(36, $constants->current()->getEndLine());
-        
-        $constants->next();
         
         $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertEquals(31, $constants->current()->getEndLine());
+        
+        $constants->next();
+        
+        $this->assertEquals('BAR', $constants->current()->getName());
+        $this->assertEquals(36, $constants->current()->getEndLine());
     }
     
     /**
@@ -988,13 +991,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
      */';
         
         $this->assertEquals(2, $constants->count());
-        $this->assertEquals('BAR', $constants->current()->getName());
-        $this->assertEquals($expected, $constants->current()->getDocComment());
-        
-        $constants->next();
         
         $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertNull($constants->current()->getDocComment());
+        
+        $constants->next();
+        
+        $this->assertEquals('BAR', $constants->current()->getName());
+        $this->assertEquals($expected, $constants->current()->getDocComment());
     }
     
     /**
@@ -1442,19 +1446,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $parameters = $function->getParameters();
         $this->assertEquals(3, $parameters->count());
         
-        // Note alphabetic order
+        $parameter = $parameters->current();
+        $this->assertEquals('$foo', $parameter->getName());
+        $this->assertEquals(0, $parameter->getPosition());
+        $this->assertNull($parameter->getType());
+        
+        $parameters->next();
+        
         $parameter = $parameters->current();
         $this->assertEquals('$bar', $parameter->getName());
         $this->assertEquals(1, $parameter->getPosition());
         $this->assertNotNull($parameter->getType());
         $this->assertEquals('Bar', $parameter->getType()->getName());
-        
-        $parameters->next();
-        
-        $parameter = $parameters->current();
-        $this->assertEquals('$foo', $parameter->getName());
-        $this->assertEquals(0, $parameter->getPosition());
-        $this->assertNull($parameter->getType());
         
         $parameters->next();
         
@@ -1488,19 +1491,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $parameters = $method->getParameters();
         $this->assertEquals(3, $parameters->count());
         
-        // Note alphabetic order
+        $parameter = $parameters->current();
+        $this->assertEquals('$foo', $parameter->getName());
+        $this->assertEquals(0, $parameter->getPosition());
+        $this->assertNull($parameter->getType());
+        
+        $parameters->next();
+        
         $parameter = $parameters->current();
         $this->assertEquals('$bar', $parameter->getName());
         $this->assertEquals(1, $parameter->getPosition());
         $this->assertNotNull($parameter->getType());
         $this->assertEquals('Bar', $parameter->getType()->getName());
-        
-        $parameters->next();
-        
-        $parameter = $parameters->current();
-        $this->assertEquals('$foo', $parameter->getName());
-        $this->assertEquals(0, $parameter->getPosition());
-        $this->assertNull($parameter->getType());
         
         $parameters->next();
         
@@ -1529,14 +1531,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             'PHP_Depend_Z'  =>  0
         );
         
-        foreach ($expected as $typeName => $typePosition) {
-            $this->assertNotNull($types->current());
-            $this->assertEquals($typeName, $types->current()->getName());
-            $this->assertEquals($typePosition, $types->current()->getPosition());
+        while (($type = $types->current()) !== false) {
+            $this->assertArrayHasKey($type->getName(), $expected);
+            
+            $position = $expected[$type->getName()];
+            $this->assertEquals($position, $type->getPosition());
             
             $types->next();
         }
-        $this->assertFalse($types->current());
     }
     
     /**
@@ -1768,10 +1770,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $ws = str_repeat(" ", 4 * $indent);
         
         $expected = array(
-            "/**\n{$ws} * This is a second comment.\n{$ws} */",
             "/**\n{$ws} * This is one comment.\n{$ws} */",
             null,
             null,
+            "/**\n{$ws} * This is a second comment.\n{$ws} */",
         );
         
         foreach ($nodes as $callable) {
