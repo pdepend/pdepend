@@ -60,7 +60,8 @@ require_once 'PHP/Reflection/AST/MemberScalarValue.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_MemberFalseValue extends PHP_Reflection_AST_MemberScalarValue
+class PHP_Reflection_AST_MemberFalseValue 
+    extends PHP_Reflection_AST_MemberScalarValue
 {
     /**
      * A GoF flyweight instance of false.
