@@ -4,7 +4,6 @@
     <file name="packages.php"/>
   </files>
   <package name="+global">
-    <class name="BarFoo"/>
     <function name="bar">
       <file name="packages.php"/>
     </function>

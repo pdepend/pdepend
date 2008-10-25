@@ -96,6 +96,7 @@ class PHP_Reflection_AST_Iterator implements Iterator, Countable
             if (!($node instanceof PHP_Reflection_AST_NodeI)) {
                 throw new RuntimeException('Invalid object given.');
             }
+            // FIXME: Find a better solution, don't use local names
             $this->_nodes[$node->getName()] = $node;
         }
         // Sort by name

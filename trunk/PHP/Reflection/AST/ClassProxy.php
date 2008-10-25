@@ -46,8 +46,13 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/AST/ClassI.php';
+require_once 'PHP/Reflection/AST/ClassOrInterfaceProxy.php';
+
 /**
- * 
+ * This class is a proxy for class nodes. Instances of this class will be used 
+ * whenever it is clear that the context node is a class, but the source of this
+ * node (project or external library) is unclear. 
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -62,4 +67,80 @@ class PHP_Reflection_AST_ClassProxy
        extends PHP_Reflection_AST_ClassOrInterfaceProxy
     implements PHP_Reflection_AST_ClassI
 {
+    /**
+     * Returns the declared modifiers for this class.
+     *
+     * @return integer
+     */
+    public function getModifiers()
+    {
+        return $this->getRealSubject()->getModifiers();
+    }
+    
+    /**
+     * Returns <b>true</b> if this class is markes as final.
+     *
+     * @return boolean
+     */
+    public function isFinal()
+    {
+        return $this->getRealSubject()->isFinal();
+    }
+    
+    /**
+     * Returns the parent class or <b>null</b> if this class has no parent.
+     *
+     * @return PHP_Reflection_AST_ClassI
+     */
+    public function getParentClass()
+    {
+        return $this->getRealSubject()->getParentClass();
+    }
+    
+    /**
+     * Returns a node iterator with all {@link PHP_Reflection_AST_InterfaceI}
+     * nodes this class implements.
+     *
+     * @return PHP_Reflection_AST_Iterator
+     */
+    public function getImplementedInterfaces()
+    {
+        return $this->getRealSubject()->getImplementedInterfaces();
+    }
+    
+    /**
+     * Will return a class property for the given node. Please note that this
+     * method requires a property name without leading '$' character.
+     *
+     * @param string $name The property name.
+     * 
+     * @return PHP_Reflection_AST_PropertyI The property instance.
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    public function getProperty($name)
+    {
+        return $this->getRealSubject()->getProperty($name);
+    }
+    
+    /**
+     * Returns a node iterator with all {@link PHP_Reflection_AST_PropertyI}
+     * nodes for this class.
+     *
+     * @return PHP_Reflection_AST_Iterator
+     */
+    public function getProperties()
+    {
+        return $this->getRealSubject()->getProperties();
+    }
+    
+    /**
+     * Returns the real class representation.
+     *
+     * @return PHP_Reflection_AST_ClassI
+     */
+    protected function getRealSubject()
+    {
+        return $this->getBuilder()->findClassSubject($this->getQualifiedName());
+    }
 }
