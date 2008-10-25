@@ -250,7 +250,7 @@ class PHP_Reflection_Parser
     public function parse(Iterator $files)
     {
         foreach ($files as $file) {
-            
+
             $this->reset();
             
             // Set next source file
@@ -422,7 +422,7 @@ class PHP_Reflection_Parser
         
         // Method position within the type body
         $this->_methodPosition = 0;
-        
+
         while ($this->tokenizer->peek() !== self::T_EOF) {
             
             switch ($this->tokenizer->peek()) {

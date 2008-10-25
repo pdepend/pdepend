@@ -480,15 +480,14 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $packages = array(
-            'package1'  =>  $builder->buildPackage('package1'),
-            'package2'  =>  $builder->buildPackage('package2'),
-            'package3'  =>  $builder->buildPackage('package3')
+            $builder->buildPackage('package1'),
+            $builder->buildPackage('package2'),
+            $builder->buildPackage('package3')
         );
         
-        foreach ($builder as $name => $package) {
-            $this->assertArrayHasKey($name, $packages);
-            $this->assertEquals($name, $package->getName());
-            $this->assertSame($packages[$name], $package);
+        foreach ($builder as $idx => $package) {
+            $this->assertArrayHasKey($idx, $packages);
+            $this->assertSame($packages[$idx], $package);
         }
     }
     
@@ -502,15 +501,14 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $packages = array(
-            'package1'  =>  $builder->buildPackage('package1'),
-            'package2'  =>  $builder->buildPackage('package2'),
-            'package3'  =>  $builder->buildPackage('package3')
+            $builder->buildPackage('package1'),
+            $builder->buildPackage('package2'),
+            $builder->buildPackage('package3')
         );
         
-        foreach ($builder->getPackages() as $name => $package) {
-            $this->assertArrayHasKey($name, $packages);
-            $this->assertEquals($name, $package->getName());
-            $this->assertSame($packages[$name], $package);
+        foreach ($builder->getPackages() as $idx => $package) {
+            $this->assertArrayHasKey($idx, $packages);
+            $this->assertSame($packages[$idx], $package);
         }
     }
     
