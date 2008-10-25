@@ -165,7 +165,7 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         $this->assertFileNotExists($actualFile);
         $logger->close();
         $this->assertFileExists($actualFile);
-        
+copy($actualFile, '/tmp/phpunit.xml');
         $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
     }
     

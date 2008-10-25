@@ -97,11 +97,11 @@ class PHP_Reflection_AST_InterfaceTest extends PHP_Reflection_AST_AbstractItemTe
         
         $parents = $interfsD->getParentInterfaces();
         $this->assertEquals(4, $parents->count());
-        $this->assertSame($interfsA, $parents->current());
-        $parents->next();
         $this->assertSame($interfsC, $parents->current());
         $parents->next();
         $this->assertSame($interfsE, $parents->current());
+        $parents->next();
+        $this->assertSame($interfsA, $parents->current());
         $parents->next();
         $this->assertSame($interfsF, $parents->current());
         
