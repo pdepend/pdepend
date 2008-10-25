@@ -240,18 +240,24 @@ class PHP_Reflection
         $filter = $this->_createInputFilter();
         
         // Append all configured directories
-        foreach ($this->_directories as $directory) {
-            $iterator->append(
-                new PHP_Reflection_Input_FileFilterIterator(
-                    new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($directory)
-            ), $filter));
+        if (count($this->_directories) > 0) {
+            foreach ($this->_directories as $directory) {
+                $iterator->append(
+                    new PHP_Reflection_Input_FileFilterIterator(
+                        new RecursiveIteratorIterator(
+                            new RecursiveDirectoryIterator($directory . '/')
+                ), $filter));
+            }
+        }
+        // Append single files
+        if (count($this->_files) > 0) {
+            $iterator->append(new ArrayIterator($this->_files));
         }
         
-        // Append single files
-        $iterator->append(new ArrayIterator($this->_files));
+        $files = iterator_to_array($iterator);
+        $files = array_unique($files);
         
-        return $iterator;
+        return new ArrayIterator($files);
     }
     
     /**

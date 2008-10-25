@@ -94,9 +94,12 @@ class PHP_Reflection_AST_Interface
         foreach ($interfaces as $interface) {
             // Append parent parents
             foreach ($interface->getParentInterfaces() as $parentInterface) {
-                if (in_array($parentInterface, $interfaces, true) === false) {
-                    $interfaces[] = $parentInterface;
+                foreach ($interfaces as $existingInterface) {
+                    if ($existingInterface->equals($parentInterface)) {
+                        continue 2;
+                    }
                 }
+                $interfaces[] = $parentInterface;
             }
         }
         return new PHP_Reflection_AST_Iterator($interfaces);

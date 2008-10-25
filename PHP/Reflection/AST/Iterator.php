@@ -91,16 +91,16 @@ class PHP_Reflection_AST_Iterator implements Iterator, Countable
      */
     public function __construct(array $nodes) 
     {
-        // First check all input nodes
+        // First check all input nodes and create a node set
+        $nodeSet = array();
         foreach ($nodes as $node) {
             if (!($node instanceof PHP_Reflection_AST_NodeI)) {
                 throw new RuntimeException('Invalid object given.');
             }
-            // FIXME: Find a better solution, don't use local names
-            $this->_nodes[$node->getName()] = $node;
+            $nodeSet[$node->getUUID()] = $node;
         }
-        // Sort by name
-        ksort($this->_nodes);
+        
+        $this->_nodes = array_values($nodeSet);
         
         $staticFilter = PHP_Reflection_AST_Iterator_StaticFilter::getInstance();
         

@@ -99,27 +99,4 @@ class PHP_Reflection_AST_IteratorTest extends PHP_Reflection_AbstractTest
         
         $this->assertEquals(4, $it->count());
     }
-    
-    /**
-     * Tests that the iterator returns the node name as key.
-     *
-     * @return void
-     */
-    public function testIteratorLoopWithKey()
-    {
-        $names = array('clazz', 'func', 'method', 'pkg');
-        $nodes = array(
-            new PHP_Reflection_AST_TestImplNode('clazz'),
-            new PHP_Reflection_AST_TestImplNode('func'),
-            new PHP_Reflection_AST_TestImplNode('method'),
-            new PHP_Reflection_AST_TestImplNode('pkg'),
-        );
-        
-        $it = new PHP_Reflection_AST_Iterator($nodes);
-        
-        for ($i = 0, $it->rewind(); $it->valid(); ++$i, $it->next()) {
-            $this->assertSame($nodes[$i], $it->current());
-            $this->assertEquals($names[$i], $it->key());
-        }
-    }
 }
