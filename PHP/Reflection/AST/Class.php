@@ -172,6 +172,8 @@ class PHP_Reflection_AST_Class
      * Sets the parent class node for this class.
      *
      * @param PHP_Reflection_AST_ClassI $parentClass The parent class.
+     * 
+     * @return void
      */
     public function setParentClass(PHP_Reflection_AST_ClassI $parentClass)
     {
@@ -209,7 +211,8 @@ class PHP_Reflection_AST_Class
     /**
      * Adds an interface node to the list of implemented interfaces.
      *
-     * @param PHP_Reflection_AST_InterfaceI $interface The implemented interface node.
+     * @param PHP_Reflection_AST_InterfaceI $interface
+     * The implemented interface node.
      * 
      * @return void
      */
@@ -307,12 +310,13 @@ class PHP_Reflection_AST_Class
      * Checks that this user type is a subtype of the given <b>$classOrInterface</b>
      * instance.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceI $classOrInterface 
-     *        The possible parent node.
+     * @param PHP_Reflection_AST_ClassOrInterfaceI $classOrInterface
+     * The possible parent node.
      * 
      * @return boolean
      */
-    public function isSubtypeOf(PHP_Reflection_AST_ClassOrInterfaceI $classOrInterface)
+    public function isSubtypeOf(
+                        PHP_Reflection_AST_ClassOrInterfaceI $classOrInterface)
     {
         if ($classOrInterface === $this) {
             return true;

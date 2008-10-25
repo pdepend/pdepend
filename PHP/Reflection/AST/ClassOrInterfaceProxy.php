@@ -80,8 +80,8 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     /**
      * Constructs a new class or interface proxy.
      *
-     * @param PHP_Reflection_BuilderI $builder The creating node builder instance.
-     * @param unknown_type $identifier
+     * @param PHP_Reflection_BuilderI $builder    The creating node builder instance.
+     * @param string                  $identifier The subject identifier.
      */
     public function __construct(PHP_Reflection_BuilderI $builder, $identifier)
     {
@@ -146,11 +146,12 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
      * instance.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceI $classOrInterface 
-     *        The possible parent node.
+     * The possible parent node.
      * 
      * @return boolean
      */
-    public function isSubtypeOf(PHP_Reflection_AST_ClassOrInterfaceI $classOrInterface)
+    public function isSubtypeOf(
+                        PHP_Reflection_AST_ClassOrInterfaceI $classOrInterface)
     {
         return $this->getRealSubject()->isSubtypeOf($classOrInterface);
     }
