@@ -159,7 +159,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
                 $collected   = $strategy->getCollectedNodes();
                 $this->nodes = array_merge_recursive($collected, $this->nodes);
             }
-            
+
             // Init node metrics
             $this->_nodeMetrics = array();
             

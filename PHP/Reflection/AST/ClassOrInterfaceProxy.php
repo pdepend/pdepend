@@ -163,7 +163,7 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
      */
     public function getName()
     {
-        return $this->_identifier;
+        return $this->getRealSubject()->getName();
     }
     
     /**
@@ -187,7 +187,7 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
      */
     public function equals(PHP_Reflection_AST_NodeI $node)
     {
-        return ($this->getRealSubject()->getUUID() === $node->getUUID());
+        return $this->getRealSubject()->equals($node);
     }
     
     /**

@@ -55,6 +55,7 @@ require_once 'PHP/Reflection/AST/Class.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceConstant.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceConstantValue.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceProxy.php';
+require_once 'PHP/Reflection/AST/ClassProxy.php';
 require_once 'PHP/Reflection/AST/ConstantValue.php';
 require_once 'PHP/Reflection/AST/Interface.php';
 require_once 'PHP/Reflection/AST/InterfaceProxy.php';
@@ -102,16 +103,16 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_AST_Class} objects
      *
-     * @var array(string=>PHP_Reflection_AST_Class) $classes
+     * @var array(string=>PHP_Reflection_AST_Class) $_classes
      */
-    protected $classes = array();
+    private $_classes = array();
     
     /**
      * All generated {@link PHP_Reflection_AST_Interface} instances.
      *
-     * @var array(string=>PHP_Reflection_AST_Interface) $interfaces
+     * @var array(string=>PHP_Reflection_AST_Interface) $_interfaces
      */
-    protected $interfaces = array();
+    protected $_interfaces = array();
     
     /**
      * All generated {@link PHP_Reflection_AST_Package} objects
@@ -126,13 +127,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      * @var array(string=>PHP_Reflection_AST_Function) $functions
      */
     protected $functions = array();
-    
-    /**
-     * Cache for already created class or interface proxy instances.
-     * 
-     * @var array(PHP_Reflection_AST_ClassOrInterfaceI) $_proxyCache
-     */
-    private $_proxyCache = array();
     
     /**
      * The internal types class.
@@ -182,6 +176,28 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             return $instance;
         }
         if ($instance = $this->_findClassOrInterfaceBestMatch($identifier)) {
+            return $instance;
+        }
+        return $this->buildClass($identifier);
+    }
+    
+    /**
+     * This method will return the best matching class instance for the given
+     * qualified class identifier. First it looks for an exactly matching class
+     * instance, then it will look for a similar match, if no exact match exits.
+     * Finally this method creates a new class instance for this given identifier,
+     * when no existing class matches.
+     *
+     * @param string $identifier The qualified class identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassI
+     */
+    public function findClassSubject($identifier)
+    {
+        if ($instance = $this->_findClassExactMatch($identifier)) {
+            return $instance;
+        }
+        if ($instance = $this->_findClassBestMatch($identifier)) {
             return $instance;
         }
         return $this->buildClass($identifier);
@@ -252,20 +268,20 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             return $instance;
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->classes[$normalizedName][self::GLOBAL_PACKAGE])) {
-            $class = $this->classes[$normalizedName][self::GLOBAL_PACKAGE];
+        } else if (isset($this->_classes[$normalizedName][self::GLOBAL_PACKAGE])) {
+            $class = $this->_classes[$normalizedName][self::GLOBAL_PACKAGE];
             
-            unset($this->classes[$normalizedName][self::GLOBAL_PACKAGE]);
+            unset($this->_classes[$normalizedName][self::GLOBAL_PACKAGE]);
 
-            $this->classes[$normalizedName][$packageName] = $class;
+            $this->_classes[$normalizedName][$packageName] = $class;
             
             $this->buildPackage($packageName)->addType($class);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->classes[$normalizedName]) 
+        } else if (isset($this->_classes[$normalizedName]) 
             && $this->isDefault($packageName)) {
 
-            $class = reset($this->classes[$normalizedName]);
+            $class = reset($this->_classes[$normalizedName]);
             
             // 4) Create a new class for the given package
         } else {
@@ -275,12 +291,24 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $class->setSourceFile($this->defaultFile);
             
             // Store class reference
-            $this->classes[$normalizedName][$packageName] = $class;
+            $this->_classes[$normalizedName][$packageName] = $class;
             
             // Append to class package
             $this->buildPackage($packageName)->addType($class);
         }
         return $class;
+    }
+    
+    /**
+     * Creates a proxy for a class.
+     *
+     * @param string $identifier The qualified class identifier.
+     * 
+     * @return PHP_Reflection_AST_ClassProxy
+     */
+    public function buildClassProxy($identifier)
+    {
+        return new PHP_Reflection_AST_ClassProxy($this, $identifier);
     }
     
     /**
@@ -338,39 +366,39 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $normalizedName = strtolower($localName);
         
-        if (isset($this->classes[$normalizedName][$packageName])) {
-            $class   = $this->classes[$normalizedName][$packageName];
+        if (isset($this->_classes[$normalizedName][$packageName])) {
+            $class   = $this->_classes[$normalizedName][$packageName];
             $package = $class->getPackage();
             
             // Only reparent if the found class is part of the default package
             if ($package === $this->defaultPackage) {
                 $package->removeType($class);
             
-                unset($this->classes[$normalizedName][$package->getName()]);
+                unset($this->_classes[$normalizedName][$package->getName()]);
                 
-                $this->classes = array_filter($this->classes);
+                $this->_classes = array_filter($this->_classes);
             }
         }
         
         // 1) check for an equal interface version
-        if (isset($this->interfaces[$normalizedName][$packageName])) {
-            $interface = $this->interfaces[$normalizedName][$packageName];
+        if (isset($this->_interfaces[$normalizedName][$packageName])) {
+            $interface = $this->_interfaces[$normalizedName][$packageName];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->interfaces[$normalizedName][self::GLOBAL_PACKAGE])) {
-            $interface = $this->interfaces[$normalizedName][self::GLOBAL_PACKAGE];
+        } else if (isset($this->_interfaces[$normalizedName][self::GLOBAL_PACKAGE])) {
+            $interface = $this->_interfaces[$normalizedName][self::GLOBAL_PACKAGE];
             
-            unset($this->interfaces[$normalizedName][self::GLOBAL_PACKAGE]);
+            unset($this->_interfaces[$normalizedName][self::GLOBAL_PACKAGE]);
             
-            $this->interfaces[$normalizedName][$packageName] = $interface;
+            $this->_interfaces[$normalizedName][$packageName] = $interface;
             
             $this->buildPackage($packageName)->addType($interface);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->interfaces[$normalizedName]) 
+        } else if (isset($this->_interfaces[$normalizedName]) 
             && $this->isDefault($packageName)) {
                 
-            $interface = reset($this->interfaces[$normalizedName]);
+            $interface = reset($this->_interfaces[$normalizedName]);
             
             // 4) Create a new interface for the given package
         } else {
@@ -379,7 +407,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
-            $this->interfaces[$normalizedName][$packageName] = $interface;
+            $this->_interfaces[$normalizedName][$packageName] = $interface;
             
             // Append interface to package
             $this->buildPackage($packageName)->addType($interface);
@@ -397,14 +425,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildInterfaceProxy($identifier)
     {
-        $proxyID = strtolower($identifier);
-        if (!isset($this->_proxyCache[$proxyID])) {
-            // Create a new node proxy
-            $proxy = new PHP_Reflection_AST_InterfaceProxy($this, $identifier); 
-            // Cache proxy instance
-            $this->_proxyCache[$proxyID] = $proxy;
-        }
-        return $this->_proxyCache[$proxyID]; 
+        return new PHP_Reflection_AST_InterfaceProxy($this, $identifier);
     }
     
     /**
@@ -552,14 +573,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildClassOrInterfaceProxy($identifier)
     {
-        $proxyID = strtolower($identifier);
-        if (!isset($this->_proxyCache[$proxyID])) {
-            // Create a new node proxy
-            $proxy = new PHP_Reflection_AST_ClassOrInterfaceProxy($this, $identifier); 
-            // Cache proxy instance
-            $this->_proxyCache[$proxyID] = $proxy;
-        }
-        return $this->_proxyCache[$proxyID]; 
+        return new PHP_Reflection_AST_ClassOrInterfaceProxy($this, $identifier);
     }
     
     /**
@@ -638,14 +652,6 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function getPackages()
     {
-        // Finally realize proxies
-        foreach ($this->_proxyCache as $proxy) {
-            $package = $proxy->getPackage();
-            if (in_array($package, $this->packages, true) === false) {
-                $this->packages[] = $package;
-            }
-        }
-        
         // Create a package array copy
         $packages = $this->packages;
         
@@ -755,8 +761,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $normalizedName = strtolower($localName);
         
-        if (isset($this->classes[$normalizedName][$packageName])) {
-            return $this->classes[$normalizedName][$packageName];
+        if (isset($this->_classes[$normalizedName][$packageName])) {
+            return $this->_classes[$normalizedName][$packageName];
         }
         return null;
     }
@@ -772,11 +778,15 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     private function _findClassBestMatch($identifier)
     {
-        $localName   = $this->extractTypeName($identifier);
         $packageName = $this->extractPackageName($identifier);
-        
-        $normalizedName = strtolower($localName);
-        // FIXME: Implement this method...
+        if ($packageName === self::GLOBAL_PACKAGE) {
+            
+            $normalizedName = strtolower($this->extractTypeName($identifier));
+            if (isset($this->_classes[$normalizedName])) {
+                return reset($this->_classes[$normalizedName]);
+            }
+        }
+        return null;
     }
     
     /**
@@ -795,8 +805,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $normalizedName = strtolower($localName);
         
-        if (isset($this->interfaces[$normalizedName][$packageName])) {
-            return $this->interfaces[$normalizedName][$packageName];
+        if (isset($this->_interfaces[$normalizedName][$packageName])) {
+            return $this->_interfaces[$normalizedName][$packageName];
         }
         return null;
     }
@@ -816,8 +826,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         if ($packageName === self::GLOBAL_PACKAGE) {
             
             $normalizedName = strtolower($this->extractTypeName($identifier));
-            if (isset($this->interfaces[$normalizedName])) {
-                return reset($this->interfaces[$normalizedName]);
+            if (isset($this->_interfaces[$normalizedName])) {
+                return reset($this->_interfaces[$normalizedName]);
             }
         }
         return null;        
@@ -840,10 +850,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         $normalizedName = strtolower($localName);
         
         $instance = null;
-        if (isset($this->classes[$normalizedName][$packageName])) {
-            $instance = $this->classes[$normalizedName][$packageName];
-        } else if (isset($this->interfaces[$normalizedName][$packageName])) {
-            $instance = $this->interfaces[$normalizedName][$packageName];
+        if (isset($this->_classes[$normalizedName][$packageName])) {
+            $instance = $this->_classes[$normalizedName][$packageName];
+        } else if (isset($this->_interfaces[$normalizedName][$packageName])) {
+            $instance = $this->_interfaces[$normalizedName][$packageName];
         }
         return $instance;
     }
@@ -866,10 +876,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $instance = null;
         if ($packageName === self::GLOBAL_PACKAGE) {
-            if (isset($this->classes[$normalizedName])) {
-                $instance = reset($this->classes[$normalizedName]);
-            } else if (isset($this->interfaces[$normalizedName])) {
-                $instance = reset($this->interfaces[$normalizedName]);
+            if (isset($this->_classes[$normalizedName])) {
+                $instance = reset($this->_classes[$normalizedName]);
+            } else if (isset($this->_interfaces[$normalizedName])) {
+                $instance = reset($this->_interfaces[$normalizedName]);
             }
         }
         return $instance;
