@@ -381,7 +381,7 @@ class PHP_Reflection_Parser
             // Parse parent class name
             $qualifiedName = $this->_parseStaticQualifiedIdentifier();
             // Set  parent class
-            $class->setParentClass($this->builder->buildClass($qualifiedName));
+            $class->setParentClass($this->builder->buildClassProxy($qualifiedName));
 
             // Skip comment tokens
             $this->_skipTokens(self::T_COMMENT, self::T_DOC_COMMENT);

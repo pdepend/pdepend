@@ -224,11 +224,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectFileComment()
     {
         $packages = self::parseSource('parser/file_comment_is_set.php');
-        $this->assertEquals(4, $packages->count()); // +global, +spl, +standard & default::package
-        
-        $packages->next();
-        $packages->next();
-        $packages->next();
+        $this->assertEquals(1, $packages->count()); // default::package
         
         $package = $packages->current();
         $this->assertEquals('default::package', $package->getName());
@@ -449,12 +445,25 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserParseNewInstancePHP53()
     {
         $packages = self::parseSource('parser/namespace-chain-new-operator.php.53');
-
-        $this->assertEquals(3, $packages->count());
-        $packages->next();
-        $this->assertEquals('php::reflection1', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('php::reflection2', $packages->current()->getName());
+        $this->assertEquals(1, $packages->count());
+        
+        $package = $packages->current();
+        $this->assertEquals(1, $package->getFunctions()->count());
+        
+        $function = $package->getFunctions()->current();
+        $this->assertEquals(2, $function->getDependencies()->count());
+        
+        $dependencies = $function->getDependencies();
+        
+        $dependency1 = $dependencies->current();
+        $this->assertEquals('Parser', $dependency1->getName());
+        $this->assertEquals('php::reflection1', $dependency1->getPackage()->getName());
+        
+        $dependencies->next();
+        
+        $dependency2 = $dependencies->current();
+        $this->assertEquals('Parser', $dependency2->getName());
+        $this->assertEquals('php::reflection2', $dependency2->getPackage()->getName());
     }
     
     /**
@@ -1021,11 +1030,8 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserStaticCallBug01()
     {
         $packages = self::parseSource('bugs/01.php');
+        $this->assertEquals(1, $packages->count());
         
-        $this->assertEquals(2, $packages->count());
-        
-        $packages->next();
-                
         $package = $packages->current();
         $this->assertEquals('package0', $package->getName());
         $classes = $package->getTypes();
@@ -1033,6 +1039,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $methods = $classes->current()->getMethods();
         $this->assertEquals(1, $methods->count());
         $this->assertEquals(1, $methods->current()->getDependencies()->count());
+        
+        $dependency = $methods->current()->getDependencies()->current();
+        $this->assertEquals('clazz1', $dependency->getName());
+        $this->assertEquals('+global', $dependency->getPackage()->getName());
     }
     
     /**
@@ -1138,17 +1148,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count());
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(6, $classes->count());
+        $this->assertEquals(1, $classes->count());
         
-        $testClass = null;
-        foreach ($classes as $class) {
-            if ($class->getName() === 'PHP_Reflection_ParserTest') {
-                $testClass = $class;
-                break;
-            }
-        }
-        
-        $this->assertNotNull($testClass);
+        $testClass = $classes->current();
+        $this->assertEquals('PHP_Reflection_ParserTest', $testClass->getName());
         
         $expected = array(
             array(PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN, 3),
@@ -1301,7 +1304,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserDetectsTypeWithinInstanceOfOperatorIssue16()
     {
         $packages = self::parseSource('bugs/16-1.php');
-        $this->assertEquals(2, $packages->count()); // +global & +spl
+        $this->assertEquals(1, $packages->count()); // +global
         
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1362,7 +1365,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserDetectsTypeWithinCatchBlockIssue17()
     {
         $packages = self::parseSource('bugs/17-1.php');
-        $this->assertEquals(2, $packages->count()); // +global & +spl
+        $this->assertEquals(1, $packages->count()); // +global
         
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1411,9 +1414,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count()); // +global
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(2, $classes->count());
-        
-        $classes->next();
+        $this->assertEquals(1, $classes->count());
         
         $class = $classes->current();
         $this->assertEquals('PHP_Reflection_Parser', $class->getName());
@@ -1474,9 +1475,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count());
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(2, $classes->count());
-        
-        $classes->next();
+        $this->assertEquals(1, $classes->count());
         
         $class = $classes->current();
         $this->assertNotNull($class);
@@ -1580,12 +1579,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesPHP53NamesInInterfaceSignatureIssue53()
     {
         $packages = self::parseSource('/issues/53-1.php53');
-        $this->assertEquals(3, $packages->count());
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals('bar', $packages->current()->getName());
+        $this->assertEquals(1, $packages->current()->getInterfaces()->count());
         
-        $expected = array('Foo' => 'bar', 'Bar' => 'foo', 'FooBar' => 'foo::bar');
-        foreach ($packages as $package) {
-            // Check number of interfaces
-            $this->assertEquals(1, $package->getInterfaces()->count());
+        $interface = $packages->current()->getInterfaces()->current();
+        $this->assertEquals(2, $interface->getParentInterfaces()->count());
+        
+        $interfaces = $interface->getParentInterfaces();
+        
+        $expected = array('Bar' => 'foo', 'FooBar' => 'foo::bar');
+        foreach ($interfaces as $interface) {
+            $package = $interface->getPackage();
             // Get current interface
             $interface = $package->getInterfaces()->current();
             // Check that name exists
@@ -1609,23 +1614,33 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserHandlesPHP533NamesInClassSignatureIssue53()
     {
         $packages = self::parseSource('/issues/53-2.php53');
-        $this->assertEquals(4, $packages->count());
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(1, $packages->current()->getClasses()->count());
+        
+        $class = $packages->current()
+                          ->getClasses()
+                          ->current();
+                        
+        $parentClass = $class->getParentClass();
+        $this->assertNotNull($parentClass);
+        $this->assertEquals('Bar', $parentClass->getName());
+        $this->assertEquals('bar::foo', $parentClass->getPackage()->getName());
+        
+        $interfaces = $class->getImplementedInterfaces();
+        $this->assertEquals(2, $interfaces->count());
         
         $expected = array(
-            'Foo'    => 'bar',
-            'Bar'    => 'bar::foo',
             'FooBar' => 'foobar',
             'ooF'    => 'foo',  
         );
-        foreach ($packages as $package) {
-            foreach ($package->getTypes() as $type) {
-                // Check that name exists
-                $this->assertArrayHasKey($type->getName(), $expected);
-                // Compare package names
-                $this->assertEquals($expected[$type->getName()], $package->getName());
-                // Remove offset
-                unset($expected[$type->getName()]);
-            }
+        
+        foreach ($interfaces as $interface) {
+            // Check that name exists
+            $this->assertArrayHasKey($interface->getName(), $expected);
+            // Compare package names
+            $this->assertEquals($expected[$interface->getName()], $interface->getPackage()->getName());
+            // Remove offset
+            unset($expected[$interface->getName()]);
         }
         $this->assertEquals(0, count($expected));
     }
@@ -1671,7 +1686,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count());
         
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(2, $classes->count());
+        $this->assertEquals(1, $classes->count());
         
         $class = $classes->current();
         $this->assertEquals('Parser', $class->getName());
