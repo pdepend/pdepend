@@ -89,8 +89,8 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
     private $_tokens = array();
     
     /**
-     * List of {@link PHP_Reflection_AST_ClassOrInterfaceConstant} objects that belong to 
-     * this type. 
+     * List of {@link PHP_Reflection_AST_ClassOrInterfaceConstant} objects that
+     * belong to this type. 
      *
      * @type array<PHP_Reflection_AST_ClassOrInterfaceConstant>
      * @var array(PHP_Reflection_AST_ClassOrInterfaceConstant) $_constants
@@ -106,7 +106,8 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
     private $_position = 0;
     
     /**
-     * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceConstant} objects in this type.
+     * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceConstant} objects
+     * in this type.
      *
      * @return PHP_Reflection_AST_Iterator
      */
@@ -118,11 +119,13 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
     /**
      * Adds the given constant to this type.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant A new type constant.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * A new type constant.
      * 
      * @return PHP_Reflection_AST_ClassOrInterfaceConstant
      */
-    public function addConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
+    public function addConstant(
+                        PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
     {
         if ($constant->getParent() !== null) {
             $constant->getParent()->removeConstant($constant);
@@ -138,11 +141,13 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
     /**
      * Removes the given constant from this type.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant The constant to remove.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * The constant to remove.
      * 
      * @return void
      */
-    public function removeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
+    public function removeConstant(
+                      PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
     {
         if (($i = array_search($constant, $this->_constants, true)) !== false) {
             // Remove this as owner
