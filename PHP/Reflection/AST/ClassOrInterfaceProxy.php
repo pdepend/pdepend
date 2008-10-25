@@ -203,6 +203,17 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     }
     
     /**
+     * Returns the builder instance that has created this proxy. The builder can
+     * be used to retrieve the real subject for a proxy.
+     *
+     * @return PHP_Reflection_BuilderI
+     */
+    protected function getBuilder()
+    {
+        return $this->_builder;
+    }
+    
+    /**
      * Returns the full qualified name for this proxy. Qualified name means class
      * or interface name, prefixed with package or namespace identifier.
      *
