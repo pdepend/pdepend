@@ -68,26 +68,6 @@ class PHP_Reflection_AST_InterfaceProxy
     implements PHP_Reflection_AST_InterfaceI
 {
     /**
-     * The creating node builder instance.
-     *
-     * @var PHP_Reflection_BuilderI $_builder
-     */
-    private $_builder = null;
-    
-    /**
-     * Constructs a new class or interface proxy.
-     *
-     * @param PHP_Reflection_BuilderI $builder The creating node builder instance.
-     * @param unknown_type $identifier
-     */
-    public function __construct(PHP_Reflection_BuilderI $builder, $identifier)
-    {
-        parent::__construct($builder, $identifier);
-        
-        $this->_builder = $builder;
-    }
-    
-    /**
      * Returns an iterator with all {@link PHP_Reflection_AST_InterfaceI} nodes
      * that are a parent, parent parent etc. interface of this interface.
      *
@@ -105,6 +85,6 @@ class PHP_Reflection_AST_InterfaceProxy
      */
     protected function getRealSubject()
     {
-        return $this->_builder->findInterfaceSubject($this->getQualifiedName());
+        return $this->getBuilder()->findInterfaceSubject($this->getQualifiedName());
     }
 }
