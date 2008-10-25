@@ -199,8 +199,8 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a class or interface constant value
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constValue 
-     *        The reference instance.
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constValue
+     * The reference instance.
      * 
      * @return void
      */

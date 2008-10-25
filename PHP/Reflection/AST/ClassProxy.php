@@ -46,10 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/MemberValueI.php';
-
 /**
- * This interface represents a static scalar node.
+ * 
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,7 +58,8 @@ require_once 'PHP/Reflection/AST/MemberValueI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_StaticScalarValueI 
-    extends PHP_Reflection_AST_MemberValueI
+class PHP_Reflection_AST_ClassProxy
+       extends PHP_Reflection_AST_ClassOrInterfaceProxy
+    implements PHP_Reflection_AST_ClassI
 {
 }
