@@ -49,7 +49,9 @@
 require_once dirname(__FILE__) . '/AbstractSourceElementTest.php';
 
 require_once 'PHP/Reflection/AST/Class.php';
+require_once 'PHP/Reflection/AST/ClassOrInterfaceConstant.php';
 require_once 'PHP/Reflection/AST/Interface.php';
+require_once 'PHP/Reflection/AST/Method.php';
 
 /**
  * Test case for the code interface class.
@@ -65,6 +67,76 @@ require_once 'PHP/Reflection/AST/Interface.php';
  */
 class PHP_Reflection_AST_InterfaceTest extends PHP_Reflection_AST_AbstractSourceElementTest 
 {
+    /**
+     * Tests the constant getter method.
+     *
+     * @return void
+     */
+    public function testGetConstant()
+    {
+        $const1 = new PHP_Reflection_AST_ClassOrInterfaceConstant('const1');
+        $const2 = new PHP_Reflection_AST_ClassOrInterfaceConstant('const2');
+        
+        $interface = new PHP_Reflection_AST_Interface('iface');
+        $interface->addConstant($const1);
+        $interface->addConstant($const2);
+        
+        $this->assertSame($const1, $interface->getConstant('const1'));
+        $this->assertSame($const2, $interface->getConstant('const2'));
+    }
+    
+    /**
+     * Tests the constant getter method with a not defined constant, which should
+     * result in an exception.
+     *
+     * @return void
+     */
+    public function testGetConstantForInvalidConstantNameFail()
+    {
+        $interface = new PHP_Reflection_AST_Interface('iface');
+        
+        $this->setExpectedException(
+            'PHP_Reflection_Exceptions_UnknownNodeException',
+            'Unknown child node requested: const1'
+        );
+        $interface->getConstant('const1');
+    }
+    
+    /**
+     * Tests the method getter method.
+     *
+     * @return void
+     */
+    public function testGetMethod()
+    {
+        $method1 = new PHP_Reflection_AST_Method('method1');
+        $method2 = new PHP_Reflection_AST_Method('method2');
+        
+        $interface = new PHP_Reflection_AST_Interface('iface');
+        $interface->addMethod($method1);
+        $interface->addMethod($method2);
+        
+        $this->assertSame($method1, $interface->getMethod('method1'));
+        $this->assertSame($method2, $interface->getMethod('method2'));
+    }
+    
+    /**
+     * Tests the method getter method with a not defined constant, which should
+     * result in an exception.
+     *
+     * @return void
+     */
+    public function testGetMethodForInvalidConstantNameFail()
+    {
+        $interface = new PHP_Reflection_AST_Interface('iface');
+        
+        $this->setExpectedException(
+            'PHP_Reflection_Exceptions_UnknownNodeException',
+            'Unknown child node requested: method1'
+        );
+        $interface->getMethod('method1');
+    }
+    
     /**
      * Tests the result of the <b>getParentInterfaces()</b> method.
      *

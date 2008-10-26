@@ -106,6 +106,25 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
     private $_position = 0;
     
     /**
+     * This method will return the constant instance for the given name.
+     *
+     * @param string $name The constant name.
+     * 
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstant
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    public function getConstant($name)
+    {
+        foreach ($this->_constants as $constant) {
+            if ($constant->getName() === $name) {
+                return $constant;
+            }
+        }
+        throw new PHP_Reflection_Exceptions_UnknownNodeException($name);
+    }
+    
+    /**
      * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceConstant} objects
      * in this type.
      *
@@ -155,6 +174,25 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
             // Remove from internal list
             unset($this->_constants[$i]);
         }
+    }
+    
+    /**
+     * This method will return the method instance for the given name.
+     *
+     * @param string $name The method name.
+     * 
+     * @return PHP_Reflection_AST_MethodI
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    public function getMethod($name)
+    {
+        foreach ($this->_methods as $method) {
+            if ($method->getName() === $name) {
+                return $method;
+            }
+        }
+        throw new PHP_Reflection_Exceptions_UnknownNodeException($name);
     }
     
     /**
