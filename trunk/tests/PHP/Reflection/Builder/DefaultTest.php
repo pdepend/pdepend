@@ -150,7 +150,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
      */
     public function testBuildClassDefaultPackage()
     {
-        $defaultPackage = PHP_Reflection_BuilderI::UNKNOWN_PKG;
+        $defaultPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
 
         $builder = new PHP_Reflection_Builder_Default();
         $class1  = $builder->buildClass('clazz1');
@@ -596,7 +596,7 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
      */
     public function testBuildFunctionDefaultPackage()
     {
-        $defaultPackage = PHP_Reflection_BuilderI::UNKNOWN_PKG;
+        $defaultPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
         
         $builder   = new PHP_Reflection_Builder_Default();
         $function1 = $builder->buildFunction('func1', 0);

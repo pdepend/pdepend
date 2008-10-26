@@ -48,7 +48,7 @@
 require_once 'PHP/Reflection/BuilderI.php';
 require_once 'PHP/Reflection/ConstantsI.php';
 require_once 'PHP/Reflection/TokenizerI.php';
-require_once 'PHP/Reflection/PHPValueTypesI.php';
+require_once 'PHP/Reflection/PHPTypesI.php';
 
 require_once 'PHP/Reflection/Exceptions/IdentifierExpectedException.php';
 require_once 'PHP/Reflection/Exceptions/UnclosedBodyException.php';
@@ -84,8 +84,7 @@ require_once 'PHP/Reflection/Exceptions/UnexpectedTokenException.php';
  * @link      http://www.manuel-pichler.de/
  */
 class PHP_Reflection_Parser
-    implements PHP_Reflection_ConstantsI,
-               PHP_Reflection_PHPValueTypesI
+    implements PHP_Reflection_ConstantsI, PHP_Reflection_PHPTypesI
 {
     /**
      * Maps between tokenizer token ids and scalar type identifiers
@@ -108,7 +107,7 @@ class PHP_Reflection_Parser
      * @type string
      * @var string $globalPackage
      */
-    protected $globalPackage = PHP_Reflection_BuilderI::UNKNOWN_PKG;
+    protected $globalPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
     
     /**
      * The package separator token.
@@ -141,7 +140,7 @@ class PHP_Reflection_Parser
      * @type string
      * @var string $_package
      */
-    private $_package = PHP_Reflection_BuilderI::UNKNOWN_PKG;
+    private $_package = PHP_Reflection_BuilderI::PKG_UNKNOWN;
     
     /**
      * Position of the context type within the analyzed file.
@@ -272,7 +271,7 @@ class PHP_Reflection_Parser
                     $this->_package = $this->parsePackage($token[1]);
                     
                     // Check for doc level comment
-                    if ($this->globalPackage === PHP_Reflection_BuilderI::UNKNOWN_PKG 
+                    if ($this->globalPackage === PHP_Reflection_BuilderI::PKG_UNKNOWN 
                      && $this->isFileComment() === true) {
     
                         $this->globalPackage = $this->_package;
@@ -300,7 +299,7 @@ class PHP_Reflection_Parser
             }
             
             // Reset global package and type position
-            $this->globalPackage = PHP_Reflection_BuilderI::UNKNOWN_PKG;
+            $this->globalPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
             $this->_typePosition = 0;
         }
     }
@@ -330,7 +329,7 @@ class PHP_Reflection_Parser
         $function = $this->builder->buildFunction($token[1], $token[2]);
             
         $package = $this->globalPackage;
-        if ($this->_package !== PHP_Reflection_BuilderI::UNKNOWN_PKG) {
+        if ($this->_package !== PHP_Reflection_BuilderI::PKG_UNKNOWN) {
             $package = $this->_package;
         }
         $this->builder->buildPackage($package)->addFunction($function);
@@ -1354,7 +1353,7 @@ class PHP_Reflection_Parser
     {
         $this->_modifiers = 0;
         $this->_comment   = null;
-        $this->_package   = PHP_Reflection_BuilderI::UNKNOWN_PKG;
+        $this->_package   = PHP_Reflection_BuilderI::PKG_UNKNOWN;
     }
     
     /**
@@ -1495,7 +1494,7 @@ class PHP_Reflection_Parser
             }
             return $package;
         }
-        return PHP_Reflection_BuilderI::UNKNOWN_PKG;
+        return PHP_Reflection_BuilderI::PKG_UNKNOWN;
     }
 
     /**
