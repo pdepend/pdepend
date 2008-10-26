@@ -56,7 +56,7 @@ require_once 'PHP/Reflection/AST/AbstractItem.php';
  * <?php
  * class PHP_Reflection_BuilderI
  * {
- *     const UNKNOWN_PKG = '+unknown';
+ *     const PKG_UNKNOWN = '+unknown';
  * }
  * </code>
  *
