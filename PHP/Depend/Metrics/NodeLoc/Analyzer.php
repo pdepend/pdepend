@@ -193,7 +193,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         list($cloc, $eloc) = $this->_linesOfCode($class->getTokens());
         
-        $loc   = $class->getEndLine() - $class->getStartLine() + 1;
+        $loc   = $class->getEndLine() - $class->getLine() + 1;
         $ncloc = $loc - $cloc;
         
         $this->_nodeMetrics[$class->getUUID()] = array(
@@ -275,7 +275,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         list($cloc, $eloc) = $this->_linesOfCode($function->getTokens());
         
-        $loc   = $function->getEndLine() - $function->getStartLine() + 1;
+        $loc   = $function->getEndLine() - $function->getLine() + 1;
         $ncloc = $loc - $cloc;
         
         $this->_nodeMetrics[$function->getUUID()] = array(
@@ -304,7 +304,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         list($cloc, $eloc) = $this->_linesOfCode($interface->getTokens());
         
-        $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
+        $loc   = $interface->getEndLine() - $interface->getLine() + 1;
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$interface->getUUID()] = array(
@@ -338,7 +338,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         
         list($cloc, $eloc) = $this->_linesOfCode($method->getTokens());
         
-        $loc   = $method->getEndLine() - $method->getStartLine() + 1;
+        $loc   = $method->getEndLine() - $method->getLine() + 1;
         $ncloc = $loc - $cloc;
         
         $this->_nodeMetrics[$method->getUUID()] = array(

@@ -96,14 +96,14 @@ class PHP_Reflection_AST_FunctionTest extends PHP_Reflection_AST_AbstractDepende
     }
     
     /**
-     * Tests that {@link PHP_Reflection_AST_Function#getStartLine()} works as expected.
+     * Tests that {@link PHP_Reflection_AST_Function#getLine()} works as expected.
      *
      * @return void
      */
     public function testGetStartLineNumber()
     {
         $function = new PHP_Reflection_AST_Function('function1', 23);
-        $this->assertEquals(23, $function->getStartLine());
+        $this->assertEquals(23, $function->getLine());
     }
     
     /**
