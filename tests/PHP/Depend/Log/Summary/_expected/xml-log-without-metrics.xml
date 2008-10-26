@@ -3,7 +3,7 @@
   <files>
     <file name="packages.php"/>
   </files>
-  <package name="+global">
+  <package name="+unknown">
     <function name="bar">
       <file name="packages.php"/>
     </function>
