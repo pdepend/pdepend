@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_AST_AbstractItemTest extends PHP_Reflection_AbstractTest
+abstract class PHP_Reflection_AST_AbstractSourceElementTest extends PHP_Reflection_AbstractTest
 {
     
     /**
@@ -157,7 +157,7 @@ abstract class PHP_Reflection_AST_AbstractItemTest extends PHP_Reflection_Abstra
     /**
      * Creates an abstract item instance.
      *
-     * @return PHP_Reflection_AST_AbstractItem
+     * @return PHP_Reflection_AST_AbstractSourceElement
      */
     protected abstract function createItem();
 }

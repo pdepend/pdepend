@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractItem.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/ParameterI.php';
 
 /**
@@ -75,7 +75,7 @@ require_once 'PHP/Reflection/AST/ParameterI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_Parameter 
-       extends PHP_Reflection_AST_AbstractItem
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_ParameterI
 {
     /**

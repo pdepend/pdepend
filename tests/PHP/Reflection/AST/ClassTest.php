@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+require_once dirname(__FILE__) . '/AbstractSourceElementTest.php';
 require_once dirname(__FILE__) . '/_dummy/TestImplAstVisitor.php';
 
 require_once 'PHP/Reflection/AST/Class.php';
@@ -68,7 +68,7 @@ require_once 'PHP/Reflection/AST/ClassOrInterfaceConstant.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
+class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractSourceElementTest
 {
     /**
      * Tests the ctor with and the {@link PHP_Reflection_AST_Class::getName()} and
@@ -465,7 +465,7 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
     /**
      * Creates an abstract item instance.
      *
-     * @return PHP_Reflection_AST_AbstractItem
+     * @return PHP_Reflection_AST_AbstractSourceElement
      */
     protected function createItem()
     {

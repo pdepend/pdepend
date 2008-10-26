@@ -60,7 +60,7 @@ require_once 'PHP/Reflection/AST/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_AST_AbstractItem 
+abstract class PHP_Reflection_AST_AbstractSourceElement 
     extends PHP_Reflection_AST_AbstractNode
 {
     /**
