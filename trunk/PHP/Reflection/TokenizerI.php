@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/ParserConstantsI.php';
+require_once 'PHP/Reflection/ConstantsI.php';
 
 /**
  * Define PHP 5.3 __NAMESPACE__ token constant.
@@ -88,7 +88,7 @@ if (!defined('T_DIR')) {
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_TokenizerI extends PHP_Reflection_ParserConstantsI
+interface PHP_Reflection_TokenizerI extends PHP_Reflection_ConstantsI
 {
     /**
      * Returns the name of the source file.
