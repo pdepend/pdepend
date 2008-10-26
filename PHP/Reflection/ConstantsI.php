@@ -797,4 +797,9 @@ interface PHP_Reflection_ConstantsI
      * Marks a '__DIR__' token.
      */
     const T_DIR = 146;
+    
+    /**
+     * The package separator token.
+     */
+    const PKG_SEPARATOR = '::';
 }

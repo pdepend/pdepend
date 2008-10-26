@@ -46,8 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/InternalTypes.php';
 require_once 'PHP/Reflection/BuilderI.php'; 
+require_once 'PHP/Reflection/ConstantsI.php';
+require_once 'PHP/Reflection/InternalTypes.php';
 require_once 'PHP/Reflection/AST/ArrayExpression.php';
 require_once 'PHP/Reflection/AST/ArrayElement.php';
 require_once 'PHP/Reflection/AST/CatchStatement.php';
@@ -83,7 +84,8 @@ require_once 'PHP/Reflection/AST/Property.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
+class PHP_Reflection_Builder_Default 
+    implements PHP_Reflection_BuilderI, PHP_Reflection_ConstantsI
 {
     /**
      * Default package which contains all functions and classes with an unknown 
@@ -702,7 +704,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     protected function extractTypeName($qualifiedName)
     {
-        if (($pos = strrpos($qualifiedName, '::')) !== false) {
+        if (($pos = strrpos($qualifiedName, self::PKG_SEPARATOR)) !== false) {
             return substr($qualifiedName, $pos + 2);
         }
         return $qualifiedName;
@@ -743,11 +745,11 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     protected function extractPackageName($qualifiedName)
     {
         $name = $qualifiedName;
-        if (preg_match('#^::[a-z_][a-z0-9_]*$#i', $name)) {
+        if (preg_match('#^' . self::PKG_SEPARATOR . '[a-z_][a-z0-9_]*$#i', $name)) {
             $name = substr($name, 2);
         }
         
-        if (($pos = strrpos($name, '::')) !== false) {
+        if (($pos = strrpos($name, self::PKG_SEPARATOR)) !== false) {
             return substr($name, 0, $pos);
         } else if ($this->_internalTypes->isInternal($name)) {
             return $this->_internalTypes->getTypePackage($name);

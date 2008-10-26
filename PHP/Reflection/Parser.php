@@ -110,14 +110,6 @@ class PHP_Reflection_Parser
     protected $globalPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
     
     /**
-     * The package separator token.
-     *
-     * @type string
-     * @var string $packageSeparator
-     */
-    protected $packageSeparator = '::';
-    
-    /**
      * The last doc comment block.
      *
      * @type string
@@ -1490,7 +1482,7 @@ class PHP_Reflection_Parser
         if (preg_match('#\*\s*@package\s+(.*)#', $comment, $match)) {
             $package = trim($match[1]);
             if (preg_match('#\*\s*@subpackage\s+(.*)#', $comment, $match)) {
-                $package .= $this->packageSeparator . trim($match[1]);
+                $package .= self::PKG_SEPARATOR . trim($match[1]);
             }
             return $package;
         }
