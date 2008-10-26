@@ -147,10 +147,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function __construct()
     {
-        $this->defaultPackage = new PHP_Reflection_AST_Package(self::GLOBAL_PACKAGE);
+        $this->defaultPackage = new PHP_Reflection_AST_Package(self::UNKNOWN_PKG);
         $this->defaultFile    = new PHP_Reflection_AST_File(null);
         
-        $this->_createdPackageSet[self::GLOBAL_PACKAGE] = $this->defaultPackage;
+        $this->_createdPackageSet[self::UNKNOWN_PKG] = $this->defaultPackage;
         
         $this->_internalTypes = PHP_Reflection_InternalTypes::getInstance();
     }
@@ -275,10 +275,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             return $instance;
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->_createdClassSet[$normalizedName][self::GLOBAL_PACKAGE])) {
-            $class = $this->_createdClassSet[$normalizedName][self::GLOBAL_PACKAGE];
+        } else if (isset($this->_createdClassSet[$normalizedName][self::UNKNOWN_PKG])) {
+            $class = $this->_createdClassSet[$normalizedName][self::UNKNOWN_PKG];
             
-            unset($this->_createdClassSet[$normalizedName][self::GLOBAL_PACKAGE]);
+            unset($this->_createdClassSet[$normalizedName][self::UNKNOWN_PKG]);
 
             $this->_createdClassSet[$normalizedName][$packageName] = $class;
             
@@ -392,10 +392,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $interface = $this->_createdInterfaceSet[$normalizedName][$packageName];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->_createdInterfaceSet[$normalizedName][self::GLOBAL_PACKAGE])) {
-            $interface = $this->_createdInterfaceSet[$normalizedName][self::GLOBAL_PACKAGE];
+        } else if (isset($this->_createdInterfaceSet[$normalizedName][self::UNKNOWN_PKG])) {
+            $interface = $this->_createdInterfaceSet[$normalizedName][self::UNKNOWN_PKG];
             
-            unset($this->_createdInterfaceSet[$normalizedName][self::GLOBAL_PACKAGE]);
+            unset($this->_createdInterfaceSet[$normalizedName][self::UNKNOWN_PKG]);
             
             $this->_createdInterfaceSet[$normalizedName][$packageName] = $interface;
             
@@ -664,7 +664,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             if ($this->defaultPackage->getTypes()->count() === 0  
              && $this->defaultPackage->getFunctions()->count() === 0) {
 
-                unset($this->_createdPackageSet[self::GLOBAL_PACKAGE]);
+                unset($this->_createdPackageSet[self::UNKNOWN_PKG]);
             }
             // Create result iterator and reset package cache
             $this->_iterator = new PHP_Reflection_AST_Iterator($this->_createdPackageSet);
@@ -683,7 +683,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     protected function isDefault($packageName)
     {
-        return ($packageName === self::GLOBAL_PACKAGE);
+        return ($packageName === self::UNKNOWN_PKG);
     }
     
     /**
@@ -752,7 +752,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         } else if ($this->_internalTypes->isInternal($name)) {
             return $this->_internalTypes->getTypePackage($name);
         }
-        return self::GLOBAL_PACKAGE; 
+        return self::UNKNOWN_PKG; 
     }
     
     /**
@@ -788,7 +788,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     private function _findClassBestMatch($identifier)
     {
         $packageName = $this->extractPackageName($identifier);
-        if ($packageName === self::GLOBAL_PACKAGE) {
+        if ($packageName === self::UNKNOWN_PKG) {
             
             $normalizedName = strtolower($this->extractTypeName($identifier));
             if (isset($this->_createdClassSet[$normalizedName])) {
@@ -832,7 +832,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     private function _findInterfaceBestMatch($identifier)
     {
         $packageName = $this->extractPackageName($identifier);
-        if ($packageName === self::GLOBAL_PACKAGE) {
+        if ($packageName === self::UNKNOWN_PKG) {
             
             $normalizedName = strtolower($this->extractTypeName($identifier));
             if (isset($this->_createdInterfaceSet[$normalizedName])) {
@@ -884,7 +884,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         $normalizedName = strtolower($localName);
         
         $instance = null;
-        if ($packageName === self::GLOBAL_PACKAGE) {
+        if ($packageName === self::UNKNOWN_PKG) {
             if (isset($this->_createdClassSet[$normalizedName])) {
                 $instance = reset($this->_createdClassSet[$normalizedName]);
             } else if (isset($this->_createdInterfaceSet[$normalizedName])) {

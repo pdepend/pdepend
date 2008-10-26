@@ -71,7 +71,7 @@ class PHP_Reflection_AST_Iterator_GlobalPackageFilterTest extends PHP_Reflection
     {
         $in1 = new PHP_Reflection_AST_Package('in1');
         $in2 = new PHP_Reflection_AST_Package('in2');
-        $out = new PHP_Reflection_AST_Package(PHP_Reflection_BuilderI::GLOBAL_PACKAGE);
+        $out = new PHP_Reflection_AST_Package(PHP_Reflection_BuilderI::UNKNOWN_PKG);
         
         $packages = array($in1, $in2, $out);
         $iterator = new PHP_Reflection_AST_Iterator($packages);

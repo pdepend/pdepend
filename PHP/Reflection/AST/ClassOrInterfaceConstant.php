@@ -56,7 +56,7 @@ require_once 'PHP/Reflection/AST/AbstractItem.php';
  * <?php
  * class PHP_Reflection_BuilderI
  * {
- *     const GLOBAL_PACKAGE = '+global';
+ *     const UNKNOWN_PKG = '+global';
  * }
  * </code>
  *
