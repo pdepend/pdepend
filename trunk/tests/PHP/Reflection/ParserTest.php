@@ -179,7 +179,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $packages->next();
         
         $function = $packages->current()->getFunctions()->current();
-        $this->assertEquals(7, $function->getStartLine());
+        $this->assertEquals(7, $function->getLine());
     }
     
     /**
@@ -293,7 +293,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
      */
     public function testParserSetsCorrectClassStartLineNumber()
     {
-        $this->assertEquals(30, $this->getMixedCodeClass()->getStartLine());
+        $this->assertEquals(30, $this->getMixedCodeClass()->getLine());
     }
     
     /**
@@ -315,9 +315,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $methods = $this->getMixedCodeClassMethods();
         
-        $this->assertEquals(43, $methods->current()->getStartLine());
+        $this->assertEquals(43, $methods->current()->getLine());
         $methods->next();
-        $this->assertEquals(44, $methods->current()->getStartLine());
+        $this->assertEquals(44, $methods->current()->getLine());
     }
     
     /**
@@ -341,7 +341,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
      */
     public function testParserSetsCorrectInterfaceStartLineNumber()
     {
-        $this->assertEquals(15, $this->getMixedCodeInterface()->getStartLine());
+        $this->assertEquals(15, $this->getMixedCodeInterface()->getLine());
     }
     
     /**
@@ -363,7 +363,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectInterfaceMethodStartLineNumbers()
     {
         $methods = $this->getMixedCodeInterfaceMethods();
-        $this->assertEquals(17, $methods->current()->getStartLine());
+        $this->assertEquals(17, $methods->current()->getLine());
     }
     
     /**
@@ -405,7 +405,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                            ->getMethods()
                            ->current();
 
-        $this->assertEquals(17, $method->getStartLine());
+        $this->assertEquals(17, $method->getLine());
     }
     
     /**
@@ -880,7 +880,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         
         $this->assertEquals(1, $constants->count());
         $this->assertEquals('FOOBAR', $constants->current()->getName());
-        $this->assertSame(16, $constants->current()->getStartLine());
+        $this->assertSame(16, $constants->current()->getLine());
     }
     
     /**
@@ -947,12 +947,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(2, $constants->count());
         
         $this->assertEquals('FOO', $constants->current()->getName());
-        $this->assertEquals(31, $constants->current()->getStartLine());
+        $this->assertEquals(31, $constants->current()->getLine());
         
         $constants->next();
         
         $this->assertEquals('BAR', $constants->current()->getName());
-        $this->assertEquals(36, $constants->current()->getStartLine());
+        $this->assertEquals(36, $constants->current()->getLine());
     }
     
     /**

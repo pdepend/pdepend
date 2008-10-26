@@ -105,9 +105,9 @@ abstract class PHP_Reflection_AST_AbstractItemTest extends PHP_Reflection_Abstra
     {
         $item = $this->createItem();
         
-        $this->assertEquals(0, $item->getStartLine());
-        $item->setStartLine(42);
-        $this->assertEquals(42, $item->getStartLine());
+        $this->assertEquals(0, $item->getLine());
+        $item->setLine(42);
+        $this->assertEquals(42, $item->getLine());
     }
     
     /**
@@ -120,9 +120,9 @@ abstract class PHP_Reflection_AST_AbstractItemTest extends PHP_Reflection_Abstra
     {
         $item = $this->createItem();
         
-        $item->setStartLine(23);
-        $item->setStartLine(42);
-        $this->assertEquals(23, $item->getStartLine());
+        $item->setLine(23);
+        $item->setLine(42);
+        $this->assertEquals(23, $item->getLine());
     }
     
     /**
