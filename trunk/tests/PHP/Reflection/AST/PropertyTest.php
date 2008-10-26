@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+require_once dirname(__FILE__) . '/AbstractSourceElementTest.php';
 
 require_once 'PHP/Reflection/AST/Class.php';
 require_once 'PHP/Reflection/AST/Property.php';
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/AST/Property.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_PropertyTest extends PHP_Reflection_AST_AbstractItemTest
+class PHP_Reflection_AST_PropertyTest extends PHP_Reflection_AST_AbstractSourceElementTest
 {
     /**
      * Tests that the default visibility modifier is public.
@@ -169,7 +169,7 @@ class PHP_Reflection_AST_PropertyTest extends PHP_Reflection_AST_AbstractItemTes
     /**
      * Creates an abstract item instance.
      *
-     * @return PHP_Reflection_AST_AbstractItem
+     * @return PHP_Reflection_AST_AbstractSourceElement
      */
     protected function createItem()
     {
