@@ -254,10 +254,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserTypeCommentNotUsedAsFileComment()
     {
         $packages = self::parseSource('parser/type_comment_not_used_as_file_comment.php');
-        $this->assertEquals(1, $packages->count()); // +global
+        $this->assertEquals(1, $packages->count()); // +unknown
         
         $package = $packages->current();
-        $this->assertEquals('+global', $package->getName());
+        $this->assertEquals('+unknown', $package->getName());
         
         $class = $package->getClasses()->current();
         $this->assertNotNull($class);
@@ -274,10 +274,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserFunctionCommentNotUsedAsFileComment()
     {
         $packages = self::parseSource('parser/function_comment_not_used_as_file_comment.php');
-        $this->assertEquals(1, $packages->count()); // +global
+        $this->assertEquals(1, $packages->count()); // +unknown
         
         $package = $packages->current();
-        $this->assertEquals('+global', $package->getName());
+        $this->assertEquals('+unknown', $package->getName());
         
         $function = $package->getFunctions()->current();
         $this->assertNotNull($function);
@@ -1046,7 +1046,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         
         $dependency = $methods->current()->getDependencies()->current();
         $this->assertEquals('clazz1', $dependency->getName());
-        $this->assertEquals('+global', $dependency->getPackage()->getName());
+        $this->assertEquals('+unknown', $dependency->getPackage()->getName());
     }
     
     /**
@@ -1308,7 +1308,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserDetectsTypeWithinInstanceOfOperatorIssue16()
     {
         $packages = self::parseSource('bugs/16-1.php');
-        $this->assertEquals(1, $packages->count()); // +global
+        $this->assertEquals(1, $packages->count()); // +unknown
         
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1341,7 +1341,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserIgnoresDynamicInstanceOfOperatorIssue16()
     {
         $packages = self::parseSource('bugs/16-2.php');
-        $this->assertEquals(1, $packages->count()); // +global
+        $this->assertEquals(1, $packages->count()); // +unknown
         
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1369,7 +1369,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserDetectsTypeWithinCatchBlockIssue17()
     {
         $packages = self::parseSource('bugs/17-1.php');
-        $this->assertEquals(1, $packages->count()); // +global
+        $this->assertEquals(1, $packages->count()); // +unknown
         
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1393,7 +1393,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserDetectsOnlyTypeHintsWithinTheFunctionSignatureBug33()
     {
         $packages = self::parseSource('bugs/33-1.php');
-        $this->assertEquals(1, $packages->count()); // +global
+        $this->assertEquals(1, $packages->count()); // +unknown
         
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1415,7 +1415,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserDetectsOnlyTypeHintsWithinTheMethodSignatureBug33()
     {
         $packages = self::parseSource('bugs/33-2.php');
-        $this->assertEquals(1, $packages->count()); // +global
+        $this->assertEquals(1, $packages->count()); // +unknown
         
         $classes = $packages->current()->getClasses();
         $this->assertEquals(1, $classes->count());

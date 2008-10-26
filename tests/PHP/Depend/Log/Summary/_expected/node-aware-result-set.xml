@@ -3,7 +3,7 @@
   <files>
     <file name="packages.php"/>
   </files>
-  <package name="+global" loc="42" ncloc="23">
+  <package name="+unknown" loc="42" ncloc="23">
     <function name="bar" loc="9" ncloc="7">
       <file name="packages.php"/>
     </function>

@@ -120,7 +120,7 @@ class PHP_Depend_TextUI_Runner
     private $_withoutAnnotations = false;
     
     /**
-     * Should PHP_Depend treat <b>+global</b> as a regular project package?
+     * Should PHP_Depend treat <b>+unknown</b> as a regular project package?
      *
      * @type boolean
      * @var boolean $_supportBadDocumentation
@@ -208,7 +208,7 @@ class PHP_Depend_TextUI_Runner
     /**
      * Should PHP_Depend support projects with a bad documentation. If this
      * option is set to <b>true</b>, PHP_Depend will treat the default package
-     * <b>+global</b> as a regular project package.
+     * <b>+unknown</b> as a regular project package.
      *
      * @return void
      */
