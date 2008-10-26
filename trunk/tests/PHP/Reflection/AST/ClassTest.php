@@ -447,6 +447,76 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractSourceElem
     }
     
     /**
+     * Tests the constant getter method.
+     *
+     * @return void
+     */
+    public function testGetConstant()
+    {
+        $const1 = new PHP_Reflection_AST_ClassOrInterfaceConstant('const1');
+        $const2 = new PHP_Reflection_AST_ClassOrInterfaceConstant('const2');
+        
+        $class = new PHP_Reflection_AST_Class('clazz');
+        $class->addConstant($const1);
+        $class->addConstant($const2);
+        
+        $this->assertSame($const1, $class->getConstant('const1'));
+        $this->assertSame($const2, $class->getConstant('const2'));
+    }
+    
+    /**
+     * Tests the constant getter method with a not defined constant, which should
+     * result in an exception.
+     *
+     * @return void
+     */
+    public function testGetConstantForInvalidConstantNameFail()
+    {
+        $class = new PHP_Reflection_AST_Class('clazz');
+        
+        $this->setExpectedException(
+            'PHP_Reflection_Exceptions_UnknownNodeException',
+            'Unknown child node requested: const1'
+        );
+        $class->getConstant('const1');
+    }
+    
+    /**
+     * Tests the method getter method.
+     *
+     * @return void
+     */
+    public function testGetMethod()
+    {
+        $method1 = new PHP_Reflection_AST_Method('method1');
+        $method2 = new PHP_Reflection_AST_Method('method2');
+        
+        $class = new PHP_Reflection_AST_Class('clazz');
+        $class->addMethod($method1);
+        $class->addMethod($method2);
+        
+        $this->assertSame($method1, $class->getMethod('method1'));
+        $this->assertSame($method2, $class->getMethod('method2'));
+    }
+    
+    /**
+     * Tests the method getter method with a not defined constant, which should
+     * result in an exception.
+     *
+     * @return void
+     */
+    public function testGetMethodForInvalidConstantNameFail()
+    {
+        $class = new PHP_Reflection_AST_Class('clazz');
+        
+        $this->setExpectedException(
+            'PHP_Reflection_Exceptions_UnknownNodeException',
+            'Unknown child node requested: method1'
+        );
+        $class->getMethod('method1');
+    }
+    
+    /**
      * Tests the visitor accept method.
      *
      * @return void
