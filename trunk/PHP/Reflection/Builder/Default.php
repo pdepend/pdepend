@@ -723,12 +723,12 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      *   $packageName = $this->extractPackageName('foobar');
      *   var_dump($packageName);
      *   // Results in:
-     *   // string(6) "+global"
+     *   // string(6) "+unknown"
      * 
      *   $packageName = $this->extractPackageName('::foobar');
      *   var_dump($packageName);
      *   // Results in:
-     *   // string(6) "+global"
+     *   // string(6) "+unknown"
      * 
      *   $packageName = $this->extractPackageName('::Iterator');
      *   var_dump($packageName);

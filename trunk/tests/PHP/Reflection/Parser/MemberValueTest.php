@@ -398,7 +398,7 @@ class PHP_Reflection_Parser_MemberValueTest extends PHP_Reflection_AbstractTest
         $this->assertEquals('PHP_Reflection', $class->getName());
         
         $package = $class->getPackage();
-        $this->assertEquals('+global', $package->getName());    
+        $this->assertEquals('+unknown', $package->getName());    
     }
     
     /**

@@ -713,6 +713,6 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
         $builder = new PHP_Reflection_Builder_Default();
         
         $class = $builder->buildClass('::MyClass');
-        $this->assertEquals('+global', $class->getPackage()->getName());
+        $this->assertEquals('+unknown', $class->getPackage()->getName());
     }
 }
