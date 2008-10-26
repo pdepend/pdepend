@@ -265,8 +265,8 @@ class PHP_Reflection_Builder_Default
      */
     public function buildClass($name, $line = 0)
     {
-        $localName   = $this->extractTypeName($name);
-        $packageName = $this->extractPackageName($name);
+        $localName   = $this->_extractLocalName($name);
+        $packageName = $this->_extractNamespace($name);
         
         $normalizedName = strtolower($localName);
         
@@ -370,8 +370,8 @@ class PHP_Reflection_Builder_Default
      */
     public function buildInterface($name, $line = 0)
     {
-        $localName   = $this->extractTypeName($name);
-        $packageName = $this->extractPackageName($name);
+        $localName   = $this->_extractLocalName($name);
+        $packageName = $this->_extractNamespace($name);
         
         $normalizedName = strtolower($localName);
         
@@ -692,7 +692,7 @@ class PHP_Reflection_Builder_Default
      * Extracts the type name of a qualified PHP 5.3 type identifier.
      *
      * <code>
-     *   $typeName = $this->extractTypeName('foo::bar::foobar');
+     *   $typeName = $this->_extractLocalName('foo::bar::foobar');
      *   var_dump($typeName);
      *   // Results in:
      *   // string(6) "foobar"
@@ -702,7 +702,7 @@ class PHP_Reflection_Builder_Default
      * 
      * @return string
      */
-    protected function extractTypeName($qualifiedName)
+    private function _extractLocalName($qualifiedName)
     {
         if (($pos = strrpos($qualifiedName, self::PKG_SEPARATOR)) !== false) {
             return substr($qualifiedName, $pos + 2);
@@ -717,22 +717,22 @@ class PHP_Reflection_Builder_Default
      * return the default identifier. 
      *
      * <code>
-     *   $packageName = $this->extractPackageName('foo::bar::foobar');
+     *   $packageName = $this->_extractNamespace('foo::bar::foobar');
      *   var_dump($packageName);
      *   // Results in:
      *   // string(8) "foo::bar"
      * 
-     *   $packageName = $this->extractPackageName('foobar');
+     *   $packageName = $this->_extractNamespace('foobar');
      *   var_dump($packageName);
      *   // Results in:
      *   // string(6) "+unknown"
      * 
-     *   $packageName = $this->extractPackageName('::foobar');
+     *   $packageName = $this->_extractNamespace('::foobar');
      *   var_dump($packageName);
      *   // Results in:
      *   // string(6) "+unknown"
      * 
-     *   $packageName = $this->extractPackageName('::Iterator');
+     *   $packageName = $this->_extractNamespace('::Iterator');
      *   var_dump($packageName);
      *   // Results in:
      *   // string(6) "+spl"
@@ -742,7 +742,7 @@ class PHP_Reflection_Builder_Default
      * 
      * @return string
      */
-    protected function extractPackageName($qualifiedName)
+    private function _extractNamespace($qualifiedName)
     {
         $name = $qualifiedName;
         if (preg_match('#^' . self::PKG_SEPARATOR . '[a-z_][a-z0-9_]*$#i', $name)) {
@@ -767,8 +767,8 @@ class PHP_Reflection_Builder_Default
      */
     private function _findClassExactMatch($identifier)
     {
-        $localName   = $this->extractTypeName($identifier);
-        $packageName = $this->extractPackageName($identifier);
+        $localName   = $this->_extractLocalName($identifier);
+        $packageName = $this->_extractNamespace($identifier);
         
         $normalizedName = strtolower($localName);
         
@@ -789,10 +789,10 @@ class PHP_Reflection_Builder_Default
      */
     private function _findClassBestMatch($identifier)
     {
-        $packageName = $this->extractPackageName($identifier);
+        $packageName = $this->_extractNamespace($identifier);
         if ($packageName === self::PKG_UNKNOWN) {
             
-            $normalizedName = strtolower($this->extractTypeName($identifier));
+            $normalizedName = strtolower($this->_extractLocalName($identifier));
             if (isset($this->_createdClassSet[$normalizedName])) {
                 return reset($this->_createdClassSet[$normalizedName]);
             }
@@ -811,8 +811,8 @@ class PHP_Reflection_Builder_Default
      */
     private function _findInterfaceExactMatch($identifier)
     {
-        $localName   = $this->extractTypeName($identifier);
-        $packageName = $this->extractPackageName($identifier);
+        $localName   = $this->_extractLocalName($identifier);
+        $packageName = $this->_extractNamespace($identifier);
         
         $normalizedName = strtolower($localName);
         
@@ -833,10 +833,10 @@ class PHP_Reflection_Builder_Default
      */
     private function _findInterfaceBestMatch($identifier)
     {
-        $packageName = $this->extractPackageName($identifier);
+        $packageName = $this->_extractNamespace($identifier);
         if ($packageName === self::PKG_UNKNOWN) {
             
-            $normalizedName = strtolower($this->extractTypeName($identifier));
+            $normalizedName = strtolower($this->_extractLocalName($identifier));
             if (isset($this->_createdInterfaceSet[$normalizedName])) {
                 return reset($this->_createdInterfaceSet[$normalizedName]);
             }
@@ -855,18 +855,17 @@ class PHP_Reflection_Builder_Default
      */
     private function _findClassOrInterfaceExactMatch($identifier)
     {
-        $localName   = $this->extractTypeName($identifier);
-        $packageName = $this->extractPackageName($identifier);
+        $localName   = $this->_extractLocalName($identifier);
+        $packageName = $this->_extractNamespace($identifier);
         
         $normalizedName = strtolower($localName);
         
-        $instance = null;
         if (isset($this->_createdClassSet[$normalizedName][$packageName])) {
-            $instance = $this->_createdClassSet[$normalizedName][$packageName];
+            return $this->_createdClassSet[$normalizedName][$packageName];
         } else if (isset($this->_createdInterfaceSet[$normalizedName][$packageName])) {
-            $instance = $this->_createdInterfaceSet[$normalizedName][$packageName];
+            return $this->_createdInterfaceSet[$normalizedName][$packageName];
         }
-        return $instance;
+        return null;
     }
     
     /**
@@ -880,19 +879,16 @@ class PHP_Reflection_Builder_Default
      */
     private function _findClassOrInterfaceBestMatch($identifier)
     {
-        $localName   = $this->extractTypeName($identifier);
-        $packageName = $this->extractPackageName($identifier);
-        
-        $normalizedName = strtolower($localName);
-        
-        $instance = null;
+        $packageName = $this->_extractNamespace($identifier);
         if ($packageName === self::PKG_UNKNOWN) {
+            
+            $normalizedName = strtolower($this->_extractLocalName($identifier));
             if (isset($this->_createdClassSet[$normalizedName])) {
-                $instance = reset($this->_createdClassSet[$normalizedName]);
+                return reset($this->_createdClassSet[$normalizedName]);
             } else if (isset($this->_createdInterfaceSet[$normalizedName])) {
-                $instance = reset($this->_createdInterfaceSet[$normalizedName]);
+                return reset($this->_createdInterfaceSet[$normalizedName]);
             }
         }
-        return $instance;
+        return null;
     }
 }
