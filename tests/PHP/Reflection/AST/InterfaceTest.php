@@ -121,7 +121,7 @@ class PHP_Reflection_AST_InterfaceTest extends PHP_Reflection_AST_AbstractSource
     }
     
     /**
-     * Tests the method getter method with a not defined constant, which should
+     * Tests the method getter method with a not defined method, which should
      * result in an exception.
      *
      * @return void

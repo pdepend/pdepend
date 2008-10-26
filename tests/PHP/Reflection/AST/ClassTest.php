@@ -500,7 +500,7 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractSourceElem
     }
     
     /**
-     * Tests the method getter method with a not defined constant, which should
+     * Tests the method getter method with a not defined method, which should
      * result in an exception.
      *
      * @return void
