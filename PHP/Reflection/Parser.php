@@ -1380,7 +1380,7 @@ class PHP_Reflection_Parser
                     $this->tokenizer->peek() === self::T_STRING) {
 
                     $name  = $this->_parseStaticQualifiedIdentifier($tokens);
-                    $proxy = $this->builder->buildClassOrInterfaceProxy($name);
+                    $proxy = $this->builder->buildClassProxy($name);
                     
                     $callable->addDependency($proxy);
                 }
