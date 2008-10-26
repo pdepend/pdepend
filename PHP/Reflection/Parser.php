@@ -46,7 +46,7 @@
  */
 
 require_once 'PHP/Reflection/BuilderI.php';
-require_once 'PHP/Reflection/ParserConstantsI.php';
+require_once 'PHP/Reflection/ConstantsI.php';
 require_once 'PHP/Reflection/TokenizerI.php';
 require_once 'PHP/Reflection/PHPValueTypesI.php';
 
@@ -84,7 +84,7 @@ require_once 'PHP/Reflection/Exceptions/UnexpectedTokenException.php';
  * @link      http://www.manuel-pichler.de/
  */
 class PHP_Reflection_Parser
-    implements PHP_Reflection_ParserConstantsI,
+    implements PHP_Reflection_ConstantsI,
                PHP_Reflection_PHPValueTypesI
 {
     /**
