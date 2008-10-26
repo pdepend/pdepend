@@ -82,6 +82,67 @@ class PHP_Reflection_Builder_DefaultTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that a proxy realization doesn't modifiy previous results of the
+     * {@link PHP_Reflection_Builder_Default::getPackage()} method.
+     * 
+     * @return void
+     */
+    public function testProxyRealizationDoesNotModifyPreviousGetPackageResults()
+    {
+        $builder = new PHP_Reflection_Builder_Default();
+        $class   = $builder->buildClass('PHP_Reflection');
+        $class->addImplementedInterface($builder->buildInterfaceProxy('Iterator'));
+        
+        $packages = $builder->getPackages();
+        $package  = $packages->current();
+        
+        $this->assertNotNull($package);
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        
+        $class->getImplementedInterfaces();
+        
+        $packages = $builder->getPackages();
+        $package  = $packages->current();
+        
+        $this->assertNotNull($package);
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+    }
+    
+    /**
+     * Tests that a proxy realization doesn't modify an existing package.
+     *
+     * @return void
+     */
+    public function testProxyRealizationDoesNotModifyExistingPackages()
+    {
+        $builder = new PHP_Reflection_Builder_Default();
+        
+        $class = $builder->buildClass('PHP_Reflection');
+        $class->setParentClass($builder->buildClassProxy('PHP_Reflection_Class'));
+        
+        // Freeze internal state
+        $builder->getPackages();
+        
+        // Realize proxy
+        $parentClass = $class->getParentClass();
+        
+        $packages = $builder->getPackages();
+        $package  = $packages->current();
+        
+        $this->assertNotNull($package);
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        
+        $class = $package->getClasses()->current();
+        
+        $this->assertEquals(1, $class->getPackage()->getTypes()->count());
+        $this->assertNotSame($class->getPackage(), $parentClass->getPackage());
+        $this->assertEquals($class->getPackage()->getName(), $parentClass->getPackage()->getName());
+    }
+    
+    /**
      * Tests that the node builder appends a default package to all new created
      * classes.
      *
