@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+require_once dirname(__FILE__) . '/AbstractSourceElementTest.php';
 
 require_once 'PHP/Reflection/AST/Class.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/AST/Class.php';
  * @link       http://www.manuel-pichler.de/
  */
 abstract class PHP_Reflection_AST_AbstractDependencyAwareTest 
-       extends PHP_Reflection_AST_AbstractItemTest
+       extends PHP_Reflection_AST_AbstractSourceElementTest
 {
     /**
      * Tests that a new {@link PHP_Reflection_AST_DependencyAwareI} instance returns 

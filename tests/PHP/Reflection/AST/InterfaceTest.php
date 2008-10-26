@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+require_once dirname(__FILE__) . '/AbstractSourceElementTest.php';
 
 require_once 'PHP/Reflection/AST/Class.php';
 require_once 'PHP/Reflection/AST/Interface.php';
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/AST/Interface.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_InterfaceTest extends PHP_Reflection_AST_AbstractItemTest 
+class PHP_Reflection_AST_InterfaceTest extends PHP_Reflection_AST_AbstractSourceElementTest 
 {
     /**
      * Tests the result of the <b>getParentInterfaces()</b> method.
@@ -197,7 +197,7 @@ class PHP_Reflection_AST_InterfaceTest extends PHP_Reflection_AST_AbstractItemTe
     /**
      * Creates an abstract item instance.
      *
-     * @return PHP_Reflection_AST_AbstractItem
+     * @return PHP_Reflection_AST_AbstractSourceElement
      */
     protected function createItem()
     {

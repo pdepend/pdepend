@@ -266,7 +266,7 @@ software JDepend and the NDepend metric tool.
             <file name="File.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="AbstractItem.php" role="php">
+            <file name="AbstractSourceElement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="VisibilityAwareI.php" role="php">
@@ -433,7 +433,7 @@ software JDepend and the NDepend metric tool.
           <file name="FunctionTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="AbstractItemTest.php" role="test">
+          <file name="AbstractSourceElementTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="MethodTest.php" role="test">

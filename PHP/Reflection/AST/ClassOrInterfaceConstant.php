@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractItem.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 
 /**
  * An instance of this class represents a class or interface constant within the
@@ -70,7 +70,7 @@ require_once 'PHP/Reflection/AST/AbstractItem.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_ClassOrInterfaceConstant 
-    extends PHP_Reflection_AST_AbstractItem
+    extends PHP_Reflection_AST_AbstractSourceElement
 {
     /**
      * The parent type object.
