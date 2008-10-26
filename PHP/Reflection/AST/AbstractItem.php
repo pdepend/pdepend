@@ -66,46 +66,42 @@ abstract class PHP_Reflection_AST_AbstractItem
     /**
      * The line number where the item declaration starts.
      *
-     * @type integer
-     * @var integer $startLine
+     * @var integer $_line
      */
-    protected $startLine = 0;
+    private $_line = 0;
     
     /**
      * The line number where the item declaration ends.
      *
-     * @type integer
-     * @var integer $endLine
+     * @var integer $_endLine
      */
-    protected $endLine = 0;
+    private $_endLine = 0;
     
     /**
      * The source file for this item.
      *
-     * @type PHP_Reflection_AST_File
-     * @var PHP_Reflection_AST_File $sourceFile
+     * @var PHP_Reflection_AST_File $_sourceFile
      */
-    protected $sourceFile = null;
+    private $_sourceFile = null;
     
     /**
      * The comment for this type.
      *
-     * @type string
-     * @var string $docComment
+     * @var string $_docComment
      */
-    protected $docComment = null;
+    private $_docComment = null;
     
     /**
      * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
      *
-     * @param string  $name      The item name.
-     * @param integer $startLine The item declaration line number.
+     * @param string  $name The item name.
+     * @param integer $line The item declaration line number.
      */
-    public function __construct($name, $startLine = 0)
+    public function __construct($name, $line = 0)
     {
         parent::__construct($name);
         
-        $this->startLine = $startLine;
+        $this->_line = $line;
     }
     
     /**
@@ -113,9 +109,9 @@ abstract class PHP_Reflection_AST_AbstractItem
      *
      * @return integer
      */
-    public function getStartLine()
+    public function getLine()
     {
-        return $this->startLine;
+        return $this->_line;
     }
     
     /**
@@ -125,10 +121,10 @@ abstract class PHP_Reflection_AST_AbstractItem
      * 
      * @return void
      */
-    public function setStartLine($startLine)
+    public function setLine($startLine)
     {
-        if ($this->startLine === 0) {
-            $this->startLine = $startLine;
+        if ($this->_line === 0) {
+            $this->_line = $startLine;
         }
     }
     
@@ -139,7 +135,7 @@ abstract class PHP_Reflection_AST_AbstractItem
      */
     public function getEndLine()
     {
-        return $this->endLine;
+        return $this->_endLine;
     }
     
     /**
@@ -151,8 +147,8 @@ abstract class PHP_Reflection_AST_AbstractItem
      */
     public function setEndLine($endLine)
     {
-        if ($this->endLine === 0) {
-            $this->endLine = $endLine;
+        if ($this->_endLine === 0) {
+            $this->_endLine = $endLine;
         }
     }
     
@@ -163,7 +159,7 @@ abstract class PHP_Reflection_AST_AbstractItem
      */
     public function getSourceFile()
     {
-        return $this->sourceFile;
+        return $this->_sourceFile;
     }
     
     /**
@@ -175,8 +171,8 @@ abstract class PHP_Reflection_AST_AbstractItem
      */
     public function setSourceFile(PHP_Reflection_AST_File $sourceFile)
     {
-        if ($this->sourceFile === null || $this->sourceFile->getFileName() === null) {
-            $this->sourceFile = $sourceFile;
+        if ($this->_sourceFile === null || $this->_sourceFile->getFileName() === null) {
+            $this->_sourceFile = $sourceFile;
         }
     }
     
@@ -187,7 +183,7 @@ abstract class PHP_Reflection_AST_AbstractItem
      */
     public function getDocComment()
     {
-        return $this->docComment;
+        return $this->_docComment;
     }
     
     /**
@@ -199,6 +195,6 @@ abstract class PHP_Reflection_AST_AbstractItem
      */
     public function setDocComment($docComment)
     {
-        $this->docComment = $docComment;
+        $this->_docComment = $docComment;
     }
 }

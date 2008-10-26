@@ -190,7 +190,7 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
     }
     
     /**
-     * Tests that {@link PHP_Reflection_AST_Class#getStartLine()} works as expected.
+     * Tests that {@link PHP_Reflection_AST_Class#getLine()} works as expected.
      * 
      * @return void
      */
@@ -198,7 +198,7 @@ class PHP_Reflection_AST_ClassTest extends PHP_Reflection_AST_AbstractItemTest
     {
         $class = new PHP_Reflection_AST_Class('foo', 42);
         
-        $this->assertEquals(42, $class->getStartLine());
+        $this->assertEquals(42, $class->getLine());
     }
     
     /**
