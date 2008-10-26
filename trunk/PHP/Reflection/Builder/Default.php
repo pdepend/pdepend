@@ -287,8 +287,8 @@ class PHP_Reflection_Builder_Default
             $this->buildPackage($packageName)->addType($class);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->_createdClassSet[$normalizedName]) 
-            && $this->isDefault($packageName)) {
+        } else if (isset($this->_createdClassSet[$normalizedName])
+            && self::PKG_UNKNOWN === $packageName) {
 
             $class = reset($this->_createdClassSet[$normalizedName]);
             
@@ -405,7 +405,7 @@ class PHP_Reflection_Builder_Default
             
             // 3) check for any version that could be used instead of the default
         } else if (isset($this->_createdInterfaceSet[$normalizedName]) 
-            && $this->isDefault($packageName)) {
+            && self::PKG_UNKNOWN === $packageName) {
                 
             $interface = reset($this->_createdInterfaceSet[$normalizedName]);
             
@@ -674,18 +674,6 @@ class PHP_Reflection_Builder_Default
             $this->_createdPackageSet = array();
         }
         return $this->_iterator;
-    }
-    
-    /**
-     * Returns <b>true</b> if the given package is the default package.
-     *
-     * @param string $packageName The package name.
-     * 
-     * @return boolean
-     */
-    protected function isDefault($packageName)
-    {
-        return ($packageName === self::PKG_UNKNOWN);
     }
     
     /**
