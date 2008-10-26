@@ -75,7 +75,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             'pkg1'                                   =>  true, 
             'pkg2'                                   =>  true, 
             'pkg3'                                   =>  true,
-            PHP_Reflection_BuilderI::GLOBAL_PACKAGE  =>  true
+            PHP_Reflection_BuilderI::UNKNOWN_PKG  =>  true
         );
         
         $result = self::parseMixedCode();

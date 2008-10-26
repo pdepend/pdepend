@@ -61,7 +61,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * The default package name.
      */
-    const GLOBAL_PACKAGE = '+global';
+    const UNKNOWN_PKG = '+global';
     
     /**
      * Generic build class for classes and interfaces. This method should be used

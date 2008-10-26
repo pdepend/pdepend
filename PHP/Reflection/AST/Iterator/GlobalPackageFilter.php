@@ -68,6 +68,6 @@ final class PHP_Reflection_AST_Iterator_GlobalPackageFilter
      */
     public function __construct()
     {
-        parent::__construct(array(PHP_Reflection_BuilderI::GLOBAL_PACKAGE));
+        parent::__construct(array(PHP_Reflection_BuilderI::UNKNOWN_PKG));
     }
 }
