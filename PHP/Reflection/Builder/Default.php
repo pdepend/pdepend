@@ -103,30 +103,30 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     /**
      * All generated {@link PHP_Reflection_AST_Class} objects
      *
-     * @var array(string=>PHP_Reflection_AST_Class) $_classes
+     * @var array(string=>PHP_Reflection_AST_Class) $_createdClassSet
      */
-    private $_classes = array();
+    private $_createdClassSet = array();
     
     /**
      * All generated {@link PHP_Reflection_AST_Interface} instances.
      *
-     * @var array(string=>PHP_Reflection_AST_Interface) $_interfaces
+     * @var array(string=>PHP_Reflection_AST_Interface) $_createdInterfaceSet
      */
-    protected $_interfaces = array();
+    private $_createdInterfaceSet = array();
     
     /**
      * All generated {@link PHP_Reflection_AST_Package} objects
      *
-     * @var array(string=>PHP_Reflection_AST_Package) $packages
+     * @var array(string=>PHP_Reflection_AST_Package) $_createdPackageSet
      */
-    protected $packages = array();
+    private $_createdPackageSet = array();
     
     /**
      * All generated {@link PHP_Reflection_AST_Function} instances.
      *
-     * @var array(string=>PHP_Reflection_AST_Function) $functions
+     * @var array(string=>PHP_Reflection_AST_Function) $_createdFunctionSet
      */
-    protected $functions = array();
+    private $_createdFunctionSet = array();
     
     /**
      * The internal types class.
@@ -136,6 +136,13 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
     private $_internalTypes = null;
     
     /**
+     * This property will cache a previously created result package iterator
+     *
+     * @var PHP_Reflection_AST_Iterator $_iterator
+     */
+    private $_iterator = null;
+    
+    /**
      * Constructs a new builder instance.
      */
     public function __construct()
@@ -143,7 +150,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         $this->defaultPackage = new PHP_Reflection_AST_Package(self::GLOBAL_PACKAGE);
         $this->defaultFile    = new PHP_Reflection_AST_File(null);
         
-        $this->packages[self::GLOBAL_PACKAGE] = $this->defaultPackage;
+        $this->_createdPackageSet[self::GLOBAL_PACKAGE] = $this->defaultPackage;
         
         $this->_internalTypes = PHP_Reflection_InternalTypes::getInstance();
     }
@@ -268,20 +275,20 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             return $instance;
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->_classes[$normalizedName][self::GLOBAL_PACKAGE])) {
-            $class = $this->_classes[$normalizedName][self::GLOBAL_PACKAGE];
+        } else if (isset($this->_createdClassSet[$normalizedName][self::GLOBAL_PACKAGE])) {
+            $class = $this->_createdClassSet[$normalizedName][self::GLOBAL_PACKAGE];
             
-            unset($this->_classes[$normalizedName][self::GLOBAL_PACKAGE]);
+            unset($this->_createdClassSet[$normalizedName][self::GLOBAL_PACKAGE]);
 
-            $this->_classes[$normalizedName][$packageName] = $class;
+            $this->_createdClassSet[$normalizedName][$packageName] = $class;
             
             $this->buildPackage($packageName)->addType($class);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->_classes[$normalizedName]) 
+        } else if (isset($this->_createdClassSet[$normalizedName]) 
             && $this->isDefault($packageName)) {
 
-            $class = reset($this->_classes[$normalizedName]);
+            $class = reset($this->_createdClassSet[$normalizedName]);
             
             // 4) Create a new class for the given package
         } else {
@@ -291,7 +298,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $class->setSourceFile($this->defaultFile);
             
             // Store class reference
-            $this->_classes[$normalizedName][$packageName] = $class;
+            $this->_createdClassSet[$normalizedName][$packageName] = $class;
             
             // Append to class package
             $this->buildPackage($packageName)->addType($class);
@@ -366,39 +373,39 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $normalizedName = strtolower($localName);
         
-        if (isset($this->_classes[$normalizedName][$packageName])) {
-            $class   = $this->_classes[$normalizedName][$packageName];
+        if (isset($this->_createdClassSet[$normalizedName][$packageName])) {
+            $class   = $this->_createdClassSet[$normalizedName][$packageName];
             $package = $class->getPackage();
             
             // Only reparent if the found class is part of the default package
             if ($package === $this->defaultPackage) {
                 $package->removeType($class);
             
-                unset($this->_classes[$normalizedName][$package->getName()]);
+                unset($this->_createdClassSet[$normalizedName][$package->getName()]);
                 
-                $this->_classes = array_filter($this->_classes);
+                $this->_createdClassSet = array_filter($this->_createdClassSet);
             }
         }
         
         // 1) check for an equal interface version
-        if (isset($this->_interfaces[$normalizedName][$packageName])) {
-            $interface = $this->_interfaces[$normalizedName][$packageName];
+        if (isset($this->_createdInterfaceSet[$normalizedName][$packageName])) {
+            $interface = $this->_createdInterfaceSet[$normalizedName][$packageName];
             
             // 2) check for a default version that could be replaced
-        } else if (isset($this->_interfaces[$normalizedName][self::GLOBAL_PACKAGE])) {
-            $interface = $this->_interfaces[$normalizedName][self::GLOBAL_PACKAGE];
+        } else if (isset($this->_createdInterfaceSet[$normalizedName][self::GLOBAL_PACKAGE])) {
+            $interface = $this->_createdInterfaceSet[$normalizedName][self::GLOBAL_PACKAGE];
             
-            unset($this->_interfaces[$normalizedName][self::GLOBAL_PACKAGE]);
+            unset($this->_createdInterfaceSet[$normalizedName][self::GLOBAL_PACKAGE]);
             
-            $this->_interfaces[$normalizedName][$packageName] = $interface;
+            $this->_createdInterfaceSet[$normalizedName][$packageName] = $interface;
             
             $this->buildPackage($packageName)->addType($interface);
             
             // 3) check for any version that could be used instead of the default
-        } else if (isset($this->_interfaces[$normalizedName]) 
+        } else if (isset($this->_createdInterfaceSet[$normalizedName]) 
             && $this->isDefault($packageName)) {
                 
-            $interface = reset($this->_interfaces[$normalizedName]);
+            $interface = reset($this->_createdInterfaceSet[$normalizedName]);
             
             // 4) Create a new interface for the given package
         } else {
@@ -407,7 +414,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
-            $this->_interfaces[$normalizedName][$packageName] = $interface;
+            $this->_createdInterfaceSet[$normalizedName][$packageName] = $interface;
             
             // Append interface to package
             $this->buildPackage($packageName)->addType($interface);
@@ -451,10 +458,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildPackage($name)
     {
-        if (!isset($this->packages[$name])) {
-            $this->packages[$name] = new PHP_Reflection_AST_Package($name);
+        if (!isset($this->_createdPackageSet[$name])) {
+            $this->_createdPackageSet[$name] = new PHP_Reflection_AST_Package($name);
         }
-        return $this->packages[$name];
+        return $this->_createdPackageSet[$name];
     }
     
     /**
@@ -495,7 +502,7 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function buildFunction($name, $line = 0)
     {
-        if (!isset($this->functions[$name])) {
+        if (!isset($this->_createdFunctionSet[$name])) {
             // Create new function
             $function = new PHP_Reflection_AST_Function($name, $line);
             $function->setSourceFile($this->defaultFile);
@@ -503,9 +510,9 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
             // Add to default package
             $this->defaultPackage->addFunction($function);
             // Store function reference
-            $this->functions[$name] = $function;
+            $this->_createdFunctionSet[$name] = $function;
         }
-        return $this->functions[$name];
+        return $this->_createdFunctionSet[$name];
     }
     
     /**
@@ -652,17 +659,19 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
      */
     public function getPackages()
     {
-        // Create a package array copy
-        $packages = $this->packages;
-        
-        // Remove default package if empty
-        if ($this->defaultPackage->getTypes()->count() === 0  
-         && $this->defaultPackage->getFunctions()->count() === 0) {
+        if ($this->_iterator === null) {
+            // Remove default package if empty
+            if ($this->defaultPackage->getTypes()->count() === 0  
+             && $this->defaultPackage->getFunctions()->count() === 0) {
 
-            unset($packages[self::GLOBAL_PACKAGE]);
+                unset($this->_createdPackageSet[self::GLOBAL_PACKAGE]);
+            }
+            // Create result iterator and reset package cache
+            $this->_iterator = new PHP_Reflection_AST_Iterator($this->_createdPackageSet);
+            
+            $this->_createdPackageSet = array();
         }
-        
-        return new PHP_Reflection_AST_Iterator($packages);
+        return $this->_iterator;
     }
     
     /**
@@ -761,8 +770,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $normalizedName = strtolower($localName);
         
-        if (isset($this->_classes[$normalizedName][$packageName])) {
-            return $this->_classes[$normalizedName][$packageName];
+        if (isset($this->_createdClassSet[$normalizedName][$packageName])) {
+            return $this->_createdClassSet[$normalizedName][$packageName];
         }
         return null;
     }
@@ -782,8 +791,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         if ($packageName === self::GLOBAL_PACKAGE) {
             
             $normalizedName = strtolower($this->extractTypeName($identifier));
-            if (isset($this->_classes[$normalizedName])) {
-                return reset($this->_classes[$normalizedName]);
+            if (isset($this->_createdClassSet[$normalizedName])) {
+                return reset($this->_createdClassSet[$normalizedName]);
             }
         }
         return null;
@@ -805,8 +814,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $normalizedName = strtolower($localName);
         
-        if (isset($this->_interfaces[$normalizedName][$packageName])) {
-            return $this->_interfaces[$normalizedName][$packageName];
+        if (isset($this->_createdInterfaceSet[$normalizedName][$packageName])) {
+            return $this->_createdInterfaceSet[$normalizedName][$packageName];
         }
         return null;
     }
@@ -826,8 +835,8 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         if ($packageName === self::GLOBAL_PACKAGE) {
             
             $normalizedName = strtolower($this->extractTypeName($identifier));
-            if (isset($this->_interfaces[$normalizedName])) {
-                return reset($this->_interfaces[$normalizedName]);
+            if (isset($this->_createdInterfaceSet[$normalizedName])) {
+                return reset($this->_createdInterfaceSet[$normalizedName]);
             }
         }
         return null;        
@@ -850,10 +859,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         $normalizedName = strtolower($localName);
         
         $instance = null;
-        if (isset($this->_classes[$normalizedName][$packageName])) {
-            $instance = $this->_classes[$normalizedName][$packageName];
-        } else if (isset($this->_interfaces[$normalizedName][$packageName])) {
-            $instance = $this->_interfaces[$normalizedName][$packageName];
+        if (isset($this->_createdClassSet[$normalizedName][$packageName])) {
+            $instance = $this->_createdClassSet[$normalizedName][$packageName];
+        } else if (isset($this->_createdInterfaceSet[$normalizedName][$packageName])) {
+            $instance = $this->_createdInterfaceSet[$normalizedName][$packageName];
         }
         return $instance;
     }
@@ -876,10 +885,10 @@ class PHP_Reflection_Builder_Default implements PHP_Reflection_BuilderI
         
         $instance = null;
         if ($packageName === self::GLOBAL_PACKAGE) {
-            if (isset($this->_classes[$normalizedName])) {
-                $instance = reset($this->_classes[$normalizedName]);
-            } else if (isset($this->_interfaces[$normalizedName])) {
-                $instance = reset($this->_interfaces[$normalizedName]);
+            if (isset($this->_createdClassSet[$normalizedName])) {
+                $instance = reset($this->_createdClassSet[$normalizedName]);
+            } else if (isset($this->_createdInterfaceSet[$normalizedName])) {
+                $instance = reset($this->_createdInterfaceSet[$normalizedName]);
             }
         }
         return $instance;
