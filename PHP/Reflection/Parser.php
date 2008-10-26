@@ -357,7 +357,7 @@ class PHP_Reflection_Parser
     
         $class = $this->builder->buildClass($qualifiedName, $token[2]);
         $class->setSourceFile($this->tokenizer->getSourceFile());
-        $class->setStartLine($token[2]);
+        $class->setLine($token[2]);
         $class->setModifiers($this->_modifiers);
         $class->setDocComment($this->_comment);
         $class->setPosition($this->_typePosition++);
@@ -512,7 +512,7 @@ class PHP_Reflection_Parser
     
         $interface = $this->builder->buildInterface($qualifiedName, $token[2]);
         $interface->setSourceFile($this->tokenizer->getSourceFile());
-        $interface->setStartLine($token[2]);
+        $interface->setLine($token[2]);
         $interface->setDocComment($this->_comment);
         $interface->setPosition($this->_typePosition++);
         
@@ -668,7 +668,7 @@ class PHP_Reflection_Parser
 
         $constant = $this->builder->buildClassOrInterfaceConstant($token[1]);
         $constant->setDocComment($this->_comment);
-        $constant->setStartLine($token[2]);
+        $constant->setLine($token[2]);
         $constant->setEndLine($token[2]);
         
         $this->_consumeToken(self::T_EQUAL, $tokens);
@@ -924,7 +924,7 @@ class PHP_Reflection_Parser
         $token = $this->_consumeToken(self::T_VARIABLE, $tokens);
         
         $parameter = $this->builder->buildParameter($token[1]);
-        $parameter->setStartLine($token[2]);
+        $parameter->setLine($token[2]);
         $parameter->setEndLine($token[2]);
         
         if ($classOrInterface !== null) {
