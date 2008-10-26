@@ -70,6 +70,17 @@ interface PHP_Reflection_AST_ClassOrInterfaceI extends PHP_Reflection_AST_NodeI
     function isAbstract();
     
     /**
+     * This method will return the constant instance for the given name.
+     *
+     * @param string $name The constant name.
+     * 
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstant
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    function getConstant($name);
+    
+    /**
      * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceConstant} objects 
      * in this class or interface node.
      *
@@ -84,6 +95,17 @@ interface PHP_Reflection_AST_ClassOrInterfaceI extends PHP_Reflection_AST_NodeI
      * @return PHP_Reflection_AST_Iterator
      */
     function getDependencies();
+    
+    /**
+     * This method will return the method instance for the given name.
+     *
+     * @param string $name The method name.
+     * 
+     * @return PHP_Reflection_AST_MethodI
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    function getMethod($name);
     
     /**
      * Returns all {@link PHP_Reflection_AST_MethodI} objects in this type.
