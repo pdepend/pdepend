@@ -195,7 +195,7 @@ class PHP_Reflection_AST_MethodTest extends PHP_Reflection_AST_AbstractDependenc
     /**
      * Creates an abstract item instance.
      *
-     * @return PHP_Reflection_AST_AbstractItem
+     * @return PHP_Reflection_AST_AbstractSourceElement
      */
     protected function createItem()
     {

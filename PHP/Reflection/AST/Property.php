@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractItem.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/PropertyI.php';
 require_once 'PHP/Reflection/AST/TypeAwareI.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/AST/TypeAwareI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_Property
-       extends PHP_Reflection_AST_AbstractItem
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_PropertyI,
                PHP_Reflection_AST_TypeAwareI
 {

@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractItem.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/MethodOrFunctionI.php';
 
 /**
@@ -64,7 +64,7 @@ require_once 'PHP/Reflection/AST/MethodOrFunctionI.php';
  * @link       http://www.manuel-pichler.de/
  */
 abstract class PHP_Reflection_AST_AbstractMethodOrFunction 
-       extends PHP_Reflection_AST_AbstractItem
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_MethodOrFunctionI
 {
     /**
