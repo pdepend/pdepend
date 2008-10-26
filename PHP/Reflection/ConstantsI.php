@@ -56,7 +56,7 @@
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_ParserConstantsI
+interface PHP_Reflection_ConstantsI
 {
     /**
      * Marks the end of the token stream.
