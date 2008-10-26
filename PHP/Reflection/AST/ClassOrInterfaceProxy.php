@@ -100,6 +100,20 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     }
     
     /**
+     * This method will return the constant instance for the given name.
+     *
+     * @param string $name The constant name.
+     * 
+     * @return PHP_Reflection_AST_ClassOrInterfaceConstant
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    public function getConstant($name)
+    {
+        return $this->getRealSubject()->getConstant($name);
+    }
+    
+    /**
      * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceConstant} objects 
      * in this class or interface node.
      *
@@ -119,6 +133,20 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     public function getDependencies()
     {
         return $this->getRealSubject()->getDependencies();
+    }
+    
+    /**
+     * This method will return the method instance for the given name.
+     *
+     * @param string $name The method name.
+     * 
+     * @return PHP_Reflection_AST_MethodI
+     * @throws PHP_Reflection_Exceptions_UnknownNodeException If no node exists
+     *                                                        for the given name.
+     */
+    public function getMethod($name)
+    {
+        return $this->getRealSubject()->getMethod($name);
     }
     
     /**
