@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/PHPValueTypesI.php';
+require_once 'PHP/Reflection/PHPTypesI.php';
 require_once 'PHP/Reflection/AST/ExpressionI.php';
 
 /**
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  */
 interface PHP_Reflection_AST_MemberValueI
     extends PHP_Reflection_AST_ExpressionI,
-            PHP_Reflection_PHPValueTypesI
+            PHP_Reflection_PHPTypesI
 {
     /**
      * Returns the php type of this value.

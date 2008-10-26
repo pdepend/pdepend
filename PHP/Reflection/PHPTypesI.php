@@ -56,7 +56,7 @@
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_PHPValueTypesI
+interface PHP_Reflection_PHPTypesI
 {
     /**
      * Marks a <b>array</b> value.
