@@ -147,6 +147,22 @@ interface PHP_Reflection_AST_MethodI extends PHP_Reflection_AST_MethodOrFunction
     function isStatic();
     
     /**
+     * Returns <b>true</b> when this method node is the class constructore,
+     * otherwise the returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isConstructor();
+    
+    /**
+     * This method will return <b>true</b> when this class is the destructor
+     * of its parent class or interface, otherwise it will return <b>false</b>.
+     *
+     * @return boolean
+     */
+    function isDestructor();
+    
+    /**
      * Returns the parent class or interface node.
      *
      * @return PHP_Reflection_AST_ClassOrInterfaceI
