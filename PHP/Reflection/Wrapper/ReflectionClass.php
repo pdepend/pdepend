@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/Wrapper/ReflectionMethod.php';
+
 /**
  * This is wrapper around PHP_Reflection's {@link PHP_Reflection_AST_Class} that
  * is compatible with PHP's internal <b>ReflectionClass</b>.
@@ -235,8 +237,8 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
     public function getMethod($name)
     {
         try {
-            // FIXME: Implement this method
-            $this->_class->getMethod($name);
+            $method = $this->_class->getMethod($name);
+            return new PHP_Reflection_Wrapper_ReflectionMethod($method);
         } catch (PHP_Reflection_Exceptions_UnknownNodeException $e) {
             $message = sprintf('Method %s does not exist in %s on line %d',
                 $name,
