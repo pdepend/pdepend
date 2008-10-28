@@ -805,6 +805,7 @@ class PHP_Reflection_Parser
         $method->setDocComment($this->_comment);
         $method->setPosition($this->_methodPosition++);
         $method->setModifiers($this->_modifiers);
+        $method->setSourceFile($this->tokenizer->getSourceFile());
                 
         $this->_prepareMethodOrFunction($method);
                 
