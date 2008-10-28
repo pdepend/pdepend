@@ -232,20 +232,21 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
     
     /**
      * Returns <b>true</b> when this method was defined by an internal class.
+     * 
+     * <code>
+     * class ArrayIt extends ArrayIterator {
+     *     public function reset() {
+     *     }
+     * }
+     * $ref = new ReflectionMethod('ArrayIt', 'reset');
+     * $ref->isInternal(); // Results in: false
+     * </code>
      *
      * @return boolean
      */
     public function isInternal()
     {
-        $typeName = $this->_method->getParent()->getName();
-        if (class_exists($typeName, false) === false) {
-            return false;
-        }
-        $reflection = new ReflectionClass($typeName);
-        if ($reflection->hasMethod($this->getName())) {
-            return $reflection->getMethod($this->getName())->isInternal();
-        }
-        return false;
+        // FIXME: Implement this method
     }
     
     /**
