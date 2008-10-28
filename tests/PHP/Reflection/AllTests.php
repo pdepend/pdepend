@@ -58,6 +58,7 @@ require_once dirname(__FILE__) . '/Input/AllTests.php';
 require_once dirname(__FILE__) . '/Parser/AllTests.php';
 require_once dirname(__FILE__) . '/Tokenizer/AllTests.php';
 require_once dirname(__FILE__) . '/Visitor/AllTests.php';
+require_once dirname(__FILE__) . '/Wrapper/AllTests.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/ReflectionTest.php';
 
@@ -99,6 +100,7 @@ class PHP_Reflection_AllTests
         $suite->addTest(PHP_Reflection_Parser_AllTests::suite());
         $suite->addTest(PHP_Reflection_Tokenizer_AllTests::suite());
         $suite->addTest(PHP_Reflection_Visitor_AllTests::suite());
+        $suite->addTest(PHP_Reflection_Wrapper_AllTests::suite());
         
         $suite->addTestSuite('PHP_Reflection_ParserTest');
         $suite->addTestSuite('PHP_Reflection_ReflectionTest');
