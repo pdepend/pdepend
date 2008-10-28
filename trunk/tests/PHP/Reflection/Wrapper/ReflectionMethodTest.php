@@ -336,13 +336,27 @@ class PHP_Reflection_Wrapper_ReflectionMethodTest extends PHP_Reflection_Abstrac
      *
      * @return void
      */
-    public function testCompatibilityOfTheGetStartLineMethod()
+    public function testCompatibilityOfTheGetStartLineAndGetEndLineMethod()
     {
         $expected = $this->createInternalMethod('start_end_line.php');
         $actual   = $this->createMethod('start_end_line.php');
         
         $this->assertEquals($expected->getStartLine(), $actual->getStartLine());
         $this->assertEquals($expected->getEndLine(), $actual->getEndLine());
+    }
+    
+    /**
+     * Tests the compatibility of the getDocComment() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfTheGetDocCommentMethod()
+    {
+        $expected = $this->createInternalMethod('doc_comment.php');
+        $actual   = $this->createMethod('doc_comment.php');
+        
+        $this->assertContains('This is a doc comment.', $expected->getDocComment());
+        $this->assertEquals($expected->getDocComment(), $actual->getDocComment());
     }
     
     /**
