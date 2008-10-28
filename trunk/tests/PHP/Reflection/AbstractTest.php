@@ -123,6 +123,7 @@ abstract class PHP_Reflection_AbstractTest extends PHPUnit_Framework_TestCase
                 new PHP_Reflection_Input_ExcludePathFilter(array('.svn'))
             );
         } else {
+            self::assertFileExists($fileOrDirectory);
             $it = new ArrayIterator(array($fileOrDirectory));
         }
         

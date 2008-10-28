@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/Wrapper/ReflectionClass.php';
+
 /**
  * This is wrapper around PHP_Reflection's {@link PHP_Reflection_AST_Method} that
  * is compatible with PHP's internal <b>ReflectionMethod</b> class.
@@ -171,7 +173,7 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function isConstructor()
     {
-        // FIXME: Implement this method
+        return $this->_method->isConstructor();
     }
     
     /**
@@ -181,7 +183,7 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function isDestructor()
     {
-        // FIXME: Implement this method
+        return $this->_method->isDestructor();
     }
     
     /**
@@ -201,7 +203,7 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function getClosure()
     {
-        // FIXME: Implement this method
+        throw new ReflectionException('Method getClosure() is not implemented.');
     }
     
     /**
@@ -235,7 +237,15 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function isInternal()
     {
-        // FIXME: Implement this method
+        $typeName = $this->_method->getParent()->getName();
+        if (class_exists($typeName, false) === false) {
+            return false;
+        }
+        $reflection = new ReflectionClass($typeName);
+        if ($reflection->hasMethod($this->getName())) {
+            return $reflection->getMethod($this->getName())->isInternal();
+        }
+        return false;
     }
     
     /**
@@ -255,10 +265,11 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function getFileName()
     {
+        $fileName = null;
         if ($this->_method instanceof PHP_Reflection_AST_AbstractSourceElement) {
-            return $this->_method->getSourceFile()->getFileName();
+            $fileName = $this->_method->getSourceFile()->getFileName();
         }
-        return false;
+        return ($fileName === null ? false : $fileName);
     }
     
     /**
@@ -268,10 +279,11 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function getStartLine()
     {
+        $line = 0;
         if ($this->_method instanceof PHP_Reflection_AST_AbstractSourceElement) {
-            return $this->_method->getLine();
+            $line = $this->_method->getLine();
         }
-        return false;
+        return ($line <= 0 ? false : $line);
     }
     
     /**
@@ -281,10 +293,11 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function getEndLine()
     {
+        $line = 0;
         if ($this->_method instanceof PHP_Reflection_AST_AbstractSourceElement) {
-            return $this->_method->getEndLine();
+            $line = $this->_method->getEndLine();
         }
-        return false;
+        return ($line <= 0 ? false : $line);
     }
     
     /**
@@ -348,6 +361,9 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function getNumberOfRequiredParameters()
     {
+        foreach ($this->_method->getParameters() as $parameter) {
+            
+        }
         // FIXME: Implement this method
     }
     
