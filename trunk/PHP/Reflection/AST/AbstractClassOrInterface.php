@@ -76,7 +76,7 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
     /**
      * List of {@link PHP_Reflection_AST_Method} objects in this class.
      *
-     * @var array(PHP_Reflection_AST_Method) $_methods
+     * @var array(string=>PHP_Reflection_AST_Method) $_methods
      */
     private $_methods = array();
     
@@ -187,12 +187,25 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
      */
     public function getMethod($name)
     {
-        foreach ($this->_methods as $method) {
-            if ($method->getName() === $name) {
-                return $method;
-            }
+        $methodName = strtolower($name);
+        if (isset($this->_methods[$methodName])) {
+            return $this->_methods[$methodName];
         }
         throw new PHP_Reflection_Exceptions_UnknownNodeException($name);
+    }
+    
+    /**
+     * This method will return <b>true</b> when this class or interface has a
+     * method with the given <b>$name</b>, otherwise this method will return 
+     * <b>false</b>.
+     *
+     * @param string $name The method name.
+     * 
+     * @return boolean
+     */
+    public function hasMethod($name)
+    {
+        return isset($this->_methods[strtolower($name)]);
     }
     
     /**
@@ -220,7 +233,7 @@ abstract class PHP_Reflection_AST_AbstractClassOrInterface
         // Set this as owner type
         $method->setParent($this);
         // Store method
-        $this->_methods[] = $method;
+        $this->_methods[strtolower($method->getName())] = $method;
         
         return $method;
     }
