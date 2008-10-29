@@ -164,6 +164,48 @@ class PHP_Reflection_Parser_MethodTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that the parser sets the returns reference flag.
+     *
+     * @return void
+     */
+    public function testParserSetsReturnsReferenceFlag()
+    {
+        $method = self::_testParseMethod('returns_reference_method.php');
+        $this->assertTrue($method->returnsReference());
+    }
+    
+    /**
+     * Tests that the parser sets no returns reference flag.
+     *
+     * @return void
+     */
+    public function testParserSetsNoReturnsReferenceFlag()
+    {
+        $method = self::_testParseMethod('returns_no_reference_method.php');
+        $this->assertFalse($method->returnsReference());
+    }
+    
+    /**
+     * Tests that the parser sets the default value of a method parameter.
+     *
+     * @return void
+     */
+    public function testParserSetsDefaultParameterValue()
+    {
+        $method = self::_testParseMethod('parameter_default_value_array.php');
+        
+        $parameters = $method->getParameters();
+        $this->assertEquals(1, $parameters->count());
+        
+        $parameter = $parameters->current();
+        $this->assertNotNull($parameter);
+        
+        $defaultValue = $parameter->getDefaultValue();
+        $this->assertNotNull($defaultValue);
+        $this->assertType('PHP_Reflection_AST_ArrayExpression', $defaultValue);
+    }
+    
+    /**
      * Parses a source file and extracts the first method instance.
      *
      * @param string $file The source file.
