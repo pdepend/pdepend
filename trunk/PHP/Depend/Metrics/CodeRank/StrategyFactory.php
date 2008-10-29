@@ -78,7 +78,6 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
     /**
      * The default strategy.
      *
-     * @type string
      * @var string $_defaultStrategy
      */
     private $_defaultStrategy = self::STRATEGY_INHERITANCE;
@@ -86,7 +85,6 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
     /**
      * List of all valid properties.
      *
-     * @type array<string>
      * @var array(string) $_validStrategies
      */
     private $_validStrategies = array(

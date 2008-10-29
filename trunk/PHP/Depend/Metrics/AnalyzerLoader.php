@@ -66,7 +66,6 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * Mapping of all installed analyzers.
      *
-     * @type array<string>
      * @var array(string=>string) $_installedAnalyzers
      */
     private $_installedAnalyzers = null;
@@ -74,7 +73,6 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * All matching analyzer instances.
      *
-     * @type array<PHP_Depend_Metrics_AnalyzerI>
      * @var array(PHP_Depend_Metrics_AnalyzerI) $_analyzers
      */
     private $_analyzers = array();

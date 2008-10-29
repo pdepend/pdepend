@@ -69,7 +69,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     /**
      * All found nodes.
      *
-     * @type array<array>
      * @var array(string=>array) $_nodes
      */
     private $_nodes = array();
