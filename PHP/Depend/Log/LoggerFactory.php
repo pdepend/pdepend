@@ -75,7 +75,6 @@ class PHP_Depend_Log_LoggerFactory
     /**
      * Set of created logger instances.
      *
-     * @type array<PHP_Depend_Log_LoggerI>
      * @var array(string=>PHP_Depend_Log_LoggerI) $_instances
      */
     private $_instances = array();
