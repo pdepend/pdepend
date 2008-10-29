@@ -73,7 +73,6 @@ class PHP_Depend_Log_Overview_Pyramid
     /**
      * The output file name.
      *
-     * @type string
      * @var string $_logFile
      */
     private $_logFile = null;
@@ -81,7 +80,6 @@ class PHP_Depend_Log_Overview_Pyramid
     /**
      * The used coupling analyzer.
      *
-     * @type PHP_Depend_Metrics_Coupling_Analyzer
      * @var PHP_Depend_Metrics_Coupling_Analyzer $_coupling
      */
     private $_coupling = null;
@@ -89,7 +87,6 @@ class PHP_Depend_Log_Overview_Pyramid
     /**
      * The used cyclomatic complexity analyzer.
      *
-     * @type PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticComplexity
      */
     private $_cyclomaticComplexity = null;
@@ -97,7 +94,6 @@ class PHP_Depend_Log_Overview_Pyramid
     /**
      * The used inheritance analyzer.
      *
-     * @type PHP_Depend_Metrics_Inheritance_Analyzer
      * @var PHP_Depend_Metrics_Inheritance_Analyzer $_inheritance
      */
     private $_inheritance = null;
@@ -105,7 +101,6 @@ class PHP_Depend_Log_Overview_Pyramid
     /**
      * The used node count analyzer.
      *
-     * @type PHP_Depend_Metrics_NodeCount_Analyzer
      * @var PHP_Depend_Metrics_NodeCount_Analyzer $_nodeCount
      */
     private $_nodeCount = null;
@@ -113,7 +108,6 @@ class PHP_Depend_Log_Overview_Pyramid
     /**
      * The used node loc analyzer.
      *
-     * @type PHP_Depend_Metrics_NodeLoc_Analyzer
      * @var PHP_Depend_Metrics_NodeLoc_Analyzer $_nodeLoc
      */
     private $_nodeLoc = null;
@@ -122,7 +116,6 @@ class PHP_Depend_Log_Overview_Pyramid
      * Holds defined thresholds for the computed proportions. This set is based
      * on java thresholds, we should find better values for php projects.
      *
-     * @type array<array>
      * @var array(string => array) $_thresholds
      */
     private $_thresholds = array(
