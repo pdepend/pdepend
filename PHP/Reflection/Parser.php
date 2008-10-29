@@ -314,6 +314,10 @@ class PHP_Reflection_Parser
             $this->_consumeToken(self::T_BITWISE_AND, $tokens);
             // Skip comments after reference operator
             $this->_consumeComments($tokens);
+            
+            $returnsReference = true;
+        } else {
+            $returnsReference = false;
         }
         
         // We expect a T_STRING token for function name
@@ -337,6 +341,7 @@ class PHP_Reflection_Parser
         $this->_parseMethodOrFunctionBody($tokens, $function);
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
+        $function->setReturnsReference($returnsReference);
         
         $this->_prepareMethodOrFunction($function);
                     
@@ -784,7 +789,12 @@ class PHP_Reflection_Parser
         if ($token[0] === self::T_BITWISE_AND) {
             $this->_consumeComments($tokens);
             $token = $this->_consumeToken(self::T_STRING, $tokens);
+            
+            $returnsReference = true;
+        } else {
+            $returnsReference = false;
         }
+        
         $this->_consumeComments($tokens);
         
         $method = $this->builder->buildMethod($token[1], $token[2]);
@@ -802,6 +812,7 @@ class PHP_Reflection_Parser
             $method->setEndLine($token[2]);
         }
 
+        $method->setReturnsReference($returnsReference);
         $method->setDocComment($this->_comment);
         $method->setPosition($this->_methodPosition++);
         $method->setModifiers($this->_modifiers);
@@ -938,7 +949,7 @@ class PHP_Reflection_Parser
         if ($this->tokenizer->peek() === self::T_EQUAL) {
             $this->_consumeToken(self::T_EQUAL, $tokens);
             $this->_consumeComments($tokens);
-            $this->_parseStaticValue($tokens);
+            $parameter->setDefaultValue($this->_parseStaticValue($tokens));
         }
         return $parameter;
     }
