@@ -46,11 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractNode.php';
-require_once 'PHP/Reflection/AST/SourceElementI.php';
+require_once 'PHP/Reflection/AST/NodeI.php';
 
 /**
- * Abstract base class for code item.
+ * This marks a node with a concrete source representation.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -61,142 +60,33 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_AST_AbstractSourceElement 
-       extends PHP_Reflection_AST_AbstractNode
-    implements PHP_Reflection_AST_SourceElementI
+interface PHP_Reflection_AST_SourceElementI extends PHP_Reflection_AST_NodeI
 {
-    /**
-     * The line number where the item declaration starts.
-     *
-     * @var integer $_line
-     */
-    private $_line = 0;
-    
-    /**
-     * The line number where the item declaration ends.
-     *
-     * @var integer $_endLine
-     */
-    private $_endLine = 0;
-    
-    /**
-     * The source file for this item.
-     *
-     * @var PHP_Reflection_AST_File $_sourceFile
-     */
-    private $_sourceFile = null;
-    
-    /**
-     * The comment for this type.
-     *
-     * @var string $_docComment
-     */
-    private $_docComment = null;
-    
-    /**
-     * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
-     *
-     * @param string  $name The item name.
-     * @param integer $line The item declaration line number.
-     */
-    public function __construct($name, $line = 0)
-    {
-        parent::__construct($name);
-        
-        $this->_line = $line;
-    }
-    
     /**
      * Returns the line number where the item declaration can be found.
      *
      * @return integer
      */
-    public function getLine()
-    {
-        return $this->_line;
-    }
-    
-    /**
-     * Sets the start line for this item.
-     *
-     * @param integer $startLine The start line for this item.
-     * 
-     * @return void
-     */
-    public function setLine($startLine)
-    {
-        if ($this->_line === 0) {
-            $this->_line = $startLine;
-        }
-    }
+    function getLine();
     
     /**
      * Returns the line number where the item declaration ends.
      *
      * @return integer The last source line for this item.
      */
-    public function getEndLine()
-    {
-        return $this->_endLine;
-    }
-    
-    /**
-     * Sets the end line for this item.
-     *
-     * @param integer $endLine The end line for this item
-     * 
-     * @return void
-     */
-    public function setEndLine($endLine)
-    {
-        if ($this->_endLine === 0) {
-            $this->_endLine = $endLine;
-        }
-    }
+    function getEndLine();
     
     /**
      * Returns the source file for this item.
      *
      * @return PHP_Reflection_AST_File
      */
-    public function getSourceFile()
-    {
-        return $this->_sourceFile;
-    }
-    
-    /**
-     * Sets the source file for this item.
-     * 
-     * @param PHP_Reflection_AST_File $sourceFile The item source file.
-     *
-     * @return void
-     */
-    public function setSourceFile(PHP_Reflection_AST_File $sourceFile)
-    {
-        if ($this->_sourceFile === null || $this->_sourceFile->getFileName() === null) {
-            $this->_sourceFile = $sourceFile;
-        }
-    }
+    function getSourceFile();
     
     /**
      * Returns the doc comment for this item or <b>null</b>.
      *
      * @return string
      */
-    public function getDocComment()
-    {
-        return $this->_docComment;
-    }
-    
-    /**
-     * Sets the doc comment for this item.
-     *
-     * @param string $docComment The doc comment block.
-     * 
-     * @return void
-     */
-    public function setDocComment($docComment)
-    {
-        $this->_docComment = $docComment;
-    }
+    function getDocComment();
 }
