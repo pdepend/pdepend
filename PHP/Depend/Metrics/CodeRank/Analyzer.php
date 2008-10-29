@@ -81,7 +81,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     /**
      * All found nodes.
      *
-     * @type array<array>
      * @var array(string=>array) $nodes
      */
     protected $nodes = array();
@@ -89,7 +88,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     /**
      * List of node collect strategies.
      * 
-     * @type array<PHP_Depend_Metrics_CodeRank_CodeRankStrategyI>
      * @var array(PHP_Depend_Metrics_CodeRank_CodeRankStrategyI) $_strategies
      */
     private $_strategies = array();
@@ -112,7 +110,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
