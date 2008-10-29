@@ -78,4 +78,11 @@ interface PHP_Reflection_AST_ParameterI
      * @return integer
      */
     function getPosition();
+    
+    /**
+     * Returns the default value of this parameter or <b>null<b>.
+     *
+     * @return PHP_Reflection_AST_MemberValueI
+     */
+    function getDefaultValue();
 }

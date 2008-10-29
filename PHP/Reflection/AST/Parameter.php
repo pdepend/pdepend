@@ -93,6 +93,13 @@ class PHP_Reflection_AST_Parameter
     private $_position = 0;
     
     /**
+     * The default value of this parameter or <b>null</b>.
+     *
+     * @var PHP_Reflection_AST_MemberValueI $_defaultValue
+     */
+    private $_defaultValue = null;
+    
+    /**
      * The type for this property. This value is <b>null</b> by default and for
      * scalar types.
      *
@@ -142,6 +149,28 @@ class PHP_Reflection_AST_Parameter
     public function setPosition($position)
     {
         $this->_position = $position;
+    }
+    
+    /**
+     * Returns the default value of this parameter or <b>null<b>.
+     *
+     * @return PHP_Reflection_AST_MemberValueI
+     */
+    public function getDefaultValue()
+    {
+        return $this->_defaultValue;
+    }
+    
+    /**
+     * Sets the default value for this parameter instance.
+     *
+     * @param PHP_Reflection_AST_MemberValueI $defaultValue The value instance.
+     * 
+     * @return void
+     */
+    public function setDefaultValue(PHP_Reflection_AST_MemberValueI $defaultValue)
+    {
+        $this->_defaultValue = $defaultValue;
     }
     
     /**
