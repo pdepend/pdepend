@@ -108,6 +108,47 @@ class PHP_Reflection_Parser_FunctionTest extends PHP_Reflection_AbstractTest
     }
     
     /**
+     * Tests that the parser sets the returns reference flag.
+     *
+     * @return void
+     */
+    public function testParserSetsReturnsReferenceFlag()
+    {
+        $function = self::_testParseFunction('returns_reference_function.php');
+        $this->assertTrue($function->returnsReference());
+    }
+    
+    /**
+     * Tests that the parser sets no returns reference flag.
+     *
+     * @return void
+     */
+    public function testParserSetsNoReturnsReferenceFlag()
+    {
+        $function = self::_testParseFunction('returns_no_reference_function.php');
+        $this->assertFalse($function->returnsReference());
+    }
+    
+    /**
+     * Tests that the parser sets the correct default parameter value.
+     *
+     * @return void
+     */
+    public function testParserSetsDefaultParameterValue()
+    {
+        $function = self::_testParseFunction('parameter_default_value_null.php');
+        
+        $parameters = $function->getParameters();
+        $this->assertEquals(1, $parameters->count());
+        
+        $parameter = $parameters->current();
+        $this->assertNotNull($parameter->getDefaultValue());
+        
+        $defaultValue = $parameter->getDefaultValue();
+        $this->assertSame(PHP_Reflection_AST_MemberNullValue::flyweight(), $defaultValue);
+    }
+    
+    /**
      * Parses a source file and extracts the first function instance.
      *
      * @param string $file The source file.
