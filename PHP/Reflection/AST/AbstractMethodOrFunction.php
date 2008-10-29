@@ -73,6 +73,13 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      * @var array(mixed) $tokens
      */
     protected $tokens = array();
+    
+    /**
+     * If this is set to <b>true</b> the return value is returned by reference.
+     *
+     * @var boolean $_returnsReference
+     */
+    private $_returnsReference = false;
 
     /**
      * List of {@link PHP_Reflection_AST_AbstractClassOrInterface} objects this function
@@ -125,6 +132,30 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     public function setTokens(array $tokens)
     {
         $this->tokens = $tokens;
+    }
+    
+    /**
+     * This method should return <b>true</b> when the context method or function
+     * returns a reference.
+     *
+     * @return boolean
+     */
+    public function returnsReference()
+    {
+        return $this->_returnsReference;
+    }
+    
+    /**
+     * This method will set an internal flag which indicates that the method or
+     * function return value is a reference.
+     *
+     * @param boolean $returnsReference Yes or no?
+     * 
+     * @return void
+     */
+    public function setReturnsReference($returnsReference)
+    {
+        $this->_returnsReference = (boolean) $returnsReference;
     }
 
     /**
