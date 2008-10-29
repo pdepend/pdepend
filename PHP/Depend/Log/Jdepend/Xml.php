@@ -116,7 +116,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The Packages dom element.
      *
-     * @type DOMElement
      * @var DOMElement $packages
      */
     protected $packages = null;
@@ -124,7 +123,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The Cycles dom element.
      *
-     * @type DOMElement
      * @var DOMElement $cycles
      */
     protected $cycles = null;
@@ -132,7 +130,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The concrete classes element for the current package.
      *
-     * @type DOMElement
      * @var DOMElement $concreteClasses
      */
     protected $concreteClasses = null;
@@ -140,7 +137,6 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The abstract classes element for the current package.
      *
-     * @type DOMElement
      * @var DOMElement $abstractClasses
      */
     protected $abstractClasses = null;

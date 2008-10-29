@@ -78,7 +78,6 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * The log output file.
      *
-     * @type string
      * @var string $_logFile
      */
     private $_logFile = null;
@@ -86,7 +85,6 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * The raw {@link PHP_Reflection_AST_Package} instances.
      *
-     * @type PHP_Reflection_AST_Iterator
      * @var PHP_Reflection_AST_Iterator $code
      */
     protected $code = null;
@@ -94,7 +92,6 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * List of all generated project metrics.
      *
-     * @type array<mixed>
      * @var array(string=>mixed) $projectMetrics
      */
     protected $projectMetrics = array();
@@ -103,7 +100,6 @@ class PHP_Depend_Log_Phpunit_Xml
      * List of all analyzers that implement the node aware interface
      * {@link PHP_Depend_Metrics_NodeAwareI}.
      *
-     * @type array<PHP_Depend_Metrics_AnalyzerI>
      * @var array(PHP_Depend_Metrics_AnalyzerI) $_nodeAwareAnalyzers
      */
     private $_nodeAwareAnalyzers = array();
@@ -111,7 +107,6 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * The internal used xml stack.
      *
-     * @type array<DOMElement>
      * @var array(DOMElement) $_xmlStack
      */
     private $_xmlStack = array();
@@ -119,7 +114,6 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * Number of visited files.
      *
-     * @type integer
      * @var integer $_files
      */
     private $_files = 0;
@@ -127,7 +121,6 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * This property contains some additional metrics for the file-DOMElement.
      *
-     * @type array<integer>
      * @var array(string=>integer) $_additionalFileMetrics
      */
     private $_additionalFileMetrics = array(
@@ -139,7 +132,6 @@ class PHP_Depend_Log_Phpunit_Xml
      * This translation table maps some PHP_Depend identifiers with the 
      * corresponding PHPUnit identifiers.
      *
-     * @type array<string>
      * @var array(string=>string)
      */
     private $_phpunitTranslationTable = array(
