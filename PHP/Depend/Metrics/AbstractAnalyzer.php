@@ -68,7 +68,6 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * Global options array.
      *
-     * @type array<mixed>
      * @var array(string=>mixed) $options
      */
     protected $options = array();
@@ -76,7 +75,6 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * List or registered listeners.
      *
-     * @type array<PHP_Depend_Metrics_ListenerI>
      * @var array(PHP_Depend_Metrics_ListenerI) $_listeners
      */
     private $_listeners = array();

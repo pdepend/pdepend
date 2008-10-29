@@ -90,7 +90,6 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
@@ -98,7 +97,6 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * The internal used cyclomatic complexity analyzer.
      *
-     * @type PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticAnalyzer
      */
     private $_cyclomaticAnalyzer = null;

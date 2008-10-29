@@ -78,7 +78,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Contains the number of derived classes for each processed class. The array
      * size is equal to the number of analyzed classes.
      *
-     * @type array<integer>
      * @var array(integer) $_derivedClasses
      */
     private $_derivedClasses = null;
@@ -88,7 +87,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * analyzed system. The array size is equal to the number of analyzed root
      * classes.
      *
-     * @type array<integer>
      * @var array(integer) $_rootClasses
      */
     private $_rootClasses = null;
@@ -96,7 +94,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * The average number of derived classes.
      *
-     * @type float
      * @var float $_andc
      */
     private $_andc = 0;
@@ -104,7 +101,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * The average hierarchy height.
      *
-     * @type float
      * @var float $_ahh
      */
     private $_ahh = 0;

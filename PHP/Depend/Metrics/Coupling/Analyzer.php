@@ -90,15 +90,13 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * The number of method or function calls.
      *
-     * @type integer
      * @var integer $_calls
      */
     private $_calls = -1;
     
     /**
      * Number of fanouts.
-     *
-     * @type integer
+     * 
      * @var integer $_fanout
      */
     private $_fanout = -1;

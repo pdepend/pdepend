@@ -83,7 +83,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
@@ -98,7 +97,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * This property holds the UUID ids of all skipable paths when this class
      * collects the cycles. 
      *
-     * @type array<boolean>
      * @var array(string=>boolean) $_skipablePaths
      */
     private $_skipablePaths = array();
@@ -119,7 +117,6 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_collectedCycles
      */
     private $_collectedCycles = array();

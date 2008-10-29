@@ -88,7 +88,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Collected node metrics
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
@@ -96,7 +95,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Collected project metrics.
      *
-     * @type array<array>
      * @var array(string=>integer) $_projectMetrics
      */
     private $_projectMetrics = array(

@@ -90,7 +90,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
@@ -98,7 +97,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * The project Cyclomatic Complexity Number.
      *
-     * @type integer
      * @var integer $_ccn
      */
     private $_ccn = 0;
@@ -106,7 +104,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Extended Cyclomatic Complexity Number(CCN2) for the project.
      *
-     * @type integer
      * @var integer $_ccn2
      */
     private $_ccn2 = 0;
