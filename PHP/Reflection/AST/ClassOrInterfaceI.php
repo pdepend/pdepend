@@ -108,17 +108,6 @@ interface PHP_Reflection_AST_ClassOrInterfaceI extends PHP_Reflection_AST_NodeI
     function getMethod($name);
     
     /**
-     * This method will return <b>true</b> when this class or interface has a
-     * method with the given <b>$name</b>, otherwise this method will return 
-     * <b>false</b>.
-     *
-     * @param string $name The method name.
-     * 
-     * @return boolean
-     */
-    function hasMethod($name);
-    
-    /**
      * Returns all {@link PHP_Reflection_AST_MethodI} objects in this type.
      *
      * @return PHP_Reflection_AST_Iterator

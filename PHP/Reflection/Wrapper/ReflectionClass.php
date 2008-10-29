@@ -141,7 +141,12 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
      */
     public function hasMethod($name)
     {
-        // FIXME: Implement this method
+        foreach ($this->_class->getMethods() as $method) {
+            if (strtolower($name) === strtolower($method->getName())) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
@@ -263,7 +268,40 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
      */
     public function getMethods($filter = 0)
     {
-        // FIXME: Implement this method
+        $methods = array();
+        foreach ($this->_class->getMethods() as $method) {
+            if (($method->getModifiers() & $filter) === 0) {
+                continue;
+            }
+            $name = strtolower($method->getName());
+            if (isset($methods[$name])) {
+                continue;
+            }
+            $methods[$name] = new PHP_Reflection_Wrapper_ReflectionMethod($method);
+        }
+        
+        // Append methods of parent class
+        if (($parent = $this->getParentClass()) !== false) {
+            foreach ($parent->getMethods($filter) as $method) {
+                $name = strtolower($method->getName());
+                if (isset($methods[$name])) {
+                    continue;
+                }
+                $methods[$name] = $method;
+            }
+        }
+        
+        // Append methods of parent interfaces
+        foreach ($this->getInterfaces() as $interface) {
+            foreach ($parent->getMethods($filter) as $method) {
+                $name = strtolower($method->getName());
+                if (isset($methods[$name])) {
+                    continue;
+                }
+                $methods[$name] = $method;
+            }
+        }
+        return $methods;
     }
     
     /**
@@ -345,6 +383,7 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
     public function getInterfaces()
     {
         // FIXME: Implement this method
+        return array();
     }
     
     /**

@@ -46,13 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/ReflectionClassTest.php';
-require_once dirname(__FILE__) . '/ReflectionMethodTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * The test suite for the reflection api wrapper package. 
+ * Test case for the reflection class wrapper.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -63,20 +60,60 @@ require_once dirname(__FILE__) . '/ReflectionMethodTest.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Wrapper_AllTests
+class PHP_Reflection_Wrapper_ReflectionClassTest extends PHP_Reflection_AbstractTest
 {
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
+    public function testCompatibilityOfGetMethodsFilteredByPublicAndStatic()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Wrapper - AllTests');
+        $expected = $this->createInternalClass('methods_filtered_public_static.php');
+        $actual   = $this->createClass('methods_filtered_public_static.php');
         
-        $suite->addTestSuite('PHP_Reflection_Wrapper_ReflectionClassTest');
-        $suite->addTestSuite('PHP_Reflection_Wrapper_ReflectionMethodTest');
+        $expectedMethods = $expected->getMethods(ReflectionMethod::IS_PUBLIC|ReflectionMethod::IS_STATIC);
+        $actualMethods   = $actual->getMethods(ReflectionMethod::IS_PUBLIC|ReflectionMethod::IS_STATIC);
+        
+        $this->assertEquals(3, count($expectedMethods));
+        $this->assertEquals(3, count($actualMethods));
+    }
+    
+    /**
+     * Returns an instance of PHP_Reflection_Wrapper_ReflectionClass for the
+     * first defined class.
+     *
+     * @param string $file The source file name.
+     * 
+     * @return PHP_Reflection_Wrapper_ReflectionClass
+     */
+    protected function createClass($file)
+    {
+        $packages = self::parseSource('/wrapper/class/' . $file);
+        $this->assertEquals(1, $packages->count());
+        
+        $types = $packages->current()->getTypes();
+        $this->assertEquals(1, $types->count());
+        
+        return new PHP_Reflection_Wrapper_ReflectionClass($types->current());
+    }
+    
+    /**
+     * Returns a ReflectionClass instance for first defined class.
+     *
+     * @param string $file the test file name
+     * 
+     * @return ReflectionClass
+     */
+    protected function createInternalClass($file)
+    {
+        // Include source file
+        $uri = $this->createResourceURI('/wrapper/class/' . $file);
+        $this->assertType('string', $uri);
+        $this->assertFileExists($uri);
+        
+        include $uri;
+        
+        // Create test class/interface name
+        $class = 'test_wrapper_class_' . pathinfo($file, PATHINFO_FILENAME);
 
-        return $suite;
+        $this->assertTrue(class_exists($class, false));
+        
+        return new ReflectionClass($class);
     }
 }

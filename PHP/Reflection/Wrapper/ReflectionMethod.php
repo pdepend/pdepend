@@ -90,7 +90,7 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function invoke($object, $args = null)
     {
-        // FIXME: Implement this method
+        throw new ReflectionException('Method invoke() is not implemented.');
     }
     
     /**
@@ -103,7 +103,7 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function invokeArgs($object, array $args = array())
     {
-        // FIXME: Implement this method
+        throw new ReflectionException('Method invokeArgs() is not implemented.');
     }
     
     /**
@@ -173,7 +173,13 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function isConstructor()
     {
-        return $this->_method->isConstructor();
+        $methodName = strtolower($this->getName());
+        if ($methodName === '__construct') {
+            return true;
+        } else if ($this->getDeclaringClass()->hasMethod('__construct')) {
+            return false;
+        }
+        return (strtolower($this->getDeclaringClass()->getName()) === $methodName);
     }
     
     /**
@@ -183,7 +189,7 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function isDestructor()
     {
-        return $this->_method->isDestructor();
+        return (strtolower($this->getName()) === '__destruct');
     }
     
     /**
@@ -332,7 +338,7 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function returnsReference()
     {
-        // FIXME: Implement this method
+        return $this->_method->returnsReference();
     }
     
     /**
@@ -362,10 +368,13 @@ class PHP_Reflection_Wrapper_ReflectionMethod extends ReflectionMethod
      */
     public function getNumberOfRequiredParameters()
     {
+        $parameterCount = 0;
         foreach ($this->_method->getParameters() as $parameter) {
-            
+            if ($parameter->getDefaultValue() === null) {
+                ++$parameterCount;
+            }
         }
-        // FIXME: Implement this method
+        return $parameterCount;
     }
     
     /**

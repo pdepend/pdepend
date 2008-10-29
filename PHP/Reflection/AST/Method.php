@@ -189,36 +189,6 @@ class PHP_Reflection_AST_Method
     }
     
     /**
-     * Returns <b>true</b> when this method node is the class constructor,
-     * otherwise the returned value will be <b>false</b>.
-     *
-     * @return boolean
-     */
-    public function isConstructor()
-    {
-        $methodName = strtolower($this->getName());
-        if ($methodName === '__construct') {
-            return true;
-        }
-        $typeName = strtolower($this->_parent->getName());
-        if ($methodName === $typeName && !$this->_parent->hasMethod('__construct')) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * This method will return <b>true</b> when this class is the destructor
-     * of its parent class or interface, otherwise it will return <b>false</b>.
-     *
-     * @return boolean
-     */
-    public function isDestructor()
-    {
-        return (strtolower($this->getName()) === '__destruct');
-    }
-    
-    /**
      * Returns the parent type object or <b>null</b>
      *
      * @return PHP_Reflection_AST_ClassOrInterfaceI|null
