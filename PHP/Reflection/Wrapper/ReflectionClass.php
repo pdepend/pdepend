@@ -169,7 +169,7 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
     public function getFileName()
     {
         // Stupid: Breaks polymorphism :-(
-        if ($this->_class instanceof PHP_Reflection_AST_AbstractSourceElement) { 
+        if ($this->_class instanceof PHP_Reflection_AST_SourceElementI) { 
             return $this->_class->getSourceFile()->getFileName();
         }
         return false;
@@ -183,7 +183,7 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
     public function getStartLine()
     {
         // Stupid: Breaks polymorphism :-(
-        if ($this->_class instanceof PHP_Reflection_AST_AbstractSourceElement) { 
+        if ($this->_class instanceof PHP_Reflection_AST_SourceElementI) { 
             return $this->_class->getLine();
         }
         return false;
