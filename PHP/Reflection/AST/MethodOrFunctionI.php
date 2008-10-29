@@ -69,6 +69,14 @@ interface PHP_Reflection_AST_MethodOrFunctionI extends PHP_Reflection_AST_NodeI
      * @return array(mixed)
      */
     function getTokens();
+    
+    /**
+     * This method should return <b>true</b> when the context method or function
+     * returns a reference.
+     *
+     * @return boolean
+     */
+    function returnsReference();
 
     /**
      * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceI} objects this 

@@ -65,6 +65,38 @@ require_once 'PHP/Reflection/Wrapper/ReflectionMethod.php';
 class PHP_Reflection_Wrapper_ReflectionMethodTest extends PHP_Reflection_AbstractTest
 {
     /**
+     * Tests that the invoke() method throws an exception.
+     *
+     * @return void
+     */
+    public function testInvokeThrowsANotImplementedException()
+    {
+        $this->setExpectedException(
+            'ReflectionException',
+            'Method invoke() is not implemented.'
+        );
+        
+        $actual = $this->createMethod('invoke.php');
+        $actual->invoke($this);
+    }
+
+    /**
+     * Tests that the invokeArgs() method throws an exception.
+     *
+     * @return void
+     */
+    public function testInvokeArgsThrowsANotImplementedException()
+    {
+        $this->setExpectedException(
+            'ReflectionException',
+            'Method invokeArgs() is not implemented.'
+        );
+        
+        $actual = $this->createMethod('invoke_args.php');
+        $actual->invokeArgs($this);
+    }
+    
+    /**
      * Tests the compatibility of the isFinal() methods.
      *
      * @return void
@@ -357,6 +389,96 @@ class PHP_Reflection_Wrapper_ReflectionMethodTest extends PHP_Reflection_Abstrac
         
         $this->assertContains('This is a doc comment.', $expected->getDocComment());
         $this->assertEquals($expected->getDocComment(), $actual->getDocComment());
+    }
+    
+    /**
+     * Tests the compatibility of the returnsReference() method.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfTheReturnsReferenceMethodWithReference()
+    {
+        $expected = $this->createInternalMethod('returns_reference.php');
+        $actual   = $this->createMethod('returns_reference.php');
+        
+        $this->assertTrue($expected->returnsReference());
+        $this->assertTrue($actual->returnsReference());        
+    }
+    
+    /**
+     * Tests the compatibility of the returnsReference() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfTheReturnsReferenceMethodWithoutReference()
+    {
+        $expected = $this->createInternalMethod('returns_no_reference.php');
+        $actual   = $this->createMethod('returns_no_reference.php');
+        
+        $this->assertFalse($expected->returnsReference());
+        $this->assertFalse($actual->returnsReference());        
+    }
+    
+    /**
+     * Tests the compatibility of the getNumberOfParameters() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfTheGetNumberOfParametersMethodWithoutParameters()
+    {
+        $expected = $this->createInternalMethod('number_of_params_0.php');
+        $actual   = $this->createMethod('number_of_params_0.php');
+        
+        $this->assertEquals(0, $expected->getNumberOfParameters());
+        $this->assertEquals($expected->getNumberOfParameters(), $actual->getNumberOfParameters());
+    }
+    
+    /**
+     * Tests the compatibility of the getNumberOfParameters() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfTheGetNumberOfParametersMethodWithParameters()
+    {
+        $expected = $this->createInternalMethod('number_of_params_4.php');
+        $actual   = $this->createMethod('number_of_params_4.php');
+        
+        $this->assertEquals(4, $expected->getNumberOfParameters());
+        $this->assertEquals($expected->getNumberOfParameters(), $actual->getNumberOfParameters());
+    }
+    
+    /**
+     * Tests the compatiblity of the getNumberOfRequiredParameters() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfTheGetNumberOfRequiredParametersWithZero()
+    {
+        $expected = $this->createInternalMethod('number_of_required_params_0.php');
+        $actual   = $this->createMethod('number_of_required_params_0.php');
+        
+        $this->assertEquals(0, $expected->getNumberOfRequiredParameters());
+        $this->assertEquals(
+            $expected->getNumberOfRequiredParameters(),
+            $actual->getNumberOfRequiredParameters()
+        );
+    }
+    
+    /**
+     * Tests the compatiblity of the getNumberOfRequiredParameters() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfTheGetNumberOfRequiredParametersWithThree()
+    {
+        $expected = $this->createInternalMethod('number_of_required_params_3.php');
+        $actual   = $this->createMethod('number_of_required_params_3.php');
+        
+        $this->assertEquals(3, $expected->getNumberOfRequiredParameters());
+        $this->assertEquals(
+            $expected->getNumberOfRequiredParameters(),
+            $actual->getNumberOfRequiredParameters()
+        );
     }
     
     /**
