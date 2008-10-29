@@ -75,7 +75,6 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Packages.
      *
-     * @type integer
      * @var integer $_nop
      */
     private $_nop = 0;
@@ -83,7 +82,6 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Classes.
      *
-     * @type integer
      * @var integer $_noc
      */
     private $_noc = 0;
@@ -91,7 +89,6 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Interfaces.
      *
-     * @type integer 
      * @var integer $_noi
      */
     private $_noi = 0;
@@ -99,7 +96,6 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Methods.
      *
-     * @type integer
      * @var integer $_nom
      */
     private $_nom = 0;
@@ -107,7 +103,6 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Functions.
      *
-     * @type integer
      * @var integer $_nof
      */
     private $_nof = 0;
@@ -115,7 +110,6 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Collected node metrics
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
