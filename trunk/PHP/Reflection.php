@@ -69,7 +69,6 @@ class PHP_Reflection
     /**
      * List of source directories.
      *
-     * @type array<string>
      * @var array(string) $_directories
      */
     private $_directories = array();
@@ -77,7 +76,6 @@ class PHP_Reflection
     /**
      * List of php source files.
      *
-     * @type array<string>
      * @var array(string) $_files
      */
     private $_files = array();
@@ -85,7 +83,6 @@ class PHP_Reflection
     /**
      * List of allowed file extensions.
      *
-     * @type array<string>
      * @var array(string) $_extensions
      */
     private $_extensions = array('php');
@@ -93,7 +90,6 @@ class PHP_Reflection
     /**
      * List of paths to exclude.
      *
-     * @type array<string>
      * @var array(string) $_excludePaths
      */
     private $_excludePaths = array('.svn', 'CVS');
@@ -101,7 +97,6 @@ class PHP_Reflection
     /**
      * Should the parse ignore doc comment annotations?
      *
-     * @type boolean
      * @var boolean $_withoutAnnotations
      */
     private $_withoutAnnotations = false;

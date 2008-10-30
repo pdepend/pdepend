@@ -82,7 +82,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all analyzed packages.
      * 
-     * @type integer
      * @var integer $_pkgs
      */
     private $_pkgs = 0;
@@ -90,7 +89,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all analyzed functions.
      *
-     * @type integer
      * @var integer $_fcs
      */
     private $_fcs = 0;
@@ -98,7 +96,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all analyzer methods.
      *
-     * @type integer
      * @var integer $_mts
      */
     private $_mts = 0;
@@ -106,7 +103,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all analyzed classes.
      *
-     * @type integer
      * @var integer $_cls
      */
     private $_cls = 0;
@@ -114,15 +110,13 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all analyzed abstract classes.
      *
-     * @type integer
      * @var integer $_clsa
      */
     private $_clsa = 0;
     
     /**
      * Number of all analyzed interfaces.
-     *
-     * @type integer 
+     * 
      * @var integer $_interfs
      */
     private $_interfs = 0;
@@ -130,7 +124,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all root classes within the analyzed source code.
      *
-     * @type integer
      * @var integer $_roots
      */
     private $_roots = 0;
@@ -138,7 +131,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all leaf classes within the analyzed source code
      *
-     * @type integer
      * @var integer $_leafs
      */
     private $_leafs = 0;
@@ -146,7 +138,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
      *
-     * @type integer
      * @var integer $_maxDIT
      */
     private $_maxDIT = 0;
@@ -183,7 +174,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;

@@ -73,7 +73,6 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Number of processed items.
      *
-     * @type integer
      * @var integer $_count
      */
     private $_count = 0;

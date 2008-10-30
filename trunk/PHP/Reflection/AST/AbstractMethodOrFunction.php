@@ -107,7 +107,6 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     /**
      * List of method/function parameters.
      *
-     * @type array<PHP_Reflection_AST_Parameter>
      * @var array(PHP_Reflection_AST_Parameter) $_parameters
      */
     private $_parameters = array();

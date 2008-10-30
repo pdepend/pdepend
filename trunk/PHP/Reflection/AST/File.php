@@ -65,7 +65,6 @@ class PHP_Reflection_AST_File extends PHP_Reflection_AST_AbstractNode
     /**
      * The source file name/path.
      *
-     * @type string
      * @var string $_fileName
      */
     private $_fileName = null;
@@ -73,7 +72,6 @@ class PHP_Reflection_AST_File extends PHP_Reflection_AST_AbstractNode
     /**
      * Normalized code in this file.
      *
-     * @type string
      * @var string $_source
      */
     private $_source = null;
@@ -81,7 +79,6 @@ class PHP_Reflection_AST_File extends PHP_Reflection_AST_AbstractNode
     /**
      * The lines of code in this file.
      *
-     * @type array<string>
      * @var array(integer=>string) $_loc
      */
     private $_loc = null;
@@ -89,7 +86,6 @@ class PHP_Reflection_AST_File extends PHP_Reflection_AST_AbstractNode
     /**
      * The tokens for this file.
      *
-     * @type array<array>
      * @var array(array) $_tokens
      */
     private $_tokens = array();
@@ -97,7 +93,6 @@ class PHP_Reflection_AST_File extends PHP_Reflection_AST_AbstractNode
     /**
      * The comment for this type.
      *
-     * @type string
      * @var string $_docComment
      */
     private $_docComment = null;

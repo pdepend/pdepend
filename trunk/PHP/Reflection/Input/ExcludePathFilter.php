@@ -66,7 +66,6 @@ class PHP_Reflection_Input_ExcludePathFilter
     /**
      * Regular expression that should not match against the file path.
      *
-     * @type string
      * @var string $regexp
      */
     protected $regexp = '';
