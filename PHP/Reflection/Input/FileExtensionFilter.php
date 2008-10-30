@@ -66,7 +66,6 @@ class PHP_Reflection_Input_FileExtensionFilter
     /**
      * Whitelist of accepted file extensions.
      *
-     * @type array<string>
      * @var array(string) $extensions
      */
     protected $extensions = array();

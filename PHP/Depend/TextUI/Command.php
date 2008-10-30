@@ -77,7 +77,6 @@ class PHP_Depend_TextUI_Command
     /**
      * Collected log options.
      *
-     * @type array<string>
      * @var array(string=>string) $_logOptions
      */
     private $_logOptions = null;
@@ -85,7 +84,6 @@ class PHP_Depend_TextUI_Command
     /**
      * Collected analyzer options.
      *
-     * @type array<string>
      * @var array(string=>string) $_analyzerOptions
      */
     private $_analyzerOptions = null;
@@ -93,7 +91,6 @@ class PHP_Depend_TextUI_Command
     /**
      * The recieved cli options
      *
-     * @type array<mixed>
      * @var array(string=>mixed) $_options
      */
     private $_options = array();
@@ -101,7 +98,6 @@ class PHP_Depend_TextUI_Command
     /**
      * The used text ui runner.
      *
-     * @type PHP_Depend_TextUI_Runner
      * @var PHP_Depend_TextUI_Runner $_runner
      */
     private $_runner = null;
