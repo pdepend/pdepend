@@ -72,7 +72,6 @@ class PHP_Depend
     /**
      * List of source directories.
      *
-     * @type array<string>
      * @var array(string) $directories
      */
     protected $directories = array();
@@ -80,7 +79,6 @@ class PHP_Depend
     /**
      * The used code node builder.
      *
-     * @type PHP_Reflection_BuilderI
      * @var PHP_Reflection_BuilderI $nodeBuilder
      */
     protected $nodeBuilder = null;
@@ -88,7 +86,6 @@ class PHP_Depend
     /**
      * Generated {@link PHP_Reflection_AST_Package} objects.
      *
-     * @type Iterator
      * @var Iterator $packages
      */
     protected $packages = null;
@@ -96,7 +93,6 @@ class PHP_Depend
     /**
      * List of all registered {@link PHP_Depend_Log_LoggerI} instances.
      *
-     * @type array<PHP_Depend_Log_LoggerI>
      * @var array(PHP_Depend_Log_LoggerI) $loggers
      */
     protected $loggers = array();
@@ -118,7 +114,6 @@ class PHP_Depend
     /**
      * A composite filter for input files.
      *
-     * @type PHP_Depend_Util_CompositeFilter
      * @var PHP_Depend_Util_CompositeFilter $_fileFilter
      */
     private $_fileFilter = null;
@@ -126,7 +121,6 @@ class PHP_Depend
     /**
      * A composite filter for source packages.
      *
-     * @type PHP_Reflection_AST_Iterator_CompositeFilter
      * @var PHP_Reflection_AST_Iterator_CompositeFilter $_codeFilter
      */
     private $_codeFilter = null;
@@ -134,7 +128,6 @@ class PHP_Depend
     /**
      * Should the parse ignore doc comment annotations?
      *
-     * @type boolean
      * @var boolean $_withoutAnnotations
      */
     private $_withoutAnnotations = false;
@@ -142,7 +135,6 @@ class PHP_Depend
     /**
      * Should PHP_Depend treat <b>+unknown</b> as a regular project package?
      *
-     * @type boolean
      * @var boolean $_supportBadDocumentation
      */
     private $_supportBadDocumentation = false;
@@ -150,7 +142,6 @@ class PHP_Depend
     /**
      * List or registered listeners.
      *
-     * @type array<PHP_Depend_ProcessListenerI>
      * @var array(PHP_Depend_ProcessListenerI) $_listeners
      */
     private $_listeners = array();
@@ -158,7 +149,6 @@ class PHP_Depend
     /**
      * List of analyzer options.
      *
-     * @type array<mixed>
      * @var array(string=>mixed) $_options
      */
     private $_options = array();

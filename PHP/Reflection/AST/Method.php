@@ -75,7 +75,6 @@ class PHP_Reflection_AST_Method
     /**
      * Method position within its parent class or interface.
      *
-     * @type integer
      * @var integer $_position
      */
     private $_position = 0;

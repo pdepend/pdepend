@@ -65,7 +65,6 @@ class PHP_Reflection_Input_FileFilterIterator extends FilterIterator
     /**
      * The associated filter object.
      *
-     * @type PHP_Reflection_Input_FileFilterI
      * @var PHP_Reflection_Input_FileFilterI $filter
      */
     protected $filter = null;

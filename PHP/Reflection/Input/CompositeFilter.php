@@ -67,7 +67,6 @@ class PHP_Reflection_Input_CompositeFilter
     /**
      * List of aggregated {@link PHP_Reflection_Input_FileFilterI} objects.
      *
-     * @type array<PHP_Reflection_Input_FileFilterI>
      * @var array(PHP_Reflection_Input_FileFilterI) $filters.
      */
     protected $filters = array();

@@ -67,15 +67,13 @@ class PHP_Reflection_AST_Iterator implements Iterator, Countable
     /**
      * List of {@link PHP_Reflection_AST_NodeI} objects in this iterator.
      *
-     * @type array<PHP_Reflection_AST_NodeI>
      * @var array(PHP_Reflection_AST_NodeI) $_nodes
      */
     private $_nodes = array();
     
     /**
      * The global filter instance.
-     * 
-     * @type PHP_Reflection_AST_Iterator_CompositeFilter
+     *
      * @var PHP_Reflection_AST_Iterator_CompositeFilter $_filter
      */
     private $_filter = null;
