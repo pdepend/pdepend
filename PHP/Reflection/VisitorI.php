@@ -216,4 +216,13 @@ interface PHP_Reflection_VisitorI
      * @return void
      */
     function visitValue(PHP_Reflection_AST_MemberValueI $value);
+    
+    /**
+     * Visits a block node.
+     *
+     * @param PHP_Reflection_AST_BlockI $block The block instance.
+     * 
+     * @return void
+     */
+    function visitBlock(PHP_Reflection_AST_BlockI $block);
 }

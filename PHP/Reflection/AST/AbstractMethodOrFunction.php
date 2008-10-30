@@ -85,9 +85,9 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      * List of {@link PHP_Reflection_AST_AbstractClassOrInterface} objects this function
      * depends on.
      *
-     * @var array(PHP_Reflection_AST_AbstractClassOrInterface) $dependencies
+     * @var array(PHP_Reflection_AST_AbstractClassOrInterface) $_dependencies
      */
-    protected $dependencies = array();
+    private $_dependencies = array();
 
     /**
      * The return type for this callable. By default and for scalar types this
@@ -165,7 +165,7 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      */
     public function getDependencies()
     {
-        $dependencies = $this->dependencies;
+        $dependencies = $this->_dependencies;
         foreach ($this->_parameters as $parameter) {
             // Skip all scalar parameters
             if (($type = $parameter->getType()) === null) {
@@ -190,8 +190,8 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      */
     public function addDependency(PHP_Reflection_AST_ClassOrInterfaceI $type)
     {
-        if (in_array($type, $this->dependencies, true) === false) {
-            $this->dependencies[] = $type;
+        if (in_array($type, $this->_dependencies, true) === false) {
+            $this->_dependencies[] = $type;
         }
     }
 
@@ -205,9 +205,9 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      */
     public function removeDependency(PHP_Reflection_AST_ClassOrInterfaceI $type)
     {
-        if (($i = array_search($type, $this->dependencies, true)) !== false) {
+        if (($i = array_search($type, $this->_dependencies, true)) !== false) {
             // Remove from internal list
-            unset($this->dependencies[$i]);
+            unset($this->_dependencies[$i]);
         }
     }
 

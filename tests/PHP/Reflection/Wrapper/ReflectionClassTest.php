@@ -62,6 +62,29 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  */
 class PHP_Reflection_Wrapper_ReflectionClassTest extends PHP_Reflection_AbstractTest
 {
+    /**
+     * Tests the compatiblity of the getMethods() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfGetMethodsNotFiltered()
+    {
+        $expected = $this->createInternalClass('methods_not_filtered.php');
+        $actual   = $this->createClass('methods_not_filtered.php');
+        
+        $expectedMethods = $expected->getMethods();
+        $actualMethods   = $actual->getMethods();
+        
+        $this->assertEquals(1, count($expectedMethods));
+        $this->assertEquals(1, count($actualMethods));
+        $this->assertEquals($expectedMethods[0]->getName(), $actualMethods[0]->getName());
+    }
+    
+    /**
+     * Tests the compatiblity of the getMethods() methods.
+     *
+     * @return void
+     */
     public function testCompatibilityOfGetMethodsFilteredByPublicAndStatic()
     {
         $expected = $this->createInternalClass('methods_filtered_public_static.php');
@@ -72,6 +95,58 @@ class PHP_Reflection_Wrapper_ReflectionClassTest extends PHP_Reflection_Abstract
         
         $this->assertEquals(3, count($expectedMethods));
         $this->assertEquals(3, count($actualMethods));
+    }
+
+    /**
+     * Tests the compatiblity of the getMethods() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfGetMethodsFilteredByFinal()
+    {
+        $expected = $this->createInternalClass('methods_filtered_final.php');
+        $actual   = $this->createClass('methods_filtered_final.php');
+        
+        $expectedMethods = $expected->getMethods(ReflectionMethod::IS_FINAL);
+        $actualMethods   = $actual->getMethods(ReflectionMethod::IS_FINAL);
+        
+        $this->assertEquals(1, count($expectedMethods));
+        $this->assertEquals(1, count($actualMethods));
+        $this->assertEquals($expectedMethods[0]->getName(), $actualMethods[0]->getName());
+    }
+    
+    /**
+     * Tests the compatibility of the hasMethod() methods.
+     *
+     * @return void
+     */
+    public function testCompatiblityOfHasMethodWithInheritedMethod()
+    {
+        $expected = $this->createInternalClass('has_method_with_inheritance.php');
+        $actual   = $this->createClass('has_method_with_inheritance.php');
+        
+        $this->assertTrue($expected->hasMethod('current'));
+        $this->assertTrue($actual->hasMethod('current'));
+
+        $this->assertFalse($expected->hasMethod('foobar'));
+        $this->assertFalse($actual->hasMethod('foobar'));
+    }
+    
+    /**
+     * Tests the compatibility of the hasMethod() methods.
+     *
+     * @return void
+     */
+    public function testCompatibilityOfHasMethodWithInheritedInterfaceMethods()
+    {
+        $expected = $this->createInternalClass('has_method_with_interface_inheritance.php');
+        $actual   = $this->createClass('has_method_with_interface_inheritance.php');
+        
+        $this->assertTrue($expected->hasMethod('current'));
+        $this->assertTrue($actual->hasMethod('current'));
+
+        $this->assertFalse($expected->hasMethod('foobar'));
+        $this->assertFalse($actual->hasMethod('foobar'));
     }
     
     /**
