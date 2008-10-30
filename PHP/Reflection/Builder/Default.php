@@ -51,7 +51,6 @@ require_once 'PHP/Reflection/ConstantsI.php';
 require_once 'PHP/Reflection/InternalTypes.php';
 require_once 'PHP/Reflection/AST/ArrayExpression.php';
 require_once 'PHP/Reflection/AST/ArrayElement.php';
-require_once 'PHP/Reflection/AST/CatchStatement.php';
 require_once 'PHP/Reflection/AST/Class.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceConstant.php';
 require_once 'PHP/Reflection/AST/ClassOrInterfaceConstantValue.php';
@@ -304,7 +303,24 @@ class PHP_Reflection_Builder_Default
             
             // Append to class package
             $this->buildPackage($packageName)->addType($class);
+        
+            // Check for internal type
+            // FIXME: This is not the best solution 
+            $internals = PHP_Reflection_InternalTypes::getInstance();
+            if ($internals->isInternal($class->getName())) {
+                // Create real reflection and build method
+                $reflection = new ReflectionClass($class->getName());
+                // Append all methods
+                foreach ($reflection->getMethods() as $refMethod) {
+                    $method = $this->buildMethod($refMethod->getName());
+                    $method->setModifiers($refMethod->getModifiers());
+                    $method->setDocComment($refMethod->getDocComment());
+                    
+                    $class->addMethod($method);
+                }
+            }
         }
+        
         return $class;
     }
     
@@ -420,6 +436,22 @@ class PHP_Reflection_Builder_Default
             
             // Append interface to package
             $this->buildPackage($packageName)->addType($interface);
+        
+            // Check for internal type
+            // FIXME: This is not the best solution 
+            $internals = PHP_Reflection_InternalTypes::getInstance();
+            if ($internals->isInternal($interface->getName())) {
+                // Create real reflection and build method
+                $reflection = new ReflectionClass($interface->getName());
+                // Append all methods
+                foreach ($reflection->getMethods() as $refMethod) {
+                    $method = $this->buildMethod($refMethod->getName());
+                    $method->setModifiers($refMethod->getModifiers());
+                    $method->setDocComment($refMethod->getDocComment());
+                    
+                    $interface->addMethod($method);
+                }
+            }
         }
         
         return $interface;
@@ -519,12 +551,30 @@ class PHP_Reflection_Builder_Default
     
     /**
      * Builds a new catch statement instance.
+     * 
+     * @param integer $line The line number of this catch statement.
      *
      * @return PHP_Reflection_AST_CatchStatement
      */
-    public function buildCatchStatement()
+    public function buildCatchStatement($line)
     {
-        return new PHP_Reflection_AST_CatchStatement();
+        include_once 'PHP/Reflection/AST/CatchStatement.php';
+        
+        return new PHP_Reflection_AST_CatchStatement($line);
+    }
+    
+    /**
+     * Builds a new code block instance.
+     *
+     * @param integer $line The line number of this block.
+     * 
+     * @return PHP_Reflection_AST_Block
+     */
+    public function buildBlock($line)
+    {
+        include_once 'PHP/Reflection/AST/Block.php';
+        
+        return new PHP_Reflection_AST_Block($line);
     }
     
     /**

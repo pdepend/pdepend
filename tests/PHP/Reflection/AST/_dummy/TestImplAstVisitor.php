@@ -330,4 +330,16 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     {
         // TODO Implement this empty stub.
     }
+    
+    /**
+     * Visits a block node.
+     *
+     * @param PHP_Reflection_AST_BlockI $block The block instance.
+     * 
+     * @return void
+     */
+    public function visitBlock(PHP_Reflection_AST_BlockI $block)
+    {
+        // TODO Implement this empty stub.
+    }
 }

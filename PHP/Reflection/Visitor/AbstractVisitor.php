@@ -275,13 +275,13 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a class constant node. 
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
+     * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const
      * The current constant node.
      * 
      * @return void
      */
     public function visitTypeConstant(
-                        PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
+                        PHP_Reflection_AST_ClassOrInterfaceConstant $const)
     {
         $this->fireStartTypeConstant($const);
         
@@ -377,6 +377,20 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
         // TODO Implement fireStartValue()
 
         // TODO Implement fireEndValue()
+    }
+    
+    /**
+     * Visits a block node.
+     *
+     * @param PHP_Reflection_AST_BlockI $block The block instance.
+     * 
+     * @return void
+     */
+    public function visitBlock(PHP_Reflection_AST_BlockI $block)
+    {
+        // TODO Implement fireStartBlock()
+
+        // TODO Implement fireEndBlock()
     }
     
     /**
