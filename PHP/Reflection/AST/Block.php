@@ -46,10 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/SourceElementI.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
+require_once 'PHP/Reflection/AST/BlockI.php';
 
 /**
- * Base interface for functions and classes.
+ * This class represents a generic code block.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,57 +61,53 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_MethodOrFunctionI 
-    extends PHP_Reflection_AST_SourceElementI
+class PHP_Reflection_AST_Block 
+       extends PHP_Reflection_AST_AbstractSourceElement
+    implements PHP_Reflection_AST_BlockI
 {
-
     /**
-     * Returns the tokens found in the function body.
-     *
-     * @return array(mixed)
+     * The name if this node type.
      */
-    function getTokens();
+    const NODE_NAME = '#block';
     
     /**
-     * This method should return <b>true</b> when the context method or function
-     * returns a reference.
+     * Source elements within this block.
      *
-     * @return boolean
+     * @var array(PHP_Reflection_AST_SourceElementI) $_sourceElements
      */
-    function returnsReference();
-
+    private $_sourceElements = array();
+    
     /**
-     * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceI} objects this 
-     * function depends on.
+     * Constructs a new code block instance.
      *
-     * @return PHP_Reflection_AST_Iterator
+     * @param integer $line The line where this code block starts.
      */
-    function getDependencies();
-
+    public function __construct($line)
+    {
+        parent::__construct(self::NODE_NAME, $line);
+    }
+    
     /**
-     * Returns the return type of this callable. By default and for scalar types
-     * this will be <b>null</b>.
+     * Adds the given source element to this block.
      *
-     * @return PHP_Reflection_AST_ClassOrInterfaceI
+     * @param PHP_Reflection_AST_SourceElementI $element The source element.
+     * 
+     * @return void
      */
-    function getReturnType();
-
+    public function addSourceElement(PHP_Reflection_AST_SourceElementI $element)
+    {
+        $this->_sourceElements[] = $element;
+    }
+    
     /**
-     * Returns an iterator with {@link PHP_Reflection_AST_ClassOrInterfaceI}
-     * nodes thrown by this function or method.
+     * Visitor method for node tree traversal.
      *
-     * @return PHP_Reflection_AST_Iterator
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     * 
+     * @return void
      */
-    function getExceptionTypes();
-
-    /**
-     * Returns an iterator with all method/function parameters.
-     *
-     * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
-     * nodes. Use the {@link PHP_Reflection_AST_Parameter::getPosition()} for
-     * the correct parameter position.
-     *
-     * @return PHP_Reflection_AST_Iterator
-     */
-    function getParameters();
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        $visitor->visitBlock($this);
+    }
 }

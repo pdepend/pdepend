@@ -105,9 +105,9 @@ class PHP_Reflection_Parser
      * The package defined in the file level comment.
      *
      * @type string
-     * @var string $globalPackage
+     * @var string $_globalPackage
      */
-    protected $globalPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
+    private $_globalPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
     
     /**
      * The last doc comment block.
@@ -263,10 +263,10 @@ class PHP_Reflection_Parser
                     $this->_package = $this->parsePackage($token[1]);
                     
                     // Check for doc level comment
-                    if ($this->globalPackage === PHP_Reflection_BuilderI::PKG_UNKNOWN 
+                    if ($this->_globalPackage === PHP_Reflection_BuilderI::PKG_UNKNOWN 
                      && $this->isFileComment() === true) {
     
-                        $this->globalPackage = $this->_package;
+                        $this->_globalPackage = $this->_package;
                         
                         $this->tokenizer->getSourceFile()->setDocComment($token[1]);
                     }
@@ -291,7 +291,7 @@ class PHP_Reflection_Parser
             }
             
             // Reset global package and type position
-            $this->globalPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
+            $this->_globalPackage = PHP_Reflection_BuilderI::PKG_UNKNOWN;
             $this->_typePosition = 0;
         }
     }
@@ -324,7 +324,7 @@ class PHP_Reflection_Parser
         $token    = $this->_consumeToken(self::T_STRING, $tokens);
         $function = $this->builder->buildFunction($token[1], $token[2]);
             
-        $package = $this->globalPackage;
+        $package = $this->_globalPackage;
         if ($this->_package !== PHP_Reflection_BuilderI::PKG_UNKNOWN) {
             $package = $this->_package;
         }
@@ -1269,8 +1269,7 @@ class PHP_Reflection_Parser
      */
     private function _parseCatchStatement(array &$tokens)
     {
-        // FIXME: Comment the following statement in, when callable is clean      
-        $this->_consumeToken(self::T_CATCH, $tokens);
+        $token = $this->_consumeToken(self::T_CATCH, $tokens);
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
         
         $identifier = $this->_parseStaticQualifiedIdentifier($tokens);
@@ -1279,10 +1278,71 @@ class PHP_Reflection_Parser
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
         
         $exception = $this->builder->buildClassOrInterfaceProxy($identifier);
-        $statement = $this->builder->buildCatchStatement();
+        $statement = $this->builder->buildCatchStatement($token[2]);
         $statement->setReference($exception);
         
+        $this->_parseBlock($tokens);
+        
         return $statement;
+    }
+    
+    /**
+     * This method parses a single code block encapsulated by '{' and '}' 
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     * 
+     * @return PHP_Reflection_AST_Block
+     */
+    private function _parseBlock(array &$tokens)
+    {
+        $token = $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+        $block = $this->builder->buildBlock($token[2]);
+        
+        while ($this->tokenizer->peek() !== self::T_EOF) {
+
+            switch ($this->tokenizer->peek()) {
+                
+            case self::T_FUNCTION:
+                $block->addSourceElement($this->_parseFunctionOrClosure($tokens));
+                break;
+                
+            case self::T_CURLY_BRACE_OPEN:
+                $block->addSourceElement($this->_parseBlock($tokens));
+                break;
+                
+            case self::T_CATCH:
+                $block->addSourceElement($this->_parseCatchStatement($tokens));
+                break;
+                
+//            case self::T_NEW:
+//                break;
+
+            case self::T_CURLY_BRACE_CLOSE:
+                break 2;
+
+            default:
+                // TODO: We should throw an exception here
+                $tokens[] = $this->tokenizer->next();
+                $this->_consumeComments($tokens);
+                break;
+            }
+        }
+        
+        $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
+        
+        return $block;
+    }
+    
+    /**
+     * Parses a function or closure declaration. 
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     * 
+     * @return PHP_Reflection_AST_AbstractMethodOrFunction
+     */
+    private function _parseFunctionOrClosure(array &$tokens)
+    {
+        
     }
     
     /**

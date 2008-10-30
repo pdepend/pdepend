@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/NodeI.php';
+require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
  * This interface represents an exception catch statement. 
@@ -60,7 +60,8 @@ require_once 'PHP/Reflection/AST/NodeI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_CatchStatementI extends PHP_Reflection_AST_NodeI
+interface PHP_Reflection_AST_CatchStatementI
+    extends PHP_Reflection_AST_SourceElementI
 {
     /**
      * Returns the referenced exception class or interface.
