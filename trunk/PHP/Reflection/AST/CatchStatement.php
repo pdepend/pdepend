@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractNode.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/CatchStatementI.php';
 
 /**
@@ -62,7 +62,7 @@ require_once 'PHP/Reflection/AST/CatchStatementI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_CatchStatement
-       extends PHP_Reflection_AST_AbstractNode
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_CatchStatementI
 {
     /**
@@ -78,11 +78,13 @@ class PHP_Reflection_AST_CatchStatement
     private $_reference = null;
     
     /**
-     * COnstructs a new catch statement node.
+     * Constructs a new catch statement node.
+     * 
+     * @param integer $line The line number of this catch statement.
      */
-    public function __construct()
+    public function __construct($line)
     {
-        parent::__construct(self::NODE_NAME);
+        parent::__construct(self::NODE_NAME, $line);
     }
     /**
      * Returns the referenced exception class or interface.

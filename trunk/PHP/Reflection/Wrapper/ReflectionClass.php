@@ -129,7 +129,13 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
      */
     public function hasConstant($name)
     {
-        // FIXME: Implement this method
+        $constantName = strtolower($name);
+        foreach ($this->_class->getConstants() as $constant) {
+            if (strtolower($constant->getName()) === $constantName) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
@@ -141,8 +147,9 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
      */
     public function hasMethod($name)
     {
-        foreach ($this->_class->getMethods() as $method) {
-            if (strtolower($name) === strtolower($method->getName())) {
+        $methodName = strtolower($name);
+        foreach ($this->getMethods() as $method) {
+            if (strtolower($method->getName()) === $methodName) {
                 return true;
             }
         }
@@ -270,7 +277,7 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
     {
         $methods = array();
         foreach ($this->_class->getMethods() as $method) {
-            if (($method->getModifiers() & $filter) === 0) {
+            if ($filter !== 0 && ($method->getModifiers() & $filter) === 0) {
                 continue;
             }
             $name = strtolower($method->getName());
@@ -301,7 +308,7 @@ class PHP_Reflection_Wrapper_ReflectionClass extends ReflectionClass
                 $methods[$name] = $method;
             }
         }
-        return $methods;
+        return array_values($methods);
     }
     
     /**

@@ -211,10 +211,21 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     
     /**
      * Builds a new catch statement instance.
+     * 
+     * @param integer $line The line number of this catch statement.
      *
      * @return PHP_Reflection_AST_CatchStatement
      */
-    function buildCatchStatement();
+    function buildCatchStatement($line);
+    
+    /**
+     * Builds a new code block instance.
+     *
+     * @param integer $line The line number of this block.
+     * 
+     * @return PHP_Reflection_AST_Block
+     */
+    function buildBlock($line);
     
     /**
      * Builds a new array value instance.
