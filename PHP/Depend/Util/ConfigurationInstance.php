@@ -63,7 +63,6 @@ class PHP_Depend_Util_ConfigurationInstance
     /**
      * The unique configuration instance.
      *
-     * @type PHP_Depend_Util_Configuration
      * @var PHP_Depend_Util_Configuration 
      */
     private static $_configuration = null;
