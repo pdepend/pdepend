@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -53,21 +53,21 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This analyzer collects different lines of code metrics.
- * 
+ *
  * It collects the total Lines Of Code(<b>loc</b>), the None Comment Lines Of
  * Code(<b>ncloc</b>), the Comment Lines Of Code(<b>cloc</b>) and a approximated
- * Executable Lines Of Code(<b>eloc</b>) for files, classes, interfaces, 
+ * Executable Lines Of Code(<b>eloc</b>) for files, classes, interfaces,
  * methods, properties and function.
- * 
- * The current implementation has a limitation, that affects inline comments. 
+ *
+ * The current implementation has a limitation, that affects inline comments.
  * The following code will suppress one line of code.
- * 
+ *
  * <code>
  * function foo() {
  *     foobar(); // Bad behaviour...
  * }
  * </code>
- * 
+ *
  * The same rule applies to class methods. mapi, <b>PLEASE, FIX THIS ISSUE.</b>
  *
  * @category   QualityAssurance
@@ -91,7 +91,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
-    
+
     /**
      * Collected project metrics.
      *
@@ -103,12 +103,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         'eloc'   =>  0,
         'ncloc'  =>  0
     );
-    
+
     /**
-     * This method will return an <b>array</b> with all generated metric values 
-     * for the given <b>$node</b> instance. If there are no metrics for the 
+     * This method will return an <b>array</b> with all generated metric values
+     * for the given <b>$node</b> instance. If there are no metrics for the
      * requested node, this method will return an empty <b>array</b>.
-     * 
+     *
      * <code>
      * array(
      *     'loc'    =>  23,
@@ -119,7 +119,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * </code>
      *
      * @param PHP_Reflection_AST_NodeI $node The context node instance.
-     * 
+     *
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(PHP_Reflection_AST_NodeI $node)
@@ -130,10 +130,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         }
         return $metrics;
     }
-    
+
     /**
      * Provides the project summary as an <b>array</b>.
-     * 
+     *
      * <code>
      * array(
      *     'loc'    =>  23,
@@ -148,52 +148,52 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     {
         return $this->_projectMetrics;
     }
-    
+
     /**
      * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
      * @param PHP_Reflection_AST_Iterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Reflection_AST_Iterator $packages)
     {
         // Check for previous run
         if ($this->_nodeMetrics === null) {
-            
+
             $this->fireStartAnalyzer();
-            
+
             // Init node metrics
             $this->_nodeMetrics = array();
-            
+
             // Process all packages
             foreach ($packages as $package) {
                 $package->accept($this);
             }
-            
+
             $this->fireEndAnalyzer();
         }
     }
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Reflection_AST_ClassI $class The current class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->fireStartClass($class);
-        
+
         $class->getSourceFile()->accept($this);
-        
+
         list($cloc, $eloc) = $this->_linesOfCode($class->getTokens());
-        
+
         $loc   = $class->getEndLine() - $class->getLine() + 1;
         $ncloc = $loc - $cloc;
-        
+
         $this->_nodeMetrics[$class->getUUID()] = array(
             'loc'    =>  $loc,
             'cloc'   =>  $cloc,
@@ -210,15 +210,15 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         foreach ($class->getConstants() as $constant) {
             $constant->accept($this);
         }
-        
+
         $this->fireEndClass($class);
     }
-    
+
     /**
-     * Visits a file node. 
+     * Visits a file node.
      *
      * @param PHP_Reflection_AST_File $file The current file node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitFile()
      */
@@ -233,11 +233,11 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         if (isset($this->_nodeMetrics[$uuid])) {
             return;
         }
-        
+
         $this->fireStartFile($file);
-        
+
         list($cloc, $eloc) = $this->_linesOfCode($file->getTokens());
-                
+
         $loc   = count($file->getLoc());
         $ncloc = $loc - $cloc;
 
@@ -247,61 +247,61 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             'eloc'   =>  $eloc,
             'ncloc'  =>  $ncloc
         );
-        
+
         // Update project metrics
         $this->_projectMetrics['loc']   += $loc;
         $this->_projectMetrics['cloc']  += $cloc;
         $this->_projectMetrics['eloc']  += $eloc;
         $this->_projectMetrics['ncloc'] += $ncloc;
-        
+
         $this->fireEndFile($file);
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Reflection_AST_Function $function The current function node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitFunction()
      */
     public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         $this->fireStartFunction($function);
-        
+
         $function->getSourceFile()->accept($this);
-        
+
         list($cloc, $eloc) = $this->_linesOfCode($function->getTokens());
-        
+
         $loc   = $function->getEndLine() - $function->getLine() + 1;
         $ncloc = $loc - $cloc;
-        
+
         $this->_nodeMetrics[$function->getUUID()] = array(
             'loc'    =>  $loc,
             'cloc'   =>  $cloc,
             'eloc'   =>  $eloc,
             'ncloc'  =>  $ncloc
         );
-        
+
         $this->fireEndFunction($function);
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitInterface()
      */
     public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->fireStartInterface($interface);
-        
+
         $interface->getSourceFile()->accept($this);
-        
+
         list($cloc, $eloc) = $this->_linesOfCode($interface->getTokens());
-        
+
         $loc   = $interface->getEndLine() - $interface->getLine() + 1;
         $ncloc = $loc - $cloc;
 
@@ -311,34 +311,34 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             'eloc'   =>  $eloc,
             'ncloc'  =>  $ncloc
         );
-        
+
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
         foreach ($interface->getConstants() as $constant) {
             $constant->accept($this);
         }
-        
+
         $this->fireEndInterface($interface);
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Reflection_AST_MethodI $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitMethod()
      */
     public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->fireStartMethod($method);
-        
+
         list($cloc, $eloc) = $this->_linesOfCode($method->getTokens());
-        
+
         $loc   = $method->getEndLine() - $method->getLine() + 1;
         $ncloc = $loc - $cloc;
-        
+
         $this->_nodeMetrics[$method->getUUID()] = array(
             'loc'    =>  $loc,
             'cloc'   =>  $cloc,
@@ -348,19 +348,19 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $this->fireEndMethod($method);
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Reflection_AST_Property $property The property class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitProperty()
      */
     public function visitProperty(PHP_Reflection_AST_Property $property)
     {
         $this->fireStartProperty($property);
-        
+
         $this->_nodeMetrics[$property->getUUID()] = array(
             'loc'    =>  1,
             'cloc'   =>  0,
@@ -370,35 +370,35 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $this->fireEndProperty($property);
     }
-    
+
     /**
-     * Visits a class constant node. 
+     * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant The current constant node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitTypeConstant()
      */
     public function visitTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
     {
         $this->fireStartTypeConstant($constant);
-                
+
         $this->_nodeMetrics[$constant->getUUID()] = array(
             'loc'    =>  1,
             'cloc'   =>  0,
             'eloc'   =>  0,
             'ncloc'  =>  1
         );
-        
+
         $this->fireEndTypeConstant($constant);
     }
-    
+
     /**
      * Counts the Comment Lines Of Code (CLOC) and a pseudo Executable Lines Of
-     * Code (ELOC) values. 
-     * 
+     * Code (ELOC) values.
+     *
      * ELOC = Non Whitespace Lines + Non Comment Lines
-     * 
+     *
      * <code>
      * array(
      *     0  =>  23,  // Comment Lines Of Code
@@ -407,7 +407,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * </code>
      *
      * @param array(array) $tokens The raw token stream.
-     * 
+     *
      * @return array(integer)
      */
     private function _linesOfCode(array $tokens)
@@ -419,10 +419,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             PHP_Reflection_TokenizerI::T_COMMENT,
             PHP_Reflection_TokenizerI::T_DOC_COMMENT
         );
-        
+
         foreach ($tokens as $token) {
             $lines = count(explode("\n", trim($token[1])));
-            
+
             if (in_array($token[0], $comment) === true) {
                 for ($i = 0; $i < $lines; ++$i) {
                     $clines[$token[2] + $i] = true;

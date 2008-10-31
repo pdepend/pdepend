@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,10 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/SourceElementI.php';
+require_once 'PHP/Reflection/AST/AbstractCallable.php';
+require_once 'PHP/Reflection/AST/ClosureI.php';
 
 /**
- * This interface represents an <b>instanceof</b> node in the source code.
+ * This class represents a closure node.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,7 +61,74 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_InstanceOfExpressionI
-    extends PHP_Reflection_AST_SourceElementI
+class PHP_Reflection_AST_Closure
+       extends PHP_Reflection_AST_AbstractCallable
+    implements PHP_Reflection_AST_ClosureI
 {
+    /**
+     * The node type identifier.
+     */
+    const NODE_NAME = '#closure';
+    
+    /**
+     * Defined modifiers for this closure.
+     *
+     * @var integer $_modifiers
+     */
+    private $_modifiers = 0;
+    
+    /**
+     * Constructs a new closure instance.
+     *
+     * @param integer $line The line number of the closure. 
+     */
+    public function __construct($line)
+    {
+        parent::__construct(self::NODE_NAME, $line);
+    }
+    
+    /**
+     * Returns the modifiers of this closure.
+     *
+     * @return integer
+     */
+    public function getModifiers()
+    {
+        return $this->_modifiers;
+    }
+    
+    /**
+     * Sets the modifiers of this closure.
+     *
+     * @param integer $modifiers Closure modifiers.
+     * 
+     * @return void
+     */
+    public function setModifiers($modifiers)
+    {
+        $this->_modifiers = (int) $modifiers;
+    }
+    
+    /**
+     * This method will return <b>true</b> when this closure is declared as 
+     * static.
+     *
+     * @return boolean
+     */
+    public function isStatic()
+    {
+        return ((self::IS_STATIC & $this->_modifiers) === self::IS_STATIC);
+    }
+
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     * 
+     * @return void
+     */
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        $visitor->visitClosure($this);
+    }
 }

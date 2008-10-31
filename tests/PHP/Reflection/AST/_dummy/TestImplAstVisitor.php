@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -69,7 +69,7 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @var PHP_Reflection_AST_Class $class
      */
     public $class = null;
-    
+
     /**
      * The last visited interface instance.
      *
@@ -77,14 +77,14 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @var PHP_Reflection_AST_Interface $interface
      */
     public $interface = null;
-    
+
     /**
      * The last visited method instance.
      *
      * @var PHP_Reflection_AST_MethodI $method
      */
     public $method = null;
-    
+
     /**
      * The last visited package instance.
      *
@@ -92,7 +92,7 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @var PHP_Reflection_AST_Package $method
      */
     public $package = null;
-    
+
     /**
      * The last visited parameter instance.
      *
@@ -100,7 +100,7 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @var PHP_Reflection_AST_Parameter $parameter
      */
     public $parameter = null;
-    
+
     /**
      * The last visited property instance.
      *
@@ -108,7 +108,7 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @var PHP_Reflection_AST_Property $property
      */
     public $property = null;
-    
+
     /**
      * The last visited function instance.
      *
@@ -116,7 +116,7 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @var PHP_Reflection_AST_Function $method
      */
     public $function = null;
-    
+
     /**
      * The last visited type constant instance.
      *
@@ -124,94 +124,94 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @var PHP_Reflection_AST_ClassOrInterfaceConstant $typeConstant
      */
     public $typeConstant = null;
-    
+
     /**
      * Adds a new listener to this node visitor.
      *
      * @param PHP_Reflection_Visitor_ListenerI $listener The new visit listener.
-     * 
+     *
      * @return void
      */
     public function addVisitListener(PHP_Reflection_Visitor_ListenerI $listener)
     {
     }
-    
+
     /**
      * Removes the listener from this node visitor.
      *
      * @param PHP_Reflection_Visitor_ListenerI $listener The listener to remove.
-     * 
+     *
      * @return void
      */
     public function removeVisitListener(PHP_Reflection_Visitor_ListenerI $listener)
     {
     }
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Reflection_AST_ClassI $class The current class node.
-     * 
+     *
      * @return void
      */
     public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->class = $class;
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
-     * 
+     *
      * @return void
      */
     public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->interface = $interface;
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Reflection_AST_MethodI $method The method class node.
-     * 
+     *
      * @return void
      */
     public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->method = $method;
     }
-    
+
     /**
-     * Visits a package node. 
+     * Visits a package node.
      *
      * @param PHP_Reflection_AST_Package $package The package class node.
-     * 
+     *
      * @return void
      */
     public function visitPackage(PHP_Reflection_AST_Package $package)
     {
         $this->package = $package;
     }
-    
+
     /**
      * Visits a parameter node.
      *
      * @param PHP_Reflection_AST_Parameter $parameter The parameter node.
-     * 
+     *
      * @return void
      */
     public function visitParameter(PHP_Reflection_AST_Parameter $parameter)
     {
         $this->parameter = $parameter;
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Reflection_AST_Property $property The property class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_AST_NodeVisitorI::visitProperty()
      */
@@ -219,98 +219,98 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     {
         $this->property = $property;
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Reflection_AST_Function $function The current function node.
-     * 
+     *
      * @return void
      */
     public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         $this->function = $function;
     }
-    
+
     /**
-     * Visits a file node. 
+     * Visits a file node.
      *
      * @param PHP_Reflection_AST_File $file The current file node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_AST_NodeVisitorI::visitFile()
      */
     public function visitFile(PHP_Reflection_AST_File $file)
     {
-        
+
     }
-    
+
     /**
-     * Visits a class constant node. 
+     * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant The current constant node.
-     * 
+     *
      * @return void
      */
     public function visitTypeConstant(PHP_Reflection_AST_ClassOrInterfaceConstant $constant)
     {
         $this->typeConstant = $constant;
     }
-    
+
     /**
      * Visits an exception catch node.
      *
      * @param PHP_Reflection_AST_CatchStatementI $stmt The current catch statement.
-     * 
+     *
      * @return void
      */
     public function visitCatchStatement(PHP_Reflection_AST_CatchStatementI $stmt)
     {
         // TODO Implement this empty stub.
     }
-    
+
     /**
      * Visits an array expression node
      *
      * @param PHP_Reflection_AST_ArrayExpression $expr The current array expression.
-     * 
+     *
      * @return void
      */
     public function visitArrayExpression(PHP_Reflection_AST_ArrayExpression $expr)
     {
         // TODO Implement this empty stub.
     }
-    
+
     /**
      * Visits an array element node.
      *
      * @param PHP_Reflection_AST_ArrayElement $elem The current array element.
-     * 
+     *
      * @return void
      */
     public function visitArrayElement(PHP_Reflection_AST_ArrayElement $elem)
     {
         // TODO Implement this empty stub.
     }
-    
+
     /**
      * Visits a constant reference node.
      *
      * @param PHP_Reflection_AST_ConstantValue $constRef The current const ref.
-     * 
+     *
      * @return void
      */
     public function visitConstantValue(PHP_Reflection_AST_ConstantValue $constRef)
     {
         // TODO Implement this empty stub.
     }
-    
+
     /**
      * Visits a class or interface constant reference
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstantValue $constRef
      *        The reference instance.
-     * 
+     *
      * @return void
      */
     public function visitClassOrInterfaceConstantValue(
@@ -318,27 +318,65 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     {
         // TODO Implement this empty stub.
     }
-                
+
     /**
      * Visits a general value.
      *
      * @param PHP_Reflection_AST_MemberValueI $value The value instance.
-     * 
+     *
      * @return void
      */
     public function visitValue(PHP_Reflection_AST_MemberValueI $value)
     {
         // TODO Implement this empty stub.
     }
-    
+
     /**
      * Visits a block node.
      *
      * @param PHP_Reflection_AST_BlockI $block The block instance.
-     * 
+     *
      * @return void
      */
     public function visitBlock(PHP_Reflection_AST_BlockI $block)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visit a closure node.
+     *
+     * @param PHP_Reflection_AST_ClosureI $closure The closure instance.
+     *
+     * @return void
+     */
+    public function visitClosure(PHP_Reflection_AST_ClosureI $closure)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visit a new expression node.
+     *
+     * @param PHP_Reflection_AST_NewExpressionI $newExpr The new expression instance.
+     *
+     * @return void
+     */
+    public function visitNewExpression(PHP_Reflection_AST_NewExpressionI $newExpr)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visit a instance of node.
+     *
+     * @param PHP_Reflection_AST_InstanceOfExpressionI $instanceOfExpr
+     * The instance of instance.
+     *
+     * @return void
+     */
+    public function visitInstanceOfExpression(
+                        PHP_Reflection_AST_InstanceOfExpressionI $instanceOfExpr)
     {
         // TODO Implement this empty stub.
     }

@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/MethodOrFunctionI.php';
+require_once 'PHP/Reflection/AST/CallableI.php';
 
 /**
  * Base interface for all function nodes.
@@ -60,7 +60,7 @@ require_once 'PHP/Reflection/AST/MethodOrFunctionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_FunctionI extends PHP_Reflection_AST_MethodOrFunctionI
+interface PHP_Reflection_AST_FunctionI extends PHP_Reflection_AST_CallableI
 {
     /**
      * Returns the parent package for this function.

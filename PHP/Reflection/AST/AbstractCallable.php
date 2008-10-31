@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
-require_once 'PHP/Reflection/AST/MethodOrFunctionI.php';
+require_once 'PHP/Reflection/AST/CallableI.php';
 
 /**
  * Abstract base class for callable objects.
@@ -63,9 +63,9 @@ require_once 'PHP/Reflection/AST/MethodOrFunctionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_AST_AbstractMethodOrFunction 
+abstract class PHP_Reflection_AST_AbstractCallable
        extends PHP_Reflection_AST_AbstractSourceElement
-    implements PHP_Reflection_AST_MethodOrFunctionI
+    implements PHP_Reflection_AST_CallableI
 {
     /**
      * The tokens for this function.
@@ -73,7 +73,7 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      * @var array(mixed) $tokens
      */
     protected $tokens = array();
-    
+
     /**
      * If this is set to <b>true</b> the return value is returned by reference.
      *
@@ -132,7 +132,7 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     {
         $this->tokens = $tokens;
     }
-    
+
     /**
      * This method should return <b>true</b> when the context method or function
      * returns a reference.
@@ -143,13 +143,13 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     {
         return $this->_returnsReference;
     }
-    
+
     /**
      * This method will set an internal flag which indicates that the method or
      * function return value is a reference.
      *
      * @param boolean $returnsReference Yes or no?
-     * 
+     *
      * @return void
      */
     public function setReturnsReference($returnsReference)
@@ -158,14 +158,20 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     }
 
     /**
-     * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceI} objects this 
+     * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceI} objects this
      * function depends on.
      *
      * @return PHP_Reflection_AST_Iterator
      */
     public function getDependencies()
     {
-        $dependencies = $this->_dependencies;
+        $dependencies = array();
+
+        $children = $this->findChildrenOfType('PHP_Reflection_AST_ClassOrInterfaceI');
+        foreach ($children as $child) {
+            $dependencies[] = $child;
+        }
+
         foreach ($this->_parameters as $parameter) {
             // Skip all scalar parameters
             if (($type = $parameter->getType()) === null) {
@@ -178,37 +184,6 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
         }
 
         return new PHP_Reflection_AST_Iterator($dependencies);
-    }
-
-    /**
-     * Adds the given {@link PHP_Reflection_AST_ClassOrInterfaceI} object
-     * as dependency.
-     *
-     * @param PHP_Reflection_AST_ClassOrInterfaceI $type A type this function depends on.
-     *
-     * @return void
-     */
-    public function addDependency(PHP_Reflection_AST_ClassOrInterfaceI $type)
-    {
-        if (in_array($type, $this->_dependencies, true) === false) {
-            $this->_dependencies[] = $type;
-        }
-    }
-
-    /**
-     * Removes the given {@link PHP_Reflection_AST_ClassOrInterfaceI} 
-     * object from the dependency list.
-     *
-     * @param PHP_Reflection_AST_ClassOrInterfaceI $type A type to remove.
-     *
-     * @return void
-     */
-    public function removeDependency(PHP_Reflection_AST_ClassOrInterfaceI $type)
-    {
-        if (($i = array_search($type, $this->_dependencies, true)) !== false) {
-            // Remove from internal list
-            unset($this->_dependencies[$i]);
-        }
     }
 
     /**
@@ -296,11 +271,11 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
      */
     public function addParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
-        if ($parameter->getDeclaringMethodOrFunction() !== null) {
-            $parameter->getDeclaringMethodOrFunction()->removeParameter($parameter);
+        if ($parameter->getDeclaringCallable() !== null) {
+            $parameter->getDeclaringCallable()->removeParameter($parameter);
         }
         // Set this as parent
-        $parameter->setDeclaringMethodOrFunction($this);
+        $parameter->setDeclaringCallable($this);
         // Store reference
         $this->_parameters[] = $parameter;
 
@@ -318,7 +293,7 @@ abstract class PHP_Reflection_AST_AbstractMethodOrFunction
     {
         if (($i = array_search($parameter, $this->_parameters, true)) !== false) {
             // Remove this parent
-            $parameter->setDeclaringMethodOrFunction(null);
+            $parameter->setDeclaringCallable(null);
             // Remove internal reference
             unset($this->_parameters[$i]);
         }

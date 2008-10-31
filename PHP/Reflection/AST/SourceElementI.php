@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -63,26 +63,44 @@ require_once 'PHP/Reflection/AST/NodeI.php';
 interface PHP_Reflection_AST_SourceElementI extends PHP_Reflection_AST_NodeI
 {
     /**
+     * Returns a list of all direct children of the given type.
+     *
+     * @param string $type The class or interface name.
+     *
+     * @return array(PHP_Reflection_AST_SourceElementI)
+     */
+    function getChildrenOfType($type);
+
+    /**
+     * Finds all source elements of the given type.
+     *
+     * @param string $type The class or interface name.
+     *
+     * @return array(PHP_Reflection_AST_SourceElementI)
+     */
+    function findChildrenOfType($type);
+
+    /**
      * Returns the line number where the item declaration can be found.
      *
      * @return integer
      */
     function getLine();
-    
+
     /**
      * Returns the line number where the item declaration ends.
      *
      * @return integer The last source line for this item.
      */
     function getEndLine();
-    
+
     /**
      * Returns the source file for this item.
      *
      * @return PHP_Reflection_AST_File
      */
     function getSourceFile();
-    
+
     /**
      * Returns the doc comment for this item or <b>null</b>.
      *
