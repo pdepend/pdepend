@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -72,15 +72,15 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParseMixedCode()
     {
         $expected = array(
-            'pkg1'                                =>  true, 
-            'pkg2'                                =>  true, 
+            'pkg1'                                =>  true,
+            'pkg2'                                =>  true,
             'pkg3'                                =>  true,
             PHP_Reflection_BuilderI::PKG_UNKNOWN  =>  true
         );
-        
+
         $result = self::parseMixedCode();
         $this->assertEquals(4, $result->count());
-        
+
         $packages = array();
         foreach ($result as $package) {
             $this->assertArrayHasKey($package->getName(), $expected);
@@ -88,18 +88,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             $packages[$package->getName()] = $package;
         }
         $this->assertEquals(0, count($expected));
-        
+
         $this->assertEquals(1, $packages['pkg1']->getFunctions()->count());
         $this->assertEquals(1, $packages['pkg1']->getTypes()->count());
         $this->assertFalse($packages['pkg1']->getTypes()->current()->isAbstract());
-        
+
         $this->assertEquals(1, $packages['pkg2']->getTypes()->count());
         $this->assertTrue($packages['pkg2']->getTypes()->current()->isAbstract());
-        
+
         $this->assertEquals(1, $packages['pkg3']->getTypes()->count());
         $this->assertTrue($packages['pkg3']->getTypes()->current()->isAbstract());
     }
-    
+
     /**
      * Tests that the parser throws an exception if it reaches the end of the
      * stream but not all class curly braces are closed.
@@ -113,10 +113,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->setExpectedException(
             'PHP_Reflection_Exceptions_UnclosedBodyException', $msg
         );
-        
+
         self::parseSource('parser/class_with_unclosed_body_block.php.fail');
     }
-    
+
     /**
      * Tests that the parser throws an exception if it reaches the end of the
      * stream but not all function curly braces are closed.
@@ -126,16 +126,16 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserWithUnclosedFunctionFail()
     {
         $file = dirname(__FILE__) . '/_code/parser/function_with_unclosed_body_block.php.fail';
-        $msg  = sprintf('Unclosed body, missing closing "}" in file "%s".', $file);
         $this->setExpectedException(
-            'PHP_Reflection_Exceptions_UnclosedBodyException', $msg
+            'PHP_Reflection_Exceptions_UnexpectedTokenException',
+            sprintf('There is an unexpected token "<eof>" on line 5 in file "%s"', $file)
         );
-        
+
         self::parseSource('parser/function_with_unclosed_body_block.php.fail');
     }
-    
+
     /**
-     * Tests that the parser throws an exception if it finds an invalid 
+     * Tests that the parser throws an exception if it finds an invalid
      * function signature.
      *
      * @return void
@@ -144,15 +144,15 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $fileName = dirname(__FILE__) . '/_code/parser/method_with_unclosed_parameter_block.php.fail';
         $this->setExpectedException(
-            'PHP_Reflection_Exceptions_UnexpectedTokenException', 
+            'PHP_Reflection_Exceptions_UnexpectedTokenException',
             "There is an unexpected token \"(\" on line 3 in file \"{$fileName}\"."
         );
-        
+
         self::parseSource('parser/method_with_unclosed_parameter_block.php.fail');
     }
-    
+
     /**
-     * Tests that the parser throws an exception if it finds an invalid 
+     * Tests that the parser throws an exception if it finds an invalid
      * function signature.
      *
      * @return void
@@ -161,13 +161,13 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $fileName = dirname(__FILE__) . '/_code/parser/method_with_invalid_signature.php.fail';
         $this->setExpectedException(
-            'PHP_Reflection_Exceptions_UnexpectedTokenException', 
+            'PHP_Reflection_Exceptions_UnexpectedTokenException',
             "There is an unexpected token \"Bar\" on line 3 in file \"{$fileName}\"."
         );
-        
+
         self::parseSource('parser/method_with_invalid_signature.php.fail');
     }
-    
+
     /**
      * Tests that the parser sets the correct line number for a function.
      *
@@ -177,11 +177,11 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseMixedCode();
         $packages->next();
-        
+
         $function = $packages->current()->getFunctions()->current();
         $this->assertEquals(7, $function->getLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct tokens for a function.
      *
@@ -190,6 +190,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectFunctionTokens()
     {
         $tokens = array(
+            array(PHP_Reflection_TokenizerI::T_STRING, 'foo', 7),
+            array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, '(', 7),
+            array(PHP_Reflection_TokenizerI::T_VARIABLE, '$foo', 7),
+            array(PHP_Reflection_TokenizerI::T_EQUAL, '=', 7),
+            array(PHP_Reflection_TokenizerI::T_ARRAY, 'array', 7),
+            array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, '(', 7),
+            array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, ')', 7),
+            array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, ')', 7),
             array(PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN, '{', 7),
             array(PHP_Reflection_TokenizerI::T_FOREACH, 'foreach', 8),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, '(', 8),
@@ -208,14 +216,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 10),
             array(PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 11),
         );
-        
+
         $packages = self::parseMixedCode();
         $packages->next();
-        
+
         $function = $packages->current()->getFunctions()->current();
         $this->assertEquals($tokens, $function->getTokens());
     }
-    
+
     /**
      * Tests that the parser sets a detected file comment.
      *
@@ -225,27 +233,27 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('parser/file_comment_is_set.php');
         $this->assertEquals(1, $packages->count()); // default::package
-        
+
         $package = $packages->current();
         $this->assertEquals('default::package', $package->getName());
-        
+
         $class = $package->getClasses()->current();
         $this->assertNotNull($class);
-        
+
         $actual = $class->getSourceFile()->getDocComment();
         $this->assertNotNull($actual);
-        
+
         $expected = "/**\n"
                   . " * FANOUT := 12\n"
                   . " * CALLS  := 10\n"
-                  . " *\n" 
-                  . " * @package default\n" 
+                  . " *\n"
+                  . " * @package default\n"
                   . " * @subpackage package\n"
                   . " */";
-        
+
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * Tests that the parser doesn't reuse a type comment as file comment.
      *
@@ -255,17 +263,17 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('parser/type_comment_not_used_as_file_comment.php');
         $this->assertEquals(1, $packages->count()); // +unknown
-        
+
         $package = $packages->current();
         $this->assertEquals('+unknown', $package->getName());
-        
+
         $class = $package->getClasses()->current();
         $this->assertNotNull($class);
-        
+
         $actual = $class->getSourceFile()->getDocComment();
         $this->assertNull($actual);
     }
-    
+
     /**
      * Tests that the parser doesn't reuse a function comment as file comment.
      *
@@ -275,17 +283,17 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('parser/function_comment_not_used_as_file_comment.php');
         $this->assertEquals(1, $packages->count()); // +unknown
-        
+
         $package = $packages->current();
         $this->assertEquals('+unknown', $package->getName());
-        
+
         $function = $package->getFunctions()->current();
         $this->assertNotNull($function);
-        
+
         $actual = $function->getSourceFile()->getDocComment();
         $this->assertNull($actual);
     }
-    
+
     /**
      * Tests that the parser sets the correct start line number for a class.
      *
@@ -295,7 +303,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $this->assertEquals(30, $this->getMixedCodeClass()->getLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct end line number for a class.
      *
@@ -305,7 +313,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $this->assertEquals(49, $this->getMixedCodeClass()->getEndLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct start line number for class methods.
      *
@@ -314,12 +322,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectClassMethodStartLineNumbers()
     {
         $methods = $this->getMixedCodeClassMethods();
-        
+
         $this->assertEquals(43, $methods->current()->getLine());
         $methods->next();
         $this->assertEquals(44, $methods->current()->getLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct end line number for class methods.
      *
@@ -328,12 +336,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsCorrectClassMethodEndLineNumbers()
     {
         $methods = $this->getMixedCodeClassMethods();
-        
+
         $this->assertEquals(43, $methods->current()->getEndLine());
         $methods->next();
         $this->assertEquals(48, $methods->current()->getEndLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct start line number for an interface.
      *
@@ -343,7 +351,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $this->assertEquals(15, $this->getMixedCodeInterface()->getLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct end line number for an interface.
      *
@@ -353,9 +361,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $this->assertEquals(18, $this->getMixedCodeInterface()->getEndLine());
     }
-    
+
     /**
-     * Tests that the parser sets the correct start line number for interface 
+     * Tests that the parser sets the correct start line number for interface
      * methods.
      *
      * @return void
@@ -365,7 +373,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $methods = $this->getMixedCodeInterfaceMethods();
         $this->assertEquals(17, $methods->current()->getLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct end line number for interface methods.
      *
@@ -376,7 +384,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $methods = $this->getMixedCodeInterfaceMethods();
         $this->assertEquals(17, $methods->current()->getEndLine());
     }
-    
+
     /**
      * Tests that the parser marks all interface methods as abstract.
      *
@@ -387,7 +395,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $methods = $this->getMixedCodeInterfaceMethods();
         $this->assertTrue($methods->current()->isAbstract());
     }
-    
+
     /**
      * Tests that the parser sets the correct line number for methods.
      *
@@ -407,7 +415,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
 
         $this->assertEquals(17, $method->getLine());
     }
-    
+
     /**
      * Tests that the parser doesn't mark a non abstract method as abstract.
      *
@@ -420,7 +428,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             $this->assertFalse($method->isAbstract());
         }
     }
-    
+
     /**
      * Tests that the parser marks an abstract method as abstract.
      *
@@ -436,7 +444,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertNotNull($method);
         $this->assertTrue($method->isAbstract());
     }
-    
+
     /**
      * Tests that the parser handles PHP 5.3 object namespace + class chaining.
      *
@@ -446,28 +454,28 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('parser/namespace-chain-new-operator.php.53');
         $this->assertEquals(1, $packages->count());
-        
+
         $package = $packages->current();
         $this->assertEquals(1, $package->getFunctions()->count());
-        
+
         $function = $package->getFunctions()->current();
         $this->assertEquals(2, $function->getDependencies()->count());
-        
+
         $dependencies = $function->getDependencies();
-        
+
         $dependency1 = $dependencies->current();
         $this->assertEquals('Parser', $dependency1->getName());
         $this->assertEquals('php::reflection1', $dependency1->getPackage()->getName());
-        
+
         $dependencies->next();
-        
+
         $dependency2 = $dependencies->current();
         $this->assertEquals('Parser', $dependency2->getName());
         $this->assertEquals('php::reflection2', $dependency2->getPackage()->getName());
     }
-    
+
     /**
-     * Tests that doc comment blocks are added to a function. 
+     * Tests that doc comment blocks are added to a function.
      *
      * @return void
      */
@@ -475,10 +483,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages  = self::parseSource('parser/function_comment_is_set.php');
         $functions = $packages->current()->getFunctions();
-        
+
         $this->doTestParserSetsCorrectDocComment($functions, 0);
     }
-    
+
     /**
      * Tests that the parser sets the correct function return type.
      *
@@ -491,7 +499,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $nodes = $packages->current()
                           ->getFunctions();
         $this->assertEquals(3, $nodes->count());
-        
+
         $this->assertEquals('func1', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getReturnType());
         $nodes->next();
@@ -503,7 +511,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertNotNull($nodes->current()->getReturnType());
         $this->assertEquals('SplObjectStore', $nodes->current()->getReturnType()->getName());
     }
-    
+
     /**
      * Tests that the parser sets the correct method exception types.
      *
@@ -515,59 +523,59 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
 
         $nodes = $packages->current()
                           ->getFunctions();
-                          
+
         $this->assertEquals(3, $nodes->count());
-        
+
         $this->assertEquals('func1', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(1, $ex->count());
         $this->assertEquals('RuntimeException', $ex->current()->getName());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('func2', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(2, $ex->count());
         $this->assertEquals('OutOfRangeException', $ex->current()->getName());
         $ex->next();
         $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('func3', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(0, $ex->count());
     }
-    
+
     /**
      * Tests that the parser doesn't handle annotations if this is set to true.
-     * 
+     *
      * @return void
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForFunctions()
     {
         $packages = self::parseSource('parser/function_no_exception_no_return_type_for_ignore_annotations.php', true);
         $nodes    = $packages->current()->getFunctions();
-                          
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
-        
-        $nodes->next();
-                          
+
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
         $this->assertNull($nodes->current()->getReturnType());
 
         $nodes->next();
-        
+
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());        
+        $this->assertNull($nodes->current()->getReturnType());
+
+        $nodes->next();
+
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());
     }
-    
+
     /**
-     * Tests that doc comment blocks are added to a method. 
+     * Tests that doc comment blocks are added to a method.
      *
      * @return void
      */
@@ -578,10 +586,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                              ->getTypes()
                              ->current()
                              ->getMethods();
-        
+
         $this->doTestParserSetsCorrectDocComment($nodes);
     }
-    
+
     /**
      * Tests that the parser sets the correct method return type.
      *
@@ -595,7 +603,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                              ->current()
                              ->getMethods();
         $this->assertEquals(3, $nodes->count());
-        
+
         $this->assertEquals('__construct', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getReturnType());
         $nodes->next();
@@ -607,7 +615,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertNotNull($nodes->current()->getReturnType());
         $this->assertEquals('SplSubject', $nodes->current()->getReturnType()->getName());
     }
-    
+
     /**
      * Tests that the parser sets the correct method exception types.
      *
@@ -620,33 +628,33 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                              ->getTypes()
                              ->current()
                              ->getMethods();
-                          
+
         $this->assertEquals(3, $nodes->count());
-        
+
         $this->assertEquals('__construct', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(1, $ex->count());
         $this->assertEquals('RuntimeException', $ex->current()->getName());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('method1', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(2, $ex->count());
         $this->assertEquals('OutOfRangeException', $ex->current()->getName());
         $ex->next();
         $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('method2', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionTypes();
         $this->assertEquals(0, $ex->count());
     }
-    
+
     /**
      * Tests that the parser doesn't handle annotations if this is set to true.
-     * 
+     *
      * @return void
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForMethods()
@@ -656,27 +664,27 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                              ->getTypes()
                              ->current()
                              ->getMethods();
-                          
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
-        
-        $nodes->next();
-                          
+
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
         $this->assertNull($nodes->current()->getReturnType());
 
         $nodes->next();
-        
+
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());        
+        $this->assertNull($nodes->current()->getReturnType());
+
+        $nodes->next();
+
+        $this->assertEquals(3, $nodes->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertNull($nodes->current()->getReturnType());
     }
-    
+
     /**
      * Tests that the parser sets the correct doc comment blocks for properties.
-     * 
+     *
      * @return void
      */
     public function testParserSetsCorrectPropertyDocComment()
@@ -686,13 +694,13 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                              ->getTypes()
                              ->current()
                              ->getProperties();
-        
+
         $this->doTestParserSetsCorrectDocComment($nodes);
     }
-    
+
     /**
      * Tests that the parser sets the correct visibility for properties.
-     * 
+     *
      * @return void
      */
     public function testParserSetsCorrectPropertyVisibility()
@@ -702,16 +710,16 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                              ->getTypes()
                              ->current()
                              ->getProperties();
-                       
+
         $this->assertTrue($nodes->current()->isPrivate());
         $nodes->next();
         $this->assertTrue($nodes->current()->isPublic());
-        $nodes->next();  
+        $nodes->next();
         $this->assertTrue($nodes->current()->isProtected());
-        $nodes->next();  
+        $nodes->next();
         $this->assertTrue($nodes->current()->isProtected());
     }
-    
+
     /**
      * Tests that the parser sets property types for non scalar properties.
      *
@@ -747,7 +755,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals('property6', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
     }
-    
+
     /**
      * Tests that the parser sets property types for non scalar properties.
      *
@@ -763,57 +771,57 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
 
         $this->assertEquals('property1', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('property2', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('property3', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('property4', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('property5', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
-        
+
         $nodes->next();
-        
+
         $this->assertEquals('property6', $nodes->current()->getName());
         $this->assertNull($nodes->current()->getType());
     }
-    
+
     /**
-     * Tests that parser sets the correct doc comment blocks for classes and 
-     * interfaces. 
+     * Tests that parser sets the correct doc comment blocks for classes and
+     * interfaces.
      *
      */
     public function testParserSetsCorrectTypeDocComment()
-    {   
+    {
         $expected = array(
             "/**\n * Sample comment.\n */",
             null,
             null,
             "/**\n * A second comment...\n */",
         );
-        
+
         $packages = self::parseSource('parser/type_doc_comment_is_set.php');
         $types    = $packages->current()
                              ->getTypes();
-                         
+
         foreach ($types as $type) {
             $comment = array_shift($expected);
             $this->assertEquals($comment, $type->getDocComment());
         }
     }
-    
+
     /**
      * Tests that the parser supports sub packages.
      *
@@ -823,10 +831,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('parser/package_subpackage_support.php');
         $package  = $packages->current();
-        
+
         $this->assertEquals('PHP::Reflection', $package->getName());
     }
-    
+
     /**
      * Tests that the parser supports sub packages.
      *
@@ -835,15 +843,15 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserSetsFileLevelFunctionPackage()
     {
         $packages = self::parseSource('parser/function_file_level_package_is_set.php');
-        
+
         $package0   = $packages->current();
         $functions0 = $package0->getFunctions();
-        
+
         $packages->next();
-        
+
         $package1   = $packages->current();
         $functions1 = $package1->getFunctions();
-        
+
         $this->assertEquals(2, $functions0->count());
         $this->assertEquals('PHP::Depend', $functions0->current()->getPackage()->getName());
         $functions0->next();
@@ -852,7 +860,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $functions1->count());
         $this->assertEquals('PHP_Depend::Test', $functions1->current()->getPackage()->getName());
     }
-    
+
     /**
      * Tests that the parser sets the correct constant parent.
      *
@@ -862,12 +870,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $interface = $this->getMixedCodeInterface();
         $constants = $interface->getConstants();
-        
+
         $this->assertEquals(1, $constants->count());
         $this->assertEquals('FOOBAR', $constants->current()->getName());
         $this->assertSame($interface, $constants->current()->getParent());
     }
-    
+
     /**
      * Tests that the parser sets the correct constant start line.
      *
@@ -877,12 +885,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $interface = $this->getMixedCodeInterface();
         $constants = $interface->getConstants();
-        
+
         $this->assertEquals(1, $constants->count());
         $this->assertEquals('FOOBAR', $constants->current()->getName());
         $this->assertSame(16, $constants->current()->getLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct constant ebd line.
      *
@@ -892,12 +900,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $interface = $this->getMixedCodeInterface();
         $constants = $interface->getConstants();
-        
+
         $this->assertEquals(1, $constants->count());
         $this->assertEquals('FOOBAR', $constants->current()->getName());
         $this->assertSame(16, $constants->current()->getEndLine());
     }
-    
+
     /**
      * Tests that the parser sets null comment for no comment constant.
      *
@@ -907,12 +915,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $interface = $this->getMixedCodeInterface();
         $constants = $interface->getConstants();
-        
+
         $this->assertEquals(1, $constants->count());
         $this->assertEquals('FOOBAR', $constants->current()->getName());
         $this->assertNull($constants->current()->getDocComment());
     }
-    
+
     /**
      * Tests that the parser sets the correct constant parent.
      *
@@ -922,18 +930,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $class     = $this->getMixedCodeClass();
         $constants = $class->getConstants();
-        
+
         $this->assertEquals(2, $constants->count());
-        
+
         $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertSame($class, $constants->current()->getParent());
-        
+
         $constants->next();
-        
+
         $this->assertEquals('BAR', $constants->current()->getName());
         $this->assertSame($class, $constants->current()->getParent());
     }
-    
+
     /**
      * Tests that the parser sets the correct start line number.
      *
@@ -943,18 +951,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $class     = $this->getMixedCodeClass();
         $constants = $class->getConstants();
-        
+
         $this->assertEquals(2, $constants->count());
-        
+
         $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertEquals(31, $constants->current()->getLine());
-        
+
         $constants->next();
-        
+
         $this->assertEquals('BAR', $constants->current()->getName());
         $this->assertEquals(36, $constants->current()->getLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct end line number.
      *
@@ -964,18 +972,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $class     = $this->getMixedCodeClass();
         $constants = $class->getConstants();
-        
+
         $this->assertEquals(2, $constants->count());
-        
+
         $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertEquals(31, $constants->current()->getEndLine());
-        
+
         $constants->next();
-        
+
         $this->assertEquals('BAR', $constants->current()->getName());
         $this->assertEquals(36, $constants->current()->getEndLine());
     }
-    
+
     /**
      * Tests that the parser sets the correct doc comment.
      *
@@ -985,22 +993,22 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $class     = $this->getMixedCodeClass();
         $constants = $class->getConstants();
-        
+
         $expected = '/**
      * My BAR constant.
      */';
-        
+
         $this->assertEquals(2, $constants->count());
-        
+
         $this->assertEquals('FOO', $constants->current()->getName());
         $this->assertNull($constants->current()->getDocComment());
-        
+
         $constants->next();
-        
+
         $this->assertEquals('BAR', $constants->current()->getName());
         $this->assertEquals($expected, $constants->current()->getDocComment());
     }
-    
+
     /**
      * Tests that parser adds parent interfaces to a parsed interface.
      *
@@ -1009,11 +1017,11 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserAddsParentInterfacesToInterface()
     {
         $packages = self::parseSource('/parser/interface_with_parents.php');
-        
+
         $this->assertEquals(1, $packages->count());
         $interfaces = $packages->current()->getInterfaces();
         $this->assertEquals(3, $interfaces->count());
-        
+
         $expected = array('FooBar' => 2, 'Bar' => 0, 'Foo' => 1);
         foreach ($interfaces as $interface) {
             // Get interface name
@@ -1024,31 +1032,31 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             $this->assertEquals($expected[$name], $interface->getParentInterfaces()->count());
         }
     }
-    
+
     /**
      * Test case for parser bug 01 that doesn't add dependencies for static
      * method calls.
-     * 
+     *
      * @return void
      */
     public function testParserStaticCallBug01()
     {
         $packages = self::parseSource('bugs/01.php');
         $this->assertEquals(1, $packages->count());
-        
+
         $package = $packages->current();
         $this->assertEquals('package0', $package->getName());
         $classes = $package->getTypes();
-        $this->assertEquals(1, $classes->count()); 
+        $this->assertEquals(1, $classes->count());
         $methods = $classes->current()->getMethods();
         $this->assertEquals(1, $methods->count());
         $this->assertEquals(1, $methods->current()->getDependencies()->count());
-        
+
         $dependency = $methods->current()->getDependencies()->current();
         $this->assertEquals('clazz1', $dependency->getName());
         $this->assertEquals('+unknown', $dependency->getPackage()->getName());
     }
-    
+
     /**
      * Tests that the parser handles function with reference return values
      * correct.
@@ -1071,10 +1079,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                           ->current();
         $this->assertEquals('fooBug08', $method->getName());
     }
-    
+
     /**
-     * Tests that the parser ignores variable class instantiation. 
-     * 
+     * Tests that the parser ignores variable class instantiation.
+     *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
      *
      * @return void
@@ -1085,29 +1093,29 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $package  = $packages->current();
         $class    = $package->getClasses()->current();
         $method   = $class->getMethods()->current();
-        
+
         $this->assertEquals('package10', $package->getName());
         $this->assertEquals('VariableClassNamesBug10', $class->getName());
         $this->assertEquals('foo10', $method->getName());
         $this->assertEquals(0, count($method->getDependencies()));
     }
-    
+
     public function testParserCurlyBraceBug11()
     {
         $packages  = self::parseSource('bugs/11.php');
         $package   = $packages->current();
         $classes   = $package->getClasses();
         $functions = $package->getFunctions();
-        
+
         $this->assertEquals(1, $classes->count());
         $this->assertEquals(1, $functions->count());
         $methods = $classes->current()->getMethods();
         $this->assertEquals(3, $methods->count());
     }
-    
+
     /**
-     * Tests that the parser handles curly braces in strings correct. 
-     * 
+     * Tests that the parser handles curly braces in strings correct.
+     *
      * http://bugs.xplib.de/index.php?do=details&task_id=12&project=3
      *
      * @return void
@@ -1116,15 +1124,15 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $package = self::parseSource('bugs/12.php')->current();
         $classes = $package->getClasses();
-        
+
         $this->assertEquals(1, $classes->count());
         $methods = $classes->current()->getMethods();
         $this->assertEquals(1, $methods->count());
     }
-    
+
     /**
-     * Tests that the parser ignores backtick expressions. 
-     * 
+     * Tests that the parser ignores backtick expressions.
+     *
      * http://bugs.xplib.de/index.php?do=details&task_id=15&project=3
      *
      * @return void
@@ -1133,15 +1141,15 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $package = self::parseSource('bugs/15.php')->current();
         $classes = $package->getClasses();
-        
+
         $this->assertEquals(1, $classes->count());
         $methods = $classes->current()->getMethods();
         $this->assertEquals(1, $methods->count());
     }
-    
+
     /**
-     * Tests that the parser sets the correct type tokens. 
-     * 
+     * Tests that the parser sets the correct type tokens.
+     *
      * http://bugs.xplib.de/index.php?do=details&task_id=30&project=3
      *
      * @return void
@@ -1150,13 +1158,13 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('bugs/30.php');
         $this->assertEquals(1, $packages->count());
-        
+
         $classes = $packages->current()->getClasses();
         $this->assertEquals(1, $classes->count());
-        
+
         $testClass = $classes->current();
         $this->assertEquals('PHP_Reflection_ParserTest', $testClass->getName());
-        
+
         $expected = array(
             array(PHP_Reflection_TokenizerI::T_CURLY_BRACE_OPEN, 3),
             array(PHP_Reflection_TokenizerI::T_DOC_COMMENT, 4),
@@ -1206,7 +1214,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, 18),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 18),
             array(PHP_Reflection_TokenizerI::T_SEMICOLON, 18),
-            
+
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 20),
             array(PHP_Reflection_TokenizerI::T_EQUAL, 20),
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 20),
@@ -1219,7 +1227,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, 20),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 20),
             array(PHP_Reflection_TokenizerI::T_SEMICOLON, 20),
-            
+
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 21),
             array(PHP_Reflection_TokenizerI::T_EQUAL, 21),
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 21),
@@ -1228,7 +1236,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, 21),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 21),
             array(PHP_Reflection_TokenizerI::T_SEMICOLON, 21),
-            
+
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 23),
             array(PHP_Reflection_TokenizerI::T_OBJECT_OPERATOR, 23),
             array(PHP_Reflection_TokenizerI::T_STRING, 23),
@@ -1242,7 +1250,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 23),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 23),
             array(PHP_Reflection_TokenizerI::T_SEMICOLON, 23),
-            
+
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 24),
             array(PHP_Reflection_TokenizerI::T_EQUAL, 24),
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 24),
@@ -1255,7 +1263,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, 24),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 24),
             array(PHP_Reflection_TokenizerI::T_SEMICOLON, 24),
-            
+
             array(PHP_Reflection_TokenizerI::T_VARIABLE, 25),
             array(PHP_Reflection_TokenizerI::T_OBJECT_OPERATOR, 25),
             array(PHP_Reflection_TokenizerI::T_STRING, 25),
@@ -1269,9 +1277,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 25),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 25),
             array(PHP_Reflection_TokenizerI::T_SEMICOLON, 25),
-            
+
             array(PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE, 26),
-            
+
             array(PHP_Reflection_TokenizerI::T_DOC_COMMENT, 28),
             array(PHP_Reflection_TokenizerI::T_PROTECTED, 33),
             array(PHP_Reflection_TokenizerI::T_ABSTRACT, 33),
@@ -1280,27 +1288,27 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN, 33),
             array(PHP_Reflection_TokenizerI::T_PARENTHESIS_CLOSE, 33),
             array(PHP_Reflection_TokenizerI::T_SEMICOLON, 33),
-            
+
             array(PHP_Reflection_TokenizerI::T_CURLY_BRACE_CLOSE, 34),
         );
-        
+
         foreach ($testClass->getTokens() as $token) {
             $expectedToken = array_shift($expected);
-            
+
             $this->assertNotNull($expectedToken);
             $this->assertEquals($expectedToken[0], $token[0]);
         }
     }
-    
+
     /**
      * Tests that the parser detect a type within an instance of operator.
-     * 
+     *
      * <code>
      * if ($object instanceof SplObjectStorage) {
-     * 
+     *
      * }
      * </code>
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
      * @return void
@@ -1309,28 +1317,28 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('bugs/16-1.php');
         $this->assertEquals(1, $packages->count()); // +unknown
-        
+
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
-        
+
         $function = $functions->current();
         $this->assertEquals('pdepend', $function->getName());
-        
+
         $dependencies = $function->getDependencies();
         $this->assertEquals(1, $dependencies->count());
         $this->assertEquals('SplObjectStorage', $dependencies->current()->getName());
     }
-    
+
     /**
      * Tests that the parser ignores dynamic(with variables) instanceof operations.
-     * 
+     *
      * <code>
      * $class = 'SplObjectStorage';
      * if ($object instanceof $class) {
-     * 
+     *
      * }
      * </code>
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
      * @return void
@@ -1342,26 +1350,26 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('bugs/16-2.php');
         $this->assertEquals(1, $packages->count()); // +unknown
-        
+
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
-        
+
         $function = $functions->current();
         $this->assertEquals('pdepend', $function->getName());
-        
+
         $dependencies = $function->getDependencies();
         $this->assertEquals(0, $dependencies->count());
     }
-    
+
     /**
      * Tests that the parser detects a type within a catch block.
-     * 
+     *
      * <code>
      * try {
      *     $foo->bar();
      * } catch (Exception $e) {}
      * </code>
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=17
      *
      * @return void
@@ -1370,22 +1378,22 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('bugs/17-1.php');
         $this->assertEquals(1, $packages->count()); // +unknown
-        
+
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
-        
+
         $function = $functions->current();
         $this->assertEquals('pdepend', $function->getName());
-        
+
         $dependencies = $function->getDependencies();
         $this->assertEquals(1, $dependencies->count());
         $this->assertEquals('OutOfBoundsException', $dependencies->current()->getName());
     }
-    
+
     /**
      * The type hint detection was broken when a constant was used as default
      * value for a function parameter.
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
      *
      * @return void
@@ -1394,20 +1402,20 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('bugs/33-1.php');
         $this->assertEquals(1, $packages->count()); // +unknown
-        
+
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
-        
+
         $function = $functions->current();
         $this->assertEquals('pdepend', $function->getName());
-        
+
         $this->assertEquals(1, $function->getDependencies()->count());
     }
-    
+
     /**
      * The type hint detection was broken when a constant was used as default
      * value for a method parameter.
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
      *
      * @return void
@@ -1416,19 +1424,19 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('bugs/33-2.php');
         $this->assertEquals(1, $packages->count()); // +unknown
-        
+
         $classes = $packages->current()->getClasses();
         $this->assertEquals(1, $classes->count());
-        
+
         $class = $classes->current();
         $this->assertEquals('PHP_Reflection_Parser', $class->getName());
-        
+
         $method = $class->getMethods()->current();
         $this->assertEquals('parse', $method->getName());
-        
+
         $this->assertEquals(1, $method->getDependencies()->count());
     }
-    
+
     /**
      * Tests that the parser supports function parameters.
      *
@@ -1438,35 +1446,35 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('issues/32-1.php');
         $this->assertEquals(1, $packages->count());
-        
+
         $function = $packages->current()->getFunctions()->current();
         $this->assertNotNull($function);
         $this->assertEquals('pdepend', $function->getName());
-        
+
         $parameters = $function->getParameters();
         $this->assertEquals(3, $parameters->count());
-        
+
         $parameter = $parameters->current();
         $this->assertEquals('$foo', $parameter->getName());
         $this->assertEquals(0, $parameter->getPosition());
         $this->assertNull($parameter->getType());
-        
+
         $parameters->next();
-        
+
         $parameter = $parameters->current();
         $this->assertEquals('$bar', $parameter->getName());
         $this->assertEquals(1, $parameter->getPosition());
         $this->assertNotNull($parameter->getType());
         $this->assertEquals('Bar', $parameter->getType()->getName());
-        
+
         $parameters->next();
-        
+
         $parameter = $parameters->current();
         $this->assertEquals('$foobar', $parameter->getName());
         $this->assertEquals(2, $parameter->getPosition());
         $this->assertNull($parameter->getType());
     }
-    
+
     /**
      * Tests that the parser supports method parameters.
      *
@@ -1476,44 +1484,44 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('issues/32-2.php');
         $this->assertEquals(1, $packages->count());
-        
+
         $classes = $packages->current()->getClasses();
         $this->assertEquals(1, $classes->count());
-        
+
         $class = $classes->current();
         $this->assertNotNull($class);
         $this->assertEquals('PHP_Reflection_Parser', $class->getName());
-        
+
         $method = $class->getMethods()->current();
         $this->assertNotNull($method);
         $this->assertEquals('parse', $method->getName());
-        
+
         $parameters = $method->getParameters();
         $this->assertEquals(3, $parameters->count());
-        
+
         $parameter = $parameters->current();
         $this->assertEquals('$foo', $parameter->getName());
         $this->assertEquals(0, $parameter->getPosition());
         $this->assertNull($parameter->getType());
-        
+
         $parameters->next();
-        
+
         $parameter = $parameters->current();
         $this->assertEquals('$bar', $parameter->getName());
         $this->assertEquals(1, $parameter->getPosition());
         $this->assertNotNull($parameter->getType());
         $this->assertEquals('Bar', $parameter->getType()->getName());
-        
+
         $parameters->next();
-        
+
         $parameter = $parameters->current();
         $this->assertEquals('$foobar', $parameter->getName());
         $this->assertEquals(2, $parameter->getPosition());
         $this->assertNull($parameter->getType());
     }
-    
+
     /**
-     * Tests that the parser sets the correct file position for classes and 
+     * Tests that the parser sets the correct file position for classes and
      * interfaces.
      *
      * @return void
@@ -1522,28 +1530,28 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('issues/39-1.php');
         $types    = $packages->current()->getTypes();
-        
+
         $this->assertEquals(3, $types->count());
-        
+
         $expected = array(
             'PHP_Depend_X'  =>  2,
             'PHP_Depend_Y'  =>  1,
             'PHP_Depend_Z'  =>  0
         );
-        
+
         while (($type = $types->current()) !== false) {
             $this->assertArrayHasKey($type->getName(), $expected);
-            
+
             $position = $expected[$type->getName()];
             $this->assertEquals($position, $type->getPosition());
-            
+
             $types->next();
         }
     }
-    
+
     /**
      * Tests that the parse handles the final modifier for classes correct.
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=52&project=5
      *
      * @return void
@@ -1552,9 +1560,9 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('/issues/52.php');
         $classes  = $packages->current()->getTypes();
-        
+
         $this->assertEquals(3, $classes->count());
-        
+
         $expected = array('Bar' => true, 'Foo' => false, 'Foobar' => true);
         foreach ($classes as $class) {
             // Get class name
@@ -1569,11 +1577,11 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         // Check everything was found
         $this->assertEquals(0, count($expected));
     }
-    
+
     /**
      * Tests that the parser handles full qualified PHP 5.3 names within an
      * interface signature.
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=53&project=5
      *
      * @return void
@@ -1584,12 +1592,12 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $this->assertEquals(1, $packages->count());
         $this->assertEquals('bar', $packages->current()->getName());
         $this->assertEquals(1, $packages->current()->getInterfaces()->count());
-        
+
         $interface = $packages->current()->getInterfaces()->current();
         $this->assertEquals(2, $interface->getParentInterfaces()->count());
-        
+
         $interfaces = $interface->getParentInterfaces();
-        
+
         $expected = array('Bar' => 'foo', 'FooBar' => 'foo::bar');
         foreach ($interfaces as $interface) {
             $package = $interface->getPackage();
@@ -1604,11 +1612,11 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         }
         $this->assertEquals(0, count($expected));
     }
-    
+
     /**
      * Tests that the parser handles full qualified PHP 5.3 names within class
      * and interface names of class signature.
-     * 
+     *
      * http://bugs.pdepend.org/index.php?do=details&task_id=53&project=5
      *
      * @return void
@@ -1618,24 +1626,24 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         $packages = self::parseSource('/issues/53-2.php53');
         $this->assertEquals(1, $packages->count());
         $this->assertEquals(1, $packages->current()->getClasses()->count());
-        
+
         $class = $packages->current()
                           ->getClasses()
                           ->current();
-                        
+
         $parentClass = $class->getParentClass();
         $this->assertNotNull($parentClass);
         $this->assertEquals('Bar', $parentClass->getName());
         $this->assertEquals('bar::foo', $parentClass->getPackage()->getName());
-        
+
         $interfaces = $class->getImplementedInterfaces();
         $this->assertEquals(2, $interfaces->count());
-        
+
         $expected = array(
             'FooBar' => 'foobar',
-            'ooF'    => 'foo',  
+            'ooF'    => 'foo',
         );
-        
+
         foreach ($interfaces as $interface) {
             // Check that name exists
             $this->assertArrayHasKey($interface->getName(), $expected);
@@ -1646,17 +1654,17 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
         }
         $this->assertEquals(0, count($expected));
     }
-    
+
     public function testParserSetsCorrectMethodPositionIssue39()
     {
         $this->markTestIncomplete('Test not implemented yet.');
-        
+
         $packages = self::parseSource(dirname(__FILE__) . 'issues/39-2.php');
         $types    = $packages->current()->getTypes();
-        
+
         $this->assertEquals(2, $types->count());
     }
-    
+
     /**
      * Tests that the parser resets the default package definition for each
      * new file.
@@ -1666,16 +1674,16 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     public function testParserResetsDefaultPackageForANewFileBug46()
     {
         $expected = array('a' => true, 'b' => true);
-        
+
         $packages = self::parseSource('/bugs/46');
         $this->assertEquals(2, $packages->count());
-        
+
         foreach ($packages as $package) {
             $this->assertArrayHasKey($package->getName(), $expected);
             $this->assertEquals(1, $package->getFunctions()->count());
         }
     }
-    
+
     /**
      * Tests that the parser ignores comments between identifiers and double
      * colon tokens in a full qualified class name.
@@ -1686,18 +1694,18 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = self::parseSource('/parser/comments_in_qualified_identifier.php53');
         $this->assertEquals(1, $packages->count());
-        
+
         $classes = $packages->current()->getClasses();
         $this->assertEquals(1, $classes->count());
-        
+
         $class = $classes->current();
         $this->assertEquals('Parser', $class->getName());
-        
+
         $parent = $class->getParentClass();
         $this->assertNotNull($parent);
         $this->assertEquals('php::reflection', $parent->getPackage()->getName());
     }
-    
+
     /**
      * Returns all packages in the mixed code example.
      *
@@ -1707,7 +1715,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         return self::parseSource('parser/parser_default_test_code.php');
     }
-    
+
     /**
      * Returns an interface instance from the mixed code test file.
      *
@@ -1721,7 +1729,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
 
         return $packages->current()->getTypes()->current();
     }
-    
+
     /**
      * Returns the methods of an interface from the mixed code test file.
      *
@@ -1731,7 +1739,7 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         return $this->getMixedCodeInterface()->getMethods();
     }
-    
+
     /**
      * Returns a class instance from the mixed code test file.
      *
@@ -1741,10 +1749,10 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         $packages = $this->parseMixedCode();
         $packages->next();
-        
+
         return $packages->current()->getTypes()->current();
     }
-    
+
     /**
      * Returns the methods of a class from the mixed code test file.
      *
@@ -1754,13 +1762,13 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
     {
         return $this->getMixedCodeClass()->getMethods();
     }
-    
+
     /**
      * Generic comment test method.
      *
      * @param PHP_Reflection_AST_Iterator $nodes  The context nodes.
      * @param integer                     $indent How deep is the commend indented.
-     * 
+     *
      * @return void
      */
     protected function doTestParserSetsCorrectDocComment(
@@ -1768,14 +1776,14 @@ class PHP_Reflection_ParserTest extends PHP_Reflection_AbstractTest
                                             $indent = 1)
     {
         $ws = str_repeat(" ", 4 * $indent);
-        
+
         $expected = array(
             "/**\n{$ws} * This is one comment.\n{$ws} */",
             null,
             null,
             "/**\n{$ws} * This is a second comment.\n{$ws} */",
         );
-        
+
         foreach ($nodes as $callable) {
             $comment = array_shift($expected);
 

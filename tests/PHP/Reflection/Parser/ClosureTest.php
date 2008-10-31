@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage AST
+ * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,21 +46,61 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/SourceElementI.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * This interface represents an <b>instanceof</b> node in the source code.
+ * Test case is for closure related parse operations.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage AST
+ * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_InstanceOfExpressionI
-    extends PHP_Reflection_AST_SourceElementI
+class PHP_Reflection_Parser_ClosureTest extends PHP_Reflection_AbstractTest
 {
+    /**
+     * Tests a simple lambda closure.
+     *
+     * @return void
+     */
+    public function testParserHandlesLambdaFunction()
+    {
+        self::_parseSource('lambda.php53');
+    }
+
+    /**
+     * Tests that the parser handles a lambda function with parameters.
+     *
+     * @return void
+     */
+    public function testParserHandlesLambdaFunctionWithParameters()
+    {
+        self::_parseSource('lamba_with_params.php53');
+    }
+
+    /**
+     * Tests that the parser handles a lambda function with parameters by reference.
+     *
+     * @return void
+     */
+    public function testParserHandlesLambdaFunctionWithReferenceParameters()
+    {
+        self::_parseSource('lamba_with_ref_params.php53');
+    }
+
+    /**
+     * Parses a file within the /parser/closures/ test folder.
+     *
+     * @param string $fileName Name of the test file.
+     *
+     * @return PHP_Reflection_AST_Iterator
+     */
+    private static function _parseSource($fileName)
+    {
+        return self::parseSource('/parser/closures/' . $fileName);
+    }
 }

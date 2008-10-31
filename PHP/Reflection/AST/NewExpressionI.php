@@ -49,7 +49,7 @@
 require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
- * This interface represents an <b>instanceof</b> node in the source code.
+ * This interface represents a new expression.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,7 +60,6 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_InstanceOfExpressionI
-    extends PHP_Reflection_AST_SourceElementI
+interface PHP_Reflection_AST_NewExpressionI extends PHP_Reflection_AST_SourceElementI
 {
 }

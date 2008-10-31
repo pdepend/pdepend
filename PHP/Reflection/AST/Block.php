@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -61,7 +61,7 @@ require_once 'PHP/Reflection/AST/BlockI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_Block 
+class PHP_Reflection_AST_Block
        extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_BlockI
 {
@@ -69,14 +69,7 @@ class PHP_Reflection_AST_Block
      * The name if this node type.
      */
     const NODE_NAME = '#block';
-    
-    /**
-     * Source elements within this block.
-     *
-     * @var array(PHP_Reflection_AST_SourceElementI) $_sourceElements
-     */
-    private $_sourceElements = array();
-    
+
     /**
      * Constructs a new code block instance.
      *
@@ -86,24 +79,12 @@ class PHP_Reflection_AST_Block
     {
         parent::__construct(self::NODE_NAME, $line);
     }
-    
-    /**
-     * Adds the given source element to this block.
-     *
-     * @param PHP_Reflection_AST_SourceElementI $element The source element.
-     * 
-     * @return void
-     */
-    public function addSourceElement(PHP_Reflection_AST_SourceElementI $element)
-    {
-        $this->_sourceElements[] = $element;
-    }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Reflection_VisitorI $visitor)

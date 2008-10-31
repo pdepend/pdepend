@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -49,7 +49,7 @@
 require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
- * This interface represents an <b>instanceof</b> node in the source code.
+ * Base interface for functions and classes.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,7 +60,57 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_InstanceOfExpressionI
+interface PHP_Reflection_AST_CallableI 
     extends PHP_Reflection_AST_SourceElementI
 {
+
+    /**
+     * Returns the tokens found in the function body.
+     *
+     * @return array(mixed)
+     */
+    function getTokens();
+    
+    /**
+     * This method should return <b>true</b> when the context method or function
+     * returns a reference.
+     *
+     * @return boolean
+     */
+    function returnsReference();
+
+    /**
+     * Returns all {@link PHP_Reflection_AST_ClassOrInterfaceI} objects this 
+     * function depends on.
+     *
+     * @return PHP_Reflection_AST_Iterator
+     */
+    function getDependencies();
+
+    /**
+     * Returns the return type of this callable. By default and for scalar types
+     * this will be <b>null</b>.
+     *
+     * @return PHP_Reflection_AST_ClassOrInterfaceI
+     */
+    function getReturnType();
+
+    /**
+     * Returns an iterator with {@link PHP_Reflection_AST_ClassOrInterfaceI}
+     * nodes thrown by this function or method.
+     *
+     * @return PHP_Reflection_AST_Iterator
+     */
+    function getExceptionTypes();
+
+    /**
+     * Returns an iterator with all method/function parameters.
+     *
+     * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
+     * nodes. Use the {@link PHP_Reflection_AST_Parameter::getPosition()} for
+     * the correct parameter position.
+     *
+     * @return PHP_Reflection_AST_Iterator
+     */
+    function getParameters();
 }
