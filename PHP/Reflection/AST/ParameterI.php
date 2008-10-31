@@ -68,9 +68,9 @@ interface PHP_Reflection_AST_ParameterI
     /**
      * Returns the parent function or method instance or <b>null</b>
      *
-     * @return PHP_Reflection_AST_MethodOrFunctionI
+     * @return PHP_Reflection_AST_CallableI
      */
-    function getDeclaringMethodOrFunction();
+    function getDeclaringCallable();
     
     /**
      * Returns the parameter position in the method/function signature.

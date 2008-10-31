@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -53,6 +53,7 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once dirname(__FILE__) . '/ClosureTest.php';
 require_once dirname(__FILE__) . '/ConstantTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/MemberValueTest.php';
@@ -82,7 +83,7 @@ class PHP_Reflection_Parser_AllTests
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
-    
+
     /**
      * Creates the phpunit test suite for this package.
      *
@@ -91,6 +92,7 @@ class PHP_Reflection_Parser_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Reflection_Parser - AllTests');
+        $suite->addTestSuite('PHP_Reflection_Parser_ClosureTest');
         $suite->addTestSuite('PHP_Reflection_Parser_ConstantTest');
         $suite->addTestSuite('PHP_Reflection_Parser_FunctionTest');
         $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');

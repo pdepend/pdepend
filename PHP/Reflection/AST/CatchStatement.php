@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -69,25 +69,30 @@ class PHP_Reflection_AST_CatchStatement
      * Identifier for this node type.
      */
     const NODE_NAME = '#catch-statement';
-    
+
     /**
      * The referenced exception class or interface.
+     *
+     * FIXME: Remove this use children instead.
      *
      * @var PHP_Reflection_AST_ClassOrInterfaceI $_reference
      */
     private $_reference = null;
-    
+
     /**
      * Constructs a new catch statement node.
-     * 
+     *
      * @param integer $line The line number of this catch statement.
      */
     public function __construct($line)
     {
         parent::__construct(self::NODE_NAME, $line);
     }
+
     /**
      * Returns the referenced exception class or interface.
+     *
+     * FIXME: Remove this use children instead.
      *
      * @return PHP_Reflection_AST_ClassOrInterfaceI
      */
@@ -95,24 +100,26 @@ class PHP_Reflection_AST_CatchStatement
     {
         return $this->_reference;
     }
-    
+
     /**
      * Sets the referenced exception class or interface.
      *
+     * FIXME: Remove this use children instead.
+     *
      * @param PHP_Reflection_AST_ClassOrInterfaceI $reference The reference type.
-     * 
+     *
      * @return void
      */
     public function setReference(PHP_Reflection_AST_ClassOrInterfaceI $reference)
     {
         $this->_reference = $reference;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Reflection_VisitorI $visitor)
