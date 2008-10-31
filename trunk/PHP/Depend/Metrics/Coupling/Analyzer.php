@@ -249,11 +249,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Counts all calls within the given <b>$callable</b>
      *
-     * @param PHP_Reflection_AST_MethodOrFunctionI $callable Context callable.
+     * @param PHP_Reflection_AST_CallableI $callable Context callable.
      * 
      * @return void
      */
-    private function _countCalls(PHP_Reflection_AST_MethodOrFunctionI $callable)
+    private function _countCalls(PHP_Reflection_AST_CallableI $callable)
     {
         $callT  = array(
             PHP_Reflection_TokenizerI::T_STRING,

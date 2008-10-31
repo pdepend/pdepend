@@ -38,7 +38,6 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage AST
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,10 +45,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/SourceElementI.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
+require_once 'PHP/Reflection/AST/InstanceOfExpressionI.php';
 
 /**
- * This interface represents an <b>instanceof</b> node in the source code.
+ * This class represents an instance of node.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,7 +60,34 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_InstanceOfExpressionI
-    extends PHP_Reflection_AST_SourceElementI
+class PHP_Reflection_AST_InstanceOfExpression
+       extends PHP_Reflection_AST_AbstractSourceElement
+    implements PHP_Reflection_AST_InstanceOfExpressionI
 {
+    /**
+     * Identifier for this node type.
+     */
+    const NODE_NAME = '#instance-of-expression';
+
+    /**
+     * Constructs a instance of expression node.
+     *
+     * @param integer $line The line number of this catch statement.
+     */
+    public function __construct($line)
+    {
+        parent::__construct(self::NODE_NAME, $line);
+    }
+
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     *
+     * @return void
+     */
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        $visitor->visitInstanceOfExpression($this);
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -62,11 +62,11 @@ require_once 'PHP/Reflection/AST/Class.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_AST_AbstractDependencyAwareTest 
+abstract class PHP_Reflection_AST_AbstractDependencyAwareTest
        extends PHP_Reflection_AST_AbstractSourceElementTest
 {
     /**
-     * Tests that a new {@link PHP_Reflection_AST_DependencyAwareI} instance returns 
+     * Tests that a new {@link PHP_Reflection_AST_DependencyAwareI} instance returns
      * an empty {@link PHP_Reflection_AST_Iterator} for dependencies.
      *
      * @return void
@@ -75,58 +75,11 @@ abstract class PHP_Reflection_AST_AbstractDependencyAwareTest
     {
         $node         = $this->createDependencyNode();
         $dependencies = $node->getDependencies();
-        
+
         $this->assertType('PHP_Reflection_AST_Iterator', $dependencies);
         $this->assertEquals(0, $dependencies->count());
     }
-    
-    /**
-     * Tests that the add {@link PHP_Reflection_AST_DependencyAwareI::addDependency()} 
-     * adds a new depended object to the internal list, but it should accept each
-     * type only once.
-     * 
-     * @return void
-     *
-     */
-    public function testAddDependency()
-    {
-        $node = $this->createDependencyNode();
-        $dep0 = new PHP_Reflection_AST_Class('dep0', 0, 'dep0.php');
-        $dep1 = new PHP_Reflection_AST_Class('dep1', 0, 'dep1.php');
-        
-        $this->assertEquals(0, $node->getDependencies()->count());
-        $node->addDependency($dep0);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->addDependency($dep0);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->addDependency($dep1);
-        $this->assertEquals(2, $node->getDependencies()->count());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Reflection_AST_DependencyAwareI::removeDependency()} 
-     * method works as expected.
-     *
-     * @return void
-     */
-    public function testRemoveDependency()
-    {
-        $node = $this->createDependencyNode();
-        $dep0 = new PHP_Reflection_AST_Class('dep0', 0, 'dep0.php');
-        $dep1 = new PHP_Reflection_AST_Class('dep1', 0, 'dep1.php');
-        
-        $this->assertEquals(0, $node->getDependencies()->count());
-        $node->addDependency($dep0);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->addDependency($dep1);
-        $this->assertEquals(2, $node->getDependencies()->count());
-        
-        $node->removeDependency($dep1);
-        $this->assertEquals(1, $node->getDependencies()->count());
-        $node->removeDependency($dep0);
-        $this->assertEquals(0, $node->getDependencies()->count());
-    } 
-    
+
     /**
      * Generates a node instance that can handle dependencies.
      *

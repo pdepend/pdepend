@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractMethodOrFunction.php';
+require_once 'PHP/Reflection/AST/AbstractCallable.php';
 require_once 'PHP/Reflection/AST/FunctionI.php';
 
 /**
@@ -62,7 +62,7 @@ require_once 'PHP/Reflection/AST/FunctionI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_Function 
-       extends PHP_Reflection_AST_AbstractMethodOrFunction
+       extends PHP_Reflection_AST_AbstractCallable
     implements PHP_Reflection_AST_FunctionI
 {
     /**

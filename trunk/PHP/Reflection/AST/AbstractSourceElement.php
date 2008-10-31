@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -61,7 +61,7 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Reflection_AST_AbstractSourceElement 
+abstract class PHP_Reflection_AST_AbstractSourceElement
        extends PHP_Reflection_AST_AbstractNode
     implements PHP_Reflection_AST_SourceElementI
 {
@@ -71,28 +71,35 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
      * @var integer $_line
      */
     private $_line = 0;
-    
+
     /**
      * The line number where the item declaration ends.
      *
      * @var integer $_endLine
      */
     private $_endLine = 0;
-    
+
     /**
      * The source file for this item.
      *
      * @var PHP_Reflection_AST_File $_sourceFile
      */
     private $_sourceFile = null;
-    
+
     /**
      * The comment for this type.
      *
      * @var string $_docComment
      */
     private $_docComment = null;
-    
+
+    /**
+     * Source elements within this block.
+     *
+     * @var array(PHP_Reflection_AST_SourceElementI) $_sourceElements
+     */
+    private $_sourceElements = array();
+
     /**
      * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
      *
@@ -102,10 +109,63 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     public function __construct($name, $line = 0)
     {
         parent::__construct($name);
-        
+
         $this->_line = $line;
     }
-    
+
+    /**
+     * Returns a list of all direct children of the given type.
+     *
+     * @param string $type The class or interface name.
+     *
+     * @return array(PHP_Reflection_AST_SourceElementI)
+     */
+    public function getChildrenOfType($type)
+    {
+        $sourceElements = array();
+        foreach ($this->_sourceElements as $sourceElement)
+        {
+            if ($sourceElement instanceof $type) {
+                $sourceElements[] = $sourceElement;
+            }
+        }
+        return $sourceElements;
+    }
+
+    /**
+     * Finds all source elements of the given type.
+     *
+     * @param string $type The class or interface name.
+     *
+     * @return array(PHP_Reflection_AST_SourceElementI)
+     */
+    public function findChildrenOfType($type)
+    {
+        $sourceElements = array();
+        foreach ($this->_sourceElements as $sourceElement)
+        {
+            if ($sourceElement instanceof $type) {
+                $sourceElements[] = $sourceElement;
+            }
+            foreach ($sourceElement->findChildrenOfType($type) as $element) {
+                $sourceElements[] = $element;
+            }
+        }
+        return $sourceElements;
+    }
+
+    /**
+     * Adds the given source element to this block.
+     *
+     * @param PHP_Reflection_AST_SourceElementI $element The source element.
+     *
+     * @return void
+     */
+    public function addChild(PHP_Reflection_AST_SourceElementI $element)
+    {
+        $this->_sourceElements[] = $element;
+    }
+
     /**
      * Returns the line number where the item declaration can be found.
      *
@@ -115,12 +175,12 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     {
         return $this->_line;
     }
-    
+
     /**
      * Sets the start line for this item.
      *
      * @param integer $startLine The start line for this item.
-     * 
+     *
      * @return void
      */
     public function setLine($startLine)
@@ -129,7 +189,7 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
             $this->_line = $startLine;
         }
     }
-    
+
     /**
      * Returns the line number where the item declaration ends.
      *
@@ -139,12 +199,12 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     {
         return $this->_endLine;
     }
-    
+
     /**
      * Sets the end line for this item.
      *
      * @param integer $endLine The end line for this item
-     * 
+     *
      * @return void
      */
     public function setEndLine($endLine)
@@ -153,7 +213,7 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
             $this->_endLine = $endLine;
         }
     }
-    
+
     /**
      * Returns the source file for this item.
      *
@@ -163,10 +223,10 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     {
         return $this->_sourceFile;
     }
-    
+
     /**
      * Sets the source file for this item.
-     * 
+     *
      * @param PHP_Reflection_AST_File $sourceFile The item source file.
      *
      * @return void
@@ -177,7 +237,7 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
             $this->_sourceFile = $sourceFile;
         }
     }
-    
+
     /**
      * Returns the doc comment for this item or <b>null</b>.
      *
@@ -187,12 +247,12 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     {
         return $this->_docComment;
     }
-    
+
     /**
      * Sets the doc comment for this item.
      *
      * @param string $docComment The doc comment block.
-     * 
+     *
      * @return void
      */
     public function setDocComment($docComment)
