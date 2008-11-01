@@ -233,6 +233,18 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     }
 
     /**
+     * Visits a if statement node.
+     *
+     * @param PHP_Reflection_AST_IfStatement $ifStmt The if statement node.
+     *
+     * @return void
+     */
+    public function visitIfStatement(PHP_Reflection_AST_IfStatement $ifStmt)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
      * Visits a function node.
      *
      * @param PHP_Reflection_AST_Function $function The current function node.
