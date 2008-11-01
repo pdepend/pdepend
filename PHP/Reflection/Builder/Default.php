@@ -60,7 +60,6 @@ require_once 'PHP/Reflection/AST/ConstantValue.php';
 require_once 'PHP/Reflection/AST/Interface.php';
 require_once 'PHP/Reflection/AST/InterfaceProxy.php';
 require_once 'PHP/Reflection/AST/Iterator.php';
-require_once 'PHP/Reflection/AST/Function.php';
 require_once 'PHP/Reflection/AST/MemberFalseValue.php';
 require_once 'PHP/Reflection/AST/MemberNullValue.php';
 require_once 'PHP/Reflection/AST/MemberNumericValue.php';
@@ -550,6 +549,8 @@ class PHP_Reflection_Builder_Default
      */
     public function buildFunction($name, $line = 0)
     {
+        require_once 'PHP/Reflection/AST/Function.php';
+
         if (!isset($this->_createdFunctionSet[$name])) {
             // Create new function
             $function = new PHP_Reflection_AST_Function($name, $line);
@@ -631,6 +632,20 @@ class PHP_Reflection_Builder_Default
         require_once 'PHP/Reflection/AST/InstanceOfExpression.php';
 
         return new PHP_Reflection_AST_InstanceOfExpression($line);
+    }
+
+    /**
+     * Builds a new code if statement.
+     *
+     * @param integer $line The line number of this if statement.
+     *
+     * @return PHP_Reflection_AST_IfStatement
+     */
+    public function buildIfStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/If/Statement.php';
+
+        return new PHP_Reflection_AST_IfStatement($line);
     }
 
     /**
