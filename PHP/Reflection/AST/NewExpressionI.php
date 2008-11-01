@@ -46,6 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/AST/ExpressionI.php';
 require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
@@ -60,6 +61,8 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI extends PHP_Reflection_AST_SourceElementI
+interface PHP_Reflection_AST_NewExpressionI
+    extends PHP_Reflection_AST_ExpressionI,
+            PHP_Reflection_AST_SourceElementI
 {
 }
