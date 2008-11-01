@@ -130,7 +130,7 @@ interface PHP_Reflection_VisitorI
      *
      * @return void
      */
-    function visitPackage(Reflection_AST_PackageI $package);
+    function visitPackage(PHP_Reflection_AST_PackageI $package);
 
     /**
      * Visits a parameter list node.
