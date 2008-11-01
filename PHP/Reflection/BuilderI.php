@@ -264,6 +264,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildInstanceOfExpression($line);
 
     /**
+     * Builds a new code if statement.
+     *
+     * @param integer $line The line number of this if statement.
+     *
+     * @return PHP_Reflection_AST_IfStatement
+     */
+    function buildIfStatement($line);
+
+    /**
      * Builds a new array value instance.
      *
      * @return PHP_Reflection_AST_ArrayExpression
