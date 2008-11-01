@@ -286,6 +286,19 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits a if statement node.
+     *
+     * @param PHP_Reflection_AST_IfStatement $ifStmt The if statement node.
+     *
+     * @return void
+     */
+    public function visitIfStatement(PHP_Reflection_AST_IfStatement $ifStmt)
+    {
+        // TODO: $this->fireStartIfStatement($stmt);
+        // TODO: $this->fireEndIfStatement($stmt);
+    }
+
+    /**
      * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const
