@@ -353,10 +353,18 @@ class PHP_Reflection_Parser
 
         $this->reset();
 
-        $block = $this->_parseBlock($tokens);
+        // FIXME: remove this
+        $tmp = array();
+
+        $block = $this->_parseBlock($tmp);
         $function->addChild($block);
         $function->setEndLine($block->getEndLine());
-        $function->setTokens($tokens);
+        $function->setTokens($tmp);
+
+        // FIXME: remove this
+        foreach ($tmp as $token) {
+            $tokens[] = $token;
+        }
 
         $this->_prepareCallable($function);
 
@@ -829,10 +837,18 @@ class PHP_Reflection_Parser
 
         $this->_consumeComments();
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
-            $block = $this->_parseBlock($tokens);
+            // FIXME: remove this
+            $tmp = array();
+
+            $block = $this->_parseBlock($tmp);
             $method->addChild($block);
             $method->setEndLine($block->getEndLine());
-            $method->setTokens($tokens);
+            $method->setTokens($tmp);
+
+            // FIXME: remove this
+            foreach ($tmp as $token) {
+                $tokens[] = $token;
+            }
         } else {
             $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
             $method->setEndLine($token[2]);
@@ -1319,8 +1335,6 @@ class PHP_Reflection_Parser
             switch ($this->tokenizer->peek()) {
 
             case self::T_FUNCTION:
-$tmp = end($tokens);
-echo $tmp[2], ') ', $this->tokenizer->getSourceFile(), PHP_EOL;
                 $block->addChild($this->_parseFunctionOrClosure($tokens));
                 break;
 
