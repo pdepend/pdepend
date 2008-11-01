@@ -210,11 +210,11 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * Visits a parameter node.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The parameter node.
+     * @param PHP_Reflection_AST_ParameterI $parameter The parameter node.
      *
      * @return void
      */
-    public function visitParameter(PHP_Reflection_AST_Parameter $parameter)
+    public function visitParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         $this->parameter = $parameter;
     }
@@ -222,12 +222,12 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * Visits a property node.
      *
-     * @param PHP_Reflection_AST_Property $property The property class node.
+     * @param PHP_Reflection_AST_PropertyI $property The property class node.
      *
      * @return void
      * @see PHP_Reflection_AST_NodeVisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_AST_Property $property)
+    public function visitProperty(PHP_Reflection_AST_PropertyI $property)
     {
         $this->property = $property;
     }

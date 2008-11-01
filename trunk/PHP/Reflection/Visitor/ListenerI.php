@@ -171,38 +171,38 @@ interface PHP_Reflection_Visitor_ListenerI
     /**
      * Is called when the visitor starts a new parameter instance.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The context parameter instance.
      *
      * @return void
      */
-    function startVisitParameter(PHP_Reflection_AST_Parameter $parameter);
+    function startVisitParameter(PHP_Reflection_AST_ParameterI $parameter);
 
     /**
      * Is called when the visitor ends with a parameter instance.
      *
-     * @param PHP_Reflection_AST_Package $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The context parameter instance.
      *
      * @return void
      */
-    function endVisitParameter(PHP_Reflection_AST_Parameter $parameter);
+    function endVisitParameter(PHP_Reflection_AST_ParameterI $parameter);
 
     /**
      * Is called when the visitor starts a new property instance.
      *
-     * @param PHP_Reflection_AST_Property $property The context property instance.
+     * @param PHP_Reflection_AST_PropertyI $property The context property instance.
      *
      * @return void
      */
-    function startVisitProperty(PHP_Reflection_AST_Property $property);
+    function startVisitProperty(PHP_Reflection_AST_PropertyI $property);
 
     /**
      * Is called when the visitor ends with a property instance.
      *
-     * @param PHP_Reflection_AST_Property $property The context property instance.
+     * @param PHP_Reflection_AST_PropertyI $property The context property instance.
      *
      * @return void
      */
-    function endVisitProperty(PHP_Reflection_AST_Property $property);
+    function endVisitProperty(PHP_Reflection_AST_PropertyI $property);
 
     /**
      * Is called when the visitor starts a new constant instance.
