@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -54,7 +54,7 @@ require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
- * from <a href="http://clarkware.com/software/JDepend.html">JDepend</a>. 
+ * from <a href="http://clarkware.com/software/JDepend.html">JDepend</a>.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -65,7 +65,7 @@ require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Jdepend_Xml 
+class PHP_Depend_Log_Jdepend_Xml
        extends PHP_Reflection_Visitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
@@ -77,85 +77,85 @@ class PHP_Depend_Log_Jdepend_Xml
      * @var string $_logFile
      */
     private $_logFile = null;
-    
+
     /**
      * The raw {@link PHP_Reflection_AST_Package} instances.
      *
      * @var PHP_Reflection_AST_Iterator $code
      */
     protected $code = null;
-    
+
     /**
      * Set of all analyzed files.
      *
      * @var array(string=>PHP_Reflection_AST_File) $fileSet
      */
     protected $fileSet = array();
-    
+
     /**
      * List of all generated project metrics.
      *
      * @var array(string=>mixed) $projectMetrics
      */
     protected $projectMetrics = array();
-    
+
     /**
      * List of all collected node metrics.
      *
      * @var array(string=>array) $nodeMetrics
      */
     protected $nodeMetrics = array();
-    
+
     /**
      * The depedency result set.
      *
      * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
      */
     protected $analyzer = null;
-    
+
     /**
      * The Packages dom element.
      *
      * @var DOMElement $packages
      */
     protected $packages = null;
-    
+
     /**
      * The Cycles dom element.
      *
      * @var DOMElement $cycles
      */
     protected $cycles = null;
-    
+
     /**
      * The concrete classes element for the current package.
      *
      * @var DOMElement $concreteClasses
      */
     protected $concreteClasses = null;
-    
+
     /**
      * The abstract classes element for the current package.
      *
      * @var DOMElement $abstractClasses
      */
     protected $abstractClasses = null;
-    
+
     /**
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     * 
+     *
      * @return void
      */
     public function setLogFile($logFile)
     {
         $this->_logFile = $logFile;
     }
-    
+
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
-     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
      * @return array(string)
      */
@@ -163,25 +163,25 @@ class PHP_Depend_Log_Jdepend_Xml
     {
         return array('PHP_Depend_Metrics_Dependency_Analyzer');
     }
-    
+
     /**
      * Sets the context code nodes.
      *
      * @param PHP_Reflection_AST_Iterator $code The code nodes.
-     * 
+     *
      * @return void
      */
     public function setCode(PHP_Reflection_AST_Iterator $code)
     {
         $this->code = $code;
     }
-    
+
     /**
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
-     * 
+     *
      * @return boolean
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
@@ -193,7 +193,7 @@ class PHP_Depend_Log_Jdepend_Xml
         }
         return false;
     }
-    
+
     /**
      * Closes the logger process and writes the output file.
      *
@@ -206,86 +206,86 @@ class PHP_Depend_Log_Jdepend_Xml
         if ($this->_logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
-        
+
         $dom = new DOMDocument('1.0', 'UTF-8');
-        
+
         $dom->formatOutput = true;
 
         $jdepend = $dom->createElement('PDepend');
-        
+
         $this->packages = $jdepend->appendChild($dom->createElement('Packages'));
         $this->cycles   = $jdepend->appendChild($dom->createElement('Cycles'));
-        
+
         foreach ($this->code as $node) {
             $node->accept($this);
         }
-        
+
         $dom->appendChild($jdepend);
         $dom->save($this->_logFile);
     }
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Reflection_AST_ClassI $class The current class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
     public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $doc = $this->packages->ownerDocument;
-        
+
         $classXml = $doc->createElement('Class');
         $classXml->setAttribute('sourceFile', (string) $class->getSourceFile());
         $classXml->appendChild($doc->createTextNode($class->getName()));
-        
+
         if ($class->isAbstract()) {
             $this->abstractClasses->appendChild($classXml);
         } else {
             $this->concreteClasses->appendChild($classXml);
         }
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $doc = $this->abstractClasses->ownerDocument;
-        
+
         $classXml = $doc->createElement('Class');
         $classXml->setAttribute('sourceFile', (string) $interface->getSourceFile());
         $classXml->appendChild($doc->createTextNode($interface->getName()));
-        
+
         $this->abstractClasses->appendChild($classXml);
     }
-    
+
     /**
-     * Visits a package node. 
+     * Visits a package node.
      *
-     * @param PHP_Reflection_AST_Package $package The package class node.
-     * 
+     * @param PHP_Reflection_AST_PackageI $package The package class node.
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_AST_Package $package)
+    public function visitPackage(PHP_Reflection_AST_PackageI $package)
     {
         $doc = $this->packages->ownerDocument;
-        
+
         $this->concreteClasses = $doc->createElement('ConcreteClasses');
         $this->abstractClasses = $doc->createElement('AbstractClasses');
 
         $packageXml = $doc->createElement('Package');
         $packageXml->setAttribute('name', $package->getName());
-        
+
         $stats = $this->analyzer->getStats($package);
-        
+
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
                  ->appendChild($doc->createTextNode($stats['tc']));
@@ -298,61 +298,61 @@ class PHP_Depend_Log_Jdepend_Xml
         $statsXml->appendChild($doc->createElement('Ce'))
                  ->appendChild($doc->createTextNode($stats['ce']));
         $statsXml->appendChild($doc->createElement('A'))
-                 ->appendChild($doc->createTextNode($stats['a'])); 
+                 ->appendChild($doc->createTextNode($stats['a']));
         $statsXml->appendChild($doc->createElement('I'))
                  ->appendChild($doc->createTextNode($stats['i']));
         $statsXml->appendChild($doc->createElement('D'))
                  ->appendChild($doc->createTextNode($stats['d']));
-                 
+
         $dependsUpon = $doc->createElement('DependsUpon');
-        
+
         // TODO: Remove this ugly sorting stuff
         $efferents = $this->analyzer->getEfferents($package);
         usort($efferents, array($this, '_compareNodes'));
         foreach ($efferents as $efferent) {
             $efferentXml = $doc->createElement('Package');
             $efferentXml->appendChild($doc->createTextNode($efferent->getName()));
-            
+
             $dependsUpon->appendChild($efferentXml);
         }
-        
+
         $usedBy = $doc->createElement('UsedBy');
-        
+
         // TODO: Remove this ugly sorting stuff
         $afferents = $this->analyzer->getAfferents($package);
         usort($afferents, array($this, '_compareNodes'));
         foreach ($afferents as $afferent) {
             $afferentXml = $doc->createElement('Package');
             $afferentXml->appendChild($doc->createTextNode($afferent->getName()));
-            
+
             $usedBy->appendChild($afferentXml);
         }
-        
+
         $packageXml->appendChild($statsXml);
         $packageXml->appendChild($this->concreteClasses);
         $packageXml->appendChild($this->abstractClasses);
         $packageXml->appendChild($dependsUpon);
         $packageXml->appendChild($usedBy);
-        
+
         if (($cycles = $this->analyzer->getCycle($package)) !== null) {
             $cycleXml = $doc->createElement('Package');
             $cycleXml->setAttribute('Name', $package->getName());
-            
+
             foreach ($cycles as $cycle) {
                 $cycleXml->appendChild($doc->createElement('Package'))
                          ->appendChild($doc->createTextNode($cycle->getName()));
             }
-            
+
             $this->cycles->appendChild($cycleXml);
         }
-        
+
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
         }
-            
+
         $this->packages->appendChild($packageXml);
     }
-    
+
     private function _compareNodes(PHP_Reflection_AST_NodeI $node1,
                                    PHP_Reflection_AST_NodeI $node2)
     {

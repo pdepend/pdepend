@@ -186,11 +186,11 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * Visits a package node.
      *
-     * @param PHP_Reflection_AST_Package $package The package class node.
+     * @param PHP_Reflection_AST_PackageI $package The package class node.
      *
      * @return void
      */
-    public function visitPackage(PHP_Reflection_AST_Package $package)
+    public function visitPackage(PHP_Reflection_AST_PackageI $package)
     {
         $this->package = $package;
     }
