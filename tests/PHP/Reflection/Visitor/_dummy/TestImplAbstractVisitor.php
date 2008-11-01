@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -69,109 +69,109 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
      * @var array(string=>integer)
      */
     public $visits = array();
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Reflection_AST_ClassI $class The current class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitClass()
      */
     public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->visits[] = $class->getName();
-        
+
         parent::visitClass($class);
     }
-    
+
     /**
-     * Visits a file node. 
+     * Visits a file node.
      *
      * @param PHP_Reflection_AST_File $file The current file node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitFile()
      */
     public function visitFile(PHP_Reflection_AST_File $file)
     {
         $this->visits[] = $file->getFileName();
-        
+
         parent::visitFile($file);
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Reflection_AST_Function $function The current function node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Reflection_AST_FunctionI $function)
     {
         $this->visits[] = $function->getName();
-        
+
         parent::visitFunction($function);
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
     {
         $this->visits[] = $interface->getName();
-        
+
         parent::visitInterface($interface);
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Reflection_AST_MethodI $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->visits[] = $method->getName();
-        
+
         parent::visitMethod($method);
     }
-    
+
     /**
-     * Visits a package node. 
+     * Visits a package node.
      *
-     * @param PHP_Reflection_AST_Package $package The package class node.
-     * 
+     * @param PHP_Reflection_AST_PackageI $package The package class node.
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_AST_Package $package)
+    public function visitPackage(PHP_Reflection_AST_PackageI $package)
     {
         $this->visits[] = $package->getName();
-        
+
         parent::visitPackage($package);
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Reflection_AST_Property $property The property class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitProperty()
      */
     public function visitProperty(PHP_Reflection_AST_Property $property)
     {
         $this->visits[] = $property->getName();
-        
+
         parent::visitProperty($property);
     }
 }
