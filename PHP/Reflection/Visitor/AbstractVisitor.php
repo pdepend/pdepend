@@ -256,11 +256,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a parameter node.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The parameter node.
+     * @param PHP_Reflection_AST_ParameterI $parameter The parameter node.
      *
      * @return void
      */
-    public function visitParameter(PHP_Reflection_AST_Parameter $parameter)
+    public function visitParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         $this->fireStartParameter($parameter);
         $this->fireEndParameter($parameter);
@@ -269,12 +269,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a property node.
      *
-     * @param PHP_Reflection_AST_Property $property The property class node.
+     * @param PHP_Reflection_AST_PropertyI $property The property class node.
      *
      * @return void
      * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_AST_Property $property)
+    public function visitProperty(PHP_Reflection_AST_PropertyI $property)
     {
         $this->fireStartProperty($property);
 
@@ -621,11 +621,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start parameter event.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The context parameter instance.
      *
      * @return void
      */
-    protected function fireStartParameter(PHP_Reflection_AST_Parameter $parameter)
+    protected function fireStartParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitParameter($parameter);
@@ -635,11 +635,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a end parameter event.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The context parameter instance.
      *
      * @return void
      */
-    protected function fireEndParameter(PHP_Reflection_AST_Parameter $parameter)
+    protected function fireEndParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitParameter($parameter);
@@ -649,11 +649,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends a start property event.
      *
-     * @param PHP_Reflection_AST_Property $property The context property instance.
+     * @param PHP_Reflection_AST_PropertyI $property The context property instance.
      *
      * @return void
      */
-    protected function fireStartProperty(PHP_Reflection_AST_Property $property)
+    protected function fireStartProperty(PHP_Reflection_AST_PropertyI $property)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitProperty($property);
@@ -663,11 +663,11 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Sends an end property event.
      *
-     * @param PHP_Reflection_AST_Property $property The context property instance.
+     * @param PHP_Reflection_AST_PropertyI $property The context property instance.
      *
      * @return void
      */
-    protected function fireEndProperty(PHP_Reflection_AST_Property $property)
+    protected function fireEndProperty(PHP_Reflection_AST_PropertyI $property)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitProperty($property);

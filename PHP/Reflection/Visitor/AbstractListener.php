@@ -211,11 +211,11 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor starts a new parameter instance.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The context parameter instance.
      *
      * @return void
      */
-    public function startVisitParameter(PHP_Reflection_AST_Parameter $parameter)
+    public function startVisitParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         $this->startVisitNode($parameter);
     }
@@ -223,11 +223,11 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor ends with a parameter instance.
      *
-     * @param PHP_Reflection_AST_Package $parameter The context parameter instance.
+     * @param PHP_Reflection_AST_ParameterI $parameter The context parameter instance.
      *
      * @return void
      */
-    public function endVisitParameter(PHP_Reflection_AST_Parameter $parameter)
+    public function endVisitParameter(PHP_Reflection_AST_ParameterI $parameter)
     {
         $this->endVisitNode($parameter);
     }
@@ -235,11 +235,11 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor starts a new property instance.
      *
-     * @param PHP_Reflection_AST_Property $property The context property instance.
+     * @param PHP_Reflection_AST_PropertyI $property The context property instance.
      *
      * @return void
      */
-    public function startVisitProperty(PHP_Reflection_AST_Property $property)
+    public function startVisitProperty(PHP_Reflection_AST_PropertyI $property)
     {
         $this->startVisitNode($property);
     }
@@ -247,11 +247,11 @@ abstract class PHP_Reflection_Visitor_AbstractListener
     /**
      * Is called when the visitor ends with a property instance.
      *
-     * @param PHP_Reflection_AST_Property $property The context property instance.
+     * @param PHP_Reflection_AST_PropertyI $property The context property instance.
      *
      * @return void
      */
-    public function endVisitProperty(PHP_Reflection_AST_Property $property)
+    public function endVisitProperty(PHP_Reflection_AST_PropertyI $property)
     {
         $this->endVisitNode($property);
     }

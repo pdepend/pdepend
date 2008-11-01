@@ -144,20 +144,20 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a parameter node.
      *
-     * @param PHP_Reflection_AST_Parameter $parameter The parameter node.
+     * @param PHP_Reflection_AST_ParameterI $parameter The parameter node.
      *
      * @return void
      */
-    function visitParameter(PHP_Reflection_AST_Parameter $parameter);
+    function visitParameter(PHP_Reflection_AST_ParameterI $parameter);
 
     /**
      * Visits a property node.
      *
-     * @param PHP_Reflection_AST_Property $property The property class node.
+     * @param PHP_Reflection_AST_PropertyI $property The property class node.
      *
      * @return void
      */
-    function visitProperty(PHP_Reflection_AST_Property $property);
+    function visitProperty(PHP_Reflection_AST_PropertyI $property);
 
     /**
      * Visits a class constant node.
