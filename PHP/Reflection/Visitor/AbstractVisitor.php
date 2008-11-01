@@ -241,6 +241,19 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits a parameter list node.
+     *
+     * @param PHP_Reflection_AST_ParameterListI $paramList The parameter list.
+     *
+     * @return void
+     */
+    public function visitParameterList(PHP_Reflection_AST_ParameterListI $paramList)
+    {
+        // TODO: $this->fireStartParameterList($stmt);
+        // TODO: $this->fireEndParameterList($stmt);
+    }
+
+    /**
      * Visits a parameter node.
      *
      * @param PHP_Reflection_AST_Parameter $parameter The parameter node.

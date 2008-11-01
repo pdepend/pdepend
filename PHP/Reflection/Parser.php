@@ -341,12 +341,14 @@ class PHP_Reflection_Parser
 
         // Skip comment tokens before function signature
         $this->_consumeComments($tokens);
-
+/*
+ * TODO: Remove
         $parameters = $this->_parseParameterList($tokens);
         foreach ($parameters as $parameter) {
             $function->addParameter($parameter);
         }
-
+*/
+        $function->addChild($this->_parseParameterList($tokens));
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
         $function->setReturnsReference($returnsReference);
@@ -821,12 +823,14 @@ class PHP_Reflection_Parser
         $this->_consumeComments($tokens);
 
         $method = $this->builder->buildMethod($token[1], $token[2]);
-
+        $method->addChild($this->_parseParameterList($tokens));
+/*
+ * TODO: Remove this
         $parameterList = $this->_parseParameterList($tokens);
         foreach ($parameterList as $parameter) {
             $method->addParameter($parameter);
         }
-
+*/
         $method->setReturnsReference($returnsReference);
         $method->setDocComment($this->_comment);
         $method->setPosition($this->_methodPosition++);
@@ -902,14 +906,15 @@ class PHP_Reflection_Parser
      */
     private function _parseParameterList(array &$tokens)
     {
-        $parameterList = array();
-
-        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        $token = $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
         $this->_consumeComments($tokens);
 
-        while (($tokenID = $this->tokenizer->peek()) !== self::T_EOF) {
+        $parameterPosition = 0;
+        $parameterList     = $this->builder->buildParameterList($token[2]);
 
-            switch ($tokenID) {
+        while (($type = $this->tokenizer->peek()) !== self::T_EOF) {
+
+            switch ($type) {
 
             // Closing parenthesis for parameter list
             case self::T_PARENTHESIS_CLOSE:
@@ -923,9 +928,9 @@ class PHP_Reflection_Parser
 
             default:
                 $parameter = $this->_parseParameter($tokens);
-                $parameter->setPosition(count($parameterList));
+                $parameter->setPosition($parameterPosition++);
 
-                $parameterList[] = $parameter;
+                $parameterList->addChild($parameter);
                 break;
             }
             $this->_consumeComments($tokens);
@@ -1421,11 +1426,13 @@ class PHP_Reflection_Parser
     private function _parseClosure($line, array &$tokens = array())
     {
         $closure = $this->builder->buildClosure($line);
-
+        $closure->addChild($this->_parseParameterList($tokens));
+/*
+ * TODO: Remove this
         foreach ($this->_parseParameterList($tokens) as $parameter) {
             $closure->addParameter($parameter);
         }
-
+*/
         $this->_consumeComments($tokens);
         if ($this->tokenizer->peek() === self::T_USE) {
             $this->_consumeToken(self::T_USE, $tokens);
