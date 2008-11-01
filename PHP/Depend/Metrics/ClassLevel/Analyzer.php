@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -52,9 +52,9 @@ require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 
 /**
- * Generates some class level based metrics. This analyzer is based on the 
+ * Generates some class level based metrics. This analyzer is based on the
  * metrics specified in the following document.
- * 
+ *
  * http://www.aivosto.com/project/help/pm-oo-misc.html
  *
  * @category   QualityAssurance
@@ -93,19 +93,19 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
-    
+
     /**
      * The internal used cyclomatic complexity analyzer.
      *
      * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticAnalyzer
      */
     private $_cyclomaticAnalyzer = null;
-    
+
     /**
      * Processes all {@link PHP_Reflection_AST_Package} code nodes.
      *
      * @param PHP_Reflection_AST_Iterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Reflection_AST_Iterator $packages)
@@ -115,23 +115,23 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             if ($this->_cyclomaticAnalyzer === null) {
                 throw new RuntimeException('Missing required CC analyzer.');
             }
-            
+
             $this->fireStartAnalyzer();
-            
+
             $this->_cyclomaticAnalyzer->analyze($packages);
-            
+
             // Init node metrics
             $this->_nodeMetrics = array();
-            
+
             // Visit all nodes
             foreach ($packages as $package) {
                 $package->accept($this);
             }
-            
+
             $this->fireEndAnalyzer();
         }
     }
-    
+
     /**
      * This method must return an <b>array</b> of class names for required
      * analyzers.
@@ -144,30 +144,30 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             'PHP_Depend_Metrics_CyclomaticComplexity_Analyzer'
         );
     }
-    
+
     /**
      * Adds a required sub analyzer.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The sub analyzer instance.
-     * 
+     *
      * @return void
      */
     public function addAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         if ($analyzer instanceof PHP_Depend_Metrics_CyclomaticComplexity_Analyzer) {
-            $this->_cyclomaticAnalyzer = $analyzer;    
+            $this->_cyclomaticAnalyzer = $analyzer;
         } else {
             throw new InvalidArgumentException('CC Analyzer required.');
         }
     }
-    
+
     /**
-     * This method will return an <b>array</b> with all generated metric values 
-     * for the given <b>$node</b>. If there are no metrics for the requested 
+     * This method will return an <b>array</b> with all generated metric values
+     * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
      * @param PHP_Reflection_AST_NodeI $node The context node instance.
-     * 
+     *
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(PHP_Reflection_AST_NodeI $node)
@@ -178,19 +178,19 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         }
         return $metrics;
     }
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Reflection_AST_ClassI $class The current class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Reflection_AST_ClassI $class)
     {
         $this->fireStartClass($class);
-        
+
         $this->_nodeMetrics[$class->getUUID()] = array(
             'dit'     =>  $this->_calculateDIT($class),
             'impl'    =>  $class->getImplementedInterfaces()->count(),
@@ -203,22 +203,22 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             'wmci'    =>  $this->_calculateWMCi($class),
             'wmcnp'   =>  0
         );
-    
+
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
-        
+
         $this->fireEndClass($class);
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitInterface()
      */
@@ -226,60 +226,60 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     {
         // Empty visit method, we don't want interface metrics
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Reflection_AST_MethodI $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Reflection_AST_MethodI $method)
     {
         $this->fireStartMethod($method);
-        
+
         // Get parent class uuid
         $uuid = $method->getParent()->getUUID();
-        
+
         $ccn2 = $this->_cyclomaticAnalyzer->getCCN2($method);
-        
+
         // Increment Weighted Methods Per Class(WMC) value
         $this->_nodeMetrics[$uuid]['wmc'] += $ccn2;
         // Increment Class Size(CSZ) value
         $this->_nodeMetrics[$uuid]['csz'] += $ccn2;
-        
+
         // Increment Non Private values
         if ($method->isPublic()) {
             // Increment Non Private WMC value
             $this->_nodeMetrics[$uuid]['wmcnp'] += $ccn2;
             // Increment Class Interface Size(CIS) value
-            $this->_nodeMetrics[$uuid]['cis'] += $ccn2; 
+            $this->_nodeMetrics[$uuid]['cis'] += $ccn2;
         }
-        
+
         $this->fireEndMethod($method);
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
-     * @param PHP_Reflection_AST_Property $property The property class node.
-     * 
+     * @param PHP_Reflection_AST_PropertyI $property The property class node.
+     *
      * @return void
      * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_AST_Property $property)
+    public function visitProperty(PHP_Reflection_AST_PropertyI $property)
     {
         $this->fireStartProperty($property);
-        
+
         // Get parent class uuid
         $uuid = $property->getParent()->getUUID();
-        
+
         // Increment VARS value
         ++$this->_nodeMetrics[$uuid]['vars'];
         // Increment Class Size(CSZ) value
         ++$this->_nodeMetrics[$uuid]['csz'];
-        
+
         // Increment Non Private values
         if ($property->isPublic()) {
             // Increment Non Private VARS value
@@ -287,15 +287,15 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             // Increment Class Interface Size(CIS) value
             ++$this->_nodeMetrics[$uuid]['cis'];
         }
-        
+
         $this->fireEndProperty($property);
     }
-    
+
     /**
      * Returns the depth of inheritance tree value for the given class.
      *
      * @param PHP_Reflection_AST_Class $class The context code class instance.
-     * 
+     *
      * @return integer
      */
     private function _calculateDIT(PHP_Reflection_AST_Class $class)
@@ -306,13 +306,13 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         }
         return $dit;
     }
-    
+
     /**
-     * Calculates the Variables Inheritance of a class metric, this method only 
+     * Calculates the Variables Inheritance of a class metric, this method only
      * counts protected and public properties of parent classes.
      *
      * @param PHP_Reflection_AST_Class $class The context class instance.
-     * 
+     *
      * @return integer
      */
     private function _calculateVARSi(PHP_Reflection_AST_Class $class)
@@ -323,7 +323,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         foreach ($class->getProperties() as $prop) {
             $properties[$prop->getName()] = true;
         }
-        
+
         // Get parent class and collect all non private properties
         $parent = $class->getParentClass();
 
@@ -339,18 +339,18 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         }
         return count($properties);
     }
-    
+
     /**
-     * Calculates the Weight Method Per Class metric, this method only counts 
+     * Calculates the Weight Method Per Class metric, this method only counts
      * protected and public methods of parent classes.
      *
      * @param PHP_Reflection_AST_Class $class The context class instance.
-     * 
+     *
      * @return integer
      */
     private function _calculateWMCi(PHP_Reflection_AST_Class $class)
     {
-        // List of methods, this method only counts not overwritten methods. 
+        // List of methods, this method only counts not overwritten methods.
         $methods = array();
         // First collect all methods of the context class
         foreach ($class->getMethods() as $method) {
@@ -359,7 +359,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
 
         // Get parent class and collect all non private methods.
         $parent = $class->getParentClass();
-        
+
         while ($parent !== null) {
             // Count all methods
             foreach ($parent->getMethods() as $method) {

@@ -352,12 +352,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a property node.
      *
-     * @param PHP_Reflection_AST_Property $property The property class node.
+     * @param PHP_Reflection_AST_PropertyI $property The property class node.
      *
      * @return void
      * @see PHP_Reflection_Visitor_AbstractVisitor::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_AST_Property $property)
+    public function visitProperty(PHP_Reflection_AST_PropertyI $property)
     {
         $this->fireStartProperty($property);
 

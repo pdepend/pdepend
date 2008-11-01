@@ -163,12 +163,12 @@ class PHP_Reflection_Visitor_TestImplAbstractVisitor extends PHP_Reflection_Visi
     /**
      * Visits a property node.
      *
-     * @param PHP_Reflection_AST_Property $property The property class node.
+     * @param PHP_Reflection_AST_PropertyI $property The property class node.
      *
      * @return void
      * @see PHP_Reflection_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_AST_Property $property)
+    public function visitProperty(PHP_Reflection_AST_PropertyI $property)
     {
         $this->visits[] = $property->getName();
 
