@@ -218,12 +218,12 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a package node.
      *
-     * @param PHP_Reflection_AST_Package $package The package class node.
+     * @param PHP_Reflection_AST_PackageI $package The package class node.
      *
      * @return void
      * @see PHP_Reflection_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_AST_Package $package)
+    public function visitPackage(PHP_Reflection_AST_PackageI $package)
     {
         $this->fireStartPackage($package);
 
@@ -597,7 +597,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
      *
      * @return void
      */
-    protected function fireStartPackage(PHP_Reflection_AST_Package $package)
+    protected function fireStartPackage(PHP_Reflection_AST_PackageI $package)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startVisitPackage($package);
@@ -611,7 +611,7 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
      *
      * @return void
      */
-    protected function fireEndPackage(PHP_Reflection_AST_Package $package)
+    protected function fireEndPackage(PHP_Reflection_AST_PackageI $package)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitPackage($package);
