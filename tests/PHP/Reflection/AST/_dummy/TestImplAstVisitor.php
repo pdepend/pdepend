@@ -196,6 +196,18 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     }
 
     /**
+     * Visits a parameter list node.
+     *
+     * @param PHP_Reflection_AST_ParameterListI $paramList The parameter list.
+     *
+     * @return void
+     */
+    public function visitParameterList(PHP_Reflection_AST_ParameterListI $paramList)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
      * Visits a parameter node.
      *
      * @param PHP_Reflection_AST_Parameter $parameter The parameter node.
