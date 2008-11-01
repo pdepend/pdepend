@@ -171,8 +171,7 @@ abstract class PHP_Reflection_AST_AbstractCallable
         foreach ($children as $child) {
             $dependencies[] = $child;
         }
-
-        foreach ($this->_parameters as $parameter) {
+        foreach ($this->getParameters() as $parameter) {
             // Skip all scalar parameters
             if (($type = $parameter->getType()) === null) {
                 continue;
@@ -259,43 +258,16 @@ abstract class PHP_Reflection_AST_AbstractCallable
      */
     public function getParameters()
     {
+        $paramList = $this->getFirstChildOfType('PHP_Reflection_AST_ParameterListI');
+        if ($paramList !== null) {
+            $params = $paramList->getChildrenOfType('PHP_Reflection_AST_ParameterI');
+        } else {
+            $params = array();
+        }
+
+        $params = $this->findChildrenOfType('PHP_Reflection_AST_ParameterI');
+
+        return new PHP_Reflection_AST_Iterator($params);
         return new PHP_Reflection_AST_Iterator($this->_parameters);
-    }
-
-    /**
-     * Adds a parameter to the list of method/function parameters.
-     *
-     * @param PHP_Reflection_AST_ParameterI $parameter The parameter instance.
-     *
-     * @return PHP_Reflection_AST_ParameterI
-     */
-    public function addParameter(PHP_Reflection_AST_ParameterI $parameter)
-    {
-        if ($parameter->getDeclaringCallable() !== null) {
-            $parameter->getDeclaringCallable()->removeParameter($parameter);
-        }
-        // Set this as parent
-        $parameter->setDeclaringCallable($this);
-        // Store reference
-        $this->_parameters[] = $parameter;
-
-        return $parameter;
-    }
-
-    /**
-     * Removes the parameter from this callable.
-     *
-     * @param PHP_Reflection_AST_ParameterI $parameter The parameter instance.
-     *
-     * @return void
-     */
-    public function removeParameter(PHP_Reflection_AST_ParameterI $parameter)
-    {
-        if (($i = array_search($parameter, $this->_parameters, true)) !== false) {
-            // Remove this parent
-            $parameter->setDeclaringCallable(null);
-            // Remove internal reference
-            unset($this->_parameters[$i]);
-        }
     }
 }

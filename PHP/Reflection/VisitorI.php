@@ -133,6 +133,15 @@ interface PHP_Reflection_VisitorI
     function visitPackage(PHP_Reflection_AST_Package $package);
 
     /**
+     * Visits a parameter list node.
+     *
+     * @param PHP_Reflection_AST_ParameterListI $paramList The parameter list.
+     *
+     * @return void
+     */
+    function visitParameterList(PHP_Reflection_AST_ParameterListI $paramList);
+
+    /**
      * Visits a parameter node.
      *
      * @param PHP_Reflection_AST_Parameter $parameter The parameter node.

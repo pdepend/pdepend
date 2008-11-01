@@ -170,6 +170,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildPackage($name);
 
     /**
+     * Creates a new parameter list instance.
+     *
+     * @param integer $line The line number of the parameter list.
+     *
+     * @return PHP_Reflection_AST_ParameterList
+     */
+    function buildParameterList($line);
+
+    /**
      * Builds a new parameter instance.
      *
      * @param string  $name The parameter variable name.
