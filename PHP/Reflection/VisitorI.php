@@ -160,6 +160,15 @@ interface PHP_Reflection_VisitorI
     function visitProperty(PHP_Reflection_AST_PropertyI $property);
 
     /**
+     * Visits a if statement node.
+     *
+     * @param PHP_Reflection_AST_IfStatement $ifStmt The if statement node.
+     *
+     * @return void
+     */
+    function visitIfStatement(PHP_Reflection_AST_IfStatement $ifStmt);
+
+    /**
      * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant
