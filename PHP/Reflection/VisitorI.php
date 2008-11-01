@@ -126,11 +126,11 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a package node.
      *
-     * @param Reflection_AST_Class $package The package class node.
+     * @param Reflection_AST_PackageI $package The package class node.
      *
      * @return void
      */
-    function visitPackage(PHP_Reflection_AST_Package $package);
+    function visitPackage(Reflection_AST_PackageI $package);
 
     /**
      * Visits a parameter list node.
