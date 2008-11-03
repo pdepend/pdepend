@@ -288,14 +288,105 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a if statement node.
      *
-     * @param PHP_Reflection_AST_IfStatement $ifStmt The if statement node.
+     * @param PHP_Reflection_AST_IfStatementI $ifStmt The if statement node.
      *
      * @return void
      */
-    public function visitIfStatement(PHP_Reflection_AST_IfStatement $ifStmt)
+    public function visitIfStatement(PHP_Reflection_AST_IfStatementI $ifStmt)
     {
         // TODO: $this->fireStartIfStatement($stmt);
         // TODO: $this->fireEndIfStatement($stmt);
+    }
+
+    /**
+     * Visits an else statement node.
+     *
+     * @param PHP_Reflection_AST_ElseStatementI $stmt The else statement node.
+     *
+     * @return void
+     */
+    public function visitElseStatement(PHP_Reflection_AST_ElseStatementI $stmt)
+    {
+        // TODO: $this->fireStartElseStatement($stmt);
+        // TODO: $this->fireEndElseStatement($stmt);
+    }
+
+    /**
+     * Visits and <b>else if</b> statement node.
+     *
+     * @param PHP_Reflection_AST_ElseIfStatementI $stmt The else if statement.
+     *
+     * @return void
+     */
+    public function visitElseIfStatement(PHP_Reflection_AST_ElseIfStatementI $stmt)
+    {
+        // TODO: $this->fireStartElseIfStatement($stmt);
+        // TODO: $this->fireEndElseIfStatement($stmt);
+    }
+
+    /**
+     * Visits a <b>for</b> statement node.
+     *
+     * @param PHP_Reflection_AST_ForStatementI $stmt The for statement.
+     *
+     * @return void
+     */
+    public function visitForStatement(PHP_Reflection_AST_ForStatementI $stmt)
+    {
+        // TODO: $this->fireStartForStatement($stmt);
+        // TODO: $this->fireEndForStatement($stmt);
+    }
+
+    /**
+     * Visits a <b>foreach</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_ForeachStatementI $stmt The foreach statement.
+     *
+     * @return void
+     */
+    public function visitForeachStatement(PHP_Reflection_AST_ForeachStatementI $stmt)
+    {
+        // TODO: $this->fireStartForeachStatement($stmt);
+        // TODO: $this->fireEndForeachStatement($stmt);
+    }
+
+    /**
+     * Visits a <b>while</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_WhileStatementI $stmt The while statement.
+     *
+     * @return void
+     */
+    public function visitWhileStatement(PHP_Reflection_AST_WhileStatementI $stmt)
+    {
+        // TODO: $this->fireStartWhileStatement($stmt);
+        // TODO: $this->fireEndWhileStatement($stmt);
+    }
+
+    /**
+     * Visits a <b>do while</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_DoWhileStatementI $stmt The do while statement.
+     *
+     * @return void
+     */
+    public function visitDoWhileStatement(PHP_Reflection_AST_DoWhileStatementI $stmt)
+    {
+        // TODO: $this->fireStartDoWhileStatement($stmt);
+        // TODO: $this->fireEndDoWhileStatement($stmt);
+    }
+
+    /**
+     * Visits a <b>case</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_CaseStatementI $stmt The case statement.
+     *
+     * @return void
+     */
+    public function visitCaseStatement(PHP_Reflection_AST_CaseStatementI $stmt)
+    {
+        // TODO: $this->fireStartCaseStatement($stmt);
+        // TODO: $this->fireEndCaseStatement($stmt);
     }
 
     /**
