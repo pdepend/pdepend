@@ -649,6 +649,104 @@ class PHP_Reflection_Builder_Default
     }
 
     /**
+     * Builds a new code else statement.
+     *
+     * @param integer $line The line number of this else statement.
+     *
+     * @return PHP_Reflection_AST_ElseStatement
+     */
+    public function buildElseStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/ElseStatement.php';
+
+        return new PHP_Reflection_AST_ElseStatement($line);
+    }
+
+    /**
+     * Builds a new <b>elseif</b>/<b>else if</b> statement.
+     *
+     * @param integer $line The line number of this else if statement.
+     *
+     * @return PHP_Reflection_AST_ElseIfStatement
+     */
+    public function buildElseIfStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/ElseIfStatement.php';
+
+        return new PHP_Reflection_AST_ElseIfStatement($line);
+    }
+
+    /**
+     * Builds a new <b>for</b>-statement.
+     *
+     * @param integer $line The line number of this for statement.
+     *
+     * @return PHP_Reflection_AST_ForStatement
+     */
+    public function buildForStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/ForStatement.php';
+
+        return new PHP_Reflection_AST_ForStatement($line);
+    }
+
+    /**
+     * Builds a new <b>foreach</b>-statement.
+     *
+     * @param integer $line The line number of this foreach statement.
+     *
+     * @return PHP_Reflection_AST_ForeachStatement
+     */
+    public function buildForeachStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/ForeachStatement.php';
+
+        return new PHP_Reflection_AST_ForeachStatement($line);
+    }
+
+    /**
+     * Builds a new <b>while</b>-statement.
+     *
+     * @param integer $line The line number of this while statement.
+     *
+     * @return PHP_Reflection_AST_WhileStatement
+     */
+    public function buildWhileStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/WhileStatement.php';
+
+        return new PHP_Reflection_AST_WhileStatement($line);
+    }
+
+    /**
+     * Builds a new <b>do while</b>-statement.
+     *
+     * @param integer $line The line number of this do while statement.
+     *
+     * @return PHP_Reflection_AST_DoWhileStatement
+     */
+    public function buildDoWhileStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/DoWhileStatement.php';
+
+        return new Reflection_AST_DoWhileStatement($line);
+    }
+
+    /**
+     * Builds a new <b>case</b>-statement.
+     *
+     * @param integer $line The line number of this case statement.
+     *
+     * @return PHP_Reflection_AST_CaseStatement
+     */
+    public function buildCaseStatement($line)
+    {
+        require_once 'PHP/Reflection/AST/CaseStatement.php';
+
+        return new PHP_Reflection_AST_CaseStatement($line);
+    }
+
+    /**
      * Builds a new array value instance.
      *
      * @return PHP_Reflection_AST_ArrayExpression

@@ -160,13 +160,76 @@ interface PHP_Reflection_VisitorI
     function visitProperty(PHP_Reflection_AST_PropertyI $property);
 
     /**
-     * Visits a if statement node.
+     * Visits an if statement node.
      *
-     * @param PHP_Reflection_AST_IfStatement $ifStmt The if statement node.
+     * @param PHP_Reflection_AST_IfStatementI $ifStmt The if statement node.
      *
      * @return void
      */
-    function visitIfStatement(PHP_Reflection_AST_IfStatement $ifStmt);
+    function visitIfStatement(PHP_Reflection_AST_IfStatementI $ifStmt);
+
+    /**
+     * Visits an else statement node.
+     *
+     * @param PHP_Reflection_AST_ElseStatementI $elseStmt The else statement node.
+     *
+     * @return void
+     */
+    function visitElseStatement(PHP_Reflection_AST_ElseStatementI $stmt);
+
+    /**
+     * Visits an <b>else if</b> statement node.
+     *
+     * @param PHP_Reflection_AST_ElseIfStatementI $stmt The else if statement.
+     *
+     * @return void
+     */
+    function visitElseIfStatement(PHP_Reflection_AST_ElseIfStatementI $stmt);
+
+    /**
+     * Visits a <b>for</b> statement node.
+     *
+     * @param PHP_Reflection_AST_ForStatementI $stmt The for statement.
+     *
+     * @return void
+     */
+    function visitForStatement(PHP_Reflection_AST_ForStatementI $stmt);
+
+    /**
+     * Visits a <b>foreach</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_ForeachStatementI $stmt The foreach statement.
+     *
+     * @return void
+     */
+    function visitForeachStatement(PHP_Reflection_AST_ForeachStatementI $stmt);
+
+    /**
+     * Visits a <b>while</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_WhileStatementI $stmt The while statement.
+     *
+     * @return void
+     */
+    function visitWhileStatement(PHP_Reflection_AST_WhileStatementI $stmt);
+
+    /**
+     * Visits a <b>do while</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_DoWhileStatementI $stmt The do while statement.
+     *
+     * @return void
+     */
+    function visitDoWhileStatement(PHP_Reflection_AST_DoWhileStatementI $stmt);
+
+    /**
+     * Visits a <b>case</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_CaseStatementI $stmt The case statement.
+     *
+     * @return void
+     */
+    function visitCaseStatement(PHP_Reflection_AST_CaseStatementI $stmt);
 
     /**
      * Visits a class constant node.
