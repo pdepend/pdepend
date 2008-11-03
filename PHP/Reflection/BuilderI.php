@@ -273,6 +273,69 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildIfStatement($line);
 
     /**
+     * Builds a new code else statement.
+     *
+     * @param integer $line The line number of this else statement.
+     *
+     * @return PHP_Reflection_AST_ElseStatement
+     */
+    function buildElseStatement($line);
+
+    /**
+     * Builds a new <b>elseif</b>/<b>else if</b> statement.
+     *
+     * @param integer $line The line number of this else if statement.
+     *
+     * @return PHP_Reflection_AST_ElseIfStatement
+     */
+    function buildElseIfStatement($line);
+
+    /**
+     * Builds a new <b>for</b>-statement.
+     *
+     * @param integer $line The line number of this for statement.
+     *
+     * @return PHP_Reflection_AST_ForStatement
+     */
+    function buildForStatement($line);
+
+    /**
+     * Builds a new <b>foreach</b>-statement.
+     *
+     * @param integer $line The line number of this foreach statement.
+     *
+     * @return PHP_Reflection_AST_ForeachStatement
+     */
+    function buildForeachStatement($line);
+
+    /**
+     * Builds a new <b>while</b>-statement.
+     *
+     * @param integer $line The line number of this while statement.
+     *
+     * @return PHP_Reflection_AST_WhileStatement
+     */
+    function buildWhileStatement($line);
+
+    /**
+     * Builds a new <b>do while</b>-statement.
+     *
+     * @param integer $line The line number of this do while statement.
+     *
+     * @return PHP_Reflection_AST_DoWhileStatement
+     */
+    function buildDoWhileStatement($line);
+
+    /**
+     * Builds a new <b>case</b>-statement.
+     *
+     * @param integer $line The line number of this case statement.
+     *
+     * @return PHP_Reflection_AST_CaseStatement
+     */
+    function buildCaseStatement($line);
+
+    /**
      * Builds a new array value instance.
      *
      * @return PHP_Reflection_AST_ArrayExpression
