@@ -549,7 +549,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildFunction($name, $line = 0)
     {
-        require_once 'PHP/Reflection/AST/Function.php';
+        include_once 'PHP/Reflection/AST/Function.php';
 
         if (!isset($this->_createdFunctionSet[$name])) {
             // Create new function
@@ -601,7 +601,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildClosure($line)
     {
-        require_once 'PHP/Reflection/AST/Closure.php';
+        include_once 'PHP/Reflection/AST/Closure.php';
 
         return new PHP_Reflection_AST_Closure($line);
     }
@@ -615,7 +615,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildNewExpression($line)
     {
-        require_once 'PHP/Reflection/AST/NewExpression.php';
+        include_once 'PHP/Reflection/AST/NewExpression.php';
 
         return new PHP_Reflection_AST_NewExpression($line);
     }
@@ -629,7 +629,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildInstanceOfExpression($line)
     {
-        require_once 'PHP/Reflection/AST/InstanceOfExpression.php';
+        include_once 'PHP/Reflection/AST/InstanceOfExpression.php';
 
         return new PHP_Reflection_AST_InstanceOfExpression($line);
     }
@@ -643,7 +643,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildIfStatement($line)
     {
-        require_once 'PHP/Reflection/AST/If/Statement.php';
+        include_once 'PHP/Reflection/AST/If/Statement.php';
 
         return new PHP_Reflection_AST_IfStatement($line);
     }
@@ -657,7 +657,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildElseStatement($line)
     {
-        require_once 'PHP/Reflection/AST/ElseStatement.php';
+        include_once 'PHP/Reflection/AST/ElseStatement.php';
 
         return new PHP_Reflection_AST_ElseStatement($line);
     }
@@ -671,7 +671,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildElseIfStatement($line)
     {
-        require_once 'PHP/Reflection/AST/ElseIfStatement.php';
+        include_once 'PHP/Reflection/AST/ElseIfStatement.php';
 
         return new PHP_Reflection_AST_ElseIfStatement($line);
     }
@@ -685,7 +685,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildForStatement($line)
     {
-        require_once 'PHP/Reflection/AST/ForStatement.php';
+        include_once 'PHP/Reflection/AST/ForStatement.php';
 
         return new PHP_Reflection_AST_ForStatement($line);
     }
@@ -699,7 +699,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildForeachStatement($line)
     {
-        require_once 'PHP/Reflection/AST/ForeachStatement.php';
+        include_once 'PHP/Reflection/AST/ForeachStatement.php';
 
         return new PHP_Reflection_AST_ForeachStatement($line);
     }
@@ -713,7 +713,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildWhileStatement($line)
     {
-        require_once 'PHP/Reflection/AST/WhileStatement.php';
+        include_once 'PHP/Reflection/AST/WhileStatement.php';
 
         return new PHP_Reflection_AST_WhileStatement($line);
     }
@@ -727,7 +727,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildDoWhileStatement($line)
     {
-        require_once 'PHP/Reflection/AST/DoWhileStatement.php';
+        include_once 'PHP/Reflection/AST/DoWhileStatement.php';
 
         return new Reflection_AST_DoWhileStatement($line);
     }
@@ -755,7 +755,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildCaseStatement($line)
     {
-        require_once 'PHP/Reflection/AST/CaseStatement.php';
+        include_once 'PHP/Reflection/AST/CaseStatement.php';
 
         return new PHP_Reflection_AST_CaseStatement($line);
     }
