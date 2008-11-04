@@ -317,6 +317,18 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     }
 
     /**
+     * Visits a <b>switch</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_SwitchStatementI $stmt The switch statement.
+     *
+     * @return void
+     */
+    public function visitSwitchStatement(PHP_Reflection_AST_SwitchStatementI $stmt)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
      * Visits a <b>case</b>-statement node.
      *
      * @param PHP_Reflection_AST_CaseStatementI $stmt The case statement.
@@ -324,6 +336,71 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @return void
      */
     public function visitCaseStatement(PHP_Reflection_AST_CaseStatementI $stmt)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a logical <b>and</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalAndExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitLogicalAndExpression(
+                                PHP_Reflection_AST_LogicalAndExpressionI $expr)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a logical <b>or</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalOrExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitLogicalOrExpression(
+                                PHP_Reflection_AST_LogicalOrExpressionI $expr)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a logical <b>xor</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalXorExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitLogicalXorExpression(
+                                PHP_Reflection_AST_LogicalXorExpressionI $expr)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a boolean <b>&&</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_BooleanAndExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitBooleanAndExpression(
+                                PHP_Reflection_AST_BooleanAndExpressionI $expr)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a boolean <b>||</b>-expression node-
+     *
+     * @param PHP_Reflection_AST_BooleanOrExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitBooleanOrExpression(
+                                PHP_Reflection_AST_BooleanOrExpressionI $expr)
     {
         // TODO Implement this empty stub.
     }
