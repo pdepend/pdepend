@@ -223,6 +223,15 @@ interface PHP_Reflection_VisitorI
     function visitDoWhileStatement(PHP_Reflection_AST_DoWhileStatementI $stmt);
 
     /**
+     * Visits a <b>switch</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_SwitchStatementI $stmt The switch statement.
+     *
+     * @return void
+     */
+    function visitSwitchStatement(PHP_Reflection_AST_SwitchStatementI $stmt);
+
+    /**
      * Visits a <b>case</b>-statement node.
      *
      * @param PHP_Reflection_AST_CaseStatementI $stmt The case statement.
@@ -230,6 +239,54 @@ interface PHP_Reflection_VisitorI
      * @return void
      */
     function visitCaseStatement(PHP_Reflection_AST_CaseStatementI $stmt);
+
+    /**
+     * Visits a logical <b>and</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalAndExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    function visitLogicalAndExpression(
+                                PHP_Reflection_AST_LogicalAndExpressionI $expr);
+
+    /**
+     * Visits a logical <b>or</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalOrExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    function visitLogicalOrExpression(PHP_Reflection_AST_LogicalOrExpressionI $expr);
+
+    /**
+     * Visits a logical <b>xor</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalXorExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    function visitLogicalXorExpression(
+                                PHP_Reflection_AST_LogicalXorExpressionI $expr);
+
+    /**
+     * Visits a boolean <b>&&</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_BooleanAndExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    function visitBooleanAndExpression(
+                                PHP_Reflection_AST_BooleanAndExpressionI $expr);
+
+    /**
+     * Visits a boolean <b>||</b>-expression node-
+     *
+     * @param PHP_Reflection_AST_BooleanOrExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    function visitBooleanOrExpression(PHP_Reflection_AST_BooleanOrExpressionI $expr);
 
     /**
      * Visits a class constant node.

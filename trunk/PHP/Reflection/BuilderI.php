@@ -327,6 +327,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildDoWhileStatement($line);
 
     /**
+     * Builds a new <b>switch</b>-statement.
+     *
+     * @param integer $line The line number of this switch statement.
+     *
+     * @return PHP_Reflection_AST_SwitchStatement
+     */
+    function buildSwitchStatement($line);
+
+    /**
      * Builds a new <b>case</b>-statement.
      *
      * @param integer $line The line number of this case statement.
@@ -334,6 +343,51 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @return PHP_Reflection_AST_CaseStatement
      */
     function buildCaseStatement($line);
+
+    /**
+     * Builds a new logical <b>and</b>-expression.
+     *
+     * @param integer $line The line number of this AND expression.
+     *
+     * @return PHP_Reflection_AST_LogicalAndExpression
+     */
+    function buildLogicalAndExpression($line);
+
+    /**
+     * Builds a new logical <b>or</b>-expression.
+     *
+     * @param integer $line The line number of this OR expression.
+     *
+     * @return PHP_Reflection_AST_LogicalOrExpression
+     */
+    function buildLogicalOrExpression($line);
+
+    /**
+     * Builds a new logical <b>xor</b>-expression.
+     *
+     * @param unknown_type $line The line number of this XOR expression.
+     *
+     * @return PHP_Reflection_AST_LogicalXorExpression
+     */
+    function buildLogicalXorExpression($line);
+
+    /**
+     * Builds a new boolean <b>&&</b>-expression.
+     *
+     * @param unknown_type $line The line number of this AND expression.
+     *
+     * @return PHP_Reflection_AST_BooleanAndExpression
+     */
+    function buildBooleanAndExpression($line);
+
+    /**
+     * Builds a new boolean <b>||</b>-expression.
+     *
+     * @param unknown_type $line The line number of this OR expression.
+     *
+     * @return PHP_Reflection_AST_BooleanOrExpression
+     */
+    function buildBooleanOrExpression($line);
 
     /**
      * Builds a new array value instance.
