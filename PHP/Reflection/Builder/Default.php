@@ -733,6 +733,20 @@ class PHP_Reflection_Builder_Default
     }
 
     /**
+     * Builds a new <b>switch</b>-statement.
+     *
+     * @param integer $line The line number of this switch statement.
+     *
+     * @return PHP_Reflection_AST_SwitchStatement
+     */
+    public function buildSwitchStatement($line)
+    {
+        include_once 'PHP/Reflection/AST/SwitchStatement.php';
+
+        return new PHP_Reflection_AST_SwitchStatement($line);
+    }
+
+    /**
      * Builds a new <b>case</b>-statement.
      *
      * @param integer $line The line number of this case statement.
@@ -744,6 +758,76 @@ class PHP_Reflection_Builder_Default
         require_once 'PHP/Reflection/AST/CaseStatement.php';
 
         return new PHP_Reflection_AST_CaseStatement($line);
+    }
+
+    /**
+     * Builds a new logical <b>and</b>-expression.
+     *
+     * @param integer $line The line number of this and expression.
+     *
+     * @return PHP_Reflection_AST_LogicalAndExpression
+     */
+    public function buildLogicalAndExpression($line)
+    {
+        include_once 'PHP/Reflection/AST/LogicalAndExpression.php';
+
+        return new PHP_Reflection_AST_LogicalAndExpression($line);
+    }
+
+    /**
+     * Builds a new logical <b>or</b>-expression.
+     *
+     * @param integer $line The line number of this OR expression.
+     *
+     * @return PHP_Reflection_AST_LogicalOrExpression
+     */
+    public function buildLogicalOrExpression($line)
+    {
+        include_once 'PHP/Reflection/AST/LogicalOrExpression.php';
+
+        return new PHP_Reflection_AST_LogicalOrExpression($line);
+    }
+
+    /**
+     * Builds a new logical <b>xor</b>-expression.
+     *
+     * @param unknown_type $line The line number of this XOR expression.
+     *
+     * @return PHP_Reflection_AST_LogicalXorExpression
+     */
+    public function buildLogicalXorExpression($line)
+    {
+        include_once 'PHP/Reflection/AST/LogicalXorExpression.php';
+
+        return new PHP_Reflection_AST_LogicalXorExpression($line);
+    }
+
+    /**
+     * Builds a new boolean <b>&&</b>-expression.
+     *
+     * @param unknown_type $line The line number of this AND expression.
+     *
+     * @return PHP_Reflection_AST_BooleanAndExpression
+     */
+    public function buildBooleanAndExpression($line)
+    {
+        include_once 'PHP/Reflection/AST/BooleanAndExpression.php';
+
+        return new PHP_Reflection_AST_BooleanAndExpression($line);
+    }
+
+    /**
+     * Builds a new boolean <b>||</b>-expression.
+     *
+     * @param unknown_type $line The line number of this OR expression.
+     *
+     * @return PHP_Reflection_AST_BooleanOrExpression
+     */
+    public function buildBooleanOrExpression($line)
+    {
+        include_once 'PHP/Reflection/AST/BooleanOrExpression.php';
+
+        return new PHP_Reflection_AST_BooleanOrExpression($line);
     }
 
     /**
