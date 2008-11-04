@@ -377,6 +377,19 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits a <b>switch</b>-statement node.
+     *
+     * @param PHP_Reflection_AST_SwitchStatementI $stmt The switch statement.
+     *
+     * @return void
+     */
+    public function visitSwitchStatement(PHP_Reflection_AST_SwitchStatementI $stmt)
+    {
+        // TODO: $this->fireStartSwitchStatement($stmt);
+        // TODO: $this->fireEndSwitchStatement($stmt);
+    }
+
+    /**
      * Visits a <b>case</b>-statement node.
      *
      * @param PHP_Reflection_AST_CaseStatementI $stmt The case statement.
@@ -387,6 +400,76 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     {
         // TODO: $this->fireStartCaseStatement($stmt);
         // TODO: $this->fireEndCaseStatement($stmt);
+    }
+
+    /**
+     * Visits a logical <b>and</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalAndExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitLogicalAndExpression(
+                                PHP_Reflection_AST_LogicalAndExpressionI $expr)
+    {
+        // TODO: $this->fireStartLogicalAndExpression($expr);
+        // TODO: $this->fireEndLogicalAndExpression($expr);
+    }
+
+    /**
+     * Visits a logical <b>or</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalOrExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitLogicalOrExpression(
+                                PHP_Reflection_AST_LogicalOrExpressionI $expr)
+    {
+        // TODO: $this->fireStartLogicalOrExpression($expr);
+        // TODO: $this->fireEndLogicalOrExpression($expr);
+    }
+
+    /**
+     * Visits a logical <b>xor</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_LogicalXorExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitLogicalXorExpression(
+                                PHP_Reflection_AST_LogicalXorExpressionI $expr)
+    {
+        // TODO: $this->fireStartLogicalXorExpression($expr);
+        // TODO: $this->fireEndLogicalXorExpression($expr);
+    }
+
+    /**
+     * Visits a boolean <b>&&</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_BooleanAndExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitBooleanAndExpression(
+                                PHP_Reflection_AST_BooleanAndExpressionI $expr)
+    {
+        // TODO: $this->fireStartBooleanAndExpression($expr);
+        // TODO: $this->fireEndBooleanAndExpression($expr);
+    }
+
+    /**
+     * Visits a boolean <b>||</b>-expression node-
+     *
+     * @param PHP_Reflection_AST_BooleanOrExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitBooleanOrExpression(
+                                PHP_Reflection_AST_BooleanOrExpressionI $expr)
+    {
+        // TODO: $this->fireStartBooleanOrExpression($expr);
+        // TODO: $this->fireEndBooleanOrExpression($expr);
     }
 
     /**
