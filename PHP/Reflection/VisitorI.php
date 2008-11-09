@@ -196,6 +196,33 @@ interface PHP_Reflection_VisitorI
     function visitForStatement(PHP_Reflection_AST_ForStatementI $stmt);
 
     /**
+     * Visits the init expressions of a <b>for</b>-statement.
+     *
+     * @param PHP_Reflection_AST_ForInitI $forInit The init node.
+     *
+     * @return void
+     */
+    function visitForInit(PHP_Reflection_AST_ForInitI $forInit);
+
+    /**
+     * Visits the condition expressions of a <b>for</b>-statement.
+     *
+     * @param PHP_Reflection_AST_ForConditionI $forCond The condition node.
+     *
+     * @return void
+     */
+    function visitForConditions(PHP_Reflection_AST_ForConditionI $forCond);
+
+    /**
+     * Visits the update expressions of a <b>for</b>-loop statement.
+     *
+     * @param PHP_Reflection_AST_ForUpdateI $forUpdate The update node.
+     *
+     * @return void
+     */
+    function visitForUpdate(PHP_Reflection_AST_ForUpdateI $forUpdate);
+
+    /**
      * Visits a <b>foreach</b>-statement node.
      *
      * @param PHP_Reflection_AST_ForeachStatementI $stmt The foreach statement.
@@ -239,6 +266,15 @@ interface PHP_Reflection_VisitorI
      * @return void
      */
     function visitCaseStatement(PHP_Reflection_AST_CaseStatementI $stmt);
+
+    /**
+     * Visits a generic block-statement node.
+     *
+     * @param PHP_Reflection_AST_BlockStatementI $stmt The statement node.
+     *
+     * @return void
+     */
+    function visitBlockStatement(PHP_Reflection_AST_BlockStatementI $stmt);
 
     /**
      * Visits a logical <b>and</b>-expression node.
@@ -287,6 +323,16 @@ interface PHP_Reflection_VisitorI
      * @return void
      */
     function visitBooleanOrExpression(PHP_Reflection_AST_BooleanOrExpressionI $expr);
+
+    /**
+     * Visits a conditional <b>? :</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_ConditionalExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    function visitConditionalExpression(
+                                PHP_Reflection_AST_ConditionalExpressionI $expr);
 
     /**
      * Visits a class constant node.

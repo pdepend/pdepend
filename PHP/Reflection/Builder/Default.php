@@ -691,6 +691,48 @@ class PHP_Reflection_Builder_Default
     }
 
     /**
+     * Builds a new init node for <b>for</b>-statements.
+     *
+     * @param integer $line The line number of this node.
+     *
+     * @return PHP_Reflection_AST_ForInit
+     */
+    public function buildForInit($line)
+    {
+        include_once 'PHP/Reflection/AST/ForInit.php';
+
+        return new PHP_Reflection_AST_ForInit($line);
+    }
+
+    /**
+     * Builds a new condition node for <b>for</b>-statements.
+     *
+     * @param integer $line The line number of this node.
+     *
+     * @return PHP_Reflection_AST_ForCondition
+     */
+    public function buildForCondition($line)
+    {
+        include_once 'PHP/Reflection/AST/ForCondition.php';
+
+        return new PHP_Reflection_AST_ForCondition($line);
+    }
+
+    /**
+     * Builds a new update node for <b>for</b>-statements.
+     *
+     * @param integer $line The line number of this node.
+     *
+     * @return PHP_Reflection_AST_ForUpdate
+     */
+    public function buildForUpdate($line)
+    {
+        include_once 'PHP/Reflection/AST/ForUpdate.php';
+
+        return new PHP_Reflection_AST_ForUpdate($line);
+    }
+
+    /**
      * Builds a new <b>foreach</b>-statement.
      *
      * @param integer $line The line number of this foreach statement.
@@ -761,6 +803,20 @@ class PHP_Reflection_Builder_Default
     }
 
     /**
+     * Builds a new block-statement
+     *
+     * @param integer $line The line number of this block statement.
+     *
+     * @return PHP_Reflection_AST_BlockStatement
+     */
+    public function buildBlockStatement($line)
+    {
+        include_once 'PHP/Reflection/AST/BlockStatement.php';
+
+        return new PHP_Reflection_AST_BlockStatement($line);
+    }
+
+    /**
      * Builds a new logical <b>and</b>-expression.
      *
      * @param integer $line The line number of this and expression.
@@ -828,6 +884,20 @@ class PHP_Reflection_Builder_Default
         include_once 'PHP/Reflection/AST/BooleanOrExpression.php';
 
         return new PHP_Reflection_AST_BooleanOrExpression($line);
+    }
+
+    /**
+     * Builds a new conditional <b>? :</b>-expression.
+     *
+     * @param integer $line The line number of this conditional expression.
+     *
+     * @return PHP_Reflection_AST_ConditionalExpression
+     */
+    public function buildConditionalExpression($line)
+    {
+        include_once 'PHP/Reflection/AST/ConditionalExpression.php';
+
+        return new PHP_Reflection_AST_ConditionalExpression($line);
     }
 
     /**
