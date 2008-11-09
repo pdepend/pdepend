@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/SourceElementI.php';
+require_once 'PHP/Reflection/AST/StatementI.php';
 
 /**
  * This interface represents a <b>for</b> statement.
@@ -60,7 +60,7 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_ForStatementI extends PHP_Reflection_AST_SourceElementI
+interface PHP_Reflection_AST_ForStatementI extends PHP_Reflection_AST_StatementI
 {
     /**
      * Identifier for this node type.

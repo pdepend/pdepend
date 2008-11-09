@@ -338,6 +338,45 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits the init expressions of a <b>for</b>-statement.
+     *
+     * @param PHP_Reflection_AST_ForInitI $forInit The init node.
+     *
+     * @return void
+     */
+    public function visitForInit(PHP_Reflection_AST_ForInitI $forInit)
+    {
+        // TODO: $this->fireStartForInit($forInit);
+        // TODO: $this->fireEndForInit($forInit);
+    }
+
+    /**
+     * Visits the condition expressions of a <b>for</b>-statement.
+     *
+     * @param PHP_Reflection_AST_ForConditionI $forCond The condition node.
+     *
+     * @return void
+     */
+    public function visitForConditions(PHP_Reflection_AST_ForConditionI $forCond)
+    {
+        // TODO: $this->fireStartForCondition($forCond);
+        // TODO: $this->fireEndForCondition($forCond);
+    }
+
+    /**
+     * Visits the update expressions of a <b>for</b>-loop statement.
+     *
+     * @param PHP_Reflection_AST_ForUpdateI $forUpdate The update node.
+     *
+     * @return void
+     */
+    public function visitForUpdate(PHP_Reflection_AST_ForUpdateI $forUpdate)
+    {
+        // TODO: $this->fireStartForUpdate($forUpdate);
+        // TODO: $this->fireEndForUpdate($forUpdate);
+    }
+
+    /**
      * Visits a <b>foreach</b>-statement node.
      *
      * @param PHP_Reflection_AST_ForeachStatementI $stmt The foreach statement.
@@ -400,6 +439,19 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     {
         // TODO: $this->fireStartCaseStatement($stmt);
         // TODO: $this->fireEndCaseStatement($stmt);
+    }
+
+    /**
+     * Visits a generic block-statement node.
+     *
+     * @param PHP_Reflection_AST_BlockStatementI $stmt The statement node.
+     *
+     * @return void
+     */
+    public function visitBlockStatement(PHP_Reflection_AST_BlockStatementI $stmt)
+    {
+        // TODO: $this->fireStartBlockStatement($stmt);
+        // TODO: $this->fireEndBlockStatement($stmt);
     }
 
     /**
@@ -470,6 +522,20 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     {
         // TODO: $this->fireStartBooleanOrExpression($expr);
         // TODO: $this->fireEndBooleanOrExpression($expr);
+    }
+
+    /**
+     * Visits a conditional <b>? :</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_ConditionalExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitConditionalExpression(
+                                PHP_Reflection_AST_ConditionalExpressionI $expr)
+    {
+        // TODO: $this->fireStartConditionalExpression($expr);
+        // TODO: $this->fireEndConditionalExpression($expr);
     }
 
     /**

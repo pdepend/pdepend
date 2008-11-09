@@ -59,6 +59,7 @@ require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/MemberValueTest.php';
 require_once dirname(__FILE__) . '/MethodTest.php';
 require_once dirname(__FILE__) . '/PropertyTest.php';
+require_once dirname(__FILE__) . '/StatementTest.php';
 
 /**
  * Main test suite for the PHP_Reflection_Parser class.
@@ -98,6 +99,7 @@ class PHP_Reflection_Parser_AllTests
         $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');
         $suite->addTestSuite('PHP_Reflection_Parser_MethodTest');
         $suite->addTestSuite('PHP_Reflection_Parser_PropertyTest');
+        $suite->addTestSuite('PHP_Reflection_Parser_StatementTest');
 
         return $suite;
     }
