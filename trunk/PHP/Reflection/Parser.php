@@ -1411,7 +1411,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
     /**
      * This method will parse a single statement.
      *
-     * @param array $tokens Reference array for parsed tokens.
+     * @param array &$tokens Reference array for parsed tokens.
      *
      * @return PHP_Reflection_AST_SourceElementI
      */
@@ -1461,6 +1461,14 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
         }
     }
 
+    /**
+     * Parses a comma separated list of expressions as used in a for statement.
+     * An expression list can contain zero or more expression nodes.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return array(PHP_Reflection_AST_ExpressionI)
+     */
     private function _parseExpressionList(array &$tokens)
     {
         // TODO: Implement expression list
@@ -1484,6 +1492,13 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
         return $expressionList;
     }
 
+    /**
+     * Parses a single expression node.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ExpressionI
+     */
     private function _parseExpression(array &$tokens)
     {
         if (($expression = $this->_parseExpressionOrEmpty($tokens)) === null) {
@@ -1492,6 +1507,13 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
         return $expression;
     }
 
+    /**
+     * Parses a single expression node or an empty statement.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ExpressionI|null
+     */
     private function _parseExpressionOrEmpty(array &$tokens)
     {
         $this->_consumeComments($tokens);
