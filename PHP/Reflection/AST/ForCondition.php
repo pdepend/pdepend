@@ -46,10 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/StatementI.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
+require_once 'PHP/Reflection/AST/ForConditionI.php';
 
 /**
- * This interface represents a <b>while</b>-statement.
+ * This class represents the condition expressions of a <b>for</b>-loop.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,11 +61,30 @@ require_once 'PHP/Reflection/AST/StatementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_WhileStatementI
-    extends PHP_Reflection_AST_StatementI
+class PHP_Reflection_AST_ForCondition
+       extends PHP_Reflection_AST_AbstractSourceElement
+    implements PHP_Reflection_AST_ForConditionI
 {
     /**
-     * Identifier for this node type.
+     * Constructs a for condition node.
+     *
+     * @param integer $line The line number of this node.
      */
-    const NODE_NAME = '#while-statement';
+    public function __construct($line)
+    {
+        parent::__construct(self::NODE_NAME, $line);
+    }
+
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     *
+     * @return void
+     */
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        $visitor->visitForConditions($this);
+    }
 }
+?>

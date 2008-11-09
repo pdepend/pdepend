@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/StatementI.php';
+require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
- * This interface represents a <b>while</b>-statement.
+ * This interface represents the init expressions of a <b>for</b>-loop.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,11 +60,11 @@ require_once 'PHP/Reflection/AST/StatementI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_WhileStatementI
-    extends PHP_Reflection_AST_StatementI
+interface PHP_Reflection_AST_ForInitI extends PHP_Reflection_AST_SourceElementI
 {
     /**
      * Identifier for this node type.
      */
-    const NODE_NAME = '#while-statement';
+    const NODE_NAME = '#for-init';
 }
+?>

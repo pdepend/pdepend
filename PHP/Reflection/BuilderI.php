@@ -300,6 +300,33 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildForStatement($line);
 
     /**
+     * Builds a new init node for <b>for</b>-statements.
+     *
+     * @param integer $line The line number of this node.
+     *
+     * @return PHP_Reflection_AST_ForInit
+     */
+    function buildForInit($line);
+
+    /**
+     * Builds a new condition node for <b>for</b>-statements.
+     *
+     * @param integer $line The line number of this node.
+     *
+     * @return PHP_Reflection_AST_ForCondition
+     */
+    function buildForCondition($line);
+
+    /**
+     * Builds a new update node for <b>for</b>-statements.
+     *
+     * @param integer $line The line number of this node.
+     *
+     * @return PHP_Reflection_AST_ForUpdate
+     */
+    function buildForUpdate($line);
+
+    /**
      * Builds a new <b>foreach</b>-statement.
      *
      * @param integer $line The line number of this foreach statement.
@@ -345,6 +372,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildCaseStatement($line);
 
     /**
+     * Builds a new block-statement
+     *
+     * @param integer $line The line number of this block statement.
+     *
+     * @return PHP_Reflection_AST_BlockStatement
+     */
+    function buildBlockStatement($line);
+
+    /**
      * Builds a new logical <b>and</b>-expression.
      *
      * @param integer $line The line number of this AND expression.
@@ -388,6 +424,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @return PHP_Reflection_AST_BooleanOrExpression
      */
     function buildBooleanOrExpression($line);
+
+    /**
+     * Builds a new conditional <b>? :</b>-expression.
+     *
+     * @param integer $line The line number of this conditional expression.
+     *
+     * @return PHP_Reflection_AST_ConditionalExpression
+     */
+    function buildConditionalExpression($line);
 
     /**
      * Builds a new array value instance.
