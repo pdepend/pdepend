@@ -1387,18 +1387,17 @@ class PHP_Reflection_Parser
                 break;
 
             default:
-                // XXX: {{{
+// FIXME - Stupid workaround: {{{
 if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
                 $blockOrStmt = $this->_parseBlockOrStatement($tokens);
                 if ($blockOrStmt !== null) {
                     $block->addChild($blockOrStmt);
                 }
 } else {
-                // XXX: }}}
-                // TODO: We should throw an exception here
                 $tokens[] = $this->tokenizer->next();
                 $this->_consumeComments($tokens);
 }
+// FIXME - Stupid workaround: }}}
                 break;
             }
         }
@@ -1629,7 +1628,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
      *
      * @return PHP_Reflection_AST_WhileStatementI
      */
-    public function _parseWhileStatement(array &$tokens)
+    private function _parseWhileStatement(array &$tokens)
     {
         $token = $this->_consumeToken(self::T_WHILE, $tokens);
         $while = $this->builder->buildWhileStatement($token[2]);
