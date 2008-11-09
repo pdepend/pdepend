@@ -46,6 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
+require_once 'PHP/Reflection/AST/ForStatementI.php';
+
 /**
  * This class represents a <b>for</b>-statement.
  *

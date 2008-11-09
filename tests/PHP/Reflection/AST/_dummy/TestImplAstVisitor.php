@@ -281,6 +281,42 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     }
 
     /**
+     * Visits the init expressions of a <b>for</b>-statement.
+     *
+     * @param PHP_Reflection_AST_ForInitI $forInit The init node.
+     *
+     * @return void
+     */
+    public function visitForInit(PHP_Reflection_AST_ForInitI $forInit)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits the condition expressions of a <b>for</b>-statement.
+     *
+     * @param PHP_Reflection_AST_ForConditionI $forCond The condition node.
+     *
+     * @return void
+     */
+    public function visitForConditions(PHP_Reflection_AST_ForConditionI $forCond)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits the update expressions of a <b>for</b>-loop statement.
+     *
+     * @param PHP_Reflection_AST_ForUpdateI $forUpdate The update node.
+     *
+     * @return void
+     */
+    public function visitForUpdate(PHP_Reflection_AST_ForUpdateI $forUpdate)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
      * Visits a <b>foreach</b>-statement node.
      *
      * @param PHP_Reflection_AST_ForeachStatementI $stmt The foreach statement.
@@ -336,6 +372,18 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      * @return void
      */
     public function visitCaseStatement(PHP_Reflection_AST_CaseStatementI $stmt)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a generic block-statement node.
+     *
+     * @param PHP_Reflection_AST_BlockStatementI $stmt The statement node.
+     *
+     * @return void
+     */
+    public function visitBlockStatement(PHP_Reflection_AST_BlockStatementI $stmt)
     {
         // TODO Implement this empty stub.
     }
@@ -401,6 +449,19 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      */
     public function visitBooleanOrExpression(
                                 PHP_Reflection_AST_BooleanOrExpressionI $expr)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a conditional <b>? :</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_ConditionalExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitConditionalExpression(
+                                PHP_Reflection_AST_ConditionalExpressionI $expr)
     {
         // TODO Implement this empty stub.
     }

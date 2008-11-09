@@ -341,13 +341,7 @@ class PHP_Reflection_Parser
 
         // Skip comment tokens before function signature
         $this->_consumeComments($tokens);
-/*
- * TODO: Remove
-        $parameters = $this->_parseParameterList($tokens);
-        foreach ($parameters as $parameter) {
-            $function->addParameter($parameter);
-        }
-*/
+
         $function->addChild($this->_parseParameterList($tokens));
         $function->setSourceFile($this->tokenizer->getSourceFile());
         $function->setDocComment($this->_comment);
@@ -823,19 +817,13 @@ class PHP_Reflection_Parser
         $this->_consumeComments($tokens);
 
         $method = $this->builder->buildMethod($token[1], $token[2]);
-        $method->addChild($this->_parseParameterList($tokens));
-/*
- * TODO: Remove this
-        $parameterList = $this->_parseParameterList($tokens);
-        foreach ($parameterList as $parameter) {
-            $method->addParameter($parameter);
-        }
-*/
         $method->setReturnsReference($returnsReference);
         $method->setDocComment($this->_comment);
         $method->setPosition($this->_methodPosition++);
         $method->setModifiers($this->_modifiers);
         $method->setSourceFile($this->tokenizer->getSourceFile());
+
+        $method->addChild($this->_parseParameterList($tokens));
 
         $this->reset();
 
@@ -1324,6 +1312,23 @@ class PHP_Reflection_Parser
     }
 
     /**
+     * This method will parse a single block encapsulated by '{' and '}' or a
+     * single statement.
+     *
+     * @param array $tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    private function _parseBlockOrStatement(array &$tokens)
+    {
+        $this->_consumeComments($tokens);
+        if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
+            return $this->_parseBlock($tokens);
+        }
+        return $this->_parseStatement($tokens);
+    }
+
+    /**
      * This method parses a single code block encapsulated by '{' and '}'
      *
      * @param array &$tokens Reference array for parsed tokens.
@@ -1382,9 +1387,18 @@ class PHP_Reflection_Parser
                 break;
 
             default:
+                // XXX: {{{
+if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
+                $blockOrStmt = $this->_parseBlockOrStatement($tokens);
+                if ($blockOrStmt !== null) {
+                    $block->addChild($blockOrStmt);
+                }
+} else {
+                // XXX: }}}
                 // TODO: We should throw an exception here
                 $tokens[] = $this->tokenizer->next();
                 $this->_consumeComments($tokens);
+}
                 break;
             }
         }
@@ -1393,6 +1407,242 @@ class PHP_Reflection_Parser
         $block->setEndLine($token[2]);
 
         return $block;
+    }
+
+    /**
+     * This method will parse a single statement.
+     *
+     * @param array $tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    private function _parseStatement(array &$tokens)
+    {
+        $this->_consumeComments($tokens);
+
+        while (($type = $this->tokenizer->peek()) !== self::T_EOF) {
+
+            switch ($type) {
+
+            case self::T_CATCH:
+                return $this->_parseCatchStatement($tokens);
+
+            case self::T_DO:
+                break;
+
+            case self::T_ELSE:
+                break;
+
+            case self::T_ELSEIF:
+                break;
+
+            case self::T_FOR:
+                return $this->_parseForStatement($tokens);
+
+            case self::T_FOREACH:
+                break;
+
+            case self::T_IF:
+                break;
+
+            case self::T_WHILE:
+                return $this->_parseWhileStatement($tokens);
+
+            case self::T_SEMICOLON:
+                $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
+                $stmt  = $this->builder->buildBlockStatement($token[2]);
+                $stmt->setEndLine($token[2]);
+                return $stmt;
+
+            default:
+                // FIXME: Throw an exception
+                $this->_consumeToken($type, $tokens);
+                break;
+            }
+        }
+    }
+
+    private function _parseExpressionList(array &$tokens)
+    {
+        // TODO: Implement expression list
+        $expressionList = array();
+        if (($expr = $this->_parseExpressionOrEmpty($tokens)) === null) {
+            return $expressionList;
+        }
+
+        $this->_consumeComments($tokens);
+
+        $expressionList[] = $expr;
+        while ($this->tokenizer->peek() !== self::T_EOF) {
+            if ($this->tokenizer->peek() !== self::T_COMMA) {
+                break;
+            }
+            $this->_consumeToken(self::T_COMMA);
+
+            $expressionList[] = $this->_parseExpression($tokens);
+        }
+
+        return $expressionList;
+    }
+
+    private function _parseExpression(array &$tokens)
+    {
+        if (($expression = $this->_parseExpressionOrEmpty($tokens)) === null) {
+            $this->_throwUnexpectedToken();
+        }
+        return $expression;
+    }
+
+    private function _parseExpressionOrEmpty(array &$tokens)
+    {
+        $this->_consumeComments($tokens);
+
+        $tokenCount = 0;
+        while (($type = $this->tokenizer->peek()) !== self::T_EOF) {
+            switch ($type) {
+
+            case self::T_PARENTHESIS_OPEN:
+                $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+                $expr = $this->_parseExpression($tokens);
+                $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+
+                return $expr;
+
+            case self::T_PARENTHESIS_CLOSE:
+            case self::T_SEMICOLON:
+            case self::T_COMMA:
+                if ($tokenCount > 0) {
+                    return new PHP_Reflection_AST_StubExpressionExpression(0);
+                }
+                return null;
+
+            default:
+                $this->_consumeToken($type, $tokens);
+                $this->_consumeComments($tokens);
+                ++$tokenCount;
+            }
+        }
+        $this->_throwUnexpectedToken();
+    }
+
+    /**
+     * This method parses a <b>for</b>-loop statement.
+     *
+     * @param array $tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ForInitI
+     */
+    private function _parseForStatement(array &$tokens)
+    {
+        $token   = $this->_consumeToken(self::T_FOR, $tokens);
+        $forStmt = $this->builder->buildForStatement($token[2]);
+
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+
+        $forStmt->addChild($this->_parseForInit($tokens));
+        $forStmt->addChild($this->_parseForCondition($tokens));
+        $forStmt->addChild($this->_parseForUpdate($tokens));
+
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+
+        $blockOrStmt = $this->_parseBlockOrStatement($tokens);
+
+        $forStmt->addChild($blockOrStmt);
+        $forStmt->setEndLine($blockOrStmt->getEndLine());
+
+        return $forStmt;
+    }
+
+    /**
+     * Parses the init section of a <b>for</b>-loop.
+     *
+     * @param array $tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ForInitI
+     */
+    private function _parseForInit(array &$tokens)
+    {
+        $token = $this->tokenizer->token();
+        $init  = $this->builder->buildForInit($token[2]);
+
+        $expressionList = $this->_parseExpressionList($tokens);
+        foreach ($expressionList as $expression) {
+            $init->addChild($expression);
+        }
+
+        $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
+        $init->setEndLine($token[2]);
+
+        return $init;
+    }
+
+    /**
+     * Parses the condition section of a <b>for</b>-loop.
+     *
+     * @param array $tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ForConditionI
+     */
+    private function _parseForCondition(array &$tokens)
+    {
+        $token     = $this->tokenizer->token();
+        $condition = $this->builder->buildForCondition($token[2]);
+
+        $expressionList = $this->_parseExpressionList($tokens);
+        foreach ($expressionList as $expression) {
+            $condition->addChild($expression);
+        }
+
+        $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
+        $condition->setEndLine($token[2]);
+
+        return $condition;
+    }
+
+    /**
+     * Parses the update expressions of a <b>for</b>-loop statement.
+     *
+     * @param array $tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ForUpdateI
+     */
+    private function _parseForUpdate(array &$tokens)
+    {
+        $token  = $this->tokenizer->token();
+        $update = $this->builder->buildForUpdate($token[2]);
+
+        $expressionList = $this->_parseExpressionList($tokens);
+        foreach ($expressionList as $expression) {
+            $update->addChild($expression);
+        }
+
+        $token = $this->tokenizer->peek();
+        $update->setEndLine($token[2]);
+
+        return $update;
+    }
+
+    /**
+     * This method parses a <b>while</b>-loop statement.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_WhileStatementI
+     */
+    public function _parseWhileStatement(array &$tokens)
+    {
+        $token = $this->_consumeToken(self::T_WHILE, $tokens);
+        $while = $this->builder->buildWhileStatement($token[2]);
+
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        $while->addChild($this->_parseExpression($tokens));
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+
+        $blockOrStmt = $this->_parseBlockOrStatement($tokens);
+        $while->addChild($blockOrStmt);
+        $while->setEndLine($blockOrStmt->getEndLine());
+
+        return $while;
     }
 
     /**
@@ -1427,12 +1677,7 @@ class PHP_Reflection_Parser
     {
         $closure = $this->builder->buildClosure($line);
         $closure->addChild($this->_parseParameterList($tokens));
-/*
- * TODO: Remove this
-        foreach ($this->_parseParameterList($tokens) as $parameter) {
-            $closure->addParameter($parameter);
-        }
-*/
+
         $this->_consumeComments($tokens);
         if ($this->tokenizer->peek() === self::T_USE) {
             $this->_consumeToken(self::T_USE, $tokens);
@@ -1790,6 +2035,24 @@ class PHP_Reflection_Parser
             $returnType = $this->builder->buildClassOrInterfaceProxy($type[0]);
             $callable->setReturnType($returnType);
         }
+    }
+}
+
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
+require_once 'PHP/Reflection/AST/ExpressionI.php';
+
+class PHP_Reflection_AST_StubExpressionExpression
+       extends PHP_Reflection_AST_AbstractSourceElement
+    implements PHP_Reflection_AST_ExpressionI
+{
+    public function __construct($line)
+    {
+        parent::__construct('#dummy-expression', $line);
+    }
+
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+
     }
 }
 ?>
