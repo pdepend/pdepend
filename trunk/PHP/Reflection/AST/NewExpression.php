@@ -73,7 +73,7 @@ class PHP_Reflection_AST_NewExpression
     /**
      * Constructs a new expression node.
      *
-     * @param integer $line The line number of this catch statement.
+     * @param integer $line The line number of this expression.
      */
     public function __construct($line)
     {
