@@ -1427,13 +1427,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
                 return $this->_parseCatchStatement($tokens);
 
             case self::T_DO:
-                break;
-
-            case self::T_ELSE:
-                break;
-
-            case self::T_ELSEIF:
-                break;
+                return $this->_parseDoStatement($tokens);
 
             case self::T_FOR:
                 return $this->_parseForStatement($tokens);
@@ -1442,7 +1436,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
                 break;
 
             case self::T_IF:
-                break;
+                return $this->_parseIfStatement($tokens);
 
             case self::T_WHILE:
                 return $this->_parseWhileStatement($tokens);
@@ -1532,6 +1526,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
             case self::T_PARENTHESIS_CLOSE:
             case self::T_SEMICOLON:
             case self::T_COMMA:
+            case self::T_AS:
                 if ($tokenCount > 0) {
                     return new PHP_Reflection_AST_StubExpressionExpression(0);
                 }
@@ -1664,6 +1659,117 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
         $while->setEndLine($blockOrStmt->getEndLine());
 
         return $while;
+    }
+
+    /**
+     * This method parses a <b>do while</b>-loop statement.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_DoStatementI
+     */
+    private function _parseDoStatement(array &$tokens)
+    {
+        $token = $this->_consumeToken(self::T_DO, $tokens);
+        $do    = $this->builder->buildDoStatement($token[2]);
+
+        $do->addChild($this->_parseBlockOrStatement($tokens));
+
+        $this->_consumeToken(self::T_WHILE, $tokens);
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        $do->addChild($this->_parseExpression($tokens));
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+
+        $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
+        $do->setEndLine($token[2]);
+
+        return $do;
+    }
+
+    /**
+     * This method parses a <b>if</b>-statement.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_IfStatementI
+     */
+    private function _parseIfStatement(array &$tokens)
+    {
+        $token = $this->_consumeToken(self::T_IF, $tokens);
+        $if    = $this->builder->buildIfStatement($token[2]);
+
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        $if->addChild($this->_parseExpression($tokens));
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+
+        $blockOrStmt = $this->_parseBlockOrStatement($tokens);
+        $if->addChild($blockOrStmt);
+        $if->setEndLine($blockOrStmt->getEndLine());
+
+        $this->_consumeComments($tokens);
+        if ($this->tokenizer->peek() === self::T_ELSE) {
+            $if->addChild($this->_parseElseStatement($tokens));
+        } else if ($this->tokenizer->peek() === self::T_ELSEIF) {
+            $if->addChild($this->_parseElseIfStatement($tokens));
+        }
+
+        return $if;
+    }
+
+    /**
+     * This method parses an <b>else</b>-statement.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ElseStatementI
+     */
+    private function _parseElseStatement(&$tokens)
+    {
+        $token = $this->_consumeToken(self::T_ELSE, $tokens);
+        $else  = $this->builder->buildElseStatement($token[2]);
+
+        $this->_consumeComments($tokens);
+        if ($this->tokenizer->peek() === self::T_IF) {
+            $if = $this->_parseIfStatement($tokens);
+            $else->addChild($if);
+            $else->setEndLine($if->getEndLine());
+        } else {
+            $blockOrStmt = $this->_parseBlockOrStatement($tokens);
+            $else->addChild($blockOrStmt);
+            $else->setEndLine($blockOrStmt->getEndLine());
+        }
+
+        return $else;
+    }
+
+    /**
+     * This method parses an <b>elseif</b>-statement.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_ElseStatementI
+     */
+    private function _parseElseIfStatement(&$tokens)
+    {
+        $token  = $this->_consumeToken(self::T_ELSEIF, $tokens);
+        $elseIf = $this->builder->buildElseIfStatement($token[2]);
+
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        $elseIf->addChild($this->_parseExpression($tokens));
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+
+        $blockOrStmt = $this->_parseBlockOrStatement($tokens);
+        $elseIf->addChild($blockOrStmt);
+        $elseIf->setEndLine($blockOrStmt->getEndLine());
+
+        $this->_consumeComments($tokens);
+        if ($this->tokenizer->peek() === self::T_ELSEIF) {
+            $elseIf->addChild($this->_parseElseIfStatement($tokens));
+        } else if ($this->tokenizer->peek() === self::T_ELSE) {
+            $elseIf->addChild($this->_parseElseStatement($tokens));
+        }
+
+        return $elseIf;
     }
 
     /**
