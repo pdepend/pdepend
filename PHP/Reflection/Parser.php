@@ -1549,7 +1549,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
     /**
      * This method parses a <b>for</b>-loop statement.
      *
-     * @param array $tokens Reference array for parsed tokens.
+     * @param array &$tokens Reference array for parsed tokens.
      *
      * @return PHP_Reflection_AST_ForInitI
      */
