@@ -643,7 +643,7 @@ class PHP_Reflection_Builder_Default
      */
     public function buildIfStatement($line)
     {
-        include_once 'PHP/Reflection/AST/If/Statement.php';
+        include_once 'PHP/Reflection/AST/IfStatement.php';
 
         return new PHP_Reflection_AST_IfStatement($line);
     }
@@ -765,13 +765,13 @@ class PHP_Reflection_Builder_Default
      *
      * @param integer $line The line number of this do while statement.
      *
-     * @return PHP_Reflection_AST_DoWhileStatement
+     * @return PHP_Reflection_AST_DoStatement
      */
-    public function buildDoWhileStatement($line)
+    public function buildDoStatement($line)
     {
-        include_once 'PHP/Reflection/AST/DoWhileStatement.php';
+        include_once 'PHP/Reflection/AST/DoStatement.php';
 
-        return new Reflection_AST_DoWhileStatement($line);
+        return new PHP_Reflection_AST_DoStatement($line);
     }
 
     /**
@@ -898,6 +898,20 @@ class PHP_Reflection_Builder_Default
         include_once 'PHP/Reflection/AST/ConditionalExpression.php';
 
         return new PHP_Reflection_AST_ConditionalExpression($line);
+    }
+
+    /**
+     * Builds a new <b>variable</b>-expression.
+     *
+     * @param integer $line The line number of this variable expression.
+     *
+     * @return PHP_Reflection_AST_VariableExpression
+     */
+    public function buildVariableExpression($line)
+    {
+        include_once 'PHP/Reflection/AST/VariableExpression.php';
+
+        return new PHP_Reflection_AST_VariableExpression($line);
     }
 
     /**

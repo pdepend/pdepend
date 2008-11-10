@@ -405,14 +405,14 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     /**
      * Visits a <b>do while</b>-statement node.
      *
-     * @param PHP_Reflection_AST_DoWhileStatementI $stmt The do while statement.
+     * @param PHP_Reflection_AST_DoStatementI $stmt The do while statement.
      *
      * @return void
      */
-    public function visitDoWhileStatement(PHP_Reflection_AST_DoWhileStatementI $stmt)
+    public function visitDoStatement(PHP_Reflection_AST_DoStatementI $stmt)
     {
-        // TODO: $this->fireStartDoWhileStatement($stmt);
-        // TODO: $this->fireEndDoWhileStatement($stmt);
+        // TODO: $this->fireStartDoStatement($stmt);
+        // TODO: $this->fireEndDoStatement($stmt);
     }
 
     /**
@@ -536,6 +536,20 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     {
         // TODO: $this->fireStartConditionalExpression($expr);
         // TODO: $this->fireEndConditionalExpression($expr);
+    }
+
+    /**
+     * Visits a <b>variable</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_VariableExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitVariableExpression(
+                                PHP_Reflection_AST_VariableExpressionI $expr)
+    {
+        // TODO: $this->fireStartVariableExpression($expr);
+        // TODO: $this->fireEndVariableExpression($expr);
     }
 
     /**
