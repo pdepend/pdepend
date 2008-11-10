@@ -343,11 +343,11 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     /**
      * Visits a <b>do while</b>-statement node.
      *
-     * @param PHP_Reflection_AST_DoWhileStatementI $stmt The do while statement.
+     * @param PHP_Reflection_AST_DoStatementI $stmt The do while statement.
      *
      * @return void
      */
-    public function visitDoWhileStatement(PHP_Reflection_AST_DoWhileStatementI $stmt)
+    public function visitDoStatement(PHP_Reflection_AST_DoStatementI $stmt)
     {
         // TODO Implement this empty stub.
     }
@@ -462,6 +462,19 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
      */
     public function visitConditionalExpression(
                                 PHP_Reflection_AST_ConditionalExpressionI $expr)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a <b>variable</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_VariableExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    public function visitVariableExpression(
+                                PHP_Reflection_AST_VariableExpressionI $expr)
     {
         // TODO Implement this empty stub.
     }
