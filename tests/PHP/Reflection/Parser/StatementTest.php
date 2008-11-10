@@ -63,6 +63,41 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Reflection_Parser_StatementTest extends PHP_Reflection_AbstractTest
 {
     /**
+     * Tests a totally ugly notation "do foo(); while($bar);", but its valid.
+     *
+     * @return void
+     */
+    public function testParserHandlesDoStatementWithStatement()
+    {
+        $do = self::_parseStatement('do_with_statement.php');
+        $this->assertType('PHP_Reflection_AST_DoStatementI', $do);
+
+        $expr = $do->findChildrenOfType('PHP_Reflection_AST_ExpressionI');
+        $this->assertEquals(1, count($expr));
+
+        $stmt = $do->findChildrenOfType('PHP_Reflection_AST_StatementI');
+        $this->assertEquals(1, count($stmt));
+
+        $block = $do->findChildrenOfType('PHP_Reflection_AST_BlockI');
+        $this->assertEquals(0, count($block));
+    }
+
+    public function testParserHandlesDoStatementWithEmptyBlock()
+    {
+        $do = self::_parseStatement('do_with_empty_block.php');
+        $this->assertType('PHP_Reflection_AST_DoStatementI', $do);
+
+        $expr = $do->findChildrenOfType('PHP_Reflection_AST_ExpressionI');
+        $this->assertEquals(1, count($expr));
+
+        $block = $do->findChildrenOfType('PHP_Reflection_AST_BlockI');
+        $this->assertEquals(1, count($block));
+
+        $stmt = $do->findChildrenOfType('PHP_Reflection_AST_StatementI');
+        $this->assertEquals(0, count($stmt));
+    }
+
+    /**
      * Tests that the parser handles a for statement without any expressions.
      *
      * @return void
@@ -100,6 +135,114 @@ class PHP_Reflection_Parser_StatementTest extends PHP_Reflection_AbstractTest
 
         $stmt = $for->findChildrenOfType('PHP_Reflection_AST_StatementI');
         $this->assertEquals(1, count($stmt));
+    }
+
+    /**
+     * Tests that the parser handles a simple if statement with an empty block
+     * correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesSimpleIfStatementWithEmptyBlock()
+    {
+        $if = self::_parseStatement('if_with_empty_block.php');
+        $this->assertType('PHP_Reflection_AST_IfStatementI', $if);
+
+        $elseIfs = $if->getChildrenOfType('PHP_Reflection_AST_ElseIfStatementI');
+        $this->assertEquals(0, count($elseIfs));
+
+        $else = $if->getChildrenOfType('PHP_Reflection_AST_ElseStatementI');
+        $this->assertEquals(0, count($else));
+
+        $block = $if->findChildrenOfType('PHP_Reflection_AST_BlockI');
+        $this->assertEquals(1, count($block));
+
+        $stmt = $if->findChildrenOfType('PHP_Reflection_AST_StatementI');
+        $this->assertEquals(0, count($stmt));
+    }
+
+    /**
+     * Tests that the parser handles an if-else combination without curly brace
+     * blocks correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesIfAndElseStatementWithStatementsInsteadOfBocks()
+    {
+        $if = self::_parseStatement('if_else_with_statements.php');
+        $this->assertType('PHP_Reflection_AST_IfStatementI', $if);
+
+        $else = $if->getFirstChildOfType('PHP_Reflection_AST_ElseStatementI');
+        $this->assertNotNull($else);
+        $this->assertType('PHP_Reflection_AST_ElseStatementI', $else);
+
+        $this->assertNull($else->getFirstChildOfType('PHP_Reflection_AST_IfStatementI'));
+    }
+
+    /**
+     * Tests that the parser handles a simple if() {} else if() {} statement
+     * combination correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesIfAndElseIfStatementWithEmptyBlocks()
+    {
+        $if = self::_parseStatement('if_else_if_with_empty_blocks.php');
+        $this->assertType('PHP_Reflection_AST_IfStatementI', $if);
+
+        $else = $if->getFirstChildOfType('PHP_Reflection_AST_ElseStatementI');
+        $this->assertNotNull($else);
+        $this->assertType('PHP_Reflection_AST_ElseStatementI', $else);
+
+        $if2 = $else->getFirstChildOfType('PHP_Reflection_AST_IfStatementI');
+        $this->assertNotNull($if2);
+        $this->assertType('PHP_Reflection_AST_IfStatementI', $if2);
+    }
+
+    /**
+     * Tests that the parser handles a simple if() {} else if() {} else {}
+     * statement combination correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesIfAndElseIfAndElseStatementWithEmptyBlocks()
+    {
+        $if1 = self::_parseStatement('if_else_if_else_with_empty_blocks.php');
+        $this->assertType('PHP_Reflection_AST_IfStatementI', $if1);
+
+        $else1 = $if1->getFirstChildOfType('PHP_Reflection_AST_ElseStatementI');
+        $this->assertNotNull($else1);
+        $this->assertType('PHP_Reflection_AST_ElseStatementI', $else1);
+
+        $if2 = $else1->getFirstChildOfType('PHP_Reflection_AST_IfStatementI');
+        $this->assertNotNull($if2);
+        $this->assertType('PHP_Reflection_AST_IfStatementI', $if2);
+
+        $else2 = $if2->getFirstChildOfType('PHP_Reflection_AST_ElseStatementI');
+        $this->assertNotNull($else2);
+        $this->assertType('PHP_Reflection_AST_ElseStatementI', $else2);
+
+        $this->assertNull($else2->getFirstChildOfType('PHP_Reflection_AST_ElseStatementI'));
+    }
+
+    /**
+     * Tests that the parser handles a <b>if () {} elseif () {} else {}</b>
+     * combination correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesAlternativeIfAndElseIfAndElseStatementWithoutBlocks()
+    {
+        $if = self::_parseStatement('if_elseif_else_with_statements.php');
+        $this->assertType('PHP_Reflection_AST_IfStatementI', $if);
+
+        $elseIf = $if->getFirstChildOfType('PHP_Reflection_AST_ElseIfStatementI');
+        $this->assertNotNull($elseIf);
+        $this->assertType('PHP_Reflection_AST_ElseIfStatementI', $elseIf);
+
+        $else = $elseIf->getFirstChildOfType('PHP_Reflection_AST_ElseStatementI');
+        $this->assertNotNull($else);
+        $this->assertType('PHP_Reflection_AST_ElseStatementI', $else);
     }
 
     /**
