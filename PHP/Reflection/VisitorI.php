@@ -243,11 +243,11 @@ interface PHP_Reflection_VisitorI
     /**
      * Visits a <b>do while</b>-statement node.
      *
-     * @param PHP_Reflection_AST_DoWhileStatementI $stmt The do while statement.
+     * @param PHP_Reflection_AST_DoStatementI $stmt The do while statement.
      *
      * @return void
      */
-    function visitDoWhileStatement(PHP_Reflection_AST_DoWhileStatementI $stmt);
+    function visitDoStatement(PHP_Reflection_AST_DoStatementI $stmt);
 
     /**
      * Visits a <b>switch</b>-statement node.
@@ -333,6 +333,15 @@ interface PHP_Reflection_VisitorI
      */
     function visitConditionalExpression(
                                 PHP_Reflection_AST_ConditionalExpressionI $expr);
+
+    /**
+     * Visits a <b>variable</b>-expression node.
+     *
+     * @param PHP_Reflection_AST_VariableExpressionI $expr The expression node.
+     *
+     * @return void
+     */
+    function visitVariableExpression(PHP_Reflection_AST_VariableExpressionI $expr);
 
     /**
      * Visits a class constant node.

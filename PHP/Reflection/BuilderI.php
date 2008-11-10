@@ -349,9 +349,9 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      *
      * @param integer $line The line number of this do while statement.
      *
-     * @return PHP_Reflection_AST_DoWhileStatement
+     * @return PHP_Reflection_AST_DoStatement
      */
-    function buildDoWhileStatement($line);
+    function buildDoStatement($line);
 
     /**
      * Builds a new <b>switch</b>-statement.
@@ -433,6 +433,15 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
      * @return PHP_Reflection_AST_ConditionalExpression
      */
     function buildConditionalExpression($line);
+
+    /**
+     * Builds a new <b>variable</b>-expression.
+     *
+     * @param integer $line The line number of this variable expression.
+     *
+     * @return PHP_Reflection_AST_VariableExpression
+     */
+    function buildVariableExpression($line);
 
     /**
      * Builds a new array value instance.
