@@ -52,6 +52,7 @@ require_once 'PHP/Reflection/PHPTypesI.php';
 
 require_once 'PHP/Reflection/Exceptions/IdentifierExpectedException.php';
 require_once 'PHP/Reflection/Exceptions/UnclosedBodyException.php';
+require_once 'PHP/Reflection/Exceptions/UnexpectedExpressionException.php';
 require_once 'PHP/Reflection/Exceptions/UnexpectedTokenException.php';
 
 /**
@@ -156,6 +157,13 @@ class PHP_Reflection_Parser
      * @var PHP_Reflection_AST_ClassOrInterfaceI $_classOrInterface
      */
     private $_classOrInterface = null;
+
+    /**
+     * Stack of already parsed expressions.
+     *
+     * @var array(PHP_Reflection_AST_ExpressionI) $_expressionStack
+     */
+    private $_expressionStack = array();
 
     /**
      * The used code tokenizer.
@@ -1433,6 +1441,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
                 return $this->_parseForStatement($tokens);
 
             case self::T_FOREACH:
+                // FIXME: Implement foreach parsing
                 break;
 
             case self::T_IF:
@@ -1448,11 +1457,33 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
                 return $stmt;
 
             default:
-                // FIXME: Throw an exception
-                $this->_consumeToken($type, $tokens);
-                break;
+                return $this->_parseBlockStatement($tokens);
             }
         }
+    }
+
+    /**
+     * Parses a single block statement.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_BlockStatementI
+     */
+    private function _parseBlockStatement(array &$tokens)
+    {
+        // FIXME: T_SEMICOLON or T_CLOSE_TAG
+        $expr  = $this->_parseExpressionOrEmpty($tokens);
+        $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
+
+        if ($expr === null) {
+            $stmt = $this->builder->buildBlockStatement($token[2]);
+        } else {
+            $stmt = $this->builder->buildBlockStatement($expr->getLine());
+            $stmt->addChild($expr);
+        }
+        $stmt->setEndLine($token[2]);
+
+        return $stmt;
     }
 
     /**
@@ -1518,19 +1549,58 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
 
             case self::T_PARENTHESIS_OPEN:
                 $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
-                $expr = $this->_parseExpression($tokens);
+                $this->_shift($this->_parseExpression($tokens));
                 $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
 
-                return $expr;
+                return $this->_reduce();
 
             case self::T_PARENTHESIS_CLOSE:
+            case self::T_QUESTION_MARK:
             case self::T_SEMICOLON:
+            case self::T_COLON:
             case self::T_COMMA:
             case self::T_AS:
                 if ($tokenCount > 0) {
                     return new PHP_Reflection_AST_StubExpressionExpression(0);
                 }
                 return null;
+
+            case self::T_TRUE:
+            case self::T_FALSE:
+                $this->_shift($this->_parseBooleanLiteral($tokens));
+                if (($expr = $this->_parseExpressionOrEmpty($tokens)) !== null) {
+                    return $expr;
+                }
+                return $this->_reduce();
+
+            case self::T_VARIABLE:
+                $this->_shift($this->_parseVariableExpression($tokens));
+                if (($expr = $this->_parseExpressionOrEmpty($tokens)) !== null) {
+                    return $expr;
+                }
+                return $this->_reduce();
+
+            case self::T_LOGICAL_AND:
+                $this->_shift($this->_parseLogicalAndExpression($tokens));
+                if (($expr = $this->_parseExpressionOrEmpty($tokens)) !== null) {
+                    return $expr;
+                }
+                return $this->_reduce();
+
+            case self::T_LOGICAL_OR:
+                $this->_shift($this->_parseLogicalOrExpression($tokens));
+                if (($expr = $this->_parseExpressionOrEmpty($tokens)) !== null) {
+                    return $expr;
+                }
+                return $this->_reduce();
+
+
+            case self::T_LOGICAL_XOR:
+                $this->_shift($this->_parseLogicalXorExpression($tokens));
+                if (($expr = $this->_parseExpressionOrEmpty($tokens)) !== null) {
+                    return $expr;
+                }
+                return $this->_reduce();
 
             default:
                 $this->_consumeToken($type, $tokens);
@@ -1723,7 +1793,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
      *
      * @return PHP_Reflection_AST_ElseStatementI
      */
-    private function _parseElseStatement(&$tokens)
+    private function _parseElseStatement(array &$tokens)
     {
         $token = $this->_consumeToken(self::T_ELSE, $tokens);
         $else  = $this->builder->buildElseStatement($token[2]);
@@ -1749,7 +1819,7 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
      *
      * @return PHP_Reflection_AST_ElseStatementI
      */
-    private function _parseElseIfStatement(&$tokens)
+    private function _parseElseIfStatement(array &$tokens)
     {
         $token  = $this->_consumeToken(self::T_ELSEIF, $tokens);
         $elseIf = $this->builder->buildElseIfStatement($token[2]);
@@ -1770,6 +1840,105 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
         }
 
         return $elseIf;
+    }
+
+    /**
+     * Parses a logical <b>and</b>-expression node.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_LogicalAndExpressionI
+     */
+    private function _parseLogicalAndExpression(array &$tokens)
+    {
+        $this->_consumeToken(self::T_LOGICAL_AND, $tokens);
+
+        $left  = $this->_reduce();
+        $right = $this->_parseExpression($tokens);
+
+        $and = $this->builder->buildLogicalAndExpression($left->getLine());
+        $and->setEndLine($right->getEndLine());
+        $and->addChild($left);
+        $and->addChild($right);
+
+        return $and;
+    }
+
+    /**
+     * Parses a logical <b>or</b>-expression node.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_LogicalOrExpressionI
+     */
+    private function _parseLogicalOrExpression(array &$tokens)
+    {
+        $this->_consumeToken(self::T_LOGICAL_OR, $tokens);
+
+        $left  = $this->_reduce();
+        $right = $this->_parseExpression($tokens);
+
+        $or = $this->builder->buildLogicalOrExpression($left->getLine());
+        $or->setEndLine($right->getEndLine());
+        $or->addChild($left);
+        $or->addChild($right);
+
+        return $or;
+    }
+
+    /**
+     * Parses a logical <b>xor</b>-expression node.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_LogicalXorExpressionI
+     */
+    private function _parseLogicalXorExpression(array &$tokens)
+    {
+        $this->_consumeToken(self::T_LOGICAL_XOR, $tokens);
+
+        $left  = $this->_reduce();
+        $right = $this->_parseExpression($tokens);
+
+        $xor = $this->builder->buildLogicalXorExpression($left->getLine());
+        $xor->setEndLine($right->getEndLine());
+        $xor->addChild($left);
+        $xor->addChild($right);
+
+        return $xor;
+    }
+
+    /**
+     * Parses a <b>variable</b>-expression node.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_VariableExpressionI
+     */
+    private function _parseVariableExpression(array &$tokens)
+    {
+        $token = $this->_consumeToken(self::T_VARIABLE, $tokens);
+        return $this->builder->buildVariableExpression($token[1], $token[2]);
+    }
+
+    /**
+     * Parses a <b>boolean</b>-expression node.
+     *
+     * @param array &$tokens Reference array for parsed tokens.
+     *
+     * @return PHP_Reflection_AST_BooleanLiteralI
+     */
+    private function _parseBooleanLiteral(array &$tokens)
+    {
+        $token = $this->_consumeToken($this->tokenizer->peek(), $tokens);
+        $bool  = $this->builder->buildBooleanLiteral($token[2]);
+
+        if ($token[0] === self::T_TRUE) {
+            $bool->setTrue();
+        } else {
+            $bool->setFalse();
+        }
+        return $bool;
     }
 
     /**
@@ -1925,6 +2094,34 @@ if (isset($GLOBALS['argv']) && in_array('--filter', $GLOBALS['argv'])) {
         }
 
         return $instanceOf;
+    }
+
+    /**
+     * Shifts the given expression onto the expression stack.
+     *
+     * @param PHP_Reflection_AST_ExpressionI $expr New expression.
+     *
+     * @return void
+     */
+    private function _shift(PHP_Reflection_AST_ExpressionI $expr)
+    {
+        array_unshift($this->_expressionStack, $expr);
+    }
+
+    /**
+     * Removes an expression of <b>$type</b> from the expression stack.
+     *
+     * @param string $type The expected expression type.
+     *
+     * @return PHP_Reflection_AST_ExpressionI
+     */
+    private function _reduce($type = 'PHP_Reflection_AST_ExpressionI')
+    {
+        $expr = array_shift($this->_expressionStack);
+        if ($expr instanceof $type) {
+            return $expr;
+        }
+        throw new PHP_Reflection_Exceptions_UnexpectedExpressionException($expr, $type);
     }
 
     /**

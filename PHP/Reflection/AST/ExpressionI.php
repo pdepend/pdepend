@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/NodeI.php';
+require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
  * This interface represents an expression.
@@ -60,6 +60,6 @@ require_once 'PHP/Reflection/AST/NodeI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_ExpressionI extends PHP_Reflection_AST_NodeI
+interface PHP_Reflection_AST_ExpressionI extends PHP_Reflection_AST_SourceElementI
 {
 }

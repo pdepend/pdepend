@@ -480,6 +480,18 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     }
 
     /**
+     * Visits a <b>boolean</b>-literal node.
+     *
+     * @param PHP_Reflection_AST_BooleanLiteralI $bool The literal node.
+     *
+     * @return void
+     */
+    public function visitBooleanLiteral(PHP_Reflection_AST_BooleanLiteralI $bool)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
      * Visits a function node.
      *
      * @param PHP_Reflection_AST_Function $function The current function node.

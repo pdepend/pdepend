@@ -49,7 +49,7 @@
 require_once 'PHP/Reflection/AST/ExpressionI.php';
 
 /**
- * This interface represents a new expression.
+ * This interface represents a boolean expression.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,7 +60,25 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+interface PHP_Reflection_AST_BooleanLiteralI extends PHP_Reflection_AST_ExpressionI
 {
+    /**
+     * Identifier for this node type.
+     */
+    const NODE_NAME = '#boolean-literal';
+
+    /**
+     * Will return <b>true</b> when this node represents a boolean true literal.
+     *
+     * @return boolean
+     */
+    function isTrue();
+
+    /**
+     * Will return <b>true</b> when this node represents a boolean false literal.
+     *
+     * @return boolean
+     */
+    function isFalse();
 }
+?>

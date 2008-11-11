@@ -553,6 +553,19 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits a <b>boolean</b>-literal node.
+     *
+     * @param PHP_Reflection_AST_BooleanLiteralI $bool The literal node.
+     *
+     * @return void
+     */
+    public function visitBooleanLiteral(PHP_Reflection_AST_BooleanLiteralI $bool)
+    {
+        // TODO: $this->fireStartBooleanLiteral($bool);
+        // TODO: $this->fireEndBooleanLiteral($bool);
+    }
+
+    /**
      * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const

@@ -46,6 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
+require_once 'PHP/Reflection/AST/LogicalOrExpressionI.php';
+
 /**
  * This class represents a logical <b>or</b>-expression.
  *
@@ -59,6 +62,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_LogicalOrExpression
+       extends PHP_Reflection_AST_AbstractSourceElement
+    implements PHP_Reflection_AST_LogicalOrExpressionI
 {
     /**
      * Constructs a new logical or expression instance.

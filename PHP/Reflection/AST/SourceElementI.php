@@ -63,6 +63,15 @@ require_once 'PHP/Reflection/AST/NodeI.php';
 interface PHP_Reflection_AST_SourceElementI extends PHP_Reflection_AST_NodeI
 {
     /**
+     * Returns the first direct child of the given type or <b>null</b>.
+     *
+     * @param string $type The class or interface name.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    function getFirstChildOfType($type);
+
+    /**
      * Returns a list of all direct children of the given type.
      *
      * @param string $type The class or interface name.
