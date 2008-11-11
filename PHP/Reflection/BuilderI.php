@@ -401,7 +401,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * Builds a new logical <b>xor</b>-expression.
      *
-     * @param unknown_type $line The line number of this XOR expression.
+     * @param integer $line The line number of this XOR expression.
      *
      * @return PHP_Reflection_AST_LogicalXorExpression
      */
@@ -410,7 +410,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * Builds a new boolean <b>&&</b>-expression.
      *
-     * @param unknown_type $line The line number of this AND expression.
+     * @param integer $line The line number of this AND expression.
      *
      * @return PHP_Reflection_AST_BooleanAndExpression
      */
@@ -419,7 +419,7 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * Builds a new boolean <b>||</b>-expression.
      *
-     * @param unknown_type $line The line number of this OR expression.
+     * @param integer $line The line number of this OR expression.
      *
      * @return PHP_Reflection_AST_BooleanOrExpression
      */
@@ -437,11 +437,21 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * Builds a new <b>variable</b>-expression.
      *
+     * @param string  $name The name of the variable expression.
      * @param integer $line The line number of this variable expression.
      *
      * @return PHP_Reflection_AST_VariableExpression
      */
-    function buildVariableExpression($line);
+    function buildVariableExpression($name, $line);
+
+    /**
+     * Builds a new <b>boolean</b>-literal.
+     *
+     * @param integer $line The line number of this variable expression.
+     *
+     * @return PHP_Reflection_AST_BooleanLiteral
+     */
+    function buildBooleanLiteral($line);
 
     /**
      * Builds a new array value instance.

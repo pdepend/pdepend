@@ -55,6 +55,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/ClosureTest.php';
 require_once dirname(__FILE__) . '/ConstantTest.php';
+require_once dirname(__FILE__) . '/ExpressionTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/MemberValueTest.php';
 require_once dirname(__FILE__) . '/MethodTest.php';
@@ -96,6 +97,7 @@ class PHP_Reflection_Parser_AllTests
         $suite->addTestSuite('PHP_Reflection_Parser_ClosureTest');
         $suite->addTestSuite('PHP_Reflection_Parser_ConstantTest');
         $suite->addTestSuite('PHP_Reflection_Parser_FunctionTest');
+        $suite->addTestSuite('PHP_Reflection_Parser_ExpressionTest');
         $suite->addTestSuite('PHP_Reflection_Parser_MemberValueTest');
         $suite->addTestSuite('PHP_Reflection_Parser_MethodTest');
         $suite->addTestSuite('PHP_Reflection_Parser_PropertyTest');

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractNode.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/StaticScalarValueI.php';
 
 /**
@@ -63,7 +63,7 @@ require_once 'PHP/Reflection/AST/StaticScalarValueI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_ConstantValue
-       extends PHP_Reflection_AST_AbstractNode 
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_StaticScalarValueI
 {
     /**
@@ -75,12 +75,12 @@ class PHP_Reflection_AST_ConstantValue
     {
         return self::IS_CONSTANT;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Reflection_VisitorI $visitor)

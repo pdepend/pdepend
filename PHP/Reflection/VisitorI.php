@@ -344,6 +344,15 @@ interface PHP_Reflection_VisitorI
     function visitVariableExpression(PHP_Reflection_AST_VariableExpressionI $expr);
 
     /**
+     * Visits a <b>boolean</b>-literal node.
+     *
+     * @param PHP_Reflection_AST_BooleanLiteralI $bool The literal node.
+     *
+     * @return void
+     */
+    function visitBooleanLiteral(PHP_Reflection_AST_BooleanLiteralI $bool);
+
+    /**
      * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant

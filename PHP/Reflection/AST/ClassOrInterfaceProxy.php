@@ -113,6 +113,18 @@ class PHP_Reflection_AST_ClassOrInterfaceProxy
     }
 
     /**
+     * Returns the first direct child of the given type or <b>null</b>.
+     *
+     * @param string $type The class or interface name.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    public function getFirstChildOfType($type)
+    {
+        return null;
+    }
+
+    /**
      * Returns a list of all direct children of the given type.
      *
      * @param string $type The class or interface name.

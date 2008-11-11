@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Reflection/AST/ExpressionI.php';
-require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
  * This interface represents a variable expression.
@@ -62,12 +61,7 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Reflection_AST_VariableExpressionI
-    extends PHP_Reflection_AST_ExpressionI,
-            PHP_Reflection_AST_SourceElementI
+    extends PHP_Reflection_AST_ExpressionI
 {
-    /**
-     * Identifier for this node type.
-     */
-    const NODE_NAME = '#variable-expression';
 }
 ?>
