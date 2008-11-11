@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Reflection/AST/ExpressionI.php';
-require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
  * This interface represents a logical <b>xor</b>-expression.
@@ -62,8 +61,7 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Reflection_AST_LogicalXorExpressionI
-    extends PHP_Reflection_AST_ExpressionI,
-            PHP_Reflection_AST_SourceElementI
+    extends PHP_Reflection_AST_ExpressionI
 {
     /**
      * Identifier for this node type.

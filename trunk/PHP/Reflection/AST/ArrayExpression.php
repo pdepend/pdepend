@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractNode.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/MemberValueI.php';
 
 /**
@@ -61,42 +61,42 @@ require_once 'PHP/Reflection/AST/MemberValueI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_ArrayExpression 
-       extends PHP_Reflection_AST_AbstractNode
+class PHP_Reflection_AST_ArrayExpression
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_MemberValueI, Countable
 {
     /**
      * Identifier for this node type.
      */
     const NODE_NAME = '#array-expression';
-    
+
     /**
      * Elements within this array.
      *
      * @var array(PHP_Reflection_AST_ArrayElement) $_elements
      */
     private $_elements = array();
-    
+
     /**
      * Constructs a new array value object.
      */
-    public function __construct()
+    public function __construct($line = 0)
     {
-        parent::__construct(self::NODE_NAME);
+        parent::__construct(self::NODE_NAME, $line);
     }
-    
+
     /**
      * Adds an element to this array.
      *
      * @param PHP_Reflection_AST_ArrayElement $element The element object.
-     * 
+     *
      * @return void
      */
     public function addElement(PHP_Reflection_AST_ArrayElement $element)
     {
         $this->_elements[] = $element;
     }
-    
+
     /**
      * Returns the elements of this array.
      *
@@ -106,7 +106,7 @@ class PHP_Reflection_AST_ArrayExpression
     {
         return $this->_elements;
     }
-    
+
     /**
      * Returns the number of values within this array
      *
@@ -116,7 +116,7 @@ class PHP_Reflection_AST_ArrayExpression
     {
         return count($this->_elements);
     }
-    
+
     /**
      * Returns the php type of this value.
      *
@@ -126,12 +126,12 @@ class PHP_Reflection_AST_ArrayExpression
     {
         return self::IS_ARRAY;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Reflection_VisitorI $visitor)

@@ -847,7 +847,7 @@ class PHP_Reflection_Builder_Default
     /**
      * Builds a new logical <b>xor</b>-expression.
      *
-     * @param unknown_type $line The line number of this XOR expression.
+     * @param integer $line The line number of this XOR expression.
      *
      * @return PHP_Reflection_AST_LogicalXorExpression
      */
@@ -861,7 +861,7 @@ class PHP_Reflection_Builder_Default
     /**
      * Builds a new boolean <b>&&</b>-expression.
      *
-     * @param unknown_type $line The line number of this AND expression.
+     * @param integer $line The line number of this AND expression.
      *
      * @return PHP_Reflection_AST_BooleanAndExpression
      */
@@ -875,7 +875,7 @@ class PHP_Reflection_Builder_Default
     /**
      * Builds a new boolean <b>||</b>-expression.
      *
-     * @param unknown_type $line The line number of this OR expression.
+     * @param integer $line The line number of this OR expression.
      *
      * @return PHP_Reflection_AST_BooleanOrExpression
      */
@@ -903,15 +903,30 @@ class PHP_Reflection_Builder_Default
     /**
      * Builds a new <b>variable</b>-expression.
      *
+     * @param string  $name The name of the variable expression.
      * @param integer $line The line number of this variable expression.
      *
      * @return PHP_Reflection_AST_VariableExpression
      */
-    public function buildVariableExpression($line)
+    public function buildVariableExpression($name, $line)
     {
         include_once 'PHP/Reflection/AST/VariableExpression.php';
 
-        return new PHP_Reflection_AST_VariableExpression($line);
+        return new PHP_Reflection_AST_VariableExpression($name, $line);
+    }
+
+    /**
+     * Builds a new <b>boolean</b>-literal.
+     *
+     * @param integer $line The line number of this variable expression.
+     *
+     * @return PHP_Reflection_AST_BooleanLiteral
+     */
+    public function buildBooleanLiteral($line)
+    {
+        include_once 'PHP/Reflection/AST/BooleanLiteral.php';
+
+        return new PHP_Reflection_AST_BooleanLiteral($line);
     }
 
     /**

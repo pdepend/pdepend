@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Reflection/AST/ExpressionI.php';
-require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
  * This interface represents an <b>instanceof</b> node in the source code.
@@ -62,7 +61,6 @@ require_once 'PHP/Reflection/AST/SourceElementI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Reflection_AST_InstanceOfExpressionI
-    extends PHP_Reflection_AST_ExpressionI,
-            PHP_Reflection_AST_SourceElementI
+    extends PHP_Reflection_AST_ExpressionI
 {
 }

@@ -299,7 +299,6 @@ class PHP_Reflection_Parser_StatementTest extends PHP_Reflection_AbstractTest
         self::assertNotNull($statement);
 
         return $statement;
-
     }
 }
 ?>
