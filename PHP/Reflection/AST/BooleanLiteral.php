@@ -46,10 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ExpressionI.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
+require_once 'PHP/Reflection/AST/BooleanLiteralI.php';
 
 /**
- * This interface represents a new expression.
+ * This class represents a boolean literal.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,7 +61,77 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+class PHP_Reflection_AST_BooleanLiteral
+       extends PHP_Reflection_AST_AbstractSourceElement
+    implements PHP_Reflection_AST_BooleanLiteralI
 {
+    /**
+     * Represents this literal boolean true or false.
+     *
+     * @var boolean $_true
+     */
+    private $_true = false;
+
+    /**
+     * Constructs a new boolean literal instance.
+     *
+     * @param integer $line The line number of this literal.
+     */
+    public function __construct($line)
+    {
+        parent::__construct(self::NODE_NAME, $line);
+    }
+
+    /**
+     * Will return <b>true</b> when this node represents a boolean true literal.
+     *
+     * @return boolean
+     */
+    public function isTrue()
+    {
+        return $this->_true;
+    }
+
+    /**
+     * Marks this literal as boolean true.
+     *
+     * @return void
+     */
+    public function setTrue()
+    {
+        $this->_true = true;
+    }
+
+    /**
+     * Will return <b>true</b> when this node represents a boolean false literal.
+     *
+     * @return boolean
+     */
+    public function isFalse()
+    {
+        return !$this->_true;
+    }
+
+    /**
+     * Marks this literal as boolean false.
+     *
+     * @return void
+     */
+    public function setFalse()
+    {
+        $this->_true = false;
+    }
+
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     *
+     * @return void
+     */
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        $visitor->visitBooleanLiteral($this);
+    }
 }
+?>

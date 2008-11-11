@@ -68,11 +68,12 @@ class PHP_Reflection_AST_VariableExpression
     /**
      * Constructs a new variable expression node.
      *
+     * @param string  $name The name of the variable expression.
      * @param integer $line The line number of this expression.
      */
-    public function __construct($line)
+    public function __construct($name, $line)
     {
-        parent::__construct(self::NODE_NAME, $line);
+        parent::__construct($name, $line);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractNode.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/StaticScalarValueI.php';
 
 /**
@@ -62,7 +62,7 @@ require_once 'PHP/Reflection/AST/StaticScalarValueI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Reflection_AST_ClassOrInterfaceConstantValue
-       extends PHP_Reflection_AST_AbstractNode 
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_StaticScalarValueI
 {
     /**
@@ -71,7 +71,7 @@ class PHP_Reflection_AST_ClassOrInterfaceConstantValue
      * @var PHP_Reflection_AST_ClassOrInterfaceI $_reference
      */
     private $_reference = null;
-    
+
     /**
      * Constructs a new class or interface constant value instance.
      *
@@ -81,11 +81,11 @@ class PHP_Reflection_AST_ClassOrInterfaceConstantValue
     public function __construct(PHP_Reflection_AST_ClassOrInterfaceI $reference,
                                 $identifier)
     {
-        parent::__construct($identifier);
-        
+        parent::__construct($identifier, 0);
+
         $this->_reference = $reference;
     }
-    
+
     /**
      * Returns the owning class or interface instance.
      *
@@ -95,7 +95,7 @@ class PHP_Reflection_AST_ClassOrInterfaceConstantValue
     {
         return $this->_reference;
     }
-    
+
     /**
      * Returns the php type of this value.
      *
@@ -105,12 +105,12 @@ class PHP_Reflection_AST_ClassOrInterfaceConstantValue
     {
         return self::IS_CLASS_OR_INTERFACE_CONSTANT;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Reflection_VisitorI $visitor)

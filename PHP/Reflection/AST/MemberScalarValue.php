@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,11 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/AbstractNode.php';
+require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
 require_once 'PHP/Reflection/AST/StaticScalarValueI.php';
 
 /**
- * Represents a scalar php value. 
+ * Represents a scalar php value.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -61,8 +61,8 @@ require_once 'PHP/Reflection/AST/StaticScalarValueI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_MemberScalarValue 
-       extends PHP_Reflection_AST_AbstractNode
+class PHP_Reflection_AST_MemberScalarValue
+       extends PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_StaticScalarValueI
 {
     /**
@@ -71,28 +71,28 @@ class PHP_Reflection_AST_MemberScalarValue
      * @var integer $_type
      */
     private $_type = null;
-    
+
     /**
      * The value of this scalar instance.
      *
      * @var mixed $_value
      */
     private $_value = null;
-    
+
     /**
      * Constructs a new scalar instance.
      *
      * @param integer $type  The type of this scalar instance.
-     * @param string  $value The raw value. 
+     * @param string  $value The raw value.
      */
     public function __construct($type, $value = null)
     {
-        parent::__construct('#scalar-value');
-        
+        parent::__construct('#scalar-value', 0);
+
         $this->_value = $this->_castValue($type, $value);
         $this->_type  = $type;
     }
-    
+
     /**
      * Returns the type of this value.
      *
@@ -102,9 +102,9 @@ class PHP_Reflection_AST_MemberScalarValue
     {
         return $this->_type;
     }
-    
+
     /**
-     * Returns the value. 
+     * Returns the value.
      *
      * @return mixed
      */
@@ -112,28 +112,28 @@ class PHP_Reflection_AST_MemberScalarValue
     {
         return $this->_value;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Reflection_VisitorI $visitor)
     {
         $visitor->visitValue($this);
     }
-    
+
     /**
      * This method casts the given string <b>$value</b> into its php representation.
-     * 
+     *
      * TODO: Review the current string handling we use substr() to remove the
      * leading and closing quote character.
      *
      * @param integer $type  The type of this scalar instance.
      * @param string  $value The raw value.
-     * 
+     *
      * @return mixed
      */
     private function _castValue($type, $value)
@@ -142,19 +142,19 @@ class PHP_Reflection_AST_MemberScalarValue
         {
             case self::IS_NULL:
                 return null;
-            
+
             case self::IS_STRING:
                 return substr((string) $value, 1, -1);
-                
+
             case self::IS_DOUBLE:
                 return (double) $value;
-                
+
             case self::IS_INTEGER:
                 return (integer) $value;
-                
+
             case self::IS_BOOLEAN:
                 return (strtolower($value) === 'true');
-                
+
             default:
                 throw new ErrorException('Invalid scalar type given.');
         }
