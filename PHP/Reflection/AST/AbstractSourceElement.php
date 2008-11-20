@@ -66,6 +66,13 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     implements PHP_Reflection_AST_SourceElementI
 {
     /**
+     * Source elements within this block.
+     *
+     * @var array(PHP_Reflection_AST_SourceElementI) $sourceElements
+     */
+    protected $sourceElements = array();
+
+    /**
      * The line number where the item declaration starts.
      *
      * @var integer $_line
@@ -92,13 +99,6 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
      * @var string $_docComment
      */
     private $_docComment = null;
-
-    /**
-     * Source elements within this block.
-     *
-     * @var array(PHP_Reflection_AST_SourceElementI) $_sourceElements
-     */
-    private $_sourceElements = array();
 
     /**
      * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
@@ -139,7 +139,7 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     public function getChildrenOfType($type)
     {
         $sourceElements = array();
-        foreach ($this->_sourceElements as $sourceElement)
+        foreach ($this->sourceElements as $sourceElement)
         {
             if ($sourceElement instanceof $type) {
                 $sourceElements[] = $sourceElement;
@@ -158,7 +158,7 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
     public function findChildrenOfType($type)
     {
         $sourceElements = array();
-        foreach ($this->_sourceElements as $sourceElement)
+        foreach ($this->sourceElements as $sourceElement)
         {
             if ($sourceElement instanceof $type) {
                 $sourceElements[] = $sourceElement;
@@ -179,7 +179,7 @@ abstract class PHP_Reflection_AST_AbstractSourceElement
      */
     public function addChild(PHP_Reflection_AST_SourceElementI $element)
     {
-        $this->_sourceElements[] = $element;
+        $this->sourceElements[] = $element;
     }
 
     /**

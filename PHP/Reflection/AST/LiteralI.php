@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ExpressionI.php';
+require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
- * This interface represents a new expression.
+ * This interface represents literal data like strings, integers, floats...
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,11 +60,39 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+interface PHP_Reflection_AST_LiteralI extends PHP_Reflection_AST_SourceElementI
 {
     /**
      * Identifier for this node type.
      */
-    const NODE_NAME = '#new-expression';
+    const NODE_NAME = '#literal';
+
+    /**
+     * Returns the string representation of this literal.
+     *
+     * @return string
+     */
+    function getData();
+
+    /**
+     * This method will return <b>true</b> when this node represents an integer.
+     *
+     * @return boolean
+     */
+    function isInt();
+
+    /**
+     * This method will return <b>true</b> when this node represents a float.
+     *
+     * @return boolean
+     */
+    function isFloat();
+
+    /**
+     * This method will return <b>true</b> when this node represents a string.
+     *
+     * @return boolean
+     */
+    function isString();
 }
+?>

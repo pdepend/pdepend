@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ExpressionI.php';
+require_once 'PHP/Reflection/AST/UnaryExpressionI.php';
 
 /**
  * This interface represents a variable expression.
@@ -61,7 +61,7 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Reflection_AST_VariableExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+    extends PHP_Reflection_AST_UnaryExpressionI
 {
 }
 ?>

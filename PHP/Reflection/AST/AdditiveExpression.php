@@ -46,10 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ExpressionI.php';
+require_once 'PHP/Reflection/AST/AbstractBinaryExpression.php';
+require_once 'PHP/Reflection/AST/AdditiveExpressionI.php';
 
 /**
- * This interface represents a new expression.
+ * This class represents an additive expression which means all + and - operations.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,11 +61,32 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+class PHP_Reflection_AST_AdditiveExpression
+       extends PHP_Reflection_AST_AbstractBinaryExpression
+    implements PHP_Reflection_AST_AdditiveExpressionI
 {
     /**
-     * Identifier for this node type.
+     * Constructs a new additive expression node.
+     *
+     * @param integer $line     The start line number of this expression.
+     * @param string  $operator The textual representation of this expression.
      */
-    const NODE_NAME = '#new-expression';
+    public function __construct($line, $operator)
+    {
+        parent::__construct(self::NODE_NAME, $line, $operator);
+    }
+
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     *
+     * @return void
+     */
+    public function accept(PHP_Reflection_VisitorI $visitor)
+    {
+        // FIXME: Add visitAdditiveExpression() call
+        throw new ErrorException('Method visitAdditiveExpression() not implemented.');
+    }
 }
+?>

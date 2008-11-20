@@ -114,21 +114,152 @@ class PHP_Reflection_Parser_ExpressionTest extends PHP_Reflection_AbstractTest
         $this->assertEquals('$foobar', $expr[1]->getName());
     }
 
+    /**
+     * Tests the parsing of logical XOR-expressions with two boolean literal
+     * nodes.
+     *
+     * @return void
+     */
     public function testParserHandlesLogicalXorExpressionWithBooleanLiterals()
     {
         $xor = self::_parseExpression('logical_xor_with_boolean_literals.php');
         $this->assertType('PHP_Reflection_AST_LogicalXorExpressionI', $xor);
 
-        $expr = $xor->findChildrenOfType('PHP_Reflection_AST_ExpressionI');
-        $this->assertEquals(2, count($expr));
+        $lits = $xor->findChildrenOfType('PHP_Reflection_AST_SourceElementI');
+        $this->assertEquals(2, count($lits));
 
-        $this->assertType('PHP_Reflection_AST_BooleanLiteralI', $expr[0]);
-        $this->assertTrue($expr[0]->isTrue());
-        $this->assertFalse($expr[0]->isFalse());
+        $this->assertType('PHP_Reflection_AST_BooleanLiteralI', $lits[0]);
+        $this->assertTrue($lits[0]->isTrue());
+        $this->assertFalse($lits[0]->isFalse());
 
-        $this->assertType('PHP_Reflection_AST_BooleanLiteralI', $expr[1]);
-        $this->assertTrue($expr[1]->isFalse());
-        $this->assertFalse($expr[1]->isTrue());
+        $this->assertType('PHP_Reflection_AST_BooleanLiteralI', $lits[1]);
+        $this->assertTrue($lits[1]->isFalse());
+        $this->assertFalse($lits[1]->isTrue());
+    }
+
+    /**
+     * Tests the parsing of a boolean AND-expression with boolean and null literals.
+     *
+     * @return void
+     */
+    public function testParserHandlesBooleanAndExpressionWithBooleanAndNullLiterals()
+    {
+        $and = self::_parseExpression('boolean_and_with_boolean_and_null_literals.php');
+        $this->assertType('PHP_Reflection_AST_BooleanAndExpressionI', $and);
+
+        $lits = $and->findChildrenOfType('PHP_Reflection_AST_SourceElementI');
+        $this->assertEquals(2, count($lits));
+
+        $this->assertType('PHP_Reflection_AST_BooleanLiteralI', $lits[0]);
+        $this->assertTrue($lits[0]->isTrue());
+
+        $this->assertType('PHP_Reflection_AST_NullLiteralI', $lits[1]);
+    }
+
+    /**
+     * Tests the parsing of a boolean OR-expression with numeric literals.
+     *
+     * @return void
+     */
+    public function testParserHandlesBooleanOrExpressionWithNumberLiterals()
+    {
+        $or = self::_parseExpression('boolean_or_with_numeric_literals.php');
+        $this->assertType('PHP_Reflection_AST_BooleanOrExpressionI', $or);
+
+        $lits = $or->findChildrenOfType('PHP_Reflection_AST_SourceElementI');
+        $this->assertEquals(2, count($lits));
+
+        $this->assertType('PHP_Reflection_AST_LiteralI', $lits[0]);
+        $this->assertTrue($lits[0]->isInt());
+        $this->assertEquals('23', $lits[0]->getData());
+
+        $this->assertType('PHP_Reflection_AST_LiteralI', $lits[1]);
+        $this->assertTrue($lits[1]->isFloat());
+        $this->assertEquals('42.0', $lits[1]->getData());
+    }
+
+    /**
+     * Tests that the parser handles a conditional ?: expression.
+     *
+     * @return void
+     */
+    public function testParserHandlesConditionalExpressionWithVariableAndLiterals()
+    {
+        $expr = self::_parseExpression('conditional_with_variable_and_literals.php');
+        $this->assertType('PHP_Reflection_AST_ConditionalExpressionI', $expr);
+
+        $exprs = $expr->getChildrenOfType('PHP_Reflection_AST_SourceElementI');
+        $this->assertEquals(3, count($exprs));
+
+        $this->assertType('PHP_Reflection_AST_VariableExpressionI', $exprs[0]);
+        $this->assertEquals('$foo', $exprs[0]->getName());
+
+        $this->assertType('PHP_Reflection_AST_LiteralI', $exprs[1]);
+        $this->assertTrue($exprs[1]->isString());
+        $this->assertEquals("'bar'", $exprs[1]->getData());
+
+        $this->assertType('PHP_Reflection_AST_NullLiteralI', $exprs[2]);
+    }
+
+    public function testParserHandlesConditinalExpressionIfsetorVariableAndLiteral()
+    {
+        $expr = self::_parseExpression('conditional_ifsetor_with_literals.php53');
+        $this->assertType('PHP_Reflection_AST_ConditionalExpressionI', $expr);
+
+        $exprs = $expr->getChildrenOfType('PHP_Reflection_AST_SourceElementI');
+        $this->assertEquals(2, count($exprs));
+
+        $this->assertType('PHP_Reflection_AST_VariableExpressionI', $exprs[0]);
+        $this->assertEquals('$foo', $exprs[0]->getName());
+
+        $this->assertType('PHP_Reflection_AST_LiteralI', $exprs[1]);
+        $this->assertTrue($exprs[1]->isString());
+        $this->assertEquals("'bar'", $exprs[1]->getData());
+    }
+
+    /**
+     * Tests a combined expression of addition and multiplication.
+     *
+     * <code>
+     * $a * $b + $c
+     * // ----------------------------
+     * // - AdditiveExpression
+     * //   - MultiplicativeExpression
+     * //     - $a
+     * //     - $b
+     * //   - $c
+     * // ----------------------------
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserHandlesExpressionOrderForAdditionAndMultiplication()
+    {
+        $expr = self::_parseExpression('multiplication_and_addition.php');
+    }
+
+    /**
+     * Tests a combined expression of addition and multiplication.
+     *
+     * <code>
+     * $a + $b * $c
+     * // ----------------------------
+     * // - AdditiveExpression
+     * //   - $a
+     * //   - MultiplicativeExpression
+     * //     - $b
+     * //     - $c
+     * // ----------------------------
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserHandlesExpressionOrderForMultiplicationAndAddition()
+    {
+        $expr = self::_parseExpression('addition_and_multiplication.php');
+
+        $add = $expr->getFirstChildOfType('PHP_Reflection_AST_ExpressionI');
+        $this->assertType('PHP_Reflection_AST_AdditiveExpressionI', $add);
     }
 
     /**
@@ -153,7 +284,7 @@ class PHP_Reflection_Parser_ExpressionTest extends PHP_Reflection_AbstractTest
         $statement = $block->getFirstChildOfType('PHP_Reflection_AST_StatementI');
         self::assertNotNull($statement);
 
-        $expression = $statement->getFirstChildOfType('PHP_Reflection_AST_ExpressionI');
+        $expression = $statement->getFirstChildOfType('PHP_Reflection_AST_SourceElementI');
         self::assertNotNull($expression);
 
         return $expression;

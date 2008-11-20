@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ExpressionI.php';
+require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
- * This interface represents a new expression.
+ * This interface represents a <b>null</b>-literal.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,11 +60,11 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+interface PHP_Reflection_AST_NullLiteralI extends PHP_Reflection_AST_SourceElementI
 {
     /**
      * Identifier for this node type.
      */
-    const NODE_NAME = '#new-expression';
+    const NODE_NAME = '#null-literal';
 }
+?>
