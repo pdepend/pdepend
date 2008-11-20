@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Reflection.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -188,7 +188,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         T_CONSTANT_ENCAPSED_STRING  =>  self::T_CONSTANT_ENCAPSED_STRING,
         T_DOLLAR_OPEN_CURLY_BRACES  =>  self::T_CURLY_BRACE_OPEN,
     );
-    
+
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
@@ -197,9 +197,9 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
      */
     protected static $literalMap = array(
         '@'              =>  self::T_AT,
-        '/'              =>  self::T_DIV,
+        '/'              =>  self::T_SLASH,
         '%'              =>  self::T_MOD,
-        '*'              =>  self::T_MUL,
+        '*'              =>  self::T_STAR,
         '+'              =>  self::T_PLUS,
         ':'              =>  self::T_COLON,
         ','              =>  self::T_COMMA,
@@ -235,7 +235,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         '__DIR__'        =>  self::T_DIR,
         '__NAMESPACE__'  =>  self::T_NS_C,
     );
-    
+
     /**
      * The source file instance.
      *
@@ -243,7 +243,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
      * @var PHP_Reflection_AST_File $sourceFile
      */
     protected $sourceFile = '';
-    
+
     /**
      * Count of all tokens.
      *
@@ -259,7 +259,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
      * @var integer $index
      */
     protected $index = 0;
-    
+
     /**
      * Prepared token list.
      *
@@ -267,7 +267,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
      * @var array(array) $tokens
      */
     protected $tokens = array();
-    
+
     /**
      * The current token array or {@link PHP_Reflection_Tokenizer::T_EOF}.
      *
@@ -275,7 +275,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
      * @var array|integer $_current
      */
     private $_token = self::T_EOF;
-    
+
     /**
      * The next free identifier for unknown string tokens.
      *
@@ -283,7 +283,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
      * @var integer $_unknownTokenID
      */
     private $_unknownTokenID = 1000;
-    
+
     /**
      * Constructs a new tokenizer for the given file.
      *
@@ -295,7 +295,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
             $this->setSourceFile($sourceFile);
         }
     }
-    
+
     /**
      * Returns the name of the source file.
      *
@@ -305,12 +305,12 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
     {
         return $this->sourceFile;
     }
-    
+
     /**
      * Sets a new php source file.
      *
      * @param string $sourceFile A php source file.
-     * 
+     *
      * @return void
      */
     public function setSourceFile($sourceFile)
@@ -319,9 +319,9 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         $this->tokenize();
         $this->sourceFile->setTokens($this->tokens);
     }
-    
+
     /**
-     * Returns the next token or {@link PHP_Reflection_TokenizerI::T_EOF} if 
+     * Returns the next token or {@link PHP_Reflection_TokenizerI::T_EOF} if
      * there is no next token.
      *
      * @return array|integer
@@ -335,11 +335,11 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         }
         return $this->_token;
     }
-    
+
     /**
-     * Returns the next token type or {@link PHP_Reflection_TokenizerI::T_EOF} if 
+     * Returns the next token type or {@link PHP_Reflection_TokenizerI::T_EOF} if
      * there is no next token.
-     * 
+     *
      * @param integer $la Number of lookahead tokens.
      *
      * @return integer
@@ -351,9 +351,9 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         }
         return self::T_EOF;
     }
-    
+
     /**
-     * Returns the previous token type or {@link PHP_Reflection_TokenizerI::T_BOF} 
+     * Returns the previous token type or {@link PHP_Reflection_TokenizerI::T_BOF}
      * if there is no previous token.
      *
      * @return integer
@@ -365,7 +365,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         }
         return self::T_BOF;
     }
-    
+
     /**
      * Returns the current token array or {@link PHP_Reflection_TokenizerI::T_EOF}
      * if there is no current token.
@@ -376,11 +376,11 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
     {
         return $this->_token;
     }
-    
+
     /**
      * Tokenizes the content of the source file with {@link token_get_all()} and
      * filters this token stream.
-     * 
+     *
      * @return void
      */
     protected function tokenize()
@@ -388,17 +388,17 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
         $this->tokens = array();
         $this->index  = 0;
         $this->count  = 0;
-        
+
         // Replace short open tags, it produces bugs.
         $source = $this->sourceFile->getSource();
         $source = str_replace('<?=', '<?php echo ', $source);
-        
+
         $tokens = token_get_all($source);
         reset($tokens);
-        
+
         // The current line number
         $line = 1;
-        
+
         // Number of skippend lines
         $skippedLines = 0;
 
@@ -419,7 +419,7 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
 
                 // Fetch next token
                 $token = (array) next($tokens);
-                    
+
                 // Skipp all non open tags
                 while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
                        $token[0] !== T_OPEN_TAG &&
@@ -428,10 +428,10 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
                     // Count skipped lines
                     $tokenContent  = (isset($token[1]) ? $token[1] : $token[0]);
                     $skippedLines += substr_count($tokenContent, "\n");
-                    
+
                     $token = (array) next($tokens);
                 }
-                
+
                 // Set internal pointer one back
                 prev($tokens);
             } else if ($token[0] === T_WHITESPACE) {
@@ -449,24 +449,24 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
                     // @codeCoverageIgnoreEnd
                 }
             }
-            
+
             if ($newToken !== null) {
                 // Set token line number
                 $newToken[2] = $line;
-                
+
                 // Store token in internal ist
                 $this->tokens[] = $newToken;
-                
+
                 // Count new line tokens.
                 $line += substr_count($newToken[1], "\n") + $skippedLines;
             }
-            
+
             next($tokens);
-            
+
             // Rest skipped lines
             $skippedLines = 0;
         }
-        
+
         $this->count = count($this->tokens);
         if ($this->count > 0) {
             $this->_token = $this->tokens[0];
@@ -474,10 +474,10 @@ class PHP_Reflection_Tokenizer_Internal implements PHP_Reflection_TokenizerI
             $this->_token = self::T_EOF;
         }
     }
-    
+
     /**
      * Generates a dummy/temp token for unknown string literals.
-     * 
+     *
      * @param string $token The unknown string token.
      *
      * @return array(integer => mixed)

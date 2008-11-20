@@ -661,7 +661,7 @@ interface PHP_Reflection_ConstantsI
     /**
      * Marks a '*' token.
      */
-    const T_MUL = 119;
+    const T_STAR = 119;
 
     /**
      * Marks a '[' token.
@@ -741,7 +741,7 @@ interface PHP_Reflection_ConstantsI
     /**
      * Marks a '/' token.
      */
-    const T_DIV = 135;
+    const T_SLASH = 135;
 
     /**
      * Marks a '%' token.

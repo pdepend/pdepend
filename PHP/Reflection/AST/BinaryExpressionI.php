@@ -49,7 +49,7 @@
 require_once 'PHP/Reflection/AST/ExpressionI.php';
 
 /**
- * This interface represents a new expression.
+ * This interface is used as a marker for binary expression nodes.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -60,11 +60,27 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+interface PHP_Reflection_AST_BinaryExpressionI extends PHP_Reflection_AST_ExpressionI
 {
     /**
-     * Identifier for this node type.
+     * Returns the textual representation of this binary expression.
+     *
+     * @return string
      */
-    const NODE_NAME = '#new-expression';
+    function getOperator();
+
+    /**
+     * Returns the left source element of this binary expression.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    function getLeft();
+
+    /**
+     * Returns the right source element of this binary expression.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    function getRight();
 }
+?>

@@ -47,10 +47,10 @@
  */
 
 require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
-require_once 'PHP/Reflection/AST/NewExpressionI.php';
+require_once 'PHP/Reflection/AST/BinaryExpressionI.php';
 
 /**
- * This class represents a new expression.
+ * This class is an abstract base for binary expression nodes.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -61,29 +61,94 @@ require_once 'PHP/Reflection/AST/NewExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_NewExpression
+abstract class PHP_Reflection_AST_AbstractBinaryExpression
        extends PHP_Reflection_AST_AbstractSourceElement
-    implements PHP_Reflection_AST_NewExpressionI
+    implements PHP_Reflection_AST_BinaryExpressionI
 {
     /**
-     * Constructs a new expression node.
+     * The textual representation of this binary expression.
      *
-     * @param integer $line The line number of this expression.
+     * @var string $_operator
      */
-    public function __construct($line)
+    private $_operator = null;
+
+    /**
+     * Constructs a new binary expression node.
+     *
+     * @param string  $name     The identifier for this expression type.
+     * @param integer $line     The start line number of this expression.
+     * @param string  $operator The textual representation of this expression.
+     */
+    public function __construct($name, $line, $operator)
     {
-        parent::__construct(self::NODE_NAME, $line);
+        parent::__construct($name, $line);
+
+        // Store operator
+        $this->_operator = $operator;
+
+        // Initialize null source elements.
+        $this->sourceElements[0] = null;
+        $this->sourceElements[1] = null;
     }
 
     /**
-     * Visitor method for node tree traversal.
+     * Returns the textual representation of this binary expression.
      *
-     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
+     * @return string
+     */
+    public function getOperator()
+    {
+        return $this->_operator;
+    }
+
+    /**
+     * Returns the left source element of this binary expression.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    public function getLeft()
+    {
+        if (isset($this->sourceElements[0])) {
+            return $this->sourceElements[0];
+        }
+        return null;
+    }
+
+    /**
+     * Sets the left source element of this binary expression.
+     *
+     * @param PHP_Reflection_AST_SourceElementI $left The left element.
      *
      * @return void
      */
-    public function accept(PHP_Reflection_VisitorI $visitor)
+    public function setLeft(PHP_Reflection_AST_SourceElementI $left)
     {
-        $visitor->visitNewExpression($this);
+        $this->sourceElements[0] = $left;
+    }
+
+    /**
+     * Returns the right source element of this binary expression.
+     *
+     * @return PHP_Reflection_AST_SourceElementI
+     */
+    public function getRight()
+    {
+        if (isset($this->sourceElements[1])) {
+            return $this->sourceElements[1];
+        }
+        return null;
+    }
+
+    /**
+     * Sets the right source element of this binary expression.
+     *
+     * @param PHP_Reflection_AST_SourceElementI $right The right source element.
+     *
+     * @return void
+     */
+    public function setRight(PHP_Reflection_AST_SourceElementI $right)
+    {
+        $this->sourceElements[1] = $right;
     }
 }
+?>
