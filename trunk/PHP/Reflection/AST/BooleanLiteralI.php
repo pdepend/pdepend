@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ExpressionI.php';
+require_once 'PHP/Reflection/AST/SourceElementI.php';
 
 /**
  * This interface represents a boolean expression.
@@ -60,7 +60,7 @@ require_once 'PHP/Reflection/AST/ExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_BooleanLiteralI extends PHP_Reflection_AST_ExpressionI
+interface PHP_Reflection_AST_BooleanLiteralI extends PHP_Reflection_AST_SourceElementI
 {
     /**
      * Identifier for this node type.

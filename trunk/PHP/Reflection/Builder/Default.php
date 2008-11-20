@@ -901,6 +901,36 @@ class PHP_Reflection_Builder_Default
     }
 
     /**
+     * Builds a new additive-expression.
+     *
+     * @param integer $line     The start line number of this expression.
+     * @param string  $operator The textual representation of this expression.
+     *
+     * @return PHP_Reflection_AST_AdditiveExpression
+     */
+    public function buildAdditiveExpression($line, $operator)
+    {
+        include_once 'PHP/Reflection/AST/AdditiveExpression.php';
+
+        return new PHP_Reflection_AST_AdditiveExpression($line, $operator);
+    }
+
+    /**
+     * Builds a new multiplication-expression.
+     *
+     * @param integer $line     The line number of this multiplication expression.
+     * @param string  $operator The textual representation of this expression.
+     *
+     * @return PHP_Reflection_AST_MultiplicativeExpression
+     */
+    public function buildMultiplicativeExpression($line, $operator)
+    {
+        include_once 'PHP/Reflection/AST/MultiplicativeExpression.php';
+
+        return new PHP_Reflection_AST_MultiplicativeExpression($line, $operator);
+    }
+
+    /**
      * Builds a new <b>variable</b>-expression.
      *
      * @param string  $name The name of the variable expression.
@@ -927,6 +957,34 @@ class PHP_Reflection_Builder_Default
         include_once 'PHP/Reflection/AST/BooleanLiteral.php';
 
         return new PHP_Reflection_AST_BooleanLiteral($line);
+    }
+
+    /**
+     * Builds a new NULL-literal node.
+     *
+     * @param integer $line The line number of this NULL-literal.
+     *
+     * @return PHP_Reflection_AST_NullLiteral
+     */
+    public function buildNullLiteral($line)
+    {
+        include_once 'PHP/Reflection/AST/NullLiteral.php';
+
+        return new PHP_Reflection_AST_NullLiteral($line);
+    }
+
+    /**
+     * Builds a new generic-literal node.
+     *
+     * @param integer $line The line number of this literal.
+     *
+     * @return PHP_Reflection_AST_Literal
+     */
+    public function buildLiteral($line)
+    {
+        include_once 'PHP/Reflection/AST/Literal.php';
+
+        return new PHP_Reflection_AST_Literal($line);
     }
 
     /**
