@@ -435,6 +435,26 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     function buildConditionalExpression($line);
 
     /**
+     * Builds a new additive-expression.
+     *
+     * @param integer $line     The line number of this additive expression.
+     * @param string  $operator The textual representation of this expression.
+     *
+     * @return PHP_Reflection_AST_AdditiveExpression
+     */
+    function buildAdditiveExpression($line, $operator);
+
+    /**
+     * Builds a new multiplication-expression.
+     *
+     * @param integer $line     The line number of this multiplication expression.
+     * @param string  $operator The textual representation of this expression.
+     *
+     * @return PHP_Reflection_AST_MultiplicativeExpression
+     */
+    function buildMultiplicativeExpression($line, $operator);
+
+    /**
      * Builds a new <b>variable</b>-expression.
      *
      * @param string  $name The name of the variable expression.
@@ -447,11 +467,29 @@ interface PHP_Reflection_BuilderI extends IteratorAggregate
     /**
      * Builds a new <b>boolean</b>-literal.
      *
-     * @param integer $line The line number of this variable expression.
+     * @param integer $line The line number of this NULL-literal.
      *
      * @return PHP_Reflection_AST_BooleanLiteral
      */
     function buildBooleanLiteral($line);
+
+    /**
+     * Builds a new NULL-literal node.
+     *
+     * @param integer $line The line number of this NULL-literal.
+     *
+     * @return PHP_Reflection_AST_NullLiteral
+     */
+    function buildNullLiteral($line);
+
+    /**
+     * Builds a new generic-literal node.
+     *
+     * @param integer $line The line number of this literal.
+     *
+     * @return PHP_Reflection_AST_Literal
+     */
+    function buildLiteral($line);
 
     /**
      * Builds a new array value instance.

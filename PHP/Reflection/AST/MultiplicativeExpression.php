@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Exceptions
+ * @subpackage AST
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,52 +46,47 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/Exceptions/AbstractException.php';
+require_once 'PHP/Reflection/AST/AbstractBinaryExpression.php';
+require_once 'PHP/Reflection/AST/MultiplicativeExpressionI.php';
 
 /**
- * This type of exception is thrown when an expression is reduced but has an
- * unexpected type.
+ * This class represents a multiplicative expression which means *, / and %.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage Exceptions
+ * @subpackage AST
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_Exceptions_UnexpectedExpressionException
-    extends PHP_Reflection_Exceptions_AbstractException
+class PHP_Reflection_AST_MultiplicativeExpression
+       extends PHP_Reflection_AST_AbstractBinaryExpression
+    implements PHP_Reflection_AST_MultiplicativeExpressionI
 {
     /**
-     * Creates a new exception for the given context file and token.
+     * Constructs a new multiplicative expression node.
      *
-     * @param PHP_Reflection_AST_ExpressionI $expr     The unexpected expression.
-     * @param string                         $expected The expected expression type.
+     * @param integer $line     The start line number of this expression.
+     * @param string  $operator The textual representation of the operator.
      */
-    public function __construct(PHP_Reflection_AST_ExpressionI $expr, $expected)
+    public function __construct($line, $operator)
     {
-        parent::__construct($this->_createMessage($expr, $expected));
+        parent::__construct(self::NODE_NAME, $line, $operator);
     }
 
     /**
-     * Creates the exception message for the given context file and token.
+     * Visitor method for node tree traversal.
      *
-     * @param PHP_Reflection_AST_ExpressionI $expr     The unexpected expression.
-     * @param string                         $expected The expected expression type.
+     * @param PHP_Reflection_VisitorI $visitor The context visitor implementation.
      *
-     * @return string
+     * @return void
      */
-    private function _createMessage(PHP_Reflection_AST_ExpressionI $expr, $expected)
+    public function accept(PHP_Reflection_VisitorI $visitor)
     {
-        return sprintf(
-            'Unexpected expression "%s" expected "%s" on line %d in file "%s".',
-            get_class($expr),
-            $expected,
-            $expr->getLine(),
-            $expr->getSourceFile()
-        );
+        // FIXME: Add visitMultiplicativeExpression() call
+        throw new ErrorException('Method visitMultiplicativeExpression() not implemented.');
     }
 }
 ?>

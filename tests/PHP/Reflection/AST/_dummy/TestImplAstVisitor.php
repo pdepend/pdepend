@@ -492,6 +492,30 @@ class PHP_Reflection_AST_TestImplAstVisitor implements PHP_Reflection_VisitorI
     }
 
     /**
+     * Visits a NULL-literal node.
+     *
+     * @param PHP_Reflection_AST_NullLiteralI $null The literal node.
+     *
+     * @return void
+     */
+    function visitNullLiteral(PHP_Reflection_AST_NullLiteralI $null)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
+     * Visits a generic-literal node.
+     *
+     * @param PHP_Reflection_AST_LiteralI $literal The literal node.
+     *
+     * @return void
+     */
+    public function visitLiteral(PHP_Reflection_AST_LiteralI $literal)
+    {
+        // TODO Implement this empty stub.
+    }
+
+    /**
      * Visits a function node.
      *
      * @param PHP_Reflection_AST_Function $function The current function node.

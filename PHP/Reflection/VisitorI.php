@@ -353,6 +353,24 @@ interface PHP_Reflection_VisitorI
     function visitBooleanLiteral(PHP_Reflection_AST_BooleanLiteralI $bool);
 
     /**
+     * Visits a NULL-literal node.
+     *
+     * @param PHP_Reflection_AST_NullLiteralI $null The literal node.
+     *
+     * @return void
+     */
+    function visitNullLiteral(PHP_Reflection_AST_NullLiteralI $null);
+
+    /**
+     * Visits a generic-literal node.
+     *
+     * @param PHP_Reflection_AST_LiteralI $literal The literal node.
+     *
+     * @return void
+     */
+    function visitLiteral(PHP_Reflection_AST_LiteralI $literal);
+
+    /**
      * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $constant

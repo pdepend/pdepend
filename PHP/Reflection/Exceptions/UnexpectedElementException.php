@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage AST
+ * @subpackage Exceptions
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,25 +46,52 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Reflection/AST/ExpressionI.php';
+require_once 'PHP/Reflection/Exceptions/AbstractException.php';
 
 /**
- * This interface represents a new expression.
+ * This type of exception is thrown when an expression is reduced but has an
+ * unexpected type.
  *
  * @category   PHP
  * @package    PHP_Reflection
- * @subpackage AST
+ * @subpackage Exceptions
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Reflection_AST_NewExpressionI
-    extends PHP_Reflection_AST_ExpressionI
+class PHP_Reflection_Exceptions_UnexpectedElementException
+    extends PHP_Reflection_Exceptions_AbstractException
 {
     /**
-     * Identifier for this node type.
+     * Creates a new exception for the given context file and token.
+     *
+     * @param PHP_Reflection_AST_NodeI $node     The unexpected source node.
+     * @param string                   $expected The expected node type.
      */
-    const NODE_NAME = '#new-expression';
+    public function __construct(PHP_Reflection_AST_NodeI $expr, $expected)
+    {
+        parent::__construct($this->_createMessage($node, $expected));
+    }
+
+    /**
+     * Creates the exception message for the given context file and token.
+     *
+     * @param PHP_Reflection_AST_NodeI $node     The unexpected source node.
+     * @param string                   $expected The expected node type.
+     *
+     * @return string
+     */
+    private function _createMessage(PHP_Reflection_AST_NodeI $node, $expected)
+    {
+        return sprintf(
+            'Unexpected source element "%s" expected "%s" on line %d in file "%s".',
+            get_class($expr),
+            $expected,
+            $expr->getLine(),
+            $expr->getSourceFile()
+        );
+    }
 }
+?>

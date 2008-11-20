@@ -47,10 +47,10 @@
  */
 
 require_once 'PHP/Reflection/AST/AbstractSourceElement.php';
-require_once 'PHP/Reflection/AST/NewExpressionI.php';
+require_once 'PHP/Reflection/AST/LiteralI.php';
 
 /**
- * This class represents a new expression.
+ * This class represents literal data like integers, floats and strings.
  *
  * @category   PHP
  * @package    PHP_Reflection
@@ -61,18 +61,128 @@ require_once 'PHP/Reflection/AST/NewExpressionI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Reflection_AST_NewExpression
+class PHP_Reflection_AST_Literal
        extends PHP_Reflection_AST_AbstractSourceElement
-    implements PHP_Reflection_AST_NewExpressionI
+    implements PHP_Reflection_AST_LiteralI
 {
     /**
-     * Constructs a new expression node.
+     * The raw string representation of this literal.
      *
-     * @param integer $line The line number of this expression.
+     * @var string $_data
+     */
+    private $_data = null;
+
+    /**
+     * Is this an integer literal?
+     *
+     * @var boolean $_int
+     */
+    private $_int = false;
+
+    /**
+     * Is this a float literal?
+     *
+     * @var boolean $_float
+     */
+    private $_float = false;
+
+    /**
+     * Is this a string literal?
+     *
+     * @var boolean $_string
+     */
+    private $_string = false;
+
+    /**
+     * Constructs a new literal node instance.
+     *
+     * @param integer $line The line number of this literal node.
      */
     public function __construct($line)
     {
         parent::__construct(self::NODE_NAME, $line);
+    }
+
+    /**
+     * Returns the string representation of this literal.
+     *
+     * @return string
+     */
+    public function getData()
+    {
+        return $this->_data;
+    }
+
+    /**
+     * Sets the raw string representation of this literal.
+     *
+     * @param string $data The raw data.
+     *
+     * @return void
+     */
+    public function setData($data)
+    {
+        $this->_data = $data;
+    }
+
+    /**
+     * This method will return <b>true</b> when this node represents an integer.
+     *
+     * @return boolean
+     */
+    public function isInt()
+    {
+        return $this->_int;
+    }
+
+    /**
+     * Marks this literal as an integer.
+     *
+     * @return void
+     */
+    public function setInt()
+    {
+        $this->_int = true;
+    }
+
+    /**
+     * This method will return <b>true</b> when this node represents a float.
+     *
+     * @return boolean
+     */
+    public function isFloat()
+    {
+        return $this->_float;
+    }
+
+    /**
+     * Marks this literal as a float.
+     *
+     * @return void
+     */
+    public function setFloat()
+    {
+        $this->_float = true;
+    }
+
+    /**
+     * This method will return <b>true</b> when this node represents a string.
+     *
+     * @return boolean
+     */
+    public function isString()
+    {
+        return $this->_string;
+    }
+
+    /**
+     * Marks this literal as a string.
+     *
+     * @return void
+     */
+    public function setString()
+    {
+        $this->_string = true;
     }
 
     /**
@@ -84,6 +194,7 @@ class PHP_Reflection_AST_NewExpression
      */
     public function accept(PHP_Reflection_VisitorI $visitor)
     {
-        $visitor->visitNewExpression($this);
+        $visitor->visitLiteral($this);
     }
 }
+?>

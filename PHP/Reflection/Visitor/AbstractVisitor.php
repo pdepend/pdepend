@@ -566,6 +566,32 @@ abstract class PHP_Reflection_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits a NULL-literal node.
+     *
+     * @param PHP_Reflection_AST_NullLiteralI $null The literal node.
+     *
+     * @return void
+     */
+    function visitNullLiteral(PHP_Reflection_AST_NullLiteralI $null)
+    {
+        // TODO: $this->fireStartNullLiteral($null);
+        // TODO: $this->fireEndNullLiteral($null);
+    }
+
+    /**
+     * Visits a generic-literal node.
+     *
+     * @param PHP_Reflection_AST_LiteralI $literal The literal node.
+     *
+     * @return void
+     */
+    public function visitLiteral(PHP_Reflection_AST_LiteralI $literal)
+    {
+        // TODO: $this->fireStartLiteral($literal);
+        // TODO: $this->fireEndLiteral($literal);
+    }
+
+    /**
      * Visits a class constant node.
      *
      * @param PHP_Reflection_AST_ClassOrInterfaceConstant $const
