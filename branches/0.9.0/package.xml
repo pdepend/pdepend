@@ -12,9 +12,9 @@ software JDepend and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2008-07-27</date>
+  <date>2008-06-21</date>
   <version>
-    <release>0.8.0</release>
+    <release>0.9.0</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -23,7 +23,9 @@ software JDepend and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- No more features or bug fixes, beta4 seems to be stable.
+- #19 + Implement a phpunit compatible xml logger.
+- #20 + Add support for class constants.
+- #30 + Improve Lines Of Code. 
   </notes>
   <contents>
     <dir name="/">
@@ -171,23 +173,6 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="Jdepend">
-              <file name="Chart.xml" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="Xml.xml" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="chart.svg" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="Chart.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="Xml.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
             <dir name="Overview">
               <file name="pyramid.svg" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -199,19 +184,21 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <file name="FileAwareI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
+            <dir name="Jdepend">
+              <file name="Chart.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Xml.xml" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Chart.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Xml.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <file name="LoggerI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="NoLogOutputException.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="CodeAwareI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="NoLogInputException.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="LoggerFactory.php" role="php">
@@ -219,11 +206,6 @@ software JDepend and the NDepend metric tool.
             </file>
           </dir>
           <dir name="Code">
-            <dir name="Tokenizer">
-              <file name="InternalTokenizer.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
             <dir name="NodeIterator">
               <file name="TypeFilter.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -235,9 +217,6 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="PackageFilter.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="InternalPackageFilter.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="CompositeFilter.php" role="php">
@@ -258,13 +237,21 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <dir name="Tokenizer">
+              <file name="InternalTokenizer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="DefaultBuilder.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="Method.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="Package.php" role="php">
+            <file name="NodeIterator.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="DefaultBuilder.php" role="php">
+            <file name="Package.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="NodeI.php" role="php">
@@ -273,16 +260,10 @@ software JDepend and the NDepend metric tool.
             <file name="NodeVisitorI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="NodeIterator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="InternalTypes.php" role="php">
+            <file name="Function.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="File.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Function.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="AbstractItem.php" role="php">
@@ -385,9 +366,6 @@ software JDepend and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <file name="DependencyAnalyzer.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="ChartTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -481,35 +459,6 @@ software JDepend and the NDepend metric tool.
           </file>
         </dir>
         <dir name="_code">
-          <dir name="php-5.3">
-            <file name="new.txt" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="coupling">
-            <file name="method.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="function.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="property.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="class.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="code-with-cycle">
-            <file name="code.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="code-without-cycle">
-            <file name="code.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
           <dir name="ccn">
             <file name="method.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -518,32 +467,13 @@ software JDepend and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="bugs">
-            <file name="12.php" role="test">
+          <dir name="code-without-cycle">
+            <file name="code.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="11.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="15.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="10.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="14.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="08.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="24.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="09.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="01.php" role="test">
+          </dir>
+          <dir name="php-5.3">
+            <file name="new.txt" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -558,37 +488,8 @@ software JDepend and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="comments">
-            <file name="method3.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="function1.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="method.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="method2.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="property2.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="function.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
+          <dir name="coderank">
             <file name="property.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="code-without-comments">
-            <file name="package1.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="package2.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="package3.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -624,27 +525,78 @@ software JDepend and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="coderank">
+          <dir name="comments">
+            <file name="method3.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="function1.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="method.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="method2.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="property2.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="function.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="property.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <file name="func_class.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="invalid_class_with_code.txt" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="package_file_level.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
+          <dir name="coupling">
+            <file name="method.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="function.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="property.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="class.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="code-with-cycle">
+            <file name="code.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="bugs">
+            <file name="12.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="11.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="15.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="10.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="14.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="08.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="09.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="01.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
           <file name="classes.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="package_subpackage_support.php" role="test">
+          <file name="invalid_class_with_code.txt" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="function.inc" role="test">
@@ -659,16 +611,25 @@ software JDepend and the NDepend metric tool.
           <file name="invalid_function1.txt" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="invalid_function2.txt" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="func_code.php" role="test">
+          <file name="package_file_level.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="not_closed_class.txt" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
+          <file name="package_subpackage_support.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="invalid_function2.txt" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
           <file name="not_closed_function.txt" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="func_code.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="func_class.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -722,9 +683,6 @@ software JDepend and the NDepend metric tool.
             </file>
           </dir>
           <dir name="CodeRank">
-            <file name="MethodStrategyTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="AnalyzerTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -764,9 +722,6 @@ software JDepend and the NDepend metric tool.
         </dir>
         <dir name="TextUI">
           <file name="RunnerTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ResultPrinterTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="AllTests.php" role="test">
@@ -878,6 +833,7 @@ software JDepend and the NDepend metric tool.
 - Checkout and test cases fixed for windows users. 
       </notes>
     </release>
+    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -908,77 +864,6 @@ software JDepend and the NDepend metric tool.
   - NodeLoc (loc, cloc, ncloc)
 - Pluggable logger architecture.
 - Pluggable metric analyzer architecture.
-      </notes>
-    </release>
-    <release>
-      <lead>
-        <name>Manuel Pichler</name>
-        <user>mapi</user>
-        <email>mapi@pdepend.org</email>
-        <active>yes</active>
-      </lead>
-      <version>
-        <release>0.8.0beta2</release>
-        <api>1.0.0</api>
-      </version>
-      <stability>
-        <release>beta</release>
-        <api>beta</api>
-      </stability>
-      <date>2008-06-19</date>
-      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
-      <notes>
-- #18 + Introduce a CodeAware interface for loggers.
-- #23 + Use an SVG-Template for the jdepend chart.
-- #24 + There is an endless loop for inline html.
-      </notes>
-    </release>
-    <release>
-      <lead>
-        <name>Manuel Pichler</name>
-        <user>mapi</user>
-        <email>mapi@pdepend.org</email>
-        <active>yes</active>
-      </lead>
-      <version>
-        <release>0.8.0beta3</release>
-        <api>1.0.0</api>
-      </version>
-      <stability>
-        <release>beta</release>
-        <api>beta</api>
-      </stability>
-      <date>2008-06-20</date>
-      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
-      <notes>
-- #25 + PHP_Depend should print an error if no @package information is available.
-- #26 + Handle class and interface names case insensitive.
-- #27 + Handle internal classes and interfaces.
-- #28 + Add option --bad-documentation.
-      </notes>
-    </release>
-    <release>
-      <lead>
-        <name>Manuel Pichler</name>
-        <user>mapi</user>
-        <email>mapi@pdepend.org</email>
-        <active>yes</active>
-      </lead>
-      <version>
-        <release>0.8.0beta4</release>
-        <api>1.0.0</api>
-      </version>
-      <stability>
-        <release>beta</release>
-        <api>beta</api>
-      </stability>
-      <date>2008-07-21</date>
-      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
-      <notes>
-- #29 + Tooltip for the Overview Pyramid.
-- #34 + Support for pattern based package filter.
-- #37 + Remove Logger - XML Config dependency.
-- #38 + The Logger interface should not force a default ctor-signature.
       </notes>
     </release>
   </changelog>

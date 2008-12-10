@@ -1,0 +1,6 @@
+<?php
+namespace pkg3;
+
+interface pkg3FooI extends Iterator {
+    
+}
