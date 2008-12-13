@@ -797,5 +797,11 @@ interface PHP_Depend_ConstantsI
      * Marks a '__DIR__' token.
      */
     const T_DIR = 146;
+
+    /**
+     * The default package name.
+     */
+    const DEFAULT_PACKAGE = '+global';
+
 }
 ?>
