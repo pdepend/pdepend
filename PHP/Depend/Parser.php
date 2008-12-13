@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -45,31 +45,32 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/ConstantsI.php';
 require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 require_once 'PHP/Depend/Code/NodeBuilderI.php';
 require_once 'PHP/Depend/Code/TokenizerI.php';
 
 /**
  * The php source parser.
- * 
+ *
  * With the default settings the parser includes annotations, better known as
- * doc comment tags, in the generated result. This means it extracts the type 
+ * doc comment tags, in the generated result. This means it extracts the type
  * information of @var tags for properties, and types in @return + @throws tags
  * of functions and methods. The current implementation tries to ignore all
  * scalar types from <b>boolean</b> to <b>void</b>. You should disable this
  * feature for project that have more or less invalid doc comments, because it
  * could produce invalid results.
- * 
+ *
  * <code>
  *   $parser->setIgnoreAnnotations();
- * </code>  
- * 
- * <b>Note</b>: Due to the fact that it is possible to use the same name for 
- * multiple classes and interfaces, and there is no way to determine to which 
+ * </code>
+ *
+ * <b>Note</b>: Due to the fact that it is possible to use the same name for
+ * multiple classes and interfaces, and there is no way to determine to which
  * package it belongs, while the parser handles class, interface or method
  * signatures, the parser could/will create a code tree that doesn't reflect the
- * real source structure. 
- * 
+ * real source structure.
+ *
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
@@ -78,7 +79,7 @@ require_once 'PHP/Depend/Code/TokenizerI.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Parser
+class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 {
     /**
      * Last parsed package tag.
@@ -87,7 +88,7 @@ class PHP_Depend_Parser
      * @var string $package
      */
     protected $package = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
-    
+
     /**
      * The package defined in the file level comment.
      *
@@ -95,7 +96,7 @@ class PHP_Depend_Parser
      * @var string $globalPackage
      */
     protected $globalPackage = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
-    
+
     /**
      * The package separator token.
      *
@@ -103,7 +104,7 @@ class PHP_Depend_Parser
      * @var string $packageSeparator
      */
     protected $packageSeparator = '::';
-    
+
     /**
      * Marks the current class as abstract.
      *
@@ -111,23 +112,23 @@ class PHP_Depend_Parser
      * @var boolean $abstract
      */
     protected $abstract = false;
-    
+
     /**
      * The used code tokenizer.
      *
-     * @type PHP_Depend_Code_TokenizerI 
+     * @type PHP_Depend_Code_TokenizerI
      * @var PHP_Depend_Code_TokenizerI $tokenizer
      */
     protected $tokenizer = null;
-    
+
     /**
      * The used data structure builder.
-     * 
+     *
      * @type PHP_Depend_Code_NodeBuilderI
      * @var PHP_Depend_Code_NodeBuilderI $builder
      */
     protected $builder = null;
-    
+
     /**
      * List of scalar php types.
      *
@@ -151,29 +152,29 @@ class PHP_Depend_Parser
         'unknown_type', // Eclipse default property type
         'void'
     );
-    
+
     /**
-     * If this property is set to <b>true</b> the parser will ignore all doc 
+     * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
      *
      * @type boolean
      * @var boolean $_ignoreAnnotations
      */
     private $_ignoreAnnotations = false;
-    
+
     /**
      * Constructs a new source parser.
      *
      * @param PHP_Depend_Code_TokenizerI   $tokenizer The used code tokenizer.
      * @param PHP_Depend_Code_NodeBuilderI $builder   The used node builder.
      */
-    public function __construct(PHP_Depend_Code_TokenizerI $tokenizer, 
+    public function __construct(PHP_Depend_Code_TokenizerI $tokenizer,
                                 PHP_Depend_Code_NodeBuilderI $builder)
     {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
     }
-    
+
     /**
      * Sets the ignore annotations flag. This means that the parser will ignore
      * doc comment annotations.
@@ -184,7 +185,7 @@ class PHP_Depend_Parser
     {
         $this->_ignoreAnnotations = true;
     }
-    
+
     /**
      * Parses the contents of the tokenizer and generates a node tree based on
      * the found tokens.
@@ -194,41 +195,41 @@ class PHP_Depend_Parser
     public function parse()
     {
         $this->reset();
-        
+
         $comment = null;
-        
+
         // Position of the context type within the analyzed file.
         $typePosition = 0;
 
-        while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
-            
+        while (($token = $this->tokenizer->next()) !== self::T_EOF) {
+
             switch ($token[0]) {
-            case PHP_Depend_Code_TokenizerI::T_ABSTRACT:
+            case self::T_ABSTRACT:
                 $this->abstract = true;
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_DOC_COMMENT:
+
+            case self::T_DOC_COMMENT:
                 $comment       = $token[1];
                 $this->package = $this->parsePackage($token[1]);
-                
+
                 // Check for doc level comment
-                if ($this->globalPackage === PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE 
+                if ($this->globalPackage === PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE
                  && $this->isFileComment() === true) {
 
                     $this->globalPackage = $this->package;
-                    
+
                     $this->tokenizer->getSourceFile()->setDocComment($token[1]);
-                    
+
                     // TODO: What happens if there is no file comment, we will
                     //       reuse the same comment for a class, interface or
                     //       function?
                 }
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_INTERFACE:
+
+            case self::T_INTERFACE:
                 // Get interface name
                 $token = $this->tokenizer->next();
-                    
+
                 $qualifiedName = "{$this->package}::{$token[1]}";
 
                 $interface = $this->builder->buildInterface($qualifiedName, $token[2]);
@@ -236,21 +237,21 @@ class PHP_Depend_Parser
                 $interface->setStartLine($token[2]);
                 $interface->setDocComment($comment);
                 $interface->setPosition($typePosition++);
-                
+
                 $this->parseInterfaceSignature($interface);
 
                 $this->builder->buildPackage($this->package)->addType($interface);
 
                 $this->parseTypeBody($interface);
                 $this->reset();
-                
+
                 $comment = null;
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_CLASS:
+
+            case self::T_CLASS:
                 // Get class name
                 $token = $this->tokenizer->next();
-                    
+
                 $qualifiedName = "{$this->package}::{$token[1]}";
 
                 $class = $this->builder->buildClass($qualifiedName, $token[2]);
@@ -259,29 +260,29 @@ class PHP_Depend_Parser
                 $class->setAbstract($this->abstract);
                 $class->setDocComment($comment);
                 $class->setPosition($typePosition++);
-                
+
                 $this->parseClassSignature($class);
 
                 $this->builder->buildPackage($this->package)->addType($class);
 
                 $this->parseTypeBody($class);
                 $this->reset();
-                
+
                 $comment = null;
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_FUNCTION:
+
+            case self::T_FUNCTION:
                 $function = $this->parseCallable();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
                 $function->setDocComment($comment);
-                
+
                 $this->_prepareCallable($function);
-                
+
                 $this->reset();
-                
+
                 $comment = null;
                 break;
-                    
+
             default:
                 // TODO: Handle/log unused tokens
                 $comment = null;
@@ -289,7 +290,7 @@ class PHP_Depend_Parser
             }
         }
     }
-    
+
     /**
      * Resets some object properties.
      *
@@ -300,10 +301,10 @@ class PHP_Depend_Parser
         $this->package  = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
         $this->abstract = false;
     }
-    
+
     /**
      * Parses the dependencies in a interface signature.
-     * 
+     *
      * @param PHP_Depend_Code_Interface $interface The context interface instance.
      *
      * @return array(array)
@@ -311,21 +312,21 @@ class PHP_Depend_Parser
     protected function parseInterfaceSignature(PHP_Depend_Code_Interface $interface)
     {
         $tokens = array();
-        while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
+        while ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
-            
-            if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
+
+            if ($token[0] === self::T_STRING) {
                 $dependency = $this->builder->buildInterface($token[1]);
                 $interface->addDependency($dependency);
             }
         }
         return $tokens;
     }
-    
+
     /**
      * Parses the dependencies in a class signature.
-     * 
+     *
      * @param PHP_Depend_Code_Class $class The context class instance.
      *
      * @return void
@@ -334,14 +335,14 @@ class PHP_Depend_Parser
     {
         $tokens     = array();
         $implements = false;
-        
-        while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
+
+        while ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
-            
-            if ($token[0] === PHP_Depend_Code_TokenizerI::T_IMPLEMENTS) {
+
+            if ($token[0] === self::T_IMPLEMENTS) {
                 $implements = true;
-            } else if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
+            } else if ($token[0] === self::T_STRING) {
                 if ($implements) {
                     $dependency = $this->builder->buildInterface($token[1]);
                 } else {
@@ -351,13 +352,13 @@ class PHP_Depend_Parser
                 $class->addDependency($dependency);
             }
         }
-        
+
         return $tokens;
     }
-    
+
     /**
      * Parses a class/interface body.
-     * 
+     *
      * @param PHP_Depend_Code_AbstractType $type The context type instance.
      *
      * @return array(array)
@@ -366,114 +367,114 @@ class PHP_Depend_Parser
     {
         $token = $this->tokenizer->next();
         $curly = 0;
-        
+
         $tokens = array($token);
-        
+
         // If type is an interface all methods are abstract
         $abstractDefault = ($type instanceof PHP_Depend_Code_Interface);
-        
+
         $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
         $comment   = null;
         $abstract  = $abstractDefault;
-        
+
         // Method position within the type body
         $methodPosition = 0;
-        
-        while ($token !== PHP_Depend_Code_TokenizerI::T_EOF) {
-            
+
+        while ($token !== self::T_EOF) {
+
             switch ($token[0]) {
-            case PHP_Depend_Code_TokenizerI::T_FUNCTION:
+            case self::T_FUNCTION:
                 $method = $this->parseCallable($tokens, $type);
                 $method->setDocComment($comment);
                 $method->setAbstract($abstract);
                 $method->setVisibility($visibilty);
                 $method->setPosition($methodPosition++);
-                
+
                 $this->_prepareCallable($method);
-                
+
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_VARIABLE:
+
+            case self::T_VARIABLE:
                 $property = $this->builder->buildProperty($token[1], $token[2]);
                 $property->setDocComment($comment);
                 $property->setVisibility($visibilty);
                 $property->setEndLine($token[2]);
-                
+
                 $this->_prepareProperty($property);
-                
+
                 // TODO: Do we need an instanceof, to check that $type is a
-                //       PHP_Depend_Code_Class instance or do we believe the 
+                //       PHP_Depend_Code_Class instance or do we believe the
                 //       code is correct?
                 $type->addProperty($property);
-                
+
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 break;
-            
-            case PHP_Depend_Code_TokenizerI::T_CONST:
+
+            case self::T_CONST:
                 $token    = $this->tokenizer->next();
                 $tokens[] = $token;
-                
+
                 $constant = $this->builder->buildTypeConstant($token[1]);
                 $constant->setDocComment($comment);
                 $constant->setStartLine($token[2]);
                 $constant->setEndLine($token[2]);
-                
+
                 $type->addConstant($constant);
-                
+
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
                 $abstract  = $abstractDefault;
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
+
+            case self::T_CURLY_BRACE_OPEN:
                 ++$curly;
                 $comment = null;
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
+
+            case self::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 $comment = null;
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_ABSTRACT:
+
+            case self::T_ABSTRACT:
                 $abstract = true;
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_PUBLIC:
+
+            case self::T_PUBLIC:
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_PRIVATE:
+
+            case self::T_PRIVATE:
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE;
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_PROTECTED:
+
+            case self::T_PROTECTED:
                 $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED;
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_STATIC:
+
+            case self::T_STATIC:
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_FINAL:
+
+            case self::T_FINAL:
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_DOC_COMMENT:
+
+            case self::T_DOC_COMMENT:
                 $comment = $token[1];
                 break;
-            
+
             default:
                 // TODO: Handle/log unused tokens
-                $comment = null; 
+                $comment = null;
                 break;
             }
-            
+
             if ($curly === 0) {
-                // Set end line number 
+                // Set end line number
                 $type->setEndLine($token[2]);
                 // Set type tokens
                 $type->setTokens($tokens);
@@ -484,57 +485,57 @@ class PHP_Depend_Parser
                 $tokens[] = $token;
             }
         }
-        
+
         if ($curly !== 0) {
             $fileName = (string) $this->tokenizer->getSourceFile();
             $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
             throw new RuntimeException($message);
         }
-        
+
         return $tokens;
     }
-    
+
     /**
      * Parses a function or a method and adds it to the parent context node.
-     * 
+     *
      * @param array(array)                 &$tokens Collected tokens.
      * @param PHP_Depend_Code_AbstractType $parent  An optional parent interface of class.
-     * 
+     *
      * @return PHP_Depend_Code_AbstractCallable
      */
     protected function parseCallable(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
     {
         $token    = $this->tokenizer->next();
         $tokens[] = $token;
-        
-        if ($token[0] === PHP_Depend_Code_TokenizerI::T_BITWISE_AND) {
+
+        if ($token[0] === self::T_BITWISE_AND) {
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
         }
-        
+
         $callable = null;
         if ($parent === null) {
             $callable = $this->builder->buildFunction($token[1], $token[2]);
-            
+
             $package = $this->globalPackage;
             if ($this->package !== PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE) {
                 $package = $this->package;
             }
-            
-            $this->builder->buildPackage($package)->addFunction($callable); 
+
+            $this->builder->buildPackage($package)->addFunction($callable);
         } else {
             $callable = $this->builder->buildMethod($token[1], $token[2]);
             $parent->addMethod($callable);
         }
-        
+
         $this->parseCallableSignature($tokens, $callable);
-        if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN) {
-            // Get function body dependencies 
+        if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
+            // Get function body dependencies
             $this->parseCallableBody($tokens, $callable);
         } else {
             $callable->setEndLine($token[2]);
         }
-        
+
         return $callable;
     }
 
@@ -543,16 +544,16 @@ class PHP_Depend_Parser
      *
      * @param array(array)                     &$tokens  Collected tokens.
      * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
-     * 
+     *
      * @return void
      */
     protected function parseCallableSignature(array &$tokens, PHP_Depend_Code_AbstractCallable $callable)
     {
-        if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN) {
+        if ($this->tokenizer->peek() !== self::T_PARENTHESIS_OPEN) {
             // Load invalid token for line number
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
-            
+
             // Throw a detailed exception message
             throw new RuntimeException(
                 sprintf(
@@ -563,51 +564,51 @@ class PHP_Depend_Parser
                 )
             );
         }
-        
+
         $parameterType     = null;
         $parameterPosition = 0;
 
         $parenthesis = 0;
-        
-        while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
+
+        while (($token = $this->tokenizer->next()) !== self::T_EOF) {
 
             $tokens[] = $token;
-            
+
             switch ($token[0]) {
-            case PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN:
+            case self::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
                 $parameterType = null;
                 break;
-                 
-            case PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE:
+
+            case self::T_PARENTHESIS_CLOSE:
                 --$parenthesis;
                 $parameterType = null;
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_STRING:
+
+            case self::T_STRING:
                 // Check that the next token is a variable or next token is the
                 // reference operator and the fo
-                if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_VARIABLE
-                 && $this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_BITWISE_AND) {
+                if ($this->tokenizer->peek() !== self::T_VARIABLE
+                 && $this->tokenizer->peek() !== self::T_BITWISE_AND) {
                     continue;
                 }
-                if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_BITWISE_AND) {
+                if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
                     // Store reference operator
                     $tokens[] = $this->tokenizer->next();
                     // Check next token
-                    if ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_VARIABLE) {
+                    if ($this->tokenizer->peek() !== self::T_VARIABLE) {
                         continue;
                     }
                 }
-                
+
                 // Create an instance for this parameter
                 $parameterType = $this->builder->buildClassOrInterface($token[1]);
                 break;
-                
-            case PHP_Depend_Code_TokenizerI::T_VARIABLE:
+
+            case self::T_VARIABLE:
                 $parameter = $this->builder->buildParameter($token[1], $token[2]);
                 $parameter->setPosition($parameterPosition++);
-                
+
                 if ($parameterType !== null) {
                     $parameter->setType($parameterType);
                 }
@@ -619,20 +620,20 @@ class PHP_Depend_Parser
                 $parameterType = null;
                 break;
             }
-            
+
             if ($parenthesis === 0) {
                 return;
             }
         }
         throw new RuntimeException('Invalid function signature.');
     }
-    
+
     /**
      * Extracts all dependencies from a callable body.
      *
      * @param array(array)                     &$outTokens Collected tokens.
      * @param PHP_Depend_Code_AbstractCallable $callable   The context callable.
-     * 
+     *
      * @return void
      */
     protected function parseCallableBody(array &$outTokens, PHP_Depend_Code_AbstractCallable $callable)
@@ -640,19 +641,19 @@ class PHP_Depend_Parser
         $curly  = 0;
         $tokens = array();
 
-        while ($this->tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_EOF) {
+        while ($this->tokenizer->peek() !== self::T_EOF) {
 
             $tokens[] = $token = $this->tokenizer->next();
 
             switch ($token[0]) {
-            case PHP_Depend_Code_TokenizerI::T_CATCH:
+            case self::T_CATCH:
                 // Skip open parenthesis
                 $tokens[] = $this->tokenizer->next();
-                
-            case PHP_Depend_Code_TokenizerI::T_NEW:
-            case PHP_Depend_Code_TokenizerI::T_INSTANCEOF:
+
+            case self::T_NEW:
+            case self::T_INSTANCEOF:
                 $parts = $this->_parseClassNameChain($tokens);
-                                
+
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: new $className('PDepend');
                 if (count($parts) > 0) {
@@ -661,13 +662,13 @@ class PHP_Depend_Parser
                     $callable->addDependency($class);
                 }
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_STRING:
-                if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON) {
+
+            case self::T_STRING:
+                if ($this->tokenizer->peek() === self::T_DOUBLE_COLON) {
                     // Skip double colon
                     $tokens[] = $this->tokenizer->next();
                     // Check for method call
-                    if ($this->tokenizer->peek() === PHP_Depend_Code_TokenizerI::T_STRING) {
+                    if ($this->tokenizer->peek() === self::T_STRING) {
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
                         // Create a dependency class
@@ -677,17 +678,17 @@ class PHP_Depend_Parser
                     }
                 }
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN:
+
+            case self::T_CURLY_BRACE_OPEN:
                 ++$curly;
                 break;
-                    
-            case PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE:
+
+            case self::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 break;
 
-            case PHP_Depend_Code_TokenizerI::T_DOUBLE_QUOTE:
-            case PHP_Depend_Code_TokenizerI::T_BACKTICK:
+            case self::T_DOUBLE_QUOTE:
+            case self::T_BACKTICK:
                 $this->_skipEncapsultedBlock($tokens, $token[0]);
                 break;
 
@@ -695,7 +696,7 @@ class PHP_Depend_Parser
                 // throw new RuntimeException("Unknown token '{$token[1]}'.");
                 // TODO: Handle/log unused tokens
             }
-            
+
             if ($curly === 0) {
                 // Set end line number
                 $callable->setEndLine($token[2]);
@@ -711,18 +712,18 @@ class PHP_Depend_Parser
             $message  = "Invalid state, unclosed function body in '{$fileName}'.";
             throw new RuntimeException($message);
         }
-        
+
         // Append all tokens
         foreach ($tokens as $token) {
             $outTokens[] = $token;
         }
     }
-    
+
     /**
      * Extracts the @package information from the given comment.
      *
      * @param string $comment A doc comment block.
-     * 
+     *
      * @return string
      */
     protected function parsePackage($comment)
@@ -738,8 +739,8 @@ class PHP_Depend_Parser
     }
 
     /**
-     * Checks that the current token could be used as file comment. 
-     * 
+     * Checks that the current token could be used as file comment.
+     *
      * This method checks that the previous token is an open tag and the following
      * token is not a class, a interface, final, abstract or a function.
      *
@@ -747,28 +748,28 @@ class PHP_Depend_Parser
      */
     protected function isFileComment()
     {
-        if ($this->tokenizer->prev() !== PHP_Depend_Code_TokenizerI::T_OPEN_TAG) {
+        if ($this->tokenizer->prev() !== self::T_OPEN_TAG) {
             return false;
         }
-        
+
         $notExpectedTags = array(
-            PHP_Depend_Code_TokenizerI::T_CLASS,
-            PHP_Depend_Code_TokenizerI::T_FINAL,
-            PHP_Depend_Code_TokenizerI::T_ABSTRACT,
-            PHP_Depend_Code_TokenizerI::T_FUNCTION,
-            PHP_Depend_Code_TokenizerI::T_INTERFACE
+            self::T_CLASS,
+            self::T_FINAL,
+            self::T_ABSTRACT,
+            self::T_FUNCTION,
+            self::T_INTERFACE
         );
-        
+
         return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
     }
-    
+
     /**
      * Parses a php class/method name chain.
-     * 
+     *
      * <code>
      * PHP::Depend::Parser::parse();
      * </code>
-     * 
+     *
      * @param array(array) &$tokens The tokens array.
      *
      * @return array(array)
@@ -776,29 +777,29 @@ class PHP_Depend_Parser
     private function _parseClassNameChain(&$tokens)
     {
         $allowed = array(
-            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
-            PHP_Depend_Code_TokenizerI::T_STRING,
+            self::T_DOUBLE_COLON,
+            self::T_STRING,
         );
-        
+
         $parts = array();
-        
+
         while (in_array($this->tokenizer->peek(), $allowed)) {
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
-            if ($token[0] === PHP_Depend_Code_TokenizerI::T_STRING) {
+            if ($token[0] === self::T_STRING) {
                 $parts[] = $token[1];
             }
         }
         return $parts;
     }
-    
+
     /**
      * Skips an encapsulted block like strings or backtick strings.
      *
      * @param array(array) &$tokens  The tokens array.
      * @param integer      $endToken The end token.
-     * 
+     *
      * @return void
      */
     private function _skipEncapsultedBlock(&$tokens, $endToken)
@@ -808,29 +809,29 @@ class PHP_Depend_Parser
         }
         $tokens[] = $this->tokenizer->next();
     }
-    
+
     /**
      * Tries to extract a class or interface type for the given <b>$annotation</b>
      * with in <b>$comment</b>. If there is no matching annotation, this method
      * will return <b>null</b>.
-     * 
+     *
      * <code>
      *   // (at)var RuntimeException
      *   array(
      *       'RuntimeException',
-     *       false, 
+     *       false,
      *   )
-     * 
+     *
      *   // (at)return array(SplObjectStore)
      *   array(
      *       'SplObjectStore',
-     *       true, 
+     *       true,
      *   )
      * </code>
      *
      * @param string $comment    The doc comment block.
      * @param string $annotation The annotation tag (e.g. 'var', 'throws'...).
-     * 
+     *
      * @return array|null
      */
     private function _parseTypeAnnotation($comment, $annotation)
@@ -838,7 +839,7 @@ class PHP_Depend_Parser
         $baseRegexp   = sprintf('\*\s*@%s\s+', $annotation);
         $arrayRegexp  = '#' . $baseRegexp . 'array\(\s*(\w+\s*=>\s*)?(\w+)\s*\)#';
         $simpleRegexp = '#' . $baseRegexp . '(\w+)#';
-    
+
         $type = null;
         if (preg_match($arrayRegexp, $comment, $match)) {
             $type = array($match[2], true);
@@ -847,13 +848,13 @@ class PHP_Depend_Parser
         }
         return $type;
     }
-    
+
     /**
      * Returns the class names of all <b>throws</b> annotations with in the
-     * given comment block. 
+     * given comment block.
      *
      * @param string $comment The context doc comment block.
-     * 
+     *
      * @return array
      */
     private function _parseThrowsAnnotations($comment)
@@ -866,57 +867,58 @@ class PHP_Depend_Parser
         }
         return $throws;
     }
-    
+
     /**
      * Extracts non scalar types from the property doc comment and sets the
-     * matching type instance. 
+     * matching type instance.
      *
      * @param PHP_Depend_Code_Property $property The context property instance.
-     * 
+     *
      * @return void
      */
     private function _prepareProperty(PHP_Depend_Code_Property $property)
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {
-            return; 
+            return;
         }
-        
+
         // Get type annotation
         $type = $this->_parseTypeAnnotation($property->getDocComment(), 'var');
-        
+
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
             $property->setType($this->builder->buildClassOrInterface($type[0]));
         }
     }
-    
+
     /**
      * Extracts documented <b>throws</b> and <b>return</b> types and sets them
      * to the given <b>$callable</b> instance.
      *
      * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
-     * 
+     *
      * @return void
      */
     private function _prepareCallable(PHP_Depend_Code_AbstractCallable $callable)
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {
-            return; 
+            return;
         }
-        
+
         // Get all @throws Types
         $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
         // Append all exception types
         foreach ($throws as $type) {
             $callable->addExceptionType($this->builder->buildClassOrInterface($type));
         }
-        
+
         // Get return annotation
         $type = $this->_parseTypeAnnotation($callable->getDocComment(), 'return');
-        
+
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
             $callable->setReturnType($this->builder->buildClassOrInterface($type[0]));
         }
     }
 }
+?>
