@@ -87,7 +87,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @type string
      * @var string $package
      */
-    protected $package = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
+    protected $package = self::DEFAULT_PACKAGE;
 
     /**
      * The package defined in the file level comment.
@@ -95,7 +95,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @type string
      * @var string $globalPackage
      */
-    protected $globalPackage = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
+    protected $globalPackage = self::DEFAULT_PACKAGE;
 
     /**
      * The package separator token.
@@ -213,7 +213,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->package = $this->parsePackage($token[1]);
 
                 // Check for doc level comment
-                if ($this->globalPackage === PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE
+                if ($this->globalPackage === self::DEFAULT_PACKAGE
                  && $this->isFileComment() === true) {
 
                     $this->globalPackage = $this->package;
@@ -298,7 +298,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function reset()
     {
-        $this->package  = PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
+        $this->package  = self::DEFAULT_PACKAGE;
         $this->abstract = false;
     }
 
@@ -518,7 +518,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $callable = $this->builder->buildFunction($token[1], $token[2]);
 
             $package = $this->globalPackage;
-            if ($this->package !== PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE) {
+            if ($this->package !== self::DEFAULT_PACKAGE) {
                 $package = $this->package;
             }
 
@@ -735,7 +735,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
             return $package;
         }
-        return PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE;
+        return self::DEFAULT_PACKAGE;
     }
 
     /**
