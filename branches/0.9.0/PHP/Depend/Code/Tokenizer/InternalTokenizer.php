@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Code/TokenizerI.php';
  * @link       http://www.manuel-pichler.de/
  *
  */
-class PHP_Depend_Code_Tokenizer_InternalTokenizer 
+class PHP_Depend_Code_Tokenizer_InternalTokenizer
     implements PHP_Depend_Code_TokenizerI
 {
     /**
@@ -188,7 +188,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         T_CONSTANT_ENCAPSED_STRING  =>  self::T_CONSTANT_ENCAPSED_STRING,
         T_DOLLAR_OPEN_CURLY_BRACES  =>  self::T_CURLY_BRACE_OPEN,
     );
-    
+
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
@@ -232,9 +232,10 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         'array'          =>  self::T_ARRAY,
         'false'          =>  self::T_FALSE,
         'parent'         =>  self::T_PARENT,
+        '__DIR__'        =>  self::T_DIR,
         '__NAMESPACE__'  =>  self::T_NS_C,
     );
-    
+
     /**
      * The source file instance.
      *
@@ -242,7 +243,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      * @var PHP_Depend_Code_File $sourceFile
      */
     protected $sourceFile = '';
-    
+
     /**
      * Count of all tokens.
      *
@@ -258,7 +259,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      * @var integer $index
      */
     protected $index = 0;
-    
+
     /**
      * Prepared token list.
      *
@@ -266,7 +267,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      * @var array(array) $tokens
      */
     protected $tokens = array();
-    
+
     /**
      * The next free identifier for unknown string tokens.
      *
@@ -274,7 +275,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      * @var integer $_unknownTokenID
      */
     private $_unknownTokenID = 1000;
-    
+
     /**
      * Constructs a new tokenizer for the given file.
      *
@@ -286,7 +287,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
             $this->setSourceFile($sourceFile);
         }
     }
-    
+
     /**
      * Returns the name of the source file.
      *
@@ -296,12 +297,12 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     {
         return $this->sourceFile;
     }
-    
+
     /**
      * Sets a new php source file.
      *
      * @param string $sourceFile A php source file.
-     * 
+     *
      * @return void
      */
     public function setSourceFile($sourceFile)
@@ -310,9 +311,9 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         $this->tokenize();
         $this->sourceFile->setTokens($this->tokens);
     }
-    
+
     /**
-     * Returns the next token or {@link PHP_Depend_Code_TokenizerI::T_EOF} if 
+     * Returns the next token or {@link PHP_Depend_Code_TokenizerI::T_EOF} if
      * there is no next token.
      *
      * @return array|integer
@@ -324,9 +325,9 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         }
         return self::T_EOF;
     }
-    
+
     /**
-     * Returns the next token type or {@link PHP_Depend_Code_TokenizerI::T_EOF} if 
+     * Returns the next token type or {@link PHP_Depend_Code_TokenizerI::T_EOF} if
      * there is no next token.
      *
      * @return integer
@@ -338,9 +339,9 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         }
         return self::T_EOF;
     }
-    
+
     /**
-     * Returns the previous token type or {@link PHP_Depend_Code_TokenizerI::T_BOF} 
+     * Returns the previous token type or {@link PHP_Depend_Code_TokenizerI::T_BOF}
      * if there is no previous token.
      *
      * @return integer
@@ -352,11 +353,11 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         }
         return self::T_BOF;
     }
-    
+
     /**
      * Tokenizes the content of the source file with {@link token_get_all()} and
      * filters this token stream.
-     * 
+     *
      * @return void
      */
     protected function tokenize()
@@ -364,17 +365,17 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         $this->tokens = array();
         $this->index  = 0;
         $this->count  = 0;
-        
+
         // Replace short open tags, it produces bugs.
         $source = $this->sourceFile->getSource();
         $source = str_replace('<?=', '<?php echo ', $source);
-        
+
         $tokens = token_get_all($source);
         reset($tokens);
-        
+
         // The current line number
         $line = 1;
-        
+
         // Number of skippend lines
         $skippedLines = 0;
 
@@ -395,7 +396,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
 
                 // Fetch next token
                 $token = (array) next($tokens);
-                    
+
                 // Skipp all non open tags
                 while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
                        $token[0] !== T_OPEN_TAG &&
@@ -404,10 +405,10 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
                     // Count skipped lines
                     $tokenContent  = (isset($token[1]) ? $token[1] : $token[0]);
                     $skippedLines += substr_count($tokenContent, "\n");
-                    
+
                     $token = (array) next($tokens);
                 }
-                
+
                 // Set internal pointer one back
                 prev($tokens);
             } else if ($token[0] === T_WHITESPACE) {
@@ -425,30 +426,30 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
                     // @codeCoverageIgnoreEnd
                 }
             }
-            
+
             if ($newToken !== null) {
                 // Set token line number
                 $newToken[2] = $line;
-                
+
                 // Store token in internal ist
                 $this->tokens[] = $newToken;
-                
+
                 // Count new line tokens.
                 $line += substr_count($newToken[1], "\n") + $skippedLines;
             }
-            
+
             next($tokens);
-            
+
             // Rest skipped lines
             $skippedLines = 0;
         }
-        
+
         $this->count = count($this->tokens);
     }
-    
+
     /**
      * Generates a dummy/temp token for unknown string literals.
-     * 
+     *
      * @param string $token The unknown string token.
      *
      * @return array(integer => mixed)
