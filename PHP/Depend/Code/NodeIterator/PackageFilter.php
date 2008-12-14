@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -49,7 +49,7 @@
 require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
 
 /**
- * This class implements a filter that is based on the package. 
+ * This class implements a filter that is based on the package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -64,13 +64,12 @@ class PHP_Depend_Code_NodeIterator_PackageFilter
     implements PHP_Depend_Code_NodeIterator_FilterI
 {
     /**
-     * Regexp with ignorable package names and package name fragments. 
+     * Regexp with ignorable package names and package name fragments.
      *
-     * @type string
      * @var string $_pattern
      */
     private $_pattern = array();
-    
+
     /**
      * Constructs a new package filter for the given list of package names.
      *
@@ -84,11 +83,11 @@ class PHP_Depend_Code_NodeIterator_PackageFilter
         }
         $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
     }
-    
+
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
-     * 
+     *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
      * @return boolean

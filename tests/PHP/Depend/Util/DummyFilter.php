@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -63,19 +63,17 @@ class PHP_Depend_Util_DummyFilter implements PHP_Depend_Util_FileFilterI
     /**
      * The return value for this filter.
      *
-     * @type boolean
      * @var boolean $returnValue
      */
     public $returnValue = false;
-    
+
     /**
      * Was this filter invoked?
      *
-     * @type boolean
      * @var boolean $invoked
      */
     public $invoked = false;
-    
+
     /**
      * Constructs a new dummy filter
      *
@@ -85,18 +83,18 @@ class PHP_Depend_Util_DummyFilter implements PHP_Depend_Util_FileFilterI
     {
         $this->returnValue = $returnValue;
     }
-    
+
     /**
      * Returns <b>true</b> if this filter accepts the file instance.
      *
      * @param SplFileInfo $fileInfo The context file instance.
-     * 
+     *
      * @return boolean
      */
     public function accept(SplFileInfo $fileInfo)
     {
         $this->invoked = true;
-        
+
         return $this->returnValue;
     }
 }

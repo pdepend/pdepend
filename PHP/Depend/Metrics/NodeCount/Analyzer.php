@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -53,7 +53,7 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
- * This analyzer collects different count metrics for code artifacts like 
+ * This analyzer collects different count metrics for code artifacts like
  * classes, methods, functions or packages.
  *
  * @category   QualityAssurance
@@ -75,56 +75,50 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Packages.
      *
-     * @type integer
      * @var integer $_nop
      */
     private $_nop = 0;
-    
+
     /**
      * Number Of Classes.
      *
-     * @type integer
      * @var integer $_noc
      */
     private $_noc = 0;
-    
+
     /**
      * Number Of Interfaces.
      *
-     * @type integer 
      * @var integer $_noi
      */
     private $_noi = 0;
-    
+
     /**
      * Number Of Methods.
      *
-     * @type integer
      * @var integer $_nom
      */
     private $_nom = 0;
-    
+
     /**
      * Number Of Functions.
      *
-     * @type integer
      * @var integer $_nof
      */
     private $_nof = 0;
-    
+
     /**
      * Collected node metrics
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
-    
+
     /**
-     * This method will return an <b>array</b> with all generated metric values 
-     * for the given <b>$node</b> instance. If there are no metrics for the 
+     * This method will return an <b>array</b> with all generated metric values
+     * for the given <b>$node</b> instance. If there are no metrics for the
      * requested node, this method will return an empty <b>array</b>.
-     * 
+     *
      * <code>
      * array(
      *     'noc'  =>  23,
@@ -134,7 +128,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      * </code>
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
@@ -145,10 +139,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         }
         return $metrics;
     }
-    
+
     /**
      * Provides the project summary as an <b>array</b>.
-     * 
+     *
      * <code>
      * array(
      *     'nop'  =>  23,
@@ -171,156 +165,156 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
             'nof'  =>  $this->_nof
         );
     }
-    
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         // Check for previous run
         if ($this->_nodeMetrics === null) {
-            
+
             $this->fireStartAnalyzer();
-            
+
             // Init node metrics
             $this->_nodeMetrics = array();
-            
+
             // Process all packages
             foreach ($packages as $package) {
                 $package->accept($this);
             }
-            
+
             $this->fireEndAnalyzer();
         }
     }
 
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->fireStartClass($class);
-        
+
         // Update global class count
         ++$this->_noc;
-        
+
         // Update parent package
         ++$this->_nodeMetrics[$class->getPackage()->getUUID()]['noc'];
-        
+
         $this->_nodeMetrics[$class->getUUID()] = array('nom'  =>  0);
-        
+
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
-        
+
         $this->fireEndClass($class);
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
-        
+
         // Update global function count
         ++$this->_nof;
-        
+
         // Update parent package
         ++$this->_nodeMetrics[$function->getPackage()->getUUID()]['nof'];
-        
+
         $this->fireEndFunction($function);
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->fireStartInterface($interface);
-        
+
         // Update global class count
         ++$this->_noi;
-        
+
         // Update parent package
         ++$this->_nodeMetrics[$interface->getPackage()->getUUID()]['noi'];
-        
+
         $this->_nodeMetrics[$interface->getUUID()] = array('nom'  =>  0);
-        
+
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
-        
+
         $this->fireEndInterface($interface);
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-        
+
         // Update global method count
         ++$this->_nom;
-        
+
         $parent = $method->getParent();
-        
+
         // Update parent class or interface
         ++$this->_nodeMetrics[$parent->getUUID()]['nom'];
         // Update parent package
         ++$this->_nodeMetrics[$parent->getPackage()->getUUID()]['nom'];
-        
+
         $this->fireEndMethod($method);
     }
-    
+
     /**
-     * Visits a package node. 
+     * Visits a package node.
      *
      * @param PHP_Depend_Code_Class $package The package class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $this->fireStartPackage($package);
-        
+
         // Update package count
         ++$this->_nop;
-        
+
         $this->_nodeMetrics[$package->getUUID()] = array(
             'noc'  =>  0,
             'noi'  =>  0,
             'nom'  =>  0,
             'nof'  =>  0
         );
-        
-        
+
+
         foreach ($package->getClasses() as $class) {
             $class->accept($this);
         }
@@ -330,7 +324,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
-        
+
         $this->fireEndPackage($package);
     }
 }

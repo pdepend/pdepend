@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -65,15 +65,13 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * The used node builder.
      *
-     * @type PHP_Depend_Code_DefaultBuilder
      * @var PHP_Depend_Code_DefaultBuilder $builder
      */
     protected $builder = null;
-    
+
     /**
      * Input test data.
      *
-     * @type array<array>
      * @var array(string=>array) $_input
      */
     private $_input = array(
@@ -96,15 +94,14 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             'afferent'      =>  1
         ),
     );
-    
+
     /**
      * Expected test data.
      *
-     * @type array<array>
      * @var array(string=>array) $_expected
      */
     private $_expected = array();
-    
+
     /**
      * Sets up the code builder.
      *
@@ -113,21 +110,21 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     protected function setUp()
     {
         parent::setUp();
-        
+
         $source        = dirname(__FILE__) . '/../../_code/mixed_code.php';
         $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($source);
         $this->builder = new PHP_Depend_Code_DefaultBuilder();
         $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
-        
+
         $parser->parse();
-        
+
         foreach ($this->builder as $pkg) {
             if (isset($this->_input[$pkg->getUUID()])) {
                 $this->_expected[$pkg->getUUID()] = $this->_input[$pkg->getName()];
             }
         }
     }
-    
+
     /**
      * Tests the generated package metrics.
      *
@@ -139,11 +136,11 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($this->builder->getPackages() as $package) {
             $package->accept($visitor);
         }
-         
+
         foreach ($this->builder->getPackages() as $package) {
-            
+
             $uuid = $package->getUUID();
-            
+
             if (!isset($this->_expected[$uuid])) {
                 continue;
             }
@@ -155,10 +152,10 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             $this->assertEquals($expected['instability'], $actual['i']);
             $this->assertEquals($expected['efferent'], $actual['ce']);
             $this->assertEquals($expected['afferent'], $actual['ca']);
-            
+
             unset($this->_expected[$uuid]);
         }
-        
+
         $this->assertEquals(0, count($this->_expected));
     }
 }

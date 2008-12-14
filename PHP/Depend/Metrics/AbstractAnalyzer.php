@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -68,19 +68,17 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * Global options array.
      *
-     * @type array<mixed>
      * @var array(string=>mixed) $options
      */
     protected $options = array();
-    
+
     /**
      * List or registered listeners.
      *
-     * @type array<PHP_Depend_Metrics_ListenerI>
      * @var array(PHP_Depend_Metrics_ListenerI) $_listeners
      */
     private $_listeners = array();
-    
+
     /**
      * Constructs a new analyzer instance.
      *
@@ -91,12 +89,12 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     {
         $this->options = $options;
     }
-    
+
     /**
      * Adds a listener to this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
+     *
      * @return void
      */
     public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
@@ -105,12 +103,12 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
             $this->_listeners[] = $listener;
         }
     }
-    
+
     /**
      * Removes the listener from this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
+     *
      * @return void
      */
     public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
@@ -119,9 +117,9 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
             unset($this->_listeners[$i]);
         }
     }
-    
+
     /**
-     * The analyzer implementation should call this method when it starts the 
+     * The analyzer implementation should call this method when it starts the
      * code processing. This method will send an analyzer start event to all
      * registered listeners.
      *
@@ -133,7 +131,7 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
             $listener->startAnalyzer($this);
         }
     }
-    
+
     /**
      * The analyzer implementation should call this method when it has finished
      * the code processing. This method will send an analyzer end event to all

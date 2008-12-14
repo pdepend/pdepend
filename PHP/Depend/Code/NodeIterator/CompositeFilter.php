@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -66,16 +66,15 @@ class PHP_Depend_Code_NodeIterator_CompositeFilter
     /**
      * List of all registered filters.
      *
-     * @type array<PHP_Depend_Code_NodeIterator_FilterI>
      * @var array(PHP_Depend_Code_NodeIterator_FilterI) $_filters
      */
     private $_filters = array();
-    
+
     /**
-     * Adds a child filter to this instance. 
+     * Adds a child filter to this instance.
      *
      * @param PHP_Depend_Code_NodeIterator_FilterI $filter The new child filter.
-     * 
+     *
      * @return void
      */
     public function addFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
@@ -84,12 +83,12 @@ class PHP_Depend_Code_NodeIterator_CompositeFilter
             $this->_filters[] = $filter;
         }
     }
-    
+
     /**
      * Removes a child filter from this instance.
      *
      * @param PHP_Depend_Code_NodeIterator_FilterI $filter The child filter.
-     * 
+     *
      * @return void
      */
     public function removeFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
@@ -98,11 +97,11 @@ class PHP_Depend_Code_NodeIterator_CompositeFilter
             unset($this->_filters[$idx]);
         }
     }
-    
+
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
-     * 
+     *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
      * @return boolean
@@ -116,7 +115,7 @@ class PHP_Depend_Code_NodeIterator_CompositeFilter
         }
         return true;
     }
-    
+
     /**
      * Returns the number of available filters.
      *
@@ -126,7 +125,7 @@ class PHP_Depend_Code_NodeIterator_CompositeFilter
     {
         return count($this->_filters);
     }
-    
+
     /**
      * Returns an iterator with all registered filter instances.
      *

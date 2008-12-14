@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Code/DependencyNodeI.php';
 
 /**
  * Abstract base class for callable objects.
- * 
+ *
  * Callable objects is a generic parent for methods and functions.
  *
  * @category   QualityAssurance
@@ -64,50 +64,45 @@ require_once 'PHP/Depend/Code/DependencyNodeI.php';
  * @link       http://www.manuel-pichler.de/
  */
 abstract class PHP_Depend_Code_AbstractCallable
-    extends PHP_Depend_Code_AbstractItem 
+    extends PHP_Depend_Code_AbstractItem
     implements PHP_Depend_Code_DependencyNodeI
 {
     /**
      * The tokens for this function.
      *
-     * @type array<mixed>
      * @var array(mixed) $tokens
      */
     protected $tokens = array();
-    
+
     /**
      * List of {@link PHP_Depend_Code_AbstractType} objects this function depends on.
      *
-     * @type array<PHP_Depend_Code_AbstractType>
      * @var array(PHP_Depend_Code_AbstractType) $dependencies
      */
     protected $dependencies = array();
-    
+
     /**
      * The return type for this callable. By default and for scalar types this
      * will be <b>null</b>.
      *
-     * @type PHP_Depend_Code_AbstractType
      * @var PHP_Depend_Code_AbstractType $_returnType
      */
     private $_returnType = null;
-    
+
     /**
      * A list of all thrown exception types.
      *
-     * @type array<PHP_Depend_Code_AbstractType>
      * @var array(PHP_Depend_Code_AbstractType) $_exceptionTypes
      */
     private $_exceptionTypes = array();
-    
+
     /**
      * List of method/function parameters.
      *
-     * @type array<PHP_Depend_Code_Parameter>
      * @var array(PHP_Depend_Code_Parameter) $_parameters
      */
     private $_parameters = array();
-    
+
     /**
      * Returns the tokens found in the function body.
      *
@@ -117,21 +112,21 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         return $this->tokens;
     }
-    
+
     /**
      * Sets the tokens found in the function body.
-     * 
+     *
      * @param array(mixed) $tokens The body tokens.
-     * 
+     *
      * @return void
      */
     public function setTokens(array $tokens)
     {
         $this->tokens = $tokens;
     }
-    
+
     /**
-     * Returns all {@link PHP_Depend_Code_AbstractType} objects this function 
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects this function
      * depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
@@ -149,15 +144,15 @@ abstract class PHP_Depend_Code_AbstractCallable
                 $dependencies[] = $type;
             }
         }
-        
+
         return new PHP_Depend_Code_NodeIterator($dependencies);
     }
-    
+
     /**
      * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
      *
      * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
-     * 
+     *
      * @return void
      */
     public function addDependency(PHP_Depend_Code_AbstractType $type)
@@ -166,13 +161,13 @@ abstract class PHP_Depend_Code_AbstractCallable
             $this->dependencies[] = $type;
         }
     }
-    
+
     /**
-     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the 
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the
      * dependency list.
      *
      * @param PHP_Depend_Code_AbstractType $type A type to remove.
-     * 
+     *
      * @return void
      */
     public function removeDependency(PHP_Depend_Code_AbstractType $type)
@@ -182,7 +177,7 @@ abstract class PHP_Depend_Code_AbstractCallable
             unset($this->dependencies[$i]);
         }
     }
-    
+
     /**
      * Returns the return type of this callable. By default and for scalar types
      * this will be <b>null</b>.
@@ -193,12 +188,12 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         return $this->_returnType;
     }
-    
+
     /**
      * Sets the return type of this callable.
      *
      * @param PHP_Depend_Code_AbstractType $returnType The return type of this.
-     * 
+     *
      * @return void
      */
     public function setReturnType(PHP_Depend_Code_AbstractType $returnType)
@@ -215,12 +210,12 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         return new PHP_Depend_Code_NodeIterator($this->_exceptionTypes);
     }
-    
+
     /**
      * Adds an exception to the list of thrown exception types.
      *
      * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
-     * 
+     *
      * @return void
      */
     public function addExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
@@ -229,12 +224,12 @@ abstract class PHP_Depend_Code_AbstractCallable
             $this->_exceptionTypes[] = $exceptionType;
         }
     }
-    
+
     /**
      * Removes an exception from the list of thrown exception types.
      *
      * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
-     * 
+     *
      * @return void
      */
     public function removeExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
@@ -243,10 +238,10 @@ abstract class PHP_Depend_Code_AbstractCallable
             unset($this->_exceptionTypes[$i]);
         }
     }
-    
+
     /**
      * Returns an iterator with all method/function parameters.
-     * 
+     *
      * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
      * nodes. Use the {@link PHP_Depend_Code_Parameter::getPosition()} for the
      * correct parameter position.
@@ -257,12 +252,12 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         return new PHP_Depend_Code_NodeIterator($this->_parameters);
     }
-    
+
     /**
      * Adds a parameter to the list of method/function parameters.
      *
      * @param PHP_Depend_Code_Parameter $parameter The parameter instance.
-     * 
+     *
      * @return PHP_Depend_Code_Parameter
      */
     public function addParameter(PHP_Depend_Code_Parameter $parameter)
@@ -274,15 +269,15 @@ abstract class PHP_Depend_Code_AbstractCallable
         $parameter->setParent($this);
         // Store reference
         $this->_parameters[] = $parameter;
-        
+
         return $parameter;
     }
-    
+
     /**
      * Removes the parameter from this callable.
      *
      * @param PHP_Depend_Code_Parameter $parameter The parameter instance.
-     * 
+     *
      * @return void
      */
     public function removeParameter(PHP_Depend_Code_Parameter $parameter)

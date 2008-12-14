@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -47,7 +47,7 @@
  */
 
 /**
- * This utility class provides access to all internal classes. 
+ * This utility class provides access to all internal classes.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -63,11 +63,10 @@ class PHP_Depend_Code_InternalTypes
     /**
      * Singleton instance for this class.
      *
-     * @type PHP_Depend_Code_InternalTypes
      * @var PHP_Depend_Code_InternalTypes $_instance
      */
     private static $_instance = null;
-    
+
     /**
      * Singleton method for the internal types class.
      *
@@ -80,23 +79,21 @@ class PHP_Depend_Code_InternalTypes
         }
         return self::$_instance;
     }
-    
+
     /**
      * Map of all internal types.
      *
-     * @type array<array>
      * @var array(string=>array) $_types
      */
     private $_types = array();
-    
+
     /**
      * List of packages/extensions with classes or interfaces.
      *
-     * @type array<string>
      * @var array(string=>string) $_packages
      */
     private $_packages = array();
-    
+
     /**
      * Constructs a new internal types instance.
      */
@@ -113,7 +110,7 @@ class PHP_Depend_Code_InternalTypes
                 $extension = 'standard';
             }
             $extension = '+' . strtolower($extension);
-    
+
             if (!isset($packages[$extension])) {
                 $packages[$extension] = array();
             }
@@ -121,24 +118,24 @@ class PHP_Depend_Code_InternalTypes
                 'package'  =>  $extension,
                 'name'     =>  $type
             );
-            
+
             $this->_packages[$extension] = true;
         }
     }
-    
+
     /**
      * Returns <b>true</b> if the given type is internal or part of an
      * extension.
      *
      * @param string $typeName The type name.
-     * 
+     *
      * @return boolean
      */
     public function isInternal($typeName)
     {
         return isset($this->_types[strtolower($typeName)]);
     }
-    
+
     /**
      * Returns an array with all package/extension names.
      *
@@ -148,13 +145,13 @@ class PHP_Depend_Code_InternalTypes
     {
         return array_keys($this->_packages);
     }
-    
+
     /**
      * Returns the package/extension for the given type name. If no package
      * exists, this method will return <b>null</b>.
      *
      * @param string $typeName The type name.
-     * 
+     *
      * @return string
      */
     public function getTypePackage($typeName)

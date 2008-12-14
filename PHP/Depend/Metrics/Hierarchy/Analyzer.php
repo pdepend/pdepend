@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -54,11 +54,11 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This analyzer calculates class/package hierarchy metrics.
- * 
- * This analyzer expects that a node list filter is set, before it starts the 
+ *
+ * This analyzer expects that a node list filter is set, before it starts the
  * analyze process. This filter will suppress PHP internal and external library
  * stuff.
- * 
+ *
  * This analyzer is based on the following metric set:
  * - http://www.aivosto.com/project/help/pm-oo-misc.html
  *
@@ -80,76 +80,67 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
 {
     /**
      * Number of all analyzed packages.
-     * 
-     * @type integer
+     *
      * @var integer $_pkgs
      */
     private $_pkgs = 0;
-    
+
     /**
      * Number of all analyzed functions.
      *
-     * @type integer
      * @var integer $_fcs
      */
     private $_fcs = 0;
-    
+
     /**
      * Number of all analyzer methods.
      *
-     * @type integer
      * @var integer $_mts
      */
     private $_mts = 0;
-    
+
     /**
      * Number of all analyzed classes.
      *
-     * @type integer
      * @var integer $_cls
      */
     private $_cls = 0;
-    
+
     /**
      * Number of all analyzed abstract classes.
      *
-     * @type integer
      * @var integer $_clsa
      */
     private $_clsa = 0;
-    
+
     /**
      * Number of all analyzed interfaces.
      *
-     * @type integer 
      * @var integer $_interfs
      */
     private $_interfs = 0;
-    
+
     /**
      * Number of all root classes within the analyzed source code.
      *
-     * @type integer
      * @var integer $_roots
      */
     private $_roots = 0;
-    
+
     /**
      * Number of all leaf classes within the analyzed source code
      *
-     * @type integer
      * @var integer $_leafs
      */
     private $_leafs = 0;
-    
+
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
      *
-     * @type integer
      * @var integer $_maxDIT
      */
     private $_maxDIT = 0;
-    
+
     /**
      * Hash with all calculated node metrics.
      *
@@ -168,37 +159,36 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
-    
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages The input package set.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Metrics_AnalyzerI::analyze()
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
-            
+
             $this->fireStartAnalyzer();
-            
+
             // Init node metrics
             $this->_nodeMetrics = array();
-            
+
             // Visit all nodes
             foreach ($packages as $package) {
                 $package->accept($this);
             }
-            
+
             $this->fireEndAnalyzer();
         }
     }
-    
+
     /**
      * Provides the project summary metrics as an <b>array</b>.
      *
@@ -214,14 +204,14 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             'maxDIT'   =>  $this->_maxDIT,
         );
     }
-    
+
     /**
-     * This method will return an <b>array</b> with all generated metric values 
-     * for the given <b>$node</b> instance. If there are no metrics for the 
+     * This method will return an <b>array</b> with all generated metric values
+     * for the given <b>$node</b> instance. If there are no metrics for the
      * requested node, this method will return an empty <b>array</b>.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
@@ -231,53 +221,53 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         }
         return array();
     }
-    
+
     /**
      * Calculates metrics for the given <b>$class</b> instance.
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->fireStartClass($class);
-        
+
         ++$this->_cls;
-        
+
         if ($class->isAbstract()) {
             ++$this->_clsa;
         }
-        
+
         if ($class->getChildClasses()->count() === 0) {
             ++$this->_leafs;
         } else if ($class->getParentClass() === null) {
             ++$this->_roots;
         }
-        
+
         // Get class dit value
         $dit = $this->getClassDIT($class);
         // Store node metric
         $this->_nodeMetrics[$class->getUUID()] = array('dit'  =>  $dit);
         // Collect max dit value
         $this->_maxDIT = max($this->_maxDIT, $dit);
-        
+
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
-        
+
         $this->fireEndClass($class);
     }
-    
+
     /**
      * Calculates metrics for the given <b>$function</b> instance.
      *
      * @param PHP_Depend_Code_Function $function The context function instance.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      */
@@ -287,33 +277,33 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         ++$this->_fcs;
         $this->fireEndFunction($function);
     }
-    
+
     /**
      * Calculates metrics for the given <b>$interface</b> instance.
      *
      * @param PHP_Depend_Code_Interface $interface The context interface instance.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->fireStartInterface($interface);
-        
+
         ++$this->_interfs;
-        
+
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
-        
+
         $this->fireEndInterface($interface);
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      */
@@ -323,37 +313,37 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         ++$this->_mts;
         $this->fireEndMethod($method);
     }
-    
+
     /**
      * Calculates metrics for the given <b>$package</b> instance.
      *
      * @param PHP_Depend_Code_Package $package The context package instance.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $this->fireStartPackage($package);
-        
+
         ++$this->_pkgs;
-        
+
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
         }
-        
+
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
-        
+
         $this->fireEndPackage($package);
     }
-    
+
     /**
      * Returns the depth of inheritance tree value for the given class.
      *
      * @param PHP_Depend_Code_Class $class The context code class instance.
-     * 
+     *
      * @return integer
      */
     protected function getClassDIT(PHP_Depend_Code_Class $class)

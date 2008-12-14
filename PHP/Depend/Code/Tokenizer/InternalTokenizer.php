@@ -69,7 +69,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
-     * @type array<integer>
      * @var array(integer=>integer) $tokenMap
      */
     protected static $tokenMap = array(
@@ -192,7 +191,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
-     * @type array<integer>
      * @var array(string=>integer) $literalMap
      */
     protected static $literalMap = array(
@@ -239,7 +237,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * The source file instance.
      *
-     * @type PHP_Depend_Code_File
      * @var PHP_Depend_Code_File $sourceFile
      */
     protected $sourceFile = '';
@@ -247,7 +244,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * Count of all tokens.
      *
-     * @type integer
      * @var integer $count
      */
     protected $count = 0;
@@ -255,7 +251,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * Internal stream pointer index.
      *
-     * @type integer
      * @var integer $index
      */
     protected $index = 0;
@@ -263,7 +258,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * Prepared token list.
      *
-     * @type array<array>
      * @var array(array) $tokens
      */
     protected $tokens = array();
@@ -271,7 +265,6 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
     /**
      * The next free identifier for unknown string tokens.
      *
-     * @type integer
      * @var integer $_unknownTokenID
      */
     private $_unknownTokenID = 1000;

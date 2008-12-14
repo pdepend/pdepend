@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -61,42 +61,38 @@ require_once 'PHP/Depend/Code/VisibilityAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Method 
+class PHP_Depend_Code_Method
     extends PHP_Depend_Code_AbstractCallable
     implements PHP_Depend_Code_VisibilityAwareI
 {
     /**
      * Marks this method as abstract.
      *
-     * @type boolean
      * @var boolean $abstract
      */
     protected $abstract = false;
-    
+
     /**
      * Set defined visibility for this method.
      *
-     * @type integer
      * @var integer $visibility
      */
     protected $visibility = -1;
-    
+
     /**
      * The parent type object.
      *
-     * @type PHP_Depend_Code_AbstractType
      * @var PHP_Depend_Code_AbstractType $parent
      */
     protected $parent = null;
-    
+
     /**
      * Method position within its parent class or interface.
      *
-     * @type integer
      * @var integer $_position
      */
     private $_position = 0;
-    
+
     /**
      * Returns <b>true</b> if this is an abstract method.
      *
@@ -106,27 +102,27 @@ class PHP_Depend_Code_Method
     {
         return $this->abstract;
     }
-    
+
     /**
      * Marks this as an abstract method.
      *
      * @param boolean $abstract Set this to <b>true</b> for an abstract method.
-     * 
+     *
      * @return void
      */
     public function setAbstract($abstract)
     {
         $this->abstract = $abstract;
     }
-    
+
     /**
-     * Sets the visibility for this node. 
-     * 
-     * The given <b>$visibility</b> value must equal to one of the defined 
+     * Sets the visibility for this node.
+     *
+     * The given <b>$visibility</b> value must equal to one of the defined
      * constants, otherwith this method will fail with an exception.
      *
      * @param integer $visibility The node visibility.
-     * 
+     *
      * @return void
      * @throws InvalidArgumentException If the given visibility is not equal to
      *                                  one of the defined visibility constants.
@@ -135,7 +131,7 @@ class PHP_Depend_Code_Method
     {
         // List of allowed visibility values
         $allowed = array(self::IS_PUBLIC, self::IS_PROTECTED, self::IS_PRIVATE);
-        
+
         // Check for a valid value
         if (in_array($visibility, $allowed, true) === false) {
             throw new InvalidArgumentException('Invalid visibility value given.');
@@ -145,9 +141,9 @@ class PHP_Depend_Code_Method
             $this->visibility = $visibility;
         }
     }
-    
+
     /**
-     * Returns <b>true</b> if this node is marked as public, otherwise the 
+     * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
      *
      * @return boolean
@@ -156,9 +152,9 @@ class PHP_Depend_Code_Method
     {
         return ($this->visibility === self::IS_PUBLIC);
     }
-    
+
     /**
-     * Returns <b>true</b> if this node is marked as protected, otherwise the 
+     * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
      *
      * @return boolean
@@ -167,9 +163,9 @@ class PHP_Depend_Code_Method
     {
         return ($this->visibility === self::IS_PROTECTED);
     }
-    
+
     /**
-     * Returns <b>true</b> if this node is marked as private, otherwise the 
+     * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
      *
      * @return boolean
@@ -178,8 +174,8 @@ class PHP_Depend_Code_Method
     {
         return ($this->visibility === self::IS_PRIVATE);
     }
-    
-    
+
+
     /**
      * Returns the parent type object or <b>null</b>
      *
@@ -189,19 +185,19 @@ class PHP_Depend_Code_Method
     {
         return $this->parent;
     }
-    
+
     /**
      * Sets the parent type object.
      *
      * @param PHP_Depend_Code_AbstractType $parent The parent type.
-     * 
+     *
      * @return void
      */
     public function setParent(PHP_Depend_Code_AbstractType $parent = null)
     {
         $this->parent = $parent;
     }
-    
+
     /**
      * Returns the position of this method within the parent class or interface.
      *
@@ -211,25 +207,25 @@ class PHP_Depend_Code_Method
     {
         return $this->_position;
     }
-    
+
     /**
      * Sets the source position of this method.
      *
      * @param integer $position Position within the parent class or interface.
-     * 
+     *
      * @return void
      */
     public function setPosition($position)
     {
         $this->_position = (int) $position;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
