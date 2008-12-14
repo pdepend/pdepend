@@ -77,7 +77,7 @@ class PHP_Depend_Log_Jdepend_Xml
      *
      * @var string $_logFile
      */
-    protected $_logFile = null;
+    private $_logFile = null;
 
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.

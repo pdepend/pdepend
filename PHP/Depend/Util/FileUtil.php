@@ -69,11 +69,11 @@ final class PHP_Depend_Util_FileUtil
     {
         if (function_exists('sys_get_temp_dir') === true) {
             return sys_get_temp_dir();
-        } else if ($tmp = getenv( 'TMP')) {
+        } else if ($tmp = getenv('TMP')) {
             return $tmp;
-        } else if ($tmp = getenv( 'TEMP')) {
+        } else if ($tmp = getenv('TEMP')) {
             return $tmp;
-        } else if ($tmp = getenv( 'TMPDIR')) {
+        } else if ($tmp = getenv('TMPDIR')) {
             return $tmp;
         }
 
