@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -95,7 +95,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
         'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
     );
-    
+
     /**
      * The expected test data.
      *
@@ -103,7 +103,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
      * @var array(string=>array) $_expected
      */
     private $_expected = array();
-    
+
     /**
      * The code rank analyzer.
      *
@@ -111,7 +111,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
      * @var PHP_Depend_Metrics_CodeRank_Analyzer $_analyzer
      */
     private $_analyzer = null;
-    
+
     /**
      * Creates the expected metrics array.
      *
@@ -120,24 +120,24 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     protected function setUp()
     {
         parent::setUp();
-        
+
         $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
         $files  = new PHP_Depend_Util_FileFilterIterator(
             new DirectoryIterator($source),
             new PHP_Depend_Util_FileExtensionFilter(array('php'))
         );
-        
+
         $builder = new PHP_Depend_Code_DefaultBuilder();
-        
+
         foreach ($files as $file) {
-            
-            $path = $file->getRealPath();
+
+            $path = realpath($file->getPathname());
             $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
-            
+
             $parser = new PHP_Depend_Parser($tokz, $builder);
             $parser->parse();
         }
-        
+
         $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
         $this->_analyzer->analyze($builder->getPackages());
 
@@ -149,7 +149,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
             }
         }
     }
-    
+
     /**
      * Tests the result of the class rank calculation against previous computed
      * values.
@@ -160,15 +160,15 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         foreach ($this->_expected as $key => $info) {
             $metrics = $this->_analyzer->getNodeMetrics($info[0]);
-            
+
             $this->assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
             $this->assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
-            
+
             unset($this->_expected[$key]);
         }
         $this->assertEquals(0, count($this->_expected));
     }
-    
+
     /**
      * Tests that {@link PHP_Depend_Metrics_CodeRank_Analyzer::getNodeMetrics()}
      * returns an empty <b>array</b> for an unknown identifier.
@@ -179,7 +179,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $class   = new PHP_Depend_Code_Class('PDepend');
         $metrics = $this->_analyzer->getNodeMetrics($class);
-        
+
         $this->assertType('array', $metrics);
         $this->assertEquals(0, count($metrics));
     }

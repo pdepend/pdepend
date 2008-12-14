@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -75,16 +75,16 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceDirectories(array('foo/bar'));
-        
+
         $this->setExpectedException(
             'RuntimeException',
             "Invalid directory 'foo/bar' added.",
             PHP_Depend_TextUI_Runner::EXCEPTION_EXIT
         );
-        
+
         $runner->run();
     }
-    
+
     /**
      * Tests that the runner stops processing if no logger is specified.
      *
@@ -94,67 +94,67 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
-        
+
         $this->setExpectedException(
-            'RuntimeException', 
-            'No output specified', 
+            'RuntimeException',
+            'No output specified',
             PHP_Depend_TextUI_Runner::EXCEPTION_EXIT
         );
-        
+
         $runner->run();
     }
-    
+
     public function testRunnerUsesCorrectFileFilter()
     {
-        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
+        $fileName = self::createTempName('pdepend.dummy');
         if (file_exists($fileName)) {
             unlink($fileName);
         }
-        
+
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
         $runner->setFileExtensions(array('inc'));
         $runner->addLogger('dummy-logger', $fileName);
-        
+
         ob_start();
         $runner->run();
         ob_end_clean();
-        
+
         $this->assertFileExists($fileName);
-        
+
         $data = unserialize(file_get_contents($fileName));
-        
+
         $code = $data['code'];
         $this->assertType('PHP_Depend_Code_NodeIterator', $code);
         $this->assertEquals(2, $code->count());
-        
+
         $code->rewind();
-        
+
         $package = $code->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
-        
+
         $this->assertEquals(1, $package->getFunctions()->count());
         $this->assertEquals(1, $package->getClasses()->count());
-        
+
         $function = $package->getFunctions()->current();
         $this->assertType('PHP_Depend_Code_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(1, $function->getExceptionTypes()->count());
         $this->assertEquals('MyException', $function->getExceptionTypes()->current()->getName());
-        
+
         $code->next();
-        
+
         $package = $code->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
         $this->assertEquals('pdepend.test2', $package->getName());
-        
+
         $sourceFile = realpath(dirname(__FILE__). '/../_code/function.inc');
         $this->assertEquals($sourceFile, $function->getSourceFile()->getName());
-        
+
         unlink($fileName);
     }
-    
+
     /**
      * Tests that the runner handles the <b>--without-annotations</b> option
      * correct.
@@ -163,85 +163,85 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
     {
-        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
+        $fileName = self::createTempName('pdepend.dummy');
         if (file_exists($fileName)) {
             unlink($fileName);
         }
-        
+
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
         $runner->setFileExtensions(array('inc'));
         $runner->addLogger('dummy-logger', $fileName);
         $runner->setWithoutAnnotations();
-        
+
         ob_start();
         $runner->run();
         ob_end_clean();
-        
+
         $this->assertFileExists($fileName);
-        
+
         $data = unserialize(file_get_contents($fileName));
-        
+
         $code = $data['code'];
         $this->assertType('PHP_Depend_Code_NodeIterator', $code);
         $this->assertEquals(2, $code->count());
-        
+
         $code->rewind();
-        
+
         $package = $code->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
-        
+
         $this->assertEquals(1, $package->getFunctions()->count());
         $this->assertEquals(1, $package->getClasses()->count());
-        
+
         $function = $package->getFunctions()->current();
         $this->assertType('PHP_Depend_Code_Function', $function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionTypes()->count());
-        
+
         $code->next();
-        
+
         $package = $code->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
         $this->assertEquals('pdepend.test2', $package->getName());
-        
+
         unlink($fileName);
     }
-    
+
     public function testSupportBadDocumentation()
     {
-        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
+        $fileName = self::createTempName('pdepend.dummy');
         if (file_exists($fileName)) {
             unlink($fileName);
         }
-        
+
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
         $runner->setSupportBadDocumentation();
         $runner->addLogger('dummy-logger', $fileName);
-        
+
         ob_start();
         $runner->run();
         ob_end_clean();
-        
+
         $this->assertFileExists($fileName);
-        
+
         $data = unserialize(file_get_contents($fileName));
-        
+
         $code = $data['code'];
         $this->assertType('PHP_Depend_Code_NodeIterator', $code);
         $this->assertEquals(1, $code->count());
-        
+
         $code->rewind();
-        
+
         $package = $code->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
         $this->assertEquals(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE, $package->getName());
-        
+
         $this->assertEquals(8, $package->getClasses()->count());
         $this->assertEquals(3, $package->getInterfaces()->count());
-        
+
         unlink($fileName);
     }
 }

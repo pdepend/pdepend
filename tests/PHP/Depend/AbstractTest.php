@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -61,6 +61,37 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Removes temporary test contents.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(dirname(__FILE__) . '/_run')
+        );
+
+        foreach ($files as $file) {
+            $pathName = realpath($file->getPathname());
+            $fileName = $file->getFilename();
+            if ($fileName === '.'
+             || $fileName === '..'
+             || strpos($pathName, '.svn') !== false) {
+                continue;
+            }
+
+            if ($file->isDir() === true) {
+                rmdir($pathName);
+            } else {
+                unlink($pathName);
+            }
+        }
+
+    }
+
+    /**
      * Resets the global iterator filter.
      *
      * @return void
@@ -68,10 +99,22 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         PHP_Depend_Code_NodeIterator_StaticFilter::getInstance()->clear();
-        
+
         parent::tearDown();
     }
-    
+
+    /**
+     * Creates a temporary file name.
+     *
+     * @param string $name The relative file name.
+     *
+     * @return string
+     */
+    protected static function createTempName($name)
+    {
+        return dirname(__FILE__) . '/_run/' . $name;
+    }
+
     /**
      * Initializes the test environment.
      *
@@ -81,30 +124,30 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         // Is it not installed?
         if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
-            
+
             $path  = realpath(dirname(__FILE__) . '/../../..');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
-            
+
             $whitelist = realpath(dirname(__FILE__) . '/../../../PHP') . '/';
             PHPUnit_Util_Filter::addDirectoryToWhitelist($whitelist);
         }
-        
+
         // Set test path
         $path  = realpath(dirname(__FILE__) . '/../..') ;
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
-        
+
         include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
     }
-    
+
     /**
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
      * @param string  $fileOrDirectory   A source file or a source directory.
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     * 
+     *
      * @return PHP_Depend_Code_NodeIterator
      */
     public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
@@ -115,7 +158,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
         include_once 'PHP/Depend/Util/ExcludePathFilter.php';
         include_once 'PHP/Depend/Util/FileFilterIterator.php';
-        
+
         if (is_dir($fileOrDirectory)) {
             $it = new PHP_Depend_Util_FileFilterIterator(
                 new RecursiveIteratorIterator(
@@ -126,12 +169,12 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         } else {
             $it = new ArrayIterator(array($fileOrDirectory));
         }
-        
+
         $builder = new PHP_Depend_Code_DefaultBuilder();
-        
+
         foreach ($it as $file) {
             $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file);
-            
+
             $parser = new PHP_Depend_Parser($tokenizer, $builder);
             if ($ignoreAnnotations === true) {
                 $parser->setIgnoreAnnotations();
