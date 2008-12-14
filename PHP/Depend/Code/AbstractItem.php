@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -65,51 +65,45 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     /**
      * The name for this item.
      *
-     * @type string
      * @var string $name
      */
     protected $name = '';
-    
+
     /**
      * The unique identifier for this function.
      *
-     * @type PHP_Depend_Util_UUID
      * @var PHP_Depend_Util_UUID $uuid
      */
     protected $uuid = null;
-    
+
     /**
      * The line number where the item declaration starts.
      *
-     * @type integer
      * @var integer $startLine
      */
     protected $startLine = 0;
-    
+
     /**
      * The line number where the item declaration ends.
      *
-     * @type integer
      * @var integer $endLine
      */
     protected $endLine = 0;
-    
+
     /**
      * The source file for this item.
      *
-     * @type PHP_Depend_Code_File
      * @var PHP_Depend_Code_File $sourceFile
      */
     protected $sourceFile = null;
-    
+
     /**
      * The comment for this type.
      *
-     * @type string
      * @var string $docComment
      */
     protected $docComment = null;
-    
+
     /**
      * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
      *
@@ -120,10 +114,10 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     {
         $this->name      = $name;
         $this->startLine = $startLine;
-        
+
         $this->uuid = new PHP_Depend_Util_UUID();
     }
-    
+
     /**
      * Returns the item name.
      *
@@ -133,7 +127,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     {
         return $this->name;
     }
-    
+
     /**
      * Returns a uuid for this code node.
      *
@@ -143,7 +137,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     {
         return (string) $this->uuid;
     }
-    
+
     /**
      * Returns the line number where the item declaration can be found.
      *
@@ -153,12 +147,12 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     {
         return $this->startLine;
     }
-    
+
     /**
      * Sets the start line for this item.
      *
      * @param integer $startLine The start line for this item.
-     * 
+     *
      * @return void
      */
     public function setStartLine($startLine)
@@ -167,7 +161,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
             $this->startLine = $startLine;
         }
     }
-    
+
     /**
      * Returns the line number where the item declaration ends.
      *
@@ -177,12 +171,12 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     {
         return $this->endLine;
     }
-    
+
     /**
      * Sets the end line for this item.
      *
      * @param integer $endLine The end line for this item
-     * 
+     *
      * @return void
      */
     public function setEndLine($endLine)
@@ -191,7 +185,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
             $this->endLine = $endLine;
         }
     }
-    
+
     /**
      * Returns the source file for this item.
      *
@@ -201,10 +195,10 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     {
         return $this->sourceFile;
     }
-    
+
     /**
      * Sets the source file for this item.
-     * 
+     *
      * @param PHP_Depend_Code_File $sourceFile The item source file.
      *
      * @return void
@@ -215,7 +209,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
             $this->sourceFile = $sourceFile;
         }
     }
-    
+
     /**
      * Returns the doc comment for this item or <b>null</b>.
      *
@@ -225,12 +219,12 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     {
         return $this->docComment;
     }
-    
+
     /**
      * Sets the doc comment for this item.
      *
      * @param string $docComment The doc comment block.
-     * 
+     *
      * @return void
      */
     public function setDocComment($docComment)

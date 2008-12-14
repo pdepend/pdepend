@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -65,11 +65,10 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     /**
      * The parent package for this function.
      *
-     * @type PHP_Depend_Code_Package
      * @var PHP_Depend_Code_Package $package
      */
     protected $package = null;
-    
+
     /**
      * Returns the parent package for this function.
      *
@@ -79,25 +78,25 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     {
         return $this->package;
     }
-    
+
     /**
      * Sets the parent package for this function.
      *
      * @param PHP_Depend_Code_Package $package The parent package.
-     * 
+     *
      * @return void
      */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
         $this->package = $package;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)

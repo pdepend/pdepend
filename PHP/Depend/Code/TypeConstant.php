@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
 /**
  * An instance of this class represents a class or interface constant within the
  * analyzed source code.
- * 
+ *
  * <code>
  * <?php
  * class PHP_Depend_Code_NodeBuilderI
@@ -74,7 +74,6 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     /**
      * The parent type object.
      *
-     * @type PHP_Depend_Code_AbstractType
      * @var PHP_Depend_Code_AbstractType $_parent
      */
     private $_parent = null;
@@ -88,25 +87,25 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     {
         return $this->_parent;
     }
-    
+
     /**
      * Sets the parent type object.
      *
      * @param PHP_Depend_Code_AbstractType $parent The parent class.
-     * 
+     *
      * @return void
      */
     public function setParent(PHP_Depend_Code_AbstractType $parent = null)
     {
         $this->_parent = $parent;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)

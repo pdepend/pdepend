@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -48,18 +48,18 @@
 
 /**
  * This factory creates singleton instances of available loggers.
- * 
+ *
  * The identifiers used for loggers follow a simple convention. Every upper case
  * word in the class file name and the logger directory is separated by a hyphen.
  * Only the last word of an identifier is used for the class file name, all
  * other words are used for the directory name.
- * 
+ *
  * <code>
  *   --my-custom-log-xml
  * </code>
- * 
- * Refers to the following file: <b>PHP/Depend/Log/MyCustomLog/Xml.php</b>, but 
- * you can not reference a file named <b>PHP/Depend/Log/MyCustom/LogXml.php</b>.  
+ *
+ * Refers to the following file: <b>PHP/Depend/Log/MyCustomLog/Xml.php</b>, but
+ * you can not reference a file named <b>PHP/Depend/Log/MyCustom/LogXml.php</b>.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -75,18 +75,17 @@ class PHP_Depend_Log_LoggerFactory
     /**
      * Set of created logger instances.
      *
-     * @type array<PHP_Depend_Log_LoggerI>
      * @var array(string=>PHP_Depend_Log_LoggerI) $instances
      */
     protected $instances = array();
-    
+
     /**
-     * Creates a new logger or returns an existing instance for the given 
+     * Creates a new logger or returns an existing instance for the given
      * <b>$identifier</b>.
      *
      * @param string $identifier The logger identifier.
      * @param string $fileName   The log output file name.
-     * 
+     *
      * @return PHP_Depend_Log_LoggerI
      */
     public function createLogger($identifier, $fileName)
@@ -94,31 +93,31 @@ class PHP_Depend_Log_LoggerFactory
         if (!isset($this->instances[$identifier])) {
             // Extract all parts from the logger identifier
             $words = explode('-', $identifier);
-            
+
             // Change all words to upper case
             $words = array_map('ucfirst', $words);
-            
+
             // By definition the logger class name must be a single word.
             // Everything else is part of the package name.
             $class   = array_pop($words);
             $package = implode('', $words);
-            
+
             $className = sprintf('PHP_Depend_Log_%s_%s', $package, $class);
             $classFile = sprintf('PHP/Depend/Log/%s/%s.php', $package, $class);
-            
+
             if ((@include_once $classFile) === false) {
                 throw new RuntimeException("Unknown logger class '{$className}'.");
             }
-            
+
             // Create a new logger instance.
             $logger = new $className();
-            
+
             // TODO: Refactor this into an external log configurator or a similar
             //       concept.
             if ($logger instanceof PHP_Depend_Log_FileAwareI) {
                 $logger->setLogFile($fileName);
             }
-            
+
             $this->instances[$identifier] = $logger;
         }
         return $this->instances[$identifier];

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -66,19 +66,17 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     /**
      * Marks this class as abstract.
      *
-     * @type boolean
      * @var boolean $abstract
      */
     protected $abstract = false;
-    
+
     /**
      * List of associated properties.
      *
-     * @type array<PHP_Depend_Code_Property>
      * @var array(PHP_Depend_Code_Property) $properties
      */
     protected $properties = array();
-    
+
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
@@ -88,19 +86,19 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     {
         return $this->abstract;
     }
-    
+
     /**
      * Marks this as an abstract class or interface.
      *
      * @param boolean $abstract Set this to <b>true</b> for an abstract class.
-     * 
+     *
      * @return void
      */
     public function setAbstract($abstract)
     {
         $this->abstract = $abstract;
     }
-    
+
     /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
@@ -116,7 +114,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         }
         return null;
     }
-    
+
     /**
      * Returns a node iterator with all implemented interfaces.
      *
@@ -126,10 +124,10 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     {
         $type   = 'PHP_Depend_Code_Interface';
         $filter = new PHP_Depend_Code_NodeIterator_TypeFilter($type);
-        
+
         $interfaces = $this->getDependencies();
         $interfaces->addFilter($filter);
-        
+
         $nodes = array();
         foreach ($interfaces as $interface) {
             // Add this interface first
@@ -141,7 +139,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
                 }
             }
         }
-        
+
         if (($parent = $this->getParentClass()) !== null) {
             foreach ($parent->getImplementedInterfaces() as $interface) {
                 $nodes[] = $interface;
@@ -149,7 +147,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         }
         return new PHP_Depend_Code_NodeIterator($nodes);
     }
-    
+
     /**
      * Returns an iterator with all child classes.
      *
@@ -159,7 +157,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     {
         return new PHP_Depend_Code_NodeIterator($this->children);
     }
-    
+
     /**
      * Returns all properties for this class.
      *
@@ -169,12 +167,12 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     {
         return new PHP_Depend_Code_NodeIterator($this->properties);
     }
-    
+
     /**
      * Adds a new property to this class instance.
      *
      * @param PHP_Depend_Code_Property $property The new class property.
-     * 
+     *
      * @return PHP_Depend_Code_Property
      */
     public function addProperty(PHP_Depend_Code_Property $property)
@@ -187,12 +185,12 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         }
         return $property;
     }
-    
+
     /**
      * Removes the given property from this class.
      *
      * @param PHP_Depend_Code_Property $property The property to remove.
-     * 
+     *
      * @return void
      */
     public function removeProperty(PHP_Depend_Code_Property $property)
@@ -204,12 +202,12 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
             unset($this->properties[$i]);
         }
     }
-    
+
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
      * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
-     * 
+     *
      * @return boolean
      */
     public function isSubtypeOf(PHP_Depend_Code_AbstractType $type)
@@ -230,13 +228,13 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         }
         return false;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)

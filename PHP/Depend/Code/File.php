@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -66,51 +66,45 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * The unique identifier for this function.
      *
-     * @type PHP_Depend_Util_UUID
      * @var PHP_Depend_Util_UUID $_uuid
      */
     private $_uuid = null;
-    
+
     /**
      * The source file name/path.
      *
-     * @type string
      * @var string $_fileName
      */
     private $_fileName = null;
-    
+
     /**
      * Normalized code in this file.
      *
-     * @type string
      * @var string $_source
      */
     private $_source = null;
-    
+
     /**
      * The lines of code in this file.
      *
-     * @type array<string>
      * @var array(integer=>string) $_loc
      */
     private $_loc = null;
-    
+
     /**
      * The tokens for this file.
      *
-     * @type array<array>
      * @var array(array) $_tokens
      */
     private $_tokens = array();
-    
+
     /**
      * The comment for this type.
      *
-     * @type string
      * @var string $_docComment
      */
     private $_docComment = null;
-    
+
     /**
      * Constructs a new source file instance.
      *
@@ -121,10 +115,10 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         if ($fileName !== null) {
             $this->_fileName = realpath($fileName);
         }
-        
+
         $this->_uuid = new PHP_Depend_Util_UUID();
     }
-    
+
     /**
      * Returns the physical file name for this object.
      *
@@ -134,7 +128,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return $this->_fileName;
     }
-    
+
     /**
      * Returns the physical file name for this object.
      *
@@ -144,7 +138,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return $this->_fileName;
     }
-    
+
     /**
      * Returns a uuid for this code node.
      *
@@ -154,7 +148,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return (string) $this->_uuid;
     }
-    
+
     /**
      * Returns the lines of code with stripped whitespaces.
      *
@@ -165,7 +159,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         $this->readSource();
         return $this->_loc;
     }
-    
+
     /**
      * Returns normalized source code with stripped whitespaces.
      *
@@ -176,7 +170,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         $this->readSource();
         return $this->_source;
     }
-    
+
     /**
      * Returns an <b>array</b> with all tokens within this file.
      *
@@ -186,19 +180,19 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return $this->_tokens;
     }
-    
+
     /**
      * Sets the tokens for this file.
      *
      * @param array(array) $tokens The generated tokens.
-     * 
+     *
      * @return void
      */
     public function setTokens(array $tokens)
     {
         $this->_tokens = $tokens;
     }
-    
+
     /**
      * Returns the doc comment for this item or <b>null</b>.
      *
@@ -208,32 +202,32 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return $this->_docComment;
     }
-    
+
     /**
      * Sets the doc comment for this item.
      *
      * @param string $docComment The doc comment block.
-     * 
+     *
      * @return void
      */
     public function setDocComment($docComment)
     {
         $this->_docComment = $docComment;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
     {
         $visitor->visitFile($this);
     }
-    
+
     /**
      * Returns the string representation of this class.
      *
@@ -243,7 +237,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return ($this->_fileName === null ? '' : $this->_fileName);
     }
-    
+
     /**
      * Reads the source file if required.
      *
@@ -253,9 +247,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         if ($this->_loc === null) {
             $source = file_get_contents($this->_fileName);
-            
+
             $this->_loc = preg_split('#(\r\n|\n|\r)#', $source);
-            
+
             $this->_source = implode("\n", $this->_loc);
         }
     }

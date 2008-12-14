@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -64,15 +64,14 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI
-{    
+{
     /**
      * Dummy node metrics.
      *
-     * @type array<mixed>
      * @var array(string=>array) $nodeMetrics
      */
     protected $nodeMetrics = null;
-    
+
     /**
      * Constructs a new analyzer dummy instance.
      *
@@ -87,38 +86,38 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
      * Adds a listener to this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
+     *
      * @return void
      */
     public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
     }
-    
+
     /**
      * Removes the listener from this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
+     *
      * @return void
      */
     public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
     }
-    
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
     }
-    
+
     /**
      * Returns an array with metrics for the requested node.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return array(string=>mixed)
      * @see PHP_Depend_Metrics_NodeAwareI::getNodeMetrics()
      */

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -70,36 +70,33 @@ class PHP_Depend_Code_Property
     /**
      * Set defined visibility for this method.
      *
-     * @type integer
      * @var integer $_visibility
      */
     private $_visibility = -1;
-    
+
     /**
      * The parent type object.
      *
-     * @type PHP_Depend_Code_Class
      * @var PHP_Depend_Code_Class $_parent
      */
     private $_parent = null;
-    
+
     /**
      * The type for this property. This value is <b>null</b> by default and for
      * scalar types.
      *
-     * @type PHP_Depend_Code_AbstractType
      * @var PHP_Depend_Code_AbstractType $_type
      */
     private $_type = null;
-    
+
     /**
-     * Sets the visibility for this node. 
-     * 
-     * The given <b>$visibility</b> value must equal to one of the defined 
+     * Sets the visibility for this node.
+     *
+     * The given <b>$visibility</b> value must equal to one of the defined
      * constants, otherwith this method will fail with an exception.
      *
      * @param integer $visibility The node visibility.
-     * 
+     *
      * @return void
      * @throws InvalidArgumentException If the given visibility is not equal to
      *                                  one of the defined visibility constants.
@@ -108,7 +105,7 @@ class PHP_Depend_Code_Property
     {
         // List of allowed visibility values
         $allowed = array(self::IS_PUBLIC, self::IS_PROTECTED, self::IS_PRIVATE);
-        
+
         // Check for a valid value
         if (in_array($visibility, $allowed, true) === false) {
             throw new InvalidArgumentException('Invalid visibility value given.');
@@ -118,9 +115,9 @@ class PHP_Depend_Code_Property
             $this->_visibility = $visibility;
         }
     }
-    
+
     /**
-     * Returns <b>true</b> if this node is marked as public, otherwise the 
+     * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
      *
      * @return boolean
@@ -129,9 +126,9 @@ class PHP_Depend_Code_Property
     {
         return ($this->_visibility === self::IS_PUBLIC);
     }
-    
+
     /**
-     * Returns <b>true</b> if this node is marked as protected, otherwise the 
+     * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
      *
      * @return boolean
@@ -140,9 +137,9 @@ class PHP_Depend_Code_Property
     {
         return ($this->_visibility === self::IS_PROTECTED);
     }
-    
+
     /**
-     * Returns <b>true</b> if this node is marked as private, otherwise the 
+     * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
      *
      * @return boolean
@@ -151,7 +148,7 @@ class PHP_Depend_Code_Property
     {
         return ($this->_visibility === self::IS_PRIVATE);
     }
-    
+
     /**
      * Returns the parent class object or <b>null</b>
      *
@@ -161,19 +158,19 @@ class PHP_Depend_Code_Property
     {
         return $this->_parent;
     }
-    
+
     /**
      * Sets the parent class object.
      *
      * @param PHP_Depend_Code_Class $parent The parent class.
-     * 
+     *
      * @return void
      */
     public function setParent(PHP_Depend_Code_Class $parent = null)
     {
         $this->_parent = $parent;
     }
-    
+
     /**
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
@@ -184,30 +181,30 @@ class PHP_Depend_Code_Property
     {
         return $this->_type;
     }
-    
+
     /**
      * Sets the type of this property.
      *
      * @param PHP_Depend_Code_AbstractType $type The property type.
-     * 
+     *
      * @return void
      */
     public function setType(PHP_Depend_Code_AbstractType $type)
     {
         $this->_type = $type;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
     {
         $visitor->visitProperty($this);
     }
-                   
+
 }

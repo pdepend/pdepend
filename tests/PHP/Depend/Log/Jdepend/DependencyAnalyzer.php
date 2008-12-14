@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -66,16 +66,15 @@ class PHP_Depend_Log_Jdepend_DependencyAnalyzer
     /**
      * Dummy package statistics
      *
-     * @type array<array>
      * @var array(string=>array) $stats
      */
     public $stats = array();
-    
+
     /**
      * Returns the statistics for the requested node.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return array
      */
     public function getStats(PHP_Depend_Code_NodeI $node)

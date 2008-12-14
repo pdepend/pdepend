@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -52,11 +52,11 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * This analyzer provides two project related inheritance metrics.
- * 
+ *
  * <b>ANDC - Average Number of Derived Classes</b>: The average number of direct
  * subclasses of a class. This metric only covers classes in the analyzed system,
  * no library or environment classes are covered.
- * 
+ *
  * <b>AHH - Average Hierarchy Height</b>: The computed average of all inheritance
  * trees within the analyzed system, external classes or interfaces are ignored.
  *
@@ -78,40 +78,36 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Contains the number of derived classes for each processed class. The array
      * size is equal to the number of analyzed classes.
      *
-     * @type array<integer>
      * @var array(integer) $_derivedClasses
      */
     private $_derivedClasses = null;
-    
+
     /**
-     * Contains the max inheritance depth for all root classes within the 
+     * Contains the max inheritance depth for all root classes within the
      * analyzed system. The array size is equal to the number of analyzed root
      * classes.
      *
-     * @type array<integer>
      * @var array(integer) $_rootClasses
      */
     private $_rootClasses = null;
-    
+
     /**
      * The average number of derived classes.
      *
-     * @type float
      * @var float $_andc
      */
     private $_andc = 0;
-    
+
     /**
      * The average hierarchy height.
      *
-     * @type float
      * @var float $_ahh
      */
     private $_ahh = 0;
-    
+
     /**
      * Provides the project summary as an <b>array</b>.
-     * 
+     *
      * <code>
      * array(
      *     'andc'  =>  0.73,
@@ -128,67 +124,67 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
             'ahh'   =>  $this->_ahh
         );
     }
-    
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_derivedClasses === null) {
-            
+
             $this->fireStartAnalyzer();
-            
+
             // Init runtime collections
             $this->_derivedClasses = array();
-        
+
             // Process all packages
             foreach ($packages as $package) {
                 $package->accept($this);
             }
-            
+
             if (($count = count($this->_derivedClasses)) > 0) {
                 $this->_andc = (array_sum($this->_derivedClasses) / $count);
             }
             if (($count = count($this->_rootClasses)) > 0) {
                 $this->_ahh = (array_sum($this->_rootClasses) / $count);
             }
-        
+
             $this->fireEndAnalyzer();
         }
     }
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->fireStartClass($class);
-        
+
         // Count all derived classes
         $this->_derivedClasses[] = $class->getChildTypes()->count();
-        
+
         // Is this a root class?
         if ($class->getParentClass() === null) {
             $this->_rootClasses[] = $this->_calculateHIT($class);
         }
-        
+
         $this->fireEndClass($class);
     }
-    
+
     /**
      * Calculates the maximum HIT for the given class.
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
-     * 
+     *
      * @return integer
      */
     private function _calculateHIT(PHP_Depend_Code_Class $class)
@@ -197,7 +193,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
         if ($childTypes->count() === 0) {
             return 0;
         }
-        
+
         $depth = 0;
         foreach ($childTypes as $childType) {
             if (($childDepth = $this->_calculateHIT($childType)) > $depth) {

@@ -84,7 +84,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Last parsed package tag.
      *
-     * @type string
      * @var string $package
      */
     protected $package = self::DEFAULT_PACKAGE;
@@ -92,7 +91,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The package defined in the file level comment.
      *
-     * @type string
      * @var string $globalPackage
      */
     protected $globalPackage = self::DEFAULT_PACKAGE;
@@ -100,7 +98,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The package separator token.
      *
-     * @type string
      * @var string $packageSeparator
      */
     protected $packageSeparator = '::';
@@ -108,7 +105,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Marks the current class as abstract.
      *
-     * @type boolean
      * @var boolean $abstract
      */
     protected $abstract = false;
@@ -116,7 +112,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The used code tokenizer.
      *
-     * @type PHP_Depend_Code_TokenizerI
      * @var PHP_Depend_Code_TokenizerI $tokenizer
      */
     protected $tokenizer = null;
@@ -124,7 +119,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The used data structure builder.
      *
-     * @type PHP_Depend_Code_NodeBuilderI
      * @var PHP_Depend_Code_NodeBuilderI $builder
      */
     protected $builder = null;
@@ -132,7 +126,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * List of scalar php types.
      *
-     * @type array<string>
      * @var array(string) $_scalarTypes
      */
     private $_scalarTypes = array(
@@ -157,7 +150,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
      *
-     * @type boolean
      * @var boolean $_ignoreAnnotations
      */
     private $_ignoreAnnotations = false;
