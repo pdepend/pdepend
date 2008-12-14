@@ -76,7 +76,7 @@
     </target>
 
     <target name="phpunit" depends="phpunit-5.2.0,phpunit-5.2.6,phpunit-5.3.0">
-        <exec executable="/home/manu/Desktop/Projects/workspace.xplib.de/phpUnderControl/trunk/bin/phpuc.php" dir="${basedir}" failonerror="true">
+        <exec executable="phpuc" dir="${basedir}" failonerror="true">
             <arg line="merge-phpunit
                        -b php-5.3.0,php-5.2.6
                        -i ${basedir}/build/tmp/php-5.3.0.xml,${basedir}/build/tmp/php-5.2.6.xml
