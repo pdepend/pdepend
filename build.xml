@@ -42,7 +42,7 @@
         <exec executable="phpcs" dir="${basedir}/PHP" 
               output="${basedir}/build/logs/checkstyle.xml" 
               error="/tmp/checkstyle.error.log">
-            <arg line="--report=checkstyle --standard=PEAR src"/>
+            <arg line="--report=checkstyle --standard=PEAR ."/>
         </exec>
     </target>
 
