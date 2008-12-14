@@ -334,22 +334,22 @@ class PHP_Depend_TextUI_Command
         $l = $this->printLogOptions();
         $l = $this->printAnalyzerOptions($l);
 
-        $suffixOption     = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $ignoreOption     = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $excludeOption    = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $configuation     = str_pad('--configuration=<file>', $l, ' ', STR_PAD_RIGHT);
-        $noAnnotations    = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
-        $badDocumentation = str_pad('--bad-documentation', $l, ' ', STR_PAD_RIGHT);
-        $iniOption        = str_pad('-d key[=value]', $l, ' ', STR_PAD_RIGHT);
-        $helpOption       = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
-        $versionOption    = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
+        $suffixOption  = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $ignoreOption  = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $excludeOption = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
+        $configuation  = str_pad('--configuration=<file>', $l, ' ', STR_PAD_RIGHT);
+        $noAnnotations = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
+        $documentation = str_pad('--bad-documentation', $l, ' ', STR_PAD_RIGHT);
+        $iniOption     = str_pad('-d key[=value]', $l, ' ', STR_PAD_RIGHT);
+        $helpOption    = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
+        $versionOption = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
 
         echo "  {$configuation} Optional PHP_Depend configuration file.\n\n",
              "  {$suffixOption} List of valid PHP file extensions.\n",
              "  {$ignoreOption} List of exclude directories.\n",
              "  {$excludeOption} List of exclude packages.\n\n",
              "  {$noAnnotations} Do not parse doc comment annotations.\n",
-             "  {$badDocumentation} Fallback for projects with bad doc comments.\n\n",
+             "  {$documentation} Fallback for projects with bad doc comments.\n\n",
              "  {$helpOption} Print this help text.\n",
              "  {$versionOption} Print the current PHP_Depend version.\n",
              "  {$iniOption} Sets a php.ini value.\n\n";
