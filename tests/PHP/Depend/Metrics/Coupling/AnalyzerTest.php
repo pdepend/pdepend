@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -74,7 +74,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $source   = dirname(__FILE__) . '/../../_code/coupling/function.php';
         $packages = self::parseSource($source);
-        
+
         $this->assertEquals(4, $packages->count());
         $this->assertEquals('+global', $packages->current()->getName());
         $packages->next();
@@ -82,17 +82,17 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->next();
         $this->assertEquals('+standard', $packages->current()->getName());
         $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
+        $this->assertEquals('default\package', $packages->current()->getName());
         $this->assertEquals(2, $packages->current()->getFunctions()->count());
-        
+
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('fanout', $project);
         $this->assertEquals(7, $project['fanout']);
-        
+
         $this->assertArrayHasKey('calls', $project);
         $this->assertEquals(10, $project['calls']);
     }
@@ -107,7 +107,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $source   = dirname(__FILE__) . '/../../_code/coupling/method.php';
         $packages = self::parseSource($source);
-        
+
         $this->assertEquals(4, $packages->count());
         $this->assertEquals('+global', $packages->current()->getName());
         $packages->next();
@@ -115,18 +115,18 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->next();
         $this->assertEquals('+standard', $packages->current()->getName());
         $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
+        $this->assertEquals('default\package', $packages->current()->getName());
         $this->assertEquals(1, $packages->current()->getClasses()->count());
         $this->assertEquals(1, $packages->current()->getInterfaces()->count());
-        
+
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('fanout', $project);
         $this->assertEquals(9, $project['fanout']);
-        
+
         $this->assertArrayHasKey('calls', $project);
         $this->assertEquals(10, $project['calls']);
     }
@@ -141,7 +141,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $source   = dirname(__FILE__) . '/../../_code/coupling/property.php';
         $packages = self::parseSource($source);
-        
+
         $this->assertEquals(4, $packages->count());
         $this->assertEquals('+global', $packages->current()->getName());
         $packages->next();
@@ -149,17 +149,17 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->next();
         $this->assertEquals('+standard', $packages->current()->getName());
         $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
+        $this->assertEquals('default\package', $packages->current()->getName());
         $this->assertEquals(1, $packages->current()->getClasses()->count());
-        
+
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('fanout', $project);
         $this->assertEquals(3, $project['fanout']);
-        
+
         $this->assertArrayHasKey('calls', $project);
         $this->assertEquals(0, $project['calls']);
     }
@@ -174,7 +174,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $source   = dirname(__FILE__) . '/../../_code/coupling/class.php';
         $packages = self::parseSource($source);
-        
+
         $this->assertEquals(4, $packages->count());
         $this->assertEquals('+global', $packages->current()->getName());
         $packages->next();
@@ -182,18 +182,18 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->next();
         $this->assertEquals('+standard', $packages->current()->getName());
         $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
+        $this->assertEquals('default\package', $packages->current()->getName());
         $this->assertEquals(1, $packages->current()->getClasses()->count());
         $this->assertEquals(1, $packages->current()->getInterfaces()->count());
-        
+
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('fanout', $project);
         $this->assertEquals(12, $project['fanout']);
-        
+
         $this->assertArrayHasKey('calls', $project);
         $this->assertEquals(10, $project['calls']);
     }
@@ -208,7 +208,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $source   = dirname(__FILE__) . '/../../_code/coupling';
         $packages = self::parseSource($source);
-        
+
         $this->assertEquals(4, $packages->count());
         $this->assertEquals('+global', $packages->current()->getName());
         $packages->next();
@@ -216,26 +216,26 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages->next();
         $this->assertEquals('+standard', $packages->current()->getName());
         $packages->next();
-        $this->assertEquals('default::package', $packages->current()->getName());
+        $this->assertEquals('default\package', $packages->current()->getName());
         $this->assertEquals(3, $packages->current()->getClasses()->count());
         $this->assertEquals(2, $packages->current()->getInterfaces()->count());
         $this->assertEquals(2, $packages->current()->getFunctions()->count());
-        
+
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('fanout', $project);
         $this->assertEquals(31, $project['fanout']);
-        
+
         $this->assertArrayHasKey('calls', $project);
         $this->assertEquals(30, $project['calls']);
     }
-    
+
     /**
      * Test case for the execution chain bug 14.
-     * 
+     *
      * http://bugs.xplib.de/index.php?do=details&task_id=14&project=3
      *
      * @return void
@@ -244,15 +244,15 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $source   = dirname(__FILE__) . '/../../_code/bugs/14.php';
         $packages = self::parseSource($source);
-        
+
         $this->assertEquals(1, $packages->count());
         $this->assertEquals(1, $packages->current()->getFunctions()->count());
-        
+
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('calls', $project);
         $this->assertEquals(3, $project['calls']);
     }
