@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -80,7 +80,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * @var PHP_Depend_Code_NodeIterator $packages
      */
     protected $packages = null;
-    
+
     /**
      * Test dependency analyzer.
      *
@@ -88,7 +88,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
      */
     protected $analyzer = null;
-    
+
     /**
      * The temporary file name for the logger result.
      *
@@ -96,7 +96,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * @var string $resultFile
      */
     protected $resultFile = null;
-    
+
     /**
      * Creates the package structure from a test source file.
      *
@@ -105,36 +105,36 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     protected function setUp()
     {
         parent::setUp();
-        
+
         $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
         $files  = new PHP_Depend_Util_FileFilterIterator(
             new DirectoryIterator($source),
             new PHP_Depend_Util_FileExtensionFilter(array('php'))
         );
-        
+
         $builder = new PHP_Depend_Code_DefaultBuilder();
-        
+
         foreach ($files as $file) {
-            $path = $file->getRealPath();
+            $path = realpath($file->getPathname());
             $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
-            
+
             $parser = new PHP_Depend_Parser($tokz, $builder);
             $parser->parse();
         }
-        
+
         $this->packages = $builder->getPackages();
-        
+
         $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $this->analyzer->analyze($this->packages);
-        
+
         $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
         $this->packages->addFilter($filter);
         $filter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
         $this->packages->addFilter($filter);
-        
-        $this->resultFile = tempnam(sys_get_temp_dir(), 'pdepend-log.xml');
+
+        $this->resultFile = self::createTempName('pdepend-log.xml');
     }
-    
+
     /**
      * Removes the temporary log files.
      *
@@ -143,10 +143,10 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     protected function tearDown()
     {
         @unlink($this->resultFile);
-        
+
         parent::tearDown();
     }
-    
+
     /**
      * Tests that the logger returns the expected set of analyzers.
      *
@@ -157,12 +157,12 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $logger    = new PHP_Depend_Log_Jdepend_Xml();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array('PHP_Depend_Metrics_Dependency_Analyzer');
-        
+
         $this->assertEquals($exptected, $actual);
     }
-    
+
     /**
-     * Tests that the logger throws an exception if the log target wasn't 
+     * Tests that the logger throws an exception if the log target wasn't
      * configured.
      *
      * @return void
@@ -173,14 +173,14 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Log_NoLogOutputException',
             "The log target is not configured for 'PHP_Depend_Log_Jdepend_Xml'."
         );
-        
+
         $logger = new PHP_Depend_Log_Jdepend_Xml();
         $logger->close();
     }
-    
+
     /**
-     * Tests that {@link PHP_Depend_Log_Summary_Xml::write()} generates the 
-     * expected document structure for the source, but without any applied 
+     * Tests that {@link PHP_Depend_Log_Summary_Xml::write()} generates the
+     * expected document structure for the source, but without any applied
      * metrics.
      *
      * @return void
@@ -192,27 +192,27 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $log->setCode($this->packages);
         $log->log($this->analyzer);
         $log->close();
-        
+
         $fileName = 'pdepend-log.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
             file_get_contents($this->resultFile)
         );
     }
-    
+
     public function testXmlLogAcceptsOnlyTheCorrectAnalyzer()
     {
         $logger = new PHP_Depend_Log_Jdepend_Xml();
-        
+
         $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
         $this->assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
     }
-    
+
     /**
      * Normalizes the file references within the expected result document.
      *
      * @param string $fileName File name of the expected result document.
-     * 
+     *
      * @return string The prepared xml document
      */
     protected function getNormalizedPathXml($fileName)
@@ -220,21 +220,21 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $expected                     = new DOMDocument('1.0', 'UTF-8');
         $expected->preserveWhiteSpace = false;
         $expected->load($fileName);
-        
+
         $xpath = new DOMXPath($expected);
         $result = $xpath->query('//Class[@sourceFile]');
-        
+
         $path = realpath(dirname(__FILE__) . '/../../_code/code-5.2.x') . '/';
-        
+
         // Adjust file path
         foreach ($result as $class) {
             $sourceFile = $class->getAttribute('sourceFile');
             $sourceFile = $path . basename($sourceFile);
-            
+
             $class->setAttribute('sourceFile', $sourceFile);
         }
-        
+
         return $expected->saveXML();
     }
-    
+
 }

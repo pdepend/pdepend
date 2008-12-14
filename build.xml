@@ -40,7 +40,7 @@
 
     <target name="phpcs">
         <exec executable="phpcs" dir="${basedir}/PHP" 
-              output="${basedir}/build/logs/checkstyle.xml" 
+              output="${basedir}/build/logs/checkstyle.xml"
               error="/tmp/checkstyle.error.log">
             <arg line="--report=checkstyle --standard=PEAR ."/>
         </exec>
@@ -68,21 +68,19 @@
     </target>
 
     <target name="phpunit-5.2.0">
-<!--
         <exec executable="/usr/local/bin/php520" dir="${basedir}" failonerror="false">
             <arg line="/usr/local/pear/bin/phpunit 
-                       - -configuration ${basedir}/phpunit.xml
-                       - -log-xml ${basedir}/build/tmp/php-5.2.0.xml
+                       --configuration ${basedir}/phpunit.xml
+                       --log-xml ${basedir}/build/tmp/php-5.2.0.xml
                        PHP_Depend_AllTests tests/PHP/Depend/AllTests.php"/>
         </exec>
--->
     </target>
 
     <target name="phpunit" depends="phpunit-5.2.0,phpunit-5.2.6,phpunit-5.3.0">
         <exec executable="phpuc" dir="${basedir}" failonerror="true">
             <arg line="merge-phpunit
-                       -b php-5.3.0,php-5.2.6
-                       -i ${basedir}/build/tmp/php-5.3.0.xml,${basedir}/build/tmp/php-5.2.6.xml
+                       -b php-5.3.0,php-5.2.6,php-5.2.0
+                       -i ${basedir}/build/tmp/php-5.3.0.xml,${basedir}/build/tmp/php-5.2.6.xml,${basedir}/build/tmp/php-5.2.0.xml
                        -o ${basedir}/build/logs/log.xml"/>
         </exec>
     </target>
