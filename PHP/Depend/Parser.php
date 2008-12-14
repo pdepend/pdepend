@@ -100,7 +100,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @var string $packageSeparator
      */
-    protected $packageSeparator = '::';
+    protected $packageSeparator = '\\';
 
     /**
      * Marks the current class as abstract.
@@ -222,7 +222,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Get interface name
                 $token = $this->tokenizer->next();
 
-                $qualifiedName = "{$this->package}::{$token[1]}";
+                $qualifiedName = sprintf('%s%s%s',
+                                    $this->package,
+                                    $this->packageSeparator,
+                                    $token[1]);
 
                 $interface = $this->builder->buildInterface($qualifiedName, $token[2]);
                 $interface->setSourceFile($this->tokenizer->getSourceFile());
@@ -244,7 +247,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Get class name
                 $token = $this->tokenizer->next();
 
-                $qualifiedName = "{$this->package}::{$token[1]}";
+                $qualifiedName = sprintf('%s%s%s',
+                                    $this->package,
+                                    $this->packageSeparator,
+                                    $token[1]);
 
                 $class = $this->builder->buildClass($qualifiedName, $token[2]);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
@@ -650,7 +656,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Something like: new $className('PDepend');
                 if (count($parts) > 0) {
                     // Get last element of parts and create a class for it
-                    $class = $this->builder->buildClass(join('::', $parts));
+                    $class = $this->builder->buildClass(join('\\', $parts));
                     $callable->addDependency($class);
                 }
                 break;
@@ -769,7 +775,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseClassNameChain(&$tokens)
     {
         $allowed = array(
-            self::T_DOUBLE_COLON,
+            self::T_BACKSLASH,
             self::T_STRING,
         );
 
