@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -63,67 +63,60 @@ require_once 'PHP/Depend/Util/UUID.php';
  * @link       http://www.manuel-pichler.de/
  */
 abstract class PHP_Depend_Code_AbstractType
-       extends PHP_Depend_Code_AbstractItem 
+       extends PHP_Depend_Code_AbstractItem
     implements PHP_Depend_Code_DependencyNodeI
 {
     /**
      * List of {@link PHP_Depend_Code_AbstractType} objects this type depends on.
      *
-     * @type array<PHP_Depend_Code_AbstractType>
      * @var array(PHP_Depend_Code_AbstractType) $dependencies
      */
     protected $dependencies = array();
-    
+
     /**
-     * List of {@link PHP_Depend_Code_AbstractType} objects that extend or implement 
-     * this type. 
+     * List of {@link PHP_Depend_Code_AbstractType} objects that extend or implement
+     * this type.
      *
-     * @type array<PHP_Depend_Code_AbstractType>
      * @var array(PHP_Depend_Code_AbstractType) $children
      */
     protected $children = array();
-    
+
     /**
      * The parent package for this class.
      *
-     * @type PHP_Depend_Code_Package
      * @var PHP_Depend_Code_Package $_package
      */
     private $_package = null;
-    
+
     /**
      * List of {@link PHP_Depend_Code_Method} objects in this class.
      *
-     * @type array<PHP_Depend_Code_Method>
      * @var array(PHP_Depend_Code_Method) $_methods
      */
     private $_methods = array();
-    
+
     /**
      * The tokens for this type.
      *
-     * @type array<array>
      * @var array(array) $_tokens
      */
     private $_tokens = array();
-    
+
     /**
-     * List of {@link PHP_Depend_Code_TypeConstant} objects that belong to this 
-     * type. 
+     * List of {@link PHP_Depend_Code_TypeConstant} objects that belong to this
+     * type.
      *
-     * @type array<PHP_Depend_Code_TypeConstant>
      * @var array(PHP_Depend_Code_TypeConstant) $_constants
      */
     private $_constants = array();
-    
+
     /**
      * Type position within the source code file.
      *
-     * @type integer
      * @var integer $_position
      */
     private $_position = 0;
-    
+
     /**
      * Returns all {@link PHP_Depend_Code_TypeConstant} objects in this type.
      *
@@ -133,12 +126,12 @@ abstract class PHP_Depend_Code_AbstractType
     {
         return new PHP_Depend_Code_NodeIterator($this->_constants);
     }
-    
+
     /**
      * Adds the given constant to this type.
      *
      * @param PHP_Depend_Code_TypeConstant $constant A new type constant.
-     * 
+     *
      * @return PHP_Depend_Code_TypeConstant
      */
     public function addConstant(PHP_Depend_Code_TypeConstant $constant)
@@ -150,15 +143,15 @@ abstract class PHP_Depend_Code_AbstractType
         $constant->setParent($this);
         // Store constant
         $this->_constants[] = $constant;
-        
+
         return $constant;
     }
-    
+
     /**
      * Removes the given constant from this type.
      *
      * @param PHP_Depend_Code_TypeConstant $constant The constant to remove.
-     * 
+     *
      * @return void
      */
     public function removeConstant(PHP_Depend_Code_TypeConstant $constant)
@@ -170,7 +163,7 @@ abstract class PHP_Depend_Code_AbstractType
             unset($this->_constants[$i]);
         }
     }
-    
+
     /**
      * Returns all {@link PHP_Depend_Code_Method} objects in this type.
      *
@@ -180,12 +173,12 @@ abstract class PHP_Depend_Code_AbstractType
     {
         return new PHP_Depend_Code_NodeIterator($this->_methods);
     }
-    
+
     /**
      * Adds the given method to this type.
      *
      * @param PHP_Depend_Code_Method $method A new type method.
-     * 
+     *
      * @return PHP_Depend_Code_Method
      */
     public function addMethod(PHP_Depend_Code_Method $method)
@@ -197,15 +190,15 @@ abstract class PHP_Depend_Code_AbstractType
         $method->setParent($this);
         // Store method
         $this->_methods[] = $method;
-        
+
         return $method;
     }
-    
+
     /**
      * Removes the given method from this class.
      *
      * @param PHP_Depend_Code_Method $method The method to remove.
-     * 
+     *
      * @return void
      */
     public function removeMethod(PHP_Depend_Code_Method $method)
@@ -217,7 +210,7 @@ abstract class PHP_Depend_Code_AbstractType
             unset($this->_methods[$i]);
         }
     }
-    
+
     /**
      * Returns all {@link PHP_Depend_Code_AbstractType} objects this type depends on.
      *
@@ -227,12 +220,12 @@ abstract class PHP_Depend_Code_AbstractType
     {
         return new PHP_Depend_Code_NodeIterator($this->dependencies);
     }
-    
+
     /**
      * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
      *
      * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
-     * 
+     *
      * @return void
      */
     public function addDependency(PHP_Depend_Code_AbstractType $type)
@@ -244,13 +237,13 @@ abstract class PHP_Depend_Code_AbstractType
             $type->addChildType($this);
         }
     }
-    
+
     /**
-     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the 
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the
      * dependency list.
      *
      * @param PHP_Depend_Code_AbstractType $type A type to remove.
-     * 
+     *
      * @return void
      */
     public function removeDependency(PHP_Depend_Code_AbstractType $type)
@@ -262,7 +255,7 @@ abstract class PHP_Depend_Code_AbstractType
             $type->removeChildType($this);
         }
     }
-    
+
     /**
      * Returns an iterator with all child types for this type.
      *
@@ -272,12 +265,12 @@ abstract class PHP_Depend_Code_AbstractType
     {
         return new PHP_Depend_Code_NodeIterator($this->children);
     }
-    
+
     /**
      * Adds a type instance that extends or implements this type.
      *
      * @param PHP_Depend_Code_AbstractType $type The child type instance.
-     * 
+     *
      * @return PHP_Depend_Code_AbstractType
      */
     public function addChildType(PHP_Depend_Code_AbstractType $type)
@@ -290,12 +283,12 @@ abstract class PHP_Depend_Code_AbstractType
         }
         return $type;
     }
-    
+
     /**
      * Removes the given type from the list of known children.
      *
      * @param PHP_Depend_Code_AbstractType $type The child type instance.
-     * 
+     *
      * @return void
      */
     public function removeChildType(PHP_Depend_Code_AbstractType $type)
@@ -307,7 +300,7 @@ abstract class PHP_Depend_Code_AbstractType
             $type->removeDependency($this);
         }
     }
-    
+
     /**
      * Returns an <b>array</b> with all tokens within this type.
      *
@@ -317,19 +310,19 @@ abstract class PHP_Depend_Code_AbstractType
     {
         return $this->_tokens;
     }
-    
+
     /**
      * Sets the tokens for this type.
      *
      * @param array(array) $tokens The generated tokens.
-     * 
+     *
      * @return void
      */
     public function setTokens(array $tokens)
     {
         $this->_tokens = $tokens;
     }
-    
+
     /**
      * Returns the parent package for this class.
      *
@@ -339,19 +332,19 @@ abstract class PHP_Depend_Code_AbstractType
     {
         return $this->_package;
     }
-    
+
     /**
      * Sets the parent package for this class.
      *
      * @param PHP_Depend_Code_Package $package The parent package.
-     * 
+     *
      * @return void
      */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
         $this->_package = $package;
     }
-    
+
     /**
      * Returns the position of this type within the source file.
      *
@@ -361,31 +354,31 @@ abstract class PHP_Depend_Code_AbstractType
     {
         return $this->_position;
     }
-    
+
     /**
      * Sets the source position of this type.
      *
      * @param integer $position Position within the source file.
-     * 
+     *
      * @return void
      */
     public function setPosition($position)
     {
         $this->_position = (int) $position;
     }
-    
+
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
      */
     public abstract function isAbstract();
-    
+
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
      * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
-     * 
+     *
      * @return boolean
      */
     public abstract function isSubtypeOf(PHP_Depend_Code_AbstractType $type);

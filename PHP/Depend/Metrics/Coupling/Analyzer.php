@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -51,13 +51,13 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
- * This analyzer collects coupling values for the hole project. It calculates 
- * all function and method <b>calls</b> and the <b>fanout</b>, that means the 
+ * This analyzer collects coupling values for the hole project. It calculates
+ * all function and method <b>calls</b> and the <b>fanout</b>, that means the
  * number of referenced types.
- * 
+ *
  * The FANOUT calculation is based on the definition used by the apache maven
  * project.
- * 
+ *
  * <ul>
  *   <li>field declarations (Uses doc comment annotations)</li>
  *   <li>formal parameters and return types (The return type uses doc comment
@@ -65,11 +65,11 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  *   <li>throws declarations (Uses doc comment annotations)</li>
  *   <li>local variables</li>
  * </ul>
- * 
+ *
  * http://www.jajakarta.org/turbine/en/turbine/maven/reference/metrics.html
- * 
+ *
  * The implemented algorithm counts each type only once for a method and function.
- * Any type that is either a supertype or a subtype of the class is not counted.  
+ * Any type that is either a supertype or a subtype of the class is not counted.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -88,22 +88,20 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * The number of method or function calls.
      *
-     * @type integer
      * @var integer $_calls
      */
     private $_calls = -1;
-    
+
     /**
      * Number of fanouts.
      *
-     * @type integer
      * @var integer $_fanout
      */
     private $_fanout = -1;
-    
+
     /**
      * Provides the project summary as an <b>array</b>.
-     * 
+     *
      * <code>
      * array(
      *     'calls'   =>  23,
@@ -120,46 +118,46 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             'fanout'  =>  $this->_fanout
         );
     }
-    
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         // Check for previous run
         if ($this->_calls === -1) {
-            
+
             $this->fireStartAnalyzer();
-            
+
             // Init metrics
             $this->_calls  = 0;
             $this->_fanout = 0;
-            
+
             // Process all packages
             foreach ($packages as $package) {
                 $package->accept($this);
             }
-            
+
             $this->fireEndAnalyzer();
         }
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
-        
+
         $fanouts = array();
         if (($type = $function->getReturnType()) !== null) {
             $fanouts[] = $type;
@@ -176,26 +174,26 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                 ++$this->_fanout;
             }
         }
-        
+
         $this->_countCalls($function);
-        
+
         $this->fireEndFunction($function);
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-        
+
         $parent = $method->getParent();
-        
+
         $fanouts = array();
         if (($type = $method->getReturnType()) !== null) {
             if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
@@ -221,42 +219,42 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                 ++$this->_fanout;
             }
         }
-        
+
         $this->_countCalls($method);
-        
+
         $this->fireEndMethod($method);
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Depend_Code_Property $property The property class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->fireStartProperty($property);
-        
+
         // Check for not null
         if (($type = $property->getType()) !== null) {
             $parent = $property->getParent();
-        
+
             // Only increment if these types are not part of the same hierarchy
             if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
                 ++$this->_fanout;
             }
         }
-        
+
         $this->fireEndProperty($property);
     }
-    
+
     /**
      * Counts all calls within the given <b>$callable</b>
      *
      * @param PHP_Depend_Code_AbstractCallable $callable Context callable.
-     * 
+     *
      * @return void
      */
     private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
@@ -269,9 +267,9 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
             PHP_Depend_Code_TokenizerI::T_OBJECT_OPERATOR,
         );
-        
+
         $called = array();
-        
+
         $tokens = $callable->getTokens();
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             // Skip non parenthesis tokens
@@ -290,14 +288,14 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             } else if (in_array($tokens[$i - 2][0], $chainT)) {
                 $identifier = $tokens[$i - 2][1] . $tokens[$i - 1][1];
                 for ($j = $i - 3; $j >= 0; --$j) {
-                    if (!in_array($tokens[$j][0], $callT) 
+                    if (!in_array($tokens[$j][0], $callT)
                      && !in_array($tokens[$j][0], $chainT)) {
 
                         break;
                     }
                     $identifier = $tokens[$j][1] . $identifier;
                 }
-                
+
                 if (!isset($called[$identifier])) {
                     $called[$identifier] = true;
                     ++$this->_calls;

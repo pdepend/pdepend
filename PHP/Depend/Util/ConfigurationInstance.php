@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -63,11 +63,10 @@ class PHP_Depend_Util_ConfigurationInstance
     /**
      * The unique configuration instance.
      *
-     * @type PHP_Depend_Util_Configuration
-     * @var PHP_Depend_Util_Configuration 
+     * @var PHP_Depend_Util_Configuration
      */
     private static $_configuration = null;
-    
+
     /**
      * Returns a configured config instance or <b>null</b>.
      *
@@ -77,12 +76,12 @@ class PHP_Depend_Util_ConfigurationInstance
     {
         return self::$_configuration;
     }
-    
+
     /**
      * Sets the configuration instance.
      *
      * @param PHP_Depend_Util_Configuration $configuration The config instance.
-     * 
+     *
      * @return void
      */
     public static function set(PHP_Depend_Util_Configuration $configuration = null)

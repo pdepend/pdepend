@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -66,7 +66,6 @@ final class PHP_Depend_Util_UUID
     /**
      * The generated uuid.
      *
-     * @type string
      * @var string $_uuid
      */
     private $_uuid = null;
@@ -82,7 +81,7 @@ final class PHP_Depend_Util_UUID
             mt_rand(0, 0x3fff) | 0x8000,
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
     }
-    
+
     /**
      * Returns the string representation of this class.
      *

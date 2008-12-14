@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -68,11 +68,10 @@ class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
     /**
      * Dummy project metrics.
      *
-     * @type array<mixed>
      * @var array(string=>mixed) $projectMetrics
      */
     protected $projectMetrics = null;
-    
+
     /**
      * Constructs a new analyzer dummy instance.
      *
@@ -82,38 +81,38 @@ class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
     {
         $this->projectMetrics = $projectMetrics;
     }
-    
+
     /**
      * Adds a listener to this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
+     *
      * @return void
      */
     public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
     }
-    
+
     /**
      * Removes the listener from this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
+     *
      * @return void
      */
     public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener) {
     }
-    
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
     }
-    
+
     /**
      * Returns the project metrics.
      *

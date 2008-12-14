@@ -73,7 +73,6 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * Test input data.
      *
-     * @type array<array>
      * @var array(string=>array) $_input
      */
     private $_input = array(
@@ -99,7 +98,6 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * The expected test data.
      *
-     * @type array<array>
      * @var array(string=>array) $_expected
      */
     private $_expected = array();
@@ -107,7 +105,6 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * The code rank analyzer.
      *
-     * @type PHP_Depend_Metrics_CodeRank_Analyzer
      * @var PHP_Depend_Metrics_CodeRank_Analyzer $_analyzer
      */
     private $_analyzer = null;

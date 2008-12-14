@@ -75,7 +75,6 @@ class PHP_Depend_Log_Jdepend_Chart
     /**
      * The output file name.
      *
-     * @type string
      * @var string $_logFile
      */
     private $_logFile = null;
@@ -83,7 +82,6 @@ class PHP_Depend_Log_Jdepend_Chart
     /**
      * The context source code.
      *
-     * @type PHP_Depend_Code_NodeIterator
      * @var PHP_Depend_Code_NodeIterator $_code
      */
     private $_code = null;
@@ -91,7 +89,6 @@ class PHP_Depend_Log_Jdepend_Chart
     /**
      * The context analyzer instance.
      *
-     * @type PHP_Depend_Metrics_Dependency_Analyzer
      * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
      */
     private $_analyzer = null;

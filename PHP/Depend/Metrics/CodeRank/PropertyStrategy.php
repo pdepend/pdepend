@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -68,11 +68,10 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * All found nodes.
      *
-     * @type array<array>
      * @var array(string=>array) $_nodes
      */
     private $_nodes = array();
-    
+
     /**
      * Returns the collected nodes.
      *
@@ -82,53 +81,53 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     {
         return $this->_nodes;
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Depend_Code_Property $property The property class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->fireStartProperty($property);
-        
+
         if (($depClass = $property->getType()) === null) {
             $this->fireEndProperty($property);
             return;
         }
-        
+
         $depPackage = $depClass->getPackage();
-            
+
         $class   = $property->getParent();
         $package = $class->getPackage();
 
         if ($depClass !== $class) {
             $this->initNode($class);
             $this->initNode($depClass);
-    
+
             $this->_nodes[$class->getUUID()]['in'][]     = $depClass->getUUID();
             $this->_nodes[$depClass->getUUID()]['out'][] = $class->getUUID();
         }
-            
+
         if ($depPackage !== $package) {
             $this->initNode($package);
             $this->initNode($depPackage);
-    
+
             $this->_nodes[$package->getUUID()]['in'][]     = $depPackage->getUUID();
             $this->_nodes[$depPackage->getUUID()]['out'][] = $package->getUUID();
         }
-        
+
         $this->fireEndProperty($property);
     }
-    
+
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return void
      */
     protected function initNode(PHP_Depend_Code_NodeI $node)
