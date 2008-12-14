@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -49,12 +49,13 @@
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
+require_once 'PHP/Depend/Util/FileUtil.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
 
 /**
  * This logger generates a system overview pyramid, as described in the book
  * <b>Object-Oriented Metrics in Practice</b>.
- * 
+ *
  * http://www.springer.com/computer/programming/book/978-3-540-24429-5
  *
  * @category   QualityAssurance
@@ -66,7 +67,7 @@ require_once 'PHP/Depend/Util/ImageConvert.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Log_Overview_Pyramid 
+class PHP_Depend_Log_Overview_Pyramid
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_FileAwareI
 {
@@ -77,7 +78,7 @@ class PHP_Depend_Log_Overview_Pyramid
      * @var string $_logFile
      */
     private $_logFile = null;
-    
+
     /**
      * The used coupling analyzer.
      *
@@ -85,7 +86,7 @@ class PHP_Depend_Log_Overview_Pyramid
      * @var PHP_Depend_Metrics_Coupling_Analyzer $_coupling
      */
     private $_coupling = null;
-    
+
     /**
      * The used cyclomatic complexity analyzer.
      *
@@ -93,7 +94,7 @@ class PHP_Depend_Log_Overview_Pyramid
      * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticComplexity
      */
     private $_cyclomaticComplexity = null;
-    
+
     /**
      * The used inheritance analyzer.
      *
@@ -101,7 +102,7 @@ class PHP_Depend_Log_Overview_Pyramid
      * @var PHP_Depend_Metrics_Inheritance_Analyzer $_inheritance
      */
     private $_inheritance = null;
-    
+
     /**
      * The used node count analyzer.
      *
@@ -109,7 +110,7 @@ class PHP_Depend_Log_Overview_Pyramid
      * @var PHP_Depend_Metrics_NodeCount_Analyzer $_nodeCount
      */
     private $_nodeCount = null;
-    
+
     /**
      * The used node loc analyzer.
      *
@@ -117,7 +118,7 @@ class PHP_Depend_Log_Overview_Pyramid
      * @var PHP_Depend_Metrics_NodeLoc_Analyzer $_nodeLoc
      */
     private $_nodeLoc = null;
-    
+
     /**
      * Holds defined thresholds for the computed proportions. This set is based
      * on java thresholds, we should find better values for php projects.
@@ -135,22 +136,22 @@ class PHP_Depend_Log_Overview_Pyramid
         'andc'          =>  array(0.25, 0.41, 0.57),
         'ahh'           =>  array(0.09, 0.21, 0.32)
     );
-    
+
     /**
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     * 
+     *
      * @return void
      */
     public function setLogFile($logFile)
     {
         $this->_logFile = $logFile;
     }
-    
+
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
-     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
      * @return array(string)
      */
@@ -164,13 +165,13 @@ class PHP_Depend_Log_Overview_Pyramid
             'PHP_Depend_Metrics_NodeLoc_Analyzer'
         );
     }
-    
+
     /**
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
-     * 
+     *
      * @return boolean
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
@@ -190,7 +191,7 @@ class PHP_Depend_Log_Overview_Pyramid
         }
         return true;
     }
-    
+
     /**
      * Closes the logger process and writes the output file.
      *
@@ -202,17 +203,17 @@ class PHP_Depend_Log_Overview_Pyramid
         if ($this->_logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
-        
+
         $metrics     = $this->_collectMetrics();
         $proportions = $this->_computeProportions($metrics);
-        
+
         $svg = new DOMDocument('1.0', 'UTF-8');
         $svg->load(dirname(__FILE__) . '/pyramid.svg');
-        
+
         $items = array_merge($metrics, $proportions);
         foreach ($items as $name => $value) {
             $svg->getElementById("pdepend.{$name}")->nodeValue = $value;
-            
+
             if (($threshold = $this->_computeThreshold($name, $value)) === null) {
                 continue;
             }
@@ -228,16 +229,17 @@ class PHP_Depend_Log_Overview_Pyramid
             $style = preg_replace('/fill:#[^;"]+/', "fill:{$match[1]}", $style);
             $rect->setAttribute('style', $style);
         }
-        
-        $temp = sys_get_temp_dir() . '/' . uniqid('pdepend_') . '.svg';
+
+        $temp  = PHP_Depend_Util_FileUtil::getSysTempDir();
+        $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
-        
+
         PHP_Depend_Util_ImageConvert::convert($temp, $this->_logFile);
-        
+
         // Remove temp file
         unlink($temp);
     }
-    
+
     /**
      * Computes the threshold (low, average, high) for the given value and metric.
      * If no threshold is defined for the given name, this method will return
@@ -245,7 +247,7 @@ class PHP_Depend_Log_Overview_Pyramid
      *
      * @param string $name  The metric/field identfier.
      * @param mixed  $value The metric/field value.
-     * 
+     *
      * @return string
      */
     private function _computeThreshold($name, $value)
@@ -253,7 +255,7 @@ class PHP_Depend_Log_Overview_Pyramid
         if (!isset($this->_thresholds[$name])) {
             return null;
         }
-        
+
         $threshold = $this->_thresholds[$name];
         if ($value <= $threshold[0]) {
             return 'low';
@@ -269,12 +271,12 @@ class PHP_Depend_Log_Overview_Pyramid
         }
         return 'average';
     }
-    
+
     /**
      * Computes the proportions between the given metrics.
      *
      * @param array $metrics The aggregated project metrics.
-     * 
+     *
      * @return array(string => float)
      */
     private function _computeProportions(array $metrics)
@@ -283,27 +285,27 @@ class PHP_Depend_Log_Overview_Pyramid
             array('cyclo', 'loc', 'nom', 'noc', 'nop'),
             array('fanout', 'calls', 'nom')
         );
-        
+
         $proportions = array();
         foreach ($orders as $names) {
             for ($i = 1, $c = count($names); $i < $c; ++$i) {
                 $value1 = $metrics[$names[$i]];
                 $value2 = $metrics[$names[$i - 1]];
-                
+
                 $identifier = "{$names[$i - 1]}-{$names[$i]}";
-                
+
                 $proportions[$identifier] = 0;
                 if ($value1 > 0) {
                     $proportions[$identifier] = round($value2 / $value1, 3);
-                } 
+                }
             }
         }
-        
+
         return $proportions;
     }
-    
+
     /**
-     * Aggregates the required metrics from the registered analyzers. 
+     * Aggregates the required metrics from the registered analyzers.
      *
      * @return array(string => mixed)
      * @throws RuntimeException If one of the required analyzers isn't set.
@@ -325,13 +327,13 @@ class PHP_Depend_Log_Overview_Pyramid
         if ($this->_nodeLoc === null) {
             throw new RuntimeException('Missing Node LOC analyzer.');
         }
-        
+
         $coupling    = $this->_coupling->getProjectMetrics();
         $cyclomatic  = $this->_cyclomaticComplexity->getProjectMetrics();
         $inheritance = $this->_inheritance->getProjectMetrics();
         $nodeCount   = $this->_nodeCount->getProjectMetrics();
         $nodeLoc     = $this->_nodeLoc->getProjectMetrics();
-        
+
         return array(
             'cyclo'   =>  $cyclomatic['ccn2'],
             'loc'     =>  $nodeLoc['eloc'],

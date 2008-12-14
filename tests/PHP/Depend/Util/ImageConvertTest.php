@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -73,7 +73,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * @var string
      */
     private $_out = null;
-    
+
     /**
      * Removes temporary output files.
      *
@@ -84,10 +84,10 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         if (file_exists($this->_out)) {
             unlink($this->_out);
         }
-        
+
         parent::tearDown();
     }
-    
+
     /**
      * Tests the copy behaviour for same mime types.
      *
@@ -96,16 +96,16 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
     public function testConvertMakesCopyForSameMimeType()
     {
         $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = sys_get_temp_dir() . '/pdepend.out.svg';
-        
+        $this->_out = self::createTempName('pdepend.out.svg');
+
         $this->assertFileNotExists($this->_out);
-        
+
         PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
-        
+
         $this->assertFileExists($this->_out);
         $this->assertFileEquals($input, $this->_out);
     }
-    
+
     /**
      * Tests the image convert behaviour of the image magick execution path.
      *
@@ -116,15 +116,15 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');
         }
-        
+
         $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = sys_get_temp_dir() . '/pdepend.out.png';
-        
+        $this->_out = self::createTempName('pdepend.out.png');
+
         $this->assertFileNotExists($this->_out);
         PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
         $this->assertFileExists($this->_out);
     }
-    
+
     /**
      * Tests that the image convert util appends the default extension as fallback.
      *
@@ -135,19 +135,19 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');
         }
-        
+
         $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = sys_get_temp_dir() . '/pdepend';
-        
+        $this->_out = self::createTempName('pdepend');
+
         $this->assertFileNotExists($this->_out);
         PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
         $this->assertFileNotExists($this->_out);
-        
+
         $this->_out .= '.svg';
-        
+
         $this->assertFileExists($this->_out);
     }
-    
+
     /**
      * Tests that the convert util recognizes the imageConvert configuration
      * for the font-family:
@@ -164,18 +164,18 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         </configuration>
         ');
         PHP_Depend_Util_ConfigurationInstance::set($config);
-        
-        $this->_out = sys_get_temp_dir() . '/pdepend.svg';
+
+        $this->_out = self::createTempName('pdepend.svg');
         copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
-        
+
         $svg = file_get_contents($this->_out);
         preg_match_all('/font-family:\s*Arial/', $svg, $matches);
         $expectedArial = count($matches[0]);
         preg_match_all('/font-family:\s*Verdana/', $svg, $matches);
         $expectedVerdana = count($matches[0]);
-        
+
         $this->assertEquals(0, $expectedVerdana);
-        
+
         PHP_Depend_Util_ImageConvert::convert($this->_out, $this->_out);
 
         $svg = file_get_contents($this->_out);
@@ -183,11 +183,11 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         $actualArial = count($matches[0]);
         preg_match_all('/font-family:\s*Verdana/', $svg, $matches);
         $actualVerdana = count($matches[0]);
-        
+
         $this->assertEquals(0, $actualArial);
         $this->assertEquals($expectedArial, $actualVerdana);
     }
-    
+
     /**
      * Tests that the convert util recognizes the imageConvert configuration
      * for the font-size:
@@ -204,20 +204,20 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         </configuration>
         ');
         PHP_Depend_Util_ConfigurationInstance::set($config);
-        
-        $this->_out = sys_get_temp_dir() . '/pdepend.svg';
+
+        $this->_out = self::createTempName('pdepend.svg');
         copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
-        
+
         $svg = file_get_contents($this->_out);
         preg_match_all('/font-size:\s*11px/', $svg, $matches);
         $expected11 = count($matches[0]);
         preg_match_all('/font-size:\s*14px/', $svg, $matches);
         $expected14 = count($matches[0]);
-        
-        
+
+
         $this->assertEquals(25, $expected11);
         $this->assertEquals(0, $expected14);
-        
+
         PHP_Depend_Util_ImageConvert::convert($this->_out, $this->_out);
 
         $svg = file_get_contents($this->_out);
@@ -225,7 +225,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         $actual11 = count($matches[0]);
         preg_match_all('/font-size:\s*14px/', $svg, $matches);
         $actual14 = count($matches[0]);
-        
+
         $this->assertEquals(0, $actual11);
         $this->assertEquals(25, $actual14);
     }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -81,7 +81,7 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * @var string $_tempFile
      */
     private $_tempFile = null;
-    
+
     /**
      * Creates the temp log file name.
      *
@@ -90,13 +90,13 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
     protected function setUp()
     {
         parent::setUp();
-        
-        $this->_tempFile = sys_get_temp_dir() . '/pdepend.phpunit-log.xml';
+
+        $this->_tempFile = self::createTempName('pdepend.phpunit-log.xml');
         if (file_exists($this->_tempFile)) {
             unlink($this->_tempFile);
         }
     }
-    
+
     /**
      * Removes the temp log file
      *
@@ -106,7 +106,7 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         if (file_exists($this->_tempFile)) {
             unlink($this->_tempFile);
         }
-        
+
         parent::tearDown();
     }
 
@@ -123,12 +123,12 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Metrics_NodeAwareI',
             'PHP_Depend_Metrics_ProjectAwareI'
         );
-        
+
         $this->assertEquals($exptected, $actual);
     }
-    
+
     /**
-     * Tests that the logger throws an exception if the log target wasn't 
+     * Tests that the logger throws an exception if the log target wasn't
      * configured.
      *
      * @return void
@@ -139,11 +139,11 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Log_NoLogOutputException',
             "The log target is not configured for 'PHP_Depend_Log_Phpunit_Xml'."
         );
-        
+
         $logger = new PHP_Depend_Log_Phpunit_Xml();
         $logger->close();
     }
-    
+
     /**
      * Tests the result of the phpunit logger with some real analyzers.
      *
@@ -153,39 +153,39 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
     {
         $source   = dirname(__FILE__) . '/../../_code/coupling';
         $packages = self::parseSource($source);
-        
+
         $packages->addFilter(new PHP_Depend_Code_NodeIterator_DefaultPackageFilter());
         $packages->addFilter(new PHP_Depend_Code_NodeIterator_InternalPackageFilter());
-        
+
         $logger = new PHP_Depend_Log_Phpunit_Xml();
         $logger->setLogFile($this->_tempFile);
         $logger->setCode($packages);
-        
+
         $analyzer0 = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer0->analyze($packages);
-        
+
         $analyzer1 = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer1->addAnalyzer($analyzer0);
         $analyzer1->analyze($packages);
-        
+
         $analyzer2 = new PHP_Depend_Metrics_CodeRank_Analyzer();
         $analyzer2->analyze($packages);
-        
+
         $analyzer3 = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer3->analyze($packages);
-        
+
         $analyzer4 = new PHP_Depend_Metrics_Hierarchy_Analyzer();
         $analyzer4->analyze($packages);
-        
+
         $analyzer5 = new PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer5->analyze($packages);
-        
+
         $analyzer6 = new PHP_Depend_Metrics_NodeCount_Analyzer();
         $analyzer6->analyze($packages);
-        
+
         $analyzer7 = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer7->analyze($packages);
-        
+
         $logger->log($analyzer0);
         $logger->log($analyzer1);
         $logger->log($analyzer2);
@@ -194,33 +194,33 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         $logger->log($analyzer5);
         $logger->log($analyzer6);
         $logger->log($analyzer7);
-        
+
         $logger->close();
-        
+
         $this->assertFileExists($this->_tempFile);
-        
+
         $actual   = file_get_contents($this->_tempFile);
         $expected = $this->_loadExpected('phpunit-log.xml');
-        
+
         $this->assertXmlStringEqualsXmlString($expected, $actual);
     }
-    
+
     /**
-     * Loads the expected log file and adjusts the file@name attribute. 
+     * Loads the expected log file and adjusts the file@name attribute.
      *
      * @param string $file The log file name.
-     * 
+     *
      * @return string
      */
     private function _loadExpected($file)
     {
         $path = realpath(dirname(__FILE__) . '/../../_code');
-        
+
         $dom = new DOMDocument('1.0', 'UTF-8');
-        
+
         $dom->formatOutput       = true;
         $dom->preserveWhiteSpace = false;
-        
+
         $dom->load(dirname(__FILE__) . "/_expected/{$file}");
         foreach ($dom->getElementsByTagName('file') as $fileXml) {
             $name = $fileXml->getAttribute('name');
