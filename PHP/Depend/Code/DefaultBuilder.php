@@ -557,7 +557,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      * Extracts the type name of a qualified PHP 5.3 type identifier.
      *
      * <code>
-     *   $typeName = $this->extractTypeName('foo::bar::foobar');
+     *   $typeName = $this->extractTypeName('foo\bar\foobar');
      *   var_dump($typeName);
      *   // Results in:
      *   // string(6) "foobar"
@@ -569,8 +569,8 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      */
     protected function extractTypeName($qualifiedName)
     {
-        if (($pos = strrpos($qualifiedName, '::')) !== false) {
-            return substr($qualifiedName, $pos + 2);
+        if (($pos = strrpos($qualifiedName, '\\')) !== false) {
+            return substr($qualifiedName, $pos + 1);
         }
         return $qualifiedName;
     }
@@ -582,10 +582,10 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      * return the default identifier.
      *
      * <code>
-     *   $packageName = $this->extractPackageName('foo::bar::foobar');
+     *   $packageName = $this->extractPackageName('foo\bar\foobar');
      *   var_dump($packageName);
      *   // Results in:
-     *   // string(8) "foo::bar"
+     *   // string(8) "foo\bar"
      *
      *   $packageName = $this->extractPackageName('foobar');
      *   var_dump($packageName);
@@ -599,7 +599,7 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilderI
      */
     protected function extractPackageName($qualifiedName)
     {
-        if (($pos = strrpos($qualifiedName, '::')) !== false) {
+        if (($pos = strrpos($qualifiedName, '\\')) !== false) {
             return substr($qualifiedName, 0, $pos);
         } else if ($this->_internalTypes->isInternal($qualifiedName)) {
             return $this->_internalTypes->getTypePackage($qualifiedName);
