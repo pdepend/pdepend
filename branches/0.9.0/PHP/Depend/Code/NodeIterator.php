@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -67,29 +67,27 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     /**
      * List of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
-     * @type array<PHP_Depend_Code_NodeI>
      * @var array(PHP_Depend_Code_NodeI) $_nodes
      */
     private $_nodes = array();
-    
+
     /**
      * The global filter instance.
-     * 
-     * @type PHP_Depend_Code_NodeIterator_CompositeFilter
+     *
      * @var PHP_Depend_Code_NodeIterator_CompositeFilter $_filter
      */
     private $_filter = null;
-    
+
     /**
      * Constructs a new node iterator from the given {@link PHP_Depend_Code_NodeI}
      * node array.
      *
      * @param array(PHP_Depend_Code_NodeI) $nodes List of code nodes.
-     * 
+     *
      * @throws RuntimeException If the array contains something different from
      *                          a {@link PHP_Depend_Code_NodeI} object.
      */
-    public function __construct(array $nodes) 
+    public function __construct(array $nodes)
     {
         // First check all input nodes
         foreach ($nodes as $node) {
@@ -100,32 +98,32 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         }
         // Sort by name
         ksort($this->_nodes);
-        
+
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
-        
+
         // Apply global filters
         $this->_filter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
         $this->_filter->addFilter($staticFilter);
-        
+
         $this->rewind();
     }
-    
+
     /**
      * Appends a filter to this iterator.
-     * 
+     *
      * A call to this method will reset the internal pointer.
      *
      * @param PHP_Depend_Code_NodeIterator_FilterI $filter The filter instance.
-     * 
+     *
      * @return void
      */
     public function addFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
     {
         $this->_filter->addFilter($filter);
-        
+
         $this->rewind();
     }
-    
+
     /**
      * Returns the number of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
@@ -143,7 +141,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         }
         return $count;
     }
-    
+
     /**
      * Returns the current node or <b>false</b>
      *
@@ -153,7 +151,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     {
         return current($this->_nodes);
     }
-    
+
     /**
      * Returns the name of the current {@link PHP_Depend_Code_NodeI}.
      *
@@ -163,7 +161,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     {
         return key($this->_nodes);
     }
-    
+
     /**
      * Moves the internal pointer to the next {@link PHP_Depend_Code_NodeI}.
      *
@@ -174,7 +172,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         next($this->_nodes);
         $this->_filterNext();
     }
-    
+
     /**
      * Rewinds the internal pointer.
      *
@@ -195,9 +193,9 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     {
         return ($this->current() !== false);
     }
-    
+
     /**
-     * Moves the internal pointer to the next valid node. If no filter is 
+     * Moves the internal pointer to the next valid node. If no filter is
      * registered, this method will simply return.
      *
      * @return void
@@ -212,6 +210,6 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
                 next($this->_nodes);
             }
         }
-        
+
     }
 }

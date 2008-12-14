@@ -69,7 +69,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
     /**
      * The temporary output file.
      *
-     * @type string
      * @var string
      */
     private $_out = null;

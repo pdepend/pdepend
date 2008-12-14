@@ -76,7 +76,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     /**
      * Test code structure.
      *
-     * @type PHP_Depend_Code_NodeIterator
      * @var PHP_Depend_Code_NodeIterator $packages
      */
     protected $packages = null;
@@ -84,7 +83,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     /**
      * Test dependency analyzer.
      *
-     * @type PHP_Depend_Metrics_Dependency_Analyzer
      * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
      */
     protected $analyzer = null;
@@ -92,7 +90,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     /**
      * The temporary file name for the logger result.
      *
-     * @type string
      * @var string $resultFile
      */
     protected $resultFile = null;

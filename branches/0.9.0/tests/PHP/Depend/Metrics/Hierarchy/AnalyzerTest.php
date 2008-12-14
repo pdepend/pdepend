@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -69,11 +69,10 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * The used node builder.
      *
-     * @type PHP_Depend_Code_DefaultBuilder
      * @var PHP_Depend_Code_DefaultBuilder $builder
      */
     protected $builder = null;
-    
+
     /**
      * Sets up the code builder.
      *
@@ -82,17 +81,17 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
     protected function setUp()
     {
         parent::setUp();
-        
+
         $source        = dirname(__FILE__) . '/../../_code/mixed_code.php';
         $tokenizer     = new PHP_Depend_Code_Tokenizer_InternalTokenizer($source);
         $this->builder = new PHP_Depend_Code_DefaultBuilder();
         $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
-        
+
         $parser->parse();
     }
-    
+
     /**
-     * Tests that the {@link PHP_Depend_Metrics_Hierarchy_Analyzer::analyze()} 
+     * Tests that the {@link PHP_Depend_Metrics_Hierarchy_Analyzer::analyze()}
      * method creates the expected hierarchy metrics.
      *
      * @return void.
@@ -101,16 +100,16 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
         $analyzer->analyze($this->builder->getPackages());
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertEquals(1, $project['clsa']);
         $this->assertEquals(2, $project['clsc']);
         $this->assertEquals(1, $project['roots']);
         $this->assertEquals(2, $project['leafs']);
         $this->assertEquals(1, $project['maxDIT']);
     }
-    
+
     /**
      * Tests that {@link PHP_Depend_Metrics_Hierarchy_Analyzer::analyze()} calculates
      * the expected DIT values.
@@ -124,22 +123,22 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         $c = new PHP_Depend_Code_Class('c');
         $d = new PHP_Depend_Code_Class('d');
         $e = new PHP_Depend_Code_Class('e');
-        
+
         $p = new PHP_Depend_Code_Package('p');
         $p->addType($a);
         $p->addType($b);
         $p->addType($c);
         $p->addType($d);
         $p->addType($e);
-        
+
         $a->addChildType($b);
         $a->addChildType($c);
         $c->addChildType($d);
         $d->addChildType($e);
-        
+
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
         $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
-        
+
         $expected = array(
             array($a, array('dit'  =>  0)),
             array($b, array('dit'  =>  1)),
@@ -147,15 +146,15 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
             array($d, array('dit'  =>  2)),
             array($e, array('dit'  =>  3)),
         );
-        
+
         foreach ($expected as $info) {
             $this->assertEquals($info[1], $analyzer->getNodeMetrics($info[0]));
         }
     }
-    
+
     /**
      * Tests that {@link PHP_Depend_Metrics_Hierarchy_Analyzer::getNodeMetrics()}
-     * returns an empty <b>array</b> for an unknown node uuid. 
+     * returns an empty <b>array</b> for an unknown node uuid.
      *
      * @return void
      */
@@ -164,9 +163,9 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         $class    = new PHP_Depend_Code_Class('PDepend');
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
         $metrics  = $analyzer->getNodeMetrics($class);
-        
+
         $this->assertType('array', $metrics);
         $this->assertEquals(0, count($metrics));
-        
+
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -50,7 +50,7 @@ require_once 'PHP/Depend/Util/FileFilterI.php';
 
 /**
  * Simple utility filter iterator for php source files.
- * 
+ *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Util
@@ -65,11 +65,10 @@ class PHP_Depend_Util_FileFilterIterator extends FilterIterator
     /**
      * The associated filter object.
      *
-     * @type PHP_Depend_Util_FileFilterI
      * @var PHP_Depend_Util_FileFilterI $filter
      */
     protected $filter = null;
-    
+
     /**
      * Constructs a new file filter iterator.
      *
@@ -79,16 +78,16 @@ class PHP_Depend_Util_FileFilterIterator extends FilterIterator
     public function __construct(Iterator $it, PHP_Depend_Util_FileFilterI $filter)
     {
         parent::__construct($it);
-        
+
         $this->filter = $filter;
     }
-    
+
     /**
      * Returns <b>true</b> if the file name ends with '.php'.
      *
      * @return boolean
      */
-    public function accept() 
+    public function accept()
     {
         return $this->filter->accept($this->getInnerIterator()->current());
     }

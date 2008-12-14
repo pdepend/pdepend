@@ -72,7 +72,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     /**
      * Test code structure.
      *
-     * @type PHP_Depend_Code_NodeIterator
      * @var PHP_Depend_Code_NodeIterator $packages
      */
     protected $packages = null;
@@ -80,7 +79,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     /**
      * The test file name.
      *
-     * @type string
      * @var string $testFile
      */
     protected $testFileName = null;
@@ -88,7 +86,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     /**
      * The temporary file name for the logger result.
      *
-     * @type string
      * @var string $resultFile
      */
     protected $resultFile = null;

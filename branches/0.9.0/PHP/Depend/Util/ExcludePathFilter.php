@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -50,7 +50,7 @@ require_once 'PHP/Depend/Util/FileFilterI.php';
 
 /**
  * Filters a given file path against a blacklist with disallow path fragments.
- * 
+ *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Util
@@ -65,11 +65,10 @@ class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilterI
     /**
      * Regular expression that should not match against the file path.
      *
-     * @type string
      * @var string $regexp
      */
     protected $regexp = '';
-    
+
     /**
      * Constructs a new exclude path filter instance and accepts an array of
      * exclude pattern as argument.
@@ -80,16 +79,16 @@ class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilterI
     {
         $regexp = join('|', array_map('preg_quote', $patterns));
         $regexp = str_replace('\*', '.*', $regexp);
-        
+
         $this->regexp = "({$regexp})i";
     }
-    
+
     /**
      * Returns <b>true</b> while the file path doesn't match against any of the
      * given patterns.
      *
      * @param SplFileInfo $fileInfo The context file object.
-     * 
+     *
      * @return boolean
      */
     public function accept(SplFileInfo $fileInfo)

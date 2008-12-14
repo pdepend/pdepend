@@ -77,7 +77,6 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
     /**
      * The temp log file.
      *
-     * @type string
      * @var string $_tempFile
      */
     private $_tempFile = null;

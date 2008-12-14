@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -90,57 +90,54 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * )
      * </code>
      *
-     * @type array<array>
      * @var array(string=>array) $_nodeMetrics
      */
     private $_nodeMetrics = null;
-    
+
     /**
      * The project Cyclomatic Complexity Number.
      *
-     * @type integer
      * @var integer $_ccn
      */
     private $_ccn = 0;
-    
+
     /**
      * Extended Cyclomatic Complexity Number(CCN2) for the project.
      *
-     * @type integer
      * @var integer $_ccn2
      */
     private $_ccn2 = 0;
-    
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     * 
+     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
-            
+
             $this->fireStartAnalyzer();
-            
+
             // Init node metrics
             $this->_nodeMetrics = array();
-            
+
             // Visit all packages
             foreach ($packages as $package) {
                 $package->accept($this);
             }
-            
+
             $this->fireEndAnalyzer();
         }
     }
-    
+
     /**
      * Returns the cyclomatic complexity for the given <b>$node</b> instance.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return integer
      */
     public function getCCN(PHP_Depend_Code_NodeI $node)
@@ -151,13 +148,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         }
         return $ccn;
     }
-    
+
     /**
-     * Returns the extended cyclomatic complexity for the given <b>$node</b> 
+     * Returns the extended cyclomatic complexity for the given <b>$node</b>
      * instance.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return integer
      */
     public function getCCN2(PHP_Depend_Code_NodeI $node)
@@ -168,14 +165,14 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         }
         return $ccn2;
     }
-    
+
     /**
-     * This method will return an <b>array</b> with all generated metric values 
-     * for the given <b>$node</b>. If there are no metrics for the requested 
+     * This method will return an <b>array</b> with all generated metric values
+     * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
@@ -186,7 +183,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         }
         return $metrics;
     }
-    
+
     /**
      * Provides the project summary metrics as an <b>array</b>.
      *
@@ -199,43 +196,43 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             'ccn2'  =>  $this->_ccn2
         );
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
-        
+
         // Get all method tokens
         $tokens = $function->getTokens();
-        
+
         $ccn  = $this->_calculateCCN($tokens);
         $ccn2 = $this->_calculateCCN2($tokens);
-        
+
         // The method metrics
         $this->_nodeMetrics[$function->getUUID()] = array(
             'ccn'   =>  $ccn,
             'ccn2'  =>  $ccn2
         );
-        
+
         // Update project metrics
         $this->_ccn  += $ccn;
         $this->_ccn2 += $ccn2;
-        
+
         $this->fireEndFunction($function);
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      */
@@ -243,43 +240,43 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         // Empty visit method, we don't want interface metrics
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-        
+
         // Get all method tokens
         $tokens = $method->getTokens();
-        
+
         $ccn  = $this->_calculateCCN($tokens);
         $ccn2 = $this->_calculateCCN2($tokens);
-        
+
         // The method metrics
         $this->_nodeMetrics[$method->getUUID()] = array(
             'ccn'   =>  $ccn,
             'ccn2'  =>  $ccn2
         );
-        
+
         // Update project metrics
         $this->_ccn  += $ccn;
         $this->_ccn2 += $ccn2;
-        
+
         $this->fireEndMethod($method);
     }
-    
+
     /**
-     * Calculates the Cyclomatic Complexity Number (CCN). 
+     * Calculates the Cyclomatic Complexity Number (CCN).
      *
      * @param array $tokens The input tokens.
-     * 
+     *
      * @return integer
      */
     private function _calculateCCN(array $tokens)
@@ -295,7 +292,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             PHP_Depend_Code_TokenizerI::T_QUESTION_MARK,
             PHP_Depend_Code_TokenizerI::T_WHILE
         );
-        
+
         $ccn = 1;
         foreach ($tokens as $token) {
             if (in_array($token[0], $countingTokens) === true) {
@@ -304,14 +301,14 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         }
         return $ccn;
     }
-    
+
     /**
      * Calculates the second version of the Cyclomatic Complexity Number (CCN2).
-     * This version includes boolean operators like <b>&&</b>, <b>and</b>, 
-     * <b>or</b> and <b>||</b>. 
+     * This version includes boolean operators like <b>&&</b>, <b>and</b>,
+     * <b>or</b> and <b>||</b>.
      *
      * @param array $tokens The input tokens.
-     * 
+     *
      * @return integer
      */
     private function _calculateCCN2(array $tokens)
@@ -331,7 +328,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             PHP_Depend_Code_TokenizerI::T_QUESTION_MARK,
             PHP_Depend_Code_TokenizerI::T_WHILE
         );
-        
+
         $ccn2 = 1;
         foreach ($tokens as $token) {
             if (in_array($token[0], $countingTokens) === true) {

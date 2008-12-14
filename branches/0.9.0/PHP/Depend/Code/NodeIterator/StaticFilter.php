@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -49,7 +49,7 @@
 require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 
 /**
- * Static composite filter for code nodes. This class is used for an overall 
+ * Static composite filter for code nodes. This class is used for an overall
  * filtering.
  *
  * @category   QualityAssurance
@@ -67,11 +67,10 @@ final class PHP_Depend_Code_NodeIterator_StaticFilter
     /**
      * Singleton instance of this filter.
      *
-     * @type PHP_Depend_Code_NodeIterator_StaticFilter
      * @var PHP_Depend_Code_NodeIterator_StaticFilter $_instance
      */
     private static $_instance = null;
-    
+
     /**
      * Singleton method for this filter class.
      *
@@ -84,7 +83,7 @@ final class PHP_Depend_Code_NodeIterator_StaticFilter
         }
         return self::$_instance;
     }
-    
+
     /**
      * Clears all registered filters.
      *
@@ -96,7 +95,7 @@ final class PHP_Depend_Code_NodeIterator_StaticFilter
             $this->removeFilter($filter);
         }
     }
-    
+
     /**
      * Constructs a new static filter.
      */

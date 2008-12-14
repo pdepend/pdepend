@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Util/FileFilterI.php';
 /**
  * Simple composite pattern implementation that allows to bundle multiple
  * filter implementations.
- * 
+ *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Util
@@ -66,31 +66,30 @@ class PHP_Depend_Util_CompositeFilter implements PHP_Depend_Util_FileFilterI
     /**
      * List of aggregated {@link PHP_Depend_Util_FileFilterI} objects.
      *
-     * @type array<PHP_Depend_Util_FileFilterI>
      * @var array(PHP_Depend_Util_FileFilterI) $filters.
      */
     protected $filters = array();
-    
+
     /**
      * Adds a file filter to this composite.
      *
      * @param PHP_Depend_Util_FileFilterI $filter The new filter object.
-     * 
+     *
      * @return void
      */
     public function append(PHP_Depend_Util_FileFilterI $filter)
     {
         $this->filters[] = $filter;
     }
-    
+
     /**
-     * Delegates the given <b>$fileInfo</b> object to all aggregated filters. 
-     * 
+     * Delegates the given <b>$fileInfo</b> object to all aggregated filters.
+     *
      * If one of these filters fail, this method will return <b>false</b> otherwise
      * the return value is <b>true</b>
      *
      * @param SplFileInfo $fileInfo The context file object.
-     * 
+     *
      * @return boolean
      */
     public function accept(SplFileInfo $fileInfo)

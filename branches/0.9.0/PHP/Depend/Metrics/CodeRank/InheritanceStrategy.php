@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -68,11 +68,10 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * All found nodes.
      *
-     * @type array<array>
      * @var array(string=>array) $_nodes
      */
     private $_nodes = array();
-    
+
     /**
      * Returns the collected nodes.
      *
@@ -82,12 +81,12 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     {
         return $this->_nodes;
     }
-    
+
     /**
      * Visits a code class object.
      *
      * @param PHP_Depend_Code_Class $class The context code class.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitClass()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
@@ -98,12 +97,12 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
         $this->visitType($class);
         $this->fireEndClass($class);
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
@@ -111,16 +110,16 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->fireStartInterface($interface);
-        $this->visitType($interface);        
+        $this->visitType($interface);
         $this->fireEndInterface($interface);
     }
-    
+
     /**
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
      * @param PHP_Depend_Code_AbstractType $type The context type instance.
-     * 
+     *
      * @return void
      */
     protected function visitType(PHP_Depend_Code_AbstractType $type)
@@ -129,17 +128,17 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
 
         $this->initNode($pkg);
         $this->initNode($type);
-        
+
         foreach ($type->getDependencies() as $dep) {
-            
+
             $depPkg = $dep->getPackage();
-            
+
             $this->initNode($dep);
             $this->initNode($depPkg);
-            
+
             $this->_nodes[$type->getUUID()]['in'][] = $dep->getUUID();
             $this->_nodes[$dep->getUUID()]['out'][] = $type->getUUID();
-            
+
             // No self references
             if ($pkg !== $depPkg) {
                 $this->_nodes[$pkg->getUUID()]['in'][]     = $depPkg->getUUID();
@@ -147,12 +146,12 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
             }
         }
     }
-    
+
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * 
+     *
      * @return void
      */
     protected function initNode(PHP_Depend_Code_NodeI $node)
@@ -166,5 +165,5 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
             );
         }
     }
-    
+
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -68,36 +68,32 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     /**
      * The package name.
      *
-     * @type string
      * @var string $name
      */
     protected $name = '';
-    
+
     /**
      * The unique identifier for this function.
      *
-     * @type PHP_Depend_Util_UUID
      * @var PHP_Depend_Util_UUID $uuid
      */
     protected $uuid = null;
-    
+
     /**
      * List of all {@link PHP_Depend_Code_AbstractType} objects for this package.
      *
-     * @type array<PHP_Depend_Code_AbstractType>
      * @var array(PHP_Depend_Code_AbstractType) $types
      */
     protected $types = array();
-    
+
     /**
      * List of all standalone {@link PHP_Depend_Code_Function} objects in this
      * package.
      *
-     * @type array<PHP_Depend_Code_Function>
      * @var array(PHP_Depend_Code_Function) $functions
      */
     protected $functions = array();
-    
+
     /**
      * Constructs a new package for the given <b>$name</b>
      *
@@ -106,10 +102,10 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     public function __construct($name)
     {
         $this->name = $name;
-        
+
         $this->uuid = new PHP_Depend_Util_UUID();
     }
-    
+
     /**
      * Returns the package name.
      *
@@ -119,7 +115,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     {
         return $this->name;
     }
-    
+
     /**
      * Returns a uuid for this code node.
      *
@@ -129,7 +125,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     {
         return (string) $this->uuid;
     }
-    
+
     /**
      * Returns an iterator with all {@link PHP_Depend_Code_Class} instances
      * within this package.
@@ -139,13 +135,13 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     public function getClasses()
     {
         $type = 'PHP_Depend_Code_Class';
-        
+
         $classes = new PHP_Depend_Code_NodeIterator($this->types);
         $classes->addFilter(new PHP_Depend_Code_NodeIterator_TypeFilter($type));
-        
+
         return $classes;
     }
-    
+
     /**
      * Returns an iterator with all {@link PHP_Depend_Code_Interface} instances
      * within this package.
@@ -155,13 +151,13 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     public function getInterfaces()
     {
         $type = 'PHP_Depend_Code_Interface';
-        
+
         $classes = new PHP_Depend_Code_NodeIterator($this->types);
         $classes->addFilter(new PHP_Depend_Code_NodeIterator_TypeFilter($type));
-        
+
         return $classes;
     }
-    
+
     /**
      * Returns all {@link PHP_Depend_Code_AbstractType} objects in this package.
      *
@@ -171,12 +167,12 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     {
         return new PHP_Depend_Code_NodeIterator($this->types);
     }
-    
+
     /**
      * Adds the given type to this package and returns the input type instance.
      *
      * @param PHP_Depend_Code_AbstractType $type The new package type.
-     * 
+     *
      * @return PHP_Depend_Code_AbstractType
      */
     public function addType(PHP_Depend_Code_AbstractType $type)
@@ -185,24 +181,24 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         if (in_array($type, $this->types, true)) {
             return;
         }
-        
+
         if ($type->getPackage() !== null) {
             $type->getPackage()->removeType($type);
         }
-        
+
         // Set this as class package
         $type->setPackage($this);
         // Append class to internal list
         $this->types[] = $type;
-        
+
         return $type;
     }
-    
+
     /**
      * Removes the given type instance from this package.
      *
      * @param PHP_Depend_Code_AbstractType $type The type instance to remove.
-     * 
+     *
      * @return void
      */
     public function removeType(PHP_Depend_Code_AbstractType $type)
@@ -214,7 +210,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
             $type->setPackage(null);
         }
     }
-    
+
     /**
      * Returns all {@link PHP_Depend_Code_Function} objects in this package.
      *
@@ -224,12 +220,12 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     {
         return new PHP_Depend_Code_NodeIterator($this->functions);
     }
-    
+
     /**
      * Adds the given function to this package and returns the input instance.
      *
      * @param PHP_Depend_Code_Function $function The new package function.
-     * 
+     *
      * @return PHP_Depend_Code_Function
      */
     public function addFunction(PHP_Depend_Code_Function $function)
@@ -242,15 +238,15 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         $function->setPackage($this);
         // Append function to internal list
         $this->functions[] = $function;
-        
+
         return $function;
     }
-    
+
     /**
      * Removes the given function from this package.
      *
      * @param PHP_Depend_Code_Function $function The function to remove
-     * 
+     *
      * @return void
      */
     public function removeFunction(PHP_Depend_Code_Function $function)
@@ -266,9 +262,9 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)

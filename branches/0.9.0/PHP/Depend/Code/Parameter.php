@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -50,9 +50,9 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
 require_once 'PHP/Depend/Code/TypeAwareI.php';
 
 /**
- * An instance of this class represents a function or method parameter within 
+ * An instance of this class represents a function or method parameter within
  * the analyzed source code.
- * 
+ *
  * <code>
  * <?php
  * class PHP_Depend_Code_NodeBuilderI
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Code/TypeAwareI.php';
  *     public function buildNode($name, $line, PHP_Depend_Code_File $file) {
  *     }
  * }
- * 
+ *
  * function parse(PHP_Depend_Code_NodeBuilderI $builder, $file) {
  * }
  * </code>
@@ -74,31 +74,28 @@ require_once 'PHP/Depend/Code/TypeAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Parameter 
+class PHP_Depend_Code_Parameter
        extends PHP_Depend_Code_AbstractItem
     implements PHP_Depend_Code_TypeAwareI
 {
     /**
      * The parent function or method instance.
      *
-     * @type PHP_Depend_Code_AbstractCallable
      * @var PHP_Depend_Code_AbstractCallable $_parent
      */
     private $_parent = null;
-    
+
     /**
      * The parameter position.
      *
-     * @type integer
      * @var integer $_position
      */
     private $_position = 0;
-    
+
     /**
      * The type for this property. This value is <b>null</b> by default and for
      * scalar types.
      *
-     * @type PHP_Depend_Code_AbstractType
      * @var PHP_Depend_Code_AbstractType $_type
      */
     private $_type = null;
@@ -112,19 +109,19 @@ class PHP_Depend_Code_Parameter
     {
         return $this->_parent;
     }
-    
+
     /**
      * Sets the parent function or method object.
      *
      * @param PHP_Depend_Code_AbstractCallable $parent The parent callable.
-     * 
+     *
      * @return void
      */
     public function setParent(PHP_Depend_Code_AbstractCallable $parent = null)
     {
         $this->_parent = $parent;
     }
-    
+
     /**
      * Returns the parameter position in the method/function signature.
      *
@@ -134,19 +131,19 @@ class PHP_Depend_Code_Parameter
     {
         return $this->_position;
     }
-    
+
     /**
      * Sets the parameter position in the method/function signature.
      *
      * @param integer $position The parameter position.
-     * 
+     *
      * @return void
      */
     public function setPosition($position)
     {
         $this->_position = $position;
     }
-    
+
     /**
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
@@ -157,25 +154,25 @@ class PHP_Depend_Code_Parameter
     {
         return $this->_type;
     }
-    
+
     /**
      * Sets the type of this property.
      *
      * @param PHP_Depend_Code_AbstractType $type The property type.
-     * 
+     *
      * @return void
      */
     public function setType(PHP_Depend_Code_AbstractType $type)
     {
         $this->_type = $type;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)

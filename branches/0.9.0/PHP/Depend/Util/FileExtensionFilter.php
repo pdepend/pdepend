@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -50,7 +50,7 @@ require_once 'PHP/Depend/Util/FileFilterI.php';
 
 /**
  * Whitelist filter that accepts files by their file extension.
- * 
+ *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Util
@@ -65,13 +65,12 @@ class PHP_Depend_Util_FileExtensionFilter implements PHP_Depend_Util_FileFilterI
     /**
      * Whitelist of accepted file extensions.
      *
-     * @type array<string>
      * @var array(string) $extensions
      */
     protected $extensions = array();
-    
+
     /**
-     * Constructs a new file extension filter instance with the given list of 
+     * Constructs a new file extension filter instance with the given list of
      *  allowed file <b>$extensions</b>.
      *
      * @param array $extensions List of allowed extension.
@@ -80,19 +79,19 @@ class PHP_Depend_Util_FileExtensionFilter implements PHP_Depend_Util_FileFilterI
     {
         $this->extensions = $extensions;
     }
-    
+
     /**
      * Returns <b>true</b> if the extension of the given <b>$fileInfo</b> instance
      * is in the list of allowed extensions.
-     * 
+     *
      * @param SplFileInfo $fileInfo The context file object.
-     * 
+     *
      * @return boolean
      */
     public function accept(SplFileInfo $fileInfo)
     {
         $extension = pathinfo($fileInfo, PATHINFO_EXTENSION);
-        
+
         return in_array($extension, $this->extensions);
     }
 }

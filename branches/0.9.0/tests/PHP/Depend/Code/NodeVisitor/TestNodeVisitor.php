@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -63,156 +63,148 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
     /**
      * The last visited class instance.
      *
-     * @type PHP_Depend_Code_Class
      * @var PHP_Depend_Code_Class $class
      */
     public $class = null;
-    
+
     /**
      * The last visited interface instance.
      *
-     * @type PHP_Depend_Code_Interface
      * @var PHP_Depend_Code_Interface $interface
      */
     public $interface = null;
-    
+
     /**
      * The last visited method instance.
      *
-     * @type PHP_Depend_Code_Method
      * @var PHP_Depend_Code_Method $method
      */
     public $method = null;
-    
+
     /**
      * The last visited package instance.
      *
-     * @type PHP_Depend_Code_Package
      * @var PHP_Depend_Code_Package $method
      */
     public $package = null;
-    
+
     /**
      * The last visited parameter instance.
      *
-     * @type PHP_Depend_Code_Parameter
      * @var PHP_Depend_Code_Parameter $parameter
      */
     public $parameter = null;
-    
+
     /**
      * The last visited property instance.
      *
-     * @type PHP_Depend_Code_Property
      * @var PHP_Depend_Code_Property $property
      */
     public $property = null;
-    
+
     /**
      * The last visited function instance.
      *
-     * @type PHP_Depend_Code_Function
      * @var PHP_Depend_Code_Function $method
      */
     public $function = null;
-    
+
     /**
      * The last visited type constant instance.
      *
-     * @type PHP_Depend_Code_TypeConstant
      * @var PHP_Depend_Code_TypeConstant $typeConstant
      */
     public $typeConstant = null;
-    
+
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener 
+     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener
      *        The new visit listener.
-     * 
+     *
      * @return void
      */
     public function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
     }
-    
+
     /**
      * Removes the listener from this node visitor.
      *
      * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener
      *        The listener to remove.
-     * 
+     *
      * @return void
      */
     public function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
     {
     }
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     * 
+     *
      * @return void
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->class = $class;
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
+     *
      * @return void
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->interface = $interface;
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     * 
+     *
      * @return void
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->method = $method;
     }
-    
+
     /**
-     * Visits a package node. 
+     * Visits a package node.
      *
      * @param PHP_Depend_Code_Class $package The package class node.
-     * 
+     *
      * @return void
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $this->package = $package;
     }
-    
+
     /**
      * Visits a parameter node.
      *
      * @param PHP_Depend_Code_Parameter $parameter The parameter node.
-     * 
+     *
      * @return void
      */
     public function visitParameter(PHP_Depend_Code_Parameter $parameter)
     {
         $this->parameter = $parameter;
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Depend_Code_Property $property The property class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
      */
@@ -220,37 +212,37 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
     {
         $this->property = $property;
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     * 
+     *
      * @return void
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->function = $function;
     }
-    
+
     /**
-     * Visits a file node. 
+     * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitFile()
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
-        
+
     }
-    
+
     /**
-     * Visits a class constant node. 
+     * Visits a class constant node.
      *
      * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     * 
+     *
      * @return void
      */
     public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)

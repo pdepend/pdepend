@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -66,113 +66,112 @@ class PHP_Depend_Code_NodeVisitor_DefaultVisitorDummy
     /**
      * Collected visit order.
      *
-     * @type array<integer>
      * @var array(string=>integer)
      */
     public $visits = array();
-    
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->visits[] = $class->getName();
-        
+
         parent::visitClass($class);
     }
-    
+
     /**
-     * Visits a file node. 
+     * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitFile()
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
         $this->visits[] = $file->getName();
-        
+
         parent::visitFile($file);
     }
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->visits[] = $function->getName();
-        
+
         parent::visitFunction($function);
     }
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->visits[] = $interface->getName();
-        
+
         parent::visitInterface($interface);
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->visits[] = $method->getName();
-        
+
         parent::visitMethod($method);
     }
-    
+
     /**
-     * Visits a package node. 
+     * Visits a package node.
      *
      * @param PHP_Depend_Code_Class $package The package class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $this->visits[] = $package->getName();
-        
+
         parent::visitPackage($package);
     }
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Depend_Code_Property $property The property class node.
-     * 
+     *
      * @return void
      * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->visits[] = $property->getName();
-        
+
         parent::visitProperty($property);
     }
 }
