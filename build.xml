@@ -49,10 +49,10 @@
     <target name="phpunit-5.3.0">
         <exec executable="/usr/local/php/bin/php" dir="${basedir}" failonerror="false">
             <arg line="/usr/local/pear/bin/phpunit 
-                       --log-xml       ${basedir}/build/tmp/php-5.3.0.xml
                        --log-pmd       ${basedir}/build/logs/phpunit.pmd.xml
                        --coverage-xml  ${basedir}/build/logs/phpunit.coverage.xml
                        --coverage-html ${basedir}/build/coverage
+                       --configuration ${basedir}/phpunit.xml
                        PHP_Depend_AllTests tests/PHP/Depend/AllTests.php"/>
         </exec>
     </target>
@@ -60,7 +60,7 @@
     <target name="phpunit-5.2.6">
         <exec executable="/usr/local/bin/php526" dir="${basedir}" failonerror="false">
             <arg line="/usr/local/pear/bin/phpunit 
-                       --log-xml ${basedir}/build/tmp/php-5.2.6.xml
+                       --configuration ${basedir}/phpunit.xml
                        PHP_Depend_AllTests tests/PHP/Depend/AllTests.php"/>
         </exec>
     </target>
@@ -69,7 +69,7 @@
 <!--
         <exec executable="/usr/local/bin/php520" dir="${basedir}" failonerror="false">
             <arg line="/usr/local/pear/bin/phpunit 
-                       - -log-xml ${basedir}/build/tmp/php-5.2.0.xml
+                       - -configuration ${basedir}/phpunit.xml
                        PHP_Depend_AllTests tests/PHP/Depend/AllTests.php"/>
         </exec>
 -->
@@ -79,7 +79,7 @@
         <exec executable="phpuc" dir="${basedir}" failonerror="true">
             <arg line="merge-phpunit
                        -b php-5.3.0,php-5.2.6
-                       -i ${basedir}/build/tmp/php-5.3.0.xml,${basedir}/build/tmp/php-5.2.6.xml
+                       -i ${basedir}/build/tmp/log.xml,${basedir}/build/tmp/log.xml
                        -o ${basedir}/build/logs/log.xml"/>
         </exec>
     </target>
