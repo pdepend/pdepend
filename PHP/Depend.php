@@ -267,8 +267,8 @@ class PHP_Depend
             throw new RuntimeException('No source directory set.');
         }
 
-        $accepted = $this->_createAnalyzerList();
-        $loader   = new PHP_Depend_Metrics_AnalyzerLoader($accepted, $this->_options);
+        $accept = $this->_createAnalyzerList();
+        $loader = new PHP_Depend_Metrics_AnalyzerLoader($accept, $this->_options);
 
         $iterator = new AppendIterator();
 
