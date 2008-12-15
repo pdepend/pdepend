@@ -1,0 +1,6 @@
+<?php
+namespace pkg1;
+
+interface pkg1FooI {
+
+}
