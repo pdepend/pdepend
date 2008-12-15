@@ -141,10 +141,10 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
             $analyzer = new $className($options);
 
             if ($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI) {
-                $required          = $analyzer->getRequiredAnalyzers();
-                $requiredAnalyzers = $this->_loadAcceptedAnalyzers($required, $options);
+                $classNames = $analyzer->getRequiredAnalyzers();
+                $required   = $this->_loadAcceptedAnalyzers($classNames, $options);
 
-                foreach ($requiredAnalyzers as $requiredAnalyzer) {
+                foreach ($required as $requiredAnalyzer) {
                     $analyzer->addAnalyzer($requiredAnalyzer);
                 }
             }
