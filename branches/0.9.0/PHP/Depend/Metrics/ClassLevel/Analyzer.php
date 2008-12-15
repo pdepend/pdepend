@@ -351,10 +351,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     private function _calculateWMCi(PHP_Depend_Code_Class $class)
     {
         // List of methods, this method only counts not overwritten methods.
-        $methods = array();
+        $ccn = array();
+
         // First collect all methods of the context class
-        foreach ($class->getMethods() as $method) {
-            $methods[$method->getName()] = $this->_cyclomaticAnalyzer->getCCN2($method);
+        foreach ($class->getMethods() as $m) {
+            $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
         }
 
         // Get parent class and collect all non private methods.
@@ -362,14 +363,14 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
 
         while ($parent !== null) {
             // Count all methods
-            foreach ($parent->getMethods() as $method) {
-                if (!$method->isPrivate() && !isset($methods[$method->getName()])) {
-                    $methods[$method->getName()] = $this->_cyclomaticAnalyzer->getCCN2($method);
+            foreach ($parent->getMethods() as $m) {
+                if (!$m->isPrivate() && !isset($methods[$m->getName()])) {
+                    $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
                 }
             }
             // Fetch parent class
             $parent = $parent->getParentClass();
         }
-        return array_sum($methods);
+        return array_sum($ccn);
     }
 }
