@@ -74,6 +74,13 @@ if (!defined('T_DIR')) {
     define('T_DIR', 4);
 }
 
+/**
+ * Define PHP 5.3's 'T_GOTO' token constant.
+ */
+if (!defined('T_GOTO')) {
+    define('T_GOTO', 333);
+}
+
 require_once 'PHP/Depend/ConstantsI.php';
 
 /**

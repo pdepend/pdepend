@@ -799,6 +799,11 @@ interface PHP_Depend_ConstantsI
     const T_DIR = 146;
 
     /**
+     * Marks a 'goto' token.
+     */
+    const T_GOTO = 147;
+
+    /**
      * The default package name.
      */
     const DEFAULT_PACKAGE = '+global';
