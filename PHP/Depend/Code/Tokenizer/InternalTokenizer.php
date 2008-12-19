@@ -224,6 +224,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         '['              =>  self::T_SQUARED_BRACKET_OPEN,
         ']'              =>  self::T_SQUARED_BRACKET_CLOSE,
         'use'            =>  self::T_USE,
+        'goto'           =>  self::T_GOTO,
         'null'           =>  self::T_NULL,
         'self'           =>  self::T_SELF,
         'true'           =>  self::T_TRUE,
