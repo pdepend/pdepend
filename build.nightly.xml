@@ -74,7 +74,7 @@
                        replace="date&gt;${date.now}&lt;/date" />
                 
         <!-- Get build version number -->
-        <buildnumber file="build_number_${version.number}.txt"/>
+        <buildnumber file="build_number_${version.number}.build"/>
         
         <!-- Replace release version number -->
         <replaceregexp file="${basedir}/build/nightly/package.xml"
