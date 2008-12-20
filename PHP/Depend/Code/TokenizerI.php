@@ -50,28 +50,28 @@
  * Define PHP 5.3 __NAMESPACE__ token constant.
  */
 if (!defined('T_NS_C')) {
-    define('T_NS_C', 1);
+    define('T_NS_C', 378);
 }
 
 /**
  * Define PHP 5.3 'use' token constant
  */
 if (!defined('T_USE')) {
-    define('T_USE', 2);
+    define('T_USE', 340);
 }
 
 /**
  * Define PHP 5.3 'namespace' token constant.
  */
 if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 3);
+    define('T_NAMESPACE', 377);
 }
 
 /**
  * Define PHP 5.3's '__DIR__' token constant.
  */
 if (!defined('T_DIR')) {
-    define('T_DIR', 4);
+    define('T_DIR', 379);
 }
 
 /**
