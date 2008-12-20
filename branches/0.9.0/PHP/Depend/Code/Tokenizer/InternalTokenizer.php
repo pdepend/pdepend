@@ -90,6 +90,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         T_EVAL                      =>  self::T_EVAL,
         T_EXIT                      =>  self::T_EXIT,
         T_FILE                      =>  self::T_FILE,
+        T_GOTO                      =>  self::T_GOTO,
         T_LINE                      =>  self::T_LINE,
         T_LIST                      =>  self::T_LIST,
         T_NS_C                      =>  self::T_NS_C,
