@@ -151,27 +151,12 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="Metrics">
-            <dir name="NodeCount">
-              <file name="Analyzer.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="Coupling">
-              <file name="Analyzer.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="CyclomaticComplexity">
-              <file name="Analyzer.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="Hierarchy">
-              <file name="Analyzer.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
             <dir name="NodeLoc">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="NodeCount">
               <file name="Analyzer.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
@@ -199,7 +184,17 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="Inheritance">
+            <dir name="Coupling">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Hierarchy">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="ClassLevel">
               <file name="Analyzer.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
@@ -209,7 +204,17 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="ClassLevel">
+            <dir name="CyclomaticComplexity">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Inheritance">
+              <file name="Analyzer.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="NPathComplexity">
               <file name="Analyzer.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
@@ -223,16 +228,16 @@ and the NDepend metric tool.
             <file name="FilterAwareI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="AbstractAnalyzer.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="ProjectAwareI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="AnalyzerLoader.php" role="php">
+            <file name="AbstractAnalyzer.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="AggregateAnalyzerI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AnalyzerLoader.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="NodeAwareI.php" role="php">
@@ -276,6 +281,9 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="FileUtil.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="MathUtil.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ConfigurationInstance.php" role="php">
@@ -765,6 +773,20 @@ and the NDepend metric tool.
           </file>
         </dir>
         <dir name="Metrics">
+          <dir name="CodeRank">
+            <file name="MethodStrategyTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="PropertyStrategyTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AllTests.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
           <dir name="Coupling">
             <file name="AnalyzerTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -785,17 +807,8 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="CodeRank">
-            <file name="MethodStrategyTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
+          <dir name="NodeLoc">
             <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="PropertyStrategyTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AllTests.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -809,12 +822,12 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="NodeLoc">
+          <dir name="ClassLevel">
             <file name="AnalyzerTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="ClassLevel">
+          <dir name="NPathComplexity">
             <file name="AnalyzerTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -915,7 +928,6 @@ and the NDepend metric tool.
     </filelist>
   </phprelease>
   <changelog>
-  
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -937,7 +949,6 @@ and the NDepend metric tool.
 - Initial release.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -959,7 +970,6 @@ and the NDepend metric tool.
 - Checkout and test cases fixed for windows users. 
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -992,7 +1002,6 @@ and the NDepend metric tool.
 - Pluggable metric analyzer architecture.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -1016,7 +1025,6 @@ and the NDepend metric tool.
 - #24 + There is an endless loop for inline html.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -1041,7 +1049,6 @@ and the NDepend metric tool.
 - #28 + Add option --bad-documentation.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -1066,7 +1073,6 @@ and the NDepend metric tool.
 - #38 + The Logger interface should not force a default ctor-signature.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -1088,6 +1094,5 @@ and the NDepend metric tool.
 - No more features or bug fixes, beta4 seems to be stable.
       </notes>
     </release>
-    
   </changelog>
 </package>

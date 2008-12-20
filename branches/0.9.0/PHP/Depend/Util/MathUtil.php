@@ -36,46 +36,63 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Metrics
+ * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://www.pdepend.org/
  */
 
 /**
- * Marker interface that marks a result set as node metrics aware.
+ * This is a simply utility class that will perform mathematical operations with
+ * bcmath when the extension exists, otherwise it will use default math operations.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Metrics
+ * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://www.pdepend.org/
  */
-interface PHP_Depend_Metrics_NodeAwareI
+final class PHP_Depend_Util_MathUtil
 {
     /**
-     * This method will return an <b>array</b> with all generated metric values
-     * for the node with the given <b>$uuid</b> identifier. If there are no
-     * metrics for the requested node, this method will return an empty <b>array</b>.
+     * This method will multiply the two given operands with the bcmath extension
+     * when available, otherwise it will use the default mathematical operations.
      *
-     * <code>
-     * array(
-     *     'loc'    =>  42,
-     *     'ncloc'  =>  17,
-     *     'cc'     =>  12
-     * )
-     * </code>
+     * @param string $left  The left arithmetic operand.
+     * @param string $right The right arithmetic operand.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
-     * @return array(string=>mixed)
+     * @return string
      */
-    function getNodeMetrics(PHP_Depend_Code_NodeI $node);
+    public static function mul($left, $right)
+    {
+        if (extension_loaded('bcmath')) {
+            return bcmul($left, $right);
+        }
+        return (string) ((int) $left * (int) $right);
+    }
+
+    /**
+     * This method will add the two given operands with the bcmath extension
+     * when available, otherwise it will use the default mathematical operations.
+     *
+     * @param string $left  The left arithmetic operand.
+     * @param string $right The right arithmetic operand.
+     *
+     * @return string
+     */
+    public static function add($left, $right)
+    {
+        if (extension_loaded('bcmath')) {
+            return bcadd($left, $right);
+        }
+        return (string) ((int) $left + (int) $right);
+    }
 }
+?>
