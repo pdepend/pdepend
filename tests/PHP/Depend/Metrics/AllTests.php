@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -62,6 +62,7 @@ require_once dirname(__FILE__) . '/Hierarchy/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/Inheritance/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/NodeCount/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/NodeLoc/AnalyzerTest.php';
+require_once dirname(__FILE__) . '/NPathComplexity/AnalyzerTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Metrics package.
@@ -85,7 +86,7 @@ class PHP_Depend_Metrics_AllTests
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
-    
+
     /**
      * Creates the phpunit test suite for this package.
      *
@@ -104,7 +105,8 @@ class PHP_Depend_Metrics_AllTests
         $suite->addTestSuite('PHP_Depend_Metrics_Inheritance_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_NodeCount_AnalyzerTest');
         $suite->addTestSuite('PHP_Depend_Metrics_NodeLoc_AnalyzerTest');
-        
+        $suite->addTestSuite('PHP_Depend_Metrics_NPathComplexity_AnalyzerTest');
+
         return $suite;
     }
 }
