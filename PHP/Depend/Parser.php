@@ -503,10 +503,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function parseCallable(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
     {
+        $this->_consumeComments($tokens);
         $token    = $this->tokenizer->next();
         $tokens[] = $token;
 
         if ($token[0] === self::T_BITWISE_AND) {
+            $this->_consumeComments($tokens);
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
         }
@@ -547,6 +549,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function parseCallableSignature(array &$tokens, PHP_Depend_Code_AbstractCallable $callable)
     {
+        $this->_consumeComments($tokens);
+
         if ($this->tokenizer->peek() !== self::T_PARENTHESIS_OPEN) {
             // Load invalid token for line number
             $token    = $this->tokenizer->next();
@@ -917,6 +921,26 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
             $callable->setReturnType($this->builder->buildClassOrInterface($type[0]));
         }
+    }
+
+    /**
+     * This method will consume all comment tokens from the token stream.
+     *
+     * @param array &$tokens Optional token storage array.
+     *
+     * @return integer
+     */
+    private function _consumeComments(&$tokens = array())
+    {
+        $comments = array(self::T_COMMENT, self::T_DOC_COMMENT);
+
+        while (($type = $this->tokenizer->peek()) !== self::T_EOF) {
+            if (in_array($type, $comments, true) === false) {
+                break;
+            }
+            $tokens[] = $this->tokenizer->next();
+        }
+        return count($tokens);
     }
 }
 ?>
