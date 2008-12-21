@@ -415,15 +415,16 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $clines = array();
         $elines = array();
 
-        $comment = array(
-            PHP_Depend_Code_TokenizerI::T_COMMENT,
-            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT
-        );
-
         foreach ($tokens as $token) {
-            $lines = count(explode("\n", trim($token[1])));
+            if (strpos($token[1], "\n") === false) {
+                $lines = 1;
+            } else {
+                $lines = count(explode("\n", trim($token[1])));
+            }
 
-            if (in_array($token[0], $comment) === true) {
+            if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT
+             || $token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
+
                 for ($i = 0; $i < $lines; ++$i) {
                     $clines[$token[2] + $i] = true;
                 }
