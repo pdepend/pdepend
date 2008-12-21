@@ -155,7 +155,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/Depend/Parser.php';
         include_once 'PHP/Depend/Code/DefaultBuilder.php';
         include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
-        include_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+        include_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
         include_once 'PHP/Depend/Util/ExcludePathFilter.php';
         include_once 'PHP/Depend/Util/FileFilterIterator.php';
 
@@ -173,7 +173,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $builder = new PHP_Depend_Code_DefaultBuilder();
 
         foreach ($it as $file) {
-            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file);
+            $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer($file);
 
             $parser = new PHP_Depend_Parser($tokenizer, $builder);
             if ($ignoreAnnotations === true) {

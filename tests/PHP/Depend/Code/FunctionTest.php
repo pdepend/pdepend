@@ -112,10 +112,10 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     public function testGetTokens()
     {
         $tokens = array(
-            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, '$foo', 3),
-            array(PHP_Depend_Code_TokenizerI::T_EQUAL, '=', 3),
-            array(PHP_Depend_Code_TokenizerI::T_LNUMBER, '42', 3),
-            array(PHP_Depend_Code_TokenizerI::T_SEMICOLON, ';', 3),
+            array(PHP_Depend_TokenizerI::T_VARIABLE, '$foo', 3),
+            array(PHP_Depend_TokenizerI::T_EQUAL, '=', 3),
+            array(PHP_Depend_TokenizerI::T_LNUMBER, '42', 3),
+            array(PHP_Depend_TokenizerI::T_SEMICOLON, ';', 3),
         );
         
         $function = new PHP_Depend_Code_Function('function1', 42);

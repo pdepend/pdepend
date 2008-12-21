@@ -260,12 +260,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
     {
         $callT  = array(
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_VARIABLE
         );
         $chainT = array(
-            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
-            PHP_Depend_Code_TokenizerI::T_OBJECT_OPERATOR,
+            PHP_Depend_TokenizerI::T_DOUBLE_COLON,
+            PHP_Depend_TokenizerI::T_OBJECT_OPERATOR,
         );
 
         $called = array();
@@ -273,7 +273,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $tokens = $callable->getTokens();
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             // Skip non parenthesis tokens
-            if ($tokens[$i][0] !== PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN) {
+            if ($tokens[$i][0] !== PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN) {
                 continue;
             }
             // Skip first token
@@ -300,7 +300,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                     $called[$identifier] = true;
                     ++$this->_calls;
                 }
-            } else if ($tokens[$i - 2][0] !== PHP_Depend_Code_TokenizerI::T_NEW) {
+            } else if ($tokens[$i - 2][0] !== PHP_Depend_TokenizerI::T_NEW) {
                 $called[$tokens[$i - 1][1]] = true;
                 ++$this->_calls;
             }

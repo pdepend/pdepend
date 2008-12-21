@@ -11,7 +11,7 @@ abstract class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserBacktickExpressionBug15()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/15.php';
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         $builder    = new PHP_Depend_Code_DefaultBuilder();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
         

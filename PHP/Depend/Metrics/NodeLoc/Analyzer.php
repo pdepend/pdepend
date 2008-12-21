@@ -419,8 +419,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
             // Check for single line token
             if (strpos($token[1], "\n") === false) {
-                if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT
-                 || $token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
+                if ($token[0] === PHP_Depend_TokenizerI::T_COMMENT
+                 || $token[0] === PHP_Depend_TokenizerI::T_DOC_COMMENT) {
 
                     $clines[$token[2]] = true;
                 } else {
@@ -430,8 +430,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             }
 
             $lines = substr_count(rtrim($token[1]), "\n") + 1;
-            if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT
-             || $token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
+            if ($token[0] === PHP_Depend_TokenizerI::T_COMMENT
+             || $token[0] === PHP_Depend_TokenizerI::T_DOC_COMMENT) {
                 for ($i = 0; $i < $lines; ++$i) {
                     $clines[$token[2] + $i] = true;
                 }
