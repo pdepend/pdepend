@@ -48,6 +48,7 @@
 
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Util/MathUtil.php';
 
@@ -68,6 +69,7 @@ require_once 'PHP/Depend/Util/MathUtil.php';
 class PHP_Depend_Metrics_NPathComplexity_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
+               PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI
 {
     /**
