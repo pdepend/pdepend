@@ -46,7 +46,7 @@
  */
 
 require_once 'PHP/Depend/Code/NodeBuilderI.php';
-require_once 'PHP/Depend/Code/TokenizerI.php';
+require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
 require_once 'PHP/Depend/Metrics/ListenerI.php';
 
@@ -86,20 +86,20 @@ interface PHP_Depend_ProcessListenerI
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    function startFileParsing(PHP_Depend_Code_TokenizerI $tokenizer);
+    function startFileParsing(PHP_Depend_TokenizerI $tokenizer);
     
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    function endFileParsing(PHP_Depend_Code_TokenizerI $tokenizer);
+    function endFileParsing(PHP_Depend_TokenizerI $tokenizer);
     
     /**
      * Is called when PDepend starts the analyzing process.
