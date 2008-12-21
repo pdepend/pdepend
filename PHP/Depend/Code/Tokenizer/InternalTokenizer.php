@@ -232,8 +232,8 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         'array'          =>  self::T_ARRAY,
         'false'          =>  self::T_FALSE,
         'parent'         =>  self::T_PARENT,
-        '__DIR__'        =>  self::T_DIR,
-        '__NAMESPACE__'  =>  self::T_NS_C,
+        '__dir__'        =>  self::T_DIR,
+        '__namespace__'  =>  self::T_NS_C,
     );
 
     /**
@@ -329,7 +329,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
      */
     public function peek()
     {
-        if ($this->index < $this->count) {
+        if (isset($this->tokens[$this->index])) {
             return $this->tokens[$this->index][0];
         }
         return self::T_EOF;
@@ -379,11 +379,14 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         // Number of skippend lines
         $skippedLines = 0;
 
+        $literalMap = self::$literalMap;
+        $tokenMap   = self::$tokenMap;
+
         while (($token = current($tokens)) !== false) {
             $newToken = null;
             if (is_string($token)) {
-                if (isset(self::$literalMap[$token])) {
-                    $newToken = array(self::$literalMap[$token], $token);
+                if (isset($literalMap[$token])) {
+                    $newToken = array($literalMap[$token], $token);
                 } else {
                     // This should never happen
                     // @codeCoverageIgnoreStart
@@ -391,34 +394,16 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
                     // @codeCoverageIgnoreEnd
                 }
             } else if ($token[0] === T_CLOSE_TAG) {
-                // Create a new token instance
-                $newToken = array(self::$tokenMap[$token[0]], $token[1]);
-
-                // Fetch next token
-                $token = (array) next($tokens);
-
-                // Skipp all non open tags
-                while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
-                       $token[0] !== T_OPEN_TAG &&
-                       $token[0] !== false) {
-
-                    // Count skipped lines
-                    $tokenContent  = (isset($token[1]) ? $token[1] : $token[0]);
-                    $skippedLines += substr_count($tokenContent, "\n");
-
-                    $token = (array) next($tokens);
-                }
-
-                // Set internal pointer one back
-                prev($tokens);
+                $newToken      = array($tokenMap[$token[0]], $token[1]);
+                $skippedLines += $this->_skipNonePhpTokens($tokens);
             } else if ($token[0] === T_WHITESPACE) {
                 $line += substr_count($token[1], "\n");
             } else {
                 $value = strtolower($token[1]);
-                if (isset(self::$literalMap[$value])) {
-                    $newToken = array(self::$literalMap[$value], $value);
-                } else if (isset(self::$tokenMap[$token[0]])) {
-                    $newToken = array(self::$tokenMap[$token[0]], $token[1]);
+                if (isset($literalMap[$value])) {
+                    $newToken = array($literalMap[$value], $value);
+                } else if (isset($tokenMap[$token[0]])) {
+                    $newToken = array($tokenMap[$token[0]], $token[1]);
                 } else {
                     // This should never happen
                     // @codeCoverageIgnoreStart
@@ -445,6 +430,40 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer
         }
 
         $this->count = count($this->tokens);
+    }
+
+    /**
+     * This method skips all tokens until it reaches the a opening tag or the
+     * end of the token stream. This method will return the number of skipped
+     * lines.
+     *
+     * @param array $tokens Reference to the current token stream.
+     *
+     * @return integer
+     */
+    private function _skipNonePhpTokens(array &$tokens)
+    {
+        $skippedLines = 0;
+
+        // Fetch next token
+        $token = (array) next($tokens);
+
+        // Skipp all non open tags
+        while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
+               $token[0] !== T_OPEN_TAG &&
+               $token[0] !== false) {
+
+            // Count skipped lines
+            $tokenContent  = (isset($token[1]) ? $token[1] : $token[0]);
+            $skippedLines += substr_count($tokenContent, "\n");
+
+            $token = (array) next($tokens);
+        }
+
+        // Set internal pointer one back
+        prev($tokens);
+
+        return $skippedLines;
     }
 
     /**
