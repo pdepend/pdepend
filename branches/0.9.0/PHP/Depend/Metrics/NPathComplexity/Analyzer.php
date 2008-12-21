@@ -776,16 +776,17 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     private function _current()
     {
         for (; $this->_index < $this->_length; ++$this->_index) {
-            if ($this->_isComment() === false) {
-                break;
+
+            $token = $this->_tokens[$this->_index];
+
+            if ($token[0] === PHP_Depend_ConstantsI::T_COMMENT
+             || $token[0] === PHP_Depend_ConstantsI::T_DOC_COMMENT) {
+
+                continue;
             }
+            return $token;
         }
-
-        if (!isset($this->_tokens[$this->_index])) {
-            return false;
-        }
-
-        return $this->_tokens[$this->_index];
+        return false;
     }
 
     /**
@@ -800,21 +801,6 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
             ++$this->_index;
         }
         return $this->_current();
-    }
-
-    /**
-     * Checks the current token against the comment token types and returns
-     * <b>true</b> when it is a comment token, otherwise the return value will
-     * be <b>false</b>.
-     *
-     * @return boolean
-     */
-    private function _isComment()
-    {
-        $type = $this->_tokens[$this->_index][0];
-
-        return ($type === PHP_Depend_ConstantsI::T_COMMENT
-             || $type === PHP_Depend_ConstantsI::T_DOC_COMMENT);
     }
 }
 ?>
