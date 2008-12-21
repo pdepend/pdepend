@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
-require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
@@ -286,7 +286,7 @@ class PHP_Depend
 
         foreach ($iterator as $file) {
 
-            $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer($file);
+            $tokenizer = new PHP_Depend_Tokenizer_Internal($file);
             $parser    = new PHP_Depend_Parser($tokenizer, $this->nodeBuilder);
 
             // Disable annotation parsing?

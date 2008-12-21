@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -45,9 +45,9 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/Internal.php';
 
 /**
  * Abstract test case implementation for the PHP_Depend package.
@@ -60,18 +60,18 @@ require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
+class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the tokenizer with a source file that contains only classes.
      *
      * @return void
      */
-    public function testInternalTokenizerWithClasses()
+    public function testInternalWithClasses()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/classes.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        
+        $sourceFile = realpath(dirname(__FILE__) . '/_code/classes.php');
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
@@ -108,26 +108,27 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE
         );
-        
+
         $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
-        
-        foreach ($tokens as $token) {
-            $t = $tokenizer->next();
-            $this->assertEquals($token, $t[0]);
+
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
+            $this->assertEquals($token[0], array_shift($tokens));
         }
+
+        $this->assertEquals(0, count($tokens));
     }
- 
+
     /**
      * Tests the tokenizer with a source file that contains mixed content of
      * classes and functions.
      *
      * @return void
-     */   
-    public function testInternalTokenizerWithMixedContent()
+     */
+    public function testInternalWithMixedContent()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        
+        $sourceFile = realpath(dirname(__FILE__) . '/_code/func_class.php');
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
         $tokens = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
             array(PHP_Depend_TokenizerI::T_COMMENT, 2),
@@ -156,40 +157,42 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 15),
             array(PHP_Depend_TokenizerI::T_CLOSE_TAG, 16)
         );
-        
+
         $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
-        
+
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             list($tok, $line) = array_shift($tokens);
             $this->assertEquals($tok, $token[0]);
             $this->assertEquals($line, $token[2]);
         }
+
+        $this->assertEquals(0, count($tokens));
     }
-    
+
     /**
      * Tests that the tokenizer returns <b>T_BOF</b> if there is no previous
      * token.
      *
      * @return void
      */
-    public function testInternalTokenizerReturnsBOFTokenForPrevCall()
+    public function testInternalReturnsBOFTokenForPrevCall()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        
+        $sourceFile = realpath(dirname(__FILE__) . '/_code/func_class.php');
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
         $this->assertEquals(PHP_Depend_TokenizerI::T_BOF, $tokenizer->prev());
     }
-    
+
     /**
      * Tests the tokenizer with a combination of procedural code and functions.
      *
      * @return void
      */
-    public function testInternalTokenizerWithProceduralCodeAndFunction()
+    public function testInternalWithProceduralCodeAndFunction()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_code.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        
+        $sourceFile = realpath(dirname(__FILE__) . '/_code/func_code.php');
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_FUNCTION,
@@ -225,25 +228,27 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_SEMICOLON,
             PHP_Depend_TokenizerI::T_CLOSE_TAG
         );
-        
+
         $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
-        
+
         while ($tokenizer->peek() !== PHP_Depend_TokenizerI::T_EOF) {
             $token = $tokenizer->next();
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
+
+        $this->assertEquals(0, count($tokens));
     }
-    
+
     /**
      * Test case for undetected static method call added.
      *
      * @return void
      */
-    public function testInternalTokenizerStaticCallBug01()
+    public function testInternalStaticCallBug01()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/bugs/01.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/01.php';
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
@@ -263,17 +268,19 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
             PHP_Depend_TokenizerI::T_SEMICOLON,
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,            
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
         );
-        
+
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
+
+        $this->assertEquals(0, count($tokens));
     }
-    
+
     /**
      * Tests that the tokenizer handles the following syntax correct.
-     * 
+     *
      * <code>
      * class Foo {
      *     public function formatBug09($x) {
@@ -281,16 +288,16 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      *     }
      * }
      * </code>
-     * 
+     *
      * http://bugs.xplib.de/index.php?do=details&task_id=9&project=3
-     * 
+     *
      * @return void
      */
-    public function testInternalTokenizerDollarSyntaxBug09()
+    public function testInternalDollarSyntaxBug09()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/bugs/09.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/09.php';
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
@@ -312,14 +319,16 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
             PHP_Depend_TokenizerI::T_SEMICOLON,
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,            
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
         );
-        
+
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
+
+        $this->assertEquals(0, count($tokens));
     }
-    
+
     /**
      * Test case for the inline html bug.
      *
@@ -327,9 +336,9 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */
     public function testTokenizerWithInlineHtmlBug24()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/bugs/24.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/24.php';
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
         $tokens = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
             array(PHP_Depend_TokenizerI::T_CLASS, 2),
@@ -362,14 +371,16 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, 13),
             array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 14),
             array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 16),
-            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 17),         
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 17),
         );
-        
+
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             $expected = array_shift($tokens);
-            
+
             $this->assertEquals($expected[0], $token[0]);
             $this->assertEquals($expected[1], $token[2]);
         }
+
+        $this->assertEquals(0, count($tokens));
     }
 }

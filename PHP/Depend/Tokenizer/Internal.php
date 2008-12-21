@@ -63,7 +63,7 @@ require_once 'PHP/Depend/TokenizerI.php';
  * @link       http://www.manuel-pichler.de/
  *
  */
-class PHP_Depend_Tokenizer_InternalTokenizer
+class PHP_Depend_Tokenizer_Internal
     implements PHP_Depend_TokenizerI
 {
     /**
