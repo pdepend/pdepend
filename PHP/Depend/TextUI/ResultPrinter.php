@@ -80,11 +80,11 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      *
      * @return void
      */
-    public function startParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    public function startParseProcess(PHP_Depend_BuilderI $builder)
     {
         $this->_count = 0;
 
@@ -94,11 +94,11 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      *
      * @return void
      */
-    public function endParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    public function endParseProcess(PHP_Depend_BuilderI $builder)
     {
         $this->finish();
     }

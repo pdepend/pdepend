@@ -68,6 +68,6 @@ final class PHP_Depend_Code_NodeIterator_DefaultPackageFilter
      */
     public function __construct()
     {
-        parent::__construct(array(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE));
+        parent::__construct(array(PHP_Depend_BuilderI::DEFAULT_PACKAGE));
     }
 }

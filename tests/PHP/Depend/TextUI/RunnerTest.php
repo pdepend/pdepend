@@ -237,7 +237,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 
         $package = $code->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
-        $this->assertEquals(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE, $package->getName());
+        $this->assertEquals(PHP_Depend_BuilderI::DEFAULT_PACKAGE, $package->getName());
 
         $this->assertEquals(8, $package->getClasses()->count());
         $this->assertEquals(3, $package->getInterfaces()->count());
