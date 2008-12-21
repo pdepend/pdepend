@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeBuilderI.php';
+require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
 require_once 'PHP/Depend/Metrics/ListenerI.php';
@@ -68,20 +68,20 @@ interface PHP_Depend_ProcessListenerI
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    function startParseProcess(PHP_Depend_Code_NodeBuilderI $builder);
+    function startParseProcess(PHP_Depend_BuilderI $builder);
     
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    function endParseProcess(PHP_Depend_Code_NodeBuilderI $builder);
+    function endParseProcess(PHP_Depend_BuilderI $builder);
     
     /**
      * Is called when PDepend starts parsing of a new file.

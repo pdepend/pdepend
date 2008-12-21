@@ -65,7 +65,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * The used node builder.
      *
-     * @var PHP_Depend_Code_DefaultBuilder $builder
+     * @var PHP_Depend_Builder_Default $builder
      */
     protected $builder = null;
 
@@ -113,7 +113,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
 
         $source        = dirname(__FILE__) . '/../../_code/mixed_code.php';
         $tokenizer     = new PHP_Depend_Tokenizer_InternalTokenizer($source);
-        $this->builder = new PHP_Depend_Code_DefaultBuilder();
+        $this->builder = new PHP_Depend_Builder_Default();
         $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
 
         $parser->parse();

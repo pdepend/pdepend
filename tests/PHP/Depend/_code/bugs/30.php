@@ -12,7 +12,7 @@ abstract class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/15.php';
         $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
-        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
         
         $parser->parse();

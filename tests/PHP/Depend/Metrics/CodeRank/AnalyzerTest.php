@@ -49,7 +49,7 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
@@ -124,7 +124,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
             new PHP_Depend_Util_FileExtensionFilter(array('php'))
         );
 
-        $builder = new PHP_Depend_Code_DefaultBuilder();
+        $builder = new PHP_Depend_Builder_Default();
 
         foreach ($files as $file) {
 
