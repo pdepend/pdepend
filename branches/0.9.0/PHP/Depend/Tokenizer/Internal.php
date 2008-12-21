@@ -303,7 +303,7 @@ class PHP_Depend_Tokenizer_Internal
     public function setSourceFile($sourceFile)
     {
         $this->sourceFile = new PHP_Depend_Code_File($sourceFile);
-        $this->tokenize();
+        $this->_tokenize();
         $this->sourceFile->setTokens($this->tokens);
     }
 
@@ -355,7 +355,7 @@ class PHP_Depend_Tokenizer_Internal
      *
      * @return void
      */
-    protected function tokenize()
+    private function _tokenize()
     {
         $this->tokens = array();
         $this->index  = 0;
@@ -374,7 +374,7 @@ class PHP_Depend_Tokenizer_Internal
         reset($tokens);
 
         // The current line number
-        $line = 1;
+        $startLine = 1;
 
         // Number of skippend lines
         $skippedLines = 0;
@@ -382,7 +382,7 @@ class PHP_Depend_Tokenizer_Internal
         $literalMap = self::$literalMap;
         $tokenMap   = self::$tokenMap;
 
-        while (($token = current($tokens)) !== false) {
+        while ($token = current($tokens)) {
             $newToken = null;
             if (is_string($token)) {
                 if (isset($literalMap[$token])) {
@@ -397,7 +397,7 @@ class PHP_Depend_Tokenizer_Internal
                 $newToken      = array($tokenMap[$token[0]], $token[1]);
                 $skippedLines += $this->_skipNonePhpTokens($tokens);
             } else if ($token[0] === T_WHITESPACE) {
-                $line += substr_count($token[1], "\n");
+                $startLine += substr_count($token[1], "\n");
             } else {
                 $value = strtolower($token[1]);
                 if (isset($literalMap[$value])) {
@@ -412,15 +412,16 @@ class PHP_Depend_Tokenizer_Internal
                 }
             }
 
-            if ($newToken !== null) {
+            if ($newToken) {
                 // Set token line number
-                $newToken[2] = $line;
+                $newToken[2] = $startLine;
+                $newToken[3] = $startLine + substr_count(rtrim($newToken[1]), "\n");
 
                 // Store token in internal ist
                 $this->tokens[] = $newToken;
 
                 // Count new line tokens.
-                $line += substr_count($newToken[1], "\n") + $skippedLines;
+                $startLine = $startLine + substr_count($newToken[1], "\n") + $skippedLines;
             }
 
             next($tokens);
