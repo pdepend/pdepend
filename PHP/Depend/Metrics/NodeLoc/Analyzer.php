@@ -416,12 +416,20 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $elines = array();
 
         foreach ($tokens as $token) {
+
+            // Check for single line token
             if (strpos($token[1], "\n") === false) {
-                $lines = 1;
-            } else {
-                $lines = count(explode("\n", trim($token[1])));
+                if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT
+                 || $token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
+
+                    $clines[$token[2]] = true;
+                } else {
+                    $elines[$token[2]] = true;
+                }
+                continue;
             }
 
+            $lines = substr_count(rtrim($token[1]), "\n") + 1;
             if ($token[0] === PHP_Depend_Code_TokenizerI::T_COMMENT
              || $token[0] === PHP_Depend_Code_TokenizerI::T_DOC_COMMENT) {
 
