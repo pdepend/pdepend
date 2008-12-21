@@ -95,7 +95,7 @@ require_once 'PHP/Depend/ConstantsI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_TokenizerI extends PHP_Depend_ConstantsI
+interface PHP_Depend_TokenizerI extends PHP_Depend_ConstantsI
 {
     /**
      * Returns the name of the source file.
@@ -105,7 +105,7 @@ interface PHP_Depend_Code_TokenizerI extends PHP_Depend_ConstantsI
     function getSourceFile();
 
     /**
-     * Returns the next token or {@link PHP_Depend_Code_TokenizerI::T_EOF} if
+     * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
      * there is no next token.
      *
      * @return array|integer
@@ -113,7 +113,7 @@ interface PHP_Depend_Code_TokenizerI extends PHP_Depend_ConstantsI
     function next();
 
     /**
-     * Returns the next token type or {@link PHP_Depend_Code_TokenizerI::T_EOF} if
+     * Returns the next token type or {@link PHP_Depend_TokenizerI::T_EOF} if
      * there is no next token.
      *
      * @return integer
@@ -121,7 +121,7 @@ interface PHP_Depend_Code_TokenizerI extends PHP_Depend_ConstantsI
     function peek();
 
     /**
-     * Returns the previous token type or {@link PHP_Depend_Code_TokenizerI::T_BOF}
+     * Returns the previous token type or {@link PHP_Depend_TokenizerI::T_BOF}
      * if there is no previous token.
      *
      * @return integer

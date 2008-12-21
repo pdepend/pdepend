@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
@@ -286,7 +286,7 @@ class PHP_Depend
 
         foreach ($iterator as $file) {
 
-            $tokenizer = new PHP_Depend_Code_Tokenizer_InternalTokenizer($file);
+            $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer($file);
             $parser    = new PHP_Depend_Parser($tokenizer, $this->nodeBuilder);
 
             // Disable annotation parsing?
@@ -484,11 +484,11 @@ class PHP_Depend
     /**
      * Sends the start file parsing event.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      *
      * @return void
      */
-    protected function fireStartFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    protected function fireStartFileParsing(PHP_Depend_TokenizerI $tokenizer)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startFileParsing($tokenizer);
@@ -498,11 +498,11 @@ class PHP_Depend
     /**
      * Sends the end file parsing event.
      *
-     * @param PHP_Depend_Code_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      *
      * @return void
      */
-    protected function fireEndFileParsing(PHP_Depend_Code_TokenizerI $tokenizer)
+    protected function fireEndFileParsing(PHP_Depend_TokenizerI $tokenizer)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endFileParsing($tokenizer);

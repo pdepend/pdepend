@@ -48,7 +48,7 @@
 require_once 'PHP/Depend/ConstantsI.php';
 require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 require_once 'PHP/Depend/Code/NodeBuilderI.php';
-require_once 'PHP/Depend/Code/TokenizerI.php';
+require_once 'PHP/Depend/TokenizerI.php';
 
 /**
  * The php source parser.
@@ -112,7 +112,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The used code tokenizer.
      *
-     * @var PHP_Depend_Code_TokenizerI $tokenizer
+     * @var PHP_Depend_TokenizerI $tokenizer
      */
     protected $tokenizer = null;
 
@@ -157,10 +157,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Constructs a new source parser.
      *
-     * @param PHP_Depend_Code_TokenizerI   $tokenizer The used code tokenizer.
+     * @param PHP_Depend_TokenizerI   $tokenizer The used code tokenizer.
      * @param PHP_Depend_Code_NodeBuilderI $builder   The used node builder.
      */
-    public function __construct(PHP_Depend_Code_TokenizerI $tokenizer,
+    public function __construct(PHP_Depend_TokenizerI $tokenizer,
                                 PHP_Depend_Code_NodeBuilderI $builder)
     {
         $this->tokenizer = $tokenizer;

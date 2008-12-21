@@ -47,7 +47,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
 
 /**
  * Abstract test case implementation for the PHP_Depend package.
@@ -70,43 +70,43 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     public function testInternalTokenizerWithClasses()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/../_code/classes.php');
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
-            PHP_Depend_Code_TokenizerI::T_OPEN_TAG,
-            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT,
-            PHP_Depend_Code_TokenizerI::T_ABSTRACT,
-            PHP_Depend_Code_TokenizerI::T_CLASS,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CLASS,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_EXTENDS,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PUBLIC,
-            PHP_Depend_Code_TokenizerI::T_FUNCTION,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_EQUAL,
-            PHP_Depend_Code_TokenizerI::T_CONSTANT_ENCAPSED_STRING,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_EQUAL,
-            PHP_Depend_Code_TokenizerI::T_TRUE,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE
+            PHP_Depend_TokenizerI::T_OPEN_TAG,
+            PHP_Depend_TokenizerI::T_DOC_COMMENT,
+            PHP_Depend_TokenizerI::T_ABSTRACT,
+            PHP_Depend_TokenizerI::T_CLASS,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_TokenizerI::T_CLASS,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_EXTENDS,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_PUBLIC,
+            PHP_Depend_TokenizerI::T_FUNCTION,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_DOUBLE_COLON,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_EQUAL,
+            PHP_Depend_TokenizerI::T_CONSTANT_ENCAPSED_STRING,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_EQUAL,
+            PHP_Depend_TokenizerI::T_TRUE,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE
         );
         
         $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
@@ -126,40 +126,40 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     public function testInternalTokenizerWithMixedContent()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
-            array(PHP_Depend_Code_TokenizerI::T_OPEN_TAG, 1),
-            array(PHP_Depend_Code_TokenizerI::T_COMMENT, 2),
-            array(PHP_Depend_Code_TokenizerI::T_FUNCTION, 5),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 5),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, 5),
-            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, 5),
-            array(PHP_Depend_Code_TokenizerI::T_COMMA, 5),
-            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, 5),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, 5),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN, 5),
-            array(PHP_Depend_Code_TokenizerI::T_NEW, 6),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 6),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, 6),
-            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, 6),
-            array(PHP_Depend_Code_TokenizerI::T_COMMA, 6),
-            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, 6),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, 6),
-            array(PHP_Depend_Code_TokenizerI::T_SEMICOLON, 6),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, 7),
-            array(PHP_Depend_Code_TokenizerI::T_DOC_COMMENT, 10),
-            array(PHP_Depend_Code_TokenizerI::T_CLASS, 13),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 13),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN, 13),
-            array(PHP_Depend_Code_TokenizerI::T_COMMENT, 14),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, 15),
-            array(PHP_Depend_Code_TokenizerI::T_CLOSE_TAG, 16)
+            array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
+            array(PHP_Depend_TokenizerI::T_COMMENT, 2),
+            array(PHP_Depend_TokenizerI::T_FUNCTION, 5),
+            array(PHP_Depend_TokenizerI::T_STRING, 5),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, 5),
+            array(PHP_Depend_TokenizerI::T_VARIABLE, 5),
+            array(PHP_Depend_TokenizerI::T_COMMA, 5),
+            array(PHP_Depend_TokenizerI::T_VARIABLE, 5),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, 5),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 5),
+            array(PHP_Depend_TokenizerI::T_NEW, 6),
+            array(PHP_Depend_TokenizerI::T_STRING, 6),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, 6),
+            array(PHP_Depend_TokenizerI::T_VARIABLE, 6),
+            array(PHP_Depend_TokenizerI::T_COMMA, 6),
+            array(PHP_Depend_TokenizerI::T_VARIABLE, 6),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, 6),
+            array(PHP_Depend_TokenizerI::T_SEMICOLON, 6),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 7),
+            array(PHP_Depend_TokenizerI::T_DOC_COMMENT, 10),
+            array(PHP_Depend_TokenizerI::T_CLASS, 13),
+            array(PHP_Depend_TokenizerI::T_STRING, 13),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 13),
+            array(PHP_Depend_TokenizerI::T_COMMENT, 14),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 15),
+            array(PHP_Depend_TokenizerI::T_CLOSE_TAG, 16)
         );
         
         $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
         
-        while (($token = $tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             list($tok, $line) = array_shift($tokens);
             $this->assertEquals($tok, $token[0]);
             $this->assertEquals($line, $token[2]);
@@ -175,9 +175,9 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     public function testInternalTokenizerReturnsBOFTokenForPrevCall()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         
-        $this->assertEquals(PHP_Depend_Code_TokenizerI::T_BOF, $tokenizer->prev());
+        $this->assertEquals(PHP_Depend_TokenizerI::T_BOF, $tokenizer->prev());
     }
     
     /**
@@ -188,47 +188,47 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     public function testInternalTokenizerWithProceduralCodeAndFunction()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_code.php');
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
-            PHP_Depend_Code_TokenizerI::T_OPEN_TAG,
-            PHP_Depend_Code_TokenizerI::T_FUNCTION,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_EQUAL,
-            PHP_Depend_Code_TokenizerI::T_NEW,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_EQUAL,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_CONSTANT_ENCAPSED_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_ARRAY,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_COMMA,
-            PHP_Depend_Code_TokenizerI::T_CONSTANT_ENCAPSED_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_CLOSE_TAG
+            PHP_Depend_TokenizerI::T_OPEN_TAG,
+            PHP_Depend_TokenizerI::T_FUNCTION,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_EQUAL,
+            PHP_Depend_TokenizerI::T_NEW,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_EQUAL,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_CONSTANT_ENCAPSED_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_ARRAY,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_COMMA,
+            PHP_Depend_TokenizerI::T_CONSTANT_ENCAPSED_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_CLOSE_TAG
         );
         
         $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
         
-        while ($tokenizer->peek() !== PHP_Depend_Code_TokenizerI::T_EOF) {
+        while ($tokenizer->peek() !== PHP_Depend_TokenizerI::T_EOF) {
             $token = $tokenizer->next();
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
@@ -242,31 +242,31 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     public function testInternalTokenizerStaticCallBug01()
     {
         $sourceFile = dirname(__FILE__) . '/../_code/bugs/01.php';
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
-            PHP_Depend_Code_TokenizerI::T_OPEN_TAG,
-            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT,
-            PHP_Depend_Code_TokenizerI::T_CLASS,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PUBLIC,
-            PHP_Depend_Code_TokenizerI::T_FUNCTION,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,            
+            PHP_Depend_TokenizerI::T_OPEN_TAG,
+            PHP_Depend_TokenizerI::T_DOC_COMMENT,
+            PHP_Depend_TokenizerI::T_CLASS,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_PUBLIC,
+            PHP_Depend_TokenizerI::T_FUNCTION,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_DOUBLE_COLON,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,            
         );
         
-        while (($token = $tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
     }
@@ -289,33 +289,33 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     public function testInternalTokenizerDollarSyntaxBug09()
     {
         $sourceFile = dirname(__FILE__) . '/../_code/bugs/09.php';
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
-            PHP_Depend_Code_TokenizerI::T_OPEN_TAG,
-            PHP_Depend_Code_TokenizerI::T_DOC_COMMENT,
-            PHP_Depend_Code_TokenizerI::T_CLASS,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_PUBLIC,
-            PHP_Depend_Code_TokenizerI::T_FUNCTION,
-            PHP_Depend_Code_TokenizerI::T_STRING,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_SELF, // SELF
-            PHP_Depend_Code_TokenizerI::T_DOUBLE_COLON,
-            PHP_Depend_Code_TokenizerI::T_DOLLAR,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN,
-            PHP_Depend_Code_TokenizerI::T_VARIABLE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_SEMICOLON,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,
-            PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE,            
+            PHP_Depend_TokenizerI::T_OPEN_TAG,
+            PHP_Depend_TokenizerI::T_DOC_COMMENT,
+            PHP_Depend_TokenizerI::T_CLASS,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_PUBLIC,
+            PHP_Depend_TokenizerI::T_FUNCTION,
+            PHP_Depend_TokenizerI::T_STRING,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_SELF, // SELF
+            PHP_Depend_TokenizerI::T_DOUBLE_COLON,
+            PHP_Depend_TokenizerI::T_DOLLAR,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN,
+            PHP_Depend_TokenizerI::T_VARIABLE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_TokenizerI::T_SEMICOLON,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
+            PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,            
         );
         
-        while (($token = $tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             $this->assertEquals(array_shift($tokens), $token[0]);
         }
     }
@@ -328,44 +328,44 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     public function testTokenizerWithInlineHtmlBug24()
     {
         $sourceFile = dirname(__FILE__) . '/../_code/bugs/24.php';
-        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
-            array(PHP_Depend_Code_TokenizerI::T_OPEN_TAG, 1),
-            array(PHP_Depend_Code_TokenizerI::T_CLASS, 2),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 2),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN, 3),
-            array(PHP_Depend_Code_TokenizerI::T_FUNCTION, 4),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 4),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, 4),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, 4),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN, 5),
-            array(PHP_Depend_Code_TokenizerI::T_CLOSE_TAG, 6),
-            array(PHP_Depend_Code_TokenizerI::T_OPEN_TAG, 7) ,
-            array(PHP_Depend_Code_TokenizerI::T_ECHO, 7),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 7),
-            array(PHP_Depend_Code_TokenizerI::T_SEMICOLON, 7),
-            array(PHP_Depend_Code_TokenizerI::T_CLOSE_TAG,  7),
-            array(PHP_Depend_Code_TokenizerI::T_OPEN_TAG, 8),
-            array(PHP_Depend_Code_TokenizerI::T_ECHO, 8),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 8),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, 8),
-            array(PHP_Depend_Code_TokenizerI::T_VARIABLE, 8),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, 8),
-            array(PHP_Depend_Code_TokenizerI::T_SEMICOLON, 8),
-            array(PHP_Depend_Code_TokenizerI::T_CLOSE_TAG, 8),
-            array(PHP_Depend_Code_TokenizerI::T_OPEN_TAG, 10),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, 11),
-            array(PHP_Depend_Code_TokenizerI::T_FUNCTION, 13),
-            array(PHP_Depend_Code_TokenizerI::T_STRING, 13),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_OPEN, 13),
-            array(PHP_Depend_Code_TokenizerI::T_PARENTHESIS_CLOSE, 13),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_OPEN, 14),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, 16),
-            array(PHP_Depend_Code_TokenizerI::T_CURLY_BRACE_CLOSE, 17),         
+            array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
+            array(PHP_Depend_TokenizerI::T_CLASS, 2),
+            array(PHP_Depend_TokenizerI::T_STRING, 2),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 3),
+            array(PHP_Depend_TokenizerI::T_FUNCTION, 4),
+            array(PHP_Depend_TokenizerI::T_STRING, 4),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, 4),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, 4),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 5),
+            array(PHP_Depend_TokenizerI::T_CLOSE_TAG, 6),
+            array(PHP_Depend_TokenizerI::T_OPEN_TAG, 7) ,
+            array(PHP_Depend_TokenizerI::T_ECHO, 7),
+            array(PHP_Depend_TokenizerI::T_STRING, 7),
+            array(PHP_Depend_TokenizerI::T_SEMICOLON, 7),
+            array(PHP_Depend_TokenizerI::T_CLOSE_TAG,  7),
+            array(PHP_Depend_TokenizerI::T_OPEN_TAG, 8),
+            array(PHP_Depend_TokenizerI::T_ECHO, 8),
+            array(PHP_Depend_TokenizerI::T_STRING, 8),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, 8),
+            array(PHP_Depend_TokenizerI::T_VARIABLE, 8),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, 8),
+            array(PHP_Depend_TokenizerI::T_SEMICOLON, 8),
+            array(PHP_Depend_TokenizerI::T_CLOSE_TAG, 8),
+            array(PHP_Depend_TokenizerI::T_OPEN_TAG, 10),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 11),
+            array(PHP_Depend_TokenizerI::T_FUNCTION, 13),
+            array(PHP_Depend_TokenizerI::T_STRING, 13),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, 13),
+            array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, 13),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 14),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 16),
+            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 17),         
         );
         
-        while (($token = $tokenizer->next()) !== PHP_Depend_Code_TokenizerI::T_EOF) {
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             $expected = array_shift($tokens);
             
             $this->assertEquals($expected[0], $token[0]);
