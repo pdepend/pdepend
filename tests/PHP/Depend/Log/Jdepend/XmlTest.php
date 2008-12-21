@@ -51,7 +51,7 @@ require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/DefaultBuilder.php';
-require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
 require_once 'PHP/Depend/Log/Jdepend/Xml.php';
@@ -113,7 +113,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
 
         foreach ($files as $file) {
             $path = realpath($file->getPathname());
-            $tokz = new PHP_Depend_Code_Tokenizer_InternalTokenizer($path);
+            $tokz = new PHP_Depend_Tokenizer_InternalTokenizer($path);
 
             $parser = new PHP_Depend_Parser($tokz, $builder);
             $parser->parse();
