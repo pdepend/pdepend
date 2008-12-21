@@ -153,7 +153,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
         include_once 'PHP/Depend/Parser.php';
-        include_once 'PHP/Depend/Code/DefaultBuilder.php';
+        include_once 'PHP/Depend/Builder/Default.php';
         include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
         include_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
         include_once 'PHP/Depend/Util/ExcludePathFilter.php';
@@ -170,7 +170,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $it = new ArrayIterator(array($fileOrDirectory));
         }
 
-        $builder = new PHP_Depend_Code_DefaultBuilder();
+        $builder = new PHP_Depend_Builder_Default();
 
         foreach ($it as $file) {
             $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer($file);

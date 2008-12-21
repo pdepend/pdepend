@@ -99,7 +99,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTest(PHP_Depend_Code_NodeIterator_AllTests::suite());
         $suite->addTest(PHP_Depend_Code_NodeVisitor_AllTests::suite());
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
-        $suite->addTestSuite('PHP_Depend_Code_DefaultBuilderTest');
+        $suite->addTestSuite('PHP_Depend_Builder_DefaultTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
         $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');

@@ -50,7 +50,7 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
 
 require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
@@ -109,7 +109,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
             new PHP_Depend_Util_FileExtensionFilter(array('php'))
         );
 
-        $builder = new PHP_Depend_Code_DefaultBuilder();
+        $builder = new PHP_Depend_Builder_Default();
 
         foreach ($files as $file) {
             $path = realpath($file->getPathname());

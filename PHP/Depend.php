@@ -46,7 +46,7 @@
  */
 
 require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/NodeVisitorI.php';
 require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
@@ -83,7 +83,7 @@ class PHP_Depend
     /**
      * The used code node builder.
      *
-     * @var PHP_Depend_Code_NodeBuilderI $nodeBuilder
+     * @var PHP_Depend_BuilderI $nodeBuilder
      */
     protected $nodeBuilder = null;
 
@@ -280,7 +280,7 @@ class PHP_Depend
             ));
         }
 
-        $this->nodeBuilder = new PHP_Depend_Code_DefaultBuilder();
+        $this->nodeBuilder = new PHP_Depend_Builder_Default();
 
         $this->fireStartParseProcess($this->nodeBuilder);
 
@@ -456,11 +456,11 @@ class PHP_Depend
     /**
      * Send the start parsing process event.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      *
      * @return void
      */
-    protected function fireStartParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    protected function fireStartParseProcess(PHP_Depend_BuilderI $builder)
     {
         foreach ($this->_listeners as $listener) {
             $listener->startParseProcess($builder);
@@ -470,11 +470,11 @@ class PHP_Depend
     /**
      * Send the end parsing process event.
      *
-     * @param PHP_Depend_Code_NodeBuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      *
      * @return void
      */
-    protected function fireEndParseProcess(PHP_Depend_Code_NodeBuilderI $builder)
+    protected function fireEndParseProcess(PHP_Depend_BuilderI $builder)
     {
         foreach ($this->_listeners as $listener) {
             $listener->endParseProcess($builder);
