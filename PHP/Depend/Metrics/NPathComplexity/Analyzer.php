@@ -811,12 +811,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      */
     private function _isComment()
     {
-        $commentTokens = array(
-            PHP_Depend_ConstantsI::T_COMMENT,
-            PHP_Depend_ConstantsI::T_DOC_COMMENT
-        );
+        $type = $this->_tokens[$this->_index][0];
 
-        return in_array($this->_tokens[$this->_index][0], $commentTokens, true);
+        return ($type === PHP_Depend_ConstantsI::T_COMMENT
+             || $type === PHP_Depend_ConstantsI::T_DOC_COMMENT);
     }
 }
 ?>
