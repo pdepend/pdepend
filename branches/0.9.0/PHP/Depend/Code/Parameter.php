@@ -55,13 +55,13 @@ require_once 'PHP/Depend/Code/TypeAwareI.php';
  *
  * <code>
  * <?php
- * class PHP_Depend_Code_NodeBuilderI
+ * class PHP_Depend_BuilderI
  * {
  *     public function buildNode($name, $line, PHP_Depend_Code_File $file) {
  *     }
  * }
  *
- * function parse(PHP_Depend_Code_NodeBuilderI $builder, $file) {
+ * function parse(PHP_Depend_BuilderI $builder, $file) {
  * }
  * </code>
  *

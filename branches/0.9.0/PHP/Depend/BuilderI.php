@@ -60,7 +60,7 @@ require_once 'PHP/Depend/ConstantsI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeBuilderI
+interface PHP_Depend_BuilderI
     extends PHP_Depend_ConstantsI, IteratorAggregate
 {
     /**

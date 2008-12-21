@@ -48,7 +48,7 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeBuilderI.php';
+require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
@@ -71,7 +71,7 @@ class PHP_Depend_Code_NodeIterator_DefaultPackageFilterTest extends PHP_Depend_A
     {
         $in1 = new PHP_Depend_Code_Package('in1');
         $in2 = new PHP_Depend_Code_Package('in2');
-        $out = new PHP_Depend_Code_Package(PHP_Depend_Code_NodeBuilderI::DEFAULT_PACKAGE);
+        $out = new PHP_Depend_Code_Package(PHP_Depend_BuilderI::DEFAULT_PACKAGE);
         
         $packages = array($in1, $in2, $out);
         $iterator = new PHP_Depend_Code_NodeIterator($packages);

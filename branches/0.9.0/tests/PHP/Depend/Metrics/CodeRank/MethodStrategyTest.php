@@ -48,7 +48,7 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeBuilderI.php';
+require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Metrics/CodeRank/MethodStrategy.php';
 
 /**

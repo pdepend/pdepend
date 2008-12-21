@@ -54,7 +54,7 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
  *
  * <code>
  * <?php
- * class PHP_Depend_Code_NodeBuilderI
+ * class PHP_Depend_BuilderI
  * {
  *     const DEFAULT_PACKAGE = '+global';
  * }

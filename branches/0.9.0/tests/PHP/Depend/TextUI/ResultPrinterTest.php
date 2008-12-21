@@ -48,7 +48,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/DefaultBuilder.php';
+require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
@@ -76,7 +76,7 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterOutputForSingleEntry()
     {
         // Create dummy objects
-        $builder   = new PHP_Depend_Code_DefaultBuilder();
+        $builder   = new PHP_Depend_Builder_Default();
         $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer(__FILE__);
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();
@@ -100,7 +100,7 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterOutputForMultipleEntries()
     {
         // Create dummy objects
-        $builder   = new PHP_Depend_Code_DefaultBuilder();
+        $builder   = new PHP_Depend_Builder_Default();
         $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer(__FILE__);
         
         $printer = new PHP_Depend_TextUI_ResultPrinter();
