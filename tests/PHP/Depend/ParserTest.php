@@ -49,7 +49,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/Internal.php';
 
 /**
  * Test case implementation for the PHP_Depend code parser.
@@ -72,7 +72,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParseMixedCode()
     {
         $sourceFile = dirname(__FILE__) . '/_code/mixed_code.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -121,7 +121,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             "Invalid state, unclosed class body in file '{$sourceFile}'."
         );
 
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -143,7 +143,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             "Invalid state, unclosed function body in '{$sourceFile}'."
         );
 
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -164,7 +164,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         );
 
         $sourceFile = dirname(__FILE__) . '/_code/invalid_function1.txt';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -186,7 +186,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             "Invalid token \"Bar\" on line 3 in file: {$sourceFile}."
         );
 
-        $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder   = new PHP_Depend_Builder_Default();
         $parser    = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -202,7 +202,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserStaticCallBug01()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/01.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -230,7 +230,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserReferenceReturnValueBug08()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/08.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -258,7 +258,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectFunctionLineNumber()
     {
         $sourceFile = dirname(__FILE__) . '/_code/mixed_code.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -279,7 +279,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectFunctionTokens()
     {
         $sourceFile = dirname(__FILE__) . '/_code/mixed_code.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -320,7 +320,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectFileComment()
     {
         $sourceFile = dirname(__FILE__) . '/_code/coupling/class.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -361,7 +361,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserDoesntReuseTypeComment()
     {
         $sourceFile = dirname(__FILE__) . '/_code/comments/constant.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -388,7 +388,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserDoesntReuseFunctionComment()
     {
         $sourceFile = dirname(__FILE__) . '/_code/comments/function.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -517,7 +517,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectMethodLineNumber()
     {
         $sourceFile = dirname(__FILE__) . '/_code/mixed_code.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -573,7 +573,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserParseNewInstancePHP53()
     {
         $sourceFile = dirname(__FILE__) . '/_code/php-5.3/new.txt';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -596,7 +596,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectFunctionDocComment()
     {
         $sourceFile = dirname(__FILE__) . '/_code/comments/function.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -705,7 +705,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectMethodDocComment()
     {
         $sourceFile = dirname(__FILE__) . '/_code/comments/method.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -824,7 +824,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectPropertyDocComment()
     {
         $sourceFile = dirname(__FILE__) . '/_code/comments/property.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -951,7 +951,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectClassOrInterfaceDocComment()
     {
         $sourceFile = dirname(__FILE__) . '/_code/class_and_interface_comment.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -983,7 +983,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSubpackageSupport()
     {
         $sourceFile = dirname(__FILE__) . '/_code/package_subpackage_support.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1002,7 +1002,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsFileLevelFunctionPackage()
     {
         $sourceFile = dirname(__FILE__) . '/_code/package_file_level.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1181,7 +1181,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testVariableClassNameBug10()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/10.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1200,7 +1200,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserCurlyBraceBug11()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/11.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1228,7 +1228,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserCurlyBraceBug12()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/12.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1254,7 +1254,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserBacktickExpressionBug15()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/15.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1278,7 +1278,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectTypeTokensIssue30()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/30.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1451,7 +1451,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserDetectsTypeWithinInstanceOfOperatorIssue16()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/16-1.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1491,7 +1491,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserIgnoresDynamicInstanceOfOperatorIssue16()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/16-2.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1526,7 +1526,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserDetectsTypeWithinCatchBlockIssue17()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/17-1.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1557,7 +1557,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserDetectsOnlyTypeHintsWithinTheFunctionSignatureBug33()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/33-1.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1586,7 +1586,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserDetectsOnlyTypeHintsWithinTheMethodSignatureBug33()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/33-2.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 
@@ -1743,7 +1743,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     protected function parseMixedCode()
     {
         $sourceFile = dirname(__FILE__) . '/_code/mixed_code.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_InternalTokenizer($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
         $builder    = new PHP_Depend_Builder_Default();
         $parser     = new PHP_Depend_Parser($tokenizer, $builder);
 

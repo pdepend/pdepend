@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
@@ -129,7 +129,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         foreach ($files as $file) {
 
             $path = realpath($file->getPathname());
-            $tokz = new PHP_Depend_Tokenizer_InternalTokenizer($path);
+            $tokz = new PHP_Depend_Tokenizer_Internal($path);
 
             $parser = new PHP_Depend_Parser($tokz, $builder);
             $parser->parse();
