@@ -74,6 +74,11 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     const DAMPING_FACTOR = 0.85;
 
     /**
+     * Number of loops for the code range calculation.
+     */
+    const ALGORITHM_LOOPS = 25;
+
+    /**
      * Option key for the code rank mode.
      */
     const STRATEGY_OPTION = 'coderank-mode';
@@ -221,7 +226,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
             $ranks[$name] = 1;
         }
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < self::ALGORITHM_LOOPS; $i++) {
             foreach ($this->nodes as $name => $info) {
                 $rank = 0;
                 foreach ($info[$id1] as $ref) {
