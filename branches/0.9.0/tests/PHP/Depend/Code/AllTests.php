@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -57,7 +57,6 @@ require_once dirname(__FILE__) . '/DefaultBuilderTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/InterfaceTest.php';
-require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
 require_once dirname(__FILE__) . '/MethodTest.php';
 require_once dirname(__FILE__) . '/NodeIteratorTest.php';
 require_once dirname(__FILE__) . '/PackageTest.php';
@@ -87,7 +86,7 @@ class PHP_Depend_Code_AllTests
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
-    
+
     /**
      * Creates the phpunit test suite for this package.
      *
@@ -103,7 +102,6 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
         $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');
-        $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
         $suite->addTestSuite('PHP_Depend_Code_MethodTest');
         $suite->addTestSuite('PHP_Depend_Code_NodeIteratorTest');
         $suite->addTestSuite('PHP_Depend_Code_PackageTest');

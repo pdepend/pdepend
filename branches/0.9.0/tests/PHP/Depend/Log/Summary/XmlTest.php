@@ -52,7 +52,7 @@ require_once dirname(__FILE__) . '/AnalyzerProjectAwareDummy.php';
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Tokenizer/InternalTokenizer.php';
+require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Log/Summary/Xml.php';
 
 /**
@@ -102,7 +102,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $this->testFileName = dirname(__FILE__) . '/../../_code/mixed_code.php';
         $this->testFileName = realpath($this->testFileName);
 
-        $tokenizer = new PHP_Depend_Tokenizer_InternalTokenizer($this->testFileName);
+        $tokenizer = new PHP_Depend_Tokenizer_Internal($this->testFileName);
         $builder   = new PHP_Depend_Builder_Default();
         $parser    = new PHP_Depend_Parser($tokenizer, $builder);
 
