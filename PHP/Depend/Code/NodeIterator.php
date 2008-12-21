@@ -65,6 +65,13 @@ require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
 class PHP_Depend_Code_NodeIterator implements Iterator, Countable
 {
     /**
+     * The unfiltered input array of {@link PHP_Depend_Code_NodeI} objects.
+     *
+     * @var array(PHP_Depend_Code_NodeI) $_input
+     */
+    private $_input = array();
+
+    /**
      * List of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
      * @var array(PHP_Depend_Code_NodeI) $_nodes
@@ -94,10 +101,10 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
             if (!($node instanceof PHP_Depend_Code_NodeI)) {
                 throw new RuntimeException('Invalid object given.');
             }
-            $this->_nodes[$node->getName()] = $node;
+            $this->_input[$node->getName()] = $node;
         }
         // Sort by name
-        ksort($this->_nodes);
+        ksort($this->_input);
 
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
 
@@ -105,7 +112,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         $this->_filter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
         $this->_filter->addFilter($staticFilter);
 
-        $this->rewind();
+        $this->_init();
     }
 
     /**
@@ -120,26 +127,17 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function addFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
     {
         $this->_filter->addFilter($filter);
-
-        $this->rewind();
+        $this->_init();
     }
 
     /**
      * Returns the number of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
      * @return integer
-     * @todo TODO: Find a better way to implement counting
      */
     public function count()
     {
-        $nodes = $this->_nodes;
-        $count = 0;
-        foreach ($nodes as $node) {
-            if ($this->_filter->accept($node)) {
-                ++$count;
-            }
-        }
-        return $count;
+        return count($this->_nodes);
     }
 
     /**
@@ -170,7 +168,6 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function next()
     {
         next($this->_nodes);
-        $this->_filterNext();
     }
 
     /**
@@ -181,7 +178,6 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function rewind()
     {
         reset($this->_nodes);
-        $this->_filterNext();
     }
 
     /**
@@ -195,21 +191,25 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     }
 
     /**
-     * Moves the internal pointer to the next valid node. If no filter is
-     * registered, this method will simply return.
+     * This method initializes a filtered list of nodes. If no filter is
+     * registered, this method will simply use the input node list.
      *
      * @return void
      */
-    private function _filterNext()
+    private function _init()
     {
-        if ($this->_filter->count() > 0) {
-            while (is_object($node = current($this->_nodes)) === true) {
-                if ($this->_filter->accept($node) === true) {
-                    break;
-                }
-                next($this->_nodes);
+        if ($this->_filter->count() === 0) {
+            $this->_nodes = $this->_input;
+            return;
+        }
+
+        $this->_nodes = array();
+        foreach ($this->_input as $name => $node) {
+            if ($this->_filter->accept($node) === true) {
+                $this->_nodes[$name] = $node;
             }
         }
 
+        reset($this->_nodes);
     }
 }
