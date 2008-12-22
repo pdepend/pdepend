@@ -86,9 +86,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     /**
      * All found nodes.
      *
-     * @var array(string=>array) $nodes
+     * @var array(string=>array) $_nodes
      */
-    protected $nodes = array();
+    private $_nodes = array();
 
     /**
      * List of node collect strategies.
@@ -158,8 +158,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
 
             // Collect all nodes
             foreach ($this->_strategies as $strategy) {
-                $collected   = $strategy->getCollectedNodes();
-                $this->nodes = array_merge_recursive($collected, $this->nodes);
+                $collected    = $strategy->getCollectedNodes();
+                $this->_nodes = array_merge_recursive($collected, $this->_nodes);
             }
 
             // Init node metrics
@@ -196,7 +196,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function buildCodeRankMetrics()
     {
-        foreach ($this->nodes as $uuid => $info) {
+        foreach ($this->_nodes as $uuid => $info) {
             $this->_nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
         }
         foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
@@ -219,19 +219,19 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     {
         $d = self::DAMPING_FACTOR;
 
-        $nodes = $this->nodes;
+        $nodes = $this->_nodes;
         $ranks = array();
 
-        foreach (array_keys($this->nodes) as $name) {
+        foreach (array_keys($this->_nodes) as $name) {
             $ranks[$name] = 1;
         }
 
         for ($i = 0; $i < self::ALGORITHM_LOOPS; $i++) {
-            foreach ($this->nodes as $name => $info) {
+            foreach ($this->_nodes as $name => $info) {
                 $rank = 0;
                 foreach ($info[$id1] as $ref) {
                     $pr = $ranks[$ref];
-                    $c  = count($this->nodes[$ref][$id2]);
+                    $c  = count($this->_nodes[$ref][$id2]);
 
                     $rank += ($pr / $c);
                 }
