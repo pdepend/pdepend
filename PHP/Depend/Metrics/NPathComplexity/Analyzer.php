@@ -237,7 +237,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $npath = '1';
         if (($token = $this->_current()) !== false) {
-            if ($token[0] ===  PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
+            if ($token->type ===  PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
                 $npath = $this->_calculateScope();
             } else {
                 $npath = $this->_calculateStatement();
@@ -258,10 +258,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $scope = 0;
 
         while (($token = $this->_current()) !== false) {
-            if ($token[0] === PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
+            if ($token->type === PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
                 $this->_next();
                 ++$scope;
-            } else if ($token[0] === PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE) {
+            } else if ($token->type === PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE) {
                 $this->_next();
                 --$scope;
             }
@@ -287,7 +287,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $token = $this->_current();
         while ($token !== false) {
 
-            switch ($token[0]) {
+            switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_IF:
             case PHP_Depend_ConstantsI::T_ELSEIF:
@@ -361,14 +361,16 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
                                                $this->_calculateScopeOrStatement());
 
         $value = '1';
-        $token = $this->_current();
-        if ($token[0] === PHP_Depend_ConstantsI::T_ELSE) {
-            $this->_next();
-            $value = $this->_calculateScopeOrStatement();
-        } else if ($token[0] === PHP_Depend_ConstantsI::T_ELSEIF) {
-            $value = $this->_calculateStatement();
+        if ($token = $this->_current()) {
+            if ($token->type === PHP_Depend_ConstantsI::T_ELSE) {
+                $this->_next();
+                $value = $this->_calculateScopeOrStatement();
+            } else if ($token->type === PHP_Depend_ConstantsI::T_ELSEIF) {
+                $value = $this->_calculateStatement();
+            }
+        } else {
+            // FIXME: Log error
         }
-
         return PHP_Depend_Util_MathUtil::add($npath, $value);
     }
 
@@ -512,7 +514,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $npath = '0';
         while (($token = $this->_next()) !== false) {
-            switch ($token[0]) {
+            switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_QUESTION_MARK:
                 $compl = $this->_calculateConditionalStatement();
@@ -561,7 +563,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $case  = '0';
         $npath = $this->_sumExpressionComplexity();
         while (($token = $this->_current()) !== false) {
-            switch ($token[0]) {
+            switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN:
                 ++$scope;
@@ -635,7 +637,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
             $npath = PHP_Depend_Util_MathUtil::add($compl, $npath);
 
             $token = $this->_current();
-            if ($token[0] === PHP_Depend_ConstantsI::T_CATCH) {
+            if ($token->type === PHP_Depend_ConstantsI::T_CATCH) {
                 continue;
             }
             break;
@@ -666,7 +668,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $colon = 0;
 
         while (($token = $this->_current()) !== false) {
-            switch ($token[0]) {
+            switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN:
             case PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN:
@@ -739,7 +741,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $scope = 0;
 
         while (($token = $this->_current()) !== false) {
-            switch ($token[0]) {
+            switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN:
                 ++$scope;
@@ -779,8 +781,8 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
 
             $token = $this->_tokens[$this->_index];
 
-            if ($token[0] === PHP_Depend_ConstantsI::T_COMMENT
-             || $token[0] === PHP_Depend_ConstantsI::T_DOC_COMMENT) {
+            if ($token->type === PHP_Depend_ConstantsI::T_COMMENT
+             || $token->type === PHP_Depend_ConstantsI::T_DOC_COMMENT) {
 
                 continue;
             }

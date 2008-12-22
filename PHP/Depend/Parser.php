@@ -195,14 +195,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         while (($token = $this->tokenizer->next()) !== self::T_EOF) {
 
-            switch ($token[0]) {
+            switch ($token->type) {
             case self::T_ABSTRACT:
                 $this->abstract = true;
                 break;
 
             case self::T_DOC_COMMENT:
-                $comment       = $token[1];
-                $this->package = $this->parsePackage($token[1]);
+                $comment       = $token->image;
+                $this->package = $this->parsePackage($token->image);
 
                 // Check for doc level comment
                 if ($this->globalPackage === self::DEFAULT_PACKAGE
@@ -210,7 +210,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                     $this->globalPackage = $this->package;
 
-                    $this->tokenizer->getSourceFile()->setDocComment($token[1]);
+                    $this->tokenizer->getSourceFile()->setDocComment($token->image);
 
                     // TODO: What happens if there is no file comment, we will
                     //       reuse the same comment for a class, interface or
@@ -225,11 +225,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $qualifiedName = sprintf('%s%s%s',
                                     $this->package,
                                     $this->packageSeparator,
-                                    $token[1]);
+                                    $token->image);
 
-                $interface = $this->builder->buildInterface($qualifiedName, $token[2]);
+                $interface = $this->builder->buildInterface($qualifiedName, $token->startLine);
                 $interface->setSourceFile($this->tokenizer->getSourceFile());
-                $interface->setStartLine($token[2]);
+                $interface->setStartLine($token->startLine);
                 $interface->setDocComment($comment);
                 $interface->setPosition($typePosition++);
 
@@ -250,11 +250,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $qualifiedName = sprintf('%s%s%s',
                                     $this->package,
                                     $this->packageSeparator,
-                                    $token[1]);
+                                    $token->image);
 
-                $class = $this->builder->buildClass($qualifiedName, $token[2]);
+                $class = $this->builder->buildClass($qualifiedName, $token->startLine);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
-                $class->setStartLine($token[2]);
+                $class->setStartLine($token->startLine);
                 $class->setAbstract($this->abstract);
                 $class->setDocComment($comment);
                 $class->setPosition($typePosition++);
@@ -314,8 +314,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
-            if ($token[0] === self::T_STRING) {
-                $dependency = $this->builder->buildInterface($token[1]);
+            if ($token->type === self::T_STRING) {
+                $dependency = $this->builder->buildInterface($token->image);
                 $interface->addDependency($dependency);
             }
         }
@@ -338,13 +338,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
-            if ($token[0] === self::T_IMPLEMENTS) {
+            if ($token->type === self::T_IMPLEMENTS) {
                 $implements = true;
-            } else if ($token[0] === self::T_STRING) {
+            } else if ($token->type === self::T_STRING) {
                 if ($implements) {
-                    $dependency = $this->builder->buildInterface($token[1]);
+                    $dependency = $this->builder->buildInterface($token->image);
                 } else {
-                    $dependency = $this->builder->buildClass($token[1]);
+                    $dependency = $this->builder->buildClass($token->image);
                 }
                 // Set class dependency
                 $class->addDependency($dependency);
@@ -380,7 +380,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         while ($token !== self::T_EOF) {
 
-            switch ($token[0]) {
+            switch ($token->type) {
             case self::T_FUNCTION:
                 $method = $this->parseCallable($tokens, $type);
                 $method->setDocComment($comment);
@@ -396,10 +396,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_VARIABLE:
-                $property = $this->builder->buildProperty($token[1], $token[2]);
+                $property = $this->builder->buildProperty($token->image, $token->startLine);
                 $property->setDocComment($comment);
                 $property->setVisibility($visibilty);
-                $property->setEndLine($token[2]);
+                $property->setEndLine($token->startLine);
 
                 $this->_prepareProperty($property);
 
@@ -417,10 +417,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token    = $this->tokenizer->next();
                 $tokens[] = $token;
 
-                $constant = $this->builder->buildTypeConstant($token[1]);
+                $constant = $this->builder->buildTypeConstant($token->image);
                 $constant->setDocComment($comment);
-                $constant->setStartLine($token[2]);
-                $constant->setEndLine($token[2]);
+                $constant->setStartLine($token->startLine);
+                $constant->setEndLine($token->startLine);
 
                 $type->addConstant($constant);
 
@@ -462,7 +462,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_DOC_COMMENT:
-                $comment = $token[1];
+                $comment = $token->image;
                 break;
 
             default:
@@ -473,7 +473,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             if ($curly === 0) {
                 // Set end line number
-                $type->setEndLine($token[2]);
+                $type->setEndLine($token->startLine);
                 // Set type tokens
                 $type->setTokens($tokens);
                 // Stop processing
@@ -507,7 +507,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token    = $this->tokenizer->next();
         $tokens[] = $token;
 
-        if ($token[0] === self::T_BITWISE_AND) {
+        if ($token->type === self::T_BITWISE_AND) {
             $this->_consumeComments($tokens);
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
@@ -515,7 +515,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $callable = null;
         if ($parent === null) {
-            $callable = $this->builder->buildFunction($token[1], $token[2]);
+            $callable = $this->builder->buildFunction($token->image, $token->startLine);
 
             $package = $this->globalPackage;
             if ($this->package !== self::DEFAULT_PACKAGE) {
@@ -524,7 +524,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $this->builder->buildPackage($package)->addFunction($callable);
         } else {
-            $callable = $this->builder->buildMethod($token[1], $token[2]);
+            $callable = $this->builder->buildMethod($token->image, $token->startLine);
             $parent->addMethod($callable);
         }
 
@@ -533,7 +533,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Get function body dependencies
             $this->parseCallableBody($tokens, $callable);
         } else {
-            $callable->setEndLine($token[2]);
+            $callable->setEndLine($token->startLine);
         }
 
         return $callable;
@@ -560,8 +560,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             throw new RuntimeException(
                 sprintf(
                     'Invalid token "%s" on line %s in file: %s.',
-                    $token[1],
-                    $token[2],
+                    $token->image,
+                    $token->startLine,
                     $this->tokenizer->getSourceFile()
                 )
             );
@@ -576,7 +576,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokens[] = $token;
 
-            switch ($token[0]) {
+            switch ($token->type) {
             case self::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
                 $parameterType = null;
@@ -604,11 +604,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 }
 
                 // Create an instance for this parameter
-                $parameterType = $this->builder->buildClassOrInterface($token[1]);
+                $parameterType = $this->builder->buildClassOrInterface($token->image);
                 break;
 
             case self::T_VARIABLE:
-                $parameter = $this->builder->buildParameter($token[1], $token[2]);
+                $parameter = $this->builder->buildParameter($token->image, $token->startLine);
                 $parameter->setPosition($parameterPosition++);
 
                 if ($parameterType !== null) {
@@ -647,7 +647,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokens[] = $token = $this->tokenizer->next();
 
-            switch ($token[0]) {
+            switch ($token->type) {
             case self::T_CATCH:
                 // Skip open parenthesis
                 $tokens[] = $this->tokenizer->next();
@@ -674,7 +674,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
                         // Create a dependency class
-                        $dependency = $this->builder->buildClassOrInterface($token[1]);
+                        $dependency = $this->builder->buildClassOrInterface($token->image);
 
                         $callable->addDependency($dependency);
                     }
@@ -691,17 +691,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_DOUBLE_QUOTE:
             case self::T_BACKTICK:
-                $this->_skipEncapsultedBlock($tokens, $token[0]);
+                $this->_skipEncapsultedBlock($tokens, $token->type);
                 break;
 
             default:
-                // throw new RuntimeException("Unknown token '{$token[1]}'.");
+                // throw new RuntimeException("Unknown token '{$token->image}'.");
                 // TODO: Handle/log unused tokens
             }
 
             if ($curly === 0) {
                 // Set end line number
-                $callable->setEndLine($token[2]);
+                $callable->setEndLine($token->startLine);
                 // Set all tokens for this function
                 $callable->setTokens($tokens);
                 // Stop processing
@@ -789,8 +789,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
-            if ($token[0] === self::T_STRING) {
-                $parts[] = $token[1];
+            if ($token->type === self::T_STRING) {
+                $parts[] = $token->image;
             }
         }
         return $parts;

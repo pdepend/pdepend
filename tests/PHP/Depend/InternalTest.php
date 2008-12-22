@@ -112,7 +112,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
         $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
 
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $this->assertEquals($token[0], array_shift($tokens));
+            $this->assertEquals($token->type, array_shift($tokens));
         }
 
         $this->assertEquals(0, count($tokens));
@@ -162,8 +162,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
 
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             list($tok, $line) = array_shift($tokens);
-            $this->assertEquals($tok, $token[0]);
-            $this->assertEquals($line, $token[2]);
+            $this->assertEquals($tok, $token->type);
+            $this->assertEquals($line, $token->startLine);
         }
 
         $this->assertEquals(0, count($tokens));
@@ -233,7 +233,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
 
         while ($tokenizer->peek() !== PHP_Depend_TokenizerI::T_EOF) {
             $token = $tokenizer->next();
-            $this->assertEquals(array_shift($tokens), $token[0]);
+            $this->assertEquals(array_shift($tokens), $token->type);
         }
 
         $this->assertEquals(0, count($tokens));
@@ -272,7 +272,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
         );
 
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $this->assertEquals(array_shift($tokens), $token[0]);
+            $this->assertEquals(array_shift($tokens), $token->type);
         }
 
         $this->assertEquals(0, count($tokens));
@@ -323,7 +323,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
         );
 
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $this->assertEquals(array_shift($tokens), $token[0]);
+            $this->assertEquals(array_shift($tokens), $token->type);
         }
 
         $this->assertEquals(0, count($tokens));
@@ -377,8 +377,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
         while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
             $expected = array_shift($tokens);
 
-            $this->assertEquals($expected[0], $token[0]);
-            $this->assertEquals($expected[1], $token[2]);
+            $this->assertEquals($expected[0], $token->type);
+            $this->assertEquals($expected[1], $token->startLine);
         }
 
         $this->assertEquals(0, count($tokens));

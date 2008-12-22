@@ -295,7 +295,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
 
         $ccn = 1;
         foreach ($tokens as $token) {
-            if (in_array($token[0], $countingTokens) === true) {
+            if (in_array($token->type, $countingTokens) === true) {
                 ++$ccn;
             }
         }
@@ -331,7 +331,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
 
         $ccn2 = 1;
         foreach ($tokens as $token) {
-            if (in_array($token[0], $countingTokens) === true) {
+            if (in_array($token->type, $countingTokens) === true) {
                 ++$ccn2;
             }
         }
