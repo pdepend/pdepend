@@ -133,6 +133,19 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getDependencies()
     {
+        $dependencies = $this->getUnfilteredRawDependencies();
+        return new PHP_Depend_Code_NodeIterator($dependencies);
+    }
+
+    /**
+     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
+     * objects this function depends on. This method is only for internal usage.
+     *
+     * @return array(PHP_Depend_Code_AbstractType)
+     * @access private
+     */
+    public function getUnfilteredRawDependencies()
+    {
         $dependencies = $this->dependencies;
         foreach ($this->_parameters as $parameter) {
             // Skip all scalar parameters
@@ -144,8 +157,7 @@ abstract class PHP_Depend_Code_AbstractCallable
                 $dependencies[] = $type;
             }
         }
-
-        return new PHP_Depend_Code_NodeIterator($dependencies);
+        return $dependencies;
     }
 
     /**
