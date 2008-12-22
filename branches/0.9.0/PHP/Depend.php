@@ -76,30 +76,30 @@ class PHP_Depend
     /**
      * List of source directories.
      *
-     * @var array(string) $directories
+     * @var array(string) $_directories
      */
-    protected $directories = array();
+    private $_directories = array();
 
     /**
      * The used code node builder.
      *
-     * @var PHP_Depend_BuilderI $nodeBuilder
+     * @var PHP_Depend_BuilderI $_builder
      */
-    protected $nodeBuilder = null;
+    private $_builder = null;
 
     /**
      * Generated {@link PHP_Depend_Code_Package} objects.
      *
-     * @var Iterator $packages
+     * @var Iterator $_packages
      */
-    protected $packages = null;
+    private $_packages = null;
 
     /**
      * List of all registered {@link PHP_Depend_Log_LoggerI} instances.
      *
-     * @var array(PHP_Depend_Log_LoggerI) $loggers
+     * @var array(PHP_Depend_Log_LoggerI) $_loggers
      */
-    protected $loggers = array();
+    private $_loggers = array();
 
     /**
      * A composite filter for input files.
@@ -167,7 +167,7 @@ class PHP_Depend
             throw new RuntimeException("Invalid directory '{$directory}' added.");
         }
 
-        $this->directories[] = $dir;
+        $this->_directories[] = $dir;
     }
 
     /**
@@ -179,7 +179,7 @@ class PHP_Depend
      */
     public function addLogger(PHP_Depend_Log_LoggerI $logger)
     {
-        $this->loggers[] = $logger;
+        $this->_loggers[] = $logger;
     }
 
     /**
@@ -263,7 +263,7 @@ class PHP_Depend
      */
     public function analyze()
     {
-        if (count($this->directories) === 0) {
+        if (count($this->_directories) === 0) {
             throw new RuntimeException('No source directory set.');
         }
 
@@ -272,7 +272,7 @@ class PHP_Depend
 
         $iterator = new AppendIterator();
 
-        foreach ($this->directories as $directory) {
+        foreach ($this->_directories as $directory) {
             $iterator->append(new PHP_Depend_Util_FileFilterIterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($directory)
@@ -280,14 +280,14 @@ class PHP_Depend
             ));
         }
 
-        $this->nodeBuilder = new PHP_Depend_Builder_Default();
+        $this->_builder = new PHP_Depend_Builder_Default();
 
-        $this->fireStartParseProcess($this->nodeBuilder);
+        $this->fireStartParseProcess($this->_builder);
 
         foreach ($iterator as $file) {
 
             $tokenizer = new PHP_Depend_Tokenizer_Internal($file);
-            $parser    = new PHP_Depend_Parser($tokenizer, $this->nodeBuilder);
+            $parser    = new PHP_Depend_Parser($tokenizer, $this->_builder);
 
             // Disable annotation parsing?
             if ($this->_withoutAnnotations === true) {
@@ -299,7 +299,7 @@ class PHP_Depend
             $this->fireEndFileParsing($tokenizer);
         }
 
-        $this->fireEndParseProcess($this->nodeBuilder);
+        $this->fireEndParseProcess($this->_builder);
 
         // Initialize defaul filters
         if ($this->_supportBadDocumentation === false) {
@@ -314,7 +314,7 @@ class PHP_Depend
         $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
         $staticFilter->addFilter($this->_codeFilter);
 
-        if ($this->nodeBuilder->getPackages()->count() === 0) {
+        if ($this->_builder->getPackages()->count() === 0) {
             $message = "The parser doesn't detect package informations "
                      . "within the analyzed project, please check the "
                      . "documentation blocks for @package-annotations or use "
@@ -344,14 +344,14 @@ class PHP_Depend
                 $staticFilter->addFilter($this->_codeFilter);
             }
 
-            $analyzer->analyze($this->nodeBuilder->getPackages());
+            $analyzer->analyze($this->_builder->getPackages());
 
             // Remove filters if this analyzer is filter aware
             if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
                 $staticFilter->removeFilter($this->_codeFilter);
             }
 
-            foreach ($this->loggers as $logger) {
+            foreach ($this->_loggers as $logger) {
                 $logger->log($analyzer);
             }
         }
@@ -361,11 +361,11 @@ class PHP_Depend
         // Set global filter for logging
         $staticFilter->addFilter($this->_codeFilter);
 
-        $packages = $this->nodeBuilder->getPackages();
+        $packages = $this->_builder->getPackages();
 
         $this->fireStartLogProcess();
 
-        foreach ($this->loggers as $logger) {
+        foreach ($this->_loggers as $logger) {
             // Check for code aware loggers
             if ($logger instanceof PHP_Depend_Log_CodeAwareI) {
                 $logger->setCode($packages);
@@ -378,7 +378,7 @@ class PHP_Depend
         // Remove global filter
         // $staticFilter->removeFilter($this->_codeFilter);
 
-        $this->packages = $packages;
+        $this->_packages = $packages;
 
         return $packages;
     }
@@ -390,13 +390,13 @@ class PHP_Depend
      */
     public function countClasses()
     {
-        if ($this->packages === null) {
+        if ($this->_packages === null) {
             $msg = 'countClasses() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
 
         $classes = 0;
-        foreach ($this->packages as $package) {
+        foreach ($this->_packages as $package) {
             $classes += $package->getTypes()->count();
         }
         return $classes;
@@ -409,13 +409,13 @@ class PHP_Depend
      */
     public function countPackages()
     {
-        if ($this->packages === null) {
+        if ($this->_packages === null) {
             $msg = 'countPackages() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
         // TODO: This is internal knownhow, it is an ArrayIterator
         //       Replace it with a custom iterator interface
-        return $this->packages->count();
+        return $this->_packages->count();
     }
 
     /**
@@ -427,11 +427,11 @@ class PHP_Depend
      */
     public function getPackage($name)
     {
-        if ($this->packages === null) {
+        if ($this->_packages === null) {
             $msg = 'getPackage() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
-        foreach ($this->packages as $package) {
+        foreach ($this->_packages as $package) {
             if ($package->getName() === $name) {
                 return $package;
             }
@@ -446,11 +446,11 @@ class PHP_Depend
      */
     public function getPackages()
     {
-        if ($this->packages === null) {
+        if ($this->_packages === null) {
             $msg = 'getPackages() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
-        return $this->packages;
+        return $this->_packages;
     }
 
     /**
@@ -566,7 +566,7 @@ class PHP_Depend
     {
         $resultSets = array();
 
-        foreach ($this->loggers as $logger) {
+        foreach ($this->_loggers as $logger) {
             foreach ($logger->getAcceptedAnalyzers() as $type) {
                 // Check for type existence
                 if (!in_array($type, $resultSets)) {
