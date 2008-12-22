@@ -220,9 +220,20 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      */
     private function _calculateMethodOrFunction($uuid, array $tokens)
     {
+        $this->_tokens = array();
+        foreach ($tokens as $token) {
+            if ($token->type === PHP_Depend_ConstantsI::T_COMMENT
+             || $token->type === PHP_Depend_ConstantsI::T_DOC_COMMENT) {
+
+                continue;
+            }
+            $this->_tokens[] = $token;
+        }
+
         $this->_index  = 0;
-        $this->_tokens = $tokens;
-        $this->_length = count($tokens);
+        //$this->_tokens = $tokens;
+        //$this->_length = count($tokens);
+        $this->_length = count($this->_tokens);
 
         $this->_metrics[$uuid] = $this->_calculateScope();
     }
@@ -236,7 +247,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     private function _calculateScopeOrStatement()
     {
         $npath = '1';
-        if (($token = $this->_current()) !== false) {
+        if (($token = current($this->_tokens)) !== false) {
             if ($token->type ===  PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
                 $npath = $this->_calculateScope();
             } else {
@@ -257,12 +268,12 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $npath = '1';
         $scope = 0;
 
-        while (($token = $this->_current()) !== false) {
+        while (($token = current($this->_tokens)) !== false) {
             if ($token->type === PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
-                $this->_next();
+                next($this->_tokens);
                 ++$scope;
             } else if ($token->type === PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE) {
-                $this->_next();
+                next($this->_tokens);
                 --$scope;
             }
 
@@ -284,7 +295,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      */
     private function _calculateStatement()
     {
-        $token = $this->_current();
+        $token = current($this->_tokens);
         while ($token !== false) {
 
             switch ($token->type) {
@@ -321,7 +332,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
                 break 2;
 
             default:
-                $this->_next();
+                next($this->_tokens);
             }
             break;
         }
@@ -354,23 +365,21 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     private function _calculateIfStatement()
     {
         // Remove <if> token
-        $this->_next();
+        next($this->_tokens);
 
         $npath = $this->_sumExpressionComplexity();
         $npath = PHP_Depend_Util_MathUtil::add($npath,
                                                $this->_calculateScopeOrStatement());
 
         $value = '1';
-        if ($token = $this->_current()) {
+        if ($token = current($this->_tokens)) {
             if ($token->type === PHP_Depend_ConstantsI::T_ELSE) {
-                $this->_next();
+                next($this->_tokens);
                 $value = $this->_calculateScopeOrStatement();
             } else if ($token->type === PHP_Depend_ConstantsI::T_ELSEIF) {
                 $value = $this->_calculateStatement();
             }
         } else {
-//            var_dump($this->_tokens);
-var_dump($token);
             // FIXME: Log error
         }
         return PHP_Depend_Util_MathUtil::add($npath, $value);
@@ -393,7 +402,7 @@ var_dump($token);
     private function _calculateWhileStatement()
     {
         // Remove <while> token
-        $this->_next();
+        next($this->_tokens);
 
         $npath = '1';
 
@@ -424,7 +433,7 @@ var_dump($token);
     private function _calculateDoStatement()
     {
         // Remove <do> token
-        $this->_next();
+        next($this->_tokens);
 
         $npath = '1';
 
@@ -432,7 +441,7 @@ var_dump($token);
         $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
 
         // Remove <while> token
-        $this->_next();
+        next($this->_tokens);
 
         $value = $this->_sumExpressionComplexity();
         $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
@@ -457,7 +466,7 @@ var_dump($token);
     private function _calculateForStatement()
     {
         // Remove <for> token
-        $this->_next();
+        next($this->_tokens);
 
         $npath = '1';
 
@@ -487,7 +496,7 @@ var_dump($token);
     private function _calculateForeachStatement()
     {
         // Remove <foreach> token
-        $this->_next();
+        next($this->_tokens);
 
         $npath = '1';
 
@@ -515,10 +524,10 @@ var_dump($token);
     private function _calculateReturnStatement()
     {
         // Remove <return> token
-        $this->_next();
+        next($this->_tokens);
 
         $npath = '0';
-        while (($token = $this->_current()) !== false) {
+        while (($token = current($this->_tokens)) !== false) {
             switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_QUESTION_MARK:
@@ -540,7 +549,7 @@ var_dump($token);
 
             }
 
-            $this->_next();
+            next($this->_tokens);
         }
         return ($npath === '0' ? '1' : $npath);
     }
@@ -564,28 +573,28 @@ var_dump($token);
     private function _calculateSwitchStatement()
     {
         // Remove <switch> token
-        $this->_next();
+        next($this->_tokens);
 
         $scope = 0;
 
         $case  = '0';
         $npath = $this->_sumExpressionComplexity();
-        while (($token = $this->_current()) !== false) {
+        while (($token = current($this->_tokens)) !== false) {
             switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN:
                 ++$scope;
-                $token = $this->_next();
+                $token = next($this->_tokens);
                 break;
 
             case PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE:
                 --$scope;
-                $token = $this->_next();
+                $token = next($this->_tokens);
                 break;
 
             case PHP_Depend_ConstantsI::T_CASE:
             case PHP_Depend_ConstantsI::T_DEFAULT:
-                $token = $this->_next();
+                $token = next($this->_tokens);
                 $npath = PHP_Depend_Util_MathUtil::add($npath, $case);
                 $case  = '1';
                 break;
@@ -634,17 +643,17 @@ var_dump($token);
     private function _calculateTryStatement()
     {
         // Remove <try> token
-        $this->_next();
+        next($this->_tokens);
 
         $npath = $this->_calculateScopeOrStatement();
-        while (($token = $this->_next()) !== false) {
+        while (($token = next($this->_tokens)) !== false) {
 
             $this->_sumExpressionComplexity();
 
             $compl = $this->_calculateScopeOrStatement();
             $npath = PHP_Depend_Util_MathUtil::add($compl, $npath);
 
-            $token = $this->_current();
+            $token = current($this->_tokens);
             if ($token->type === PHP_Depend_ConstantsI::T_CATCH) {
                 continue;
             }
@@ -668,14 +677,14 @@ var_dump($token);
     private function _calculateConditionalStatement()
     {
         // Remove < ? > token
-        $this->_next();
+        next($this->_tokens);
 
         // We don't know the complexity of the first expression
         $input = array('0', '0');
         $scope = 1;
         $colon = 0;
 
-        while (($token = $this->_current()) !== false) {
+        while (($token = current($this->_tokens)) !== false) {
             switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN:
@@ -720,7 +729,7 @@ var_dump($token);
                 break;
             }
 
-            $this->_next();
+            next($this->_tokens);
         }
 
         $input = array_pad(array_filter($input), 5, '1');
@@ -748,7 +757,7 @@ var_dump($token);
         $npath = '0';
         $scope = 0;
 
-        while (($token = $this->_current()) !== false) {
+        while (($token = current($this->_tokens)) !== false) {
             switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN:
@@ -768,49 +777,13 @@ var_dump($token);
                 break;
             }
 
-            $this->_next();
+            next($this->_tokens);
 
             if ($scope === 0) {
                 break;
             }
         }
         return $npath;
-    }
-
-    /**
-     * Returns the current token array or <b>false</b> when we have reached the
-     * end of the token stream.
-     *
-     * @return PHP_Depend_Token
-     */
-    private function _current()
-    {
-        for (; $this->_index < $this->_length; ++$this->_index) {
-
-            $token = $this->_tokens[$this->_index];
-
-            if ($token->type === PHP_Depend_ConstantsI::T_COMMENT
-             || $token->type === PHP_Depend_ConstantsI::T_DOC_COMMENT) {
-
-                continue;
-            }
-            return $token;
-        }
-        return false;
-    }
-
-    /**
-     * Increments the internal pointer an returns the new active element. This
-     * method will return <b>false</b> when we have reached the token stream end.
-     *
-     * @return PHP_Depend_Token
-     */
-    private function _next()
-    {
-        if (($token = $this->_current()) !== false) {
-            ++$this->_index;
-        }
-        return $this->_current();
     }
 }
 ?>
