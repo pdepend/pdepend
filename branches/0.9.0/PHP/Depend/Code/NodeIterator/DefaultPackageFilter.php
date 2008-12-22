@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,10 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
+require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
 
 /**
- * Filter implementation for the default package. 
+ * Filter implementation for the default package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,13 +61,31 @@ require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
  * @link       http://www.manuel-pichler.de/
  */
 final class PHP_Depend_Code_NodeIterator_DefaultPackageFilter
-    extends PHP_Depend_Code_NodeIterator_PackageFilter
+    implements PHP_Depend_Code_NodeIterator_FilterI
 {
     /**
-     * Constructs a new default package filter.
+     * Returns <b>true</b> if the given node should be part of the node iterator,
+     * otherwise this method will return <b>false</b>.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return boolean
      */
-    public function __construct()
+    public function accept(PHP_Depend_Code_NodeI $node)
     {
-        parent::__construct(array(PHP_Depend_BuilderI::DEFAULT_PACKAGE));
+        $package = null;
+        // NOTE: This looks a little bit ugly and it seems better to exclude
+        //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
+        //       PDepend supports more node types, this could produce errors.
+        if ($node instanceof PHP_Depend_Code_Method) {
+            $package = $node->getParent()->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_AbstractType) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Function) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Package) {
+            $package = $node->getName();
+        }
+        return ($package !== PHP_Depend_BuilderI::DEFAULT_PACKAGE);
     }
 }
