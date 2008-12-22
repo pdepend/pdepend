@@ -638,7 +638,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         foreach ($this->classes as $types) {
             foreach ($types as $type) {
-                foreach ($type->getDependencies() as $dependency) {
+                foreach ($type->getUnfilteredRawDependencies() as $dependency) {
                     if ($dependency === $class) {
                         $type->removeDependency($class);
                         $type->addDependency($interface);
@@ -649,7 +649,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         foreach ($this->interfaces as $types) {
             foreach ($types as $type) {
-                foreach ($type->getDependencies() as $dependency) {
+                foreach ($type->getUnfilteredRawDependencies() as $dependency) {
                     if ($dependency === $class) {
                         $type->removeDependency($class);
                         $type->addDependency($interface);
@@ -659,7 +659,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
 
         foreach ($this->functions as $function) {
-            foreach ($function->getDependencies() as $dependency) {
+            foreach ($function->getUnfilteredRawDependencies() as $dependency) {
                 if ($dependency === $class) {
                     $function->removeDependency($class);
                     $function->addDependency($interface);
@@ -677,7 +677,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
 
         foreach ($this->methods as $method) {
-            foreach ($method->getDependencies() as $dependency) {
+            foreach ($method->getUnfilteredRawDependencies() as $dependency) {
                 if ($dependency === $class) {
                     $method->removeDependency($class);
                     $method->addDependency($interface);

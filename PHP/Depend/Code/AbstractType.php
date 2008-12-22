@@ -222,6 +222,18 @@ abstract class PHP_Depend_Code_AbstractType
     }
 
     /**
+     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
+     * objects this type depends on. This method is only for internal usage.
+     *
+     * @return array(PHP_Depend_Code_AbstractType)
+     * @access private
+     */
+    public function getUnfilteredRawDependencies()
+    {
+        return $this->dependencies;
+    }
+
+    /**
      * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
      *
      * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
