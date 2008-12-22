@@ -224,6 +224,18 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
 
     /**
+     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
+     * objects this function may throw. This method is only for internal usage.
+     *
+     * @return array(PHP_Depend_Code_AbstractType)
+     * @access private
+     */
+    public function getUnfilteredRawExceptionTypes()
+    {
+        return $this->_exceptionTypes;
+    }
+
+    /**
      * Adds an exception to the list of thrown exception types.
      *
      * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
