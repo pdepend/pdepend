@@ -273,35 +273,35 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $tokens = $callable->getTokens();
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             // Skip non parenthesis tokens
-            if ($tokens[$i][0] !== PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN) {
+            if ($tokens[$i]->type !== PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN) {
                 continue;
             }
             // Skip first token
-            if (!isset($tokens[$i - 1]) || !in_array($tokens[$i - 1][0], $callT)) {
+            if (!isset($tokens[$i - 1]) || !in_array($tokens[$i - 1]->type, $callT)) {
                 continue;
             }
             // Count if no other token exists
-            if (!isset($tokens[$i - 2]) && !isset($called[$tokens[$i - 1][1]])) {
-                $called[$tokens[$i - 1][1]] = true;
+            if (!isset($tokens[$i - 2]) && !isset($called[$tokens[$i - 1]->image])) {
+                $called[$tokens[$i - 1]->image] = true;
                 ++$this->_calls;
                 continue;
-            } else if (in_array($tokens[$i - 2][0], $chainT)) {
-                $identifier = $tokens[$i - 2][1] . $tokens[$i - 1][1];
+            } else if (in_array($tokens[$i - 2]->type, $chainT)) {
+                $identifier = $tokens[$i - 2]->image . $tokens[$i - 1]->image;
                 for ($j = $i - 3; $j >= 0; --$j) {
-                    if (!in_array($tokens[$j][0], $callT)
-                     && !in_array($tokens[$j][0], $chainT)) {
+                    if (!in_array($tokens[$j]->type, $callT)
+                     && !in_array($tokens[$j]->type, $chainT)) {
 
                         break;
                     }
-                    $identifier = $tokens[$j][1] . $identifier;
+                    $identifier = $tokens[$j]->image . $identifier;
                 }
 
                 if (!isset($called[$identifier])) {
                     $called[$identifier] = true;
                     ++$this->_calls;
                 }
-            } else if ($tokens[$i - 2][0] !== PHP_Depend_TokenizerI::T_NEW) {
-                $called[$tokens[$i - 1][1]] = true;
+            } else if ($tokens[$i - 2]->type !== PHP_Depend_TokenizerI::T_NEW) {
+                $called[$tokens[$i - 1]->image] = true;
                 ++$this->_calls;
             }
         }

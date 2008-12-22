@@ -417,18 +417,18 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         foreach ($tokens as $token) {
 
-            if ($token[0] === PHP_Depend_TokenizerI::T_COMMENT
-             || $token[0] === PHP_Depend_TokenizerI::T_DOC_COMMENT) {
+            if ($token->type === PHP_Depend_TokenizerI::T_COMMENT
+             || $token->type === PHP_Depend_TokenizerI::T_DOC_COMMENT) {
 
                 $lines =& $clines;
             } else {
                 $lines =& $elines;
             }
 
-            if ($token[2] === $token[3]) {
-                $lines[$token[2]] = true;
+            if ($token->startLine === $token->endLine) {
+                $lines[$token->startLine] = true;
             } else {
-                for ($i = $token[2]; $i <= $token[3]; ++$i) {
+                for ($i = $token->startLine; $i <= $token->endLine; ++$i) {
                     $lines[$i] = true;
                 }
             }
