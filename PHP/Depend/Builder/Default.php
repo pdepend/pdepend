@@ -683,7 +683,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
                     $method->addDependency($interface);
                 }
             }
-            foreach ($method->getExceptionTypes() as $exceptionType) {
+            foreach ($method->getUnfilteredRawExceptionTypes() as $exceptionType) {
                 if ($exceptionType === $class) {
                     $method->removeExceptionType($class);
                     $method->addExceptionType($interface);
