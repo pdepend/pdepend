@@ -1241,5 +1241,46 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Abstrac
 
         $this->assertEquals(array('npath' => 6), $analyzer->getNodeMetrics($method));
     }
+
+    /**
+     * Tests the algorithm implementation against an existing bug in the combination
+     * of return, conditional and if statement.
+     *
+     * @return void
+     */
+    public function testReturnStatementWithConditionalBug80()
+    {
+        $tokens = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0),
+
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '2', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0),
+
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0),
+        );
+
+        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
+        $method->expects($this->once())
+               ->method('getTokens')
+               ->will($this->returnValue($tokens));
+        $method->expects($this->any())
+               ->method('getUUID')
+               ->will($this->returnValue('uuid'));
+
+        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $analyzer->visitMethod($method);
+
+        $this->assertEquals(array('npath' => 6), $analyzer->getNodeMetrics($method));
+    }
 }
 ?>
