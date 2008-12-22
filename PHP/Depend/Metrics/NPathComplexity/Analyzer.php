@@ -369,6 +369,8 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
                 $value = $this->_calculateStatement();
             }
         } else {
+//            var_dump($this->_tokens);
+var_dump($token);
             // FIXME: Log error
         }
         return PHP_Depend_Util_MathUtil::add($npath, $value);
@@ -512,14 +514,17 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      */
     private function _calculateReturnStatement()
     {
+        // Remove <return> token
+        $this->_next();
+
         $npath = '0';
-        while (($token = $this->_next()) !== false) {
+        while (($token = $this->_current()) !== false) {
             switch ($token->type) {
 
             case PHP_Depend_ConstantsI::T_QUESTION_MARK:
                 $compl = $this->_calculateConditionalStatement();
                 $npath = PHP_Depend_Util_MathUtil::add($npath, $compl);
-                break;
+                continue 2;
 
             case PHP_Depend_ConstantsI::T_BOOLEAN_AND:
             case PHP_Depend_ConstantsI::T_BOOLEAN_OR:
@@ -529,10 +534,13 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
                 $npath = PHP_Depend_Util_MathUtil::add('1', $npath);
                 break;
 
+            case PHP_Depend_ConstantsI::T_CLOSE_TAG:
             case PHP_Depend_ConstantsI::T_SEMICOLON:
                 break 2;
 
             }
+
+            $this->_next();
         }
         return ($npath === '0' ? '1' : $npath);
     }
@@ -773,7 +781,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * Returns the current token array or <b>false</b> when we have reached the
      * end of the token stream.
      *
-     * @return array|false
+     * @return PHP_Depend_Token
      */
     private function _current()
     {
@@ -795,7 +803,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * Increments the internal pointer an returns the new active element. This
      * method will return <b>false</b> when we have reached the token stream end.
      *
-     * @return array|false
+     * @return PHP_Depend_Token
      */
     private function _next()
     {
