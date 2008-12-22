@@ -65,11 +65,10 @@ final class PHP_Depend_Util_MathUtil
      * Internal static final property that identifiers that the bcmath extension
      * exists or not.
      *
-     * @var boolean $extension
-     * @access private
+     * @var boolean $_extension
      * @final
      */
-    public static $extension = false;
+    private static $_extension = null;
 
     /**
      * This method will multiply the two given operands with the bcmath extension
@@ -82,7 +81,7 @@ final class PHP_Depend_Util_MathUtil
      */
     public static function mul($left, $right)
     {
-        if (self::$extension) {
+        if (self::$_extension) {
             return bcmul($left, $right);
         }
         return (string) ((int) $left * (int) $right);
@@ -99,13 +98,25 @@ final class PHP_Depend_Util_MathUtil
      */
     public static function add($left, $right)
     {
-        if (self::$extension) {
+        if (self::$_extension) {
             return bcadd($left, $right);
         }
         return (string) ((int) $left + (int) $right);
     }
+
+    /**
+     * Initializes the final bcmath extension available property
+     *
+     * @return void
+     */
+    public static function initFinalExtensionProperty()
+    {
+        if (self::$_extension === null) {
+            self::$_extension = extension_loaded('bcmath');
+        }
+    }
 }
 
 // Static final property initializer
-PHP_Depend_Util_MathUtil::$extension = extension_loaded('bcmath');
+PHP_Depend_Util_MathUtil::initFinalExtensionProperty();
 ?>
