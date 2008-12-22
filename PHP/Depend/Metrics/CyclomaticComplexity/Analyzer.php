@@ -283,19 +283,19 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         // List of tokens
         $countingTokens = array(
-            PHP_Depend_TokenizerI::T_CASE,
-            PHP_Depend_TokenizerI::T_CATCH,
-            PHP_Depend_TokenizerI::T_ELSEIF,
-            PHP_Depend_TokenizerI::T_FOR,
-            PHP_Depend_TokenizerI::T_FOREACH,
-            PHP_Depend_TokenizerI::T_IF,
-            PHP_Depend_TokenizerI::T_QUESTION_MARK,
-            PHP_Depend_TokenizerI::T_WHILE
+            PHP_Depend_TokenizerI::T_CASE           =>  true,
+            PHP_Depend_TokenizerI::T_CATCH          =>  true,
+            PHP_Depend_TokenizerI::T_ELSEIF         =>  true,
+            PHP_Depend_TokenizerI::T_FOR            =>  true,
+            PHP_Depend_TokenizerI::T_FOREACH        =>  true,
+            PHP_Depend_TokenizerI::T_IF             =>  true,
+            PHP_Depend_TokenizerI::T_QUESTION_MARK  =>  true,
+            PHP_Depend_TokenizerI::T_WHILE          =>  true
         );
 
         $ccn = 1;
         foreach ($tokens as $token) {
-            if (in_array($token->type, $countingTokens) === true) {
+            if (isset($countingTokens[$token->type])) {
                 ++$ccn;
             }
         }
@@ -315,23 +315,23 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         // List of tokens
         $countingTokens = array(
-            PHP_Depend_TokenizerI::T_BOOLEAN_AND,
-            PHP_Depend_TokenizerI::T_BOOLEAN_OR,
-            PHP_Depend_TokenizerI::T_CASE,
-            PHP_Depend_TokenizerI::T_CATCH,
-            PHP_Depend_TokenizerI::T_ELSEIF,
-            PHP_Depend_TokenizerI::T_FOR,
-            PHP_Depend_TokenizerI::T_FOREACH,
-            PHP_Depend_TokenizerI::T_IF,
-            PHP_Depend_TokenizerI::T_LOGICAL_AND,
-            PHP_Depend_TokenizerI::T_LOGICAL_OR,
-            PHP_Depend_TokenizerI::T_QUESTION_MARK,
-            PHP_Depend_TokenizerI::T_WHILE
+            PHP_Depend_TokenizerI::T_BOOLEAN_AND    =>  true,
+            PHP_Depend_TokenizerI::T_BOOLEAN_OR     =>  true,
+            PHP_Depend_TokenizerI::T_CASE           =>  true,
+            PHP_Depend_TokenizerI::T_CATCH          =>  true,
+            PHP_Depend_TokenizerI::T_ELSEIF         =>  true,
+            PHP_Depend_TokenizerI::T_FOR            =>  true,
+            PHP_Depend_TokenizerI::T_FOREACH        =>  true,
+            PHP_Depend_TokenizerI::T_IF             =>  true,
+            PHP_Depend_TokenizerI::T_LOGICAL_AND    =>  true,
+            PHP_Depend_TokenizerI::T_LOGICAL_OR     =>  true,
+            PHP_Depend_TokenizerI::T_QUESTION_MARK  =>  true,
+            PHP_Depend_TokenizerI::T_WHILE          =>  true
         );
 
         $ccn2 = 1;
         foreach ($tokens as $token) {
-            if (in_array($token->type, $countingTokens) === true) {
+            if (isset($countingTokens[$token->type])) {
                 ++$ccn2;
             }
         }
