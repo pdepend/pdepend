@@ -286,23 +286,23 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parser->parse();
 
         $tokens = array(
-            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 7, 7),
-            array(PHP_Depend_TokenizerI::T_FOREACH, 'foreach', 8, 8),
-            array(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 8, 8),
-            array(PHP_Depend_TokenizerI::T_VARIABLE, '$foo', 8, 8),
-            array(PHP_Depend_TokenizerI::T_AS, 'as', 8, 8),
-            array(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 8, 8),
-            array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 8, 8),
-            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 8, 8),
-            array(PHP_Depend_TokenizerI::T_STRING, 'FooBar', 9, 9),
-            array(PHP_Depend_TokenizerI::T_DOUBLE_COLON, '::', 9, 9),
-            array(PHP_Depend_TokenizerI::T_STRING, 'y', 9, 9),
-            array(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 9, 9),
-            array(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 9, 9),
-            array(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 9, 9),
-            array(PHP_Depend_TokenizerI::T_SEMICOLON, ';', 9, 9),
-            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 10, 10),
-            array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 11, 11),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 7, 7),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_FOREACH, 'foreach', 8, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 8, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$foo', 8, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_AS, 'as', 8, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 8, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 8, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 8, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'FooBar', 9, 9),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_DOUBLE_COLON, '::', 9, 9),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'y', 9, 9),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 9, 9),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 9, 9),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 9, 9),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_SEMICOLON, ';', 9, 9),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 10, 10),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 11, 11),
         );
 
         $packages = $builder->getPackages();
@@ -1431,7 +1431,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $expectedToken = array_shift($expected);
 
             $this->assertNotNull($expectedToken);
-            $this->assertEquals($expectedToken[0], $token[0]);
+            $this->assertEquals($expectedToken[0], $token->type);
         }
     }
 

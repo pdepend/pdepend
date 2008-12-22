@@ -46,8 +46,9 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/File.php';
+require_once 'PHP/Depend/Token.php';
 require_once 'PHP/Depend/TokenizerI.php';
+require_once 'PHP/Depend/Code/File.php';
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
@@ -260,7 +261,7 @@ class PHP_Depend_Tokenizer_Internal
     /**
      * Prepared token list.
      *
-     * @var array(array) $tokens
+     * @var array(PHP_Depend_Token) $tokens
      */
     protected $tokens = array();
 
@@ -311,7 +312,7 @@ class PHP_Depend_Tokenizer_Internal
      * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
      * there is no next token.
      *
-     * @return array|integer
+     * @return PHP_Depend_Token|integer
      */
     public function next()
     {
@@ -330,7 +331,7 @@ class PHP_Depend_Tokenizer_Internal
     public function peek()
     {
         if (isset($this->tokens[$this->index])) {
-            return $this->tokens[$this->index][0];
+            return $this->tokens[$this->index]->type;
         }
         return self::T_EOF;
     }
@@ -344,7 +345,7 @@ class PHP_Depend_Tokenizer_Internal
     public function prev()
     {
         if ($this->index > 1) {
-            return $this->tokens[$this->index - 2][0];
+            return $this->tokens[$this->index - 2]->type;
         }
         return self::T_BOF;
     }
@@ -383,45 +384,50 @@ class PHP_Depend_Tokenizer_Internal
         $tokenMap   = self::$tokenMap;
 
         while ($token = current($tokens)) {
-            $newToken = null;
+            $type  = null;
+            $image = null;
             if (is_string($token)) {
-                if (isset($literalMap[$token])) {
-                    $newToken = array($literalMap[$token], $token);
-                } else {
+                if (!isset($literalMap[$token])) {
                     // This should never happen
                     // @codeCoverageIgnoreStart
                     throw new RuntimeException( "Unexpected token '{$token}'." );
                     // @codeCoverageIgnoreEnd
                 }
+                $type  = $literalMap[$token];
+                $image = $token;
             } else if ($token[0] === T_CLOSE_TAG) {
-                $newToken      = array($tokenMap[$token[0]], $token[1]);
+                $type  = $tokenMap[$token[0]];
+                $image = $token[1];
+
                 $skippedLines += $this->_skipNonePhpTokens($tokens);
             } else if ($token[0] === T_WHITESPACE) {
                 $startLine += substr_count($token[1], "\n");
             } else {
                 $value = strtolower($token[1]);
                 if (isset($literalMap[$value])) {
-                    $newToken = array($literalMap[$value], $value);
+                    $type  = $literalMap[$value];
+                    $image = $value;
                 } else if (isset($tokenMap[$token[0]])) {
-                    $newToken = array($tokenMap[$token[0]], $token[1]);
+                    $type  = $tokenMap[$token[0]];
+                    $image = $token[1];
                 } else {
                     // This should never happen
                     // @codeCoverageIgnoreStart
-                    $newToken = $this->_generateUnknownToken($token[1]);
+                    list($type, $image) = $this->_generateUnknownToken($token[1]);
                     // @codeCoverageIgnoreEnd
                 }
             }
 
-            if ($newToken) {
-                // Set token line number
-                $newToken[2] = $startLine;
-                $newToken[3] = $startLine + substr_count(rtrim($newToken[1]), "\n");
+            if ($type) {
+                $endLine = $startLine + substr_count(rtrim($image), "\n");
 
-                // Store token in internal ist
-                $this->tokens[] = $newToken;
+                $token = new PHP_Depend_Token($type, $image, $startLine, $endLine);
+
+                // Store token in internal list
+                $this->tokens[] = $token;
 
                 // Count new line tokens.
-                $startLine = $startLine + substr_count($newToken[1], "\n") + $skippedLines;
+                $startLine += substr_count($image, "\n") + $skippedLines;
             }
 
             next($tokens);
