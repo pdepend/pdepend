@@ -66,16 +66,16 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     /**
      * Marks this class as abstract.
      *
-     * @var boolean $abstract
+     * @var boolean $_abstract
      */
-    protected $abstract = false;
+    private $_abstract = false;
 
     /**
      * List of associated properties.
      *
-     * @var array(PHP_Depend_Code_Property) $properties
+     * @var array(PHP_Depend_Code_Property) $_properties
      */
-    protected $properties = array();
+    private $_properties = array();
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -84,7 +84,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function isAbstract()
     {
-        return $this->abstract;
+        return $this->_abstract;
     }
 
     /**
@@ -96,7 +96,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function setAbstract($abstract)
     {
-        $this->abstract = $abstract;
+        $this->_abstract = $abstract;
     }
 
     /**
@@ -165,7 +165,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function getProperties()
     {
-        return new PHP_Depend_Code_NodeIterator($this->properties);
+        return new PHP_Depend_Code_NodeIterator($this->_properties);
     }
 
     /**
@@ -177,9 +177,9 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function addProperty(PHP_Depend_Code_Property $property)
     {
-        if (in_array($property, $this->properties, true) === false) {
+        if (in_array($property, $this->_properties, true) === false) {
             // Add to internal list
-            $this->properties[] = $property;
+            $this->_properties[] = $property;
             // Set this as parent
             $property->setParent($this);
         }
@@ -195,11 +195,11 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function removeProperty(PHP_Depend_Code_Property $property)
     {
-        if (($i = array_search($property, $this->properties, true)) !== false) {
+        if (($i = array_search($property, $this->_properties, true)) !== false) {
             // Remove this as parent
             $property->setParent(null);
             // Remove from internal property list
-            unset($this->properties[$i]);
+            unset($this->_properties[$i]);
         }
     }
 
