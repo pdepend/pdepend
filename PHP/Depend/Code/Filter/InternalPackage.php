@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,11 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
+require_once 'PHP/Depend/Code/InternalTypes.php';
+require_once 'PHP/Depend/Code/Filter/Package.php';
 
 /**
- * Static composite filter for code nodes. This class is used for an overall
- * filtering.
+ * Filter implementation for internal packages. 
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,45 +61,14 @@ require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-final class PHP_Depend_Code_NodeIterator_StaticFilter
-    extends PHP_Depend_Code_NodeIterator_CompositeFilter
+final class PHP_Depend_Code_Filter_InternalPackage
+    extends PHP_Depend_Code_Filter_Package
 {
     /**
-     * Singleton instance of this filter.
-     *
-     * @var PHP_Depend_Code_NodeIterator_StaticFilter $_instance
+     * Constructs a new internal package filter.
      */
-    private static $_instance = null;
-
-    /**
-     * Singleton method for this filter class.
-     *
-     * @return PHP_Depend_Code_NodeIterator_StaticFilter
-     */
-    public static function getInstance()
+    public function __construct()
     {
-        if (self::$_instance === null) {
-            self::$_instance = new PHP_Depend_Code_NodeIterator_StaticFilter();
-        }
-        return self::$_instance;
-    }
-
-    /**
-     * Clears all registered filters.
-     *
-     * @return void
-     */
-    public function clear()
-    {
-        foreach ($this->getIterator() as $filter) {
-            $this->removeFilter($filter);
-        }
-    }
-
-    /**
-     * Constructs a new static filter.
-     */
-    private function __construct()
-    {
+        parent::__construct(PHP_Depend_Code_InternalTypes::getInstance()->getInternalPackages());
     }
 }

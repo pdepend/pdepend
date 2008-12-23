@@ -52,8 +52,8 @@ require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Tokenizer/Internal.php';
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
+require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
+require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Log/Jdepend/Xml.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Util/FileExtensionFilter.php';
@@ -124,9 +124,9 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $this->analyzer->analyze($this->packages);
 
-        $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
+        $filter = new PHP_Depend_Code_Filter_DefaultPackage();
         $this->packages->addFilter($filter);
-        $filter = new PHP_Depend_Code_NodeIterator_InternalPackageFilter();
+        $filter = new PHP_Depend_Code_Filter_InternalPackage();
         $this->packages->addFilter($filter);
 
         $this->resultFile = self::createTempName('pdepend-log.xml');

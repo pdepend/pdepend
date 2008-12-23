@@ -46,10 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
-
 /**
- * Filter implementation for the default package.
+ * Base interface for {@link PHP_Depend_Code_NodeIterator} filters.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,8 +58,7 @@ require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-final class PHP_Depend_Code_NodeIterator_DefaultPackageFilter
-    implements PHP_Depend_Code_NodeIterator_FilterI
+interface PHP_Depend_Code_FilterI
 {
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
@@ -71,21 +68,5 @@ final class PHP_Depend_Code_NodeIterator_DefaultPackageFilter
      *
      * @return boolean
      */
-    public function accept(PHP_Depend_Code_NodeI $node)
-    {
-        $package = null;
-        // NOTE: This looks a little bit ugly and it seems better to exclude
-        //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
-        //       PDepend supports more node types, this could produce errors.
-        if ($node instanceof PHP_Depend_Code_Method) {
-            $package = $node->getParent()->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_AbstractType) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_Function) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_Package) {
-            $package = $node->getName();
-        }
-        return ($package !== PHP_Depend_BuilderI::DEFAULT_PACKAGE);
-    }
+    function accept(PHP_Depend_Code_NodeI $node);
 }

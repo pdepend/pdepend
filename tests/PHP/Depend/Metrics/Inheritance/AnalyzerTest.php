@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -53,8 +53,8 @@ require_once 'PHP/Depend/Code/File.php';
 require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+require_once 'PHP/Depend/Code/Filter/Package.php';
+require_once 'PHP/Depend/Code/Filter/Collection.php';
 require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
 
 /**
@@ -74,16 +74,16 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
     /**
      * Tests that the analyzer calculates the correct average number of derived
      * classes.
-     * 
+     *
      * @return void
      */
     public function testAnalyzerCalculatesCorrectANDCValue()
     {
         $system  = new PHP_Depend_Code_Package('system');
         $library = new PHP_Depend_Code_Package('library');
-        
+
         $file = new PHP_Depend_Code_File(null);
-        
+
         $A = $system->addType(new PHP_Depend_Code_Class('A'));
         $B = $A->addChildType($system->addType(new PHP_Depend_Code_Class('B')));
         $C = $A->addChildType($system->addType(new PHP_Depend_Code_Class('C')));
@@ -105,7 +105,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
         $S = $system->addType(new PHP_Depend_Code_Class('S'));
         $T = $system->addType(new PHP_Depend_Code_Interface('T'));
         $U = $T->addChildType($system->addType(new PHP_Depend_Code_Class('U')));
-        
+
         $A->setSourceFile($file);
         $B->setSourceFile($file);
         $C->setSourceFile($file);
@@ -127,32 +127,32 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
         $S->setSourceFile($file);
         $T->setSourceFile($file);
         $U->setSourceFile($file);
-        
-        $filter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
-        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array('library')));
-        
+
+        $filter = PHP_Depend_Code_Filter_Collection::getInstance();
+        $filter->addFilter(new PHP_Depend_Code_Filter_Package(array('library')));
+
         $packages = new PHP_Depend_Code_NodeIterator(array($system, $library));
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('andc', $project);
         $this->assertEquals(0.7368, $project['andc'], null, 0.0001);
     }
-    
+
     /**
      * Tests that the analyzer calculates the correct average hierarchy height.
-     * 
+     *
      * @return void
      */
     public function testAnalyzerCalculatesCorrectAHHValue()
     {
         $system  = new PHP_Depend_Code_Package('system');
         $library = new PHP_Depend_Code_Package('library');
-        
+
         $file = new PHP_Depend_Code_File(null);
-        
+
         $A = $system->addType(new PHP_Depend_Code_Class('A'));
         $B = $A->addChildType($system->addType(new PHP_Depend_Code_Class('B')));
         $C = $A->addChildType($system->addType(new PHP_Depend_Code_Class('C')));
@@ -174,7 +174,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
         $S = $system->addType(new PHP_Depend_Code_Class('S'));
         $T = $system->addType(new PHP_Depend_Code_Interface('T'));
         $U = $T->addChildType($system->addType(new PHP_Depend_Code_Class('U')));
-        
+
         $A->setSourceFile($file);
         $B->setSourceFile($file);
         $C->setSourceFile($file);
@@ -196,16 +196,16 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
         $S->setSourceFile($file);
         $T->setSourceFile($file);
         $U->setSourceFile($file);
-        
-        $filter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
-        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array('library')));
-        
+
+        $filter = PHP_Depend_Code_Filter_Collection::getInstance();
+        $filter->addFilter(new PHP_Depend_Code_Filter_Package(array('library')));
+
         $packages = new PHP_Depend_Code_NodeIterator(array($system, $library));
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($packages);
-        
+
         $project = $analyzer->getProjectMetrics();
-        
+
         $this->assertArrayHasKey('ahh', $project);
         $this->assertEquals(1, $project['ahh']);
     }
