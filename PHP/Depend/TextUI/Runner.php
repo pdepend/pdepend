@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
+require_once 'PHP/Depend/Code/Filter/Package.php';
 require_once 'PHP/Depend/Log/LoggerFactory.php';
 require_once 'PHP/Depend/TextUI/ResultPrinter.php';
 require_once 'PHP/Depend/Util/ExcludePathFilter.php';
@@ -261,7 +261,7 @@ class PHP_Depend_TextUI_Runner
 
         if (count($this->_excludePackages) > 0) {
             $exclude = $this->_excludePackages;
-            $filter  = new PHP_Depend_Code_NodeIterator_PackageFilter($exclude);
+            $filter  = new PHP_Depend_Code_Filter_Package($exclude);
             $pdepend->addCodeFilter($filter);
         }
 

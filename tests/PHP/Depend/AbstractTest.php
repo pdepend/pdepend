@@ -98,7 +98,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        PHP_Depend_Code_NodeIterator_StaticFilter::getInstance()->clear();
+        PHP_Depend_Code_Filter_Collection::getInstance()->clear();
 
         parent::tearDown();
     }
@@ -138,7 +138,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
 
-        include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+        include_once 'PHP/Depend/Code/Filter/Collection.php';
     }
 
     /**
@@ -154,7 +154,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         include_once 'PHP/Depend/Parser.php';
         include_once 'PHP/Depend/Builder/Default.php';
-        include_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+        include_once 'PHP/Depend/Code/Filter/Collection.php';
         include_once 'PHP/Depend/Tokenizer/Internal.php';
         include_once 'PHP/Depend/Util/ExcludePathFilter.php';
         include_once 'PHP/Depend/Util/FileFilterIterator.php';

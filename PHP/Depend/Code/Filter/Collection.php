@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,11 +46,11 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/InternalTypes.php';
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
+require_once 'PHP/Depend/Code/Filter/Composite.php';
 
 /**
- * Filter implementation for internal packages. 
+ * Static composite filter for code nodes. This class is used for an overall
+ * filtering.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,14 +61,45 @@ require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-final class PHP_Depend_Code_NodeIterator_InternalPackageFilter
-    extends PHP_Depend_Code_NodeIterator_PackageFilter
+final class PHP_Depend_Code_Filter_Collection
+    extends PHP_Depend_Code_Filter_Composite
 {
     /**
-     * Constructs a new internal package filter.
+     * Singleton instance of this filter.
+     *
+     * @var PHP_Depend_Code_Filter_Collection $_instance
      */
-    public function __construct()
+    private static $_instance = null;
+
+    /**
+     * Singleton method for this filter class.
+     *
+     * @return PHP_Depend_Code_Filter_Collection
+     */
+    public static function getInstance()
     {
-        parent::__construct(PHP_Depend_Code_InternalTypes::getInstance()->getInternalPackages());
+        if (self::$_instance === null) {
+            self::$_instance = new PHP_Depend_Code_Filter_Collection();
+        }
+        return self::$_instance;
+    }
+
+    /**
+     * Clears all registered filters.
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        foreach ($this->getIterator() as $filter) {
+            $this->removeFilter($filter);
+        }
+    }
+
+    /**
+     * Constructs a new static filter.
+     */
+    private function __construct()
+    {
     }
 }
