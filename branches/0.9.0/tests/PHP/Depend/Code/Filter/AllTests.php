@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -41,20 +41,20 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
+ * @version   SVN: $Id: AllTests.php 527 2008-12-13 22:33:27Z mapi $
  * @link      http://www.manuel-pichler.de/
  */
 
 if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_NodeIterator_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_Filter_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/DefaultPackageFilterTest.php';
-require_once dirname(__FILE__) . '/PackageFilterTest.php';
-require_once dirname(__FILE__) . '/StaticFilterTest.php';
+require_once dirname(__FILE__) . '/DefaultPackageTest.php';
+require_once dirname(__FILE__) . '/PackageTest.php';
+require_once dirname(__FILE__) . '/CollectionTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Code package.
@@ -67,7 +67,7 @@ require_once dirname(__FILE__) . '/StaticFilterTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_AllTests
+class PHP_Depend_Code_Filter_AllTests
 {
     /**
      * Test suite main method.
@@ -78,7 +78,7 @@ class PHP_Depend_Code_NodeIterator_AllTests
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
-    
+
     /**
      * Creates the phpunit test suite for this package.
      *
@@ -86,15 +86,15 @@ class PHP_Depend_Code_NodeIterator_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code_NodeIterator - AllTests');
-        $suite->addTestSuite('PHP_Depend_Code_NodeIterator_DefaultPackageFilterTest');
-        $suite->addTestSuite('PHP_Depend_Code_NodeIterator_PackageFilterTest');
-        $suite->addTestSuite('PHP_Depend_Code_NodeIterator_StaticFilterTest');
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code_Filter - AllTests');
+        $suite->addTestSuite('PHP_Depend_Code_Filter_DefaultPackageTest');
+        $suite->addTestSuite('PHP_Depend_Code_Filter_PackageTest');
+        $suite->addTestSuite('PHP_Depend_Code_Filter_CollectionTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_NodeIterator_AllTests::main') {
-    PHP_Depend_Code_NodeIterator_AllTests::main();
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_Filter_AllTests::main') {
+    PHP_Depend_Code_Filter_AllTests::main();
 }

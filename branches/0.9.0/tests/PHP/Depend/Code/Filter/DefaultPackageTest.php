@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,10 +46,15 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
+
+require_once 'PHP/Depend/BuilderI.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
+require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
 
 /**
- * This class implements a filter that is based on the package.
+ * Test case for the default package filter.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -60,53 +65,26 @@ require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_PackageFilter
-    implements PHP_Depend_Code_NodeIterator_FilterI
+class PHP_Depend_Code_Filter_DefaultPackageTest extends PHP_Depend_AbstractTest
 {
-    /**
-     * Regexp with ignorable package names and package name fragments.
-     *
-     * @var string $_pattern
-     */
-    private $_pattern = array();
-
-    /**
-     * Constructs a new package filter for the given list of package names.
-     *
-     * @param array(string) $packages Package names.
-     */
-    public function __construct(array $packages)
+    public function testFilterDefaultPackage()
     {
-        $patterns = array();
-        foreach ($packages as $package) {
-            $patterns[] = str_replace('\*', '\S*', preg_quote($package));
+        $in1 = new PHP_Depend_Code_Package('in1');
+        $in2 = new PHP_Depend_Code_Package('in2');
+        $out = new PHP_Depend_Code_Package(PHP_Depend_BuilderI::DEFAULT_PACKAGE);
+        
+        $packages = array($in1, $in2, $out);
+        $iterator = new PHP_Depend_Code_NodeIterator($packages);
+        
+        $filter = new PHP_Depend_Code_Filter_DefaultPackage();
+        $iterator->addFilter($filter);
+        
+        $expected = array('in1'  =>  true, 'in2'  =>  true);
+        
+        foreach ($iterator as $pkg) {
+            $this->assertArrayHasKey($pkg->getName(), $expected);
+            unset($expected[$pkg->getName()]);
         }
-        $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
-    }
-
-    /**
-     * Returns <b>true</b> if the given node should be part of the node iterator,
-     * otherwise this method will return <b>false</b>.
-     *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
-     * @return boolean
-     */
-    public function accept(PHP_Depend_Code_NodeI $node)
-    {
-        $package = null;
-        // NOTE: This looks a little bit ugly and it seems better to exclude
-        //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
-        //       PDepend supports more node types, this could produce errors.
-        if ($node instanceof PHP_Depend_Code_Method) {
-            $package = $node->getParent()->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_AbstractType) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_Function) {
-            $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_Package) {
-            $package = $node->getName();
-        }
-        return (preg_match($this->_pattern, $package) === 0);
+        $this->assertEquals(0, count($expected));
     }
 }

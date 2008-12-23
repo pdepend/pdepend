@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,8 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Code/FilterI.php';
+
 /**
- * Base interface for {@link PHP_Depend_Code_NodeIterator} filters.
+ * This class implements a filter that is based on the package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -58,15 +60,53 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeIterator_FilterI
+class PHP_Depend_Code_Filter_Package
+    implements PHP_Depend_Code_FilterI
 {
+    /**
+     * Regexp with ignorable package names and package name fragments.
+     *
+     * @var string $_pattern
+     */
+    private $_pattern = '';
+
+    /**
+     * Constructs a new package filter for the given list of package names.
+     *
+     * @param array(string) $packages Package names.
+     */
+    public function __construct(array $packages)
+    {
+        $patterns = array();
+        foreach ($packages as $package) {
+            $patterns[] = str_replace('\*', '\S*', preg_quote($package));
+        }
+        $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
+    }
+
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
-     * 
+     *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
      * @return boolean
      */
-    function accept(PHP_Depend_Code_NodeI $node);
+    public function accept(PHP_Depend_Code_NodeI $node)
+    {
+        $package = null;
+        // NOTE: This looks a little bit ugly and it seems better to exclude
+        //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
+        //       PDepend supports more node types, this could produce errors.
+        if ($node instanceof PHP_Depend_Code_Method) {
+            $package = $node->getParent()->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_AbstractType) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Function) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Package) {
+            $package = $node->getName();
+        }
+        return (preg_match($this->_pattern, $package) === 0);
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,15 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
+require_once 'PHP/Depend/Code/FilterI.php';
 
 /**
- * Test case for the default package filter.
+ * Filter implementation for the default package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -65,26 +60,32 @@ require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_DefaultPackageFilterTest extends PHP_Depend_AbstractTest
+final class PHP_Depend_Code_Filter_DefaultPackage
+    implements PHP_Depend_Code_FilterI
 {
-    public function testFilterDefaultPackage()
+    /**
+     * Returns <b>true</b> if the given node should be part of the node iterator,
+     * otherwise this method will return <b>false</b>.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return boolean
+     */
+    public function accept(PHP_Depend_Code_NodeI $node)
     {
-        $in1 = new PHP_Depend_Code_Package('in1');
-        $in2 = new PHP_Depend_Code_Package('in2');
-        $out = new PHP_Depend_Code_Package(PHP_Depend_BuilderI::DEFAULT_PACKAGE);
-        
-        $packages = array($in1, $in2, $out);
-        $iterator = new PHP_Depend_Code_NodeIterator($packages);
-        
-        $filter = new PHP_Depend_Code_NodeIterator_DefaultPackageFilter();
-        $iterator->addFilter($filter);
-        
-        $expected = array('in1'  =>  true, 'in2'  =>  true);
-        
-        foreach ($iterator as $pkg) {
-            $this->assertArrayHasKey($pkg->getName(), $expected);
-            unset($expected[$pkg->getName()]);
+        $package = null;
+        // NOTE: This looks a little bit ugly and it seems better to exclude
+        //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
+        //       PDepend supports more node types, this could produce errors.
+        if ($node instanceof PHP_Depend_Code_Method) {
+            $package = $node->getParent()->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_AbstractType) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Function) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Package) {
+            $package = $node->getName();
         }
-        $this->assertEquals(0, count($expected));
+        return ($package !== PHP_Depend_BuilderI::DEFAULT_PACKAGE);
     }
 }

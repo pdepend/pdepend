@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -46,13 +46,10 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+require_once 'PHP/Depend/Code/FilterI.php';
 
 /**
- * Test case for the static filter.
+ * This filter can be used to reduce a node iterator by the node type.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -63,16 +60,51 @@ require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_StaticFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_Filter_Type
+    implements PHP_Depend_Code_FilterI
 {
-    public function testStaticFilterClear()
+    /**
+     * List of allowed types.
+     *
+     * @var array(string) $_types
+     */
+    private $_types = array();
+
+    /**
+     * Constructs a new type filter. The ctor accepts different arguments. You
+     * can pass a single <b>array</b> parameter in or variable amount of type
+     * names.
+     *
+     * @param array|string $typesArrayOrFirstType An array of types or the first
+     *                                            type.
+     */
+    public function __construct($typesArrayOrFirstType)
     {
-        $filter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
-        $this->assertEquals(0, $filter->getIterator()->count());
-        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array()));
-        $filter->addFilter(new PHP_Depend_Code_NodeIterator_PackageFilter(array()));
-        $this->assertEquals(2, $filter->getIterator()->count());
-        $filter->clear();
-        $this->assertEquals(0, $filter->getIterator()->count());
+        $types = $typesArrayOrFirstType;
+        if (!is_array($types)) {
+            $types = func_get_args();
+        }
+
+        foreach ($types as $type) {
+            $this->_types[] = (string) $type;
+        }
+    }
+
+    /**
+     * Returns <b>true</b> if the given node should be part of the node iterator,
+     * otherwise this method will return <b>false</b>.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return boolean
+     */
+    public function accept(PHP_Depend_Code_NodeI $node)
+    {
+        foreach ($this->_types as $type) {
+            if ($node instanceof $type) {
+                return true;
+            }
+        }
+        return false;
     }
 }
