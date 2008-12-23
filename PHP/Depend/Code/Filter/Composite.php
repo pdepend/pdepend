@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
+require_once 'PHP/Depend/Code/FilterI.php';
 
 /**
  * Composite filter implementation.
@@ -60,24 +60,24 @@ require_once 'PHP/Depend/Code/NodeIterator/FilterI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_CompositeFilter
-    implements PHP_Depend_Code_NodeIterator_FilterI, Countable, IteratorAggregate
+class PHP_Depend_Code_Filter_Composite
+    implements PHP_Depend_Code_FilterI, Countable, IteratorAggregate
 {
     /**
      * List of all registered filters.
      *
-     * @var array(PHP_Depend_Code_NodeIterator_FilterI) $_filters
+     * @var array(PHP_Depend_Code_FilterI) $_filters
      */
     private $_filters = array();
 
     /**
      * Adds a child filter to this instance.
      *
-     * @param PHP_Depend_Code_NodeIterator_FilterI $filter The new child filter.
+     * @param PHP_Depend_Code_FilterI $filter The new child filter.
      *
      * @return void
      */
-    public function addFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
+    public function addFilter(PHP_Depend_Code_FilterI $filter)
     {
         if (in_array($filter, $this->_filters, true) === false) {
             $this->_filters[] = $filter;
@@ -87,11 +87,11 @@ class PHP_Depend_Code_NodeIterator_CompositeFilter
     /**
      * Removes a child filter from this instance.
      *
-     * @param PHP_Depend_Code_NodeIterator_FilterI $filter The child filter.
+     * @param PHP_Depend_Code_FilterI $filter The child filter.
      *
      * @return void
      */
-    public function removeFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
+    public function removeFilter(PHP_Depend_Code_FilterI $filter)
     {
         if (($idx = array_search($filter, $this->_filters, true)) !== false) {
             unset($this->_filters[$idx]);

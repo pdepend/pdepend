@@ -54,10 +54,10 @@ require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
+require_once 'PHP/Depend/Code/Filter/Package.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_NodeIterator_PackageFilter} class.
+ * Test case for the {@link PHP_Depend_Code_Filter_Package} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -68,7 +68,7 @@ require_once 'PHP/Depend/Code/NodeIterator/PackageFilter.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that the package filter works a expected for packages.
@@ -85,7 +85,7 @@ class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_Abstract
         $packages = array($pkgIn1, $pkgIn2, $pkgOut1, $pkgOut2);
         $iterator = new PHP_Depend_Code_NodeIterator($packages);
         
-        $filter = new PHP_Depend_Code_NodeIterator_PackageFilter(array('out1', 'out2'));
+        $filter = new PHP_Depend_Code_Filter_Package(array('out1', 'out2'));
         $iterator->addFilter($filter);
         
         $expected = array('in1'  =>  true, 'in2'  =>  true);
@@ -116,7 +116,7 @@ class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_Abstract
         $classes  = array($clsIn1, $clsIn2, $clsOut1, $clsOut2);
         $iterator = new PHP_Depend_Code_NodeIterator($classes);
         
-        $filter = new PHP_Depend_Code_NodeIterator_PackageFilter(array('out'));
+        $filter = new PHP_Depend_Code_Filter_Package(array('out'));
         $iterator->addFilter($filter);
         
         $expected = array('in1'  =>  true, 'in2'  =>  true);
@@ -146,7 +146,7 @@ class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_Abstract
         $functions = array($fcnIn1, $fcnIn2, $fcnOut1, $fcnOut2);
         $iterator  = new PHP_Depend_Code_NodeIterator($functions);
         
-        $filter = new PHP_Depend_Code_NodeIterator_PackageFilter(array('out'));
+        $filter = new PHP_Depend_Code_Filter_Package(array('out'));
         $iterator->addFilter($filter);
         
         $expected = array('in1'  =>  true, 'in2'  =>  true);
@@ -173,7 +173,7 @@ class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_Abstract
         $methods  = array($mtdIn1, $mtdIn2, $mtdOut1, $mtdOut2);
         $iterator = new PHP_Depend_Code_NodeIterator($methods);
         
-        $filter = new PHP_Depend_Code_NodeIterator_PackageFilter(array('out'));
+        $filter = new PHP_Depend_Code_Filter_Package(array('out'));
         $iterator->addFilter($filter);
         
         $expected = array('in1'  =>  true, 'in2'  =>  true);
@@ -200,7 +200,7 @@ class PHP_Depend_Code_NodeIterator_PackageFilterTest extends PHP_Depend_Abstract
         $packages = array($pkgIn1, $pkgIn2, $pkgOut1, $pkgOut2);
         $iterator = new PHP_Depend_Code_NodeIterator($packages);
         
-        $filter = new PHP_Depend_Code_NodeIterator_PackageFilter(array('ezc*', 'Zend_*'));
+        $filter = new PHP_Depend_Code_Filter_Package(array('ezc*', 'Zend_*'));
         $iterator->addFilter($filter);
         
         $expected = array('PHP_Depend_Code'  =>  true, 'PHP_Depend_Metrics'  =>  true);

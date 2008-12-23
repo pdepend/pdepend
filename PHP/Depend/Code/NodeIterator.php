@@ -47,8 +47,8 @@
  */
 
 require_once 'PHP/Depend/Code/NodeI.php';
-require_once 'PHP/Depend/Code/NodeIterator/CompositeFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/StaticFilter.php';
+require_once 'PHP/Depend/Code/Filter/Composite.php';
+require_once 'PHP/Depend/Code/Filter/Collection.php';
 
 /**
  * Iterator for code nodes.
@@ -81,7 +81,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     /**
      * The global filter instance.
      *
-     * @var PHP_Depend_Code_NodeIterator_CompositeFilter $_filter
+     * @var PHP_Depend_Code_Filter_Composite $_filter
      */
     private $_filter = null;
 
@@ -106,11 +106,11 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         // Sort by name
         ksort($this->_input);
 
-        $staticFilter = PHP_Depend_Code_NodeIterator_StaticFilter::getInstance();
+        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
 
         // Apply global filters
-        $this->_filter = new PHP_Depend_Code_NodeIterator_CompositeFilter();
-        $this->_filter->addFilter($staticFilter);
+        $this->_filter = new PHP_Depend_Code_Filter_Composite();
+        $this->_filter->addFilter($collection);
 
         $this->_init();
     }
@@ -120,11 +120,11 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      *
      * A call to this method will reset the internal pointer.
      *
-     * @param PHP_Depend_Code_NodeIterator_FilterI $filter The filter instance.
+     * @param PHP_Depend_Code_FilterI $filter The filter instance.
      *
      * @return void
      */
-    public function addFilter(PHP_Depend_Code_NodeIterator_FilterI $filter)
+    public function addFilter(PHP_Depend_Code_FilterI $filter)
     {
         $this->_filter->addFilter($filter);
         $this->_init();

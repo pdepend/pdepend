@@ -48,8 +48,8 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeIterator/DefaultPackageFilter.php';
-require_once 'PHP/Depend/Code/NodeIterator/InternalPackageFilter.php';
+require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
+require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Log/Phpunit/Xml.php';
 require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
@@ -153,8 +153,8 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
         $source   = dirname(__FILE__) . '/../../_code/coupling';
         $packages = self::parseSource($source);
 
-        $packages->addFilter(new PHP_Depend_Code_NodeIterator_DefaultPackageFilter());
-        $packages->addFilter(new PHP_Depend_Code_NodeIterator_InternalPackageFilter());
+        $packages->addFilter(new PHP_Depend_Code_Filter_DefaultPackage());
+        $packages->addFilter(new PHP_Depend_Code_Filter_InternalPackage());
 
         $logger = new PHP_Depend_Log_Phpunit_Xml();
         $logger->setLogFile($this->_tempFile);

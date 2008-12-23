@@ -47,7 +47,7 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractType.php';
-require_once 'PHP/Depend/Code/NodeIterator/TypeFilter.php';
+require_once 'PHP/Depend/Code/Filter/Type.php';
 
 /**
  * Representation of a code interface.  
@@ -86,7 +86,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
         $type = 'PHP_Depend_Code_Class';
         
         $children = new PHP_Depend_Code_NodeIterator($this->children);
-        $children->addFilter(new PHP_Depend_Code_NodeIterator_TypeFilter($type));
+        $children->addFilter(new PHP_Depend_Code_Filter_Type($type));
         
         return $children;
     }
@@ -124,7 +124,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
         $type = 'PHP_Depend_Code_Interface';
         
         $children = new PHP_Depend_Code_NodeIterator($this->children);
-        $children->addFilter(new PHP_Depend_Code_NodeIterator_TypeFilter($type));
+        $children->addFilter(new PHP_Depend_Code_Filter_Type($type));
         
         return $children;
     }
