@@ -187,7 +187,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function valid()
     {
-        return ($this->current() !== false);
+        return (current($this->_nodes) !== false);
     }
 
     /**
