@@ -107,10 +107,15 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     public function getParentClass()
     {
         // We know that a class has only 'extends' and 'implements' dependencies
-        foreach ($this->getDependencies() as $dependency) {
-            if ($dependency instanceof PHP_Depend_Code_Class) {
-                return $dependency;
+        foreach ($this->getUnfilteredRawDependencies() as $dependency) {
+            if (($dependency instanceof PHP_Depend_Code_Class) === false) {
+                continue;
             }
+            $collection = PHP_Depend_Code_Filter_Collection::getInstance();
+            if ($collection->accept($dependency) === false) {
+                return null;
+            }
+            return $dependency;
         }
         return null;
     }
@@ -129,20 +134,22 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         $interfaces->addFilter($filter);
 
         $nodes = array();
-        foreach ($interfaces as $interface) {
+        foreach ($this->getUnfilteredRawDependencies() as $dependency) {
+            // Add parent interfaces of parent class
+            if ($dependency instanceof PHP_Depend_Code_Class) {
+                foreach ($dependency->getImplementedInterfaces() as $interface) {
+                    $nodes[] = $interface;
+                }
+                continue;
+            }
+
             // Add this interface first
-            $nodes[] = $interface;
+            $nodes[] = $dependency;
             // Append all parent interfaces
-            foreach ($interface->getParentInterfaces() as $parentInterface) {
+            foreach ($dependency->getParentInterfaces() as $parentInterface) {
                 if (in_array($parentInterface, $nodes, true) === false) {
                     $nodes[] = $parentInterface;
                 }
-            }
-        }
-
-        if (($parent = $this->getParentClass()) !== null) {
-            foreach ($parent->getImplementedInterfaces() as $interface) {
-                $nodes[] = $interface;
             }
         }
         return new PHP_Depend_Code_NodeIterator($nodes);
