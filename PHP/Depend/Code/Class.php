@@ -127,12 +127,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function getImplementedInterfaces()
     {
-        $type   = 'PHP_Depend_Code_Interface';
-        $filter = new PHP_Depend_Code_Filter_Type($type);
-
-        $interfaces = $this->getDependencies();
-        $interfaces->addFilter($filter);
-
         $nodes = array();
         foreach ($this->getUnfilteredRawDependencies() as $dependency) {
             // Add parent interfaces of parent class
