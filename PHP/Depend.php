@@ -47,7 +47,7 @@
 
 require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/VisitorI.php';
 require_once 'PHP/Depend/Code/Filter/Composite.php';
 require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
 require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
@@ -330,7 +330,7 @@ class PHP_Depend
             foreach ($this->_listeners as $listener) {
                 $analyzer->addAnalyzeListener($listener);
 
-                if ($analyzer instanceof PHP_Depend_Code_NodeVisitorI) {
+                if ($analyzer instanceof PHP_Depend_VisitorI) {
                     $analyzer->addVisitListener($listener);
                 }
             }

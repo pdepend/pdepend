@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/VisitorI.php';
 
 /**
  * The code rank strategy provides an interface for dependency collection. 
@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
-    extends PHP_Depend_Code_NodeVisitorI
+    extends PHP_Depend_VisitorI
 {
     /**
      * Returns the collected nodes.

@@ -88,7 +88,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * @param PHP_Depend_Code_Class $class The context code class.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     * @see PHP_Depend_VisitorI::visitClass()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
@@ -104,7 +104,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Depend_VisitorI::visitInterface()
      * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
