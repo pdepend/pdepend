@@ -218,12 +218,12 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
+     * @param PHP_Depend_VisitorI $visitor The context visitor
      *                                              implementation.
      *
      * @return void
      */
-    public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
+    public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitFile($this);
     }

@@ -152,7 +152,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -186,7 +186,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -231,7 +231,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
+     * @see PHP_Depend_VisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {

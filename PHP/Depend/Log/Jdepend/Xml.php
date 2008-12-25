@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/VisitorI.php';
 require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
@@ -231,7 +231,7 @@ class PHP_Depend_Log_Jdepend_Xml
      * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     * @see PHP_Depend_VisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -254,7 +254,7 @@ class PHP_Depend_Log_Jdepend_Xml
      * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -273,7 +273,7 @@ class PHP_Depend_Log_Jdepend_Xml
      * @param PHP_Depend_Code_Class $package The package class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
+     * @see PHP_Depend_VisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
