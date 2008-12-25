@@ -41,7 +41,7 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id: AllTests.php 527 2008-12-13 22:33:27Z mapi $
+ * @version   SVN: $Id$
  * @link      http://www.manuel-pichler.de/
  */
 
