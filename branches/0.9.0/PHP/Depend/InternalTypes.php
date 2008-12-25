@@ -58,24 +58,24 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_InternalTypes
+class PHP_Depend_InternalTypes
 {
     /**
      * Singleton instance for this class.
      *
-     * @var PHP_Depend_Code_InternalTypes $_instance
+     * @var PHP_Depend_InternalTypes $_instance
      */
     private static $_instance = null;
 
     /**
      * Singleton method for the internal types class.
      *
-     * @return PHP_Depend_Code_InternalTypes
+     * @return PHP_Depend_InternalTypes
      */
     public static function getInstance()
     {
         if (self::$_instance === null) {
-            self::$_instance = new PHP_Depend_Code_InternalTypes();
+            self::$_instance = new PHP_Depend_InternalTypes();
         }
         return self::$_instance;
     }
