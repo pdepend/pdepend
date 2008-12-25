@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Visitor
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,179 +46,261 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Visitor/ListenerI.php';
+
 /**
- * Base interface for a visitor listener.
+ * This abstract class provides a default implementation of the node visitor
+ * listener.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Visitor
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeVisitor_ListenerI
+abstract class PHP_Depend_Visitor_AbstractListener
+    implements PHP_Depend_Visitor_ListenerI
 {
     /**
      * Is called when the visitor starts a new class instance.
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
-     * 
+     *
      * @return void
      */
-    function startVisitClass(PHP_Depend_Code_Class $class);
-    
+    public function startVisitClass(PHP_Depend_Code_Class $class)
+    {
+        $this->startVisitNode($class);
+    }
+
     /**
      * Is called when the visitor ends with a class instance.
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
-     * 
+     *
      * @return void
      */
-    function endVisitClass(PHP_Depend_Code_Class $class);
-    
+    public function endVisitClass(PHP_Depend_Code_Class $class)
+    {
+        $this->endVisitNode($class);
+    }
+
     /**
      * Is called when the visitor starts a new file instance.
      *
      * @param PHP_Depend_Code_File $file The context file instance.
-     * 
+     *
      * @return void
      */
-    function startVisitFile(PHP_Depend_Code_File $file);
-    
+    public function startVisitFile(PHP_Depend_Code_File $file)
+    {
+        $this->startVisitNode($file);
+    }
+
     /**
      * Is called when the visitor ends with a file instance.
      *
      * @param PHP_Depend_Code_File $file The context file instance.
-     * 
+     *
      * @return void
      */
-    function endVisitFile(PHP_Depend_Code_File $file);
-    
+    public function endVisitFile(PHP_Depend_Code_File $file)
+    {
+        $this->endVisitNode($file);
+    }
+
     /**
      * Is called when the visitor starts a new function instance.
      *
      * @param PHP_Depend_Code_Function $function The context function instance.
-     * 
+     *
      * @return void
      */
-    function startVisitFunction(PHP_Depend_Code_Function $function);
-    
+    public function startVisitFunction(PHP_Depend_Code_Function $function)
+    {
+        $this->startVisitNode($function);
+    }
+
     /**
      * Is called when the visitor ends with a function instance.
      *
      * @param PHP_Depend_Code_Function $function The context function instance.
-     * 
+     *
      * @return void
      */
-    function endVisitFunction(PHP_Depend_Code_Function $function);
-    
+    public function endVisitFunction(PHP_Depend_Code_Function $function)
+    {
+        $this->endVisitNode($function);
+    }
+
     /**
      * Is called when the visitor starts a new interface instance.
      *
      * @param PHP_Depend_Code_Interface $interface The context interface instance.
-     * 
+     *
      * @return void
      */
-    function startVisitInterface(PHP_Depend_Code_Interface $interface);
-    
+    public function startVisitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->startVisitNode($interface);
+    }
+
     /**
      * Is called when the visitor ends with an interface instance.
      *
      * @param PHP_Depend_Code_Interface $interface The context interface instance.
-     * 
+     *
      * @return void
      */
-    function endVisitInterface(PHP_Depend_Code_Interface $interface);
-    
+    public function endVisitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->endVisitNode($interface);
+    }
+
     /**
      * Is called when the visitor starts a new method instance.
      *
      * @param PHP_Depend_Code_Method $method The context method instance.
-     * 
+     *
      * @return void
      */
-    function startVisitMethod(PHP_Depend_Code_Method $method);
-    
+    public function startVisitMethod(PHP_Depend_Code_Method $method)
+    {
+        $this->startVisitNode($method);
+    }
+
     /**
      * Is called when the visitor ends with a method instance.
      *
      * @param PHP_Depend_Code_Method $method The context method instance.
-     * 
+     *
      * @return void
      */
-    function endVisitMethod(PHP_Depend_Code_Method $method);
-    
+    public function endVisitMethod(PHP_Depend_Code_Method $method)
+    {
+        $this->endVisitNode($method);
+    }
+
     /**
      * Is called when the visitor starts a new package instance.
      *
      * @param PHP_Depend_Code_Package $package The context package instance.
-     * 
+     *
      * @return void
      */
-    function startVisitPackage(PHP_Depend_Code_Package $package);
-    
+    public function startVisitPackage(PHP_Depend_Code_Package $package)
+    {
+        $this->startVisitNode($package);
+    }
+
     /**
      * Is called when the visitor ends with a package instance.
      *
      * @param PHP_Depend_Code_Package $package The context package instance.
-     * 
+     *
      * @return void
      */
-    function endVisitPackage(PHP_Depend_Code_Package $package);
-    
+    public function endVisitPackage(PHP_Depend_Code_Package $package)
+    {
+        $this->endVisitNode($package);
+    }
+
     /**
      * Is called when the visitor starts a new parameter instance.
      *
      * @param PHP_Depend_Code_Parameter $parameter The context parameter instance.
-     * 
+     *
      * @return void
      */
-    function startVisitParameter(PHP_Depend_Code_Parameter $parameter);
-    
+    public function startVisitParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        $this->startVisitNode($parameter);
+    }
+
     /**
      * Is called when the visitor ends with a parameter instance.
      *
      * @param PHP_Depend_Code_Package $parameter The context parameter instance.
-     * 
+     *
      * @return void
      */
-    function endVisitParameter(PHP_Depend_Code_Parameter $parameter);
-    
+    public function endVisitParameter(PHP_Depend_Code_Parameter $parameter)
+    {
+        $this->endVisitNode($parameter);
+    }
+
     /**
      * Is called when the visitor starts a new property instance.
      *
      * @param PHP_Depend_Code_Property $property The context property instance.
-     * 
+     *
      * @return void
      */
-    function startVisitProperty(PHP_Depend_Code_Property $property);
-    
+    public function startVisitProperty(PHP_Depend_Code_Property $property)
+    {
+        $this->startVisitNode($property);
+    }
+
     /**
      * Is called when the visitor ends with a property instance.
      *
      * @param PHP_Depend_Code_Property $property The context property instance.
-     * 
+     *
      * @return void
      */
-    function endVisitProperty(PHP_Depend_Code_Property $property);
-    
+    public function endVisitProperty(PHP_Depend_Code_Property $property)
+    {
+        $this->endVisitNode($property);
+    }
+
     /**
      * Is called when the visitor starts a new constant instance.
      *
      * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
-     * 
+     *
      * @return void
      */
-    function startVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant);
-    
+    public function startVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
+    {
+        $this->startVisitNode($constant);
+    }
+
     /**
      * Is called when the visitor ends with a constant instance.
      *
      * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
-     * 
+     *
      * @return void
      */
-    function endVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant);
+    public function endVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
+    {
+        $this->endVisitNode($constant);
+    }
+
+    /**
+     * Generic notification method that is called for every node start.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return void
+     */
+    protected function startVisitNode(PHP_Depend_Code_NodeI $node)
+    {
+
+    }
+
+    /**
+     * Generic notification method that is called when the node processing ends.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return void
+     */
+    protected function endVisitNode(PHP_Depend_Code_NodeI $node)
+    {
+
+    }
 }

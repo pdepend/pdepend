@@ -237,7 +237,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testVisitorAccept()
     {
         $package = new PHP_Depend_Code_Package('package1');
-        $visitor = new PHP_Depend_Code_NodeVisitor_TestNodeVisitor();
+        $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
         
         $this->assertNull($visitor->package);
         $package->accept($visitor);

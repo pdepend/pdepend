@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @link       http://www.manuel-pichler.de/
  */
 abstract class PHP_Depend_Metrics_AbstractAnalyzer
-       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Metrics_AnalyzerI
 {
     /**

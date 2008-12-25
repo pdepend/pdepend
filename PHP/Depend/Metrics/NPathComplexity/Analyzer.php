@@ -215,7 +215,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitFunction()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -233,7 +233,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitMethod()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {

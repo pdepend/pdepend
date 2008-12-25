@@ -70,7 +70,7 @@ require_once 'PHP/Depend/Code/Property.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeVisitor_DefaultListenerTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 {
     public function testDefaultImplementationCallsListeners()
     {
@@ -90,8 +90,8 @@ class PHP_Depend_Code_NodeVisitor_DefaultListenerTest extends PHP_Depend_Abstrac
         $function->setSourceFile($file);
         $interface->setSourceFile($file);
         
-        $listener = new PHP_Depend_Code_NodeVisitor_TestListener();
-        $visitor  = new PHP_Depend_Code_NodeVisitor_DefaultVisitorDummy();
+        $listener = new PHP_Depend_Visitor_TestListener();
+        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
         $visitor->visitPackage($package);
         

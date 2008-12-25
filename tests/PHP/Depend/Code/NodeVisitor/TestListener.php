@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractListener.php';
+require_once 'PHP/Depend/Visitor/AbstractListener.php';
 
 /**
  * Simple test node visitor implementation.
@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Code/NodeVisitor/AbstractListener.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeVisitor_TestListener extends PHP_Depend_Code_NodeVisitor_AbstractListener
+class PHP_Depend_Visitor_TestListener extends PHP_Depend_Visitor_AbstractListener
 {
     public $nodes = array();
     
