@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -47,10 +47,9 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractType.php';
-require_once 'PHP/Depend/Code/Filter/Type.php';
 
 /**
- * Representation of a code interface.  
+ * Representation of a code interface.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -72,7 +71,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
     {
         return true;
     }
-    
+
     /**
      * Returns an iterator with all implementing classes.
      *
@@ -83,14 +82,15 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
      */
     public function getImplementingClasses()
     {
-        $type = 'PHP_Depend_Code_Class';
-        
-        $children = new PHP_Depend_Code_NodeIterator($this->children);
-        $children->addFilter(new PHP_Depend_Code_Filter_Type($type));
-        
-        return $children;
+        $classes = array();
+        foreach ($this->children as $child) {
+            if ($child instanceof PHP_Depend_Code_Class) {
+                $classes[] = $child;
+            }
+        }
+        return new PHP_Depend_Code_NodeIterator($classes);
     }
-    
+
     /**
      * Returns an iterator with all parent, parent parent etc. interfaces.
      *
@@ -99,8 +99,8 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
     public function getParentInterfaces()
     {
         $interfaces = array();
-        foreach ($this->getDependencies() as $interface) {
-            // Append parent interface first 
+        foreach ($this->getUnfilteredRawDependencies() as $interface) {
+            // Append parent interface first
             if (in_array($interface, $interfaces, true) === false) {
                 $interfaces[] = $interface;
             }
@@ -113,7 +113,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
         }
         return new PHP_Depend_Code_NodeIterator($interfaces);
     }
-    
+
     /**
      * Returns an iterator with all child interfaces.
      *
@@ -121,19 +121,20 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
      */
     public function getChildInterfaces()
     {
-        $type = 'PHP_Depend_Code_Interface';
-        
-        $children = new PHP_Depend_Code_NodeIterator($this->children);
-        $children->addFilter(new PHP_Depend_Code_Filter_Type($type));
-        
-        return $children;
+        $interfaces = array();
+        foreach ($this->children as $child) {
+            if ($child instanceof PHP_Depend_Code_Interface) {
+                $interfaces[] = $child;
+            }
+        }
+        return new PHP_Depend_Code_NodeIterator($interfaces);
     }
-    
+
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
      * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
-     * 
+     *
      * @return boolean
      */
     public function isSubtypeOf(PHP_Depend_Code_AbstractType $type)
@@ -149,18 +150,18 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
         }
         return false;
     }
-    
+
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor 
+     * @param PHP_Depend_Code_NodeVisitorI $visitor The context visitor
      *                                              implementation.
-     * 
+     *
      * @return void
      */
     public function accept(PHP_Depend_Code_NodeVisitorI $visitor)
     {
         $visitor->visitInterface($this);
     }
-    
+
 }

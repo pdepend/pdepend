@@ -48,7 +48,6 @@
 
 require_once 'PHP/Depend/Code/NodeI.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Filter/Type.php';
 require_once 'PHP/Depend/Util/UUID.php';
 
 /**
@@ -134,12 +133,13 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getClasses()
     {
-        $type = 'PHP_Depend_Code_Class';
-
-        $classes = new PHP_Depend_Code_NodeIterator($this->types);
-        $classes->addFilter(new PHP_Depend_Code_Filter_Type($type));
-
-        return $classes;
+        $classes = array();
+        foreach ($this->types as $type) {
+            if ($type instanceof PHP_Depend_Code_Class) {
+                $classes[] = $type;
+            }
+        }
+        return new PHP_Depend_Code_NodeIterator($classes);
     }
 
     /**
@@ -150,12 +150,13 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getInterfaces()
     {
-        $type = 'PHP_Depend_Code_Interface';
-
-        $classes = new PHP_Depend_Code_NodeIterator($this->types);
-        $classes->addFilter(new PHP_Depend_Code_Filter_Type($type));
-
-        return $classes;
+        $interfaces = array();
+        foreach ($this->types as $type) {
+            if ($type instanceof PHP_Depend_Code_Interface) {
+                $interfaces[] = $type;
+            }
+        }
+        return new PHP_Depend_Code_NodeIterator($interfaces);
     }
 
     /**
