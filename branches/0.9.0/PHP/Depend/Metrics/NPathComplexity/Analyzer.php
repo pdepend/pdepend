@@ -73,6 +73,43 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
                PHP_Depend_Metrics_NodeAwareI
 {
     /**
+     * List of valid token types that are relevant for the npath complexity
+     * calculation.
+     *
+     * @var array(integer=>boolean) $_validTokens
+     */
+    private static $_validTokens = array(
+        PHP_Depend_ConstantsI::T_CLOSE_TAG         => true,
+        PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN  => true,
+        PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE => true,
+        PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN  => true,
+        PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE => true,
+        PHP_Depend_ConstantsI::T_COMMENT           => true,
+        PHP_Depend_ConstantsI::T_DOC_COMMENT       => true,
+        PHP_Depend_ConstantsI::T_SEMICOLON         => true,
+        PHP_Depend_ConstantsI::T_QUESTION_MARK     => true,
+        PHP_Depend_ConstantsI::T_COLON             => true,
+        PHP_Depend_ConstantsI::T_RETURN            => true,
+        PHP_Depend_ConstantsI::T_DO                => true,
+        PHP_Depend_ConstantsI::T_FOR               => true,
+        PHP_Depend_ConstantsI::T_IF                => true,
+        PHP_Depend_ConstantsI::T_ELSE              => true,
+        PHP_Depend_ConstantsI::T_ELSEIF            => true,
+        PHP_Depend_ConstantsI::T_FOREACH           => true,
+        PHP_Depend_ConstantsI::T_WHILE             => true,
+        PHP_Depend_ConstantsI::T_SWITCH            => true,
+        PHP_Depend_ConstantsI::T_CASE              => true,
+        PHP_Depend_ConstantsI::T_DEFAULT           => true,
+        PHP_Depend_ConstantsI::T_BOOLEAN_AND       => true,
+        PHP_Depend_ConstantsI::T_BOOLEAN_OR        => true,
+        PHP_Depend_ConstantsI::T_LOGICAL_AND       => true,
+        PHP_Depend_ConstantsI::T_LOGICAL_OR        => true,
+        PHP_Depend_ConstantsI::T_LOGICAL_XOR       => true,
+        PHP_Depend_ConstantsI::T_TRY               => true,
+        PHP_Depend_ConstantsI::T_CATCH             => true,
+    );
+
+    /**
      * The current token array.
      *
      * @var array $_tokens
@@ -222,12 +259,9 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->_tokens = array();
         foreach ($tokens as $token) {
-            if ($token->type === PHP_Depend_ConstantsI::T_COMMENT
-             || $token->type === PHP_Depend_ConstantsI::T_DOC_COMMENT) {
-
-                continue;
+            if (isset(self::$_validTokens[$token->type])) {
+                $this->_tokens[] = $token;
             }
-            $this->_tokens[] = $token;
         }
 
         $this->_index  = 0;
