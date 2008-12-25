@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/AbstractVisitor.php';
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
 
 /**
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
  * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Metrics_CodeRank_MethodStrategy
-       extends PHP_Depend_Code_NodeVisitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
 {
     /**
@@ -88,7 +88,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitMethod()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {

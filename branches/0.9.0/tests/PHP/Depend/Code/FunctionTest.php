@@ -132,7 +132,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     public function testVisitorAccept()
     {
         $function = new PHP_Depend_Code_Function('func', 0);
-        $visitor  = new PHP_Depend_Code_NodeVisitor_TestNodeVisitor();
+        $visitor  = new PHP_Depend_Visitor_TestNodeVisitor();
         
         $this->assertNull($visitor->function);
         $function->accept($visitor);

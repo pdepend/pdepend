@@ -163,7 +163,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitClass()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {

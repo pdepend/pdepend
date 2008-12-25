@@ -451,7 +451,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
     public function testVisitorAccept()
     {
         $class   = new PHP_Depend_Code_Class('clazz', 0);
-        $visitor = new PHP_Depend_Code_NodeVisitor_TestNodeVisitor();
+        $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
         
         $this->assertNull($visitor->class);
         $class->accept($visitor);

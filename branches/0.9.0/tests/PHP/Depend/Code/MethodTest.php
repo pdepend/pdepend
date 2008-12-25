@@ -100,7 +100,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
     public function testVisitorAccept()
     {
         $method  = new PHP_Depend_Code_Method('method', 0);
-        $visitor = new PHP_Depend_Code_NodeVisitor_TestNodeVisitor();
+        $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
         
         $this->assertNull($visitor->method);
         $method->accept($visitor);
