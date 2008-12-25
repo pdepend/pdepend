@@ -203,7 +203,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -234,7 +234,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -247,7 +247,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {

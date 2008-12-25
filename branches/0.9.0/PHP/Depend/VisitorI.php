@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Code_NodeVisitorI
+interface PHP_Depend_VisitorI
 {
     /**
      * Adds a new listener to this node visitor.
