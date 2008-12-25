@@ -95,7 +95,7 @@ class PHP_Depend_Code_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
         $suite->addTest(PHP_Depend_Code_Filter_AllTests::suite());
-        $suite->addTest(PHP_Depend_Code_NodeVisitor_AllTests::suite());
+        $suite->addTest(PHP_Depend_Visitor_AllTests::suite());
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');

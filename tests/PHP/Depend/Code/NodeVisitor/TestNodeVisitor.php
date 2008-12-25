@@ -58,7 +58,7 @@ require_once 'PHP/Depend/VisitorI.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_VisitorI
+class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
 {
     /**
      * The last visited class instance.
@@ -119,24 +119,24 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_VisitorI
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener
+     * @param PHP_Depend_Visitor_ListenerI $listener
      *        The new visit listener.
      *
      * @return void
      */
-    public function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
+    public function addVisitListener(PHP_Depend_Visitor_ListenerI $listener)
     {
     }
 
     /**
      * Removes the listener from this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener
+     * @param PHP_Depend_Visitor_ListenerI $listener
      *        The listener to remove.
      *
      * @return void
      */
-    public function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener)
+    public function removeVisitListener(PHP_Depend_Visitor_ListenerI $listener)
     {
     }
 

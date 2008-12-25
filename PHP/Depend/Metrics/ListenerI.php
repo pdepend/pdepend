@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
+require_once 'PHP/Depend/Visitor/ListenerI.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 
 /**
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @link       http://www.manuel-pichler.de/
  */
 interface PHP_Depend_Metrics_ListenerI
-    extends PHP_Depend_Code_NodeVisitor_ListenerI
+    extends PHP_Depend_Visitor_ListenerI
 {
     /**
      * This method is called when the analyzer starts code processing.

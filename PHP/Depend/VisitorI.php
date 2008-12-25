@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -36,127 +36,125 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Code
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   SVN: $Id$
+ * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitor/ListenerI.php';
+require_once 'PHP/Depend/Visitor/ListenerI.php';
 
 /**
  * Base interface for visitors that work on the generated node tree.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Code
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
  */
 interface PHP_Depend_VisitorI
 {
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The new visit listener.
-     * 
+     * @param PHP_Depend_Visitor_ListenerI $listener The new visit listener.
+     *
      * @return void
      */
-    function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
-    
+    function addVisitListener(PHP_Depend_Visitor_ListenerI $listener);
+
     /**
      * Removes the listener from this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $listener The listener to remove.
-     * 
+     * @param PHP_Depend_Visitor_ListenerI $listener The listener to remove.
+     *
      * @return void
      */
-    function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $listener);
-    
+    function removeVisitListener(PHP_Depend_Visitor_ListenerI $listener);
+
     /**
-     * Visits a class node. 
+     * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     * 
+     *
      * @return void
      */
     function visitClass(PHP_Depend_Code_Class $class);
-    
+
     /**
-     * Visits a file node. 
+     * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.
-     * 
+     *
      * @return void
      */
     function visitFile(PHP_Depend_Code_File $file);
-    
+
     /**
-     * Visits a function node. 
+     * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     * 
+     *
      * @return void
      */
     function visitFunction(PHP_Depend_Code_Function $function);
-    
+
     /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     * 
+     *
      * @return void
      */
     function visitInterface(PHP_Depend_Code_Interface $interface);
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     * 
+     *
      * @return void
      */
     function visitMethod(PHP_Depend_Code_Method $method);
-    
+
     /**
-     * Visits a package node. 
+     * Visits a package node.
      *
      * @param PHP_Depend_Code_Class $package The package class node.
-     * 
+     *
      * @return void
      */
     function visitPackage(PHP_Depend_Code_Package $package);
-    
+
     /**
      * Visits a parameter node.
      *
      * @param PHP_Depend_Code_Parameter $parameter The parameter node.
-     * 
+     *
      * @return void
      */
     function visitParameter(PHP_Depend_Code_Parameter $parameter);
-    
+
     /**
-     * Visits a property node. 
+     * Visits a property node.
      *
      * @param PHP_Depend_Code_Property $property The property class node.
-     * 
+     *
      * @return void
      */
     function visitProperty(PHP_Depend_Code_Property $property);
-    
+
     /**
-     * Visits a class constant node. 
+     * Visits a class constant node.
      *
      * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     * 
+     *
      * @return void
      */
     function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant);

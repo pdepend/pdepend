@@ -181,7 +181,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitClass()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -220,7 +220,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @param PHP_Depend_Code_File $file The current file node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitFile()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitFile()
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
@@ -263,7 +263,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitFunction()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -292,7 +292,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitInterface()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -328,7 +328,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitMethod()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -355,7 +355,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitProperty()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
@@ -377,7 +377,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitor_AbstractVisitor::visitTypeConstant()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitTypeConstant()
      */
     public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
     {
