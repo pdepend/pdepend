@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/InternalTypes.php';
+require_once 'PHP/Depend/InternalTypes.php';
 require_once 'PHP/Depend/Code/Filter/Package.php';
 
 /**
@@ -69,6 +69,6 @@ final class PHP_Depend_Code_Filter_InternalPackage
      */
     public function __construct()
     {
-        parent::__construct(PHP_Depend_Code_InternalTypes::getInstance()->getInternalPackages());
+        parent::__construct(PHP_Depend_InternalTypes::getInstance()->getInternalPackages());
     }
 }

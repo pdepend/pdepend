@@ -49,7 +49,7 @@
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/TypeConstant.php';
 require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/InternalTypes.php';
+require_once 'PHP/Depend/InternalTypes.php';
 require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
@@ -146,7 +146,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * The internal types class.
      *
-     * @var PHP_Depend_Code_InternalTypes $_internalTypes
+     * @var PHP_Depend_InternalTypes $_internalTypes
      */
     private $_internalTypes = null;
 
@@ -160,7 +160,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
 
-        $this->_internalTypes = PHP_Depend_Code_InternalTypes::getInstance();
+        $this->_internalTypes = PHP_Depend_InternalTypes::getInstance();
     }
 
     /**
