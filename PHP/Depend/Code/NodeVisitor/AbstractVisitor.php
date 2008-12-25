@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/VisitorI.php';
 
 /**
  * This abstract visitor implementation provides a default traversal algorithm
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
  * @link       http://www.manuel-pichler.de/
  */
 abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
-    implements PHP_Depend_Code_NodeVisitorI
+    implements PHP_Depend_VisitorI
 {
     /**
      * List of all registered listeners.
@@ -115,7 +115,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitClass()
+     * @see PHP_Depend_VisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -142,7 +142,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * @param PHP_Depend_Code_File $file The current file node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFile()
+     * @see PHP_Depend_VisitorI::visitFile()
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
@@ -156,7 +156,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFunction()
+     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -177,7 +177,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitInterface()
+     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -201,7 +201,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitMethod()
+     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -220,7 +220,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * @param PHP_Depend_Code_Class $package The package class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitPackage()
+     * @see PHP_Depend_VisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
@@ -258,7 +258,7 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
      * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
+     * @see PHP_Depend_VisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {

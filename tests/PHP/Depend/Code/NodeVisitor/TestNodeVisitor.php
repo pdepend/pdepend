@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/NodeVisitorI.php';
+require_once 'PHP/Depend/VisitorI.php';
 
 /**
  * Simple test node visitor implementation.
@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Code/NodeVisitorI.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_NodeVisitorI
+class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_VisitorI
 {
     /**
      * The last visited class instance.
@@ -206,7 +206,7 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
      * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitProperty()
+     * @see PHP_Depend_VisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
@@ -231,7 +231,7 @@ class PHP_Depend_Code_NodeVisitor_TestNodeVisitor implements PHP_Depend_Code_Nod
      * @param PHP_Depend_Code_File $file The current file node.
      *
      * @return void
-     * @see PHP_Depend_Code_NodeVisitorI::visitFile()
+     * @see PHP_Depend_VisitorI::visitFile()
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
