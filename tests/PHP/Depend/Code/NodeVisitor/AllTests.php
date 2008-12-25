@@ -46,7 +46,7 @@
  */
 
 if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_NodeVisitor_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Visitor_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
@@ -66,7 +66,7 @@ require_once dirname(__FILE__) . '/DefaultVisitorTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_NodeVisitor_AllTests
+class PHP_Depend_Visitor_AllTests
 {
     /**
      * Test suite main method.
@@ -86,13 +86,13 @@ class PHP_Depend_Code_NodeVisitor_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code_NodeVisitor - AllTests');
-        $suite->addTestSuite('PHP_Depend_Code_NodeVisitor_DefaultListenerTest');
-        $suite->addTestSuite('PHP_Depend_Code_NodeVisitor_DefaultVisitorTest');
+        $suite->addTestSuite('PHP_Depend_Visitor_DefaultListenerTest');
+        $suite->addTestSuite('PHP_Depend_Visitor_DefaultVisitorTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_NodeVisitor_AllTests::main') {
-    PHP_Depend_Code_NodeVisitor_AllTests::main();
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Visitor_AllTests::main') {
+    PHP_Depend_Visitor_AllTests::main();
 }

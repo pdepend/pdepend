@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Visitor
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -54,20 +54,20 @@ require_once 'PHP/Depend/VisitorI.php';
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Visitor
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
+abstract class PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_VisitorI
 {
     /**
      * List of all registered listeners.
      *
-     * @var array(PHP_Depend_Code_NodeVisitor_ListenerI) $_listeners
+     * @var array(PHP_Depend_Visitor_ListenerI) $_listeners
      */
     private $_listeners = array();
 
@@ -84,11 +84,11 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $l The new visit listener.
+     * @param PHP_Depend_Visitor_ListenerI $l The new visit listener.
      *
      * @return void
      */
-    public function addVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $l)
+    public function addVisitListener(PHP_Depend_Visitor_ListenerI $l)
     {
         if (in_array($l, $this->_listeners, true) === false) {
             $this->_listeners[] = $l;
@@ -98,11 +98,11 @@ abstract class PHP_Depend_Code_NodeVisitor_AbstractVisitor
     /**
      * Removes the listener from this node visitor.
      *
-     * @param PHP_Depend_Code_NodeVisitor_ListenerI $l The listener to remove.
+     * @param PHP_Depend_Visitor_ListenerI $l The listener to remove.
      *
      * @return void
      */
-    public function removeVisitListener(PHP_Depend_Code_NodeVisitor_ListenerI $l)
+    public function removeVisitListener(PHP_Depend_Visitor_ListenerI $l)
     {
         if (($i = array_search($l, $this->_listeners, true)) !== false) {
             unset($this->_listeners[$i]);
