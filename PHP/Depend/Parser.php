@@ -769,7 +769,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a php class/method name chain.
      *
      * <code>
-     * PHP::Depend::Parser::parse();
+     * PHP\Depend\Parser::parse();
      * </code>
      *
      * @param array(array) &$tokens The tokens array.
@@ -778,20 +778,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseClassNameChain(&$tokens)
     {
-        $allowed = array(
-            self::T_BACKSLASH,
-            self::T_STRING,
-        );
-
+        $type  = $this->tokenizer->peek();
         $parts = array();
-
-        while (in_array($this->tokenizer->peek(), $allowed)) {
+        while ($type === self::T_BACKSLASH || $type === self::T_STRING) {
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
             if ($token->type === self::T_STRING) {
                 $parts[] = $token->image;
             }
+
+            $type = $this->tokenizer->peek();
         }
         return $parts;
     }
