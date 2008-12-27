@@ -65,25 +65,11 @@ require_once 'PHP/Depend/Code/Filter/Collection.php';
 class PHP_Depend_Code_NodeIterator implements Iterator, Countable
 {
     /**
-     * The unfiltered input array of {@link PHP_Depend_Code_NodeI} objects.
-     *
-     * @var array(PHP_Depend_Code_NodeI) $_input
-     */
-    private $_input = array();
-
-    /**
      * List of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
      * @var array(PHP_Depend_Code_NodeI) $_nodes
      */
     private $_nodes = array();
-
-    /**
-     * The global filter instance.
-     *
-     * @var PHP_Depend_Code_Filter_Composite $_filter
-     */
-    private $_filter = null;
 
     /**
      * Constructs a new node iterator from the given {@link PHP_Depend_Code_NodeI}
@@ -101,18 +87,12 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
             if (!($node instanceof PHP_Depend_Code_NodeI)) {
                 throw new RuntimeException('Invalid object given.');
             }
-            $this->_input[$node->getName()] = $node;
+            $this->_nodes[$node->getName()] = $node;
         }
         // Sort by name
-        ksort($this->_input);
+        ksort($this->_nodes);
 
-        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-
-        // Apply global filters
-        $this->_filter = new PHP_Depend_Code_Filter_Composite();
-        $this->_filter->addFilter($collection);
-
-        $this->_init();
+        $this->_init(PHP_Depend_Code_Filter_Collection::getInstance());
     }
 
     /**
@@ -126,8 +106,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function addFilter(PHP_Depend_Code_FilterI $filter)
     {
-        $this->_filter->addFilter($filter);
-        $this->_init();
+        $this->_init($filter);
     }
 
     /**
@@ -196,20 +175,16 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      *
      * @return void
      */
-    private function _init()
+    private function _init(PHP_Depend_Code_FilterI $filter)
     {
-        if ($this->_filter->count() === 0) {
-            $this->_nodes = $this->_input;
-            return;
-        }
-
-        $this->_nodes = array();
-        foreach ($this->_input as $name => $node) {
-            if ($this->_filter->accept($node) === true) {
-                $this->_nodes[$name] = $node;
+        $nodes = array();
+        foreach ($this->_nodes as $name => $node) {
+            if ($filter->accept($node) === true) {
+                $nodes[$name] = $node;
             }
         }
 
+        $this->_nodes = $nodes;
         reset($this->_nodes);
     }
 }
