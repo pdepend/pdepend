@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
@@ -47,10 +47,10 @@
  */
 
 require_once 'PHP/Depend/InternalTypes.php';
-require_once 'PHP/Depend/Code/Filter/Package.php';
+require_once 'PHP/Depend/Code/FilterI.php';
 
 /**
- * Filter implementation for internal packages. 
+ * Filter implementation for internal packages.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,13 +62,49 @@ require_once 'PHP/Depend/Code/Filter/Package.php';
  * @link       http://www.manuel-pichler.de/
  */
 final class PHP_Depend_Code_Filter_InternalPackage
-    extends PHP_Depend_Code_Filter_Package
+    implements PHP_Depend_Code_FilterI
 {
+    /**
+     * Map of internal packages/extension names.
+     *
+     * @var array(string) $_internals
+     */
+    private static $_internals = null;
+
     /**
      * Constructs a new internal package filter.
      */
     public function __construct()
     {
-        parent::__construct(PHP_Depend_InternalTypes::getInstance()->getInternalPackages());
+        if (self::$_internals === null) {
+            $types = PHP_Depend_InternalTypes::getInstance();
+            foreach ($types->getInternalPackages() as $type) {
+                self::$_internals[$type] = true;
+            }
+        }
+    }
+
+    /**
+     * Returns <b>true</b> if the given node should be part of the node iterator,
+     * otherwise this method will return <b>false</b>.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return boolean
+     */
+    public function accept(PHP_Depend_Code_NodeI $node)
+    {
+        $package = null;
+        // NOTE: This looks a little bit ugly and it seems better to exclude
+        //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
+        //       PDepend supports more node types, this could produce errors.
+        if ($node instanceof PHP_Depend_Code_AbstractType) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Function) {
+            $package = $node->getPackage()->getName();
+        } else if ($node instanceof PHP_Depend_Code_Package) {
+            $package = $node->getName();
+        }
+        return !isset(self::$_internals[$package]);
     }
 }
