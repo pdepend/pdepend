@@ -204,12 +204,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
         }
-        foreach ($class->getProperties() as $property) {
-            $property->accept($this);
-        }
-        foreach ($class->getConstants() as $constant) {
-            $constant->accept($this);
-        }
 
         $this->fireEndClass($class);
     }
@@ -347,50 +341,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         );
 
         $this->fireEndMethod($method);
-    }
-
-    /**
-     * Visits a property node.
-     *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     *
-     * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitProperty()
-     */
-    public function visitProperty(PHP_Depend_Code_Property $property)
-    {
-        $this->fireStartProperty($property);
-
-        $this->_nodeMetrics[$property->getUUID()] = array(
-            'loc'    =>  1,
-            'cloc'   =>  0,
-            'eloc'   =>  0,
-            'ncloc'  =>  1
-        );
-
-        $this->fireEndProperty($property);
-    }
-
-    /**
-     * Visits a class constant node.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     *
-     * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitTypeConstant()
-     */
-    public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        $this->fireStartTypeConstant($constant);
-
-        $this->_nodeMetrics[$constant->getUUID()] = array(
-            'loc'    =>  1,
-            'cloc'   =>  0,
-            'eloc'   =>  0,
-            'ncloc'  =>  1
-        );
-
-        $this->fireEndTypeConstant($constant);
     }
 
     /**
