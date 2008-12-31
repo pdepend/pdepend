@@ -1,0 +1,17 @@
+<?php
+namespace pkg1;
+
+use pkg2 as p;
+
+class pkg1Barfoo extends pkg1Bar implements ::pkg1FooI {
+    public function foo()
+    {
+        new p::pkg2Bar();//::doIt();
+    }
+    
+    public function bar(pkg2FooI $fx)
+    {
+        use pkg2::pkg2Bar as pkg2Bar;
+        new pkg2Bar();
+    }
+}
