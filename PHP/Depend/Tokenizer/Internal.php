@@ -483,7 +483,8 @@ class PHP_Depend_Tokenizer_Internal
     private function _php53BackslashWorkaround($source)
     {
         // Replace backslash with valid token
-        $source = preg_replace('#\\\\([^"\'`])#i', ':::\\1', $source);
+        $source = preg_replace('#\\\\([^"\'`\\\\])#i', ':::\\1', $source);
+
         $tokens = token_get_all($source);
 
         $result = array();
