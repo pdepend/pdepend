@@ -265,8 +265,6 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         }
 
         $this->_index  = 0;
-        //$this->_tokens = $tokens;
-        //$this->_length = count($tokens);
         $this->_length = count($this->_tokens);
 
         $this->_metrics[$uuid] = $this->_calculateScope();
