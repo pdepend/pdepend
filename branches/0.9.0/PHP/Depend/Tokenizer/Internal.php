@@ -444,7 +444,7 @@ class PHP_Depend_Tokenizer_Internal
      * end of the token stream. This method will return the number of skipped
      * lines.
      *
-     * @param array $tokens Reference to the current token stream.
+     * @param array &$tokens Reference to the current token stream.
      *
      * @return integer
      */
