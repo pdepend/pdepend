@@ -173,6 +173,8 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      * This method initializes a filtered list of nodes. If no filter is
      * registered, this method will simply use the input node list.
      *
+     * @param PHP_Depend_Code_FilterI $filter A newly added node filter.
+     *
      * @return void
      */
     private function _init(PHP_Depend_Code_FilterI $filter)
