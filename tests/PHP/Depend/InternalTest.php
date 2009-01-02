@@ -383,4 +383,38 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(0, count($tokens));
     }
+
+    /**
+     * Tests that the tokenizer handles a backslash within a string correct,
+     * this bug only occures for PHP versions < 5.3.0alpha3.
+     *
+     * @return void
+     */
+    public function testTokenizerHandlesBackslashInStringCorrectBug84()
+    {
+        if (version_compare(phpversion(), '5.3.0alpha3') >= 0) {
+            $this->markTestSkipped('Only relevant for php versions < 5.3.0alpha3');
+        }
+
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/84.php';
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+
+        $tokens = array(
+            array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
+            array(PHP_Depend_TokenizerI::T_VARIABLE, 2),
+            array(PHP_Depend_TokenizerI::T_EQUAL, 2),
+            array(PHP_Depend_TokenizerI::T_CONSTANT_ENCAPSED_STRING, 2),
+            array(PHP_Depend_TokenizerI::T_SEMICOLON, 2),
+            array(PHP_Depend_TokenizerI::T_CLOSE_TAG, 3),
+        );
+
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
+            $expected = array_shift($tokens);
+
+            $this->assertEquals($expected[0], $token->type);
+            $this->assertEquals($expected[1], $token->startLine);
+        }
+
+        $this->assertEquals(0, count($tokens));
+    }
 }
