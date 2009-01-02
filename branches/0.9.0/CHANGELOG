@@ -1,3 +1,8 @@
+PHP_Depend 0.9.2
+----------------
+
+- #84 + Critical bug, a backslash could kill PHP_Depend with all PHP Versions lower 5.3.0alpha3
+
 PHP_Depend 0.9.1
 ----------------
 
