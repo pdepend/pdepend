@@ -5,7 +5,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2007-2009, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
