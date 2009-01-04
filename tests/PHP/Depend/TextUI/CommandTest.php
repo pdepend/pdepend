@@ -425,16 +425,18 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $startsWith = '/^' . preg_quote($startsWith) . '/';
         $this->assertRegExp($startsWith, $actual);
 
-        $endsWith = "/  --configuration=<file>[ ]*Optional PHP_Depend configuration file.\n\n"
-                  . "  --suffix=<ext\[,\.\.\.\]>[ ]*List of valid PHP file extensions\.\n"
-                  . "  --ignore=<dir\[,\.\.\.\]>[ ]*List of exclude directories\.\n"
-                  . "  --exclude=<pkg\[,\.\.\.\]>[ ]*List of exclude packages\.\n\n"
-                  . "  --without-annotations[ ]*Do not parse doc comment annotations\.\n"
-                  . "  --bad-documentation[ ]*Fallback for projects with bad doc comments\.\n\n"
-                  . "  --help[ ]*Print this help text\.\n"
-                  . "  --version[ ]*Print the current PHP_Depend version\.\n"
-                  . "  -d key\[=value\][ ]*Sets a php.ini value.\n\n$/";
-        $this->assertRegExp($endsWith, $actual);
+        $this->assertRegExp('(  --configuration=<file>[ ]+Optional\s+PHP_Depend\s+configuration\s+file\.)', $actual);
+        $this->assertRegExp('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
+        $this->assertRegExp('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
+        $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+packages\.)', $actual);
+        $this->assertRegExp('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
+        $this->assertRegExp('(  --bad-documentation[ ]+Fallback\s+for\s+projects\s+with\s+bad\s+doc\s+comments\.)', $actual);
+        $this->assertRegExp('(  --optimization=<mode>[ ]+Runtime\s+switch\s+to\s+influence\s+the\s+internal\s+processing\.)', $actual);
+        $this->assertRegExp('(  [ ]+"best"[ ]+Provides\s+lowest\s+memory\s+usage\s+with\s+best\s+possible\s+performance\.)', $actual);
+        $this->assertRegExp('(  [ ]+"none"[ ]+Highest\s+memory\s+usage\s+without\s+any\s+caching\.)', $actual);
+        $this->assertRegExp('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
+        $this->assertRegExp('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
+        $this->assertRegExp('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
     }
 
     /**
