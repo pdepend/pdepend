@@ -46,14 +46,15 @@
  */
 
 require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Builder/Default.php';
+require_once 'PHP/Depend/StorageRegistry.php';
 require_once 'PHP/Depend/VisitorI.php';
+require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Filter/Composite.php';
 require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
 require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
+require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
 
@@ -73,6 +74,11 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
  */
 class PHP_Depend
 {
+    /**
+     * Marks the storage used for runtime tokens.
+     */
+    const TOKEN_STORAGE = 1;
+
     /**
      * List of source directories.
      *
@@ -143,6 +149,10 @@ class PHP_Depend
      */
     private $_options = array();
 
+    private $_storages = array(
+        self::TOKEN_STORAGE  =>  null,
+    );
+
     /**
      * Constructs a new php depend facade.
      */
@@ -192,6 +202,29 @@ class PHP_Depend
     public function addFileFilter(PHP_Depend_Util_FileFilterI $filter)
     {
         $this->_fileFilter->append($filter);
+    }
+
+    /**
+     * Sets a storage instance for a special usage.
+     *
+     * @param integer                           $type   The target identifier.
+     * @param PHP_Depend_Storage_AbstractEngine $engine The storage instance.
+     *
+     * @return void
+     */
+    public function setStorage($type, PHP_Depend_Storage_AbstractEngine $engine)
+    {
+        switch ($type) {
+        case self::TOKEN_STORAGE:
+            $engine->setPrune();
+            break;
+
+        default:
+            $message = sprintf('Unknown storage identifier "%s" given.', $type);
+            throw new InvalidArgumentException($message);
+        }
+
+        $this->_storages[$type] = $engine;
     }
 
     /**
@@ -266,6 +299,8 @@ class PHP_Depend
         if (count($this->_directories) === 0) {
             throw new RuntimeException('No source directory set.');
         }
+
+        $this->_initStorages();
 
         $accept = $this->_createAnalyzerList();
         $loader = new PHP_Depend_Metrics_AnalyzerLoader($accept, $this->_options);
@@ -554,6 +589,27 @@ class PHP_Depend
     {
         foreach ($this->_listeners as $listener) {
             $listener->endLogProcess();
+        }
+    }
+
+    /**
+     * This method initializes the storage strategies for node tokens that are
+     * used during a single PHP_Depend run and the parser cache storage.
+     *
+     * @return void
+     */
+    private function _initStorages()
+    {
+        foreach ($this->_storages as $identifier => $storage) {
+            // Fallback for unconfigured storage engines
+            if ($storage === null) {
+                // Include memory storage class definition
+                include_once 'PHP/Depend/Storage/MemoryEngine.php';
+
+                $storage = new PHP_Depend_Storage_MemoryEngine();
+            }
+
+            PHP_Depend_StorageRegistry::set($identifier, $storage);
         }
     }
 

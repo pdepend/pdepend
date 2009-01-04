@@ -178,7 +178,8 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getTokens()
     {
-        return $this->_tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        return (array) $storage->restore($this->getUUID(), 'tokens-file');
     }
 
     /**
@@ -190,7 +191,8 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setTokens(array $tokens)
     {
-        $this->_tokens = $tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        $storage->store($tokens, $this->getUUID(), 'tokens-file');
     }
 
     /**
