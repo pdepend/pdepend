@@ -70,9 +70,9 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * The tokens for this function.
      *
-     * @var array(mixed) $tokens
+     * @var array(mixed) $_tokens
      */
-    protected $tokens = array();
+    private $_tokens = array();
 
     /**
      * List of {@link PHP_Depend_Code_AbstractType} objects this function depends on.
@@ -110,7 +110,8 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getTokens()
     {
-        return $this->tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        return (array) $storage->restore($this->getUUID(), 'tokens-callable');
     }
 
     /**
@@ -122,7 +123,8 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function setTokens(array $tokens)
     {
-        $this->tokens = $tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        $storage->store($tokens, $this->getUUID(), 'tokens-callable');
     }
 
     /**

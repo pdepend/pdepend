@@ -316,23 +316,25 @@ abstract class PHP_Depend_Code_AbstractType
     /**
      * Returns an <b>array</b> with all tokens within this type.
      *
-     * @return array(array)
+     * @return array(PHP_Depend_Token)
      */
     public function getTokens()
     {
-        return $this->_tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        return (array) $storage->restore($this->getUUID(), 'tokens-type');
     }
 
     /**
      * Sets the tokens for this type.
      *
-     * @param array(array) $tokens The generated tokens.
+     * @param array(PHP_Depend_Token) $tokens The generated tokens.
      *
      * @return void
      */
     public function setTokens(array $tokens)
     {
-        $this->_tokens = $tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        $storage->store($tokens, $this->getUUID(), 'tokens-type');
     }
 
     /**
