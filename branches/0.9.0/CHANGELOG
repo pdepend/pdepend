@@ -1,3 +1,8 @@
+PHP_Depend 0.9.3
+
+- #83 + Storage layer for node tokens added, reduces memory consumption. 
+- #85 + TextUI displays the execution time and the memory usage(linux only).
+
 PHP_Depend 0.9.2
 ----------------
 
