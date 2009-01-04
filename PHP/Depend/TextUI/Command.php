@@ -46,6 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/TextUI/Runner.php';
 require_once 'PHP/Depend/Util/Configuration.php';
 require_once 'PHP/Depend/Util/ConfigurationInstance.php';
@@ -73,6 +74,18 @@ class PHP_Depend_TextUI_Command
      * Marks an input error exit.
      */
     const INPUT_ERROR = 1743;
+
+    /**
+     * Mapping between command line identifiers and optimzation strategies.
+     *
+     * @var array(string=>integer) $_optimizations
+     */
+    private $_optimizations = array(
+        PHP_Depend_TextUI_Runner::OPTIMZATION_BEST =>
+            'Provides lowest memory usage with best possible performance.',
+        PHP_Depend_TextUI_Runner::OPTIMZATION_NONE =>
+            'Highest memory usage without any caching.'
+    );
 
     /**
      * Collected log options.
@@ -149,7 +162,7 @@ class PHP_Depend_TextUI_Command
                 unset($options[$option]);
 
                 if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
-                    echo "Option '{$option}' requires a value.\n";
+                    echo 'Option ', $option, ' requires a value.', PHP_EOL;
                     return self::INPUT_ERROR;
                 } else if ($analyzerOptions[$option]['value'] === '*') {
                     $value = array_map('trim', explode(',', $value));
@@ -163,6 +176,20 @@ class PHP_Depend_TextUI_Command
             $this->_runner->setWithoutAnnotations();
             // Remove option
             unset($options['--without-annotations']);
+        }
+
+        if (isset($options['--optimization'])) {
+            // Check optimization strategy
+            if (!isset($this->_optimizations[$options['--optimization']])) {
+                echo 'Invalid optimization ', $options['--optimization'],
+                     ' given.', PHP_EOL;
+                return self::INPUT_ERROR;
+            }
+
+            // Set optimization strategy
+            $this->_runner->setOptimization($options['--optimization']);
+            // Remove option
+            unset($options['--optimization']);
         }
 
         if (count($options) > 0) {
@@ -334,25 +361,36 @@ class PHP_Depend_TextUI_Command
         $l = $this->printLogOptions();
         $l = $this->printAnalyzerOptions($l);
 
-        $suffixOption  = str_pad('--suffix=<ext[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $ignoreOption  = str_pad('--ignore=<dir[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $excludeOption = str_pad('--exclude=<pkg[,...]>', $l, ' ', STR_PAD_RIGHT);
-        $configuation  = str_pad('--configuration=<file>', $l, ' ', STR_PAD_RIGHT);
-        $noAnnotations = str_pad('--without-annotations', $l, ' ', STR_PAD_RIGHT);
-        $documentation = str_pad('--bad-documentation', $l, ' ', STR_PAD_RIGHT);
-        $iniOption     = str_pad('-d key[=value]', $l, ' ', STR_PAD_RIGHT);
-        $helpOption    = str_pad('--help', $l, ' ', STR_PAD_RIGHT);
-        $versionOption = str_pad('--version', $l, ' ', STR_PAD_RIGHT);
+        $this->_printOption('--configuration=<file>',
+                            'Optional PHP_Depend configuration file.', $l);
+        echo PHP_EOL;
 
-        echo "  {$configuation} Optional PHP_Depend configuration file.\n\n",
-             "  {$suffixOption} List of valid PHP file extensions.\n",
-             "  {$ignoreOption} List of exclude directories.\n",
-             "  {$excludeOption} List of exclude packages.\n\n",
-             "  {$noAnnotations} Do not parse doc comment annotations.\n",
-             "  {$documentation} Fallback for projects with bad doc comments.\n\n",
-             "  {$helpOption} Print this help text.\n",
-             "  {$versionOption} Print the current PHP_Depend version.\n",
-             "  {$iniOption} Sets a php.ini value.\n\n";
+        $this->_printOption('--suffix=<ext[,...]>',
+                            'List of valid PHP file extensions.', $l);
+        $this->_printOption('--ignore=<dir[,...]>',
+                            'List of exclude directories.', $l);
+        $this->_printOption('--exclude=<pkg[,...]>',
+                            'List of exclude packages.', $l);
+        echo PHP_EOL;
+
+        $this->_printOption('--without-annotations',
+                            'Do not parse doc comment annotations.', $l);
+        $this->_printOption('--bad-documentation',
+                            'Fallback for projects with bad doc comments.', $l);
+        echo PHP_EOL;
+
+        $this->_printOption('--optimization=<mode>',
+                            'Runtime switch to influence the internal processing.',
+                            $l);
+        foreach ($this->_optimizations as $name => $help) {
+            $this->_printOption('               "' . $name . '"', $help, $l);
+        }
+        echo PHP_EOL;
+
+        $this->_printOption('--help', 'Print this help text.', $l);
+        $this->_printOption('--version', 'Print the current version.', $l);
+        $this->_printOption('-d key[=value]', 'Sets a php.ini value.', $l);
+        echo PHP_EOL;
     }
 
     /**
