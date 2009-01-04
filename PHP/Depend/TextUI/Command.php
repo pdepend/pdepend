@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.manuel-pichler.de/
@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Util/ConfigurationInstance.php';
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
@@ -202,7 +202,19 @@ class PHP_Depend_TextUI_Command
             // Output current pdepend version and author
             $this->printVersion();
 
-            return $this->_runner->run();
+            $startTime = time();
+
+            $result = $this->_runner->run();
+
+            echo PHP_EOL, 'Time: ', date('i:s', time() - $startTime);
+            if (function_exists('memory_get_peak_usage')) {
+                $memory = (memory_get_peak_usage(true) / (1024 * 1024));
+                printf('; Memory: %4.2fMb', $memory);
+            }
+            echo PHP_EOL;
+
+
+            return $result;
         } catch (RuntimeException $e) {
             // Print error message
             echo $e->getMessage(), "\n";
