@@ -47,14 +47,9 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
 require_once 'PHP/Depend/Util/UUID.php';
 
 /**
@@ -118,28 +113,13 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
-        $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
-        $files  = new PHP_Depend_Util_FileFilterIterator(
-            new DirectoryIterator($source),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
-
-        $builder = new PHP_Depend_Builder_Default();
-
-        foreach ($files as $file) {
-
-            $path = realpath($file->getPathname());
-            $tokz = new PHP_Depend_Tokenizer_Internal($path);
-
-            $parser = new PHP_Depend_Parser($tokz, $builder);
-            $parser->parse();
-        }
+        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/code-5.2.x');
 
         $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
-        $this->_analyzer->analyze($builder->getPackages());
+        $this->_analyzer->analyze($packages);
 
         $this->_expected = array();
-        foreach ($builder->getPackages() as $package) {
+        foreach ($packages as $package) {
             $this->_expected[] = array($package, $this->_input[$package->getName()]);
             foreach ($package->getTypes() as $type) {
                 $this->_expected[] = array($type, $this->_input[$type->getName()]);

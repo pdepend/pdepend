@@ -126,10 +126,12 @@ class PHP_Depend_TextUI_Runner
      */
     private $_optimizations = array(
         self::OPTIMZATION_BEST => array(
-            PHP_Depend::TOKEN_STORAGE => 'PHP_Depend_Storage_FileEngine',
+            PHP_Depend::TOKEN_STORAGE   =>  'PHP_Depend_Storage_FileEngine',
+            PHP_Depend::PARSER_STORAGE  =>  'PHP_Depend_Storage_FileEngine',
         ),
         self::OPTIMZATION_NONE => array(
-            PHP_Depend::TOKEN_STORAGE => 'PHP_Depend_Storage_MemoryEngine',
+            PHP_Depend::TOKEN_STORAGE   =>  'PHP_Depend_Storage_MemoryEngine',
+            PHP_Depend::PARSER_STORAGE  =>  'PHP_Depend_Storage_MemoryEngine',
         ),
     );
 
