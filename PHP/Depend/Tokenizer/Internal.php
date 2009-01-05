@@ -273,18 +273,6 @@ class PHP_Depend_Tokenizer_Internal
     private $_unknownTokenID = 1000;
 
     /**
-     * Constructs a new tokenizer for the given file.
-     *
-     * @param string $sourceFile A php source file.
-     */
-    public function __construct($sourceFile = null)
-    {
-        if ($sourceFile !== null) {
-            $this->setSourceFile($sourceFile);
-        }
-    }
-
-    /**
      * Returns the name of the source file.
      *
      * @return PHP_Depend_Code_File
