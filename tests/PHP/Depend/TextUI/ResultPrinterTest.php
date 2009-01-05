@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -77,21 +77,22 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     {
         // Create dummy objects
         $builder   = new PHP_Depend_Builder_Default();
-        $tokenizer = new PHP_Depend_Tokenizer_Internal(__FILE__);
-        
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(__FILE__);
+
         $printer = new PHP_Depend_TextUI_ResultPrinter();
-        
+
         ob_start();
         $printer->startFileParsing($tokenizer);
         $printer->endParseProcess($builder);
         $actual = ob_get_contents();
         ob_end_clean();
-        
+
         $expected = ".                                                                1\n\n";
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * Tests the result printer with multiple entries.
      *
@@ -101,10 +102,11 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     {
         // Create dummy objects
         $builder   = new PHP_Depend_Builder_Default();
-        $tokenizer = new PHP_Depend_Tokenizer_Internal(__FILE__);
-        
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(__FILE__);
+
         $printer = new PHP_Depend_TextUI_ResultPrinter();
-        
+
         ob_start();
         for ($i = 0; $i < 73; ++$i) {
             $printer->startFileParsing($tokenizer);
@@ -112,13 +114,13 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
         $printer->endParseProcess($builder);
         $actual = ob_get_contents();
         ob_end_clean();
-        
+
         $expected = "............................................................    60\n"
                   . ".............                                                   73\n\n";
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * Tests the result printer with multiple entries.
      *
@@ -129,9 +131,9 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
         // Create dummy objects
         $method   = new PHP_Depend_Code_Method('method');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        
+
         $printer = new PHP_Depend_TextUI_ResultPrinter();
-        
+
         ob_start();
         for ($i = 0; $i < 1401; ++$i) {
             $printer->startVisitMethod($method);
@@ -139,13 +141,13 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
         $printer->endAnalyzer($analyzer);
         $actual = ob_get_contents();
         ob_end_clean();
-        
+
         $expected = "............................................................  1200\n"
                   . "..........                                                    1401\n\n";
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * Tests the result printer with multiple entries.
      *
@@ -156,9 +158,9 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
         // Create dummy objects
         $method   = new PHP_Depend_Code_Method('method');
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        
+
         $printer = new PHP_Depend_TextUI_ResultPrinter();
-        
+
         ob_start();
         for ($i = 0; $i < 2400; ++$i) {
             $printer->startVisitMethod($method);
@@ -166,7 +168,7 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
         $printer->endAnalyzer($analyzer);
         $actual = ob_get_contents();
         ob_end_clean();
-        
+
         $expected = "............................................................  1200\n"
                   . "............................................................  2400\n\n";
 

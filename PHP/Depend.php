@@ -54,6 +54,7 @@ require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
 require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
+require_once 'PHP/Depend/Tokenizer/CacheDecorator.php';
 require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Util/CompositeFilter.php';
 require_once 'PHP/Depend/Util/FileFilterIterator.php';
@@ -78,6 +79,11 @@ class PHP_Depend
      * Marks the storage used for runtime tokens.
      */
     const TOKEN_STORAGE = 1;
+
+    /**
+     * Marks the storag engine used for parser artifacts.
+     */
+    const PARSER_STORAGE = 2;
 
     /**
      * List of source directories.
@@ -149,8 +155,14 @@ class PHP_Depend
      */
     private $_options = array();
 
+    /**
+     * Configured storage engines.
+     *
+     * @var array(PHP_Depend_Storage_AbstractEngine) $_storages
+     */
     private $_storages = array(
-        self::TOKEN_STORAGE  =>  null,
+        self::TOKEN_STORAGE   =>  null,
+        self::PARSER_STORAGE  =>  null,
     );
 
     /**
@@ -217,6 +229,11 @@ class PHP_Depend
         switch ($type) {
         case self::TOKEN_STORAGE:
             $engine->setPrune();
+            break;
+
+        case self::PARSER_STORAGE:
+            $engine->getMaxLifetime(86400);
+            $engine->setProbability(5);
             break;
 
         default:
@@ -316,13 +333,14 @@ class PHP_Depend
         }
 
         $this->_builder = new PHP_Depend_Builder_Default();
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
 
         $this->fireStartParseProcess($this->_builder);
 
         foreach ($iterator as $file) {
+            $tokenizer->setSourceFile($file);
 
-            $tokenizer = new PHP_Depend_Tokenizer_Internal($file);
-            $parser    = new PHP_Depend_Parser($tokenizer, $this->_builder);
+            $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
 
             // Disable annotation parsing?
             if ($this->_withoutAnnotations === true) {

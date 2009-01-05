@@ -67,30 +67,6 @@ require_once 'PHP/Depend/Util/UUID.php';
 class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
-     * The used node builder.
-     *
-     * @var PHP_Depend_Builder_Default $builder
-     */
-    protected $builder = null;
-
-    /**
-     * Sets up the code builder.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $source        = dirname(__FILE__) . '/../../_code/mixed_code.php';
-        $tokenizer     = new PHP_Depend_Tokenizer_Internal($source);
-        $this->builder = new PHP_Depend_Builder_Default();
-        $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
-
-        $parser->parse();
-    }
-
-    /**
      * Tests that the {@link PHP_Depend_Metrics_Hierarchy_Analyzer::analyze()}
      * method creates the expected hierarchy metrics.
      *
@@ -99,7 +75,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
     public function testAnalyzeProjectMetrics()
     {
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
-        $analyzer->analyze($this->builder->getPackages());
+        $analyzer->analyze(self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php'));
 
         $project = $analyzer->getProjectMetrics();
 

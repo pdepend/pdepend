@@ -105,6 +105,15 @@ interface PHP_Depend_TokenizerI extends PHP_Depend_ConstantsI
     function getSourceFile();
 
     /**
+     * Sets a new php source file.
+     *
+     * @param string $sourceFile A php source file.
+     *
+     * @return void
+     */
+    function setSourceFile($sourceFile);
+
+    /**
      * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
      * there is no next token.
      *
