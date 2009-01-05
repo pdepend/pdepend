@@ -102,14 +102,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $this->testFileName = dirname(__FILE__) . '/../../_code/mixed_code.php';
         $this->testFileName = realpath($this->testFileName);
 
-        $tokenizer = new PHP_Depend_Tokenizer_Internal($this->testFileName);
-        $builder   = new PHP_Depend_Builder_Default();
-        $parser    = new PHP_Depend_Parser($tokenizer, $builder);
-
-        $parser->parse();
-
-        $this->packages = $builder->getPackages();
-
+        $this->packages   = self::parseSource($this->testFileName);
         $this->resultFile = self::createTempName('log-summary.xml');
     }
 

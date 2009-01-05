@@ -103,23 +103,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
-        $source = dirname(__FILE__) . '/../../_code/code-5.2.x';
-        $files  = new PHP_Depend_Util_FileFilterIterator(
-            new DirectoryIterator($source),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
-        );
-
-        $builder = new PHP_Depend_Builder_Default();
-
-        foreach ($files as $file) {
-            $path = realpath($file->getPathname());
-            $tokz = new PHP_Depend_Tokenizer_Internal($path);
-
-            $parser = new PHP_Depend_Parser($tokz, $builder);
-            $parser->parse();
-        }
-
-        $this->packages = $builder->getPackages();
+        $this->packages = self::parseSource(dirname(__FILE__) . '/../../_code/code-5.2.x');
 
         $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $this->analyzer->analyze($this->packages);

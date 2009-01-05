@@ -111,14 +111,8 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
-        $source        = dirname(__FILE__) . '/../../_code/mixed_code.php';
-        $tokenizer     = new PHP_Depend_Tokenizer_Internal($source);
-        $this->builder = new PHP_Depend_Builder_Default();
-        $parser        = new PHP_Depend_Parser($tokenizer, $this->builder);
-
-        $parser->parse();
-
-        foreach ($this->builder as $pkg) {
+        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php');
+        foreach ($packages as $pkg) {
             if (isset($this->_input[$pkg->getUUID()])) {
                 $this->_expected[$pkg->getUUID()] = $this->_input[$pkg->getName()];
             }
@@ -133,11 +127,13 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     public function testGenerateMetrics()
     {
         $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
-        foreach ($this->builder->getPackages() as $package) {
+
+        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php');
+        foreach ($packages as $package) {
             $package->accept($visitor);
         }
 
-        foreach ($this->builder->getPackages() as $package) {
+        foreach ($packages as $package) {
 
             $uuid = $package->getUUID();
 

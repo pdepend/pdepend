@@ -70,7 +70,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
     public function testInternalWithClasses()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/_code/classes.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -127,7 +128,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
     public function testInternalWithMixedContent()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/_code/func_class.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $tokens = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
@@ -178,7 +180,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
     public function testInternalReturnsBOFTokenForPrevCall()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/_code/func_class.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $this->assertEquals(PHP_Depend_TokenizerI::T_BOF, $tokenizer->prev());
     }
@@ -191,7 +194,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
     public function testInternalWithProceduralCodeAndFunction()
     {
         $sourceFile = realpath(dirname(__FILE__) . '/_code/func_code.php');
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -247,7 +251,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
     public function testInternalStaticCallBug01()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/01.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -296,7 +301,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
     public function testInternalDollarSyntaxBug09()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/09.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $tokens = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -337,7 +343,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
     public function testTokenizerWithInlineHtmlBug24()
     {
         $sourceFile = dirname(__FILE__) . '/_code/bugs/24.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $tokens = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
@@ -397,7 +404,8 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
         }
 
         $sourceFile = dirname(__FILE__) . '/_code/bugs/84.php';
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal($sourceFile);
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
 
         $tokens = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),

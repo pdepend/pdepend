@@ -95,6 +95,10 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             PHP_Depend::TOKEN_STORAGE,
             new PHP_Depend_Storage_MemoryEngine()
         );
+        PHP_Depend_StorageRegistry::set(
+            PHP_Depend::PARSER_STORAGE,
+            new PHP_Depend_Storage_MemoryEngine()
+        );
     }
 
     /**
@@ -179,7 +183,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $builder = new PHP_Depend_Builder_Default();
 
         foreach ($it as $file) {
-            $tokenizer = new PHP_Depend_Tokenizer_Internal($file);
+            $tokenizer = new PHP_Depend_Tokenizer_Internal();
+            $tokenizer->setSourceFile($file);
 
             $parser = new PHP_Depend_Parser($tokenizer, $builder);
             if ($ignoreAnnotations === true) {
