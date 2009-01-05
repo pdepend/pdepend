@@ -333,7 +333,9 @@ class PHP_Depend
         }
 
         $this->_builder = new PHP_Depend_Builder_Default();
+
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer = new PHP_Depend_Tokenizer_CacheDecorator($tokenizer);
 
         $this->fireStartParseProcess($this->_builder);
 
