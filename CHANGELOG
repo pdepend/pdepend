@@ -2,6 +2,8 @@ PHP_Depend 0.9.3
 
 - #83 + Storage layer for node tokens added, reduces memory consumption. 
 - #85 + TextUI displays the execution time and the memory usage(linux only).
+- #82 + Tokenizer cache added, reduces runtime up to 25%.
+- Code restructured, input filters and iterator moved to package "Input".
 
 PHP_Depend 0.9.2
 ----------------
