@@ -56,8 +56,8 @@ require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Tokenizer/CacheDecorator.php';
 require_once 'PHP/Depend/Tokenizer/Internal.php';
-require_once 'PHP/Depend/Util/CompositeFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
+require_once 'PHP/Depend/Input/CompositeFilter.php';
+require_once 'PHP/Depend/Input/Iterator.php';
 
 /**
  * PHP_Depend analyzes php class files and generates metrics.
@@ -116,7 +116,7 @@ class PHP_Depend
     /**
      * A composite filter for input files.
      *
-     * @var PHP_Depend_Util_CompositeFilter $_fileFilter
+     * @var PHP_Depend_Input_CompositeFilter $_fileFilter
      */
     private $_fileFilter = null;
 
@@ -171,7 +171,7 @@ class PHP_Depend
     public function __construct()
     {
         $this->_codeFilter = new PHP_Depend_Code_Filter_Composite();
-        $this->_fileFilter = new PHP_Depend_Util_CompositeFilter();
+        $this->_fileFilter = new PHP_Depend_Input_CompositeFilter();
     }
 
     /**
@@ -207,11 +207,11 @@ class PHP_Depend
     /**
      * Adds a new input/file filter.
      *
-     * @param PHP_Depend_Util_FileFilterI $filter New input/file filter instance.
+     * @param PHP_Depend_Input_FilterI $filter New input/file filter instance.
      *
      * @return void
      */
-    public function addFileFilter(PHP_Depend_Util_FileFilterI $filter)
+    public function addFileFilter(PHP_Depend_Input_FilterI $filter)
     {
         $this->_fileFilter->append($filter);
     }
@@ -325,7 +325,7 @@ class PHP_Depend
         $iterator = new AppendIterator();
 
         foreach ($this->_directories as $directory) {
-            $iterator->append(new PHP_Depend_Util_FileFilterIterator(
+            $iterator->append(new PHP_Depend_Input_Iterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($directory)
                 ), $this->_fileFilter

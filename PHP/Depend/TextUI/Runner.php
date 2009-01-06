@@ -50,8 +50,8 @@ require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Code/Filter/Package.php';
 require_once 'PHP/Depend/Log/LoggerFactory.php';
 require_once 'PHP/Depend/TextUI/ResultPrinter.php';
-require_once 'PHP/Depend/Util/ExcludePathFilter.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
+require_once 'PHP/Depend/Input/ExcludePathFilter.php';
+require_once 'PHP/Depend/Input/ExtensionFilter.php';
 
 /**
  * The command line runner starts a PDepend process.
@@ -305,13 +305,13 @@ class PHP_Depend_TextUI_Runner
         }
 
         if (count($this->_extensions) > 0) {
-            $filter = new PHP_Depend_Util_FileExtensionFilter($this->_extensions);
+            $filter = new PHP_Depend_Input_ExtensionFilter($this->_extensions);
             $pdepend->addFileFilter($filter);
         }
 
         if (count($this->_excludeDirectories) > 0) {
             $exclude = $this->_excludeDirectories;
-            $filter  = new PHP_Depend_Util_ExcludePathFilter($exclude);
+            $filter  = new PHP_Depend_Input_ExcludePathFilter($exclude);
             $pdepend->addFileFilter($filter);
         }
 

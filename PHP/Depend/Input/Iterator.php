@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,26 +46,49 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Input/FilterI.php';
+
 /**
- * Base interface for file filters.
- * 
+ * Simple utility filter iterator for php source files.
+ *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Util_FileFilterI
+class PHP_Depend_Input_Iterator extends FilterIterator
 {
     /**
-     * Should return <b>true</b> if the given file should be part of the analyzation.
+     * The associated filter object.
      *
-     * @param SplFileInfo $fileInfo The context file object.
-     * 
+     * @var PHP_Depend_Input_FilterI $filter
+     */
+    protected $filter = null;
+
+    /**
+     * Constructs a new file filter iterator.
+     *
+     * @param Iterator                 $it     The inner iterator.
+     * @param PHP_Depend_Input_FilterI $filter The filter object.
+     */
+    public function __construct(Iterator $it, PHP_Depend_Input_FilterI $filter)
+    {
+        parent::__construct($it);
+
+        $this->filter = $filter;
+    }
+
+    /**
+     * Returns <b>true</b> if the file name ends with '.php'.
+     *
      * @return boolean
      */
-    function accept(SplFileInfo $fileInfo);
+    public function accept()
+    {
+        return $this->filter->accept($this->getInnerIterator()->current());
+    }
 }

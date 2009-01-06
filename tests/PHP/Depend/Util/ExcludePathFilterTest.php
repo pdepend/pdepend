@@ -47,7 +47,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Util/ExcludePathFilter.php';
+require_once 'PHP/Depend/Input/ExcludePathFilter.php';
 
 /**
  * Test case for the exclude path filter.
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Util/ExcludePathFilter.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the exclude filter with a single file in the exclude list.
@@ -70,7 +70,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
     public function testExcludePathFilterWithFile()
     {
         $files  = array('code-5.2.x/package2.php');
-        $filter = new PHP_Depend_Util_ExcludePathFilter($files);
+        $filter = new PHP_Depend_Input_ExcludePathFilter($files);
         $it     = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code/code-5.2.x')
         );
@@ -95,7 +95,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
     public function testExcludePathFilterWithDirectory()
     {
         $files  = array('/code-5.2.x/', '/code-without-comments');
-        $filter = new PHP_Depend_Util_ExcludePathFilter($files);
+        $filter = new PHP_Depend_Input_ExcludePathFilter($files);
         $it     = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
         );
@@ -119,7 +119,7 @@ class PHP_Depend_Util_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      */
     public function testExcludePathFilterWithFileAndDirectory()
     {
-        $filter = new PHP_Depend_Util_ExcludePathFilter(
+        $filter = new PHP_Depend_Input_ExcludePathFilter(
             array(
                 '/code-5.3.x/',
                 '/code-5.2.x/package1.php',
