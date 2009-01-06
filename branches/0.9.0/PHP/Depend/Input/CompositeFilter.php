@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,46 +46,47 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilterI.php';
+require_once 'PHP/Depend/Input/FilterI.php';
 
 /**
- * Filters a given file path against a blacklist with disallow path fragments.
+ * Simple composite pattern implementation that allows to bundle multiple
+ * filter implementations.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilterI
+class PHP_Depend_Input_CompositeFilter implements PHP_Depend_Input_FilterI
 {
     /**
-     * Regular expression that should not match against the file path.
+     * List of aggregated {@link PHP_Depend_Input_FilterI} objects.
      *
-     * @var string $regexp
+     * @var array(PHP_Depend_Input_FilterI) $filters.
      */
-    protected $regexp = '';
+    protected $filters = array();
 
     /**
-     * Constructs a new exclude path filter instance and accepts an array of
-     * exclude pattern as argument.
+     * Adds a file filter to this composite.
      *
-     * @param array $patterns List of exclude file path patterns.
+     * @param PHP_Depend_Input_FilterI $filter The new filter object.
+     *
+     * @return void
      */
-    public function __construct(array $patterns)
+    public function append(PHP_Depend_Input_FilterI $filter)
     {
-        $regexp = join('|', array_map('preg_quote', $patterns));
-        $regexp = str_replace('\*', '.*', $regexp);
-
-        $this->regexp = "({$regexp})i";
+        $this->filters[] = $filter;
     }
 
     /**
-     * Returns <b>true</b> while the file path doesn't match against any of the
-     * given patterns.
+     * Delegates the given <b>$fileInfo</b> object to all aggregated filters.
+     *
+     * If one of these filters fail, this method will return <b>false</b> otherwise
+     * the return value is <b>true</b>
      *
      * @param SplFileInfo $fileInfo The context file object.
      *
@@ -93,6 +94,11 @@ class PHP_Depend_Util_ExcludePathFilter implements PHP_Depend_Util_FileFilterI
      */
     public function accept(SplFileInfo $fileInfo)
     {
-        return (preg_match($this->regexp, $fileInfo->getPathname()) === 0);
+        foreach ($this->filters as $filter) {
+            if (!$filter->accept($fileInfo)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

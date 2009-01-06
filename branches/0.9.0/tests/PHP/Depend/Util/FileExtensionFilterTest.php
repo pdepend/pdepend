@@ -47,7 +47,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
+require_once 'PHP/Depend/Input/ExtensionFilter.php';
 
 /**
  * Test case for the file extension filter.
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Util/FileExtensionFilter.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_FileExtensionFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the extension filter for simple *.txt.
@@ -70,7 +70,7 @@ class PHP_Depend_Util_FileExtensionFilterTest extends PHP_Depend_AbstractTest
     public function testFileExtensionFilterWithTxtExtension()
     {
         $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
-        $filter = new PHP_Depend_Util_FileExtensionFilter(array('txt'));
+        $filter = new PHP_Depend_Input_ExtensionFilter(array('txt'));
         
         $result = array();
         foreach ($it as $file) {
@@ -100,7 +100,7 @@ class PHP_Depend_Util_FileExtensionFilterTest extends PHP_Depend_AbstractTest
     public function testFileExtensionFilterWithMultipleExtensions()
     {
         $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
-        $filter = new PHP_Depend_Util_FileExtensionFilter(array('txt', 'inc'));
+        $filter = new PHP_Depend_Input_ExtensionFilter(array('txt', 'inc'));
         
         $result = array();
         foreach ($it as $file) {

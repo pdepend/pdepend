@@ -48,7 +48,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DummyFilter.php';
 
-require_once 'PHP/Depend/Util/CompositeFilter.php';
+require_once 'PHP/Depend/Input/CompositeFilter.php';
 
 /**
  * Test case for the composite filter.
@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Util/CompositeFilter.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_CompositeFilterTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the execution chain in the composite filter.
@@ -75,7 +75,7 @@ class PHP_Depend_Util_CompositeFilterTest extends PHP_Depend_AbstractTest
         $filter2 = new PHP_Depend_Util_DummyFilter(false);
         $filter3 = new PHP_Depend_Util_DummyFilter(true);
         
-        $composite = new PHP_Depend_Util_CompositeFilter();
+        $composite = new PHP_Depend_Input_CompositeFilter();
         $composite->append($filter0);
         $composite->append($filter1);
         $composite->append($filter2);

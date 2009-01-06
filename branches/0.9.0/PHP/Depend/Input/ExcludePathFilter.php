@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,49 +46,53 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilterI.php';
+require_once 'PHP/Depend/Input/FilterI.php';
 
 /**
- * Simple utility filter iterator for php source files.
+ * Filters a given file path against a blacklist with disallow path fragments.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_FileFilterIterator extends FilterIterator
+class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
 {
     /**
-     * The associated filter object.
+     * Regular expression that should not match against the file path.
      *
-     * @var PHP_Depend_Util_FileFilterI $filter
+     * @var string $regexp
      */
-    protected $filter = null;
+    protected $regexp = '';
 
     /**
-     * Constructs a new file filter iterator.
+     * Constructs a new exclude path filter instance and accepts an array of
+     * exclude pattern as argument.
      *
-     * @param Iterator                    $it     The inner iterator.
-     * @param PHP_Depend_Util_FileFilterI $filter The filter object.
+     * @param array $patterns List of exclude file path patterns.
      */
-    public function __construct(Iterator $it, PHP_Depend_Util_FileFilterI $filter)
+    public function __construct(array $patterns)
     {
-        parent::__construct($it);
+        $regexp = join('|', array_map('preg_quote', $patterns));
+        $regexp = str_replace('\*', '.*', $regexp);
 
-        $this->filter = $filter;
+        $this->regexp = "({$regexp})i";
     }
 
     /**
-     * Returns <b>true</b> if the file name ends with '.php'.
+     * Returns <b>true</b> while the file path doesn't match against any of the
+     * given patterns.
+     *
+     * @param SplFileInfo $fileInfo The context file object.
      *
      * @return boolean
      */
-    public function accept()
+    public function accept(SplFileInfo $fileInfo)
     {
-        return $this->filter->accept($this->getInnerIterator()->current());
+        return (preg_match($this->regexp, $fileInfo->getPathname()) === 0);
     }
 }

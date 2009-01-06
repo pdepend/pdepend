@@ -47,8 +47,8 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
+require_once 'PHP/Depend/Input/ExtensionFilter.php';
+require_once 'PHP/Depend/Input/Iterator.php';
 
 /**
  * Test case for the php file filter iterator.
@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Util/FileFilterIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that the filter iterator only returns files with a .php extension.
@@ -71,9 +71,9 @@ class PHP_Depend_Util_FileFilterIteratorTest extends PHP_Depend_AbstractTest
     public function testFilterIterator()
     {
         $dir = dirname(__FILE__) . '/../_code';
-        $it  = new PHP_Depend_Util_FileFilterIterator(
+        $it  = new PHP_Depend_Input_Iterator(
             new DirectoryIterator($dir),
-            new PHP_Depend_Util_FileExtensionFilter(array('php'))
+            new PHP_Depend_Input_ExtensionFilter(array('php'))
         );
         
         $expected = array(

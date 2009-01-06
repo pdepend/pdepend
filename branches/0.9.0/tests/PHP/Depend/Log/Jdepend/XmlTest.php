@@ -56,8 +56,8 @@ require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
 require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Log/Jdepend/Xml.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-require_once 'PHP/Depend/Util/FileExtensionFilter.php';
-require_once 'PHP/Depend/Util/FileFilterIterator.php';
+require_once 'PHP/Depend/Input/ExtensionFilter.php';
+require_once 'PHP/Depend/Input/Iterator.php';
 
 /**
  * Test case for the jdepend xml logger.
