@@ -277,7 +277,9 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                 continue;
             }
             // Skip first token
-            if (!isset($tokens[$i - 1]) || !in_array($tokens[$i - 1]->type, $callT)) {
+            if (!isset($tokens[$i - 1])
+             || !in_array($tokens[$i - 1]->type, $callT)) {
+
                 continue;
             }
             // Count if no other token exists
