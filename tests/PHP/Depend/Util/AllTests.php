@@ -89,10 +89,10 @@ class PHP_Depend_Util_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util - AllTests');
-        $suite->addTestSuite('PHP_Depend_Util_CompositeFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_ExcludePathFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_FileExtensionFilterTest');
-        $suite->addTestSuite('PHP_Depend_Util_FileFilterIteratorTest');
+        $suite->addTestSuite('PHP_Depend_Input_CompositeFilterTest');
+        $suite->addTestSuite('PHP_Depend_Input_ExcludePathFilterTest');
+        $suite->addTestSuite('PHP_Depend_Input_ExtensionFilterTest');
+        $suite->addTestSuite('PHP_Depend_Input_IteratorTest');
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
         
         return $suite;
