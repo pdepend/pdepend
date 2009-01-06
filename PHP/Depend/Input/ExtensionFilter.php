@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,47 +46,43 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilterI.php';
+require_once 'PHP/Depend/Input/FilterI.php';
 
 /**
- * Simple composite pattern implementation that allows to bundle multiple
- * filter implementations.
+ * Whitelist filter that accepts files by their file extension.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_CompositeFilter implements PHP_Depend_Util_FileFilterI
+class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
 {
     /**
-     * List of aggregated {@link PHP_Depend_Util_FileFilterI} objects.
+     * Whitelist of accepted file extensions.
      *
-     * @var array(PHP_Depend_Util_FileFilterI) $filters.
+     * @var array(string) $extensions
      */
-    protected $filters = array();
+    protected $extensions = array();
 
     /**
-     * Adds a file filter to this composite.
+     * Constructs a new file extension filter instance with the given list of
+     *  allowed file <b>$extensions</b>.
      *
-     * @param PHP_Depend_Util_FileFilterI $filter The new filter object.
-     *
-     * @return void
+     * @param array $extensions List of allowed extension.
      */
-    public function append(PHP_Depend_Util_FileFilterI $filter)
+    public function __construct(array $extensions)
     {
-        $this->filters[] = $filter;
+        $this->extensions = $extensions;
     }
 
     /**
-     * Delegates the given <b>$fileInfo</b> object to all aggregated filters.
-     *
-     * If one of these filters fail, this method will return <b>false</b> otherwise
-     * the return value is <b>true</b>
+     * Returns <b>true</b> if the extension of the given <b>$fileInfo</b> instance
+     * is in the list of allowed extensions.
      *
      * @param SplFileInfo $fileInfo The context file object.
      *
@@ -94,11 +90,8 @@ class PHP_Depend_Util_CompositeFilter implements PHP_Depend_Util_FileFilterI
      */
     public function accept(SplFileInfo $fileInfo)
     {
-        foreach ($this->filters as $filter) {
-            if (!$filter->accept($fileInfo)) {
-                return false;
-            }
-        }
-        return true;
+        $extension = pathinfo($fileInfo, PATHINFO_EXTENSION);
+
+        return in_array($extension, $this->extensions);
     }
 }

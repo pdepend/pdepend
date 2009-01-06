@@ -166,15 +166,15 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/Depend/Builder/Default.php';
         include_once 'PHP/Depend/Code/Filter/Collection.php';
         include_once 'PHP/Depend/Tokenizer/Internal.php';
-        include_once 'PHP/Depend/Util/ExcludePathFilter.php';
-        include_once 'PHP/Depend/Util/FileFilterIterator.php';
+        include_once 'PHP/Depend/Input/ExcludePathFilter.php';
+        include_once 'PHP/Depend/Input/Iterator.php';
 
         if (is_dir($fileOrDirectory)) {
-            $it = new PHP_Depend_Util_FileFilterIterator(
+            $it = new PHP_Depend_Input_Iterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($fileOrDirectory)
                 ),
-                new PHP_Depend_Util_ExcludePathFilter(array('.svn'))
+                new PHP_Depend_Input_ExcludePathFilter(array('.svn'))
             );
         } else {
             $it = new ArrayIterator(array($fileOrDirectory));

@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,52 +46,26 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Util/FileFilterI.php';
-
 /**
- * Whitelist filter that accepts files by their file extension.
+ * Base interface for file filters.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_FileExtensionFilter implements PHP_Depend_Util_FileFilterI
+interface PHP_Depend_Input_FilterI
 {
     /**
-     * Whitelist of accepted file extensions.
-     *
-     * @var array(string) $extensions
-     */
-    protected $extensions = array();
-
-    /**
-     * Constructs a new file extension filter instance with the given list of
-     *  allowed file <b>$extensions</b>.
-     *
-     * @param array $extensions List of allowed extension.
-     */
-    public function __construct(array $extensions)
-    {
-        $this->extensions = $extensions;
-    }
-
-    /**
-     * Returns <b>true</b> if the extension of the given <b>$fileInfo</b> instance
-     * is in the list of allowed extensions.
+     * Should return <b>true</b> if the given file should be part of the analyzation.
      *
      * @param SplFileInfo $fileInfo The context file object.
      *
      * @return boolean
      */
-    public function accept(SplFileInfo $fileInfo)
-    {
-        $extension = pathinfo($fileInfo, PATHINFO_EXTENSION);
-
-        return in_array($extension, $this->extensions);
-    }
+    function accept(SplFileInfo $fileInfo);
 }
