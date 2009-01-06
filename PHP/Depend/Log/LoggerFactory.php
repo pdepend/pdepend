@@ -105,8 +105,15 @@ class PHP_Depend_Log_LoggerFactory
             $className = sprintf('PHP_Depend_Log_%s_%s', $package, $class);
             $classFile = sprintf('PHP/Depend/Log/%s/%s.php', $package, $class);
 
-            if ((@include_once $classFile) === false) {
-                throw new RuntimeException("Unknown logger class '{$className}'.");
+            if (class_exists($className) === false) {
+
+                if (($fp = @fopen($classFile, 'r', true)) === false) {
+                    throw new RuntimeException("Unknown logger class '{$className}'.");
+                }
+
+                // Close file pointer and include class file
+                fclose($fp);
+                include $classFile;
             }
 
             // Create a new logger instance.
