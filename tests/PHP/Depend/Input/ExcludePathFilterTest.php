@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -36,13 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
@@ -52,13 +53,14 @@ require_once 'PHP/Depend/Input/ExcludePathFilter.php';
 /**
  * Test case for the exclude path filter.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
 {
@@ -74,19 +76,19 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
         $it     = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code/code-5.2.x')
         );
-        
+
         $result = array();
         foreach ($it as $file) {
             if ($filter->accept($file)) {
                 $result[$file->getFilename()] = true;
             }
         }
-        
+
         $this->assertArrayHasKey('package1.php', $result);
         $this->assertArrayHasKey('package3.php', $result);
         $this->assertArrayNotHasKey('package2.php', $result);
     }
-    
+
     /**
      * Tests the path exclude filter with a directory in the exclude list.
      *
@@ -99,19 +101,19 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
         $it     = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
         );
-        
+
         $result = array();
         foreach ($it as $file) {
             if ($filter->accept($file)) {
                 $result[$file->getFilename()] = true;
             }
         }
-        
+
         $this->assertArrayHasKey('pkg3FooI.txt', $result);
         $this->assertArrayHasKey('invalid_class_with_code.txt', $result);
         $this->assertArrayNotHasKey('package1.php', $result);
     }
-    
+
     /**
      * Tests the path exclude filter with a mix of files and directories.
      *
@@ -127,18 +129,18 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
                 '/function.inc'
             )
         );
-            
+
         $it = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
         );
-        
+
         $result = array();
         foreach ($it as $file) {
             if ($filter->accept($file)) {
                 $result[$file->getFilename()] = true;
             }
         }
-        
+
         $this->assertArrayHasKey('package2.php', $result);
         $this->assertArrayHasKey('invalid_class_with_code.txt', $result);
         $this->assertArrayNotHasKey('pkg3FooI.txt', $result);

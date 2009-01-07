@@ -36,13 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once 'PHP/Depend/Input/FilterI.php';
@@ -50,15 +51,16 @@ require_once 'PHP/Depend/Input/FilterI.php';
 /**
  * Dummy filter.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Util_DummyFilter implements PHP_Depend_Input_FilterI
+class PHP_Depend_Input_DummyFilter implements PHP_Depend_Input_FilterI
 {
     /**
      * The return value for this filter.
