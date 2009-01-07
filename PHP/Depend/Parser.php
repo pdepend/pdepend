@@ -638,7 +638,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    protected function parseCallableBody(array &$outTokens, PHP_Depend_Code_AbstractCallable $callable)
+    protected function parseCallableBody(array &$outTokens,
+                                         PHP_Depend_Code_AbstractCallable $callable)
     {
         $curly  = 0;
         $tokens = array();
