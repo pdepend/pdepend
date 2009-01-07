@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -52,10 +52,6 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/CompositeFilterTest.php';
-require_once dirname(__FILE__) . '/ExcludePathFilterTest.php';
-require_once dirname(__FILE__) . '/FileExtensionFilterTest.php';
-require_once dirname(__FILE__) . '/FileFilterIteratorTest.php';
 require_once dirname(__FILE__) . '/ImageConvertTest.php';
 
 /**
@@ -80,7 +76,7 @@ class PHP_Depend_Util_AllTests
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
-    
+
     /**
      * Creates the phpunit test suite for this package.
      *
@@ -89,12 +85,8 @@ class PHP_Depend_Util_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util - AllTests');
-        $suite->addTestSuite('PHP_Depend_Input_CompositeFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_ExcludePathFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_ExtensionFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_IteratorTest');
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
-        
+
         return $suite;
     }
 }
