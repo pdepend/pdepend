@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -36,13 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
@@ -52,35 +53,36 @@ require_once 'PHP/Depend/Input/ExtensionFilter.php';
 /**
  * Test case for the file extension filter.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
 class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the extension filter for simple *.txt.
-     * 
+     *
      * @return void
      */
     public function testFileExtensionFilterWithTxtExtension()
     {
         $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
         $filter = new PHP_Depend_Input_ExtensionFilter(array('txt'));
-        
+
         $result = array();
         foreach ($it as $file) {
             if ($filter->accept($file)) {
                 $result[] = $file->getFilename();
             }
         }
-        
+
         sort($result);
-        
+
         $expected = array(
             'invalid_class_with_code.txt',
             'invalid_function1.txt',
@@ -88,29 +90,29 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
             'not_closed_class.txt',
             'not_closed_function.txt'
         );
-        
+
         $this->assertEquals($expected, $result);
     }
-    
+
     /**
      * Tests the extension filter with multiple allowed file extensions.
-     * 
+     *
      * @return void
      */
     public function testFileExtensionFilterWithMultipleExtensions()
     {
         $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
         $filter = new PHP_Depend_Input_ExtensionFilter(array('txt', 'inc'));
-        
+
         $result = array();
         foreach ($it as $file) {
             if ($filter->accept($file)) {
                 $result[] = $file->getFilename();
             }
         }
-        
+
         sort($result);
-        
+
         $expected = array(
             'function.inc',
             'invalid_class_with_code.txt',
@@ -119,7 +121,7 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
             'not_closed_class.txt',
             'not_closed_function.txt'
         );
-        
+
         $this->assertEquals($expected, $result);
     }
 }
