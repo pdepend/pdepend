@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -36,64 +36,58 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.manuel-pichler.de/
  */
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/DummyFilter.php';
 
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-require_once 'PHP/Depend/Input/Iterator.php';
+require_once 'PHP/Depend/Input/CompositeFilter.php';
 
 /**
- * Test case for the php file filter iterator.
+ * Test case for the composite filter.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Input
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that the filter iterator only returns files with a .php extension.
+     * Tests the execution chain in the composite filter.
      *
      * @return void
      */
-    public function testFilterIterator()
+    public function testCompositeFilter()
     {
-        $dir = dirname(__FILE__) . '/../_code';
-        $it  = new PHP_Depend_Input_Iterator(
-            new DirectoryIterator($dir),
-            new PHP_Depend_Input_ExtensionFilter(array('php'))
-        );
-        
-        $expected = array(
-            'class_and_interface_comment.php',
-            'classes.php', 
-            'func_class.php', 
-            'func_code.php',
-            'mixed_code.php',
-            'package_file_level.php',
-            'package_subpackage_support.php',
-        );
-        
-        $result = array();
-        foreach ($it as $file) {
-            $result[] = $file->getFilename();
-        }
-        
-        sort($expected);
-        sort($result);
-        
-        $this->assertEquals($expected, $result);
+        $filter0 = new PHP_Depend_Input_DummyFilter(true);
+        $filter1 = new PHP_Depend_Input_DummyFilter(true);
+        $filter2 = new PHP_Depend_Input_DummyFilter(false);
+        $filter3 = new PHP_Depend_Input_DummyFilter(true);
+
+        $composite = new PHP_Depend_Input_CompositeFilter();
+        $composite->append($filter0);
+        $composite->append($filter1);
+        $composite->append($filter2);
+        $composite->append($filter3);
+
+        $composite->accept(new SplFileInfo(dirname(__FILE__)));
+
+        $this->assertTrue($filter0->invoked);
+        $this->assertTrue($filter1->invoked);
+        $this->assertTrue($filter2->invoked);
+        $this->assertFalse($filter3->invoked);
     }
 }
