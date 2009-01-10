@@ -114,15 +114,19 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Creates a temporary file name.
+     * Creates a temporary resource for the given file name.
      *
-     * @param string $name The relative file name.
+     * @param string $fileName The temporary file name.
      *
      * @return string
      */
-    protected static function createTempName($name)
+    protected static function createRunResourceURI($fileName)
     {
-        return dirname(__FILE__) . '/_run/' . $name;
+        $uri = dirname(__FILE__) . '/_run/' . $fileName;
+        if (file_exists($uri) === true) {
+            throw new ErrorException("File '{$fileName}' already exists.");
+        }
+        return $uri;
     }
 
     /**

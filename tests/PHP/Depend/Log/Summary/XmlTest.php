@@ -103,7 +103,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $this->testFileName = realpath($this->testFileName);
 
         $this->packages   = self::parseSource($this->testFileName);
-        $this->resultFile = self::createTempName('log-summary.xml');
+        $this->resultFile = self::createRunResourceURI('log-summary.xml');
     }
 
     /**

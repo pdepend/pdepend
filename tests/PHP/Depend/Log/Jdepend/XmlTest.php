@@ -113,7 +113,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $filter = new PHP_Depend_Code_Filter_InternalPackage();
         $this->packages->addFilter($filter);
 
-        $this->resultFile = self::createTempName('pdepend-log.xml');
+        $this->resultFile = self::createRunResourceURI('pdepend-log.xml');
     }
 
     /**

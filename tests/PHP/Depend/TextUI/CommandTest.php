@@ -157,7 +157,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandStartsProcessWithDummyLogger()
     {
-        $logFile = self::createTempName('pdepend.dummy');
+        $logFile = self::createRunResourceURI('pdepend.dummy');
         $source  = realpath(dirname(__FILE__) . '/../_code');
 
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
@@ -202,7 +202,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandHandlesWithoutAnnotationsOptionCorrect()
     {
-        $logFile = self::createTempName('pdepend.dummy');
+        $logFile = self::createRunResourceURI('pdepend.dummy');
         $source  = realpath(dirname(__FILE__) . '/../_code');
 
         $argv = array(
@@ -258,7 +258,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandHandlesBadDocumentationOptionCorrect()
     {
-        $logFile = self::createTempName('pdepend.dummy');
+        $logFile = self::createRunResourceURI('pdepend.dummy');
         $source  = realpath(dirname(__FILE__) . '/../_code/code-without-comments');
 
         $argv = array(
@@ -308,7 +308,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '-d',
             'html_errors',
-            '--dummy-logger=' . self::createTempName('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
             dirname(__FILE__)
         );
 
@@ -335,7 +335,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '-d',
             'html_errors=off',
-            '--dummy-logger=' . self::createTempName('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
             dirname(__FILE__)
         );
 
@@ -356,7 +356,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testCommandHandlesConfigurationFileCorrect()
     {
         // Sample config file
-        $configFile = self::createTempName('config.xml');
+        $configFile = self::createRunResourceURI('config.xml');
         // Write a dummy config file.
         file_put_contents(
             $configFile,
@@ -368,7 +368,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         $argv = array(
             '--configuration=' . $configFile,
-            '--dummy-logger=' . self::createTempName('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
             dirname(__FILE__)
         );
 
@@ -394,7 +394,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
     {
-        $configFile = self::createTempName('config.xml');
+        $configFile = self::createRunResourceURI('config.xml');
         if (file_exists($configFile) === true) {
             unlink($configFile);
         }

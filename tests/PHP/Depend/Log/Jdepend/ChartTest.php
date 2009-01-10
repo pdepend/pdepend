@@ -115,7 +115,7 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      */
     public function testGeneratesCorrectSVGImageFile()
     {
-        $fileName = self::createTempName('jdepend-test-out.svg');
+        $fileName = self::createRunResourceURI('jdepend-test-out.svg');
         if (file_exists($fileName)) {
             @unlink($fileName);
         }
@@ -151,7 +151,7 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
 
     public function testCalculateCorrectEllipseSize()
     {
-        $fileName = self::createTempName('jdepend-test-out.svg');
+        $fileName = self::createRunResourceURI('jdepend-test-out.svg');
         if (file_exists($fileName)) {
             @unlink($fileName);
         }
@@ -222,7 +222,7 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('No pecl/imagick extension.');
         }
 
-        $fileName = self::createTempName('jdepend-test-out.png');
+        $fileName = self::createRunResourceURI('jdepend-test-out.png');
         if (file_exists($fileName)) {
             unlink($fileName);
         }
