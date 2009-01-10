@@ -131,7 +131,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         );
 
         $log = new PHP_Depend_Log_Overview_Pyramid();
-        $log->setLogFile(self::createTempName('_tmp_.svg'));
+        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_NodeCountAnalyzer());
@@ -152,7 +152,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         );
 
         $log = new PHP_Depend_Log_Overview_Pyramid();
-        $log->setLogFile(self::createTempName('_tmp_.svg'));
+        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_NodeCountAnalyzer());
@@ -173,7 +173,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         );
 
         $log = new PHP_Depend_Log_Overview_Pyramid();
-        $log->setLogFile(self::createTempName('_tmp_.svg'));
+        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_NodeCountAnalyzer());
@@ -194,7 +194,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         );
 
         $log = new PHP_Depend_Log_Overview_Pyramid();
-        $log->setLogFile(self::createTempName('_tmp_.svg'));
+        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
@@ -215,7 +215,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         );
 
         $log = new PHP_Depend_Log_Overview_Pyramid();
-        $log->setLogFile(self::createTempName('_tmp_.svg'));
+        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
         $log->log(new PHP_Depend_Log_Overview_CouplingAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer());
         $log->log(new PHP_Depend_Log_Overview_InheritanceAnalyzer());
@@ -225,7 +225,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
 
     public function testCollectedAndComputedValuesInOutputSVG()
     {
-        $output = self::createTempName('temp.svg');
+        $output = self::createRunResourceURI('temp.svg');
         if (file_exists($output)) {
             unlink($output);
         }

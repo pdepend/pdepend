@@ -90,7 +90,7 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
-        $this->_tempFile = self::createTempName('pdepend.phpunit-log.xml');
+        $this->_tempFile = self::createRunResourceURI('pdepend.phpunit-log.xml');
         if (file_exists($this->_tempFile)) {
             unlink($this->_tempFile);
         }
