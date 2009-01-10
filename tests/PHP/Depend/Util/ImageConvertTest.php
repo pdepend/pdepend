@@ -95,7 +95,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
     public function testConvertMakesCopyForSameMimeType()
     {
         $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = self::createTempName('pdepend.out.svg');
+        $this->_out = self::createRunResourceURI('pdepend.out.svg');
 
         $this->assertFileNotExists($this->_out);
 
@@ -117,7 +117,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         }
 
         $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = self::createTempName('pdepend.out.png');
+        $this->_out = self::createRunResourceURI('pdepend.out.png');
 
         $this->assertFileNotExists($this->_out);
         PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
@@ -136,7 +136,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         }
 
         $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = self::createTempName('pdepend');
+        $this->_out = self::createRunResourceURI('pdepend');
 
         $this->assertFileNotExists($this->_out);
         PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
@@ -164,7 +164,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         ');
         PHP_Depend_Util_ConfigurationInstance::set($config);
 
-        $this->_out = self::createTempName('pdepend.svg');
+        $this->_out = self::createRunResourceURI('pdepend.svg');
         copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
 
         $svg = file_get_contents($this->_out);
@@ -204,7 +204,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         ');
         PHP_Depend_Util_ConfigurationInstance::set($config);
 
-        $this->_out = self::createTempName('pdepend.svg');
+        $this->_out = self::createRunResourceURI('pdepend.svg');
         copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
 
         $svg = file_get_contents($this->_out);

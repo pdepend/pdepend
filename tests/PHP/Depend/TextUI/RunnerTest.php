@@ -106,7 +106,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 
     public function testRunnerUsesCorrectFileFilter()
     {
-        $fileName = self::createTempName('pdepend.dummy');
+        $fileName = self::createRunResourceURI('pdepend.dummy');
         if (file_exists($fileName)) {
             unlink($fileName);
         }
@@ -163,7 +163,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
     {
-        $fileName = self::createTempName('pdepend.dummy');
+        $fileName = self::createRunResourceURI('pdepend.dummy');
         if (file_exists($fileName)) {
             unlink($fileName);
         }
@@ -211,7 +211,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 
     public function testSupportBadDocumentation()
     {
-        $fileName = self::createTempName('pdepend.dummy');
+        $fileName = self::createRunResourceURI('pdepend.dummy');
         if (file_exists($fileName)) {
             unlink($fileName);
         }
