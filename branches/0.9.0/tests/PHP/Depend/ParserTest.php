@@ -1411,6 +1411,126 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser sets the source file of an interface constant.
+     *
+     * @return void
+     */
+    public function testParserSetsSourceFileForInterfaceConstantsBug89()
+    {
+        $fileName = dirname(__FILE__) . '/_code/bugs/089-1.php';
+
+        $packages = self::parseSource($fileName);
+        $this->assertEquals(1, $packages->count()); // +global
+
+        $interface = $packages->current()->getInterfaces()->current();
+        $this->assertType('PHP_Depend_Code_Interface', $interface);
+
+        $constant = $interface->getConstants()->current();
+        $this->assertType('PHP_Depend_Code_TypeConstant', $constant);
+
+        $sourceFile = $constant->getSourceFile();
+        $this->assertNotNull($sourceFile);
+        $this->assertType('PHP_Depend_Code_File', $sourceFile);
+        $this->assertSame($fileName, $sourceFile->getFileName());
+    }
+
+    /**
+     * Tests that the parser sets the source file of a class constant.
+     *
+     * @return void
+     */
+    public function testParserSetsSourceFileForClassConstantsBug89()
+    {
+        $fileName = dirname(__FILE__) . '/_code/bugs/089-2.php';
+
+        $packages = self::parseSource($fileName);
+        $this->assertEquals(1, $packages->count()); // +global
+
+        $class = $packages->current()->getClasses()->current();
+        $this->assertType('PHP_Depend_Code_Class', $class);
+
+        $constant = $class->getConstants()->current();
+        $this->assertType('PHP_Depend_Code_TypeConstant', $constant);
+
+        $sourceFile = $constant->getSourceFile();
+        $this->assertNotNull($sourceFile);
+        $this->assertType('PHP_Depend_Code_File', $sourceFile);
+        $this->assertSame($fileName, $sourceFile->getFileName());
+    }
+
+    /**
+     * Tests that the parser sets the source file of an interface method.
+     *
+     * @return void
+     */
+    public function testParserSetsSourceFileForInterfaceMethodBug89()
+    {
+        $fileName = dirname(__FILE__) . '/_code/bugs/089-3.php';
+
+        $packages = self::parseSource($fileName);
+        $this->assertEquals(1, $packages->count()); // +global
+
+        $interface = $packages->current()->getInterfaces()->current();
+        $this->assertType('PHP_Depend_Code_Interface', $interface);
+
+        $method = $interface->getMethods()->current();
+        $this->assertType('PHP_Depend_Code_Method', $method);
+
+        $sourceFile = $method->getSourceFile();
+        $this->assertNotNull($sourceFile);
+        $this->assertType('PHP_Depend_Code_File', $sourceFile);
+        $this->assertSame($fileName, $sourceFile->getFileName());
+    }
+
+    /**
+     * Tests that the parser sets the source file of a class method.
+     *
+     * @return void
+     */
+    public function testParserSetsSourceFileForClassMethodBug89()
+    {
+        $fileName = dirname(__FILE__) . '/_code/bugs/089-4.php';
+
+        $packages = self::parseSource($fileName);
+        $this->assertEquals(1, $packages->count()); // +global
+
+        $class = $packages->current()->getClasses()->current();
+        $this->assertType('PHP_Depend_Code_Class', $class);
+
+        $method = $class->getMethods()->current();
+        $this->assertType('PHP_Depend_Code_Method', $method);
+
+        $sourceFile = $method->getSourceFile();
+        $this->assertNotNull($sourceFile);
+        $this->assertType('PHP_Depend_Code_File', $sourceFile);
+        $this->assertSame($fileName, $sourceFile->getFileName());
+    }
+
+    /**
+     * Tests that the parser sets the source file of a class property.
+     *
+     * @return void
+     */
+    public function testParserSetsSourceFileForClassPropertyBug89()
+    {
+        $fileName = dirname(__FILE__) . '/_code/bugs/089-5.php';
+
+        $packages = self::parseSource($fileName);
+        $this->assertEquals(1, $packages->count()); // +global
+
+        $class = $packages->current()->getClasses()->current();
+        $this->assertType('PHP_Depend_Code_Class', $class);
+
+        $property = $class->getProperties()->current();
+        $this->assertType('PHP_Depend_Code_Property', $property);
+
+        $sourceFile = $property->getSourceFile();
+        $this->assertNotNull($sourceFile);
+        $this->assertType('PHP_Depend_Code_File', $sourceFile);
+        $this->assertSame($fileName, $sourceFile->getFileName());
+    }
+
+    /**
      * Tests that the parser supports function parameters.
      *
      * @return void

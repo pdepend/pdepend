@@ -387,6 +387,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $method->setAbstract($abstract);
                 $method->setVisibility($visibilty);
                 $method->setPosition($methodPosition++);
+                $method->setSourceFile($this->tokenizer->getSourceFile());
 
                 $this->_prepareCallable($method);
 
@@ -400,6 +401,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $property->setDocComment($comment);
                 $property->setVisibility($visibilty);
                 $property->setEndLine($token->startLine);
+                $property->setSourceFile($this->tokenizer->getSourceFile());
 
                 $this->_prepareProperty($property);
 
@@ -421,6 +423,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $constant->setDocComment($comment);
                 $constant->setStartLine($token->startLine);
                 $constant->setEndLine($token->startLine);
+                $constant->setSourceFile($this->tokenizer->getSourceFile());
 
                 $type->addConstant($constant);
 
