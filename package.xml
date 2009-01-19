@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                         http://pear.php.net/dtd/tasks-1.0.xsd                         http://pear.php.net/dtd/package-2.0                         http://pear.php.net/dtd/package-2.0.xsd">
   <name>PHP_Depend</name>
-  <channel>pear.xplib.de</channel>
+  <channel>pear.pdepend.org</channel>
   <summary>PHP_Depend design quality metrics for PHP packages</summary>
   <description>
 PHP_Depend is an adaption of the Java design quality metrics software JDepend 
@@ -13,9 +13,9 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2009-01-02</date>
+  <date>2009-01-19</date>
   <version>
-    <release>0.9.2</release>
+    <release>0.9.3</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,7 +24,12 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- #84 + Critical bug, a backslash could kill PHP_Depend with all PHP Versions lower 5.3.0alpha3
+- #89 + Source file is never set for methods, properties and constants.
+- #83 + Storage layer for node tokens added, reduces memory consumption.
+- #85 + TextUI displays the execution time and the memory usage(linux only).
+- #82 + Tokenizer cache added, reduces runtime up to 25%.
+- Code restructured, input filters and iterator moved to package "Input".
+- Test suite restructured to reflect the actual project structure.
   </notes>
   <contents>
     <dir name="/">
@@ -235,39 +240,27 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="Tokenizer">
+            <file name="CacheDecorator.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="Internal.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
           <dir name="Util">
-            <file name="CompositeFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ExcludePathFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="UUID.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="Configuration.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="FileExtensionFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="FileFilterIterator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="FileFilterI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ImageConvert.php" role="php">
+            <file name="MathUtil.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="FileUtil.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="MathUtil.php" role="php">
+            <file name="ImageConvert.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ConfigurationInstance.php" role="php">
@@ -295,16 +288,25 @@ and the NDepend metric tool.
               </file>
             </dir>
             <dir name="Jdepend">
+              <file name="Chart.php.orig" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Xml.php.orig" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Chart.php.rej" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
               <file name="Chart.xml" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="Xml.xml" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="chart.svg" role="php">
+              <file name="Chart.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="Chart.php" role="php">
+              <file name="chart.svg" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="Xml.php" role="php">
@@ -335,28 +337,59 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <file name="BuilderI.php" role="php">
+          <dir name="Storage">
+            <file name="MemoryEngine.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AbstractEngine.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="FileEngine.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Input">
+            <file name="Iterator.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ExcludePathFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CompositeFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ExtensionFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="FilterI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="InternalTypes.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ProcessListenerI.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
+          <file name="BuilderI.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
           <file name="ConstantsI.php" role="php">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="InternalTypes.php" role="php">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="Parser.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="TokenizerI.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="Token.php" role="php">
+          <file name="VisitorI.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="VisitorI.php" role="php">
+          <file name="Parser.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="StorageRegistry.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="Token.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -365,6 +398,26 @@ and the NDepend metric tool.
         </file>
       </dir>
       <dir name="tests/PHP/Depend">
+        <dir name="Input">
+          <file name="DummyFilter.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ExtensionFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="IteratorTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="CompositeFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ExcludePathFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
         <dir name="Code">
           <dir name="NodeVisitor">
             <file name="DefaultVisitorTest.php" role="test">
@@ -434,93 +487,6 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
-        <dir name="Log">
-          <dir name="Summary">
-            <dir name="_expected">
-              <file name="project-aware-result-set-without-code.xml" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="node-aware-result-set.xml" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="xml-log-without-metrics.xml" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <file name="AnalyzerProjectAwareDummy.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AnalyzerNodeAwareDummy.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="XmlTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Phpunit">
-            <dir name="_expected">
-              <file name="phpunit-log.xml" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <file name="XmlTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Overview">
-            <file name="NodeCountAnalyzer.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="CouplingAnalyzer.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="InheritanceAnalyzer.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="PyramidTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="NodeLocAnalyzer.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="CyclomaticComplexityAnalyzer.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Dummy">
-            <file name="Logger.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Logger.xml" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Jdepend">
-            <dir name="_expected">
-              <file name="pdepend-log.xml" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <file name="DependencyAnalyzer.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ChartTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="XmlTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <file name="DummyAnalyzer.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="AllTests.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="LoggerFactoryTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-        </dir>
         <dir name="_run"/>
         <dir name="Builder">
           <file name="DefaultTest.php" role="test">
@@ -545,22 +511,31 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="bugs">
+            <file name="089-3.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="30.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="12.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="10.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="30.php" role="test">
+            <file name="11.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="11.php" role="test">
+            <file name="089-5.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="33-2.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="15.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="089-4.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="14.php" role="test">
@@ -572,13 +547,22 @@ and the NDepend metric tool.
             <file name="08.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="84.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="16-1.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="089-2.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="24.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="16-2.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="089-1.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="09.php" role="test">
@@ -757,6 +741,105 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
+        <dir name="Log">
+          <dir name="Summary">
+            <dir name="_expected">
+              <file name="project-aware-result-set-without-code.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="node-aware-result-set.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="xml-log-without-metrics.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="AnalyzerProjectAwareDummy.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AnalyzerNodeAwareDummy.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="XmlTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Phpunit">
+            <dir name="_expected">
+              <file name="phpunit-log.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="XmlTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Overview">
+            <file name="NodeCountAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CouplingAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="InheritanceAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="PyramidTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="NodeLocAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CyclomaticComplexityAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Dummy">
+            <file name="Logger.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Logger.xml" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Jdepend">
+            <dir name="_expected">
+              <file name="pdepend-log.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="XmlTest.php.orig" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="XmlTest.php.rej" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ChartTest.php.rej" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="DependencyAnalyzer.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ChartTest.php.orig" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ChartTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="XmlTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="DummyAnalyzer.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="LoggerFactoryTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
         <dir name="Metrics">
           <dir name="CodeRank">
             <file name="MethodStrategyTest.php" role="test">
@@ -830,25 +913,10 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <file name="FileFilterIteratorTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="FileExtensionFilterTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="DummyFilter.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
           <file name="AllTests.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ImageConvertTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ExcludePathFilterTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="CompositeFilterTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -866,7 +934,7 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
-        <file name="AbstractTest.php" role="test">
+        <file name="ParserTest.php" role="test">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="AllTests.php" role="test">
@@ -875,7 +943,7 @@ and the NDepend metric tool.
         <file name="DependTest.php" role="test">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
-        <file name="ParserTest.php" role="test">
+        <file name="AbstractTest.php" role="test">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="InternalTest.php" role="test">
@@ -1095,7 +1163,6 @@ and the NDepend metric tool.
 - No more features or bug fixes, beta4 seems to be stable.
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -1120,7 +1187,6 @@ and the NDepend metric tool.
     - #30 + Improve Lines Of Code. 
       </notes>
     </release>
-    
     <release>
       <lead>
         <name>Manuel Pichler</name>
@@ -1143,6 +1209,27 @@ and the NDepend metric tool.
     - #21 + Support for the NPath Complexity metric.
     - #78 + Parser fails for comment in function signature.
     - #79 + Token objects instead of arrays.
+      </notes>
+    </release>
+    <release>
+      <lead>
+        <name>Manuel Pichler</name>
+        <user>mapi</user>
+        <email>mapi@pdepend.org</email>
+        <active>yes</active>
+      </lead>
+      <version>
+        <release>0.9.2</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>beta</api>
+      </stability>
+      <date>2009-01-02</date>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+    - #84 + Critical bug, a backslash could kill PHP_Depend with all PHP Versions lower 5.3.0alpha3
       </notes>
     </release>
   </changelog>
