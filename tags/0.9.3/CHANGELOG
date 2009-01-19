@@ -1,0 +1,80 @@
+PHP_Depend 0.9.3
+----------------
+
+- #89 + Source file is never set for methods, properties and constants.
+- #83 + Storage layer for node tokens added, reduces memory consumption. 
+- #85 + TextUI displays the execution time and the memory usage(linux only).
+- #82 + Tokenizer cache added, reduces runtime up to 25%.
+- Code restructured, input filters and iterator moved to package "Input".
+- Test suite restructured to reflect the actual project structure.
+
+PHP_Depend 0.9.2
+----------------
+
+- #84 + Critical bug, a backslash could kill PHP_Depend with all PHP Versions lower 5.3.0alpha3
+
+PHP_Depend 0.9.1
+----------------
+
+- Performance improvements
+- #21 + Support for the NPath Complexity metric.
+- #78 + Parser fails for comment in function signature.
+- #79 + Token objects instead of arrays.
+
+PHP_Depend 0.9.0
+----------------
+
+- PHP_Depend works with PHP 5.2.0
+- #19 + Implement a phpunit compatible xml logger. 
+- #20 + Add support for class constants.
+- #30 + Improve Lines Of Code.
+
+PHP_Depend 0.8.0
+----------------
+
+- No more features or bug fixes, beta4 seems to be stable.
+
+PHP_Depend 0.8.0beta4
+---------------------
+
+- #29 + Tooltip for the Overview Pyramid.
+- #34 + Support for pattern based package filter.
+- #37 + Remove Logger - XML Config dependency.
+- #38 + The Logger interface should not force a default ctor-signature.
+
+PHP_Depend 0.8.0beta3
+---------------------
+
+- #25 + PHP_Depend should print an error if no @package information is available.
+- #26 + Handle class and interface names case insensitive.
+- #27 + Handle internal classes and interfaces.
+- #28 + Add option --bad-documentation. 
+
+PHP_Depend 0.8.0beta2
+---------------------
+
+- #18 + Introduce a CodeAware interface for loggers.
+- #23 + Use an SVG-Template for the jdepend chart.
+- #24 + There is an endless loop for inline html.
+
+PHP_Depend 0.8.0beta1
+---------------------
+
+- New metrics implemented
+  - ClassLevel (wmc, vars, dit, csz, ...)
+  - CodeRank (cr, rcr - PageRank adaption for classes and packages)
+  - Coupling (Fanout, calls)
+  - CyclomaticComplexity (CCN, CCN2)
+  - Dependency (ac, cc, ce, ca, d, a, i)
+  - Hierarchy (clsa, clsc, roots, leafs, maxDIT)
+  - Inheritance (andc, ahh)
+  - NodeCount (nop, noc, nof, noi, nom)
+  - NodeLoc (loc, cloc, ncloc)
+- Pluggable logger architecture.
+- Pluggable metric analyzer architecture.
+
+
+PHP_Depend 0.1.0
+----------------
+
+- Initial proof-of-concept release.
