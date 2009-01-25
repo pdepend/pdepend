@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+
 /**
  * Marker interface that marks a result set as node metrics aware.
  *
@@ -58,7 +60,7 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_NodeAwareI
+interface PHP_Depend_Metrics_NodeAwareI extends PHP_Depend_Metrics_AnalyzerI
 {
     /**
      * This method will return an <b>array</b> with all generated metric values
