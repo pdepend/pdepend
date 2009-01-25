@@ -1,3 +1,9 @@
+PHP_Depend 0.9.4
+----------------
+
+- The ProjectAwareI and NodeAwareI interfaces extend the AnalyzerI interface,
+  which makes analyzer mocking easier.
+
 PHP_Depend 0.9.3
 ----------------
 

@@ -46,6 +46,8 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/Metrics/AnalyzerI.php';
+
 /**
  * This interface is used to mark a result set as project summary aware.
  * 
@@ -61,7 +63,7 @@
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-interface PHP_Depend_Metrics_ProjectAwareI
+interface PHP_Depend_Metrics_ProjectAwareI extends PHP_Depend_Metrics_AnalyzerI
 {
     /**
      * Provides the project summary as an <b>array</b>.
