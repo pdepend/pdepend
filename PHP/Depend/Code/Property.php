@@ -48,7 +48,6 @@
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
 require_once 'PHP/Depend/Code/TypeAwareI.php';
-require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 
 /**
  * This code class represents a class property.
@@ -64,16 +63,8 @@ require_once 'PHP/Depend/Code/VisibilityAwareI.php';
  */
 class PHP_Depend_Code_Property
     extends PHP_Depend_Code_AbstractItem
-    implements PHP_Depend_Code_TypeAwareI,
-               PHP_Depend_Code_VisibilityAwareI
+    implements PHP_Depend_Code_TypeAwareI
 {
-    /**
-     * Set defined visibility for this method.
-     *
-     * @var integer $_visibility
-     */
-    private $_visibility = -1;
-
     /**
      * The parent type object.
      *
@@ -90,30 +81,42 @@ class PHP_Depend_Code_Property
     private $_type = null;
 
     /**
-     * Sets the visibility for this node.
+     * Defined modifiers for this property node.
      *
-     * The given <b>$visibility</b> value must equal to one of the defined
-     * constants, otherwith this method will fail with an exception.
+     * @var integer $_modifiers
+     */
+    private $_modifiers = 0;
+
+    /**
+     * This method sets a OR combined integer of the declared modifiers for this
+     * node.
      *
-     * @param integer $visibility The node visibility.
+     * This method will throw an exception when the value of given <b>$modifiers</b> 
+     * contains an invalid/unexpected modifier
+     *
+     * @param integer $modifiers The declared modifiers for this node.
      *
      * @return void
-     * @throws InvalidArgumentException If the given visibility is not equal to
-     *                                  one of the defined visibility constants.
+     * @throws InvalidArgumentException If the given modifier contains unexpected
+     *                                  values.
+     * @since 0.9.4
      */
-    public function setVisibility($visibility)
+    public function setModifiers($modifiers)
     {
-        // List of allowed visibility values
-        $allowed = array(self::IS_PUBLIC, self::IS_PROTECTED, self::IS_PRIVATE);
+        if ($this->_modifiers !== 0) {
+            return;
+        }
 
-        // Check for a valid value
-        if (in_array($visibility, $allowed, true) === false) {
-            throw new InvalidArgumentException('Invalid visibility value given.');
+        $expected = ~PHP_Depend_ConstantsI::IS_PUBLIC
+                  & ~PHP_Depend_ConstantsI::IS_PROTECTED
+                  & ~PHP_Depend_ConstantsI::IS_PRIVATE
+                  & ~PHP_Depend_ConstantsI::IS_STATIC;
+
+        if (($expected & $modifiers) !== 0) {
+            throw new InvalidArgumentException('Invalid property modifier given.');
         }
-        // Check for previous value
-        if ($this->_visibility === -1) {
-            $this->_visibility = $visibility;
-        }
+
+        $this->_modifiers = $modifiers;
     }
 
     /**
@@ -124,7 +127,8 @@ class PHP_Depend_Code_Property
      */
     public function isPublic()
     {
-        return ($this->_visibility === self::IS_PUBLIC);
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
+                                 === PHP_Depend_ConstantsI::IS_PUBLIC);
     }
 
     /**
@@ -135,7 +139,8 @@ class PHP_Depend_Code_Property
      */
     public function isProtected()
     {
-        return ($this->_visibility === self::IS_PROTECTED);
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
+                                 === PHP_Depend_ConstantsI::IS_PROTECTED);
     }
 
     /**
@@ -146,13 +151,26 @@ class PHP_Depend_Code_Property
      */
     public function isPrivate()
     {
-        return ($this->_visibility === self::IS_PRIVATE);
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
+                                 === PHP_Depend_ConstantsI::IS_PRIVATE);
+    }
+
+    /**
+     * Returns <b>true</b> when this node is declared as static, otherwise
+     * the returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isStatic()
+    {
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_STATIC)
+                                 === PHP_Depend_ConstantsI::IS_STATIC);
     }
 
     /**
      * Returns the parent class object or <b>null</b>
      *
-     * @return PHP_Depend_Code_Class|null
+     * @return PHP_Depend_Code_Class
      */
     public function getParent()
     {
@@ -207,4 +225,26 @@ class PHP_Depend_Code_Property
         $visitor->visitProperty($this);
     }
 
+    // DEPRECATED METHODS
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Sets the visibility for this node.
+     *
+     * The given <b>$visibility</b> value must equal to one of the defined
+     * constants, otherwith this method will fail with an exception.
+     *
+     * @param integer $visibility The node visibility.
+     *
+     * @return void
+     * @throws InvalidArgumentException If the given visibility is not equal to
+     *                                  one of the defined visibility constants.
+     * @deprecated Since version 0.9.4, use setModifiers() instead.
+     */
+    public function setVisibility($visibility)
+    {
+        fwrite(STDERR, 'Since 0.9.4 setVisibility() is deprecated.' . PHP_EOL);
+    }
+
+    // @codeCoverageIgnoreEnd
 }

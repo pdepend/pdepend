@@ -64,34 +64,50 @@ require_once 'PHP/Depend/Code/Property.php';
 class PHP_Depend_Code_PropertyTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
-     * Tests that {@link PHP_Depend_Code_Property::setVisibility()} fails with
+     * Tests that {@link PHP_Depend_Code_Property::setModifiers()} fails with
      * an exception for invalid visibility values.
      *
      * @return void
      */
-    public function testSetVisibilityWithInvalidVisibilityTypeFail()
+    public function testSetModifiersWithInvalidVisibilityTypeFail()
     {
         $this->setExpectedException('InvalidArgumentException');
         
         $property = $this->createItem();
-        $property->setVisibility(-1);
+        $property->setModifiers(-1);
     }
     
     /**
-     * Tests that {@link PHP_Depend_Code_Property::setVisibility()} only accepts
+     * Tests that {@link PHP_Depend_Code_Property::setModifiers()} only accepts
      * the first set value, later method calls will be ignored.
      *
      * @return void
      */
-    public function testSetVisibilityOnlyAcceptsTheFirstValue()
+    public function testSetModifiersOnlyAcceptsTheFirstValue()
     {
         $property = $this->createItem();
         $this->assertFalse($property->isPublic());
-        $property->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+        $property->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $this->assertTrue($property->isPublic());
-        $property->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+        $property->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $this->assertTrue($property->isPublic());
         $this->assertFalse($property->isPrivate());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Property::setModifiers()} marks the
+     * property is as static.
+     *
+     * @return void
+     */
+    public function testSetModifiersMarksPropertyAsStatic()
+    {
+        $property = new PHP_Depend_Code_Property('$pdepend');
+        $this->assertFalse($property->isStatic());
+
+        $property->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE
+                              | PHP_Depend_ConstantsI::IS_STATIC);
+        $this->assertTrue($property->isStatic());
     }
     
     /**

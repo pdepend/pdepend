@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractCallable.php';
-require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 
 /**
  * Represents a php method node.
@@ -61,24 +60,8 @@ require_once 'PHP/Depend/Code/VisibilityAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Method
-    extends PHP_Depend_Code_AbstractCallable
-    implements PHP_Depend_Code_VisibilityAwareI
+class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
 {
-    /**
-     * Marks this method as abstract.
-     *
-     * @var boolean $abstract
-     */
-    protected $abstract = false;
-
-    /**
-     * Set defined visibility for this method.
-     *
-     * @var integer $visibility
-     */
-    protected $visibility = -1;
-
     /**
      * The parent type object.
      *
@@ -94,52 +77,55 @@ class PHP_Depend_Code_Method
     private $_position = 0;
 
     /**
+     * Defined modifiers for this property node.
+     *
+     * @var integer $_modifiers
+     */
+    private $_modifiers = 0;
+
+    /**
+     * This method sets a OR combined integer of the declared modifiers for this
+     * node.
+     *
+     * This method will throw an exception when the value of given <b>$modifiers</b>
+     * contains an invalid/unexpected modifier
+     *
+     * @param integer $modifiers The declared modifiers for this node.
+     *
+     * @return void
+     * @throws InvalidArgumentException If the given modifier contains unexpected
+     *                                  values.
+     * @since 0.9.4
+     */
+    public function setModifiers($modifiers)
+    {
+        if ($this->_modifiers !== 0) {
+            return;
+        }
+
+        $expected = ~PHP_Depend_ConstantsI::IS_PUBLIC
+                  & ~PHP_Depend_ConstantsI::IS_PROTECTED
+                  & ~PHP_Depend_ConstantsI::IS_PRIVATE
+                  & ~PHP_Depend_ConstantsI::IS_STATIC
+                  & ~PHP_Depend_ConstantsI::IS_ABSTRACT
+                  & ~PHP_Depend_ConstantsI::IS_FINAL;
+
+        if (($expected & $modifiers) !== 0) {
+            throw new InvalidArgumentException('Invalid method modifier given.');
+        }
+
+        $this->_modifiers = $modifiers;
+    }
+
+    /**
      * Returns <b>true</b> if this is an abstract method.
      *
      * @return boolean
      */
     public function isAbstract()
     {
-        return $this->abstract;
-    }
-
-    /**
-     * Marks this as an abstract method.
-     *
-     * @param boolean $abstract Set this to <b>true</b> for an abstract method.
-     *
-     * @return void
-     */
-    public function setAbstract($abstract)
-    {
-        $this->abstract = $abstract;
-    }
-
-    /**
-     * Sets the visibility for this node.
-     *
-     * The given <b>$visibility</b> value must equal to one of the defined
-     * constants, otherwith this method will fail with an exception.
-     *
-     * @param integer $visibility The node visibility.
-     *
-     * @return void
-     * @throws InvalidArgumentException If the given visibility is not equal to
-     *                                  one of the defined visibility constants.
-     */
-    public function setVisibility($visibility)
-    {
-        // List of allowed visibility values
-        $allowed = array(self::IS_PUBLIC, self::IS_PROTECTED, self::IS_PRIVATE);
-
-        // Check for a valid value
-        if (in_array($visibility, $allowed, true) === false) {
-            throw new InvalidArgumentException('Invalid visibility value given.');
-        }
-        // Check for previous value
-        if ($this->visibility === -1) {
-            $this->visibility = $visibility;
-        }
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_ABSTRACT)
+                                 === PHP_Depend_ConstantsI::IS_ABSTRACT);
     }
 
     /**
@@ -150,7 +136,8 @@ class PHP_Depend_Code_Method
      */
     public function isPublic()
     {
-        return ($this->visibility === self::IS_PUBLIC);
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
+                                 === PHP_Depend_ConstantsI::IS_PUBLIC);
     }
 
     /**
@@ -161,7 +148,8 @@ class PHP_Depend_Code_Method
      */
     public function isProtected()
     {
-        return ($this->visibility === self::IS_PROTECTED);
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
+                                 === PHP_Depend_ConstantsI::IS_PROTECTED);
     }
 
     /**
@@ -172,9 +160,33 @@ class PHP_Depend_Code_Method
      */
     public function isPrivate()
     {
-        return ($this->visibility === self::IS_PRIVATE);
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
+                                 === PHP_Depend_ConstantsI::IS_PRIVATE);
     }
 
+    /**
+     * Returns <b>true</b> when this node is declared as static, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isStatic()
+    {
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_STATIC)
+                                 === PHP_Depend_ConstantsI::IS_STATIC);
+    }
+
+    /**
+     * Returns <b>true</b> when this node is declared as final, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isFinal()
+    {
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
+                                 === PHP_Depend_ConstantsI::IS_FINAL);
+    }
 
     /**
      * Returns the parent type object or <b>null</b>
@@ -232,4 +244,40 @@ class PHP_Depend_Code_Method
     {
         $visitor->visitMethod($this);
     }
+    
+    // DEPRECATED METHODS
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Marks this as an abstract method.
+     *
+     * @param boolean $abstract Set this to <b>true</b> for an abstract method.
+     *
+     * @return void
+     * @deprecated Since version 0.9.4, use setModifiers() instead.
+     */
+    public function setAbstract($abstract)
+    {
+        fwrite(STDERR, 'Since 0.9.4 setAbstract() is deprecated.' . PHP_EOL);
+    }
+
+    /**
+     * Sets the visibility for this node.
+     *
+     * The given <b>$visibility</b> value must equal to one of the defined
+     * constants, otherwith this method will fail with an exception.
+     *
+     * @param integer $visibility The node visibility.
+     *
+     * @return void
+     * @throws InvalidArgumentException If the given visibility is not equal to
+     *                                  one of the defined visibility constants.
+     * @deprecated Since version 0.9.4, use setModifiers() instead.
+     */
+    public function setVisibility($visibility)
+    {
+        fwrite(STDERR, 'Since 0.9.4 setVisibility() is deprecated.' . PHP_EOL);
+    }
+
+    // @codeCoverageIgnoreEnd
 }
