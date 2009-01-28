@@ -231,45 +231,45 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         
         $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
         $classC->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classC->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classC->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classC->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classC->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classA->setSourceFile($file);
         $classB->setSourceFile($file);
@@ -304,31 +304,31 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         
         $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classB->addChildType($classA); // class A extends B {}
                
@@ -359,21 +359,21 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classB = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classA->setSourceFile($file);
         $classB->setSourceFile($file);
@@ -404,27 +404,27 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classB = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addProperty(new PHP_Depend_Code_Property('$d'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addProperty(new PHP_Depend_Code_Property('$e'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addProperty(new PHP_Depend_Code_Property('$f'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         
         $classB->addChildType($classA); // class A extends B {}
                
@@ -455,27 +455,27 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classB = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classB->addProperty(new PHP_Depend_Code_Property('$d'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addProperty(new PHP_Depend_Code_Property('$e'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addProperty(new PHP_Depend_Code_Property('$f'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         
         $classB->addChildType($classA); // class A extends B {}
                
@@ -506,31 +506,31 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         
         $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
         $classC->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classC->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classC->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classB->addChildType($classA); // class A extends B {}
         $classC->addChildType($classB); // class B extends C {}
@@ -565,31 +565,31 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         
         $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addMethod(new PHP_Depend_Code_Method('a2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
         $classC->addMethod(new PHP_Depend_Code_Method('a3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classC->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classC->addMethod(new PHP_Depend_Code_Method('c2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classA->setSourceFile($file);
         $classB->setSourceFile($file);
@@ -624,31 +624,31 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         
         $classA = $package->addType(new PHP_Depend_Code_Class('A'));
         $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         
         $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
         $classB->addMethod(new PHP_Depend_Code_Method('a2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classB->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classB->addMethod(new PHP_Depend_Code_Method('c2'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
         $classC->addMethod(new PHP_Depend_Code_Method('a3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $classC->addMethod(new PHP_Depend_Code_Method('b3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $classC->addMethod(new PHP_Depend_Code_Method('c3'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
                
         $classA->setSourceFile($file);
         $classB->setSourceFile($file);

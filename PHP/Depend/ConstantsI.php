@@ -59,6 +59,36 @@
 interface PHP_Depend_ConstantsI
 {
     /**
+     * Marks a node as public.
+     */
+    const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
+
+    /**
+     * Marks a node as protected.
+     */
+    const IS_PROTECTED = ReflectionMethod::IS_PROTECTED;
+
+    /**
+     * Marks a node as private.
+     */
+    const IS_PRIVATE = ReflectionMethod::IS_PRIVATE;
+
+    /**
+     * Marks a node as abstract.
+     */
+    const IS_ABSTRACT = ReflectionMethod::IS_ABSTRACT;
+
+    /**
+     * Marks a node as final.
+     */
+    const IS_FINAL = ReflectionMethod::IS_FINAL;
+
+    /**
+     * Marks a node as static.
+     */
+    const IS_STATIC = ReflectionMethod::IS_STATIC;
+
+    /**
      * Marks the end of the token stream.
      */
     const T_EOF = -1;

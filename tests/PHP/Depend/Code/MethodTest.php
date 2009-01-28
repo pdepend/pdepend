@@ -108,77 +108,126 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
-     * fails with an exception for an invalid visibility type.
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
+     * fails with an exception for an invalid modifier value.
      *
      * @return void
      */
-    public function testSetInvalidVisibilityFail()
+    public function testSetInvalidModifierFail()
     {
         $this->setExpectedException('InvalidArgumentException');
         
         $method = new PHP_Depend_Code_Method('method');
-        $method->setVisibility(0);
+        $method->setModifiers(-1);
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * accepts the defined visibility value.
      *
      * @return void
      */
-    public function testSetVisibilityAcceptsPublicValue()
+    public function testSetModifiersAcceptsPublicValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $this->assertTrue($method->isPublic());
         $this->assertFalse($method->isProtected());
         $this->assertFalse($method->isPrivate());
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method marks
+     * a method as static.
+     *
+     * @return void
+     */
+    public function testSetModifiersMarksMethodAsStatic()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertFalse($method->isStatic());
+
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED
+                            | PHP_Depend_ConstantsI::IS_STATIC);
+        $this->assertTrue($method->isStatic());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method marks
+     * a method as final.
+     *
+     * @return void
+     */
+    public function testSetModifiersMarksMethodAsFinal()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertFalse($method->isFinal());
+
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED
+                            | PHP_Depend_ConstantsI::IS_FINAL);
+        $this->assertTrue($method->isFinal());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method marks
+     * a method as static+final.
+     *
+     * @return void
+     */
+    public function testSetModifiersMarksMethodAsStaticFinal()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertFalse($method->isFinal() || $method->isStatic());
+
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED
+                            | PHP_Depend_ConstantsI::IS_STATIC
+                            | PHP_Depend_ConstantsI::IS_FINAL);
+        $this->assertTrue($method->isFinal() && $method->isStatic());
+    }
+    
+    /**
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * accepts the defined visibility value.
      *
      * @return void
      */
-    public function testSetVisibilityAcceptsProtectedValue()
+    public function testSetModifiersAcceptsProtectedValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $this->assertTrue($method->isProtected());
         $this->assertFalse($method->isPublic());
         $this->assertFalse($method->isPrivate());
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * accepts the defined visibility value.
      *
      * @return void
      */
-    public function testSetVisibilityAcceptsPrivateValue()
+    public function testSetModifiersAcceptsPrivateValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE);
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
         $this->assertTrue($method->isPrivate());
         $this->assertFalse($method->isPublic());
         $this->assertFalse($method->isProtected());
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Method::setVisibility()} method
+     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * ignores repeated calls if the internal value is set.
      *
      * @return void
      */
-    public function testSetVisibilityOnlyAcceptsTheFirstValue()
+    public function testSetModifiersOnlyAcceptsTheFirstValue()
     {
         $method = new PHP_Depend_Code_Method('method');
         $this->assertFalse($method->isPublic());
-        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC);
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $this->assertTrue($method->isPublic());
-        $method->setVisibility(PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED);
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $this->assertTrue($method->isPublic());
     }
     

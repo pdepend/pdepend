@@ -46,7 +46,6 @@
  */
 
 require_once 'PHP/Depend/ConstantsI.php';
-require_once 'PHP/Depend/Code/VisibilityAwareI.php';
 require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/TokenizerI.php';
 
@@ -366,14 +365,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->tokenizer->next();
         $curly = 0;
 
-        $tokens = array($token);
+        $tokens  = array($token);
+        $comment = null;
 
-        // If type is an interface all methods are abstract
-        $abstractDefault = ($type instanceof PHP_Depend_Code_Interface);
-
-        $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
-        $comment   = null;
-        $abstract  = $abstractDefault;
+        $defaultModifier = self::IS_PUBLIC;
+        if ($type instanceof PHP_Depend_Code_Interface) {
+            $defaultModifier |= self::IS_ABSTRACT;
+        }
+        $modifiers = $defaultModifier;
 
         // Method position within the type body
         $methodPosition = 0;
@@ -384,24 +383,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_FUNCTION:
                 $method = $this->parseCallable($tokens, $type);
                 $method->setDocComment($comment);
-                $method->setAbstract($abstract);
-                $method->setVisibility($visibilty);
                 $method->setPosition($methodPosition++);
                 $method->setSourceFile($this->tokenizer->getSourceFile());
+                $method->setModifiers($modifiers);
 
                 $this->_prepareCallable($method);
 
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
-                $abstract  = $abstractDefault;
+                $modifiers = $defaultModifier;
                 break;
 
             case self::T_VARIABLE:
                 $property = $this->builder->buildProperty($token->image, $token->startLine);
                 $property->setDocComment($comment);
-                $property->setVisibility($visibilty);
                 $property->setEndLine($token->startLine);
                 $property->setSourceFile($this->tokenizer->getSourceFile());
+                $property->setModifiers($modifiers);
 
                 $this->_prepareProperty($property);
 
@@ -410,9 +407,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 //       code is correct?
                 $type->addProperty($property);
 
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
-                $abstract  = $abstractDefault;
+                $modifiers = $defaultModifier;
                 break;
 
             case self::T_CONST:
@@ -427,9 +423,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                 $type->addConstant($constant);
 
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
                 $comment   = null;
-                $abstract  = $abstractDefault;
+                $modifiers = $defaultModifier;
                 break;
 
             case self::T_CURLY_BRACE_OPEN:
@@ -443,25 +438,29 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_ABSTRACT:
-                $abstract = true;
+                $modifiers |= self::IS_ABSTRACT;
                 break;
 
             case self::T_PUBLIC:
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PUBLIC;
+                $modifiers |= self::IS_PUBLIC;
                 break;
 
             case self::T_PRIVATE:
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PRIVATE;
+                $modifiers |= self::IS_PRIVATE & ~self::IS_PUBLIC;
+                $modifiers  = $modifiers & ~self::IS_PUBLIC;
                 break;
 
             case self::T_PROTECTED:
-                $visibilty = PHP_Depend_Code_VisibilityAwareI::IS_PROTECTED;
+                $modifiers |= self::IS_PROTECTED;
+                $modifiers  = $modifiers & ~self::IS_PUBLIC;
                 break;
 
             case self::T_STATIC:
+                $modifiers |= self::IS_STATIC;
                 break;
 
             case self::T_FINAL:
+                $modifiers |= self::IS_FINAL;
                 break;
 
             case self::T_DOC_COMMENT:
