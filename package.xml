@@ -30,6 +30,7 @@ and the NDepend metric tool.
   methods and properties to modifiers compatible with PHP's reflection-extension.
 - Support for static modifier for properties and methods and final for methods
   added.
+- Support for class final modifier added.
   </notes>
   <contents>
     <dir name="/">
