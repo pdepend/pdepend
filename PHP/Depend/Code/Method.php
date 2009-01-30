@@ -259,6 +259,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     public function setAbstract($abstract)
     {
         fwrite(STDERR, 'Since 0.9.4 setAbstract() is deprecated.' . PHP_EOL);
+        $this->_modifiers |= PHP_Depend_ConstantsI::IS_ABSTRACT;
     }
 
     /**
