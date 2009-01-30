@@ -258,6 +258,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         }
 
         $expected = ~PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
+                  & ~PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT
                   & ~PHP_Depend_ConstantsI::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {
@@ -281,6 +282,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     }
 
     // DEPRECATED METHODS
+    // @codeCoverageIgnoreStart
 
     /**
      * Marks this as an abstract class or interface.
@@ -295,4 +297,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         fwrite(STDERR, 'Since 0.9.4 setAbstract() is deprecated.' . PHP_EOL);
         $this->_modifiers |= PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT;
     }
+    
+    // @codeCoverageIgnoreEnd
 }
