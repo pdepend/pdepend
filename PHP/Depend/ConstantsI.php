@@ -59,6 +59,16 @@
 interface PHP_Depend_ConstantsI
 {
     /**
+     * Marks a class or interface as implicit abstract.
+     */
+    const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
+
+    /**
+     * Marks a class or interface as explicit abstract.
+     */
+    const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
+
+    /**
      * Marks a node as public.
      */
     const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
