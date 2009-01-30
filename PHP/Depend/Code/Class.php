@@ -96,6 +96,17 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     }
 
     /**
+     * This method will return <b>true</b> when this class is declared as final.
+     *
+     * @return boolean
+     */
+    public function isFinal()
+    {
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
+                                 === PHP_Depend_ConstantsI::IS_FINAL);
+    }
+
+    /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
      * @return PHP_Depend_Code_Class

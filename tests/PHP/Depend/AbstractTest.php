@@ -136,6 +136,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function init()
     {
+
+
         // Is it not installed?
         if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
 

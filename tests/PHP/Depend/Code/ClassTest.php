@@ -95,6 +95,37 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $class->setModifiers(PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
         $this->assertTrue($class->isAbstract());
     }
+
+    /**
+     * Tests that the default behavior of {@link PHP_Depend_Code_Class::isFinal()}
+     * is a return value <b>false</b> that can be changed with the correct
+     * modifier.
+     *
+     * @return void
+     */
+    public function testMarkClassInstanceAsFinal()
+    {
+        $class = new PHP_Depend_Code_Class('clazz', 0);
+
+        $this->assertFalse($class->isFinal());
+        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+        $this->assertTrue($class->isFinal());
+    }
+
+    /**
+     * Tests the behavior of {@link PHP_Depend_Code_Class::setModifiers()} when
+     * it is called with an invalid modifier.
+     *
+     * @return void
+     */
+    public function testSetModifiersThrowsExpectedExceptionForInvalidModifier()
+    {
+        $class = new PHP_Depend_Code_Class('clazz');
+
+        $this->setExpectedException('InvalidArgumentException');
+        $class->setModifiers(PHP_Depend_ConstantsI::IS_ABSTRACT
+                           | PHP_Depend_ConstantsI::IS_FINAL);
+    }
     
     /**
      * Tests that a new {@link PHP_Depend_Code_Class} object returns an empty
