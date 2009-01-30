@@ -79,7 +79,14 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $packages->rewind();
         
         $this->assertEquals(2, $packages->count()); // +global & +standard
-        $functions = $packages->current()->getFunctions();
+
+        foreach ($packages as $package) {
+            if ($package->getName() === '+global') {
+                break;
+            }
+        }
+
+        $functions = $package->getFunctions();
         $this->assertEquals(2, $functions->count());
         
         $expected = array(
@@ -117,8 +124,14 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         
         $packages->rewind();
         
-        $this->assertEquals(2, $packages->count()); // +global & +standard
-        $classes = $packages->current()->getClasses();
+        $this->assertEquals(2, $packages->count()); // +global & +standard|+core
+        foreach ($packages as $package) {
+            if ($package->getName() === '+global') {
+                break;
+            }
+        }
+
+        $classes = $package->getClasses();
         $this->assertEquals(1, $classes->count());
         $methods = $classes->current()->getMethods();
         $this->assertEquals(2, $methods->count());

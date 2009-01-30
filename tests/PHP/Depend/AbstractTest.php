@@ -154,6 +154,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         set_include_path($path);
 
         include_once 'PHP/Depend/Code/Filter/Collection.php';
+
+        self::initVersionCompatibility();
     }
 
     /**
@@ -167,6 +169,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $reflection = new ReflectionClass('Iterator');
         $extension  = strtolower($reflection->getExtensionName());
+        $extension  = ($extension === '' ? 'standard' : $extension);
 
         define('CORE_PACKAGE', '+' . $extension);
     }
