@@ -7,6 +7,7 @@ PHP_Depend 0.9.4
   methods&properties to modifiers compatible with PHP's reflection-extension.
 - Support for static modifier for properties&methods and final for methods
   added.
+- Support for class final modifier added.
 
 PHP_Depend 0.9.3
 ----------------
