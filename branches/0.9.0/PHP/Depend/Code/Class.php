@@ -78,25 +78,21 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     private $_properties = array();
 
     /**
+     * The modifiers for this class instance.
+     *
+     * @var integer $_modifiers
+     */
+    private $_modifiers = 0;
+
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
      */
     public function isAbstract()
     {
-        return $this->_abstract;
-    }
-
-    /**
-     * Marks this as an abstract class or interface.
-     *
-     * @param boolean $abstract Set this to <b>true</b> for an abstract class.
-     *
-     * @return void
-     */
-    public function setAbstract($abstract)
-    {
-        $this->_abstract = $abstract;
+        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
+                                 === PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
     }
 
     /**
@@ -231,6 +227,47 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     }
 
     /**
+     * Returns the declared modifiers for this type.
+     *
+     * @return integer
+     * @since 0.9.4
+     */
+    public function getModifiers()
+    {
+        return $this->_modifiers;
+    }
+
+    /**
+     * This method sets a OR combined integer of the declared modifiers for this
+     * node.
+     *
+     * This method will throw an exception when the value of given <b>$modifiers</b>
+     * contains an invalid/unexpected modifier
+     *
+     * @param integer $modifiers The declared modifiers for this node.
+     *
+     * @return void
+     * @throws InvalidArgumentException If the given modifier contains unexpected
+     *                                  values.
+     * @since 0.9.4
+     */
+    public function setModifiers($modifiers)
+    {
+        if ($this->_modifiers !== 0) {
+            return;
+        }
+
+        $expected = ~PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
+                  & ~PHP_Depend_ConstantsI::IS_FINAL;
+
+        if (($expected & $modifiers) !== 0) {
+            throw new InvalidArgumentException('Invalid class modifier given.');
+        }
+
+        $this->_modifiers = $modifiers;
+    }
+
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_VisitorI $visitor The context visitor
@@ -241,5 +278,21 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitClass($this);
+    }
+
+    // DEPRECATED METHODS
+
+    /**
+     * Marks this as an abstract class or interface.
+     *
+     * @param boolean $abstract Set this to <b>true</b> for an abstract class.
+     *
+     * @return void
+     * @deprecated Since version 0.9.4, use setModifiers() instead.
+     */
+    public function setAbstract($abstract)
+    {
+        fwrite(STDERR, 'Since 0.9.4 setAbstract() is deprecated.' . PHP_EOL);
+        $this->_modifiers |= PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT;
     }
 }

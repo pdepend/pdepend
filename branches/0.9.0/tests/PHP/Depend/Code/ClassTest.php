@@ -92,10 +92,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $class = new PHP_Depend_Code_Class('clazz', 0);
         
         $this->assertFalse($class->isAbstract());
-        $class->setAbstract(true);
+        $class->setModifiers(PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
         $this->assertTrue($class->isAbstract());
-        $class->setAbstract(false);
-        $this->assertFalse($class->isAbstract());
     }
     
     /**
