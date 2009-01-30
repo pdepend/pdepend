@@ -113,11 +113,11 @@ class PHP_Depend_TextUI_Runner
     private $_excludePackages = array();
 
     /**
-     * List of source code directories.
+     * List of source code directories and files.
      *
-     * @var array(string) $_sourceDirectories
+     * @var array(string) $_sourceArguments
      */
-    private $_sourceDirectories = array();
+    private $_sourceArguments = array();
 
     /**
      * Mapping between optimization strategies and storage engines.
@@ -211,15 +211,15 @@ class PHP_Depend_TextUI_Runner
     }
 
     /**
-     * Sets a list of source directories.
+     * Sets a list of source directories and files.
      *
-     * @param array(string) $sourceDirectories The source directories.
+     * @param array(string) $sourceArguments The source directories.
      *
      * @return void
      */
-    public function setSourceDirectories(array $sourceDirectories)
+    public function setSourceArguments(array $sourceArguments)
     {
-        $this->_sourceDirectories = $sourceDirectories;
+        $this->_sourceArguments = $sourceArguments;
     }
 
     /**
@@ -330,7 +330,7 @@ class PHP_Depend_TextUI_Runner
 
         // Try to set all source directories.
         try {
-            foreach ($this->_sourceDirectories as $sourceDirectory) {
+            foreach ($this->_sourceArguments as $sourceDirectory) {
                 $pdepend->addDirectory($sourceDirectory);
             }
         } catch (Exception $e) {

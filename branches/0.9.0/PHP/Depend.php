@@ -93,6 +93,13 @@ class PHP_Depend
     private $_directories = array();
 
     /**
+     * List of source code file names.
+     *
+     * @var array(string) $_files
+     */
+    private $_files = array();
+
+    /**
      * The used code node builder.
      *
      * @var PHP_Depend_BuilderI $_builder
@@ -186,10 +193,28 @@ class PHP_Depend
         $dir = realpath($directory);
 
         if (!is_dir($dir)) {
-            throw new RuntimeException("Invalid directory '{$directory}' added.");
+            throw new InvalidArgumentException("Invalid directory '{$directory}' added.");
         }
 
         $this->_directories[] = $dir;
+    }
+
+    /**
+     * Adds a single source code file to the list of files to be analysed.
+     *
+     * @param string $file The source file name.
+     *
+     * @return void
+     */
+    public function addFile($file)
+    {
+        $fileName = realpath($file);
+
+        if (!is_file($fileName)) {
+            throw new InvalidArgumentException("Invalid file '{$file}' added.");
+        }
+
+        $this->_files[] = $fileName;
     }
 
     /**
@@ -313,8 +338,8 @@ class PHP_Depend
      */
     public function analyze()
     {
-        if (count($this->_directories) === 0) {
-            throw new RuntimeException('No source directory set.');
+        if (count($this->_directories) === 0 && count($this->_files) === 0) {
+            throw new RuntimeException('No source directory and file set.');
         }
 
         $this->_initStorages();
@@ -323,6 +348,7 @@ class PHP_Depend
         $loader = new PHP_Depend_Metrics_AnalyzerLoader($accept, $this->_options);
 
         $iterator = new AppendIterator();
+        $iterator->append(new ArrayIterator($this->_files));
 
         foreach ($this->_directories as $directory) {
             $iterator->append(new PHP_Depend_Input_Iterator(

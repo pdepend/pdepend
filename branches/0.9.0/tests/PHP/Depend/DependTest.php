@@ -74,7 +74,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $dir = dirname(__FILE__) . '/foobar';
         $msg = "Invalid directory '{$dir}' added.";
         
-        $this->setExpectedException('RuntimeException', $msg);
+        $this->setExpectedException('InvalidArgumentException', $msg);
         
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory($dir);
@@ -129,7 +129,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
     {
         $pdepend = new PHP_Depend();
-        $this->setExpectedException('RuntimeException', 'No source directory set.');
+        $this->setExpectedException('RuntimeException', 'No source directory and file set.');
         $pdepend->analyze();
     }
     
@@ -356,5 +356,24 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
         $this->assertEquals(1, $pdepend->getPackages()->count());
+    }
+
+    /**
+     * Tests the newly added support for single file handling.
+     *
+     * @return void
+     */
+    public function testSupportForSingleFileIssue90()
+    {
+        $pdepend = new PHP_Depend();
+        $pdepend->addFile(dirname(__FILE__) . '/_code/issues/090.php');
+        $pdepend->analyze();
+
+        $packages = $pdepend->getPackages();
+        $this->assertSame(1, $packages->count());
+
+        $package = $packages->current();
+        $this->assertSame(1, $package->getClasses()->count());
+        $this->assertSame(1, $package->getInterfaces()->count());
     }
 }

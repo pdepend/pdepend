@@ -253,7 +253,7 @@ class PHP_Depend_TextUI_Command
 
         // Last argument must be a list of source directories
         if (strpos(end($argv), '--') !== 0) {
-            $this->_runner->setSourceDirectories(explode(',', array_pop($argv)));
+            $this->_runner->setSourceArguments(explode(',', array_pop($argv)));
         }
 
         for ($i = 0, $c = count($argv); $i < $c; ++$i) {
