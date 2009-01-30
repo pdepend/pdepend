@@ -74,7 +74,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
     {
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array('foo/bar'));
+        $runner->setSourceArguments(array('foo/bar'));
 
         $this->setExpectedException(
             'RuntimeException',
@@ -93,7 +93,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
+        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code/code-without-comments'));
 
         $this->setExpectedException(
             'RuntimeException',
@@ -112,7 +112,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         }
 
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
+        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code'));
         $runner->setFileExtensions(array('inc'));
         $runner->addLogger('dummy-logger', $fileName);
 
@@ -169,7 +169,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         }
 
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
+        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code'));
         $runner->setFileExtensions(array('inc'));
         $runner->addLogger('dummy-logger', $fileName);
         $runner->setWithoutAnnotations();
@@ -217,7 +217,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         }
 
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code/code-without-comments'));
+        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code/code-without-comments'));
         $runner->setSupportBadDocumentation();
         $runner->addLogger('dummy-logger', $fileName);
 
