@@ -102,13 +102,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     protected $packageSeparator = '\\';
 
     /**
-     * Marks the current class as abstract.
-     *
-     * @var boolean $abstract
-     */
-    protected $abstract = false;
-
-    /**
      * The used code tokenizer.
      *
      * @var PHP_Depend_TokenizerI $tokenizer
@@ -198,7 +191,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             switch ($token->type) {
             case self::T_ABSTRACT:
                 $modifiers |= self::IS_EXPLICIT_ABSTRACT;
-                $this->abstract = true;
                 break;
 
             case self::T_FINAL:
@@ -304,8 +296,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function reset()
     {
-        $this->package  = self::DEFAULT_PACKAGE;
-        $this->abstract = false;
+        $this->package = self::DEFAULT_PACKAGE;
     }
 
     /**
