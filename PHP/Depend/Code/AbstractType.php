@@ -396,4 +396,11 @@ abstract class PHP_Depend_Code_AbstractType
      * @return boolean
      */
     public abstract function isSubtypeOf(PHP_Depend_Code_AbstractType $type);
+
+    /**
+     * Returns the declared modifiers for this type.
+     *
+     * @return integer
+     */
+    public abstract function getModifiers();
 }

@@ -187,7 +187,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->reset();
 
-        $comment = null;
+        $modifiers = 0;
+        $comment   = null;
 
         // Position of the context type within the analyzed file.
         $typePosition = 0;
@@ -196,7 +197,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             switch ($token->type) {
             case self::T_ABSTRACT:
+                $modifiers |= self::IS_EXPLICIT_ABSTRACT;
                 $this->abstract = true;
+                break;
+
+            case self::T_FINAL:
+                $modifiers |= self::IS_FINAL;
                 break;
 
             case self::T_DOC_COMMENT:
@@ -231,6 +237,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $interface->setStartLine($token->startLine);
                 $interface->setDocComment($comment);
                 $interface->setPosition($typePosition++);
+                $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
 
                 $this->parseInterfaceSignature($interface);
 
@@ -239,7 +246,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->parseTypeBody($interface);
                 $this->reset();
 
-                $comment = null;
+                $comment   = null;
+                $modifiers = 0;
                 break;
 
             case self::T_CLASS:
@@ -254,7 +262,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $class = $this->builder->buildClass($qualifiedName, $token->startLine);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setStartLine($token->startLine);
-                $class->setAbstract($this->abstract);
+                $class->setModifiers($modifiers);
                 $class->setDocComment($comment);
                 $class->setPosition($typePosition++);
 
@@ -265,7 +273,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->parseTypeBody($class);
                 $this->reset();
 
-                $comment = null;
+                $comment   = null;
+                $modifiers = 0;
                 break;
 
             case self::T_FUNCTION:

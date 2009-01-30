@@ -63,6 +63,14 @@ require_once 'PHP/Depend/Code/AbstractType.php';
 class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
 {
     /**
+     * The modifiers for this interface instance, by default an interface is
+     * always abstract.
+     *
+     * @var integer $_modifiers
+     */
+    private $_modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
+
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
@@ -149,6 +157,46 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the declared modifiers for this type.
+     *
+     * @return integer
+     * @since 0.9.4
+     */
+    public function getModifiers()
+    {
+        return $this->_modifiers;
+    }
+
+    /**
+     * This method sets a OR combined integer of the declared modifiers for this
+     * node.
+     *
+     * This method will throw an exception when the value of given <b>$modifiers</b>
+     * contains an invalid/unexpected modifier
+     *
+     * @param integer $modifiers The declared modifiers for this node.
+     *
+     * @return void
+     * @throws InvalidArgumentException If the given modifier contains unexpected
+     *                                  values.
+     * @since 0.9.4
+     */
+    public function setModifiers($modifiers)
+    {
+        if ($this->_modifiers !== 0) {
+            return;
+        }
+
+        $expected = ~PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
+
+        if (($expected & $modifiers) !== 0) {
+            throw new InvalidArgumentException('Invalid class modifier given.');
+        }
+
+        $this->_modifiers = $modifiers;
     }
 
     /**
