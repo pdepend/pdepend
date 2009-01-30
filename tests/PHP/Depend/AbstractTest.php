@@ -137,7 +137,6 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     public static function init()
     {
 
-
         // Is it not installed?
         if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
 
@@ -155,6 +154,21 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         set_include_path($path);
 
         include_once 'PHP/Depend/Code/Filter/Collection.php';
+    }
+
+    /**
+     * There was an api change between PHP 5.3.0alpha3 and 5.3.0beta1, the new
+     * extension name "Core" was introduced and interfaces like "Iterator" are
+     * now part of "Core" instead of "Standard".
+     *
+     * @return void
+     */
+    private static function initVersionCompatibility()
+    {
+        $reflection = new ReflectionClass('Iterator');
+        $extension  = strtolower($reflection->getExtensionName());
+
+        define('CORE_PACKAGE', '+' . $extension);
     }
 
     /**
