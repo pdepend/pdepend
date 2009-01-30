@@ -174,7 +174,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         $log->log($this->analyzer);
         $log->close();
 
-        $fileName = 'pdepend-log.xml';
+        $fileName = 'pdepend-log' . CORE_PACKAGE . '.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
             file_get_contents($this->resultFile)

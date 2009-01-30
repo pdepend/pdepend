@@ -75,15 +75,22 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $source   = dirname(__FILE__) . '/../../_code/coupling/function.php';
         $packages = self::parseSource($source);
 
+        // Count total packages
         $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default\package', $packages->current()->getName());
-        $this->assertEquals(2, $packages->current()->getFunctions()->count());
+
+        // Expected package names with fallback for php5.3.0beta1 change
+        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        sort($packageNames);
+
+        // Check package names
+        foreach ($packageNames as $packageName) {
+            $package = $packages->current();
+            
+            $this->assertEquals($packageName, $package->getName());
+            $packages->next();
+        }
+        
+        $this->assertEquals(2, $package->getFunctions()->count());
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
@@ -109,15 +116,21 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
 
         $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default\package', $packages->current()->getName());
-        $this->assertEquals(1, $packages->current()->getClasses()->count());
-        $this->assertEquals(1, $packages->current()->getInterfaces()->count());
+
+        // Expected package names with fallback for php5.3.0beta1 change
+        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        sort($packageNames);
+
+        // Check package names
+        foreach ($packageNames as $packageName) {
+            $package = $packages->current();
+
+            $this->assertEquals($packageName, $package->getName());
+            $packages->next();
+        }
+
+        $this->assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
@@ -143,14 +156,20 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
 
         $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default\package', $packages->current()->getName());
-        $this->assertEquals(1, $packages->current()->getClasses()->count());
+
+        // Expected package names with fallback for php5.3.0beta1 change
+        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        sort($packageNames);
+
+        // Check package names
+        foreach ($packageNames as $packageName) {
+            $package = $packages->current();
+
+            $this->assertEquals($packageName, $package->getName());
+            $packages->next();
+        }
+
+        $this->assertEquals(1, $package->getClasses()->count());
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
@@ -176,15 +195,21 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
 
         $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default\package', $packages->current()->getName());
-        $this->assertEquals(1, $packages->current()->getClasses()->count());
-        $this->assertEquals(1, $packages->current()->getInterfaces()->count());
+
+        // Expected package names with fallback for php5.3.0beta1 change
+        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        sort($packageNames);
+
+        // Check package names
+        foreach ($packageNames as $packageName) {
+            $package = $packages->current();
+
+            $this->assertEquals($packageName, $package->getName());
+            $packages->next();
+        }
+
+        $this->assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
@@ -210,16 +235,22 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
 
         $this->assertEquals(4, $packages->count());
-        $this->assertEquals('+global', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+spl', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('+standard', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('default\package', $packages->current()->getName());
-        $this->assertEquals(3, $packages->current()->getClasses()->count());
-        $this->assertEquals(2, $packages->current()->getInterfaces()->count());
-        $this->assertEquals(2, $packages->current()->getFunctions()->count());
+
+        // Expected package names with fallback for php5.3.0beta1 change
+        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        sort($packageNames);
+
+        // Check package names
+        foreach ($packageNames as $packageName) {
+            $package = $packages->current();
+
+            $this->assertEquals($packageName, $package->getName());
+            $packages->next();
+        }
+
+        $this->assertEquals(3, $package->getClasses()->count());
+        $this->assertEquals(2, $package->getInterfaces()->count());
+        $this->assertEquals(2, $package->getFunctions()->count());
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
