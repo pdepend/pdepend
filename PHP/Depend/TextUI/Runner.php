@@ -330,8 +330,12 @@ class PHP_Depend_TextUI_Runner
 
         // Try to set all source directories.
         try {
-            foreach ($this->_sourceArguments as $sourceDirectory) {
-                $pdepend->addDirectory($sourceDirectory);
+            foreach ($this->_sourceArguments as $sourceArgument) {
+                if (is_dir($sourceArgument)) {
+                    $pdepend->addDirectory($sourceArgument);
+                } else {
+                    $pdepend->addFile($sourceArgument);
+                }
             }
         } catch (Exception $e) {
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
