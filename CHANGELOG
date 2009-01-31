@@ -1,6 +1,7 @@
 PHP_Depend 0.9.4
 ----------------
 
+- #90 + Support for single file parsing/analyzing implemented (Closed)
 - The ProjectAwareI and NodeAwareI interfaces extend the AnalyzerI interface,
   which makes analyzer mocking easier.
 - Switch from PHP_Depend specific constants for public, protected, private
