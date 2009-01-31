@@ -81,6 +81,12 @@ require_once 'PHP/Depend/TokenizerI.php';
 class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 {
     /**
+     * Regular expression for inline type definitions in regular comments. This
+     * kind of type is supported by IDEs like Netbeans or eclipse.
+     */
+    const REGEXP_INLINE_TYPE = '(^\s*/\*\s*@var\s+\$\w+\s+(\w+)\s*\*/\s*$)i';
+
+    /**
      * Last parsed package tag.
      *
      * @var string $package
@@ -695,6 +701,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_DOUBLE_QUOTE:
             case self::T_BACKTICK:
                 $this->_skipEncapsultedBlock($tokens, $token->type);
+                break;
+
+            case self::T_COMMENT:
+
+                // Check for inline type definitions like: /* @var $o FooBar */
+                if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
+                    print_r($match);
+                }
                 break;
 
             default:
