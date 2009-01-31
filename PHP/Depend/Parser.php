@@ -704,10 +704,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_COMMENT:
-
+                /* @var $token PHP_Depend_Token */
                 // Check for inline type definitions like: /* @var $o FooBar */
                 if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
-                    print_r($match);
+                    // Create a referenced class or interface instance
+                    $dependency = $this->builder->buildClassOrInterface($match[1]);
+
+                    $callable->addDependency($dependency);
                 }
                 break;
 
