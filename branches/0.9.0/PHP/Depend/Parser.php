@@ -84,7 +84,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Regular expression for inline type definitions in regular comments. This
      * kind of type is supported by IDEs like Netbeans or eclipse.
      */
-    const REGEXP_INLINE_TYPE = '(^\s*/\*\s*@var\s+\$\w+\s+(\w+)\s*\*/\s*$)i';
+    const REGEXP_INLINE_TYPE = '(^\s*/\*\s*@var\s+\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\s+(.*?)\s*\*/\s*$)i';
 
     /**
      * Last parsed package tag.
