@@ -428,4 +428,94 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(0, count($tokens));
     }
+
+    /**
+     * Tests the tokenizers column calculation implementation.
+     *
+     * @return void
+     */
+    public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/issues/088-1.phtml';
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
+
+        $tokens = array(
+            array(PHP_Depend_ConstantsI::T_NO_PHP, '<html>
+    <head>
+        <title>', 1, 3, 1, 15),
+            array(PHP_Depend_ConstantsI::T_OPEN_TAG, '<?php', 3, 3, 16, 20),
+            array(PHP_Depend_ConstantsI::T_ECHO, 'echo', 3, 3, 22, 25),
+            array(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 3, 3, 27, 30),
+            array(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 3, 3, 31, 31),
+            array(PHP_Depend_ConstantsI::T_CLOSE_TAG, '?>', 3, 3, 32, 33),
+            array(PHP_Depend_ConstantsI::T_NO_PHP, '</title>
+    </head>
+    <body>', 3, 5, 34, 10),
+            array(PHP_Depend_ConstantsI::T_OPEN_TAG, '<?php', 6, 6, 9, 13),
+            array(PHP_Depend_ConstantsI::T_ECHO, 'echo', 6, 6, 15, 18),
+            array(PHP_Depend_ConstantsI::T_VARIABLE, '$bar', 6, 6, 20, 23),
+            array(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 6, 6, 24, 24),
+            array(PHP_Depend_ConstantsI::T_CLOSE_TAG, '?>', 6, 6, 26, 27),
+            array(PHP_Depend_ConstantsI::T_NO_PHP, '    </body>
+</html>', 7, 8, 1, 7),
+        );
+
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
+            $expected = array_shift($tokens);
+
+            $this->assertEquals($expected[0], $token->type);
+            $this->assertEquals($expected[1], $token->image);
+            $this->assertEquals($expected[2], $token->startLine);
+            $this->assertEquals($expected[3], $token->endLine);
+            $this->assertEquals($expected[4], $token->startColumn);
+            $this->assertEquals($expected[5], $token->endColumn);
+        }
+
+        $this->assertEquals(0, count($tokens));
+    }
+
+    /**
+     * Tests the tokenizers column calculation implementation.
+     *
+     * @return void
+     */
+    public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88()
+    {
+        $sourceFile = dirname(__FILE__) . '/_code/issues/088-2.php';
+        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
+
+        $tokens = array(
+            array(PHP_Depend_ConstantsI::T_NO_PHP, 'Hello', 1, 1, 1, 5),
+            array(PHP_Depend_ConstantsI::T_OPEN_TAG, '<?php', 1, 1, 7, 11),
+            array(PHP_Depend_ConstantsI::T_ECHO, 'echo', 1, 1, 13, 16),
+            array(PHP_Depend_ConstantsI::T_VARIABLE, '$user', 1, 1, 18, 22),
+            array(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 1, 1, 23, 23),
+            array(PHP_Depend_ConstantsI::T_CLOSE_TAG, '?>', 1, 1, 25, 26),
+            array(PHP_Depend_ConstantsI::T_NO_PHP, '
+this is a simple letter to users of', 2, 3, 1, 35),
+            array(PHP_Depend_ConstantsI::T_OPEN_TAG, '<?php', 3, 3, 37, 41),
+            array(PHP_Depend_ConstantsI::T_PRINT, 'print', 3, 3, 43, 47),
+            array(PHP_Depend_ConstantsI::T_VARIABLE, '$service', 3, 3, 49, 56),
+            array(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 3, 3, 57, 57),
+            array(PHP_Depend_ConstantsI::T_CLOSE_TAG, '?>', 3, 3, 59, 60),
+            array(PHP_Depend_ConstantsI::T_NO_PHP, '.
+
+Manuel', 3, 5, 61, 6),
+        );
+
+        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
+            $expected = array_shift($tokens);
+
+            $this->assertEquals($expected[0], $token->type);
+            $this->assertEquals($expected[1], $token->image);
+            $this->assertEquals($expected[2], $token->startLine);
+            $this->assertEquals($expected[3], $token->endLine);
+            $this->assertEquals($expected[4], $token->startColumn);
+            $this->assertEquals($expected[5], $token->endColumn);
+        }
+
+        $this->assertEquals(0, count($tokens));
+    }
 }
