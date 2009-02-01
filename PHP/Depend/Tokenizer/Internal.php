@@ -350,9 +350,12 @@ class PHP_Depend_Tokenizer_Internal
         $this->index  = 0;
         $this->count  = 0;
 
-        // Replace short open tags, it produces bugs.
+        // Replace short open tags, short open tags will produce invalid results
+        // in all environments with disabled short open tags.
         $source = $this->sourceFile->getSource();
-        $source = str_replace('<?=', '<?php echo ', $source);
+        $source = preg_replace(array('(<\?=)', '(<\?\s)'),
+                               array('<?php echo ', '<?\1'),
+                               $source);
 
         if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
             $tokens = $this->_php53BackslashWorkaround($source);
@@ -361,6 +364,9 @@ class PHP_Depend_Tokenizer_Internal
         }
 
         reset($tokens);
+
+        // Is the current token between an opening and a closing php tag?
+        $inTag = false;
 
         // The current line number
         $startLine = 1;
@@ -374,20 +380,22 @@ class PHP_Depend_Tokenizer_Internal
         while ($token = current($tokens)) {
             $type  = null;
             $image = null;
+
             if (is_string($token)) {
-                if (!isset($literalMap[$token])) {
-                    // This should never happen
-                    // @codeCoverageIgnoreStart
-                    throw new RuntimeException( "Unexpected token '{$token}'." );
-                    // @codeCoverageIgnoreEnd
-                }
-                $type  = $literalMap[$token];
-                $image = $token;
+                $token = array(null, $token);
+            }
+
+            if ($token[0] === T_OPEN_TAG) {
+                $type  = $tokenMap[$token[0]];
+                $image = $token[1];
+                $inTag = true;
             } else if ($token[0] === T_CLOSE_TAG) {
                 $type  = $tokenMap[$token[0]];
                 $image = $token[1];
-
-                $skippedLines += $this->_skipNonePhpTokens($tokens);
+                $inTag = false;
+            } else if ($inTag === false) {
+                $type  = self::T_NO_PHP;
+                $image = $this->_consumeNonePhpTokens($tokens);
             } else if ($token[0] === T_WHITESPACE) {
                 $startLine += substr_count($token[1], "\n");
             } else {
@@ -428,37 +436,38 @@ class PHP_Depend_Tokenizer_Internal
     }
 
     /**
-     * This method skips all tokens until it reaches the a opening tag or the
-     * end of the token stream. This method will return the number of skipped
-     * lines.
+     * This method fetches all tokens until an opening php tag was found and it
+     * returns the collected content. The returned value will be null if there
+     * was no none php token.
      *
      * @param array &$tokens Reference to the current token stream.
      *
-     * @return integer
+     * @return string
      */
-    private function _skipNonePhpTokens(array &$tokens)
+    private function _consumeNonePhpTokens(array &$tokens)
     {
-        $skippedLines = 0;
+        // The collected token content
+        $content = null;
 
-        // Fetch next token
-        $token = (array) next($tokens);
+        // Fetch current token
+        $token = (array) current($tokens);
 
         // Skipp all non open tags
         while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
                $token[0] !== T_OPEN_TAG &&
                $token[0] !== false) {
 
-            // Count skipped lines
-            $tokenContent  = (isset($token[1]) ? $token[1] : $token[0]);
-            $skippedLines += substr_count($tokenContent, "\n");
+            $content .= (isset($token[1]) ? $token[1] : $token[0]);
 
             $token = (array) next($tokens);
         }
 
-        // Set internal pointer one back
-        prev($tokens);
+        // Set internal pointer one back when there was at least one none php token
+        if ($token[0] !== false) {
+            prev($tokens);
+        }
 
-        return $skippedLines;
+        return $content;
     }
 
     /**
