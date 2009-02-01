@@ -353,8 +353,8 @@ class PHP_Depend_Tokenizer_Internal
         // Replace short open tags, short open tags will produce invalid results
         // in all environments with disabled short open tags.
         $source = $this->sourceFile->getSource();
-        $source = preg_replace(array('(<\?=)', '(<\?\s)'),
-                               array('<?php echo ', '<?\1'),
+        $source = preg_replace(array('(<\?=)', '(<\?(\s))'),
+                               array('<?php echo ', '<?php\1'),
                                $source);
 
         if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
@@ -427,18 +427,18 @@ class PHP_Depend_Tokenizer_Internal
                 if ($lines === 0) {
                     $endColumn = $startColumn + strlen(rtrim($image)) - 1;
                 } else {
-                    $endColumn = strlen(substr($image, strrpos(rtrim($image), "\n") + 1));
+                    $endColumn = strlen(substr(rtrim($image), strrpos(rtrim($image), "\n") + 1));
                 }
 
                 $endLine = $startLine + $lines;
 
-                $token = new PHP_Depend_Token($type, $image, 
+                $token = new PHP_Depend_Token($type, rtrim($image),
                                               $startLine, $endLine,
                                               $startColumn, $endColumn);
 
                 // Store token in internal list
                 $this->tokens[] = $token;
-//printf("% 2s / % 2s / % 2s - |%s|%s", $startLine, $startColumn, $endColumn, $image, PHP_EOL);
+
                 // Count newlines in token
                 $lines = substr_count($image, "\n");
                 if ($lines === 0) {
