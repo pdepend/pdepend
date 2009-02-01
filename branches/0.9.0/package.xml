@@ -25,6 +25,7 @@ and the NDepend metric tool.
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
 - #87 + Support for type definitions within comments implemented. (Closed)
+- #88 + Tokens provide information about the start and end column. (Closed)
 - #90 + Support for single file parsing/analyzing implemented (Closed)
 - The ProjectAwareI and NodeAwareI interfaces extend the AnalyzerI interface,
   which makes analyzer mocking easier.
