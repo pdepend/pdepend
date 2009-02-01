@@ -342,7 +342,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      */
     public function testTokenizerWithInlineHtmlBug24()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/24.php';
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/024.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
