@@ -371,8 +371,8 @@ class PHP_Depend_Tokenizer_Internal
         // The current line number
         $startLine = 1;
 
-        // Number of skippend lines
-        $skippedLines = 0;
+        $startColumn = 1;
+        $endColumn   = 1;
 
         $literalMap = self::$literalMap;
         $tokenMap   = self::$tokenMap;
@@ -397,7 +397,15 @@ class PHP_Depend_Tokenizer_Internal
                 $type  = self::T_NO_PHP;
                 $image = $this->_consumeNonePhpTokens($tokens);
             } else if ($token[0] === T_WHITESPACE) {
-                $startLine += substr_count($token[1], "\n");
+                // Count newlines in token
+                $lines = substr_count($token[1], "\n");
+                if ($lines === 0) {
+                    $startColumn += strlen($token[1]);
+                } else {
+                    $startColumn = strlen(substr($token[1], strrpos($token[1], "\n") + 1)) + 1;
+                }
+
+                $startLine += $lines;
             } else {
                 $value = strtolower($token[1]);
                 if (isset($literalMap[$value])) {
@@ -415,15 +423,31 @@ class PHP_Depend_Tokenizer_Internal
             }
 
             if ($type) {
-                $endLine = $startLine + substr_count(rtrim($image), "\n");
+                $lines = substr_count(rtrim($image), "\n");
+                if ($lines === 0) {
+                    $endColumn = $startColumn + strlen(rtrim($image)) - 1;
+                } else {
+                    $endColumn = strlen(substr($image, strrpos(rtrim($image), "\n") + 1));
+                }
 
-                $token = new PHP_Depend_Token($type, $image, $startLine, $endLine);
+                $endLine = $startLine + $lines;
+
+                $token = new PHP_Depend_Token($type, $image, 
+                                              $startLine, $endLine,
+                                              $startColumn, $endColumn);
 
                 // Store token in internal list
                 $this->tokens[] = $token;
+//printf("% 2s / % 2s / % 2s - |%s|%s", $startLine, $startColumn, $endColumn, $image, PHP_EOL);
+                // Count newlines in token
+                $lines = substr_count($image, "\n");
+                if ($lines === 0) {
+                    $startColumn += strlen($image);
+                } else {
+                    $startColumn = strlen(substr($image, strrpos($image, "\n") + 1)) + 1;
+                }
 
-                // Count new line tokens.
-                $startLine += substr_count($image, "\n") + $skippedLines;
+                $startLine += $lines;
             }
 
             next($tokens);
