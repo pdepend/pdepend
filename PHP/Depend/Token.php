@@ -87,19 +87,39 @@ class PHP_Depend_Token
     public $endLine = null;
 
     /**
+     * The start column number for this token.
+     *
+     * @var integer $startColumn
+     */
+    public $startColumn = null;
+
+    /**
+     * The end column number for this token.
+     *
+     * @var integer $endColumn
+     */
+    public $endColumn = null;
+
+    /**
      * Constructs a new source token.
      *
-     * @param integer $type      The token type identifier.
-     * @param string  $image     The token image/textual representation.
-     * @param integer $startLine The start line number for this token.
-     * @param integer $endLine   The end line number for this token.
+     * @param integer $type        The token type identifier.
+     * @param string  $image       The token image/textual representation.
+     * @param integer $startLine   The start line number for this token.
+     * @param integer $endLine     The end line number for this token.
+     * @param integer $startColumn The start column number for this token.
+     * @param integer $endColumn   The end column number for this token.
      */
-    public function __construct($type, $image, $startLine, $endLine)
+    public function __construct($type, $image, 
+                                $startLine, $endLine,
+                                $startColumn, $endColumn)
     {
-        $this->type      = $type;
-        $this->image     = $image;
-        $this->startLine = $startLine;
-        $this->endLine   = $endLine;
+        $this->type        = $type;
+        $this->image       = $image;
+        $this->startLine   = $startLine;
+        $this->endLine     = $endLine;
+        $this->startColumn = $startColumn;
+        $this->endColumn   = $endColumn;
     }
 }
 ?>
