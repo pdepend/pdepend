@@ -844,6 +844,11 @@ interface PHP_Depend_ConstantsI
     const T_GOTO = 147;
 
     /**
+     * Marks any content not between php tags.
+     */
+    const T_NO_PHP = 255;
+
+    /**
      * The default package name.
      */
     const DEFAULT_PACKAGE = '+global';
