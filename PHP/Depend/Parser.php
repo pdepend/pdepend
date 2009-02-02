@@ -84,7 +84,48 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Regular expression for inline type definitions in regular comments. This
      * kind of type is supported by IDEs like Netbeans or eclipse.
      */
-    const REGEXP_INLINE_TYPE = '(^\s*/\*\s*@var\s+\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\s+(.*?)\s*\*/\s*$)i';
+    const REGEXP_INLINE_TYPE = '(^\s*/\*\s*
+                                 @var\s+
+                                   \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\s+
+                                   (.*?)
+                                \s*\*/\s*$)ix';
+
+    /**
+     * Regular expression for types defined in <b>throws</b> annotations of
+     * method or function doc comments.
+     */
+    const REGEXP_THROWS_TYPE = '(\*\s*
+                                 @throws\s+
+                                   ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)
+                                )ix';
+
+    /**
+     * Regular expression for types defined in annotations like <b>return</b> or
+     * <b>var</b> in doc comments of functions and methods.
+     */
+    const REGEXP_RETURN_TYPE = '(\*\s*
+                                 @return\s+
+                                  (array\(\s*
+                                    (\w+\s*=>\s*)?
+                                    ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
+                                  \)
+                                  |
+                                  ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*))\s+
+                                )ix';
+
+    /**
+     * Regular expression for types defined in annotations like <b>return</b> or
+     * <b>var</b> in doc comments of functions and methods.
+     */
+    const REGEXP_VAR_TYPE = '(\*\s*
+                              @var\s+
+                               (array\(\s*
+                                 (\w+\s*=>\s*)?
+                                 ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
+                               \)
+                               |
+                               ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*))\s+
+                             )ix';
 
     /**
      * Last parsed package tag.
@@ -139,9 +180,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         'real',
         'resource',
         'string',
+        'void',
+        'false',
+        'true',
         'unknown',      // Eclipse default return type
         'unknown_type', // Eclipse default property type
-        'void'
     );
 
     /**
@@ -830,45 +873,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Tries to extract a class or interface type for the given <b>$annotation</b>
-     * with in <b>$comment</b>. If there is no matching annotation, this method
-     * will return <b>null</b>.
-     *
-     * <code>
-     *   // (at)var RuntimeException
-     *   array(
-     *       'RuntimeException',
-     *       false,
-     *   )
-     *
-     *   // (at)return array(SplObjectStore)
-     *   array(
-     *       'SplObjectStore',
-     *       true,
-     *   )
-     * </code>
-     *
-     * @param string $comment    The doc comment block.
-     * @param string $annotation The annotation tag (e.g. 'var', 'throws'...).
-     *
-     * @return array|null
-     */
-    private function _parseTypeAnnotation($comment, $annotation)
-    {
-        $baseRegexp   = sprintf('\*\s*@%s\s+', $annotation);
-        $arrayRegexp  = '#' . $baseRegexp . 'array\(\s*(\w+\s*=>\s*)?(\w+)\s*\)#';
-        $simpleRegexp = '#' . $baseRegexp . '(\w+)#';
-
-        $type = null;
-        if (preg_match($arrayRegexp, $comment, $match)) {
-            $type = array($match[2], true);
-        } else if (preg_match($simpleRegexp, $comment, $match)) {
-            $type = array($match[1], false);
-        }
-        return $type;
-    }
-
-    /**
      * Returns the class names of all <b>throws</b> annotations with in the
      * given comment block.
      *
@@ -879,12 +883,52 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseThrowsAnnotations($comment)
     {
         $throws = array();
-        if (preg_match_all('#\*\s*@throws\s+(\w+)#', $comment, $matches) > 0) {
+        if (preg_match_all(self::REGEXP_THROWS_TYPE, $comment, $matches) > 0) {
             foreach ($matches[1] as $match) {
                 $throws[] = $match;
             }
         }
         return $throws;
+    }
+
+    /**
+     * This method parses the given doc comment text for a return annotation and
+     * it returns the found return type.
+     *
+     * @param string $comment A doc comment text.
+     *
+     * @return string
+     */
+    private function _parseReturnAnnotation($comment)
+    {
+        if (preg_match(self::REGEXP_RETURN_TYPE, $comment, $match) > 0) {
+            foreach (explode('|', end($match)) as $type) {
+                if (in_array(strtolower($type), $this->_scalarTypes) === false) {
+                    return $type;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * This method parses the given doc comment text for a var annotation and
+     * it returns the found property type.
+     *
+     * @param string $comment A doc comment text.
+     *
+     * @return string
+     */
+    private function _parseVarAnnotation($comment)
+    {
+        if (preg_match(self::REGEXP_VAR_TYPE, $comment, $match) > 0) {
+            foreach (explode('|', end($match)) as $type) {
+                if (in_array(strtolower($type), $this->_scalarTypes) === false) {
+                    return $type;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -903,10 +947,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         // Get type annotation
-        $type = $this->_parseTypeAnnotation($property->getDocComment(), 'var');
-
-        if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
-            $property->setType($this->builder->buildClassOrInterface($type[0]));
+        $type = $this->_parseVarAnnotation($property->getDocComment());
+        if ($type !== null && in_array($type, $this->_scalarTypes) === false) {
+            $property->setType($this->builder->buildClassOrInterface($type));
         }
     }
 
@@ -933,10 +976,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         // Get return annotation
-        $type = $this->_parseTypeAnnotation($callable->getDocComment(), 'return');
-
-        if ($type !== null && in_array($type[0], $this->_scalarTypes) === false) {
-            $callable->setReturnType($this->builder->buildClassOrInterface($type[0]));
+        $type = $this->_parseReturnAnnotation($callable->getDocComment());
+        if ($type !== null && in_array($type, $this->_scalarTypes) === false) {
+            $callable->setReturnType($this->builder->buildClassOrInterface($type));
         }
     }
 
