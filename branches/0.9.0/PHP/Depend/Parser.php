@@ -179,6 +179,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         'null',
         'real',
         'resource',
+        'object',
         'string',
         'void',
         'false',
