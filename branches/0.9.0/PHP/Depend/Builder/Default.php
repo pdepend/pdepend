@@ -46,17 +46,17 @@
  * @link       http://www.manuel-pichler.de/
  */
 
+require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/TypeConstant.php';
 require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/InternalTypes.php';
-require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Parameter.php';
 require_once 'PHP/Depend/Code/Property.php';
+require_once 'PHP/Depend/Util/Type.php';
 
 /**
  * Default code tree builder implementation.
@@ -144,13 +144,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     private $_typeConstants = array();
 
     /**
-     * The internal types class.
-     *
-     * @var PHP_Depend_InternalTypes $_internalTypes
-     */
-    private $_internalTypes = null;
-
-    /**
      * Constructs a new builder instance.
      */
     public function __construct()
@@ -159,8 +152,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->defaultFile    = new PHP_Depend_Code_File(null);
 
         $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
-
-        $this->_internalTypes = PHP_Depend_InternalTypes::getInstance();
     }
 
     /**
@@ -601,8 +592,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
             return substr($qualifiedName, 0, $pos);
-        } else if ($this->_internalTypes->isInternal($qualifiedName)) {
-            return $this->_internalTypes->getTypePackage($qualifiedName);
+        } else if (PHP_Depend_Util_Type::isInternalType($qualifiedName)) {
+            return PHP_Depend_Util_Type::getTypePackage($qualifiedName);
         }
         return self::DEFAULT_PACKAGE;
     }
