@@ -56,6 +56,7 @@ require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Parameter.php';
 require_once 'PHP/Depend/Code/Property.php';
+require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
 
 /**
@@ -255,6 +256,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
             // 4) Create a new class for the given package
         } else {
+            // Debug class creation
+            PHP_Depend_Util_Log::debug('Creating class "' . $name . '"');
 
             // Create a new class instance
             $class = new PHP_Depend_Code_Class($cls, $line);
@@ -279,6 +282,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildTypeConstant($name)
     {
+        // Debug type constant creation
+        PHP_Depend_Util_Log::debug('Creating type constant "' . $name . '"');
+
         // Create new constant instance.
         $constant = new PHP_Depend_Code_TypeConstant($name);
 
@@ -377,6 +383,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
             // 4) Create a new interface for the given package
         } else {
+            // Debug interface creation
+            PHP_Depend_Util_Log::debug('Creating interface "' . $name . '"');
+
             // Create a new interface instance
             $interface = new PHP_Depend_Code_Interface($ife, $line);
             $interface->setSourceFile($this->defaultFile);
@@ -405,6 +414,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildMethod($name, $line = 0)
     {
+        // Debug method creation
+        PHP_Depend_Util_Log::debug('Creating method "' . $name . '()"');
+
         // Create a new method instance
         $method = new PHP_Depend_Code_Method($name, $line);
 
@@ -424,6 +436,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildPackage($name)
     {
         if (!isset($this->packages[$name])) {
+            // Debug package creation
+            PHP_Depend_Util_Log::debug('Creating package "' . $name . '"');
+
             $this->packages[$name] = new PHP_Depend_Code_Package($name);
         }
         return $this->packages[$name];
@@ -439,6 +454,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildParameter($name, $line = 0)
     {
+        // Debug parameter creation
+        PHP_Depend_Util_Log::debug('Creating parameter "' . $name . '"');
+
         // Create a new parameter instance
         $parameter = new PHP_Depend_Code_Parameter($name, $line);
 
@@ -458,6 +476,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildProperty($name, $line = 0)
     {
+        // Debug property creation
+        PHP_Depend_Util_Log::debug('Creating property "' . $name . '"');
+
         // Create new property instance.
         $property = new PHP_Depend_Code_Property($name, $line);
 
@@ -484,6 +505,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         if (isset($this->functions[$name])) {
             $function = $this->functions[$name];
         } else {
+            // Debug function creation
+            PHP_Depend_Util_Log::debug('Creating function "' . $name . '()"');
+
             // Create new function
             $function = new PHP_Depend_Code_Function($name, $line, $sourceFile);
             $function->setSourceFile($this->defaultFile);
