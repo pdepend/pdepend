@@ -48,6 +48,7 @@
 
 require_once 'PHP/Depend/InternalTypes.php';
 require_once 'PHP/Depend/Code/FilterI.php';
+require_once 'PHP/Depend/Util/Type.php';
 
 /**
  * Filter implementation for internal packages.
@@ -64,26 +65,6 @@ require_once 'PHP/Depend/Code/FilterI.php';
 final class PHP_Depend_Code_Filter_InternalPackage
     implements PHP_Depend_Code_FilterI
 {
-    /**
-     * Map of internal packages/extension names.
-     *
-     * @var array(string) $_internals
-     */
-    private static $_internals = null;
-
-    /**
-     * Constructs a new internal package filter.
-     */
-    public function __construct()
-    {
-        if (self::$_internals === null) {
-            $types = PHP_Depend_InternalTypes::getInstance();
-            foreach ($types->getInternalPackages() as $type) {
-                self::$_internals[$type] = true;
-            }
-        }
-    }
-
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
@@ -105,6 +86,6 @@ final class PHP_Depend_Code_Filter_InternalPackage
         } else if ($node instanceof PHP_Depend_Code_Package) {
             $package = $node->getName();
         }
-        return !isset(self::$_internals[$package]);
+        return !PHP_Depend_Util_Type::isInternalPackage($package);
     }
 }

@@ -48,6 +48,7 @@
 require_once 'PHP/Depend/ConstantsI.php';
 require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/TokenizerI.php';
+require_once 'PHP/Depend/Util/Type.php';
 
 /**
  * The php source parser.
@@ -161,32 +162,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @var PHP_Depend_BuilderI $builder
      */
     protected $builder = null;
-
-    /**
-     * List of scalar php types.
-     *
-     * @var array(string) $_scalarTypes
-     */
-    private $_scalarTypes = array(
-        'array',
-        'bool',
-        'boolean',
-        'double',
-        'float',
-        'int',
-        'integer',
-        'mixed',
-        'null',
-        'real',
-        'resource',
-        'object',
-        'string',
-        'void',
-        'false',
-        'true',
-        'unknown',      // Eclipse default return type
-        'unknown_type', // Eclipse default property type
-    );
 
     /**
      * If this property is set to <b>true</b> the parser will ignore all doc
@@ -904,7 +879,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         if (preg_match(self::REGEXP_RETURN_TYPE, $comment, $match) > 0) {
             foreach (explode('|', end($match)) as $type) {
-                if (in_array(strtolower($type), $this->_scalarTypes) === false) {
+                if (PHP_Depend_Util_Type::isScalarType($type) === false) {
                     return $type;
                 }
             }
@@ -924,7 +899,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         if (preg_match(self::REGEXP_VAR_TYPE, $comment, $match) > 0) {
             foreach (explode('|', end($match)) as $type) {
-                if (in_array(strtolower($type), $this->_scalarTypes) === false) {
+                if (PHP_Depend_Util_Type::isScalarType($type) === false) {
                     return $type;
                 }
             }
@@ -949,7 +924,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Get type annotation
         $type = $this->_parseVarAnnotation($property->getDocComment());
-        if ($type !== null && in_array($type, $this->_scalarTypes) === false) {
+        if ($type !== null) {
             $property->setType($this->builder->buildClassOrInterface($type));
         }
     }
@@ -978,7 +953,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Get return annotation
         $type = $this->_parseReturnAnnotation($callable->getDocComment());
-        if ($type !== null && in_array($type, $this->_scalarTypes) === false) {
+        if ($type !== null) {
             $callable->setReturnType($this->builder->buildClassOrInterface($type));
         }
     }
