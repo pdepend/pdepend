@@ -111,9 +111,6 @@ class PHP_Depend_InternalTypes
             }
             $extension = '+' . strtolower($extension);
 
-            if (!isset($packages[$extension])) {
-                $packages[$extension] = array();
-            }
             $this->_types[strtolower($type)] = array(
                 'package'  =>  $extension,
                 'name'     =>  $type
