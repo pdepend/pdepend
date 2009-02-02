@@ -48,6 +48,7 @@
 require_once 'PHP/Depend/ConstantsI.php';
 require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/TokenizerI.php';
+require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
 
 /**
@@ -203,6 +204,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     public function parse()
     {
+        // Debug currently parsed source file.
+        PHP_Depend_Util_Log::debug('Processing file ' . $this->tokenizer->getSourceFile());
+
         $this->reset();
 
         $modifiers = 0;
