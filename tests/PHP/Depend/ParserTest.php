@@ -1681,6 +1681,58 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser handles an interface within an instanceof operator
+     * correct.
+     *
+     * @return void
+     */
+    public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterfaceBug92()
+    {
+        $packages = self::parseSource('bugs/092-1.php');
+
+        $package = $packages->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+
+        $this->assertSame(1, $package->getClasses()->count());
+        $class = $package->getClasses()->current();
+        $this->assertSame('Bar', $class->getName());
+
+        $this->assertSame(1, $package->getInterfaces()->count());
+        $interface = $package->getInterfaces()->current();
+        $this->assertSame('IFoo', $interface->getName());
+
+        $this->assertSame(1, $class->getMethods()->count());
+        $method = $class->getMethods()->current();
+        $this->assertSame($interface, $method->getDependencies()->current());
+    }
+
+    /**
+     * Tests that the parser handles an interface within an instanceof operator
+     * correct.
+     *
+     * @return void
+     */
+    public function testParserTreatsTypeInInstanceOfOperatorGenericWithClassBug92()
+    {
+        $packages = self::parseSource('bugs/092-2.php');
+
+        $package = $packages->current();
+        $this->assertType('PHP_Depend_Code_Package', $package);
+
+        $classes = $package->getClasses();
+        $this->assertSame(2, $classes->count());
+        $class1 = $classes->current();
+        $this->assertSame('Bar', $class1->getName());
+        $classes->next();
+        $class2 = $classes->current();
+        $this->assertSame('Foo', $class2->getName());
+
+        $this->assertSame(1, $class1->getMethods()->count());
+        $method = $class1->getMethods()->current();
+        $this->assertSame($class2, $method->getDependencies()->current());
+    }
+
+    /**
      * Tests that the parser supports function parameters.
      *
      * @return void
