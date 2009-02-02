@@ -792,6 +792,18 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertNull($nodes->current()->getType());
     }
 
+    public function testParserSetsExpectedPropertyTypeForChainedComment()
+    {
+        $packages = self::parseSource('parser/prop_comment_chained_type.php');
+        $this->assertSame(1, $packages->count());
+
+        $package = $packages->current();
+        $this->assertSame(2, $package->getTypes()->count());
+
+        $class = $package->getTypes()->current();
+        $this->assertSame('Parser', $class->getName());
+    }
+
     /**
      * Tests that the parser sets property types for non scalar properties.
      *
