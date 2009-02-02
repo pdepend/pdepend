@@ -273,7 +273,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerExecutionChainBug14()
     {
-        $source   = dirname(__FILE__) . '/../../_code/bugs/14.php';
+        $source   = dirname(__FILE__) . '/../../_code/bugs/014.php';
         $packages = self::parseSource($source);
 
         $this->assertEquals(1, $packages->count());
