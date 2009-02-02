@@ -250,7 +250,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      */
     public function testInternalStaticCallBug01()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/01.php';
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/001.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -300,7 +300,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      */
     public function testInternalDollarSyntaxBug09()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/09.php';
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/009.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -406,7 +406,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Only relevant for php versions < 5.3.0alpha3');
         }
 
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/84.php';
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/084.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
