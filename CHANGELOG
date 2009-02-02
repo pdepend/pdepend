@@ -6,6 +6,7 @@ PHP_Depend 0.9.4
 - #87 + Support for type definitions within comments implemented. (Closed)
 - #88 + Tokens provide information about the start and end column. (Closed)
 - #90 + Support for single file parsing/analyzing implemented (Closed)
+- #92 + Handling of types within instanceof-operator fixed. (Fixed)
 - The ProjectAwareI and NodeAwareI interfaces extend the AnalyzerI interface,
   which makes analyzer mocking easier.
 - Switch from PHP_Depend specific constants for public, protected, private
