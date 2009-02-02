@@ -46,7 +46,6 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/InternalTypes.php';
 require_once 'PHP/Depend/Code/FilterI.php';
 require_once 'PHP/Depend/Util/Type.php';
 
