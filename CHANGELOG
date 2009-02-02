@@ -11,6 +11,8 @@ PHP_Depend 0.9.4
 - Support for static modifier for properties&methods and final for methods
   added.
 - Support for class final modifier added.
+- Support for chained types like "false|Iterator" or "array(false|Iterator)" in
+  doc comments added.
 
 PHP_Depend 0.9.3
 ----------------
