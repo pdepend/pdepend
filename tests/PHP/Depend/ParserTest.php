@@ -792,16 +792,120 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertNull($nodes->current()->getType());
     }
 
+    /**
+     * Tests that the parser recognizes the first type defined in a doc comment.
+     *
+     * <code>
+     *   @var false|null|Runtime
+     * 
+     *   // Results in
+     *   Runtime
+     * </code>
+     *
+     * @return void
+     */
     public function testParserSetsExpectedPropertyTypeForChainedComment()
     {
         $packages = self::parseSource('parser/prop_comment_chained_type.php');
         $this->assertSame(1, $packages->count());
 
-        $package = $packages->current();
-        $this->assertSame(2, $package->getTypes()->count());
-
-        $class = $package->getTypes()->current();
+        $class = $packages->current()->getTypes()->current();
+        $this->assertType('PHP_Depend_Code_Class', $class);
         $this->assertSame('Parser', $class->getName());
+
+        $property = $class->getProperties()->current();
+        $this->assertType('PHP_Depend_Code_Property', $property);
+
+        $type = $property->getType();
+        $this->assertType('PHP_Depend_Code_Class', $type);
+        $this->assertSame('Runtime', $type->getName());
+    }
+
+    /**
+     * Tests that the parser recognizes the first type defined in a doc comment.
+     *
+     * <code>
+     *   @var array(Session|Runtime)
+     *
+     *   // Results in
+     *   Session
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserSetsExpectedPropertyTypeForChainedCommentInArray()
+    {
+        $packages = self::parseSource('parser/prop_comment_chained_type_array.php');
+        $this->assertSame(1, $packages->count());
+
+        $class = $packages->current()->getTypes()->current();
+        $this->assertType('PHP_Depend_Code_Class', $class);
+        $this->assertSame('Parser', $class->getName());
+
+        $property = $class->getProperties()->current();
+        $this->assertType('PHP_Depend_Code_Property', $property);
+
+        $type = $property->getType();
+        $this->assertType('PHP_Depend_Code_Class', $type);
+        $this->assertSame('Session', $type->getName());
+    }
+
+    /**
+     * Tests that the parser recognizes the first type defined in a doc comment.
+     *
+     * <code>
+     *   @return false|null|Runtime
+     *
+     *   // Results in
+     *   Runtime
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserSetsExpectedReturnTypeForChainedComment()
+    {
+        $packages = self::parseSource('parser/return_comment_chained_type.php');
+        $this->assertSame(1, $packages->count());
+
+        $class = $packages->current()->getTypes()->current();
+        $this->assertType('PHP_Depend_Code_Class', $class);
+        $this->assertSame('Parser', $class->getName());
+
+        $method = $class->getMethods()->current();
+        $this->assertType('PHP_Depend_Code_Method', $method);
+
+        $type = $method->getReturnType();
+        $this->assertType('PHP_Depend_Code_Class', $type);
+        $this->assertSame('Runtime', $type->getName());
+    }
+
+    /**
+     * Tests that the parser recognizes the first type defined in a doc comment.
+     *
+     * <code>
+     *   @return array(integer => null|Session|Runtime)
+     *
+     *   // Results in
+     *   Session
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserSetsExpectedReturnTypeForChainedCommentInArray()
+    {
+        $packages = self::parseSource('parser/return_comment_chained_type_array.php');
+        $this->assertSame(1, $packages->count());
+
+        $class = $packages->current()->getTypes()->current();
+        $this->assertType('PHP_Depend_Code_Class', $class);
+        $this->assertSame('Parser', $class->getName());
+
+        $method = $class->getMethods()->current();
+        $this->assertType('PHP_Depend_Code_Method', $method);
+
+        $type = $method->getReturnType();
+        $this->assertType('PHP_Depend_Code_Class', $type);
+        $this->assertSame('Session', $type->getName());
     }
 
     /**
