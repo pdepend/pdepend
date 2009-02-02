@@ -134,7 +134,8 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
         $key   = md5_file($sourceFile);
         $group = 'parser-tokenizer';
 
-        if (is_array($tokens = $storage->restore($key, $group, $id))) {
+        $tokens = $storage->restore($key, $group, $id);
+        if (is_array($tokens)) {
             $this->_sourceFile = new PHP_Depend_Code_File($sourceFile);
             $this->_sourceFile->setTokens($tokens);
         } else {
