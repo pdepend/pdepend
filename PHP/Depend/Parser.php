@@ -685,7 +685,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $tokens[] = $this->tokenizer->next();
 
             case self::T_NEW:
-            case self::T_INSTANCEOF:
                 $parts = $this->_parseClassNameChain($tokens);
 
                 // If this is a dynamic instantiation, do not add dependency.
@@ -693,6 +692,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 if (count($parts) > 0) {
                     // Get last element of parts and create a class for it
                     $class = $this->builder->buildClass(join('\\', $parts));
+                    $callable->addDependency($class);
+                }
+                break;
+
+            case self::T_INSTANCEOF:
+                $parts = $this->_parseClassNameChain($tokens);
+
+                // If this is a dynamic instantiation, do not add dependency.
+                // Something like: new $className('PDepend');
+                if (count($parts) > 0) {
+                    // Get last element of parts and create a class for it
+                    $class = $this->builder->buildClassOrInterface(join('\\', $parts));
                     $callable->addDependency($class);
                 }
                 break;
