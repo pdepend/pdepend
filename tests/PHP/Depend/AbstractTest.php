@@ -192,6 +192,10 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/Depend/Input/ExcludePathFilter.php';
         include_once 'PHP/Depend/Input/Iterator.php';
 
+        if (file_exists($fileOrDirectory) === false) {
+            $fileOrDirectory = dirname(__FILE__) . '/_code/' . $fileOrDirectory;
+        }
+
         if (is_dir($fileOrDirectory)) {
             $it = new PHP_Depend_Input_Iterator(
                 new RecursiveIteratorIterator(
