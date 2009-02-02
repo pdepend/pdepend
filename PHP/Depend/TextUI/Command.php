@@ -50,6 +50,7 @@ require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/TextUI/Runner.php';
 require_once 'PHP/Depend/Util/Configuration.php';
 require_once 'PHP/Depend/Util/ConfigurationInstance.php';
+require_once 'PHP/Depend/Util/Log.php';
 
 /**
  * Handles the command line stuff and starts the text ui runner.
@@ -337,6 +338,13 @@ class PHP_Depend_TextUI_Command
             PHP_Depend_Util_ConfigurationInstance::set($config);
         }
 
+        if (isset($this->_options['--debug'])) {
+            // Remove option from array
+            unset($this->_options['--debug']);
+            // Enable debug logging
+            PHP_Depend_Util_Log::setSeverity(PHP_Depend_Util_Log::DEBUG);
+        }
+
         return true;
     }
 
@@ -399,6 +407,7 @@ class PHP_Depend_TextUI_Command
         }
         echo PHP_EOL;
 
+        $this->_printOption('--debug', 'Prints debugging information.', $l);
         $this->_printOption('--help', 'Print this help text.', $l);
         $this->_printOption('--version', 'Print the current version.', $l);
         $this->_printOption('-d key[=value]', 'Sets a php.ini value.', $l);
