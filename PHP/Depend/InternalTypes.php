@@ -111,10 +111,7 @@ class PHP_Depend_InternalTypes
             }
             $extension = '+' . strtolower($extension);
 
-            $this->_types[strtolower($type)] = array(
-                'package'  =>  $extension,
-                'name'     =>  $type
-            );
+            $this->_types[strtolower($type)] = $extension;
 
             $this->_packages[$extension] = true;
         }
@@ -155,7 +152,7 @@ class PHP_Depend_InternalTypes
     {
         $package = null;
         if ($this->isInternal($typeName)) {
-            $package = $this->_types[strtolower($typeName)]['package'];
+            $package = $this->_types[strtolower($typeName)];
         }
         return $package;
     }
