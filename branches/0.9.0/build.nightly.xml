@@ -2,7 +2,7 @@
 <project name="PHP_Depend" default="build" basedir=".">
     
     <property name="test.source" value="/opt/pdepend-sources" />
-    <property name="version.number" value="0.9.2" />
+    <property name="version.number" value="0.9.5" />
     
     <target name="build" depends="default.build,create,extended.tests,release">
         
