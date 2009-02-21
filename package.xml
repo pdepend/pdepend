@@ -13,7 +13,7 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2009-01-19</date>
+  <date>2009-02-21</date>
   <version>
     <release>0.9.4</release>
     <api>1.0.0</api>
