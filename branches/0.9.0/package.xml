@@ -139,6 +139,9 @@ and the NDepend metric tool.
             <file name="UUID.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="Log.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="Configuration.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -506,67 +509,73 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="bugs">
-            <file name="11.php" role="test">
+            <file name="012.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="001.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="033-1.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="014.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="089-3.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="30.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="12.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="089-5.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="089-4.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="33-2.php" role="test">
+            <file name="033-2.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="024.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="15.php" role="test">
+            <file name="016-1.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="10.php" role="test">
+            <file name="089-4.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="14.php" role="test">
+            <file name="084.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="08.php" role="test">
+            <file name="010.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="84.php" role="test">
+            <file name="030.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="16-1.php" role="test">
+            <file name="092-1.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="092-2.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="089-2.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="16-2.php" role="test">
+            <file name="009.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="33-1.php" role="test">
+            <file name="015.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="17-1.php" role="test">
+            <file name="016-2.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="011.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="008.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="089-1.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="09.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="01.php" role="test">
+            <file name="017-1.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
