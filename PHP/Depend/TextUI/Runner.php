@@ -49,7 +49,6 @@
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Code/Filter/Package.php';
 require_once 'PHP/Depend/Log/LoggerFactory.php';
-require_once 'PHP/Depend/TextUI/ResultPrinter.php';
 require_once 'PHP/Depend/Input/ExcludePathFilter.php';
 require_once 'PHP/Depend/Input/ExtensionFilter.php';
 
@@ -171,6 +170,14 @@ class PHP_Depend_TextUI_Runner
     private $_options = array();
 
     /**
+     * This of process listeners that will be hooked into PHP_Depend's analyzing
+     * process.
+     *
+     * @var array(PHP_Depend_ProcessListenerI) $_processListeners
+     */
+    private $_processListeners = array();
+
+    /**
      * Sets a list of allowed file extensions.
      *
      * NOTE: If you call this method, it will replace the default file extensions.
@@ -283,6 +290,19 @@ class PHP_Depend_TextUI_Runner
     }
 
     /**
+     * Adds a process listener instance that will be hooked into PHP_Depends
+     * analyzing process.
+     *
+     * @param PHP_Depend_ProcessListenerI $processListener A process listener.
+     *
+     * @return void
+     */
+    public function addProcessListener(PHP_Depend_ProcessListenerI $processListener)
+    {
+        $this->_processListeners[] = $processListener;
+    }
+
+    /**
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *
@@ -359,10 +379,14 @@ class PHP_Depend_TextUI_Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
-        // TODO: Make the result printer class configurable
-        $resultPrinter = new PHP_Depend_TextUI_ResultPrinter();
+        foreach ($this->_processListeners as $processListener)
+        {
+            $pdepend->addProcessListener($processListener);
+        }
 
-        $pdepend->addProcessListener($resultPrinter);
+        // TODO: Make the result printer class configurable
+        //$resultPrinter = new PHP_Depend_TextUI_ResultPrinter();
+        //$pdepend->addProcessListener($resultPrinter);
 
         try {
             $pdepend->analyze();
