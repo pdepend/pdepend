@@ -85,6 +85,11 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
     {
         $this->_dirname = PHP_Depend_Util_FileUtil::getSysTempDir()
                         . '/pdepend_storage';
+
+        // Append the user identifier on *NIX systems
+        if (function_exists('posix_getuid') === true) {
+            $this->_dirname .= '-' . posix_getuid();
+        }
     }
 
     /**
