@@ -430,7 +430,8 @@ class PHP_Depend_TextUI_Command
             // Store in options array
             $options[$identifier] = (string) simplexml_load_file($path)->message;
 
-            if (($length = strlen($identifier)) > $maxLength) {
+            $length = strlen($identifier);
+            if ($identifier > $maxLength) {
                 $maxLength = $length;
             }
         }
