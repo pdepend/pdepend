@@ -257,7 +257,7 @@ class PHP_Depend
             break;
 
         case self::PARSER_STORAGE:
-            $engine->getMaxLifetime(86400);
+            $engine->setMaxLifetime(86400);
             $engine->setProbability(5);
             break;
 
