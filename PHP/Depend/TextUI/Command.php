@@ -47,6 +47,7 @@
  */
 
 require_once 'PHP/Depend.php';
+require_once 'PHP/Depend/TextUI/ResultPrinter.php';
 require_once 'PHP/Depend/TextUI/Runner.php';
 require_once 'PHP/Depend/Util/Configuration.php';
 require_once 'PHP/Depend/Util/ConfigurationInstance.php';
@@ -125,6 +126,7 @@ class PHP_Depend_TextUI_Command
     {
         // Create a new text ui runner
         $this->_runner = new PHP_Depend_TextUI_Runner();
+        $this->_runner->addProcessListener(new PHP_Depend_TextUI_ResultPrinter());
 
         if ($this->handleArguments() === false) {
             $this->printHelp();
