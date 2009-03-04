@@ -1733,6 +1733,134 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser does not end in an endless loop when it detects an
+     * interface without a body.
+     *
+     * @return void
+     */
+    public function testParserHandlesInterfaceDeclarationWithoutBodyBug065()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Unexpected end of token stream.'
+        );
+
+        self::parseSource('bugs/065-1-interface-declaration-without-body.fail');
+    }
+
+    /**
+     * Tests that the parser does not end in an endless loop when it detects an
+     * interface declaration with extend but without a body.
+     *
+     * @return void
+     */
+    public function testParserHandlesInterfaceDeclarationWithExtendWithoutBodyBug065()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Unexpected end of token stream.'
+        );
+
+        self::parseSource('bugs/065-2-interface-declaration-without-body.fail');
+    }
+
+    /**
+     * Tests that the parser does not end in an endless loop when it detects an
+     * interface declaration with extend with invalid end of interface list.
+     *
+     * @return void
+     */
+    public function testParserHandlesInterfaceDeclarationWithInvalidInterfaceListBug065()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Interface identifier expected.'
+        );
+
+        self::parseSource('bugs/065-3-interface-declaration-without-body.fail');
+    }
+
+    /**
+     * Tests that the parser does not end in an endless loop when it detects a
+     * class declaration without a body.
+     *
+     * @return void
+     */
+    public function testParserHandlesClassDeclarationWithoutBodyBug65()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Unexpected end of token stream.'
+        );
+
+        self::parseSource('bugs/065-4-class-declaration-without-body.fail');
+    }
+
+    /**
+     * Tests that the parser does not end in an endless loop when it detects a
+     * class declaration with extend but without a parent class name and a body.
+     *
+     * @return void
+     */
+    public function testParserHandlesClassDeclarationWithExtendsWithoutClassNameBug65()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Class identifier expected.'
+        );
+
+        self::parseSource('bugs/065-5-class-declaration-without-body.fail');
+    }
+
+    /**
+     * Tests that the parser does not end in an endless loop when it detects a
+     * class declaration with implements but without a interface name and a body.
+     *
+     * @return void
+     */
+    public function testParserHandlesClassDeclarationWithExtendsWithoutInterfaceNameBug65()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Interface identifier expected.'
+        );
+
+        self::parseSource('bugs/065-6-class-declaration-without-body.fail');
+    }
+
+    /**
+     * Tests that the parser does not end in an endless loop when it detects a
+     * class declaration with parent interface but without a body.
+     *
+     * @return void
+     */
+    public function testParserHandlesClassDeclarationWithParentInterfaceWithoutBodyBug65()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Unexpected end of token stream.'
+        );
+
+        self::parseSource('bugs/065-7-class-declaration-without-body.fail');
+    }
+
+    /**
+     * Tests that the parser does not end in an endless loop when it detects a
+     * class declaration with an incomplete parent interface list and without a body.
+     *
+     * @return void
+     */
+    public function testParserHandlesClassDeclarationWithIncompleteParentInterfaceWithoutBodyBug65()
+    {
+        $this->setExpectedException(
+            'RuntimeException',
+            'Interface identifier expected.'
+        );
+
+        self::parseSource('bugs/065-8-class-declaration-without-body.fail');
+    }
+
+    /**
      * Tests that the parser supports function parameters.
      *
      * @return void
