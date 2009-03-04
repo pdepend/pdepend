@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
-require_once 'PHP/Depend/Code/TypeAwareI.php';
 
 /**
  * An instance of this class represents a function or method parameter within
@@ -74,9 +73,7 @@ require_once 'PHP/Depend/Code/TypeAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Parameter
-       extends PHP_Depend_Code_AbstractItem
-    implements PHP_Depend_Code_TypeAwareI
+class PHP_Depend_Code_Parameter extends PHP_Depend_Code_AbstractItem
 {
     /**
      * The parent function or method instance.
