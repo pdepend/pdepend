@@ -196,9 +196,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testParserReferenceReturnValueBug08()
+    public function testParserReferenceReturnValueBug04()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/008.php');
+        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/004.php');
         $package  = $packages->current();
 
         // Get function
@@ -1201,7 +1201,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testVariableClassNameBug10()
     {
-        $package = self::parseSource(dirname(__FILE__) . '/_code/bugs/010.php')->current();
+        $package = self::parseSource(dirname(__FILE__) . '/_code/bugs/006.php')->current();
         $class   = $package->getClasses()->current();
         $method  = $class->getMethods()->current();
 
@@ -1213,7 +1213,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
     public function testParserCurlyBraceBug11()
     {
-        $package   = self::parseSource(dirname(__FILE__) . '/_code/bugs/011.php')->current();
+        $package   = self::parseSource(dirname(__FILE__) . '/_code/bugs/007.php')->current();
         $classes   = $package->getClasses();
         $functions = $package->getFunctions();
 
@@ -1234,7 +1234,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserCurlyBraceBug12()
     {
-        $package = self::parseSource(dirname(__FILE__) . '/_code/bugs/012.php')->current();
+        $package = self::parseSource(dirname(__FILE__) . '/_code/bugs/008.php')->current();
         $classes = $package->getClasses();
 
         $this->assertEquals(1, $classes->count());
