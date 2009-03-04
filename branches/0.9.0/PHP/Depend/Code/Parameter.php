@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/AbstractItem.php';
+require_once 'PHP/Depend/Code/NodeI.php';
 
 /**
  * An instance of this class represents a function or method parameter within
@@ -73,8 +73,22 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Parameter extends PHP_Depend_Code_AbstractItem
+class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
 {
+    /**
+     * The name for this item.
+     *
+     * @var string $_name
+     */
+    private $_name = '';
+
+    /**
+     * The unique identifier for this function.
+     *
+     * @var PHP_Depend_Util_UUID $_uuid
+     */
+    private $_uuid = null;
+
     /**
      * The parent function or method instance.
      *
@@ -96,6 +110,37 @@ class PHP_Depend_Code_Parameter extends PHP_Depend_Code_AbstractItem
      * @var PHP_Depend_Code_AbstractType $_type
      */
     private $_type = null;
+
+    /**
+     * Constructs a new parameter instance for the given <b>$name</b>.
+     *
+     * @param string $name The item name.
+     */
+    public function __construct($name)
+    {
+        $this->_name = $name;
+        $this->_uuid = new PHP_Depend_Util_UUID();
+    }
+
+    /**
+     * Returns the item name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->_name;
+    }
+
+    /**
+     * Returns a uuid for this code node.
+     *
+     * @return string
+     */
+    public function getUUID()
+    {
+        return (string) $this->_uuid;
+    }
 
     /**
      * Returns the parent function or method instance or <b>null</b>
