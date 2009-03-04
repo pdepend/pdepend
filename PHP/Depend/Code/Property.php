@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
-require_once 'PHP/Depend/Code/TypeAwareI.php';
 
 /**
  * This code class represents a class property.
@@ -61,9 +60,7 @@ require_once 'PHP/Depend/Code/TypeAwareI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Property
-    extends PHP_Depend_Code_AbstractItem
-    implements PHP_Depend_Code_TypeAwareI
+class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
 {
     /**
      * The parent type object.
