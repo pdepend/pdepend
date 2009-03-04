@@ -300,7 +300,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      */
     public function testInternalDollarSyntaxBug09()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/009.php';
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/005.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
