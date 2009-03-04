@@ -333,21 +333,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @param PHP_Depend_Code_Interface $interface The context interface instance.
      *
-     * @return array(array)
+     * @return array(PHP_Depend_Token)
      */
     protected function parseInterfaceSignature(PHP_Depend_Code_Interface $interface)
     {
         $tokens = array();
-        while ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
+        $this->_consumeComments($tokens);
 
-            if ($token->type === self::T_STRING) {
-                $dependency = $this->builder->buildInterface($token->image);
-                $interface->addDependency($dependency);
-            }
+        $tokenType = $this->tokenizer->peek();
+        if ($tokenType === self::T_CURLY_BRACE_OPEN) {
+            return $tokens;
         }
-        return $tokens;
+
+        $this->_consumeToken(self::T_EXTENDS, $tokens);
+        $this->_consumeComments($tokens);
+
+        $tokens = array_merge($tokens, $this->_parseInterfaceList($interface));
     }
 
     /**
@@ -359,27 +360,76 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function parseClassSignature(PHP_Depend_Code_Class $class)
     {
-        $tokens     = array();
-        $implements = false;
+        $tokens = array();
+        $this->_consumeComments($tokens);
 
-        while ($this->tokenizer->peek() !== self::T_CURLY_BRACE_OPEN) {
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-
-            if ($token->type === self::T_IMPLEMENTS) {
-                $implements = true;
-            } else if ($token->type === self::T_STRING) {
-                if ($implements) {
-                    $dependency = $this->builder->buildInterface($token->image);
-                } else {
-                    $dependency = $this->builder->buildClass($token->image);
-                }
-                // Set class dependency
-                $class->addDependency($dependency);
+        $tokenType = $this->tokenizer->peek();
+        if ($tokenType === self::T_CURLY_BRACE_OPEN) {
+            return $tokens;
+        }
+        
+        if ($tokenType === self::T_EXTENDS) {
+            $this->_consumeToken(self::T_EXTENDS, $tokens);
+            $this->_consumeComments($tokens);
+            
+            $qualifiedName = $this->_parseClassNameChain($tokens);
+            if ($qualifiedName === '') {
+                throw new RuntimeException('Class identifier expected.');
             }
+            
+            $dependency = $this->builder->buildClass($qualifiedName);
+            $class->addDependency($dependency);
+        }
+        $this->_consumeComments($tokens);
+
+        $tokenType = $this->tokenizer->peek();
+        if ($tokenType === self::T_CURLY_BRACE_OPEN) {
+            return $tokens;
         }
 
-        return $tokens;
+        $this->_consumeToken(self::T_IMPLEMENTS, $tokens);
+
+        $tokens = array_merge($tokens, $this->_parseInterfaceList($class));
+    }
+
+    /**
+     * This method parses a list of interface names as used in the <b>extends</b>
+     * part of a interface declaration or in the <b>implements</b> part of a
+     * class declaration.
+     *
+     * @param PHP_Depend_Code_AbstractType $abstractType The declaring type
+     *
+     * @return array(PHP_Depend_Token)
+     */
+    private function _parseInterfaceList(PHP_Depend_Code_AbstractType $abstractType)
+    {
+        $tokens = array();
+
+        do {
+            $this->_consumeComments($tokens);
+
+            $qualifiedName = $this->_parseClassNameChain($tokens);
+            if ($qualifiedName === '') {
+                throw new RuntimeException('Interface identifier expected.');
+            }
+
+            $dependency = $this->builder->buildInterface($qualifiedName);
+            $abstractType->addDependency($dependency);
+
+            $this->_consumeComments($tokens);
+
+            $tokenType = $this->tokenizer->peek();
+
+            // Check for opening interface body
+            if ($tokenType === self::T_CURLY_BRACE_OPEN) {
+                return $tokens;
+            }
+
+            $this->_consumeToken(self::T_COMMA, $tokens);
+            $this->_consumeComments($tokens);
+        } while (true);
+
+        throw new RuntimeException('Unexpected end of interface list.');
     }
 
     /**
@@ -685,25 +735,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $tokens[] = $this->tokenizer->next();
 
             case self::T_NEW:
-                $parts = $this->_parseClassNameChain($tokens);
+                $qualifiedName = $this->_parseClassNameChain($tokens);
 
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: new $className('PDepend');
-                if (count($parts) > 0) {
+                if ($qualifiedName !== '') {
                     // Get last element of parts and create a class for it
-                    $class = $this->builder->buildClass(join('\\', $parts));
+                    $class = $this->builder->buildClass($qualifiedName);
                     $callable->addDependency($class);
                 }
                 break;
 
             case self::T_INSTANCEOF:
-                $parts = $this->_parseClassNameChain($tokens);
+                $qualifiedName = $this->_parseClassNameChain($tokens);
 
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: new $className('PDepend');
-                if (count($parts) > 0) {
+                if ($qualifiedName !== '') {
                     // Get last element of parts and create a class for it
-                    $class = $this->builder->buildClassOrInterface(join('\\', $parts));
+                    $class = $this->builder->buildClassOrInterface($qualifiedName);
                     $callable->addDependency($class);
                 }
                 break;
@@ -826,25 +876,23 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * PHP\Depend\Parser::parse();
      * </code>
      *
-     * @param array(array) &$tokens The tokens array.
+     * @param array(PHP_Depend_Token) &$tokens The tokens array.
      *
-     * @return array(array)
+     * @return string
      */
     private function _parseClassNameChain(&$tokens)
     {
-        $type  = $this->tokenizer->peek();
-        $parts = array();
+        $type = $this->tokenizer->peek();
+        $qualifiedName = '';
         while ($type === self::T_BACKSLASH || $type === self::T_STRING) {
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
-            if ($token->type === self::T_STRING) {
-                $parts[] = $token->image;
-            }
+            $qualifiedName .= $token->image;
 
             $type = $this->tokenizer->peek();
         }
-        return $parts;
+        return $qualifiedName;
     }
 
     /**
@@ -971,6 +1019,31 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($type !== null) {
             $callable->setReturnType($this->builder->buildClassOrInterface($type));
         }
+    }
+
+    /**
+     * This method will consume the next token in the token stream. It will
+     * throw an exception if the type of this token is not identical with
+     * <b>$tokenType</b>.
+     *
+     * @param integer $tokenType The next expected token type.
+     * @param array   &$tokens   Optional token storage array.
+     *
+     * @return void
+     */
+    private function _consumeToken($tokenType, &$tokens = array())
+    {
+        $token = $this->tokenizer->next();
+
+        if ($token === self::T_EOF) {
+            throw new RuntimeException('Unexpected end of token stream.');
+        }
+
+        if ($token->type !== $tokenType) {
+            throw new RuntimeException('Unexpected token type.');
+        }
+
+        $tokens[] = $token;
     }
 
     /**
