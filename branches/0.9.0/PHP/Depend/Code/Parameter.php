@@ -126,6 +126,14 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     private $_class = null;
 
     /**
+     * This property is set to <b>true</b> when the parameter is passed by
+     * reference.
+     *
+     * @var boolean $_passedByReference
+     */
+    private $_passedByReference = false;
+
+    /**
      * Constructs a new parameter instance for the given <b>$name</b>.
      *
      * @param string $name The item name.
@@ -271,6 +279,29 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
         if (true || $this->_class === null) {
             $this->_class = $class;
         }
+    }
+
+    /**
+     * This method will return <b>true</b> when the parameter is passed by
+     * reference.
+     *
+     * @return boolean
+     */
+    public function isPassedByReference()
+    {
+        return $this->_passedByReference;
+    }
+
+    /**
+     * This method can be used to mark this parameter as passed by reference.
+     *
+     * @param boolean $passedByReference Boolean flag.
+     *
+     * @return void
+     */
+    public function setPassedByReference($passedByReference)
+    {
+        $this->_passedByReference = (boolean) $passedByReference;
     }
 
     /**

@@ -674,6 +674,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $parameterReference = false;
                 break;
 
+            case self::T_BITWISE_AND:
+                $parameterReference = true;
+                break;
+
             case self::T_STRING:
                 // Check that the next token is a variable or next token is the
                 // reference operator
@@ -689,6 +693,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     if ($this->tokenizer->peek() !== self::T_VARIABLE) {
                         continue;
                     }
+                    $parameterReference = true;
                 }
 
                 // Create an instance for this parameter
@@ -699,6 +704,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $parameter = $this->builder->buildParameter($token->image);
                 $parameter->setStartLine($token->startLine);
                 $parameter->setPosition($parameterPosition++);
+                $parameter->setPassedByReference($parameterReference);
 
                 if ($parameterType !== null) {
                     $parameter->setClass($parameterType);
@@ -720,6 +726,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 return;
             }
         }
+        
         throw new RuntimeException('Invalid function signature.');
     }
 
