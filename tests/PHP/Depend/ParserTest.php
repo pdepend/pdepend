@@ -1987,6 +1987,84 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser sets the parameter flag by reference.
+     *
+     * @return void
+     */
+    public function testParserSetsFunctionParameterByReferenceIssue67()
+    {
+        $packages = self::parseSource('issues/067-1-parameter-by-reference.php');
+
+        $package    = $packages->current();
+        $functions  = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $parameter = $parameters->current();
+        $this->assertSame('$foo', $parameter->getName());
+        $this->assertTrue($parameter->isPassedByReference());
+    }
+
+    /**
+     * Tests that the parser sets the parameter flag by reference.
+     *
+     * @return void
+     */
+    public function testParserSetsMultipleFunctionParameterByReferenceIssue67()
+    {
+        $packages = self::parseSource('issues/067-2-parameter-by-reference.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $expected = array('$foo' => true, '$bar' => false, '$foobar' => true);
+        foreach ($parameters as $parameter) {
+            $this->assertSame($expected[$parameter->getName()], $parameter->isPassedByReference());
+        }
+    }
+
+    /**
+     * Tests that the parser sets the parameter flag by reference.
+     *
+     * @return void
+     */
+    public function testParserSetsFunctionParameterByReferenceWithTypeHintIssue67()
+    {
+        $packages = self::parseSource('issues/067-3-parameter-by-reference.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $parameter = $parameters->current();
+        $this->assertSame('$foo', $parameter->getName());
+        $this->assertTrue($parameter->isPassedByReference());
+    }
+
+    /**
+     * Tests that the parser sets the parameter flag by reference.
+     *
+     * @return void
+     */
+    public function testParserSetsMultipleFunctionParameterByReferenceWithTypeHintIssue67()
+    {
+        $packages = self::parseSource('issues/067-4-parameter-by-reference.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $expected = array('$foo' => true, '$bar' => true);
+        foreach ($parameters as $parameter) {
+            $this->assertSame($expected[$parameter->getName()], $parameter->isPassedByReference());
+        }
+    }
+
+    /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
      *
@@ -1999,7 +2077,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithWhitespaceIssue87()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/087-1.php');
+        $packages = self::parseSource('issues/087-1.php');
         $this->assertSame(1, $packages->count());
 
         $function = $packages->current()->getFunctions()->current();
@@ -2025,7 +2103,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithoutWhitespaceIssue87()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/087-2.php');
+        $packages = self::parseSource('issues/087-2.php');
         $this->assertSame(1, $packages->count());
 
         $function = $packages->current()->getFunctions()->current();
@@ -2054,7 +2132,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserIgnoresDependencyDefinedInMultilineCommentIssue87()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/087-3.php');
+        $packages = self::parseSource('issues/087-3.php');
         $this->assertSame(1, $packages->count());
 
         $function = $packages->current()->getFunctions()->current();
@@ -2078,7 +2156,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserIgnoresDependencyDefinedWithinAnotherCommentIssue87()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/087-4.php');
+        $packages = self::parseSource('issues/087-4.php');
         $this->assertSame(1, $packages->count());
 
         $function = $packages->current()->getFunctions()->current();
@@ -2095,7 +2173,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     protected function parseMixedCode()
     {
-        return self::parseSource(dirname(__FILE__) . '/_code/mixed_code.php');
+        return self::parseSource('mixed_code.php');
     }
 
     /**
