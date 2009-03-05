@@ -41,7 +41,7 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
+ * @version   SVN: $Id: ParserTest.php 673 2009-03-04 21:39:16Z mapi $
  * @link      http://www.manuel-pichler.de/
  */
 
@@ -797,7 +797,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      *
      * <code>
      *   @var false|null|Runtime
-     * 
+     *
      *   // Results in
      *   Runtime
      * </code>
@@ -1881,22 +1881,22 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parameter = $parameters->current();
         $this->assertEquals('$bar', $parameter->getName());
         $this->assertEquals(1, $parameter->getPosition());
-        $this->assertNotNull($parameter->getType());
-        $this->assertEquals('Bar', $parameter->getType()->getName());
+        $this->assertNotNull($parameter->getClass());
+        $this->assertEquals('Bar', $parameter->getClass()->getName());
 
         $parameters->next();
 
         $parameter = $parameters->current();
         $this->assertEquals('$foo', $parameter->getName());
         $this->assertEquals(0, $parameter->getPosition());
-        $this->assertNull($parameter->getType());
+        $this->assertNull($parameter->getClass());
 
         $parameters->next();
 
         $parameter = $parameters->current();
         $this->assertEquals('$foobar', $parameter->getName());
         $this->assertEquals(2, $parameter->getPosition());
-        $this->assertNull($parameter->getType());
+        $this->assertNull($parameter->getClass());
     }
 
     /**
@@ -1929,22 +1929,22 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $parameter = $parameters->current();
         $this->assertEquals('$bar', $parameter->getName());
         $this->assertEquals(1, $parameter->getPosition());
-        $this->assertNotNull($parameter->getType());
-        $this->assertEquals('Bar', $parameter->getType()->getName());
+        $this->assertNotNull($parameter->getClass());
+        $this->assertEquals('Bar', $parameter->getClass()->getName());
 
         $parameters->next();
 
         $parameter = $parameters->current();
         $this->assertEquals('$foo', $parameter->getName());
         $this->assertEquals(0, $parameter->getPosition());
-        $this->assertNull($parameter->getType());
+        $this->assertNull($parameter->getClass());
 
         $parameters->next();
 
         $parameter = $parameters->current();
         $this->assertEquals('$foobar', $parameter->getName());
         $this->assertEquals(2, $parameter->getPosition());
-        $this->assertNull($parameter->getType());
+        $this->assertNull($parameter->getClass());
     }
 
     /**

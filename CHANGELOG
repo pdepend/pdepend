@@ -5,6 +5,9 @@ PHP_Depend 0.9.5
 - Unused interface PHP_Depend_Code_TypeAwareI removed from object graph.
 - Uneccessary inheritence between parameter class and the abstract item class
   refactored.
+- Builder method signatures simplified and inconsistent usage of the optional
+  $line ctor argument replaces with setStartLine() invokations.
+
 
 PHP_Depend 0.9.4
 ----------------
