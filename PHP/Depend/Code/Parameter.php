@@ -267,6 +267,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      */
     public function setClass(PHP_Depend_Code_AbstractType $class)
     {
+        // TODO Refs #66: Remove the "true" expression
         if (true || $this->_class === null) {
             $this->_class = $class;
         }

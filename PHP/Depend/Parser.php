@@ -651,8 +651,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             );
         }
 
-        $parameterType     = null;
-        $parameterPosition = 0;
+        $parameterType      = null;
+        $parameterReference = false;
+        $parameterPosition  = 0;
 
         $parenthesis = 0;
 
@@ -663,21 +664,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             switch ($token->type) {
             case self::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
-                $parameterType = null;
+                $parameterType      = null;
+                $parameterReference = false;
                 break;
 
             case self::T_PARENTHESIS_CLOSE:
                 --$parenthesis;
-                $parameterType = null;
+                $parameterType      = null;
+                $parameterReference = false;
                 break;
 
             case self::T_STRING:
                 // Check that the next token is a variable or next token is the
-                // reference operator and the fo
+                // reference operator
                 if ($this->tokenizer->peek() !== self::T_VARIABLE
                  && $this->tokenizer->peek() !== self::T_BITWISE_AND) {
                     continue;
                 }
+
                 if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
                     // Store reference operator
                     $tokens[] = $this->tokenizer->next();
@@ -700,11 +704,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $parameter->setClass($parameterType);
                 }
                 $callable->addParameter($parameter);
+
+                $parameterType      = null;
+                $parameterReference = false;
                 break;
 
             default:
                 // TODO: Handle/log unused tokens
-                $parameterType = null;
+                $parameterType      = null;
+                $parameterReference = false;
                 break;
             }
 
