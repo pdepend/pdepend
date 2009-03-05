@@ -71,7 +71,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     public function testCreateNewFunctionInstance()
     {
-        $function = new PHP_Depend_Code_Function('func', 0);
+        $function = new PHP_Depend_Code_Function('func');
         $this->assertEquals('func', $function->getName());
     }
     
@@ -84,7 +84,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
     public function testGetSetPackage()
     {
         $package  = new PHP_Depend_Code_Package('package');
-        $function = new PHP_Depend_Code_Function('func', 0);
+        $function = new PHP_Depend_Code_Function('func');
         
         $this->assertNull($function->getPackage());
         $function->setPackage($package);
@@ -100,7 +100,9 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     public function testGetStartLineNumber()
     {
-        $function = new PHP_Depend_Code_Function('function1', 23);
+        $function = new PHP_Depend_Code_Function('function1');
+        $function->setStartLine(23);
+
         $this->assertEquals(23, $function->getStartLine());
     }
     
@@ -118,7 +120,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
             array(PHP_Depend_TokenizerI::T_SEMICOLON, ';', 3),
         );
         
-        $function = new PHP_Depend_Code_Function('function1', 42);
+        $function = new PHP_Depend_Code_Function('function1');
         $function->setTokens($tokens);
         
         $this->assertEquals($tokens, $function->getTokens());
@@ -131,7 +133,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     public function testVisitorAccept()
     {
-        $function = new PHP_Depend_Code_Function('func', 0);
+        $function = new PHP_Depend_Code_Function('func');
         $visitor  = new PHP_Depend_Visitor_TestNodeVisitor();
         
         $this->assertNull($visitor->function);
@@ -146,7 +148,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     protected function createItem()
     {
-        return new PHP_Depend_Code_Function('func', 0);
+        return new PHP_Depend_Code_Function('func');
     }
     
     /**
@@ -156,6 +158,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractDependencyTes
      */
     protected function createDependencyNode()
     {
-        return new PHP_Depend_Code_Function('func', 0);
+        return new PHP_Depend_Code_Function('func');
     }
 }

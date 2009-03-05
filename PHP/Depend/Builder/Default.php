@@ -222,12 +222,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *   <li>Create a new instance for the specified package.</li>
      * </ol>
      *
-     * @param string  $name The class name.
-     * @param integer $line The line number for the class declaration.
+     * @param string $name The class name.
      *
      * @return PHP_Depend_Code_Class The created class object.
      */
-    public function buildClass($name, $line = 0)
+    public function buildClass($name)
     {
         $cls = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
@@ -260,7 +259,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             PHP_Depend_Util_Log::debug('Creating class "' . $name . '"');
 
             // Create a new class instance
-            $class = new PHP_Depend_Code_Class($cls, $line);
+            $class = new PHP_Depend_Code_Class($cls);
             $class->setSourceFile($this->defaultFile);
 
             // Store class reference
@@ -324,12 +323,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *   <li>Create a new instance for the specified package.</li>
      * </ol>
      *
-     * @param string  $name The interface name.
-     * @param integer $line The line number for the interface declaration.
+     * @param string $name The interface name.
      *
      * @return PHP_Depend_Code_Interface The created interface object.
      */
-    public function buildInterface($name, $line = 0)
+    public function buildInterface($name)
     {
         $ife = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
@@ -387,7 +385,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             PHP_Depend_Util_Log::debug('Creating interface "' . $name . '"');
 
             // Create a new interface instance
-            $interface = new PHP_Depend_Code_Interface($ife, $line);
+            $interface = new PHP_Depend_Code_Interface($ife);
             $interface->setSourceFile($this->defaultFile);
 
             // Store interface reference
@@ -407,18 +405,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new method instance.
      *
-     * @param string  $name The method name.
-     * @param integer $line The line number with the method declaration.
+     * @param string $name The method name.
      *
      * @return PHP_Depend_Code_Method The created class method object.
      */
-    public function buildMethod($name, $line = 0)
+    public function buildMethod($name)
     {
         // Debug method creation
         PHP_Depend_Util_Log::debug('Creating method "' . $name . '()"');
 
         // Create a new method instance
-        $method = new PHP_Depend_Code_Method($name, $line);
+        $method = new PHP_Depend_Code_Method($name);
 
         // Store instance an local map
         $this->methods[] = $method;
@@ -447,18 +444,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new parameter instance.
      *
-     * @param string  $name The parameter variable name.
-     * @param integer $line The line number with the parameter declaration.
+     * @param string $name The parameter variable name.
      *
      * @return PHP_Depend_Code_Parameter The created parameter instance.
      */
-    public function buildParameter($name, $line = 0)
+    public function buildParameter($name)
     {
         // Debug parameter creation
         PHP_Depend_Util_Log::debug('Creating parameter "' . $name . '"');
 
         // Create a new parameter instance
-        $parameter = new PHP_Depend_Code_Parameter($name, $line);
+        $parameter = new PHP_Depend_Code_Parameter($name);
 
         // Store local reference
         $this->_parameters[] = $parameter;
@@ -469,18 +465,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new property instance.
      *
-     * @param string  $name The property variable name.
-     * @param integer $line The line number with the property declaration.
+     * @param string $name The property variable name.
      *
      * @return PHP_Depend_Code_Property The created property instance.
      */
-    public function buildProperty($name, $line = 0)
+    public function buildProperty($name)
     {
         // Debug property creation
         PHP_Depend_Util_Log::debug('Creating property "' . $name . '"');
 
         // Create new property instance.
-        $property = new PHP_Depend_Code_Property($name, $line);
+        $property = new PHP_Depend_Code_Property($name);
 
         // Store local reference
         $this->_properties[] = $property;
@@ -491,16 +486,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new function instance.
      *
-     * @param string               $name       The function name.
-     * @param integer              $line       The line number with the function
-     *                                         declaration.
-     * @param PHP_Depend_Code_File $sourceFile The source file for the function.
+     * @param string $name The function name.
      *
      * @return PHP_Depend_Code_Function The function instance.
      */
-    public function buildFunction($name,
-                                  $line = 0,
-                                  PHP_Depend_Code_File $sourceFile = null)
+    public function buildFunction($name)
     {
         if (isset($this->functions[$name])) {
             $function = $this->functions[$name];
@@ -509,17 +499,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             PHP_Depend_Util_Log::debug('Creating function "' . $name . '()"');
 
             // Create new function
-            $function = new PHP_Depend_Code_Function($name, $line, $sourceFile);
+            $function = new PHP_Depend_Code_Function($name);
             $function->setSourceFile($this->defaultFile);
 
             // Add to default package
             $this->defaultPackage->addFunction($function);
             // Store function reference
             $this->functions[$name] = $function;
-        }
-
-        if ($sourceFile !== null) {
-            $function->setSourceFile($sourceFile);
         }
 
         return $function;
