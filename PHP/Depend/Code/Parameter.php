@@ -42,7 +42,7 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
+ * @version    SVN: $Id: Parameter.php 675 2009-03-05 07:40:28Z mapi $
  * @link       http://www.manuel-pichler.de/
  */
 
@@ -118,12 +118,12 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     private $_position = 0;
 
     /**
-     * The type for this property. This value is <b>null</b> by default and for
+     * The type for this parameter. This value is <b>null</b> by default and for
      * scalar types.
      *
-     * @var PHP_Depend_Code_AbstractType $_type
+     * @var PHP_Depend_Code_AbstractType $_class
      */
-    private $_type = null;
+    private $_class = null;
 
     /**
      * Constructs a new parameter instance for the given <b>$name</b>.
@@ -245,26 +245,31 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     }
 
     /**
-     * Returns the type of this property. This method will return <b>null</b>
-     * for all scalar type, only class properties will have a type.
+     * Returns the class type of this parameter. This method will return
+     * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
      * @return PHP_Depend_Code_AbstractType
+     * @since 0.9.5
      */
-    public function getType()
+    public function getClass()
     {
-        return $this->_type;
+        return $this->_class;
     }
 
     /**
-     * Sets the type of this property.
+     * Sets the class type for this parameter. This method will only set its
+     * internal state on the first call.
      *
-     * @param PHP_Depend_Code_AbstractType $type The property type.
+     * @param PHP_Depend_Code_AbstractType $class The parameter class type.
      *
      * @return void
+     * @since 0.9.5
      */
-    public function setType(PHP_Depend_Code_AbstractType $type)
+    public function setClass(PHP_Depend_Code_AbstractType $class)
     {
-        $this->_type = $type;
+        if (true || $this->_class === null) {
+            $this->_class = $class;
+        }
     }
 
     /**
@@ -278,5 +283,34 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitParameter($this);
+    }
+
+    // Deprecated methods
+
+    /**
+     * Returns the type of this property. This method will return <b>null</b>
+     * for all scalar type, only class properties will have a type.
+     *
+     * @return PHP_Depend_Code_AbstractType
+     * @deprecated since 0.9.5
+     */
+    public function getType()
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
+        return $this->getClass();
+    }
+
+    /**
+     * Sets the type of this property.
+     *
+     * @param PHP_Depend_Code_AbstractType $type The property type.
+     *
+     * @return void
+     * @deprecated since 0.9.5
+     */
+    public function setType(PHP_Depend_Code_AbstractType $type)
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
+        $this->setClass($type);
     }
 }
