@@ -1,6 +1,7 @@
 PHP_Depend 0.9.5
 ----------------
 
+- Fixed #65:
 - Unused interface PHP_Depend_Code_TypeAwareI removed from object graph.
 - Uneccessary inheritence between parameter class and the abstract item class
   refactored.

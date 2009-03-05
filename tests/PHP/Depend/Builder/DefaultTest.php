@@ -627,43 +627,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that build function updates the source file information for null
-     * values.
-     *
-     * @return void
-     */
-    public function testBuildFunctionSetsSourceFileInformationForNull()
-    {
-        $file = new PHP_Depend_Code_File('FooBar.php');
-
-        $builder  = new PHP_Depend_Builder_Default();
-        $function = $builder->buildFunction('foobar');
-
-        $this->assertNull($function->getSourceFile()->getName());
-        $builder->buildFunction('foobar', 0, $file);
-        $this->assertSame($file, $function->getSourceFile());
-    }
-
-    /**
-     * Tests that the build function method doesn't update an existing source
-     * file info.
-     *
-     * @return void
-     */
-    public function testBuildFunctionDoesntSetSourceFileInformationForNotNullValues()
-    {
-        $file1 = new PHP_Depend_Code_File('FooBar.php');
-        $file2 = new PHP_Depend_Code_File('HelloWorld.php');
-
-        $builder  = new PHP_Depend_Builder_Default();
-        $function = $builder->buildFunction('foobar', 0, $file1);
-
-        $this->assertSame($file1, $function->getSourceFile());
-        $builder->buildFunction('foobar', 0, $file2);
-        $this->assertSame($file1, $function->getSourceFile());
-    }
-
-    /**
      * Tests that the node builder works case insensitive for class names.
      *
      * @return void

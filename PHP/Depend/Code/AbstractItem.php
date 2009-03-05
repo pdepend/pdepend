@@ -105,16 +105,13 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     protected $docComment = null;
 
     /**
-     * Constructs a new item for the given <b>$name</b> and <b>$startLine</b>.
+     * Constructs a new item for the given <b>$name</b>.
      *
-     * @param string  $name      The item name.
-     * @param integer $startLine The item declaration line number.
+     * @param string $name The item name.
      */
-    public function __construct($name, $startLine = 0)
+    public function __construct($name)
     {
-        $this->name      = $name;
-        $this->startLine = $startLine;
-
+        $this->name = $name;
         $this->uuid = new PHP_Depend_Util_UUID();
     }
 

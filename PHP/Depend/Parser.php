@@ -253,7 +253,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                                     $this->packageSeparator,
                                     $token->image);
 
-                $interface = $this->builder->buildInterface($qualifiedName, $token->startLine);
+                $interface = $this->builder->buildInterface($qualifiedName);
                 $interface->setSourceFile($this->tokenizer->getSourceFile());
                 $interface->setStartLine($token->startLine);
                 $interface->setDocComment($comment);
@@ -280,7 +280,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                                     $this->packageSeparator,
                                     $token->image);
 
-                $class = $this->builder->buildClass($qualifiedName, $token->startLine);
+                $class = $this->builder->buildClass($qualifiedName);
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setStartLine($token->startLine);
                 $class->setModifiers($modifiers);
@@ -301,6 +301,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_FUNCTION:
                 $function = $this->parseCallable();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
+                $function->setStartLine($token->startLine);
                 $function->setDocComment($comment);
 
                 $this->_prepareCallable($function);
@@ -462,6 +463,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_FUNCTION:
                 $method = $this->parseCallable($tokens, $type);
                 $method->setDocComment($comment);
+                $method->setStartLine($token->startLine);
                 $method->setPosition($methodPosition++);
                 $method->setSourceFile($this->tokenizer->getSourceFile());
                 $method->setModifiers($modifiers);
@@ -473,8 +475,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_VARIABLE:
-                $property = $this->builder->buildProperty($token->image, $token->startLine);
+                $property = $this->builder->buildProperty($token->image);
                 $property->setDocComment($comment);
+                $property->setStartLine($token->startLine);
                 $property->setEndLine($token->startLine);
                 $property->setSourceFile($this->tokenizer->getSourceFile());
                 $property->setModifiers($modifiers);
@@ -596,7 +599,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $callable = null;
         if ($parent === null) {
-            $callable = $this->builder->buildFunction($token->image, $token->startLine);
+            $callable = $this->builder->buildFunction($token->image);
 
             $package = $this->globalPackage;
             if ($this->package !== self::DEFAULT_PACKAGE) {
@@ -605,7 +608,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $this->builder->buildPackage($package)->addFunction($callable);
         } else {
-            $callable = $this->builder->buildMethod($token->image, $token->startLine);
+            $callable = $this->builder->buildMethod($token->image);
             $parent->addMethod($callable);
         }
 
@@ -689,7 +692,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_VARIABLE:
-                $parameter = $this->builder->buildParameter($token->image, $token->startLine);
+                $parameter = $this->builder->buildParameter($token->image);
+                $parameter->setStartLine($token->startLine);
                 $parameter->setPosition($parameterPosition++);
 
                 if ($parameterType !== null) {
