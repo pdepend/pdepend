@@ -106,9 +106,9 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     /**
      * The parent function or method instance.
      *
-     * @var PHP_Depend_Code_AbstractCallable $_parent
+     * @var PHP_Depend_Code_AbstractCallable $_declaringFunction
      */
-    private $_parent = null;
+    private $_declaringFunction = null;
 
     /**
      * The parameter position.
@@ -130,6 +130,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * reference.
      *
      * @var boolean $_passedByReference
+     * @since 0.9.5
      */
     private $_passedByReference = false;
 
@@ -211,23 +212,25 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     /**
      * Returns the parent function or method instance or <b>null</b>
      *
-     * @return PHP_Depend_Code_AbstractCallable|null
+     * @return PHP_Depend_Code_AbstractCallable
+     * @since 0.9.5
      */
-    public function getParent()
+    public function getDeclaringFunction()
     {
-        return $this->_parent;
+        return $this->_declaringFunction;
     }
 
     /**
      * Sets the parent function or method object.
      *
-     * @param PHP_Depend_Code_AbstractCallable $parent The parent callable.
+     * @param PHP_Depend_Code_AbstractCallable $function The parent callable.
      *
      * @return void
+     * @since 0.9.5
      */
-    public function setParent(PHP_Depend_Code_AbstractCallable $parent = null)
+    public function setDeclaringFunction(PHP_Depend_Code_AbstractCallable $function)
     {
-        $this->_parent = $parent;
+        $this->_declaringFunction = $function;
     }
 
     /**
@@ -286,6 +289,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * reference.
      *
      * @return boolean
+     * @since 0.9.5
      */
     public function isPassedByReference()
     {
@@ -298,6 +302,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * @param boolean $passedByReference Boolean flag.
      *
      * @return void
+     * @since 0.9.5
      */
     public function setPassedByReference($passedByReference)
     {
@@ -344,5 +349,31 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     {
         fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
         $this->setClass($type);
+    }
+
+    /**
+     * Returns the parent function or method instance or <b>null</b>
+     *
+     * @return PHP_Depend_Code_AbstractCallable|null
+     * @deprecated since 0.9.5
+     */
+    public function getParent()
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
+        return $this->getDeclaringFunction();
+    }
+
+    /**
+     * Sets the parent function or method object.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $parent The parent callable.
+     *
+     * @return void
+     * @deprecated since 0.9.5
+     */
+    public function setParent(PHP_Depend_Code_AbstractCallable $parent = null)
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
+        $this->setDeclaringFunction($parent);
     }
 }
