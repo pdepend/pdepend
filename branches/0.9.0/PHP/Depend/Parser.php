@@ -41,7 +41,7 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
+ * @version   SVN: $Id: Parser.php 675 2009-03-05 07:40:28Z mapi $
  * @link      http://www.manuel-pichler.de/
  */
 
@@ -368,16 +368,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($tokenType === self::T_CURLY_BRACE_OPEN) {
             return $tokens;
         }
-        
+
         if ($tokenType === self::T_EXTENDS) {
             $this->_consumeToken(self::T_EXTENDS, $tokens);
             $this->_consumeComments($tokens);
-            
+
             $qualifiedName = $this->_parseClassNameChain($tokens);
             if ($qualifiedName === '') {
                 throw new RuntimeException('Class identifier expected.');
             }
-            
+
             $dependency = $this->builder->buildClass($qualifiedName);
             $class->addDependency($dependency);
         }
@@ -697,7 +697,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $parameter->setPosition($parameterPosition++);
 
                 if ($parameterType !== null) {
-                    $parameter->setType($parameterType);
+                    $parameter->setClass($parameterType);
                 }
                 $callable->addParameter($parameter);
                 break;
