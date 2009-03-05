@@ -88,12 +88,11 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new code class instance.
      *
-     * @param string  $name The class name.
-     * @param integer $line The line number for the class declaration.
+     * @param string $name The class name.
      *
      * @return PHP_Depend_Code_Class The created class object.
      */
-    function buildClass($name, $line = 0);
+    function buildClass($name);
 
     /**
      * Builds a new code class constant instance.
@@ -107,12 +106,11 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new new interface instance.
      *
-     * @param string  $name The interface name.
-     * @param integer $line The line number for the interface declaration.
+     * @param string $name The interface name.
      *
      * @return PHP_Depend_Code_Interface The created interface object.
      */
-    function buildInterface($name, $line = 0);
+    function buildInterface($name);
 
     /**
      * Builds a new package instance.
@@ -126,44 +124,36 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new parameter instance.
      *
-     * @param string  $name The parameter variable name.
-     * @param integer $line The line number with the parameter declaration.
+     * @param string $name The parameter variable name.
      *
      * @return PHP_Depend_Code_Parameter The created parameter instance.
      */
-    function buildParameter($name, $line = 0);
+    function buildParameter($name);
 
     /**
      * Builds a new property instance.
      *
-     * @param string  $name The property variable name.
-     * @param integer $line The line number with the property declaration.
+     * @param string $name The property variable name.
      *
      * @return PHP_Depend_Code_Property The created property instance.
      */
-    function buildProperty($name, $line = 0);
+    function buildProperty($name);
 
     /**
      * Builds a new method instance.
      *
-     * @param string  $name The method name.
-     * @param integer $line The line number with the method declaration.
+     * @param string $name The method name.
      *
      * @return PHP_Depend_Code_Method The created class method object.
      */
-    function buildMethod($name, $line = 0);
+    function buildMethod($name);
 
     /**
      * Builds a new function instance.
      *
-     * @param string               $name       The function name.
-     * @param integer              $line       The line number with the function
-     *                                         declaration.
-     * @param PHP_Depend_Code_File $sourceFile The source file for the function.
+     * @param string $name The function name.
      *
      * @return PHP_Depend_Code_Function The function instance
      */
-    function buildFunction($name,
-                           $line = 0,
-                           PHP_Depend_Code_File $sourceFile = null);
+    function buildFunction($name);
 }
