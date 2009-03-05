@@ -68,13 +68,6 @@ abstract class PHP_Depend_Code_AbstractCallable
     implements PHP_Depend_Code_DependencyNodeI
 {
     /**
-     * The tokens for this function.
-     *
-     * @var array(mixed) $_tokens
-     */
-    private $_tokens = array();
-
-    /**
      * List of {@link PHP_Depend_Code_AbstractType} objects this function depends on.
      *
      * @var array(PHP_Depend_Code_AbstractType) $dependencies
