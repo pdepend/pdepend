@@ -281,11 +281,11 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function addParameter(PHP_Depend_Code_Parameter $parameter)
     {
-        if ($parameter->getParent() !== null) {
-            $parameter->getParent()->removeParameter($parameter);
+        if ($parameter->getDeclaringFunction() !== null) {
+            $parameter->getDeclaringFunction()->removeParameter($parameter);
         }
         // Set this as parent
-        $parameter->setParent($this);
+        $parameter->setDeclaringFunction($this);
         // Store reference
         $this->_parameters[] = $parameter;
 
