@@ -42,7 +42,7 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
+ * @version    SVN: $Id: AbstractCallable.php 602 2009-01-04 15:10:10Z mapi $
  * @link       http://www.manuel-pichler.de/
  */
 
@@ -151,7 +151,7 @@ abstract class PHP_Depend_Code_AbstractCallable
         $dependencies = $this->dependencies;
         foreach ($this->_parameters as $parameter) {
             // Skip all scalar parameters
-            if (($type = $parameter->getType()) === null) {
+            if (($type = $parameter->getClass()) === null) {
                 continue;
             }
             // Add only once

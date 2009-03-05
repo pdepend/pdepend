@@ -42,7 +42,7 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
+ * @version    SVN: $Id: Default.php 675 2009-03-05 07:40:28Z mapi $
  * @link       http://www.manuel-pichler.de/
  */
 
@@ -702,8 +702,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
 
         foreach ($this->_parameters as $parameter) {
-            if ($parameter->getType() === $class) {
-                $parameter->setType($interface);
+            if ($parameter->getClass() === $class) {
+                $parameter->setClass($interface);
             }
         }
     }

@@ -41,7 +41,7 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
+ * @version   SVN: $Id: DefaultTest.php 675 2009-03-05 07:40:28Z mapi $
  * @link      http://www.manuel-pichler.de/
  */
 
@@ -331,12 +331,12 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $param  = $builder->buildParameter('$bar', 0);
         $type0  = $builder->buildClassOrInterface('FooBar');
 
-        $this->assertNull($param->getType());
-        $param->setType($type0);
-        $this->assertSame($type0, $param->getType());
+        $this->assertNull($param->getClass());
+        $param->setClass($type0);
+        $this->assertSame($type0, $param->getClass());
 
         $type1 = $builder->buildInterface('FooBar');
-        $this->assertSame($type1, $param->getType());
+        $this->assertSame($type1, $param->getClass());
     }
 
     /**
