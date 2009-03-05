@@ -90,6 +90,20 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     private $_uuid = null;
 
     /**
+     * The line number where the item declaration starts.
+     *
+     * @var integer $_startLine
+     */
+    private $_startLine = 0;
+
+    /**
+     * The line number where the item declaration ends.
+     *
+     * @var integer $_endLine
+     */
+    private $_endLine = 0;
+
+    /**
      * The parent function or method instance.
      *
      * @var PHP_Depend_Code_AbstractCallable $_parent
@@ -140,6 +154,50 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     public function getUUID()
     {
         return (string) $this->_uuid;
+    }
+
+    /**
+     * Returns the line number where the item declaration can be found.
+     *
+     * @return integer
+     */
+    public function getStartLine()
+    {
+        return $this->_startLine;
+    }
+
+    /**
+     * Sets the start line for this item.
+     *
+     * @param integer $startLine The start line for this item.
+     *
+     * @return void
+     */
+    public function setStartLine($startLine)
+    {
+        $this->_startLine = $startLine;
+    }
+
+    /**
+     * Returns the line number where the item declaration ends.
+     *
+     * @return integer The last source line for this item.
+     */
+    public function getEndLine()
+    {
+        return $this->_endLine;
+    }
+
+    /**
+     * Sets the end line for this item.
+     *
+     * @param integer $endLine The end line for this item
+     *
+     * @return void
+     */
+    public function setEndLine($endLine)
+    {
+        $this->_endLine = $endLine;
     }
 
     /**
