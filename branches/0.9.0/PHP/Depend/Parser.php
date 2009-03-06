@@ -637,28 +637,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     protected function parseCallableSignature(array &$tokens, PHP_Depend_Code_AbstractCallable $callable)
     {
         $this->_consumeComments($tokens);
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
 
-        if ($this->tokenizer->peek() !== self::T_PARENTHESIS_OPEN) {
-            // Load invalid token for line number
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
-
-            // Throw a detailed exception message
-            throw new RuntimeException(
-                sprintf(
-                    'Invalid token "%s" on line %s in file: %s.',
-                    $token->image,
-                    $token->startLine,
-                    $this->tokenizer->getSourceFile()
-                )
-            );
-        }
 
         $parameterType      = null;
         $parameterReference = false;
         $parameterPosition  = 0;
 
-        $parenthesis = 0;
+        $parenthesis = 1;
 
         while (($token = $this->tokenizer->next()) !== self::T_EOF) {
 
@@ -1062,7 +1048,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         if ($token->type !== $tokenType) {
-            throw new RuntimeException('Unexpected token type.');
+            $message = sprintf('Unexpected token: %s, line: %d, col: %d, file: %s.',
+                               $token->image,
+                               $token->startLine,
+                               $token->startColumn,
+                               $this->tokenizer->getSourceFile());
+            throw new RuntimeException($message);
         }
 
         return $tokens[] = $token;
