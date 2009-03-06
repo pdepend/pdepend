@@ -379,8 +379,7 @@ class PHP_Depend_TextUI_Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
-        foreach ($this->_processListeners as $processListener)
-        {
+        foreach ($this->_processListeners as $processListener) {
             $pdepend->addProcessListener($processListener);
         }
 

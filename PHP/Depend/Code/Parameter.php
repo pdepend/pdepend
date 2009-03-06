@@ -126,6 +126,14 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     private $_class = null;
 
     /**
+     * The parameter is declared with the array type hint, when this property is
+     * set to <b>true</b>.
+     *
+     * @var boolean $_array
+     */
+    private $_array = false;
+
+    /**
      * This property is set to <b>true</b> when the parameter is passed by
      * reference.
      *
@@ -307,6 +315,33 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     public function setPassedByReference($passedByReference)
     {
         $this->_passedByReference = (boolean) $passedByReference;
+    }
+
+    /**
+     * This method will return <b>true</b> when the parameter was declared with
+     * the array type hint, otherwise the it will return <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.5
+     */
+    public function isArray()
+    {
+        return $this->_array;
+    }
+
+    /**
+     * This method sets the is array flag of this parameter. This means the
+     * parameter was declared with the array type hint when this will be set to
+     * <b>true</b>.
+     *
+     * @param boolean $array Boolean flag that indicates declared as array?
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setArray($array)
+    {
+        $this->_array = (boolean) $array;
     }
 
     /**

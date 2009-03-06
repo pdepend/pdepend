@@ -528,13 +528,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_PRIVATE:
-                $modifiers |= self::IS_PRIVATE & ~self::IS_PUBLIC;
-                $modifiers  = $modifiers & ~self::IS_PUBLIC;
+                $modifiers |= self::IS_PRIVATE;
+                $modifiers = $modifiers & ~self::IS_PUBLIC;
                 break;
 
             case self::T_PROTECTED:
                 $modifiers |= self::IS_PROTECTED;
-                $modifiers  = $modifiers & ~self::IS_PUBLIC;
+                $modifiers = $modifiers & ~self::IS_PUBLIC;
                 break;
 
             case self::T_STATIC:
@@ -629,7 +629,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @param array(array)                     &$tokens  Collected tokens.
+     * @param array(PHP_Depend_Token)          &$tokens  Collected tokens.
      * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
      *
      * @return void
@@ -638,7 +638,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_consumeComments($tokens);
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+        $this->_consumeComments($tokens);
 
+        $tokenType = $this->tokenizer->peek();
+
+        // Check for function without parameters
+        if ($tokenType === self::T_PARENTHESIS_CLOSE) {
+            $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+            return;
+        }
 
         $parameterType      = null;
         $parameterReference = false;
@@ -646,77 +654,135 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $parenthesis = 1;
 
-        while (($token = $this->tokenizer->next()) !== self::T_EOF) {
+        while ($tokenType !== self::T_EOF) {
+            $parameter = $this->_parseFunctionParameter($tokens);
+            $parameter->setPosition($parameterPosition++);
 
-            $tokens[] = $token;
+            $callable->addParameter($parameter);
 
-            switch ($token->type) {
+            $this->_consumeComments($tokens);
+
+            $tokenType = $this->tokenizer->peek();
+            // Check for following parameter
+            if ($tokenType === self::T_COMMA) {
+                $this->_consumeToken(self::T_COMMA, $tokens);
+                continue;
+            }
+            // Stop processing
+            break;
+        }
+
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+    }
+
+    /**
+     * This method parses a single function or method parameter and returns the
+     * corresponding ast instance. Additionally this method fills the tokens
+     * array with all found tokens.
+     * 
+     * @param array(PHP_Depend_Token) &$tokens Collected tokens instances.
+     *
+     * @return PHP_Depend_Code_Parameter
+     */
+    private function _parseFunctionParameter(array &$tokens)
+    {
+        $parameterRef   = false;
+        $parameterType  = null;
+        $parameterArray = false;
+
+        $this->_consumeComments($tokens);
+        $tokenType = $this->tokenizer->peek();
+
+        // Check for class/interface type hint
+        if ($tokenType === self::T_STRING || $tokenType === self::T_BACKSLASH) {
+            // Get type identifier
+            $parameterType = $this->_parseClassNameChain($tokens);
+
+            // Remove ending comments
+            $this->_consumeComments($tokens);
+
+            // Get next token type
+            $tokenType = $this->tokenizer->peek();
+        } else if ($tokenType === self::T_ARRAY) {
+            // Mark as array parameter
+            $parameterArray = true;
+
+            // Consume array token and remove comments
+            $this->_consumeToken(self::T_ARRAY);
+            $this->_consumeComments($tokens);
+
+            // Get next token type
+            $tokenType = $this->tokenizer->peek();
+        }
+
+        // Check for parameter by reference
+        if ($tokenType === self::T_BITWISE_AND) {
+            // Set by ref flag
+            $parameterRef = true;
+
+            // Consume bitwise and token
+            $this->_consumeToken(self::T_BITWISE_AND);
+
+            // Get next token type
+            $tokenType = $this->tokenizer->peek();
+        }
+
+        // Next token must be the parameter variable
+        $token = $this->_consumeToken(self::T_VARIABLE, $tokens);
+        $this->_consumeComments($tokens);
+
+        $parameter = $this->builder->buildParameter($token->image);
+        $parameter->setPassedByReference($parameterRef);
+        $parameter->setArray($parameterArray);
+
+        if ($parameterType !== null) {
+            // TODO: Refs #66: This should be done in the post processing process.
+            $instance = $this->builder->buildClassOrInterface($parameterType);
+            $parameter->setClass($instance);
+        }
+
+        // Check for a default value
+        if ($this->tokenizer->peek() !== self::T_EQUAL) {
+            return $parameter;
+        }
+
+        $this->_consumeToken(self::T_EQUAL, $tokens);
+        $this->_consumeComments($tokens);
+
+        $parenthesis = 1;
+
+
+        while (($tokenType = $this->tokenizer->peek()) !== self::T_EOF) {
+
+            switch ($tokenType) {
+
             case self::T_PARENTHESIS_OPEN:
                 ++$parenthesis;
-                $parameterType      = null;
-                $parameterReference = false;
                 break;
 
             case self::T_PARENTHESIS_CLOSE:
                 --$parenthesis;
-                $parameterType      = null;
-                $parameterReference = false;
                 break;
 
-            case self::T_BITWISE_AND:
-                $parameterReference = true;
-                break;
-
-            case self::T_STRING:
-                // Check that the next token is a variable or next token is the
-                // reference operator
-                if ($this->tokenizer->peek() !== self::T_VARIABLE
-                 && $this->tokenizer->peek() !== self::T_BITWISE_AND) {
-                    continue;
+            case self::T_COMMA:
+                // No array parenthesis, so it is the parameter separator
+                if ($parenthesis === 1) {
+                    $parenthesis = 0;
                 }
-
-                if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
-                    // Store reference operator
-                    $tokens[] = $this->tokenizer->next();
-                    // Check next token
-                    if ($this->tokenizer->peek() !== self::T_VARIABLE) {
-                        continue;
-                    }
-                    $parameterReference = true;
-                }
-
-                // Create an instance for this parameter
-                $parameterType = $this->builder->buildClassOrInterface($token->image);
-                break;
-
-            case self::T_VARIABLE:
-                $parameter = $this->builder->buildParameter($token->image);
-                $parameter->setStartLine($token->startLine);
-                $parameter->setPosition($parameterPosition++);
-                $parameter->setPassedByReference($parameterReference);
-
-                if ($parameterType !== null) {
-                    $parameter->setClass($parameterType);
-                }
-                $callable->addParameter($parameter);
-
-                $parameterType      = null;
-                $parameterReference = false;
-                break;
-
-            default:
-                // TODO: Handle/log unused tokens
-                $parameterType      = null;
-                $parameterReference = false;
                 break;
             }
 
+            // End of parameter declaration, stop here
             if ($parenthesis === 0) {
-                return;
+                return $parameter;
             }
+
+            // Consume the current token
+            $this->_consumeToken($tokenType, $tokens);
         }
-        
-        throw new RuntimeException('Invalid function signature.');
+
+        // We should never reach this, so throw an exception
+        throw new RuntimeException('Unexpected end of token stream.');
     }
 
     /**
@@ -775,9 +841,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                         // Skip method call
                         $tokens[] = $this->tokenizer->next();
                         // Create a dependency class
-                        $dependency = $this->builder->buildClassOrInterface($token->image);
+                        $dep = $this->builder->buildClassOrInterface($token->image);
 
-                        $callable->addDependency($dependency);
+                        $callable->addDependency($dep);
                     }
                 }
                 break;
@@ -890,15 +956,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseClassNameChain(&$tokens)
     {
-        $type = $this->tokenizer->peek();
+        $tokenType = $this->tokenizer->peek();
+
         $qualifiedName = '';
-        while ($type === self::T_BACKSLASH || $type === self::T_STRING) {
+        while ($tokenType === self::T_BACKSLASH 
+            || $tokenType === self::T_STRING) {
+
             $token    = $this->tokenizer->next();
             $tokens[] = $token;
 
             $qualifiedName .= $token->image;
 
-            $type = $this->tokenizer->peek();
+            $tokenType = $this->tokenizer->peek();
         }
         return $qualifiedName;
     }
@@ -1019,7 +1088,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
         // Append all exception types
         foreach ($throws as $type) {
-            $callable->addExceptionType($this->builder->buildClassOrInterface($type));
+            $exceptionType = $this->builder->buildClassOrInterface($type);
+            $callable->addExceptionType($exceptionType);
         }
 
         // Get return annotation
