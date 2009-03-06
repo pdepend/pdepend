@@ -663,13 +663,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeComments($tokens);
 
             $tokenType = $this->tokenizer->peek();
+
             // Check for following parameter
-            if ($tokenType === self::T_COMMA) {
-                $this->_consumeToken(self::T_COMMA, $tokens);
-                continue;
+            if ($tokenType !== self::T_COMMA) {
+                break;
             }
-            // Stop processing
-            break;
+
+            // It must be a comma
+            $this->_consumeToken(self::T_COMMA, $tokens);
         }
 
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
