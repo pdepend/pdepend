@@ -194,7 +194,8 @@ class PHP_Depend_Log_Jdepend_Chart
         $diff = (($max - $min) / 10);
 
         // Sort items by size
-        usort($items, create_function('$a, $b', 'return ($a["size"] - $b["size"]);'));
+        usort($items, 
+              create_function('$a, $b', 'return ($a["size"] - $b["size"]);'));
 
         foreach ($items as $item) {
             if ($item['distance'] < $bias) {
