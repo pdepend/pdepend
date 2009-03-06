@@ -145,7 +145,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Invalid function signature.'
+            'Unexpected token: (, line: 3, col: 23, file: '
         );
 
         self::parseSource('invalid_function1.txt');
