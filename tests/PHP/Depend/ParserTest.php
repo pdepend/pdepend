@@ -148,7 +148,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             'Invalid function signature.'
         );
 
-        self::parseSource(dirname(__FILE__) . '/_code/invalid_function1.txt');
+        self::parseSource('invalid_function1.txt');
     }
 
     /**
@@ -159,14 +159,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserWithInvalidFunction2Fail()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/invalid_function2.txt';
-
         $this->setExpectedException(
             'RuntimeException',
-            "Invalid token \"Bar\" on line 3 in file: {$sourceFile}."
+            "Unexpected token: Bar, line: 3, col: 18, file: "
         );
 
-        self::parseSource($sourceFile);
+        self::parseSource('invalid_function2.txt');
     }
 
     /**
@@ -177,7 +175,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserStaticCallBug01()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/001.php');
+        $packages = self::parseSource('bugs/001.php');
         $packages->next();
         $this->assertEquals(2, $packages->count());
 
