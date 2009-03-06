@@ -247,10 +247,10 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
                 'ncloc'  =>  1,
             ),
             'method_without_comment'  =>  array(
-                'loc'    =>  1,
+                'loc'    =>  2,
                 'cloc'   =>  0,
                 'eloc'   =>  0,
-                'ncloc'  =>  1,
+                'ncloc'  =>  2,
             ),
             'method_without_doc_comment'  =>  array(
                 'loc'    =>  1,

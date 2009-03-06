@@ -613,10 +613,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $this->parseCallableSignature($tokens, $callable);
+        $this->_consumeComments($tokens);
+
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies
             $this->parseCallableBody($tokens, $callable);
         } else {
+            $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
             $callable->setEndLine($token->startLine);
         }
 
@@ -1048,7 +1051,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param integer $tokenType The next expected token type.
      * @param array   &$tokens   Optional token storage array.
      *
-     * @return void
+     * @return PHP_Depend_Token
      */
     private function _consumeToken($tokenType, &$tokens = array())
     {
@@ -1062,7 +1065,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             throw new RuntimeException('Unexpected token type.');
         }
 
-        $tokens[] = $token;
+        return $tokens[] = $token;
     }
 
     /**
