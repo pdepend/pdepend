@@ -2063,6 +2063,60 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser sets the is array flag when the parameter contains
+     * the array type hint.
+     *
+     * @return void
+     */
+    public function testParserSetsParameterArrayFlagIssue67()
+    {
+        $packages = self::parseSource('issues/067-5-parameter-type-hint-array.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isArray());
+    }
+
+    /**
+     * Tests that the parser does not set the array flag when the parameter is
+     * scalar without type hint.
+     *
+     * @return void
+     */
+    public function testParserDoesNotSetParameterArrayFlagForScalarIssue67()
+    {
+        $packages = self::parseSource('issues/067-6-parameter-type-hint-array.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertFalse($parameters->current()->isArray());
+    }
+
+    /**
+     * Tests that the parser does not set the array flag when the parameter has
+     * a class type hint.
+     *
+     * @return void
+     */
+    public function testParserDoesNotSetParameterArrayFlagForTypeIssue67()
+    {
+        $packages = self::parseSource('issues/067-7-parameter-type-hint-array.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertFalse($parameters->current()->isArray());
+    }
+
+    /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
      *
