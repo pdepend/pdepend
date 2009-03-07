@@ -1859,6 +1859,117 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that parser handles a php 5.3 static method call correct.
+     *
+     * <code>
+     * PHP\Depend\Parser::call();
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserHandlesStaticMethodCallInFunctionBodyBug69()
+    {
+        $packages = self::parseSource('bugs/069-1-static-expression.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $package = $function->getDependencies()
+                            ->current()
+                            ->getPackage();
+
+        $this->assertSame('PHP\Depend', $package->getName());
+    }
+
+    /**
+     * Tests that parser handles a php 5.3 static method call correct.
+     *
+     * <code>
+     * \PHP\Depend\Parser::call();
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserHandlesStaticMethodLeadingBackslashCallInFunctionBodyBug69()
+    {
+        $packages = self::parseSource('bugs/069-2-static-expression.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $package = $function->getDependencies()
+                            ->current()
+                            ->getPackage();
+
+        $this->assertSame('\PHP\Depend', $package->getName());
+    }
+
+    /**
+     * Tests that parser does not handle a php 5.3 function call as dependency.
+     *
+     * <code>
+     * \PHP\Depend\Parser\call();
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserDoesNotHandleQualifiedFunctionCallAsDependencyInFunctionBodyBug69()
+    {
+        $packages = self::parseSource('bugs/069-3-static-expression.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $this->assertSame(0, $function->getDependencies()->count());
+    }
+
+    /**
+     * Tests that parser handles a php 5.3 property access as dependency.
+     *
+     * <code>
+     * \PHP\Depend\Parser::$prop;
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserHandlesQualifiedPropertyAccessAsDependencyInFunctionBodyBug69()
+    {
+        $packages = self::parseSource('bugs/069-4-static-expression.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $package = $function->getDependencies()
+                            ->current()
+                            ->getPackage();
+
+        $this->assertSame('\PHP\Depend', $package->getName());
+    }
+
+    /**
+     * Tests that parser handles a php 5.3 constant access as dependency.
+     *
+     * <code>
+     * \PHP\Depend\Parser::CONSTANT;
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserHandlesQualifiedConstantAccessAsDependencyInFunctionBodyBug69()
+    {
+        $packages = self::parseSource('bugs/069-5-static-expression.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $package = $function->getDependencies()
+                            ->current()
+                            ->getPackage();
+
+        $this->assertSame('\PHP\Depend', $package->getName());
+    }
+
+    /**
      * Tests that the parser supports function parameters.
      *
      * @return void
