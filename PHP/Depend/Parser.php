@@ -373,7 +373,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_EXTENDS, $tokens);
             $this->_consumeComments($tokens);
 
-            $qualifiedName = $this->_parseClassNameChain($tokens);
+            $qualifiedName = $this->_parseQualifiedName($tokens);
             if ($qualifiedName === '') {
                 throw new RuntimeException('Class identifier expected.');
             }
@@ -409,7 +409,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         do {
             $this->_consumeComments($tokens);
 
-            $qualifiedName = $this->_parseClassNameChain($tokens);
+            $qualifiedName = $this->_parseQualifiedName($tokens);
             if ($qualifiedName === '') {
                 throw new RuntimeException('Interface identifier expected.');
             }
@@ -617,7 +617,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies
-            $this->parseCallableBody($tokens, $callable);
+            $this->_parseFunctionBody($tokens, $callable);
         } else {
             $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
             $callable->setEndLine($token->startLine);
@@ -693,7 +693,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Check for class/interface type hint
         if ($tokenType === self::T_STRING || $tokenType === self::T_BACKSLASH) {
             // Get type identifier
-            $parameterType = $this->_parseClassNameChain($tokens);
+            $parameterType = $this->_parseQualifiedName($tokens);
 
             // Remove ending comments
             $this->_consumeComments($tokens);
@@ -705,7 +705,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parameterArray = true;
 
             // Consume array token and remove comments
-            $this->_consumeToken(self::T_ARRAY);
+            $this->_consumeToken(self::T_ARRAY, $tokens);
             $this->_consumeComments($tokens);
 
             // Get next token type
@@ -718,7 +718,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parameterRef = true;
 
             // Consume bitwise and token
-            $this->_consumeToken(self::T_BITWISE_AND);
+            $this->_consumeToken(self::T_BITWISE_AND, $tokens);
+            $this->_consumeComments($tokens);
 
             // Get next token type
             $tokenType = $this->tokenizer->peek();
@@ -790,8 +791,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    protected function parseCallableBody(array &$outTokens,
-                                         PHP_Depend_Code_AbstractCallable $callable)
+    private function _parseFunctionBody(array &$outTokens,
+                                        PHP_Depend_Code_AbstractCallable $callable)
     {
         $curly  = 0;
         $tokens = array();
@@ -802,11 +803,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             switch ($token->type) {
             case self::T_CATCH:
-                // Skip open parenthesis
-                $tokens[] = $this->tokenizer->next();
+                // Consume the opening parenthesis
+                $this->_consumeComments($tokens);
+                $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
 
             case self::T_NEW:
-                $qualifiedName = $this->_parseClassNameChain($tokens);
+                $qualifiedName = $this->_parseQualifiedName($tokens);
 
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: new $className('PDepend');
@@ -818,7 +820,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_INSTANCEOF:
-                $qualifiedName = $this->_parseClassNameChain($tokens);
+                $qualifiedName = $this->_parseQualifiedName($tokens);
 
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: new $className('PDepend');
@@ -951,7 +953,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return string
      */
-    private function _parseClassNameChain(&$tokens)
+    private function _parseQualifiedName(&$tokens)
     {
         $tokenType = $this->tokenizer->peek();
 
