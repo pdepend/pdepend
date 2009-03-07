@@ -799,15 +799,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         while ($this->tokenizer->peek() !== self::T_EOF) {
 
-            $tokens[] = $token = $this->tokenizer->next();
-
-            switch ($token->type) {
+            switch ($this->tokenizer->peek()) {
+                
             case self::T_CATCH:
-                // Consume the opening parenthesis
+                // Consume catch and the opening parenthesis
+                $this->_consumeToken(self::T_CATCH, $tokens);
                 $this->_consumeComments($tokens);
                 $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
 
+                $qualifiedName = $this->_parseQualifiedName($tokens);
+                
+                $type = $this->builder->buildClassOrInterface($qualifiedName);
+                $callable->addDependency($type);
+                break;
+
             case self::T_NEW:
+                // Consume the
+                $this->_consumeToken(self::T_NEW, $tokens);
+                $this->_consumeComments($tokens);
+
                 $qualifiedName = $this->_parseQualifiedName($tokens);
 
                 // If this is a dynamic instantiation, do not add dependency.
@@ -820,6 +830,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_INSTANCEOF:
+                $this->_consumeToken(self::T_INSTANCEOF, $tokens);
+                $this->_consumeComments($tokens);
+
                 $qualifiedName = $this->_parseQualifiedName($tokens);
 
                 // If this is a dynamic instantiation, do not add dependency.
@@ -832,36 +845,54 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_STRING:
-                if ($this->tokenizer->peek() === self::T_DOUBLE_COLON) {
-                    // Skip double colon
-                    $tokens[] = $this->tokenizer->next();
-                    // Check for method call
-                    if ($this->tokenizer->peek() === self::T_STRING) {
-                        // Skip method call
-                        $tokens[] = $this->tokenizer->next();
-                        // Create a dependency class
-                        $dep = $this->builder->buildClassOrInterface($token->image);
+            case self::T_BACKSLASH:
+                $qualifiedName = $this->_parseQualifiedName($tokens);
 
+                // Remove comments
+                $this->_consumeComments($tokens);
+
+                // Test for static method, property or constant access
+                if ($this->tokenizer->peek() === self::T_DOUBLE_COLON) {
+                    $this->_consumeToken(self::T_DOUBLE_COLON, $tokens);
+                    $this->_consumeComments($tokens);
+
+                    $tokenType = $this->tokenizer->peek();
+                    if ($tokenType === self::T_STRING 
+                     || $tokenType === self::T_VARIABLE) {
+
+                        $this->_consumeToken($tokenType, $tokens);
+
+                        // TODO Refs #66: This should be done in a post process
+                        $dep = $this->builder->buildClassOrInterface($qualifiedName);
+                        
                         $callable->addDependency($dep);
                     }
                 }
                 break;
 
             case self::T_CURLY_BRACE_OPEN:
+                $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
                 ++$curly;
                 break;
 
             case self::T_CURLY_BRACE_CLOSE:
+                $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
                 --$curly;
                 break;
 
             case self::T_DOUBLE_QUOTE:
+                $this->_consumeToken(self::T_DOUBLE_QUOTE, $tokens);
+                $this->_skipEncapsultedBlock($tokens, self::T_DOUBLE_QUOTE);
+                break;
+
             case self::T_BACKTICK:
-                $this->_skipEncapsultedBlock($tokens, $token->type);
+                $this->_consumeToken(self::T_BACKTICK, $tokens);
+                $this->_skipEncapsultedBlock($tokens, self::T_BACKTICK);
                 break;
 
             case self::T_COMMENT:
-                /* @var $token PHP_Depend_Token */
+                $token = $this->_consumeToken(self::T_COMMENT, $tokens);
+
                 // Check for inline type definitions like: /* @var $o FooBar */
                 if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
                     // Create a referenced class or interface instance
@@ -872,11 +903,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
+                $tokens[] = $this->tokenizer->next();
                 // throw new RuntimeException("Unknown token '{$token->image}'.");
                 // TODO: Handle/log unused tokens
             }
 
             if ($curly === 0) {
+                // Get the last token
+                $token = end($tokens);
                 // Set end line number
                 $callable->setEndLine($token->startLine);
                 // Set all tokens for this function
@@ -965,6 +999,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokens[] = $token;
 
             $qualifiedName .= $token->image;
+
+            $this->_consumeComments($tokens);
 
             $tokenType = $this->tokenizer->peek();
         }
