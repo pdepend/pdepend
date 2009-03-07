@@ -648,15 +648,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return;
         }
 
-        $parameterType      = null;
-        $parameterReference = false;
-        $parameterPosition  = 0;
-
-        $parenthesis = 1;
+        $position  = 0;
 
         while ($tokenType !== self::T_EOF) {
             $parameter = $this->_parseFunctionParameter($tokens);
-            $parameter->setPosition($parameterPosition++);
+            $parameter->setPosition($position++);
 
             $callable->addParameter($parameter);
 
