@@ -48,6 +48,7 @@
 require_once 'PHP/Depend/ConstantsI.php';
 require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/TokenizerI.php';
+require_once 'PHP/Depend/Code/Value.php';
 require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
 
@@ -648,7 +649,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return;
         }
 
-        $position  = 0;
+        $position = 0;
 
         while ($tokenType !== self::T_EOF) {
             $parameter = $this->_parseFunctionParameter($tokens);
@@ -747,40 +748,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_EQUAL, $tokens);
         $this->_consumeComments($tokens);
 
-        $parenthesis = 1;
+        $parameter->setValue($this->_parseDefaultValue($tokens));
 
-
-        while (($tokenType = $this->tokenizer->peek()) !== self::T_EOF) {
-
-            switch ($tokenType) {
-
-            case self::T_PARENTHESIS_OPEN:
-                ++$parenthesis;
-                break;
-
-            case self::T_PARENTHESIS_CLOSE:
-                --$parenthesis;
-                break;
-
-            case self::T_COMMA:
-                // No array parenthesis, so it is the parameter separator
-                if ($parenthesis === 1) {
-                    $parenthesis = 0;
-                }
-                break;
-            }
-
-            // End of parameter declaration, stop here
-            if ($parenthesis === 0) {
-                return $parameter;
-            }
-
-            // Consume the current token
-            $this->_consumeToken($tokenType, $tokens);
-        }
-
-        // We should never reach this, so throw an exception
-        throw new RuntimeException('Unexpected end of token stream.');
+        return $parameter;
     }
 
     /**
@@ -930,6 +900,104 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         foreach ($tokens as $token) {
             $outTokens[] = $token;
         }
+    }
+
+    /**
+     * This method will parse the default value of a parameter or property
+     * declaration.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
+     * @return PHP_Depend_Code_Value
+     */
+    private function _parseDefaultValue(array &$tokens)
+    {
+        $defaultValue = new PHP_Depend_Code_Value();
+
+        $parenthesis = 0;
+
+        $this->_consumeComments($tokens);
+        while (($tokenType = $this->tokenizer->peek()) !== self::T_EOF) {
+
+            switch ($tokenType) {
+
+            case self::T_PARENTHESIS_OPEN:
+                ++$parenthesis;
+                break;
+
+            case self::T_PARENTHESIS_CLOSE:
+                --$parenthesis;
+                break;
+
+            case self::T_COMMA:
+                // No array parenthesis, so it is the parameter separator
+                if ($parenthesis === 0) {
+                    $parenthesis = -1;
+                }
+                break;
+            
+            case self::T_SEMICOLON:
+                $parenthesis = -1;
+                break;
+
+            case self::T_NULL:
+                $token = $this->_consumeToken(self::T_NULL, $tokens);
+                $defaultValue->setValue(null);
+                continue 2;
+
+            case self::T_TRUE:
+                $token = $this->_consumeToken(self::T_TRUE, $tokens);
+                $defaultValue->setValue(true);
+                continue 2;
+
+            case self::T_FALSE:
+                $token = $this->_consumeToken(self::T_FALSE, $tokens);
+                $defaultValue->setValue(false);
+                continue 2;
+
+            case self::T_LNUMBER:
+                $token = $this->_consumeToken(self::T_LNUMBER, $tokens);
+                $defaultValue->setValue((int) $token->image);
+                continue 2;
+
+            case self::T_DNUMBER:
+                $token = $this->_consumeToken(self::T_DNUMBER, $tokens);
+                $defaultValue->setValue((double) $token->image);
+                continue 2;
+
+            case self::T_CONSTANT_ENCAPSED_STRING:
+                $token = $this->_consumeToken(self::T_CONSTANT_ENCAPSED_STRING, $tokens);
+                $defaultValue->setValue(substr($token->image, 1, -1));
+                continue 2;
+
+            case self::T_ARRAY:
+                $defaultValue->setValue(array());
+                break;
+
+            case self::T_SELF:
+            case self::T_STRING:
+            case self::T_STATIC:
+            case self::T_BACKSLASH:
+                // There is a default value but we don't handle it at the moment.
+                $defaultValue->setValue(null);
+                break;
+            }
+
+            // End of parameter declaration, stop here
+            if ($parenthesis === -1) {
+                if ($defaultValue->isValueAvailable() === true) {
+                    return $defaultValue;
+                }
+                throw new RuntimeException('A default value was expected.');
+            }
+
+            // Consume the current token
+            $this->_consumeToken($tokenType, $tokens);
+            $this->_consumeComments($tokens);
+        }
+
+        // We should never reach this, so throw an exception
+        throw new RuntimeException('Unexpected end of token stream.');
     }
 
     /**
