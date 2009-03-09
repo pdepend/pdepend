@@ -61,6 +61,7 @@ require_once dirname(__FILE__) . '/NodeIteratorTest.php';
 require_once dirname(__FILE__) . '/PackageTest.php';
 require_once dirname(__FILE__) . '/ParameterTest.php';
 require_once dirname(__FILE__) . '/PropertyTest.php';
+require_once dirname(__FILE__) . '/ReflectionParameterTest.php';
 require_once dirname(__FILE__) . '/Filter/AllTests.php';
 require_once dirname(__FILE__) . '/NodeVisitor/AllTests.php';
 
@@ -106,6 +107,8 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_PackageTest');
         $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
         $suite->addTestSuite('PHP_Depend_Code_ParameterTest');
+
+        $suite->addTestSuite('PHP_Depend_Code_ReflectionParameterTest');
 
         return $suite;
     }
