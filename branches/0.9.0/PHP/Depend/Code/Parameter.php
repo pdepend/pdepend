@@ -353,6 +353,19 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * This method will return <b>true</b> when current parameter is a simple
+     * scalar or it is an <b>array</b> or type explicit declared with a default
+     * value <b>null</b>.
+     *
+     * @return boolean
+     */
+    public function allowsNull()
+    {
+        return ($this->_array === false && $this->_class === null)
+            || ($this->_value !== null && $this->_value->getValue() === null);
+    }
+
+    /**
      * This method will return <b>true</b> when this parameter is optional and
      * can be left blank on invokation.
      *
