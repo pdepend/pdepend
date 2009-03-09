@@ -143,6 +143,14 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     private $_passedByReference = false;
 
     /**
+     * The default value for this parameter or <b>null</b> when no default value
+     * was declared.
+     *
+     * @var PHP_Depend_Code_Value $value
+     */
+    private $_value = null;
+
+    /**
      * Constructs a new parameter instance for the given <b>$name</b>.
      *
      * @param string $name The item name.
@@ -342,6 +350,50 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     public function setArray($array)
     {
         $this->_array = (boolean) $array;
+    }
+
+    /**
+     * This method will return <b>true</b> when the parameter declaration
+     * contains a default value.
+     *
+     * @return boolean
+     */
+    public function isDefaultValueAvailable()
+    {
+        if ($this->_value === null) {
+            return false;
+        }
+        return $this->_value->isValueAvailable();
+    }
+
+    /**
+     * This method will return the declared default value for this parameter.
+     * Please note that this method will return <b>null</b> when no default
+     * value was declared, therefore you should combine calls to this method and
+     * {@link PHP_Depend_Code_Parameter::isDefaultValueAvailable()} to detect a
+     * NULL-value.
+     *
+     * @return mixed
+     */
+    public function getDefaultValue()
+    {
+        if ($this->_value === null) {
+            return null;
+        }
+        return $this->_value->getValue();
+    }
+
+    /**
+     * This method is used by the parser to the a declared default value for
+     * this parameter.
+     *
+     * @param PHP_Depend_Code_Value $value The declared parameter default value.
+     *
+     * @return void
+     */
+    public function setValue(PHP_Depend_Code_Value $value = null)
+    {
+        $this->_value = $value;
     }
 
     /**

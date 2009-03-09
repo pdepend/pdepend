@@ -2228,6 +2228,195 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the boolean flag has default value is <b>false</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterWithoutDefaultValueIssue67()
+    {
+        $packages = self::parseSource('issues/067-8-parameter-default-value-none.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertFalse($parameters->current()->isDefaultValueAvailable());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is <b>null</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueNullIssue67()
+    {
+        $packages = self::parseSource('issues/067-9-parameter-default-value-null.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertNull($parameters->current()->getDefaultValue());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is <b>true</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueBooleanTrueIssue67()
+    {
+        $packages = self::parseSource('issues/067-10-parameter-default-value-true.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertTrue($parameters->current()->getDefaultValue());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is <b>false</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueBooleanFalseIssue67()
+    {
+        $packages = self::parseSource('issues/067-11-parameter-default-value-false.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertFalse($parameters->current()->getDefaultValue());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is a <b>float</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueFloatIssue67()
+    {
+        $packages = self::parseSource('issues/067-12-parameter-default-value-float.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertType('float', $parameters->current()->getDefaultValue());
+        $this->assertEquals(42.23, $parameters->current()->getDefaultValue(), null, 0.001);
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is an <b>integer</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueIntegerIssue67()
+    {
+        $packages = self::parseSource('issues/067-13-parameter-default-value-integer.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertSame(42, $parameters->current()->getDefaultValue());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is a <b>string</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueStringIssue67()
+    {
+        $packages = self::parseSource('issues/067-14-parameter-default-value-string.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertSame('foo bar 42', $parameters->current()->getDefaultValue());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is an <b>array</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueArrayIssue67()
+    {
+        $packages = self::parseSource('issues/067-15-parameter-default-value-array.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertSame(array(), $parameters->current()->getDefaultValue());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is <b>null</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueConstantIssue67()
+    {
+        $packages = self::parseSource('issues/067-16-parameter-default-value-constant.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertSame(null, $parameters->current()->getDefaultValue());
+    }
+
+    /**
+     * Tests that the boolean flag has default value is <b>true</b> and the
+     * default value is <b>null</b>.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterDefaultValueClassConstantIssue67()
+    {
+        $packages = self::parseSource('issues/067-17-parameter-default-value-class-constant.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $this->assertTrue($parameters->current()->isDefaultValueAvailable());
+        $this->assertSame(null, $parameters->current()->getDefaultValue());
+    }
+
+    /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
      *
