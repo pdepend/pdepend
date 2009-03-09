@@ -130,6 +130,22 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a code uri for the given file name.
+     *
+     * @param string $fileName The code file name.
+     *
+     * @return string
+     */
+    protected static function createCodeResourceURI($fileName)
+    {
+        $uri = dirname(__FILE__) . '/_code/' . $fileName;
+        if (file_exists($uri) === false) {
+            throw new ErrorException("File '{$fileName}' does not exists.");
+        }
+        return $uri;
+    }
+
+    /**
      * Initializes the test environment.
      *
      * @return void
@@ -193,7 +209,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/Depend/Input/Iterator.php';
 
         if (file_exists($fileOrDirectory) === false) {
-            $fileOrDirectory = dirname(__FILE__) . '/_code/' . $fileOrDirectory;
+            $fileOrDirectory = self::createCodeResourceURI($fileOrDirectory);
         }
 
         if (is_dir($fileOrDirectory)) {
