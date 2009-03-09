@@ -2102,7 +2102,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsFunctionParameterByReferenceIssue67()
     {
-        $packages = self::parseSource('issues/067-1-parameter-by-reference.php');
+        $packages = self::parseSource('issues/067-001-parameter-by-reference.php');
 
         $package    = $packages->current();
         $functions  = $package->getFunctions();
@@ -2121,7 +2121,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsMultipleFunctionParameterByReferenceIssue67()
     {
-        $packages = self::parseSource('issues/067-2-parameter-by-reference.php');
+        $packages = self::parseSource('issues/067-002-parameter-by-reference.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2141,7 +2141,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsFunctionParameterByReferenceWithTypeHintIssue67()
     {
-        $packages = self::parseSource('issues/067-3-parameter-by-reference.php');
+        $packages = self::parseSource('issues/067-003-parameter-by-reference.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2160,7 +2160,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsMultipleFunctionParameterByReferenceWithTypeHintIssue67()
     {
-        $packages = self::parseSource('issues/067-4-parameter-by-reference.php');
+        $packages = self::parseSource('issues/067-004-parameter-by-reference.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2181,7 +2181,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsParameterArrayFlagIssue67()
     {
-        $packages = self::parseSource('issues/067-5-parameter-type-hint-array.php');
+        $packages = self::parseSource('issues/067-005-parameter-type-hint-array.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2199,7 +2199,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDoesNotSetParameterArrayFlagForScalarIssue67()
     {
-        $packages = self::parseSource('issues/067-6-parameter-type-hint-array.php');
+        $packages = self::parseSource('issues/067-006-parameter-type-hint-array.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2217,7 +2217,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDoesNotSetParameterArrayFlagForTypeIssue67()
     {
-        $packages = self::parseSource('issues/067-7-parameter-type-hint-array.php');
+        $packages = self::parseSource('issues/067-007-parameter-type-hint-array.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2234,7 +2234,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterWithoutDefaultValueIssue67()
     {
-        $packages = self::parseSource('issues/067-8-parameter-default-value-none.php');
+        $packages = self::parseSource('issues/067-008-parameter-default-value-none.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2252,7 +2252,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueNullIssue67()
     {
-        $packages = self::parseSource('issues/067-9-parameter-default-value-null.php');
+        $packages = self::parseSource('issues/067-009-parameter-default-value-null.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2271,7 +2271,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueBooleanTrueIssue67()
     {
-        $packages = self::parseSource('issues/067-10-parameter-default-value-true.php');
+        $packages = self::parseSource('issues/067-010-parameter-default-value-true.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2290,7 +2290,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueBooleanFalseIssue67()
     {
-        $packages = self::parseSource('issues/067-11-parameter-default-value-false.php');
+        $packages = self::parseSource('issues/067-011-parameter-default-value-false.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2309,7 +2309,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueFloatIssue67()
     {
-        $packages = self::parseSource('issues/067-12-parameter-default-value-float.php');
+        $packages = self::parseSource('issues/067-012-parameter-default-value-float.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2329,7 +2329,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueIntegerIssue67()
     {
-        $packages = self::parseSource('issues/067-13-parameter-default-value-integer.php');
+        $packages = self::parseSource('issues/067-013-parameter-default-value-integer.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2348,7 +2348,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueStringIssue67()
     {
-        $packages = self::parseSource('issues/067-14-parameter-default-value-string.php');
+        $packages = self::parseSource('issues/067-014-parameter-default-value-string.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2367,7 +2367,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueArrayIssue67()
     {
-        $packages = self::parseSource('issues/067-15-parameter-default-value-array.php');
+        $packages = self::parseSource('issues/067-015-parameter-default-value-array.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2386,7 +2386,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueConstantIssue67()
     {
-        $packages = self::parseSource('issues/067-16-parameter-default-value-constant.php');
+        $packages = self::parseSource('issues/067-016-parameter-default-value-constant.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
@@ -2405,7 +2405,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParameterDefaultValueClassConstantIssue67()
     {
-        $packages = self::parseSource('issues/067-17-parameter-default-value-class-constant.php');
+        $packages = self::parseSource('issues/067-017-parameter-default-value-class-constant.php');
 
         $package   = $packages->current();
         $functions = $package->getFunctions();
