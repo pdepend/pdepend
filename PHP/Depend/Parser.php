@@ -650,12 +650,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $position = 0;
+        $parameters = array();
 
         while ($tokenType !== self::T_EOF) {
             $parameter = $this->_parseFunctionParameter($tokens);
-            $parameter->setPosition($position++);
+            $parameter->setPosition(count($parameters));
 
+            // Add new parameter to function
             $callable->addParameter($parameter);
+
+            // Store parameter for later isOptional calculation.
+            $parameters[] = $parameter;
 
             $this->_consumeComments($tokens);
 
@@ -668,6 +673,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // It must be a comma
             $this->_consumeToken(self::T_COMMA, $tokens);
+        }
+
+        $optional = true;
+        foreach (array_reverse($parameters) as $parameter) {
+            if ($parameter->isDefaultValueAvailable() === false) {
+                $optional = false;
+            }
+            $parameter->setOptional($optional);
         }
 
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
