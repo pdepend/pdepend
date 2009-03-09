@@ -353,6 +353,32 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * This method will return <b>true</b> when this parameter is optional and
+     * can be left blank on invokation.
+     *
+     * @return boolean
+     */
+    public function isOptional()
+    {
+        return $this->_optional;
+    }
+
+    /**
+     * This method can be used to mark a parameter optional. Note that a
+     * parameter is only optional when it has a default value an no following
+     * parameter has no default value.
+     *
+     * @param boolean $optional Boolean flag that marks this parameter a
+     *                          optional or not.
+     *
+     * @return void
+     */
+    public function setOptional($optional)
+    {
+        $this->_optional = (boolean) $optional;
+    }
+
+    /**
      * This method will return <b>true</b> when the parameter declaration
      * contains a default value.
      *

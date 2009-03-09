@@ -2417,6 +2417,91 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the boolean flag for optional parameters is set to <b>false</b>
+     * for all parameters.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterOptionalIsFalseForAllParametersIssue67()
+    {
+        $packages = self::parseSource('issues/067-018-parameter-optional.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $expected = array(false, false, false);
+
+        foreach ($parameters as $parameter) {
+            $this->assertSame($expected[$parameter->getPosition()], $parameter->isOptional());
+        }
+    }
+
+    /**
+     * Tests that the boolean flag for optional parameters is set to <b>false</b>
+     * for all parameters.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterOptionalIsFalseForAllParametersEvenADefaultValueExistsIssue67()
+    {
+        $packages = self::parseSource('issues/067-019-parameter-optional.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $expected = array(false, false, false);
+        foreach ($parameters as $parameter) {
+            $this->assertSame($expected[$parameter->getPosition()], $parameter->isOptional());
+        }
+    }
+
+    /**
+     * Tests that the boolean flag for optional parameters is set to <b>false</b>
+     * for the first two parameters.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterOptionalIsFalseForFirstTwoParametersIssue67()
+    {
+        $packages = self::parseSource('issues/067-020-parameter-optional.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $expected = array(false, false, true);
+        foreach ($parameters as $parameter) {
+            $this->assertSame($expected[$parameter->getPosition()], $parameter->isOptional());
+        }
+    }
+
+    /**
+     * Tests that the boolean flag for optional parameters is set to <b>true</b>
+     * for all parameters.
+     *
+     * @return void
+     */
+    public function testParserHandlesParameterOptionalIsTrueForAllParametersIssue67()
+    {
+        $packages = self::parseSource('issues/067-021-parameter-optional.php');
+
+        $package   = $packages->current();
+        $functions = $package->getFunctions();
+        $function   = $functions->current();
+        $parameters = $function->getParameters();
+
+        $expected = array(true, true);
+        foreach ($parameters as $parameter) {
+            $this->assertSame($expected[$parameter->getPosition()], $parameter->isOptional());
+        }
+    }
+
+    /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
      *
