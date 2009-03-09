@@ -250,6 +250,22 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * This method will return the class where the parent method was declared.
+     * The returned value will be <b>null</b> if the parent is a function.
+     *
+     * @return PHP_Depend_Code_AbstractType
+     * @since 0.9.5
+     */
+    public function getDeclaringClass()
+    {
+        // TODO: Review this for refactoring, maybe create a empty getParent()?
+        if ($this->_declaringFunction instanceof PHP_Depend_Code_Method) {
+            return $this->_declaringFunction->getParent();
+        }
+        return null;
+    }
+
+    /**
      * Returns the parameter position in the method/function signature.
      *
      * @return integer
@@ -358,6 +374,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * value <b>null</b>.
      *
      * @return boolean
+     * @since 0.9.5
      */
     public function allowsNull()
     {
@@ -370,6 +387,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * can be left blank on invokation.
      *
      * @return boolean
+     * @since 0.9.5
      */
     public function isOptional()
     {
@@ -385,6 +403,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      *                          optional or not.
      *
      * @return void
+     * @since 0.9.5
      */
     public function setOptional($optional)
     {
@@ -396,6 +415,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * contains a default value.
      *
      * @return boolean
+     * @since 0.9.5
      */
     public function isDefaultValueAvailable()
     {
@@ -413,6 +433,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * NULL-value.
      *
      * @return mixed
+     * @since 0.9.5
      */
     public function getDefaultValue()
     {
@@ -429,6 +450,7 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
      * @param PHP_Depend_Code_Value $value The declared parameter default value.
      *
      * @return void
+     * @since 0.9.5
      */
     public function setValue(PHP_Depend_Code_Value $value = null)
     {

@@ -49,6 +49,8 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Function.php';
+require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Parameter.php';
 require_once 'PHP/Depend/Code/Value.php';
 
@@ -153,6 +155,20 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
         $parameter->setValue($value);
 
         $this->assertTrue($parameter->allowsNull());
+    }
+
+    /**
+     * Tests that the getDeclaringClass() method returns <b>null</b> for a
+     * function.
+     *
+     * @return void
+     */
+    public function testParameterDeclaringClassReturnsNullForFunctionIssue67()
+    {
+        $parameter = new PHP_Depend_Code_Parameter('foo');
+        $parameter->setDeclaringFunction(new PHP_Depend_Code_Function('bar'));
+
+        $this->assertNull($parameter->getDeclaringClass());
     }
 }
 ?>
