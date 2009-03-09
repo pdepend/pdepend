@@ -170,5 +170,23 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
 
         $this->assertNull($parameter->getDeclaringClass());
     }
+
+    /**
+     * Tests that the getDeclaringClass() method returns the declaring class
+     * of a parent function/method.
+     *
+     * @return void
+     */
+    public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67()
+    {
+        $class  = new PHP_Depend_Code_Class('foobar');
+        $method = new PHP_Depend_Code_Method('bar');
+        $method->setParent($class);
+
+        $parameter = new PHP_Depend_Code_Parameter('foo');
+        $parameter->setDeclaringFunction($method);
+
+        $this->assertSame($class, $parameter->getDeclaringClass());
+    }
 }
 ?>
