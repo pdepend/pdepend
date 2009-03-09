@@ -73,7 +73,9 @@ require_once 'PHP/Depend/Code/NodeI.php';
  * @version    Release: @package_version@
  * @link       http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
+class PHP_Depend_Code_Parameter
+       extends ReflectionParameter
+    implements PHP_Depend_Code_NodeI
 {
     /**
      * The name for this item.
@@ -441,6 +443,70 @@ class PHP_Depend_Code_Parameter implements PHP_Depend_Code_NodeI
             return null;
         }
         return $this->_value->getValue();
+    }
+
+    /**
+     * This method returns a string representation of this parameter.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $required  = $this->isOptional() ? 'optional' : 'required';
+        $reference = $this->isPassedByReference() ? '&' : '';
+
+        $typeHint = '';
+        if ($this->isArray() === true) {
+            $typeHint = ' array';
+        } else if ($this->getClass() !== null) {
+            $typeHint = ' ' . $this->getClass()->getName();
+        }
+
+        $default = '';
+        if ($this->isDefaultValueAvailable()) {
+            $default = ' = ';
+
+            $value = $this->getDefaultValue();
+            if ($value === null) {
+                $default  .= 'NULL';
+                $typeHint .= ($typeHint !== '' ? ' or NULL' : '');
+            } else if ($value === false) {
+                $default .= 'false';
+            } else if ($value === true) {
+                $default .= 'true';
+            } else if (is_array($value) === true) {
+                $default .= 'Array';
+            } else if (is_string($value) === true) {
+                $default .= "'" . $value . "'";
+            } else {
+                $default .= $value;
+            }
+        }
+
+        return sprintf('Parameter #%d [ <%s>%s %s%s%s ]',
+                       $this->_position,
+                       $required,
+                       $typeHint,
+                       $reference,
+                       $this->_name,
+                       $default);
+    }
+
+    /**
+     * This method can be used to export a single function or method parameter.
+     *
+     * @param string|array   $function  Name of the parent function.
+     * @param string|integer $parameter Name or offset of the export parameter.
+     * @param boolean        $return    Should this method return the export.
+     *
+     * @return string|null
+     */
+    public static function export($function, $parameter, $return = false)
+    {
+        if (is_callable($function) === false) {
+            throw new ReflectionException(__METHOD__ . '() is not suppored.');
+        }
+        return parent::export($function, $parameter, $return);
     }
 
     /**
