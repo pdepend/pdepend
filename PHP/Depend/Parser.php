@@ -468,10 +468,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function parseTypeBody(PHP_Depend_Code_AbstractType $type)
     {
-        $token = $this->tokenizer->next();
         $curly = 0;
 
-        $tokens  = array($token);
+        $tokens  = array();
         $comment = null;
 
         $defaultModifier = self::IS_PUBLIC;
@@ -483,10 +482,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Method position within the type body
         $methodPosition = 0;
 
-        while ($token !== self::T_EOF) {
+        $tokenType = $this->tokenizer->peek();
 
-            switch ($token->type) {
+        while ($tokenType !== self::T_EOF) {
+
+            switch ($tokenType) {
+
             case self::T_FUNCTION:
+                // Read function keyword for $startLine property
+                $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
+
                 $method = $this->_parseFunction($tokens, $type);
                 $method->setDocComment($comment);
                 $method->setStartLine($token->startLine);
@@ -501,6 +506,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_VARIABLE:
+                // Read variable token for $startLine property
+                $token = $this->_consumeToken(self::T_VARIABLE, $tokens);
+
                 $property = $this->builder->buildProperty($token->image);
                 $property->setDocComment($comment);
                 $property->setStartLine($token->startLine);
@@ -520,8 +528,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CONST:
-                $token    = $this->tokenizer->next();
-                $tokens[] = $token;
+                // Consume const keyword
+                $this->_consumeToken(self::T_CONST, $tokens);
+
+                // Remove leading comments and read constant name
+                $this->_consumeComments($tokens);
+                $token = $this->_consumeToken(self::T_STRING, $tokens);
 
                 $constant = $this->builder->buildTypeConstant($token->image);
                 $constant->setDocComment($comment);
@@ -536,46 +548,63 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CURLY_BRACE_OPEN:
+                $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+
                 ++$curly;
                 $comment = null;
                 break;
 
             case self::T_CURLY_BRACE_CLOSE:
+                // Read close token, we need it for the $endLine property
+                $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
+
                 --$curly;
                 $comment = null;
                 break;
 
             case self::T_ABSTRACT:
+                $this->_consumeToken(self::T_ABSTRACT, $tokens);
                 $modifiers |= self::IS_ABSTRACT;
                 break;
 
             case self::T_PUBLIC:
+                $this->_consumeToken(self::T_PUBLIC, $tokens);
                 $modifiers |= self::IS_PUBLIC;
                 break;
 
             case self::T_PRIVATE:
+                $this->_consumeToken(self::T_PRIVATE, $tokens);
                 $modifiers |= self::IS_PRIVATE;
                 $modifiers = $modifiers & ~self::IS_PUBLIC;
                 break;
 
             case self::T_PROTECTED:
+                $this->_consumeToken(self::T_PROTECTED, $tokens);
                 $modifiers |= self::IS_PROTECTED;
                 $modifiers = $modifiers & ~self::IS_PUBLIC;
                 break;
 
             case self::T_STATIC:
+                $this->_consumeToken(self::T_STATIC, $tokens);
                 $modifiers |= self::IS_STATIC;
                 break;
 
             case self::T_FINAL:
+                $this->_consumeToken(self::T_FINAL, $tokens);
                 $modifiers |= self::IS_FINAL;
                 break;
 
             case self::T_DOC_COMMENT:
+                // Read comment token
+                $token = $this->_consumeToken(self::T_DOC_COMMENT, $tokens);
+
                 $comment = $token->image;
                 break;
 
             default:
+                // Consume anything else
+                $this->_consumeToken($tokenType, $tokens);
+
                 // TODO: Handle/log unused tokens
                 $comment = null;
                 break;
@@ -583,24 +612,19 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             if ($curly === 0) {
                 // Set end line number
-                $type->setEndLine($token->startLine);
+                $type->setEndLine($token->endLine);
                 // Set type tokens
                 $type->setTokens($tokens);
                 // Stop processing
-                break;
-            } else {
-                $token    = $this->tokenizer->next();
-                $tokens[] = $token;
+                return $tokens;
             }
+
+            $tokenType = $this->tokenizer->peek();
         }
 
-        if ($curly !== 0) {
-            $fileName = (string) $this->tokenizer->getSourceFile();
-            $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
-            throw new RuntimeException($message);
-        }
-
-        return $tokens;
+        $fileName = (string) $this->tokenizer->getSourceFile();
+        $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
+        throw new RuntimeException($message);
     }
 
     /**
