@@ -216,18 +216,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Position of the context type within the analyzed file.
         $typePosition = 0;
 
-        while (($token = $this->tokenizer->next()) !== self::T_EOF) {
+        $tokenType = $this->tokenizer->peek();
 
-            switch ($token->type) {
+        while ($tokenType !== self::T_EOF) {
+
+            switch ($tokenType) {
+                
             case self::T_ABSTRACT:
+                $this->_consumeToken(self::T_ABSTRACT);
                 $modifiers |= self::IS_EXPLICIT_ABSTRACT;
                 break;
 
             case self::T_FINAL:
+                $this->_consumeToken(self::T_FINAL);
                 $modifiers |= self::IS_FINAL;
                 break;
 
             case self::T_DOC_COMMENT:
+                $token = $this->_consumeToken(self::T_DOC_COMMENT);
+
                 $comment       = $token->image;
                 $this->package = $this->parsePackage($token->image);
 
@@ -246,6 +253,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_INTERFACE:
+                // Consume interface keyword
+                $this->_consumeToken(self::T_INTERFACE);
+
                 // Remove leading comments and get interface name
                 $this->_consumeComments();
                 $token = $this->_consumeToken(self::T_STRING);
@@ -275,6 +285,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CLASS:
+                // Consume class keyword
+                $this->_consumeToken(self::T_CLASS);
+
                 // Remove leading comments and get class name
                 $this->_consumeComments();
                 $token = $this->_consumeToken(self::T_STRING);
@@ -304,6 +317,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_FUNCTION:
+                // Consume function keyword
+                $token = $this->_consumeToken(self::T_FUNCTION);
+
                 $function = $this->_parseFunction();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
                 $function->setStartLine($token->startLine);
@@ -317,10 +333,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
+                // Consume whatever token
+                $this->_consumeToken($tokenType);
+
                 // TODO: Handle/log unused tokens
                 $comment = null;
                 break;
             }
+
+            $tokenType = $this->tokenizer->peek();
         }
     }
 
@@ -781,7 +802,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return void
      */
     private function _parseFunctionBody(array &$outTokens,
-                                        PHP_Depend_Code_AbstractCallable $callable)
+                                        PHP_Depend_Code_AbstractCallable $function)
     {
         $curly  = 0;
         $tokens = array();
@@ -799,7 +820,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $qualifiedName = $this->_parseQualifiedName($tokens);
                 
                 $type = $this->builder->buildClassOrInterface($qualifiedName);
-                $callable->addDependency($type);
+                $function->addDependency($type);
                 break;
 
             case self::T_NEW:
@@ -814,7 +835,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 if ($qualifiedName !== '') {
                     // Get last element of parts and create a class for it
                     $class = $this->builder->buildClass($qualifiedName);
-                    $callable->addDependency($class);
+                    $function->addDependency($class);
                 }
                 break;
 
@@ -829,7 +850,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 if ($qualifiedName !== '') {
                     // Get last element of parts and create a class for it
                     $class = $this->builder->buildClassOrInterface($qualifiedName);
-                    $callable->addDependency($class);
+                    $function->addDependency($class);
                 }
                 break;
 
@@ -854,7 +875,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                         // TODO Refs #66: This should be done in a post process
                         $dep = $this->builder->buildClassOrInterface($qualifiedName);
                         
-                        $callable->addDependency($dep);
+                        $function->addDependency($dep);
                     }
                 }
                 break;
@@ -887,7 +908,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     // Create a referenced class or interface instance
                     $dependency = $this->builder->buildClassOrInterface($match[1]);
 
-                    $callable->addDependency($dependency);
+                    $function->addDependency($dependency);
                 }
                 break;
 
@@ -901,9 +922,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Get the last token
                 $token = end($tokens);
                 // Set end line number
-                $callable->setEndLine($token->startLine);
+                $function->setEndLine($token->startLine);
                 // Set all tokens for this function
-                $callable->setTokens($tokens);
+                $function->setTokens($tokens);
                 // Stop processing
                 break;
             }
