@@ -2502,6 +2502,76 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser sets the user-defined flag for an analyzed class.
+     *
+     * @return void
+     */
+    public function testParserSetsUserDefinedFlagForClassIssue67()
+    {
+        $packages = self::parseSource('issues/067-031-user-defined-class.php');
+
+        $package = $packages->current();
+        $classes = $package->getClasses();
+        $class   = $classes->current();
+
+        $this->assertTrue($class->isUserDefined());
+    }
+
+    /**
+     * Tests that the parser does not set the user-defined flag for an unknown
+     * class.
+     *
+     * @return void
+     */
+    public function testParserNotSetsUserDefinedFlagForUnknownClassIssue67()
+    {
+        $packages = self::parseSource('issues/067-031-user-defined-class.php');
+
+        $package = $packages->current();
+        $classes = $package->getClasses();
+
+        $classes->next();
+        $class = $classes->current();
+
+        $this->assertFalse($class->isUserDefined());
+    }
+
+    /**
+     * Tests that the parser sets the user-defined flag for an analyzed interface.
+     *
+     * @return void
+     */
+    public function testParserSetsUserDefinedFlagForInterfaceIssue67()
+    {
+        $packages = self::parseSource('issues/067-032-user-defined-interface.php');
+
+        $package    = $packages->current();
+        $interfaces = $package->getInterfaces();
+        $interface  = $interfaces->current();
+
+        $this->assertTrue($interface->isUserDefined());
+    }
+
+    /**
+     * Tests that the parser does not sets the user-defined flag for an unknown
+     * interface.
+     *
+     * @return void
+     */
+    public function testParserNotSetsUserDefinedFlagForUnknownInterfaceIssue67()
+    {
+        $packages = self::parseSource('issues/067-032-user-defined-interface.php');
+
+        $package    = $packages->current();
+        $interfaces = $package->getInterfaces();
+
+        $interfaces->next();
+        $interface = $interfaces->current();
+
+        $this->assertFalse($interface->isUserDefined());
+    }
+
+    /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
      *
