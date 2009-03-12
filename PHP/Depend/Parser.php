@@ -260,6 +260,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $interface->setDocComment($comment);
                 $interface->setPosition($typePosition++);
                 $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
+                $interface->setUserDefined();
 
                 $this->parseInterfaceSignature($interface);
 
@@ -287,6 +288,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $class->setModifiers($modifiers);
                 $class->setDocComment($comment);
                 $class->setPosition($typePosition++);
+                $class->setUserDefined();
 
                 $this->parseClassSignature($class);
 

@@ -118,6 +118,40 @@ abstract class PHP_Depend_Code_AbstractType
     private $_position = 0;
 
     /**
+     * This property will indicate that the class or interface is user defined.
+     * The parser marks all classes and interfaces as user defined that have a
+     * source file and were part of parsing process.
+     *
+     * @var boolean $_userDefined
+     * @since 0.9.5
+     */
+    private $_userDefined = false;
+
+    /**
+     * This method will return <b>true</b> when this type has a declaration in
+     * the analyzed source files.
+     *
+     * @return boolean
+     * @since 0.9.5
+     */
+    public function isUserDefined()
+    {
+        return $this->_userDefined;
+    }
+
+    /**
+     * This method can be used to mark a type as user defined. User defined
+     * means that the type has a valid declaration in the analyzed source files.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setUserDefined()
+    {
+        $this->_userDefined = true;
+    }
+
+    /**
      * Returns all {@link PHP_Depend_Code_TypeConstant} objects in this type.
      *
      * @return PHP_Depend_Code_NodeIterator
