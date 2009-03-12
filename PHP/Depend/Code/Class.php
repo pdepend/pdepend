@@ -85,6 +85,14 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     private $_modifiers = 0;
 
     /**
+     * The parent for this class node.
+     *
+     * @var PHP_Depend_Code_Class $_parentClass
+     * @since 0.9.5
+     */
+    private $_parentClass = null;
+
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
@@ -113,18 +121,33 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function getParentClass()
     {
-        // We know that a class has only 'extends' and 'implements' dependencies
-        foreach ($this->getUnfilteredRawDependencies() as $dependency) {
-            if (($dependency instanceof PHP_Depend_Code_Class) === false) {
-                continue;
-            }
-            $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-            if ($collection->accept($dependency) === false) {
-                return null;
-            }
-            return $dependency;
+        // No parent? Stop here!
+        if ($this->_parentClass === null) {
+            return null;
         }
-        return null;
+
+        // Check parent against global filter
+        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
+        if ($collection->accept($this->_parentClass) === false) {
+            return null;
+        }
+
+        // Parent is valid, so return
+        return $this->_parentClass;
+    }
+
+    /**
+     * Sets the parent for this class node.
+     *
+     * @param PHP_Depend_Code_Class $parentClass The parent class for this this.
+     *
+     * @return PHP_Depend_Code_Class
+     * @since 0.9.5
+     */
+    public function setParentClass(PHP_Depend_Code_Class $parentClass)
+    {
+        $this->_parentClass = $parentClass;
+        $this->_parentClass->addChildType($this);
     }
 
     /**
@@ -209,6 +232,24 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
             // Remove from internal property list
             unset($this->_properties[$i]);
         }
+    }
+
+    /**
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects this type depends on.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public function getDependencies()
+    {
+        // No parent? Then use the parent implementation
+        if ($this->_parentClass === null) {
+            return parent::getDependencies();
+        }
+        
+        $dependencies   = $this->dependencies;
+        $dependencies[] = $this->_parentClass;
+
+        return new PHP_Depend_Code_NodeIterator($dependencies);
     }
 
     /**

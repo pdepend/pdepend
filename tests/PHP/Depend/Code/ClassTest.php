@@ -448,8 +448,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
 
         $interfsF->addChildType($classC); // class C extends B implements F {}
         
-        $classA->addChildType($classB); // class B extends A {} 
-        $classB->addChildType($classC); // class C extends B implements F {}
+        $classB->setParentClass($classA); // class B extends A {}
+        $classC->setParentClass($classB); // class C extends B implements F {}
         
         $this->assertTrue($classA->isSubtypeOf($classA));
         $this->assertFalse($classA->isSubtypeOf($classB));

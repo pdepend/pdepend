@@ -379,8 +379,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 throw new RuntimeException('Class identifier expected.');
             }
 
-            $dependency = $this->builder->buildClass($qualifiedName);
-            $class->addDependency($dependency);
+            $parentClass = $this->builder->buildClass($qualifiedName);
+            $class->setParentClass($parentClass);
         }
         $this->_consumeComments($tokens);
 
