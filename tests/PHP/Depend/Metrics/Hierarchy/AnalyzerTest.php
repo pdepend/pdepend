@@ -107,10 +107,10 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
         $p->addType($d);
         $p->addType($e);
 
-        $a->addChildType($b);
-        $a->addChildType($c);
-        $c->addChildType($d);
-        $d->addChildType($e);
+        $b->setParentClass($a);
+        $c->setParentClass($a);
+        $d->setParentClass($c);
+        $e->setParentClass($d);
 
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
         $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
