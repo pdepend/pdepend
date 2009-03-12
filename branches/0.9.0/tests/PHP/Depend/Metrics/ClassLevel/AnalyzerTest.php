@@ -131,12 +131,12 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classE->setSourceFile($file);
         $classF->setSourceFile($file);
         
-        $interfs->addChildType($classA); // class A implements I // DIT = 0 
-        $classA->addChildType($classB);  // class B extends A {} // DIT = 1
-        $classB->addChildType($classC);  // class C extends B {} // DIT = 2
-        $classC->addChildType($classD);  // class D extends C {} // DIT = 3
-        $classC->addChildType($classE);  // class E extends C {} // DIT = 3
-        $classE->addChildType($classF);  // class F extends E {} // DIT = 4
+        $interfs->addChildType($classA);   // class A implements I // DIT = 0
+        $classB->setParentClass($classA);  // class B extends A {} // DIT = 1
+        $classC->setParentClass($classB);  // class C extends B {} // DIT = 2
+        $classD->setParentClass($classC);  // class D extends C {} // DIT = 3
+        $classE->setParentClass($classC);  // class E extends C {} // DIT = 3
+        $classF->setParentClass($classE);  // class F extends E {} // DIT = 4
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
@@ -426,7 +426,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classB->addProperty(new PHP_Depend_Code_Property('$f'))
                ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         
-        $classB->addChildType($classA); // class A extends B {}
+        $classA->setParentClass($classB); // class A extends B {}
                
         $classA->setSourceFile($file);
         $classB->setSourceFile($file);
@@ -595,8 +595,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $classB->setSourceFile($file);
         $classC->setSourceFile($file);
                
-        $classB->addChildType($classA); // class A extends B {}
-        $classC->addChildType($classB); // class B extends C {}
+        $classA->setParentClass($classB); // class A extends B {}
+        $classB->setParentClass($classC); // class B extends C {}
         
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
