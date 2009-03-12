@@ -304,7 +304,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_FUNCTION:
-                $function = $this->parseCallable();
+                $function = $this->_parseFunction();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
                 $function->setStartLine($token->startLine);
                 $function->setDocComment($comment);
@@ -466,7 +466,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             switch ($token->type) {
             case self::T_FUNCTION:
-                $method = $this->parseCallable($tokens, $type);
+                $method = $this->_parseFunction($tokens, $type);
                 $method->setDocComment($comment);
                 $method->setStartLine($token->startLine);
                 $method->setPosition($methodPosition++);
@@ -590,17 +590,19 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_AbstractCallable
      */
-    protected function parseCallable(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
+    private function _parseFunction(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
     {
+        // Remove leading comments
         $this->_consumeComments($tokens);
-        $token    = $this->tokenizer->next();
-        $tokens[] = $token;
 
-        if ($token->type === self::T_BITWISE_AND) {
+        // Check for returns reference token
+        if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
+            $this->_consumeToken(self::T_BITWISE_AND, $tokens);
             $this->_consumeComments($tokens);
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
         }
+
+        // Next token must be the function identifier
+        $token = $this->_consumeToken(self::T_STRING, $tokens);
 
         $callable = null;
         if ($parent === null) {
@@ -639,7 +641,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    private function _parseFunctionSignature(array &$tokens, PHP_Depend_Code_AbstractCallable $callable)
+    private function _parseFunctionSignature(array &$tokens, PHP_Depend_Code_AbstractCallable $function)
     {
         $this->_consumeComments($tokens);
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
@@ -661,7 +663,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parameter->setPosition(count($parameters));
 
             // Add new parameter to function
-            $callable->addParameter($parameter);
+            $function->addParameter($parameter);
 
             // Store parameter for later isOptional calculation.
             $parameters[] = $parameter;
