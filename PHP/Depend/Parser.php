@@ -246,8 +246,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_INTERFACE:
-                // Get interface name
-                $token = $this->tokenizer->next();
+                // Remove leading comments and get interface name
+                $this->_consumeComments();
+                $token = $this->_consumeToken(self::T_STRING);
 
                 $qualifiedName = sprintf('%s%s%s',
                                     $this->package,
@@ -274,8 +275,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CLASS:
-                // Get class name
-                $token = $this->tokenizer->next();
+                // Remove leading comments and get class name
+                $this->_consumeComments();
+                $token = $this->_consumeToken(self::T_STRING);
 
                 $qualifiedName = sprintf('%s%s%s',
                                     $this->package,
