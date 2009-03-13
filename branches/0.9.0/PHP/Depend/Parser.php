@@ -975,69 +975,63 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return PHP_Depend_Code_Value
+     * @since 0.9.5
      */
     private function _parseDefaultValue(array &$tokens)
     {
         $defaultValue = new PHP_Depend_Code_Value();
 
-        $parenthesis = 0;
-
         $this->_consumeComments($tokens);
-        while (($tokenType = $this->tokenizer->peek()) !== self::T_EOF) {
+
+        $tokenType = $this->tokenizer->peek();
+        while ($tokenType !== self::T_EOF) {
 
             switch ($tokenType) {
 
-            case self::T_PARENTHESIS_OPEN:
-                ++$parenthesis;
-                break;
-
-            case self::T_PARENTHESIS_CLOSE:
-                --$parenthesis;
-                break;
-
-            case self::T_COMMA:
-                // No array parenthesis, so it is the parameter separator
-                if ($parenthesis === 0) {
-                    $parenthesis = -1;
-                }
-                break;
-            
+            case self::T_COMMA:            
             case self::T_SEMICOLON:
-                $parenthesis = -1;
-                break;
+            case self::T_PARENTHESIS_CLOSE:
+                if ($defaultValue->isValueAvailable() === true) {
+                    return $defaultValue;
+                }
+                throw new RuntimeException('A default value was expected.');
 
             case self::T_NULL:
                 $token = $this->_consumeToken(self::T_NULL, $tokens);
                 $defaultValue->setValue(null);
-                continue 2;
+                break;
 
             case self::T_TRUE:
                 $token = $this->_consumeToken(self::T_TRUE, $tokens);
                 $defaultValue->setValue(true);
-                continue 2;
+                break;
 
             case self::T_FALSE:
                 $token = $this->_consumeToken(self::T_FALSE, $tokens);
                 $defaultValue->setValue(false);
-                continue 2;
+                break;
 
             case self::T_LNUMBER:
                 $token = $this->_consumeToken(self::T_LNUMBER, $tokens);
                 $defaultValue->setValue((int) $token->image);
-                continue 2;
+                break;
 
             case self::T_DNUMBER:
                 $token = $this->_consumeToken(self::T_DNUMBER, $tokens);
                 $defaultValue->setValue((double) $token->image);
-                continue 2;
+                break;
 
             case self::T_CONSTANT_ENCAPSED_STRING:
                 $token = $this->_consumeToken(self::T_CONSTANT_ENCAPSED_STRING, $tokens);
                 $defaultValue->setValue(substr($token->image, 1, -1));
-                continue 2;
+                break;
 
             case self::T_ARRAY:
-                $defaultValue->setValue(array());
+                $defaultValue->setValue($this->_parseDefaultArrayValue($tokens));
+                break;
+
+            case self::T_DOUBLE_COLON:
+                $this->_consumeToken(self::T_DOUBLE_COLON, $tokens);
                 break;
 
             case self::T_SELF:
@@ -1046,24 +1040,74 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_BACKSLASH:
                 // There is a default value but we don't handle it at the moment.
                 $defaultValue->setValue(null);
+                $this->_consumeToken($tokenType, $tokens);
                 break;
             }
-
-            // End of parameter declaration, stop here
-            if ($parenthesis === -1) {
-                if ($defaultValue->isValueAvailable() === true) {
-                    return $defaultValue;
-                }
-                throw new RuntimeException('A default value was expected.');
-            }
-
-            // Consume the current token
-            $this->_consumeToken($tokenType, $tokens);
+            
             $this->_consumeComments($tokens);
+
+            $tokenType = $this->tokenizer->peek();
         }
 
         // We should never reach this, so throw an exception
         throw new RuntimeException('Unexpected end of token stream.');
+    }
+
+    /**
+     * This method parses an array as it is used for for parameter or property
+     * default values.
+     *
+     * Note: At the moment the implementation of this method only returns an
+     *       empty array, but consumes all tokens that belong to the array
+     *       declaration.
+     *
+     * TODO: Implement array content/value handling, but how should we handle
+     *       constant values like array(self::FOO, FOOBAR)?
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
+     * @return array
+     * @since 0.9.5
+     */
+    private function _parseDefaultArrayValue(array &$tokens)
+    {
+        $defaultValue = array();
+
+        // Fetch all tokens that belong to this array
+        $this->_consumeToken(self::T_ARRAY, $tokens);
+        $this->_consumeComments($tokens);
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+
+        $parenthesis = 1;
+
+        $tokenType = $this->tokenizer->peek();
+        while ($tokenType !== self::T_EOF) {
+
+            switch ($tokenType) {
+
+            case self::T_PARENTHESIS_OPEN:
+                $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+                ++$parenthesis;
+                break;
+
+            case self::T_PARENTHESIS_CLOSE:
+                $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+                --$parenthesis;
+                break;
+
+            default:
+                $this->_consumeToken($tokenType, $tokens);
+                break;
+            }
+
+            if ($parenthesis === 0) {
+                return $defaultValue;
+            }
+
+            $tokenType = $this->tokenizer->peek();
+        }
+
+        throw new RuntimeException('Unclosed array declaration.');
     }
 
     /**
