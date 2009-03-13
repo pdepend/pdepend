@@ -1772,7 +1772,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Unexpected token: }, line: 2, col: 30, file: '
+            'Unexpected token: {, line: 2, col: 28, file: '
         );
 
         self::parseSource('bugs/065-3-interface-declaration-without-body.fail');
