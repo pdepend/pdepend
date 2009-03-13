@@ -64,8 +64,6 @@ class PHP_Depend_Parser_UnexpectedTokenException extends RuntimeException
      * Constructs a new unexpected token exception.
      *
      * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer instance.
-     * @param PHP_Depend_Token      $token     Optional token that caused the
-     *                                         exception.
      */
     public function __construct(PHP_Depend_TokenizerI $tokenizer)
     {
