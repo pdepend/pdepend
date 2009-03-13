@@ -987,9 +987,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->tokenizer->peek();
 
         if ($tokenType === self::T_EOF) {
-            $message = sprintf('Unexpected end of token stream in file: %s.',
-                               $this->tokenizer->getSourceFile());
-            throw new RuntimeException($message);
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
         }
 
         // List of expected tokens for a qualified name
@@ -1348,9 +1346,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _consumeToken($tokenType, &$tokens = array())
     {
         if ($this->tokenizer->peek() === self::T_EOF) {
-            $message = sprintf('Unexpected end of token stream in file: %s.',
-                               $this->tokenizer->getSourceFile());
-            throw new RuntimeException($message);
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
         }
 
         if ($this->tokenizer->peek() !== $tokenType) {
