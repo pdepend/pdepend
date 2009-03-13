@@ -51,6 +51,7 @@ require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/Value.php';
 require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
+require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
 
 /**
  * The php source parser.
@@ -969,6 +970,59 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses a php class/method name chain.
+     *
+     * <code>
+     * PHP\Depend\Parser::parse();
+     * </code>
+     *
+     * @param array(PHP_Depend_Token) &$tokens The tokens array.
+     *
+     * @return string
+     */
+    private function _parseQualifiedName(array &$tokens)
+    {
+        // Consume comments and fetch first token type
+        $this->_consumeComments($tokens);
+        $tokenType = $this->tokenizer->peek();
+
+        if ($tokenType === self::T_EOF) {
+            $message = sprintf('Unexpected end of token stream in file: %s.',
+                               $this->tokenizer->getSourceFile());
+            throw new RuntimeException($message);
+        }
+
+        // List of expected tokens for a qualified name
+        $validTokenTypes = array(0 => self::T_BACKSLASH, 1 => self::T_STRING);
+
+        // Get first token index and validate that there is at least one token
+        $index = array_search($tokenType, $validTokenTypes);
+        if ($index === false) {
+            throw new PHP_Depend_Parser_UnexpectedTokenException($this->tokenizer);
+        }
+
+        $qualifiedName = '';
+        while (in_array($tokenType, $validTokenTypes) === true) {
+
+            // Read the expected token type
+            $token = $this->_consumeToken($validTokenTypes[$index], $tokens);
+
+            // Append token image to qualified name
+            $qualifiedName .= $token->image;
+
+            // Strip allowed comments and lookup next token type
+            $this->_consumeComments($tokens);
+            $tokenType = $this->tokenizer->peek();
+
+            // Calculate next token expected type
+            $index = ($index + 1) % 2;
+        }
+
+
+        return $qualifiedName;
+    }
+
+    /**
      * This method will parse the default value of a parameter or property
      * declaration.
      *
@@ -1155,65 +1209,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Parses a php class/method name chain.
-     *
-     * <code>
-     * PHP\Depend\Parser::parse();
-     * </code>
-     *
-     * @param array(PHP_Depend_Token) &$tokens The tokens array.
-     *
-     * @return string
-     */
-    private function _parseQualifiedName(array &$tokens)
-    {
-        // Consume comments and fetch first token type
-        $this->_consumeComments($tokens);
-        $tokenType = $this->tokenizer->peek();
-        
-        if ($tokenType === self::T_EOF) {
-            $message = sprintf('Unexpected end of token stream in file: %s.',
-                               $this->tokenizer->getSourceFile());
-            throw new RuntimeException($message);
-        }
-
-        // List of expected tokens for a qualified name
-        $validTokenTypes = array(0 => self::T_BACKSLASH, 1 => self::T_STRING);
-
-        // Get first token index and validate that there is at least one token
-        $index = array_search($tokenType, $validTokenTypes);
-        if ($index === false) {
-            $token = $this->tokenizer->next();
-
-            $message = sprintf('Unexpected token: %s, line: %d, col: %d, file: %s.',
-                               $token->image,
-                               $token->startLine,
-                               $token->startColumn,
-                               $this->tokenizer->getSourceFile());
-        }
-
-        $qualifiedName = '';
-        while (in_array($tokenType, $validTokenTypes) === true) {
-
-            // Read the expected token type
-            $token = $this->_consumeToken($validTokenTypes[$index], $tokens);
-
-            // Append token image to qualified name
-            $qualifiedName .= $token->image;
-
-            // Strip allowed comments and lookup next token type
-            $this->_consumeComments($tokens);
-            $tokenType = $this->tokenizer->peek();
-
-            // Calculate next token expected type
-            $index = ($index + 1) % 2;
-        }
-
-        
-        return $qualifiedName;
-    }
-
-    /**
      * Skips an encapsulted block like strings or backtick strings.
      *
      * @param array(array) &$tokens  The tokens array.
@@ -1352,24 +1347,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _consumeToken($tokenType, &$tokens = array())
     {
-        $token = $this->tokenizer->next();
-
-        if ($token === self::T_EOF) {
+        if ($this->tokenizer->peek() === self::T_EOF) {
             $message = sprintf('Unexpected end of token stream in file: %s.',
                                $this->tokenizer->getSourceFile());
             throw new RuntimeException($message);
         }
 
-        if ($token->type !== $tokenType) {
-            $message = sprintf('Unexpected token: %s, line: %d, col: %d, file: %s.',
-                               $token->image,
-                               $token->startLine,
-                               $token->startColumn,
-                               $this->tokenizer->getSourceFile());
-            throw new RuntimeException($message);
+        if ($this->tokenizer->peek() !== $tokenType) {
+            throw new PHP_Depend_Parser_UnexpectedTokenException($this->tokenizer);
         }
 
-        return $tokens[] = $token;
+        return $tokens[] = $this->tokenizer->next();
     }
 
     /**
