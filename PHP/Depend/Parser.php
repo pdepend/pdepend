@@ -51,6 +51,7 @@ require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/Value.php';
 require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
+require_once 'PHP/Depend/Parser/TokenStreamEndException.php';
 require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
 
 /**
