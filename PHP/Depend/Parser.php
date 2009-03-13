@@ -831,9 +831,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $curly  = 0;
         $tokens = array();
 
-        while ($this->tokenizer->peek() !== self::T_EOF) {
+        $tokenType = $this->tokenizer->peek();
 
-            switch ($this->tokenizer->peek()) {
+        while ($tokenType !== self::T_EOF) {
+
+            switch ($tokenType) {
                 
             case self::T_CATCH:
                 // Consume catch and the opening parenthesis
@@ -937,9 +939,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
-                $tokens[] = $this->tokenizer->next();
-                // throw new RuntimeException("Unknown token '{$token->image}'.");
-                // TODO: Handle/log unused tokens
+                $this->_consumeToken($tokenType, $tokens);
+                break;
             }
 
             if ($curly === 0) {
@@ -949,21 +950,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $function->setEndLine($token->startLine);
                 // Set all tokens for this function
                 $function->setTokens($tokens);
+
+                // Append all tokens to parent's reference array
+                foreach ($tokens as $token) {
+                    $outTokens[] = $token;
+                }
+
                 // Stop processing
-                break;
+                return;
             }
+
+            $tokenType = $this->tokenizer->peek();
         }
         // Throw an exception for invalid states
-        if ($curly !== 0) {
-            $fileName = (string) $this->tokenizer->getSourceFile();
-            $message  = "Invalid state, unclosed function body in '{$fileName}'.";
-            throw new RuntimeException($message);
-        }
-
-        // Append all tokens
-        foreach ($tokens as $token) {
-            $outTokens[] = $token;
-        }
+        $fileName = (string) $this->tokenizer->getSourceFile();
+        $message  = "Invalid state, unclosed function body in '{$fileName}'.";
+        throw new RuntimeException($message);
     }
 
     /**
