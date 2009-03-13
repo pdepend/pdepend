@@ -154,14 +154,15 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      * Returns a node iterator with all implemented interfaces.
      *
      * @return PHP_Depend_Code_NodeIterator
+     * @since 0.9.5
      */
-    public function getImplementedInterfaces()
+    public function getInterfaces()
     {
         $nodes = array();
         foreach ($this->getUnfilteredRawDependencies() as $dependency) {
             // Add parent interfaces of parent class
             if ($dependency instanceof PHP_Depend_Code_Class) {
-                foreach ($dependency->getImplementedInterfaces() as $interface) {
+                foreach ($dependency->getInterfaces() as $interface) {
                     $nodes[] = $interface;
                 }
                 continue;
@@ -264,7 +265,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
         if ($type === $this) {
             return true;
         } else if ($type instanceof PHP_Depend_Code_Interface) {
-            foreach ($this->getImplementedInterfaces() as $interface) {
+            foreach ($this->getInterfaces() as $interface) {
                 if ($interface === $type) {
                     return true;
                 }
@@ -348,6 +349,18 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     {
         fwrite(STDERR, 'Since 0.9.4 setAbstract() is deprecated.' . PHP_EOL);
         $this->_modifiers |= PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT;
+    }
+
+    /**
+     * Returns a node iterator with all implemented interfaces.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     * @deprecated Since version 0.9.5, use getInterfaces() instead.
+     */
+    public function getImplementedInterfaces()
+    {
+        fwrite(STDERR, 'Since 0.9.5 getImplementedInterfaces() is deprecated.' . PHP_EOL);
+        return $this->getInterfaces();
     }
     
     // @codeCoverageIgnoreEnd
