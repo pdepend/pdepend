@@ -854,12 +854,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_NEW, $tokens);
                 $this->_consumeComments($tokens);
 
-                $qualifiedName = $this->_parseQualifiedName($tokens);
+                // Peek next token and look for a static type identifier
+                $peekType = $this->tokenizer->peek();
 
-                // If this is a dynamic instantiation, then do not add dependency.
-                // Something like: new $className();
-                if ($qualifiedName !== '') {
-                    // Get last element of parts and create a class for it
+                // If this is a dynamic instantiation, do not add dependency.
+                // Something like: $bar instanceof $className
+                if ($peekType === self::T_STRING
+                 || $peekType === self::T_BACKSLASH) {
+
+                    $qualifiedName = $this->_parseQualifiedName($tokens);
+
                     $class = $this->builder->buildClass($qualifiedName);
                     $function->addDependency($class);
                 }
@@ -869,12 +873,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_INSTANCEOF, $tokens);
                 $this->_consumeComments($tokens);
 
-                $qualifiedName = $this->_parseQualifiedName($tokens);
+                // Peek next token and look for a static type identifier
+                $peekType = $this->tokenizer->peek();
 
                 // If this is a dynamic instantiation, do not add dependency.
-                // Something like: new $className('PDepend');
-                if ($qualifiedName !== '') {
-                    // Get last element of parts and create a class for it
+                // Something like: $bar instanceof $className
+                if ($peekType === self::T_STRING
+                 || $peekType === self::T_BACKSLASH) {
+
+                    $qualifiedName = $this->_parseQualifiedName($tokens);
+
                     $class = $this->builder->buildClassOrInterface($qualifiedName);
                     $function->addDependency($class);
                 }
