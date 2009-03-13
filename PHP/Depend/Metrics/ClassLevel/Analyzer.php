@@ -193,7 +193,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
 
         $this->_nodeMetrics[$class->getUUID()] = array(
             'dit'     =>  $this->_calculateDIT($class),
-            'impl'    =>  $class->getImplementedInterfaces()->count(),
+            'impl'    =>  $class->getInterfaces()->count(),
             'cis'     =>  0,
             'csz'     =>  0,
             'vars'    =>  0,
