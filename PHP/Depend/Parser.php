@@ -856,8 +856,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                 $qualifiedName = $this->_parseQualifiedName($tokens);
 
-                // If this is a dynamic instantiation, do not add dependency.
-                // Something like: new $className('PDepend');
+                // If this is a dynamic instantiation, then do not add dependency.
+                // Something like: new $className();
                 if ($qualifiedName !== '') {
                     // Get last element of parts and create a class for it
                     $class = $this->builder->buildClass($qualifiedName);
@@ -962,7 +962,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->tokenizer->peek();
         }
-        // Throw an exception for invalid states
+        
         $fileName = (string) $this->tokenizer->getSourceFile();
         $message  = "Invalid state, unclosed function body in '{$fileName}'.";
         throw new RuntimeException($message);
