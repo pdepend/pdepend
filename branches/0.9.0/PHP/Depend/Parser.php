@@ -400,11 +400,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeComments($tokens);
 
             $qualifiedName = $this->_parseQualifiedName($tokens);
-            if ($qualifiedName === '') {
-                throw new RuntimeException('Class identifier expected.');
-            }
-
-            $parentClass = $this->builder->buildClass($qualifiedName);
+            $parentClass   = $this->builder->buildClass($qualifiedName);
             $class->setParentClass($parentClass);
         }
         $this->_consumeComments($tokens);
@@ -435,13 +431,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         do {
             $this->_consumeComments($tokens);
 
-            $qualifiedName = $this->_parseQualifiedName($tokens);
-            if ($qualifiedName === '') {
-                throw new RuntimeException('Interface identifier expected.');
-            }
-
-            $dependency = $this->builder->buildInterface($qualifiedName);
-            $abstractType->addDependency($dependency);
+            $qualifiedName   = $this->_parseQualifiedName($tokens);
+            $parentInterface = $this->builder->buildInterface($qualifiedName);
+            $abstractType->addDependency($parentInterface);
 
             $this->_consumeComments($tokens);
 
@@ -1173,23 +1165,51 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return string
      */
-    private function _parseQualifiedName(&$tokens)
+    private function _parseQualifiedName(array &$tokens)
     {
+        // Consume comments and fetch first token type
+        $this->_consumeComments($tokens);
         $tokenType = $this->tokenizer->peek();
+        
+        if ($tokenType === self::T_EOF) {
+            $message = sprintf('Unexpected end of token stream in file: %s.',
+                               $this->tokenizer->getSourceFile());
+            throw new RuntimeException($message);
+        }
+
+        // List of expected tokens for a qualified name
+        $validTokenTypes = array(0 => self::T_BACKSLASH, 1 => self::T_STRING);
+
+        // Get first token index and validate that there is at least one token
+        $index = array_search($tokenType, $validTokenTypes);
+        if ($index === false) {
+            $token = $this->tokenizer->next();
+
+            $message = sprintf('Unexpected token: %s, line: %d, col: %d, file: %s.',
+                               $token->image,
+                               $token->startLine,
+                               $token->startColumn,
+                               $this->tokenizer->getSourceFile());
+        }
 
         $qualifiedName = '';
-        while ($tokenType === self::T_BACKSLASH 
-            || $tokenType === self::T_STRING) {
+        while (in_array($tokenType, $validTokenTypes) === true) {
 
-            $token    = $this->tokenizer->next();
-            $tokens[] = $token;
+            // Read the expected token type
+            $token = $this->_consumeToken($validTokenTypes[$index], $tokens);
 
+            // Append token image to qualified name
             $qualifiedName .= $token->image;
 
+            // Strip allowed comments and lookup next token type
             $this->_consumeComments($tokens);
-
             $tokenType = $this->tokenizer->peek();
+
+            // Calculate next token expected type
+            $index = ($index + 1) % 2;
         }
+
+        
         return $qualifiedName;
     }
 
@@ -1335,7 +1355,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->tokenizer->next();
 
         if ($token === self::T_EOF) {
-            throw new RuntimeException('Unexpected end of token stream.');
+            $message = sprintf('Unexpected end of token stream in file: %s.',
+                               $this->tokenizer->getSourceFile());
+            throw new RuntimeException($message);
         }
 
         if ($token->type !== $tokenType) {

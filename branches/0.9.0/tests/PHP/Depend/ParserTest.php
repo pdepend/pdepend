@@ -1740,7 +1740,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Unexpected end of token stream.'
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource('bugs/065-1-interface-declaration-without-body.fail');
@@ -1756,7 +1756,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Unexpected end of token stream.'
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource('bugs/065-2-interface-declaration-without-body.fail');
@@ -1772,7 +1772,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Interface identifier expected.'
+            'Unexpected token: }, line: 2, col: 30, file: '
         );
 
         self::parseSource('bugs/065-3-interface-declaration-without-body.fail');
@@ -1788,7 +1788,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Unexpected end of token stream.'
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource('bugs/065-4-class-declaration-without-body.fail');
@@ -1804,7 +1804,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Class identifier expected.'
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource('bugs/065-5-class-declaration-without-body.fail');
@@ -1820,7 +1820,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Interface identifier expected.'
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource('bugs/065-6-class-declaration-without-body.fail');
@@ -1836,7 +1836,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Unexpected end of token stream.'
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource('bugs/065-7-class-declaration-without-body.fail');
@@ -1852,7 +1852,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $this->setExpectedException(
             'RuntimeException',
-            'Interface identifier expected.'
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource('bugs/065-8-class-declaration-without-body.fail');
