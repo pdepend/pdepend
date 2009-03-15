@@ -1979,9 +1979,60 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertSame('\PHP\Depend', $package->getName());
     }
 
+    /**
+     * Tests that the parser does not throw an exception when it detects a
+     * lmabda function on file level.
+     *
+     * @return void
+     */
     public function testParserHandlesLambdaFunctionOnFileLevelBug70()
     {
-        $packages = self::parseSource('bugs/070-001-closure-results-in-exception.php');
+        self::parseSource('bugs/070-001-closure-results-in-exception.php');
+    }
+
+    /**
+     * Tests that the parser handles a lambda function with parameters.
+     *
+     * @return void
+     */
+    public function testParserHandlesLambdaFunctionWithParametersBug70()
+    {
+        self::parseSource('bugs/070-002-closure-results-in-exception.php');
+    }
+
+    /**
+     * Tests that the parser handles a closure function with bound variables.
+     *
+     * @return void
+     */
+    public function testParserHandlesClosureFunctionWithBoundVariableBug70()
+    {
+        self::parseSource('bugs/070-003-closure-results-in-exception.php');
+    }
+
+    /**
+     * Tests that the parser handles a closure function with bound variables.
+     *
+     * @return void
+     */
+    public function testParserHandlesClosureFunctionWithBoundVariableByRefBug70()
+    {
+        self::parseSource('bugs/070-004-closure-results-in-exception.php');
+    }
+
+    /**
+     * Tests that the parser handles a closure function with bound variables.
+     *
+     * @return void
+     */
+    public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: lexical, line: 3, col: 17, file: '
+        );
+
+        self::parseSource('bugs/070-005-closure-results-in-exception.php');
     }
 
     /**
