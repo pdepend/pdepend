@@ -294,8 +294,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
+     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
      *
      * @return void
      */
