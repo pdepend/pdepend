@@ -271,7 +271,15 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $called = array();
 
         $tokens = $callable->getTokens();
-        for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
+        $count  = count($tokens);
+        for ($i = 0; $i < $count; ++$i) {
+            // break on function body open
+            if ($tokens[$i]->type === PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN) {
+                break;
+            }
+        }
+
+        for (; $i < $count; ++$i) {
             // Skip non parenthesis tokens
             if ($tokens[$i]->type !== PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN) {
                 continue;
