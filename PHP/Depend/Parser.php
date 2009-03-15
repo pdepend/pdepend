@@ -617,6 +617,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         throw new RuntimeException($message);
     }
 
+    /**
+     * This method parses a simple function or a PHP 5.3 lambda function or
+     * closure.
+     *
+     * @return PHP_Depend_Code_AbstractCallable
+     */
     private function _parseFunctionOrClosure()
     {
         $tokens = array();
@@ -638,10 +644,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $callable;
     }
 
+    /**
+     * This method parses a PHP 5.3 closure or lambda function.
+     *
+     * @param array(array) &$tokens Collected tokens.
+     *
+     * @return PHP_Depend_Code_Closure
+     */
     private function _parseClosure(array &$tokens)
     {
         $closure = $this->builder->buildClosure();
 
+        $this->_parseFunctionSignature($tokens, $closure);
+
+        $this->_consumeComments($tokens);
+        if ($this->tokenizer->peek() === self::T_USE) {
+            $this->_parseBoundVariables($tokens, $closure);
+        }
+        
+        $this->_parseFunctionBody($tokens, $closure);
 
         return $closure;
     }
@@ -701,7 +722,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Extracts all dependencies from a callable signature.
      *
      * @param array(PHP_Depend_Token)          &$tokens  Collected tokens.
-     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
+     * @param PHP_Depend_Code_AbstractCallable $function The context callable.
      *
      * @return void
      */
@@ -719,7 +740,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return;
         }
 
-        $position = 0;
+        $position   = 0;
         $parameters = array();
 
         while ($tokenType !== self::T_EOF) {
@@ -840,7 +861,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Extracts all dependencies from a callable body.
      *
      * @param array(array)                     &$outTokens Collected tokens.
-     * @param PHP_Depend_Code_AbstractCallable $callable   The context callable.
+     * @param PHP_Depend_Code_AbstractCallable $function   The context callable.
      *
      * @return void
      */
@@ -993,6 +1014,51 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $fileName = (string) $this->tokenizer->getSourceFile();
         $message  = "Invalid state, unclosed function body in '{$fileName}'.";
         throw new RuntimeException($message);
+    }
+
+    /**
+     * Parses a list of bound closure variables.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     * @param PHP_Depend_Code_Closure $closure The parent closure instance.
+     *
+     * @return void
+     */
+    private function _parseBoundVariables(array &$tokens, PHP_Depend_Code_Closure $closure)
+    {
+        // Consume use keyword
+        $this->_consumeComments($tokens);
+        $this->_consumeToken(self::T_USE, $tokens);
+
+        // Consume opening parenthesis
+        $this->_consumeComments($tokens);
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
+
+        while ($this->tokenizer->peek() !== self::T_EOF) {
+            // Consume leading comments
+            $this->_consumeComments($tokens);
+
+            // Check for by-ref operator
+            if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
+                $this->_consumeToken(self::T_BITWISE_AND, $tokens);
+                $this->_consumeComments($tokens);
+            }
+
+            // Read bound variable
+            $this->_consumeToken(self::T_VARIABLE, $tokens);
+            $this->_consumeComments($tokens);
+
+            // Check for further bound variables
+            if ($this->tokenizer->peek() === self::T_COMMA) {
+                $this->_consumeToken(self::T_COMMA, $tokens);
+                continue;
+            }
+            break;
+        }
+
+        // Consume closing parenthesis
+        $this->_consumeComments($tokens);
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
     }
 
     /**
