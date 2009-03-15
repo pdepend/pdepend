@@ -1565,7 +1565,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsSourceFileForInterfaceConstantsBug89()
     {
-        $fileName = dirname(__FILE__) . '/_code/bugs/089-1.php';
+        $fileName = dirname(__FILE__) . '/_code/bugs/059-001-constant-source-file.php';
 
         $packages = self::parseSource($fileName);
         $this->assertEquals(1, $packages->count()); // +global
@@ -1589,7 +1589,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsSourceFileForClassConstantsBug89()
     {
-        $fileName = dirname(__FILE__) . '/_code/bugs/089-2.php';
+        $fileName = dirname(__FILE__) . '/_code/bugs/059-002-constant-source-file.php';
 
         $packages = self::parseSource($fileName);
         $this->assertEquals(1, $packages->count()); // +global
@@ -1613,7 +1613,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsSourceFileForInterfaceMethodBug89()
     {
-        $fileName = dirname(__FILE__) . '/_code/bugs/089-3.php';
+        $fileName = dirname(__FILE__) . '/_code/bugs/059-003-function-source-file.php';
 
         $packages = self::parseSource($fileName);
         $this->assertEquals(1, $packages->count()); // +global
@@ -1637,7 +1637,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsSourceFileForClassMethodBug89()
     {
-        $fileName = dirname(__FILE__) . '/_code/bugs/089-4.php';
+        $fileName = dirname(__FILE__) . '/_code/bugs/059-004-function-source-file.php';
 
         $packages = self::parseSource($fileName);
         $this->assertEquals(1, $packages->count()); // +global
@@ -1661,7 +1661,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsSourceFileForClassPropertyBug89()
     {
-        $fileName = dirname(__FILE__) . '/_code/bugs/089-5.php';
+        $fileName = dirname(__FILE__) . '/_code/bugs/059-005-property-source-file.php';
 
         $packages = self::parseSource($fileName);
         $this->assertEquals(1, $packages->count()); // +global
