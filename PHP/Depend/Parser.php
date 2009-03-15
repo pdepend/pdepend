@@ -655,7 +655,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $closure = $this->builder->buildClosure();
 
-        $this->_parseFunctionSignature($tokens, $closure);
+        $this->_parseParameterList($tokens, $closure);
 
         $this->_consumeComments($tokens);
         if ($this->tokenizer->peek() === self::T_USE) {
@@ -704,7 +704,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parent->addMethod($callable);
         }
 
-        $this->_parseFunctionSignature($tokens, $callable);
+        $this->_parseParameterList($tokens, $callable);
         $this->_consumeComments($tokens);
 
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
@@ -726,7 +726,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    private function _parseFunctionSignature(array &$tokens, PHP_Depend_Code_AbstractCallable $function)
+    private function _parseParameterList(array &$tokens, PHP_Depend_Code_AbstractCallable $function)
     {
         $this->_consumeComments($tokens);
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
