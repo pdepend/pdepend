@@ -154,9 +154,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      */
     public function setStartLine($startLine)
     {
-        if ($this->startLine === 0) {
-            $this->startLine = $startLine;
-        }
+        $this->startLine = $startLine;
     }
 
     /**
@@ -178,9 +176,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      */
     public function setEndLine($endLine)
     {
-        if ($this->endLine === 0) {
-            $this->endLine = $endLine;
-        }
+        $this->endLine = $endLine;
     }
 
     /**
