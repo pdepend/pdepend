@@ -276,7 +276,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectFileComment()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/coupling/class.php');
+        $packages = self::parseSource('coupling/class.php');
         $this->assertEquals(4, $packages->count()); // default, +global, +spl & +standard
 
         $packages->next();
@@ -310,7 +310,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDoesntReuseTypeComment()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/constant.php');
+        $packages = self::parseSource('comments/constant.php');
         $this->assertEquals(1, $packages->count()); // +global
 
         $package = $packages->current();
@@ -330,7 +330,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDoesntReuseFunctionComment()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/function.php');
+        $packages = self::parseSource('comments/function.php');
         $this->assertEquals(1, $packages->count()); // +global
 
         $package = $packages->current();
