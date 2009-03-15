@@ -1686,7 +1686,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterfaceBug92()
     {
-        $packages = self::parseSource('bugs/092-1.php');
+        $packages = self::parseSource('bugs/062-001-instanceof-expression.php');
 
         $package = $packages->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
@@ -1712,7 +1712,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithClassBug92()
     {
-        $packages = self::parseSource('bugs/092-2.php');
+        $packages = self::parseSource('bugs/062-002-instanceof-expression.php');
 
         $package = $packages->current();
         $this->assertType('PHP_Depend_Code_Package', $package);
