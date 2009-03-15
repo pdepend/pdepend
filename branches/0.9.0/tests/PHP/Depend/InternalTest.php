@@ -406,7 +406,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Only relevant for php versions < 5.3.0alpha3');
         }
 
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/084.php';
+        $sourceFile = dirname(__FILE__) . '/_code/bugs/054-namespace-separator.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
