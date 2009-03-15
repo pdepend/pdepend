@@ -273,6 +273,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new closure instance.
+     *
+     * @return PHP_Depend_Code_Closure
+     */
+    public function buildClosure()
+    {
+        include_once 'PHP/Depend/Code/Closure.php';
+
+        return new PHP_Depend_Code_Closure();
+    }
+
+    /**
      * Builds a new code class constant instance.
      *
      * @param string $name The constant name.
