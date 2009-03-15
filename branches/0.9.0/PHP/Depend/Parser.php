@@ -307,7 +307,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $class->setPosition($typePosition++);
                 $class->setUserDefined();
 
-                $this->parseClassSignature($class);
+                $this->_parseClassDeclaration($class);
 
                 $this->builder->buildPackage($this->package)->addType($class);
 
@@ -383,7 +383,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    protected function parseClassSignature(PHP_Depend_Code_Class $class)
+    private function _parseClassDeclaration(PHP_Depend_Code_Class $class)
     {
         $tokens = array();
         $this->_consumeComments($tokens);
