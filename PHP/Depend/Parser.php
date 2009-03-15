@@ -275,7 +275,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
                 $interface->setUserDefined();
 
-                $this->parseInterfaceSignature($interface);
+                $this->_parseInterfaceDeclaration($interface);
 
                 $this->builder->buildPackage($this->package)->addType($interface);
 
@@ -360,7 +360,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return array(PHP_Depend_Token)
      */
-    protected function parseInterfaceSignature(PHP_Depend_Code_Interface $interface)
+    protected function _parseInterfaceDeclaration(PHP_Depend_Code_Interface $interface)
     {
         $tokens = array();
         $this->_consumeComments($tokens);
