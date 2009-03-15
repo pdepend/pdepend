@@ -232,27 +232,37 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectFunctionTokens()
     {
+        // function foo($foo = array())
         $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 7, 7, 30, 30),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_FOREACH, 'foreach', 8, 8, 5, 11),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 8, 8, 13, 13),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$foo', 8, 8, 14, 17),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_AS, 'as', 8, 8, 19, 20),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 8, 8, 22, 25),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 8, 8, 26, 26),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 8, 8, 28, 28),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'FooBar', 9, 9, 9, 14),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_DOUBLE_COLON, '::', 9, 9, 15, 16),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'y', 9, 9, 17, 17),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 9, 9, 18, 18),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 9, 9, 19, 22),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 9, 9, 23, 23),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_SEMICOLON, ';', 9, 9, 24, 24),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
-            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 11, 11, 1, 1),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_FUNCTION, 'function', 5, 5, 1, 8),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'foo', 5, 5, 10, 12),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 5, 5, 13, 13),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$foo', 5, 5, 14, 17),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_EQUAL, '=', 5, 5, 19, 19),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_ARRAY, 'array', 5, 5, 21, 25),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 5, 5, 26, 26),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 5, 5, 27, 27),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 5, 5, 28, 28),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 5, 5, 30, 30),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_FOREACH, 'foreach', 6, 6, 5, 11),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 6, 6, 13, 13),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$foo', 6, 6, 14, 17),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_AS, 'as', 6, 6, 19, 20),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 6, 6, 22, 25),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 6, 6, 26, 26),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, '{', 6, 6, 28, 28),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'FooBar', 7, 7, 9, 14),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_DOUBLE_COLON, '::', 7, 7, 15, 16),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'y', 7, 7, 17, 17),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN, '(', 7, 7, 18, 18),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_VARIABLE, '$bar', 7, 7, 19, 22),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE, ')', 7, 7, 23, 23),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_SEMICOLON, ';', 7, 7, 24, 24),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 8, 8, 5, 5),
+            new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
         );
 
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/mixed_code.php');
+        $packages = self::parseSource('/parser/parser-sets-expected-function-tokens.php');
         $packages->next();
 
         $function = $packages->current()->getFunctions()->current();
@@ -1967,6 +1977,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                             ->getPackage();
 
         $this->assertSame('\PHP\Depend', $package->getName());
+    }
+
+    public function testParserHandlesLambdaFunctionOnFileLevelBug70()
+    {
+        $packages = self::parseSource('bugs/070-001-closure-results-in-exception.php');
     }
 
     /**
