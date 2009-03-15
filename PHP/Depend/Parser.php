@@ -319,12 +319,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_FUNCTION:
-                // Consume function keyword
-                $token = $this->_consumeToken(self::T_FUNCTION);
-
-                $function = $this->_parseFunction();
+                $function = $this->_parseFunctionOrClosure();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
-                $function->setStartLine($token->startLine);
                 $function->setDocComment($comment);
 
                 $this->_prepareCallable($function);
@@ -619,6 +615,35 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $fileName = (string) $this->tokenizer->getSourceFile();
         $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
         throw new RuntimeException($message);
+    }
+
+    private function _parseFunctionOrClosure()
+    {
+        $tokens = array();
+        $token  = $this->_consumeToken(self::T_FUNCTION, $tokens);
+
+        // Remove leading comments
+        $this->_consumeComments($tokens);
+
+        // Check for closure or function
+        if ($this->tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
+            $callable = $this->_parseClosure($tokens);
+        } else {
+            $callable = $this->_parseFunction($tokens);
+        }
+
+        $callable->setStartLine($token->startLine);
+        $callable->setTokens($tokens);
+
+        return $callable;
+    }
+
+    private function _parseClosure(array &$tokens)
+    {
+        $closure = $this->builder->buildClosure();
+
+
+        return $closure;
     }
 
     /**

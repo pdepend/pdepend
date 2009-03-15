@@ -95,6 +95,13 @@ interface PHP_Depend_BuilderI
     function buildClass($name);
 
     /**
+     * Builds a new closure instance.
+     *
+     * @return PHP_Depend_Code_Closure
+     */
+    function buildClosure();
+
+    /**
      * Builds a new code class constant instance.
      *
      * @param string $name The constant name.
