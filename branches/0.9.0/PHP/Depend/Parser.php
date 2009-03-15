@@ -1171,7 +1171,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_ARRAY:
-                $defaultValue->setValue($this->_parseDefaultArrayValue($tokens));
+                $defaultValue->setValue($this->_parseDefaultValueArray($tokens));
                 break;
 
             case self::T_DOUBLE_COLON:
@@ -1213,7 +1213,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return array
      * @since 0.9.5
      */
-    private function _parseDefaultArrayValue(array &$tokens)
+    private function _parseDefaultValueArray(array &$tokens)
     {
         $defaultValue = array();
 
