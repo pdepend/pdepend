@@ -72,8 +72,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectFunctionAndFileLoc()
     {
-        $source   = dirname(__FILE__) . '/../../_code/comments/function.php';
-        $packages = self::parseSource($source);
+        $packages = self::parseSource('comments/function.php');
 
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);

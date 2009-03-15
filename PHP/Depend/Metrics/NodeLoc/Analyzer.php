@@ -265,7 +265,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $function->getSourceFile()->accept($this);
 
-        list($cloc, $eloc) = $this->_linesOfCode($function->getTokens());
+        list($cloc, $eloc) = $this->_linesOfCode($function->getTokens(), true);
 
         $loc   = $function->getEndLine() - $function->getStartLine() + 1;
         $ncloc = $loc - $cloc;
@@ -328,7 +328,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     {
         $this->fireStartMethod($method);
 
-        list($cloc, $eloc) = $this->_linesOfCode($method->getTokens());
+        list($cloc, $eloc) = $this->_linesOfCode($method->getTokens(), true);
 
         $loc   = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
@@ -357,15 +357,30 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * </code>
      *
      * @param array(array) $tokens The raw token stream.
+     * @param boolean      $search Optional boolean flag, search start.
      *
      * @return array(integer)
      */
-    private function _linesOfCode(array $tokens)
+    private function _linesOfCode(array $tokens, $search = false)
     {
         $clines = array();
         $elines = array();
 
-        foreach ($tokens as $token) {
+        $count = count($tokens);
+        if ($search === true) {
+            for ($i = 0; $i < $count; ++$i) {
+                $token = $tokens[$i];
+
+                if ($token->type === PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN) {
+                    break;
+                }
+            }
+        } else {
+            $i = 0;
+        }
+
+        for (; $i < $count; ++$i) {
+            $token = $tokens[$i];
 
             if ($token->type === PHP_Depend_TokenizerI::T_COMMENT
              || $token->type === PHP_Depend_TokenizerI::T_DOC_COMMENT) {
@@ -378,8 +393,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             if ($token->startLine === $token->endLine) {
                 $lines[$token->startLine] = true;
             } else {
-                for ($i = $token->startLine; $i <= $token->endLine; ++$i) {
-                    $lines[$i] = true;
+                for ($j = $token->startLine; $j <= $token->endLine; ++$j) {
+                    $lines[$j] = true;
                 }
             }
             unset($lines);
