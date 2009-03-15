@@ -744,7 +744,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $parameters = array();
 
         while ($tokenType !== self::T_EOF) {
-            $parameter = $this->_parseFunctionParameter($tokens);
+            $parameter = $this->_parseParameter($tokens);
             $parameter->setPosition(count($parameters));
 
             // Add new parameter to function
@@ -786,7 +786,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_Parameter
      */
-    private function _parseFunctionParameter(array &$tokens)
+    private function _parseParameter(array &$tokens)
     {
         $parameterRef   = false;
         $parameterType  = null;
