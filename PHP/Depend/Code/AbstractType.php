@@ -149,6 +149,36 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     }
 
     /**
+     * Returns a node iterator with all implemented interfaces.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     * @since 0.9.5
+     */
+    public function getInterfaces()
+    {
+        $nodes = array();
+        foreach ($this->getUnfilteredRawDependencies() as $dependency) {
+            // Add parent interfaces of parent class
+            if ($dependency instanceof PHP_Depend_Code_Class) {
+                foreach ($dependency->getInterfaces() as $interface) {
+                    $nodes[] = $interface;
+                }
+                continue;
+            }
+
+            // Add this interface first
+            $nodes[] = $dependency;
+            // Append all parent interfaces
+            foreach ($dependency->getInterfaces() as $parentInterface) {
+                if (in_array($parentInterface, $nodes, true) === false) {
+                    $nodes[] = $parentInterface;
+                }
+            }
+        }
+        return new PHP_Depend_Code_NodeIterator($nodes);
+    }
+
+    /**
      * Returns all {@link PHP_Depend_Code_TypeConstant} objects in this type.
      *
      * @return PHP_Depend_Code_NodeIterator
