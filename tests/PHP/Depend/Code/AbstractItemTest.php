@@ -109,21 +109,6 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that a previous set start line number is not replaced by a second
-     * value.
-     *
-     * @return void
-     */
-    public function testDoesntSetStartLineNumberForNonZeroValue()
-    {
-        $item = $this->createItem();
-        
-        $item->setStartLine(23);
-        $item->setStartLine(42);
-        $this->assertEquals(23, $item->getStartLine());
-    }
-    
-    /**
      * Tests that the end line number is set correct.
      *
      * @return void
@@ -135,21 +120,6 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
         $this->assertEquals(0, $item->getEndLine());
         $item->setEndLine(42);
         $this->assertEquals(42, $item->getEndLine());
-    }
-    
-    /**
-     * Tests that a previous set ebd line number is not replaced by a second
-     * value.
-     *
-     * @return void
-     */
-    public function testDoesntSetEndLineNumberForNonZeroValue()
-    {
-        $item = $this->createItem();
-        
-        $item->setEndLine(23);
-        $item->setEndLine(42);
-        $this->assertEquals(23, $item->getEndLine());
     }
     
     /**
