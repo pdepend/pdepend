@@ -51,6 +51,7 @@ require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/Value.php';
 require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
+require_once 'PHP/Depend/Parser/SymbolTable.php';
 require_once 'PHP/Depend/Parser/TokenStreamEndException.php';
 require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
 
@@ -194,7 +195,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
 
-        $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable();
+        $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable(true);
     }
 
     /**
@@ -379,7 +380,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return array(PHP_Depend_Token)
      */
-    protected function _parseInterfaceDeclaration(PHP_Depend_Code_Interface $interface)
+    private function _parseInterfaceDeclaration(PHP_Depend_Code_Interface $interface)
     {
         $tokens = array();
         $this->_consumeComments($tokens);
@@ -1583,47 +1584,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokens[] = $this->tokenizer->next();
         }
         return count($tokens);
-    }
-}
-
-class PHP_Depend_Parser_SymbolTable
-{
-    private $_scopeStack = array();
-
-    private $_scope = array();
-
-    public function createScope()
-    {
-        // Add copy of last scope as new scope
-        array_push($this->_scopeStack, $this->_scope);
-    }
-
-    public function destroyScope()
-    {
-        // Remove scope from stack
-        array_pop($this->_scopeStack);
-
-        // Update current scope to latest in stack
-        $this->_scope = end($this->_scopeStack);
-    }
-
-    public function add($key, $value)
-    {
-        if (is_array($this->_scope) === false) {
-            throw new BadMethodCallException('No active scope.');
-        }
-        $this->_scope[$key] = $value;
-    }
-
-    public function lookup($key)
-    {
-        if (is_array($this->_scope) === false) {
-            throw new BadMethodCallException('No active scope.');
-        }
-        if (isset($this->_scope[$key])) {
-            return $this->_scope[$key];
-        }
-        return null;
     }
 }
 ?>
