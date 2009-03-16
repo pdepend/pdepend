@@ -53,7 +53,7 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/NamespaceSupportIssue002.php';
+require_once dirname(__FILE__) . '/NamespaceSupportIssue002Test.php';
 
 /**
  * Test suite for issues meta package.
@@ -87,7 +87,7 @@ class PHP_Depend_Issues_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Issues - AllTests');
-        $suite->addTestSuite('PHP_Depend_Issues_NamespaceSupportIssue002');
+        $suite->addTestSuite('PHP_Depend_Issues_NamespaceSupportIssue002Test');
 
         return $suite;
     }

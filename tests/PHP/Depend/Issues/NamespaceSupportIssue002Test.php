@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Issues_NamespaceSupportIssue002 extends PHP_Depend_AbstractTest
+class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that the parser handles a simple use statement as expected.
