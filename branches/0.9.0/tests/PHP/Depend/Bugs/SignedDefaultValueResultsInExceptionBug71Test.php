@@ -46,56 +46,71 @@
  * @link       http://www.pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Bugs_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/ClosureResultsInExceptionBug070Test.php';
-require_once dirname(__FILE__) . '/SignedDefaultValueResultsInExceptionBug71Test.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Test suite for bugs meta package.
+ * Test case for the signed default value bug no. 70.
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Issues
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_AllTests
+class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
      */
-    public static function main()
+    public function testParserHandlesSimpleSignedDefaultValue()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $packages = self::parseSource('bugs/071-001-signed-default-value.php');
+
+        $parameter = $packages->current()
+                              ->getFunctions()
+                              ->current()
+                              ->getParameters()
+                              ->current();
+        $this->assertSame(-42, $parameter->getDefaultValue());
     }
 
     /**
-     * Creates the phpunit test suite for this package.
+     * Tests that the parser handles a parameter with a signed default value.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testParserHandlesMultipleSignedDefaultValue()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Bugs - AllTests');
-        $suite->addTestSuite('PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test');
+        $packages = self::parseSource('bugs/071-002-signed-default-value.php');
 
-        return $suite;
+        $parameter = $packages->current()
+                              ->getFunctions()
+                              ->current()
+                              ->getParameters()
+                              ->current();
+        $this->assertSame(42, $parameter->getDefaultValue());
     }
-}
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Bugs_AllTests::main') {
-    PHP_Depend_Bugs_AllTests::main();
+    /**
+     * Tests that the parser handles a parameter with a signed default value.
+     *
+     * @return void
+     */
+    public function testParserHandlesComplexSignedDefaultValue()
+    {
+        $packages = self::parseSource('bugs/071-003-signed-default-value.php');
+
+        $parameter = $packages->current()
+                              ->getFunctions()
+                              ->current()
+                              ->getParameters()
+                              ->current();
+        $this->assertSame(-42, $parameter->getDefaultValue());
+    }
 }
 ?>
