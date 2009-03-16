@@ -1092,15 +1092,30 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseQualifiedName(array &$tokens)
     {
+        $fragments = $this->_parseQualifiedNameRaw($tokens);
+
+        return join('', $fragments);
+    }
+
+    /**
+     * This method parses a qualified PHP 5.3 class, interface and namespace
+     * identifier and returns the collected tokens as a string array.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
+     * @return array(string)
+     */
+    private function _parseQualifiedNameRaw(array &$tokens)
+    {
         // Consume comments and fetch first token type
         $this->_consumeComments($tokens);
         $tokenType = $this->tokenizer->peek();
 
-        $qualifiedName = '';
+        $qualifiedName = array();
 
         // Check for local name
         if ($tokenType === self::T_STRING) {
-            $qualifiedName = $this->_consumeToken(self::T_STRING, $tokens)->image;
+            $qualifiedName[] = $this->_consumeToken(self::T_STRING, $tokens)->image;
 
             $this->_consumeComments($tokens);
             $tokenType = $this->tokenizer->peek();
@@ -1121,7 +1136,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeComments($tokens);
 
             // Append to qualified name
-            $qualifiedName .= '\\' . $token->image;
+            $qualifiedName[] = '\\';
+            $qualifiedName[] = $token->image;
 
             // Get next token type
             $tokenType = $this->tokenizer->peek();
