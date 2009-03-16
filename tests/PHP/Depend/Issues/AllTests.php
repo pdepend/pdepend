@@ -54,6 +54,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/NamespaceSupportIssue002Test.php';
+require_once dirname(__FILE__) . '/ReflectionCompatibilityIssue67Test.php';
 
 /**
  * Test suite for issues meta package.
@@ -87,7 +88,9 @@ class PHP_Depend_Issues_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Issues - AllTests');
+
         $suite->addTestSuite('PHP_Depend_Issues_NamespaceSupportIssue002Test');
+        $suite->addTestSuite('PHP_Depend_Issues_ReflectionCompatibilityIssue67Test');
 
         return $suite;
     }
