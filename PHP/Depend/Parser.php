@@ -641,12 +641,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses a simple function or a PHP 5.3 lambda function or
      * closure.
      *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
      * @return PHP_Depend_Code_AbstractCallable
      */
-    private function _parseFunctionOrClosure()
+    private function _parseFunctionOrClosure(array &$tokens = array())
     {
-        $tokens = array();
-        $token  = $this->_consumeToken(self::T_FUNCTION, $tokens);
+        // Read function keyword
+        $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
 
         // Remove leading comments
         $this->_consumeComments($tokens);
@@ -667,7 +669,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * This method parses a PHP 5.3 closure or lambda function.
      *
-     * @param array(array) &$tokens Collected tokens.
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return PHP_Depend_Code_Closure
      */
@@ -690,8 +692,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses a function or a method and adds it to the parent context node.
      *
-     * @param array(array)                 &$tokens Collected tokens.
-     * @param PHP_Depend_Code_AbstractType $parent  An optional parent interface of class.
+     * @param array(PHP_Depend_Token)      &$tokens Reference for all parsed tokens.
+     * @param PHP_Depend_Code_AbstractType $parent  Optional parent interface/class.
      *
      * @return PHP_Depend_Code_AbstractCallable
      */
@@ -741,7 +743,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @param array(PHP_Depend_Token)          &$tokens  Collected tokens.
+     * @param array(PHP_Depend_Token)          &$tokens Reference for parsed tokens.
      * @param PHP_Depend_Code_AbstractCallable $function The context callable.
      *
      * @return void
@@ -802,7 +804,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * corresponding ast instance. Additionally this method fills the tokens
      * array with all found tokens.
      * 
-     * @param array(PHP_Depend_Token) &$tokens Collected tokens instances.
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return PHP_Depend_Code_Parameter
      */
@@ -998,6 +1000,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_BACKTICK:
                 $this->_consumeToken(self::T_BACKTICK, $tokens);
                 $this->_skipEncapsultedBlock($tokens, self::T_BACKTICK);
+                break;
+
+            case self::T_FUNCTION:
+                $this->_parseFunctionOrClosure();
                 break;
 
             case self::T_COMMENT:
