@@ -168,6 +168,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     protected $builder = null;
 
     /**
+     * The symbol table used to handle PHP 5.3 use statements.
+     *
+     * @var PHP_Depend_Parser_SymbolTable $_useSymbolTable
+     */
+    private $_useSymbolTable = null;
+
+    /**
      * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
      *
@@ -186,6 +193,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
+
+        $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable();
     }
 
     /**
@@ -209,6 +218,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->tokenizer->getSourceFile());
+
+        $this->_useSymbolTable->createScope();
 
         $this->reset();
 
@@ -331,21 +342,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_USE:
-                $this->_consumeToken(self::T_USE);
-                $this->_consumeComments();
-
-                $this->_parseQualifiedName();
-                $this->_consumeComments();
-
-                if ($this->tokenizer->peek() === self::T_AS) {
-                    $this->_consumeToken(self::T_AS);
-                    $this->_consumeComments();
-
-                    $this->_consumeToken(self::T_STRING);
-                    $this->_consumeComments();
-                    $this->_consumeToken(self::T_SEMICOLON);
-                }
-                
+                // Parse a use statement. This method has no return value but it
+                // creates a new entry in the symbol map.
+                $this->_parseUseDeclarations();
                 break;
 
             default:
@@ -359,6 +358,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->tokenizer->peek();
         }
+
+        $this->_useSymbolTable->destroyScope();
     }
 
     /**
@@ -886,6 +887,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseFunctionBody(array &$outTokens,
                                         PHP_Depend_Code_AbstractCallable $function)
     {
+        $this->_useSymbolTable->createScope();
+        
         $curly  = 0;
         $tokens = array();
 
@@ -1022,6 +1025,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $outTokens[] = $token;
                 }
 
+                $this->_useSymbolTable->destroyScope();
+
                 // Stop processing
                 return;
             }
@@ -1086,13 +1091,28 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * PHP\Depend\Parser::parse();
      * </code>
      *
-     * @param array(PHP_Depend_Token) &$tokens The tokens array.
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return string
      */
     private function _parseQualifiedName(array &$tokens)
     {
         $fragments = $this->_parseQualifiedNameRaw($tokens);
+        
+        // Check for fully qualified name
+        if ($fragments[0] === '\\') {
+            return join('', $fragments);
+        }
+
+        // Search for an alias
+        $mapsTo = $this->_useSymbolTable->lookup($fragments[0]);
+        if ($mapsTo === null) {
+            return join('', $fragments);
+        }
+
+        // Remove alias and add real namespace
+        array_shift($fragments);
+        array_unshift($fragments, $mapsTo);
 
         return join('', $fragments);
     }
@@ -1144,6 +1164,69 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         } while ($tokenType === self::T_BACKSLASH);
 
         return $qualifiedName;
+    }
+
+    /**
+     * This method parses a list of PHP 5.3 use declarations and adds a mapping
+     * between short name and full qualified name to the use symbol table.
+     *
+     * <code>
+     * use \foo\bar as fb,
+     *     \foobar\Bar;
+     * </code>
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
+     * @return void
+     */
+    private function _parseUseDeclarations(array &$tokens = array())
+    {
+        // Consume use keyword
+        $this->_consumeToken(self::T_USE, $tokens);
+        $this->_consumeComments($tokens);
+
+        // Parse all use declarations
+        $this->_parseUseDeclaration($tokens);
+        $this->_consumeComments($tokens);
+
+        // Consume closing semicolon
+        $this->_consumeToken(self::T_SEMICOLON, $tokens);
+    }
+
+    /**
+     * This method parses a single use declaration and adds a mapping between
+     * short name and full qualified name to the use symbol table. 
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
+     * @return void
+     */
+    private function _parseUseDeclaration(array &$tokens)
+    {
+        $fragments = $this->_parseQualifiedNameRaw($tokens);
+        $this->_consumeComments($tokens);
+
+        if ($this->tokenizer->peek() === self::T_AS) {
+            $this->_consumeToken(self::T_AS, $tokens);
+            $this->_consumeComments($tokens);
+
+            $image = $this->_consumeToken(self::T_STRING, $tokens)->image;
+            $this->_consumeComments($tokens);
+        } else {
+            $image = end($fragments);
+        }
+
+        // Add mapping between image and qualified name to symbol table
+        $this->_useSymbolTable->add($image, join('', $fragments));
+
+        // Check for a following use declaration
+        if ($this->tokenizer->peek() === self::T_COMMA) {
+            // Consume comma token and comments
+            $this->_consumeToken(self::T_COMMA, $tokens);
+            $this->_consumeComments($tokens);
+
+            $this->_parseUseDeclaration($tokens);
+        }
     }
 
     /**
@@ -1500,6 +1583,47 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokens[] = $this->tokenizer->next();
         }
         return count($tokens);
+    }
+}
+
+class PHP_Depend_Parser_SymbolTable
+{
+    private $_scopeStack = array();
+
+    private $_scope = array();
+
+    public function createScope()
+    {
+        // Add copy of last scope as new scope
+        array_push($this->_scopeStack, $this->_scope);
+    }
+
+    public function destroyScope()
+    {
+        // Remove scope from stack
+        array_pop($this->_scopeStack);
+
+        // Update current scope to latest in stack
+        $this->_scope = end($this->_scopeStack);
+    }
+
+    public function add($key, $value)
+    {
+        if (is_array($this->_scope) === false) {
+            throw new BadMethodCallException('No active scope.');
+        }
+        $this->_scope[$key] = $value;
+    }
+
+    public function lookup($key)
+    {
+        if (is_array($this->_scope) === false) {
+            throw new BadMethodCallException('No active scope.');
+        }
+        if (isset($this->_scope[$key])) {
+            return $this->_scope[$key];
+        }
+        return null;
     }
 }
 ?>
