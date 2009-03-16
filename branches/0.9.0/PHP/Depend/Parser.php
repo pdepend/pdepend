@@ -330,6 +330,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $comment = null;
                 break;
 
+            case self::T_USE:
+                $this->_consumeToken(self::T_USE);
+                $this->_consumeComments();
+
+                $this->_parseQualifiedName();
+                $this->_consumeComments();
+
+                if ($this->tokenizer->peek() === self::T_AS) {
+                    $this->_consumeToken(self::T_AS);
+                    $this->_consumeComments();
+
+                    $this->_consumeToken(self::T_STRING);
+                    $this->_consumeComments();
+                    $this->_consumeToken(self::T_SEMICOLON);
+                }
+                
+                break;
+
             default:
                 // Consume whatever token
                 $this->_consumeToken($tokenType);
@@ -1082,32 +1100,36 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
         }
 
-        // List of expected tokens for a qualified name
-        $validTokenTypes = array(0 => self::T_BACKSLASH, 1 => self::T_STRING);
-
-        // Get first token index and validate that there is at least one token
-        $index = array_search($tokenType, $validTokenTypes);
-        if ($index === false) {
-            throw new PHP_Depend_Parser_UnexpectedTokenException($this->tokenizer);
-        }
-
         $qualifiedName = '';
-        while (in_array($tokenType, $validTokenTypes) === true) {
 
-            // Read the expected token type
-            $token = $this->_consumeToken($validTokenTypes[$index], $tokens);
+        // Check for local name
+        if ($tokenType === self::T_STRING) {
+            $qualifiedName = $this->_consumeToken(self::T_STRING, $tokens)->image;
 
-            // Append token image to qualified name
-            $qualifiedName .= $token->image;
-
-            // Strip allowed comments and lookup next token type
             $this->_consumeComments($tokens);
             $tokenType = $this->tokenizer->peek();
 
-            // Calculate next token expected type
-            $index = ($index + 1) % 2;
+            // Stop here for simple identifier
+            if ($tokenType !== self::T_BACKSLASH) {
+                return $qualifiedName;
+            }
         }
 
+        do {
+            // Next token must be a namespace separator
+            $this->_consumeToken(self::T_BACKSLASH, $tokens);
+            $this->_consumeComments($tokens);
+
+            // Next token must be a namespace identifier
+            $token = $this->_consumeToken(self::T_STRING, $tokens);
+            $this->_consumeComments($tokens);
+
+            // Append to qualified name
+            $qualifiedName .= '\\' . $token->image;
+
+            // Get next token type
+            $tokenType = $this->tokenizer->peek();
+        } while ($tokenType === self::T_BACKSLASH);
 
         return $qualifiedName;
     }
