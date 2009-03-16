@@ -554,5 +554,37 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue67Test extends PHP_Depend_Ab
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
         $this->assertSame(array(), $parameters->current()->getDefaultValue());
     }
+
+    /**
+     * Tests that the parser throws the expected exception when no default value
+     * was defined.
+     *
+     * @return void
+     */
+    public function testParserThrowsExpectedExceptionForMissingDefaultValue()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_MissingValueException',
+            'Missing default value on line: 2, col: 21, file: '
+        );
+
+        self::parseSource('issues/067-034-parameter-missing-default-value.php');
+    }
+
+    /**
+     * Tests that the parser throws the expected exception when it reaches the
+     * end of file while it parses a parameter default value.
+     *
+     * @return void
+     */
+    public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_TokenStreamEndException',
+            'Unexpected end of token stream in file: '
+        );
+
+        self::parseSource('issues/067-035-parameter-missing-default-value-eof.php');
+    }
 }
 ?>
