@@ -586,5 +586,21 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue67Test extends PHP_Depend_Ab
 
         self::parseSource('issues/067-035-parameter-missing-default-value-eof.php');
     }
+
+    /**
+     * Tests that the parser throws an exception when the default value contains
+     * an invalid token.
+     *
+     * @return void
+     */
+    public function testParserThrowsExpectedExceptionWhenDefaultValueContainsInvalidToken()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: *, line: 2, col: 24, file: '
+        );
+
+        self::parseSource('issues/067-036-parameter-default-value-invalid-token.php');
+    }
 }
 ?>
