@@ -1255,6 +1255,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->_consumeComments($tokens);
 
+        // By default all parameters positive signed
+        $signed = 1;
+
         $tokenType = $this->tokenizer->peek();
         while ($tokenType !== self::T_EOF) {
 
@@ -1285,12 +1288,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_LNUMBER:
                 $token = $this->_consumeToken(self::T_LNUMBER, $tokens);
-                $defaultValue->setValue((int) $token->image);
+                $defaultValue->setValue($signed * (int) $token->image);
                 break;
 
             case self::T_DNUMBER:
                 $token = $this->_consumeToken(self::T_DNUMBER, $tokens);
-                $defaultValue->setValue((double) $token->image);
+                $defaultValue->setValue($signed * (double) $token->image);
                 break;
 
             case self::T_CONSTANT_ENCAPSED_STRING:
@@ -1304,6 +1307,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_DOUBLE_COLON:
                 $this->_consumeToken(self::T_DOUBLE_COLON, $tokens);
+                break;
+
+            case self::T_PLUS:
+                $this->_consumeToken(self::T_PLUS, $tokens);
+                break;
+
+            case self::T_MINUS:
+                $this->_consumeToken(self::T_MINUS, $tokens);
+                $signed *= -1;
                 break;
 
             case self::T_DIR:
