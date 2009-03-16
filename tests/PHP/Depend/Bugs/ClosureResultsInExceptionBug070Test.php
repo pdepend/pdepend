@@ -117,5 +117,36 @@ class PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test extends PHP_Depend_Abs
 
         self::parseSource('bugs/070-005-closure-results-in-exception.php');
     }
+
+    /**
+     * Tests that the parser handles a nested function within a function.
+     *
+     * @return void
+     */
+    public function testParserHandlesFunctionDeclarationWithinFunctionDeclarationBug70()
+    {
+        $packages = self::parseSource('bugs/070-006-closure-results-in-exception.php');
+
+        $functions = $packages->current()->getFunctions();
+        $this->assertSame(2, count($functions));
+        $this->assertSame('bar', $functions->current()->getName());
+        $functions->next();
+        $this->assertSame('foo', $functions->current()->getName());
+    }
+
+    /**
+     * Tests that the parser handles a nested closure within a function declaration.
+     *
+     * @return void
+     */
+    public function testParserHandlesClosureWithinFunctionDeclarationBug70()
+    {
+        $packages = self::parseSource('bugs/070-007-closure-results-in-exception.php');
+        $function = $packages->current()
+                              ->getFunctions()
+                              ->current();
+
+        $this->assertSame('foo', $function->getName());
+    }
 }
 ?>
