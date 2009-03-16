@@ -52,6 +52,7 @@ require_once 'PHP/Depend/Code/Value.php';
 require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
 require_once 'PHP/Depend/Parser/SymbolTable.php';
+require_once 'PHP/Depend/Parser/MissingValueException.php';
 require_once 'PHP/Depend/Parser/TokenStreamEndException.php';
 require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
 
@@ -446,7 +447,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $tokens = array();
 
-        do {
+        while (true) {
             $this->_consumeComments($tokens);
 
             $qualifiedName   = $this->_parseQualifiedName($tokens);
@@ -464,9 +465,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $this->_consumeToken(self::T_COMMA, $tokens);
             $this->_consumeComments($tokens);
-        } while (true);
-
-        throw new RuntimeException('Unexpected end of interface list.');
+        }
     }
 
     /**
@@ -1265,7 +1264,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 if ($defaultValue->isValueAvailable() === true) {
                     return $defaultValue;
                 }
-                throw new RuntimeException('A default value was expected.');
+                throw new PHP_Depend_Parser_MissingValueException($this->tokenizer);
 
             case self::T_NULL:
                 $token = $this->_consumeToken(self::T_NULL, $tokens);
@@ -1341,7 +1340,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         // We should never reach this, so throw an exception
-        throw new RuntimeException('Unexpected end of token stream.');
+        throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
     }
 
     /**
