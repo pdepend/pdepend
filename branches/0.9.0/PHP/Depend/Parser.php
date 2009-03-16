@@ -1306,14 +1306,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_DOUBLE_COLON, $tokens);
                 break;
 
+            case self::T_DIR:
+            case self::T_FILE:
+            case self::T_LINE:
             case self::T_SELF:
+            case self::T_NS_C:
+            case self::T_FUNC_C:
             case self::T_STRING:
             case self::T_STATIC:
+            case self::T_CLASS_C:
+            case self::T_METHOD_C:
             case self::T_BACKSLASH:
+            
                 // There is a default value but we don't handle it at the moment.
                 $defaultValue->setValue(null);
                 $this->_consumeToken($tokenType, $tokens);
                 break;
+
+            default:
+                throw new PHP_Depend_Parser_UnexpectedTokenException($this->tokenizer);
             }
             
             $this->_consumeComments($tokens);
