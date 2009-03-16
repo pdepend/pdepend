@@ -57,6 +57,7 @@ require_once dirname(__FILE__) . '/DependTest.php';
 require_once dirname(__FILE__) . '/InternalTest.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/Builder/DefaultTest.php';
+require_once dirname(__FILE__) . '/Bugs/AllTests.php';
 require_once dirname(__FILE__) . '/Code/AllTests.php';
 require_once dirname(__FILE__) . '/Input/AllTests.php';
 require_once dirname(__FILE__) . '/Issues/AllTests.php';
@@ -96,6 +97,8 @@ class PHP_Depend_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
+
+        $suite->addTest(PHP_Depend_Bugs_AllTests::suite());
         $suite->addTest(PHP_Depend_Code_AllTests::suite());
         $suite->addTest(PHP_Depend_Issues_AllTests::suite());
         $suite->addTest(PHP_Depend_Log_AllTests::suite());
@@ -103,6 +106,7 @@ class PHP_Depend_AllTests
         $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
         $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_AllTests::suite());
+
         $suite->addTestSuite('PHP_Depend_Builder_DefaultTest');
         $suite->addTestSuite('PHP_Depend_InternalTest');
         $suite->addTestSuite('PHP_Depend_ParserTest');
