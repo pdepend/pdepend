@@ -102,6 +102,11 @@ class PHP_Depend_Issues_NamespaceSupportIssue002 extends PHP_Depend_AbstractTest
         $this->assertSame('foo', $interface->getPackage()->getName());
     }
 
+    /**
+     * Tests that parser handles a use declaration case insensitive.
+     *
+     * @return void
+     */
     public function testParserHandlesUseDeclarationCaseInsensitive()
     {
         $packages = self::parseSource('issues/002-003-use-declaration.php');
@@ -113,6 +118,21 @@ class PHP_Depend_Issues_NamespaceSupportIssue002 extends PHP_Depend_AbstractTest
         $parentClass = $class->getParentClass();
         $this->assertSame('Bar', $parentClass->getName());
         $this->assertSame('\foo\bar', $parentClass->getPackage()->getName());
+    }
+
+    /**
+     * Tests that parser throws an expected exception.
+     *
+     * @return void
+     */
+    public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: as, line: 2, col: 19, file: '
+        );
+
+        self::parseSource('issues/002-004-use-declaration.php');
     }
 }
 ?>
