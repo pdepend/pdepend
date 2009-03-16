@@ -101,5 +101,18 @@ class PHP_Depend_Issues_NamespaceSupportIssue002 extends PHP_Depend_AbstractTest
         $this->assertSame('Bar', $interface->getName());
         $this->assertSame('foo', $interface->getPackage()->getName());
     }
+
+    public function testParserHandlesUseDeclarationCaseInsensitive()
+    {
+        $packages = self::parseSource('issues/002-003-use-declaration.php');
+
+        $class = $packages->current()
+                          ->getClasses()
+                          ->current();
+
+        $parentClass = $class->getParentClass();
+        $this->assertSame('Bar', $parentClass->getName());
+        $this->assertSame('\foo\bar', $parentClass->getPackage()->getName());
+    }
 }
 ?>
