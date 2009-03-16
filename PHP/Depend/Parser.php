@@ -1096,10 +1096,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments($tokens);
         $tokenType = $this->tokenizer->peek();
 
-        if ($tokenType === self::T_EOF) {
-            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
-        }
-
         $qualifiedName = '';
 
         // Check for local name
