@@ -460,12 +460,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Check for opening interface body
             if ($tokenType === self::T_CURLY_BRACE_OPEN) {
-                return $tokens;
+                break;
             }
 
             $this->_consumeToken(self::T_COMMA, $tokens);
             $this->_consumeComments($tokens);
         }
+
+        return $tokens;
     }
 
     /**
