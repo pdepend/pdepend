@@ -900,11 +900,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         while ($tokenType !== self::T_EOF) {
 
             switch ($tokenType) {
-
-            case self::T_USE:
-                $this->_parseUseDeclarations($tokens);
-                break;
-                
+        
             case self::T_CATCH:
                 // Consume catch and the opening parenthesis
                 $this->_consumeToken(self::T_CATCH, $tokens);
