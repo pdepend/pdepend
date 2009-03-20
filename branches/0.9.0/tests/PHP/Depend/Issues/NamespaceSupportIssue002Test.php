@@ -214,7 +214,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
      *
      * @return void
      */
-    public function testNamespaceHasHigherPriorityThanPackageAnnotation()
+    public function testNamespaceHasHigherPriorityThanPackageAnnotationSemicolonSyntax()
     {
         $packages = self::parseSource('issues/002-010-namespace-has-higher-priority.php');
 
@@ -223,6 +223,91 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                           ->current();
 
         $this->assertSame('bar', $class->getPackage()->getName());
+    }
+
+    /**
+     * Tests that an existing namespace declaration has a higher priority than
+     * a simply package annotation.
+     *
+     * @return void
+     */
+    public function testNamespaceHasHigherPriorityThanPackageAnnotationCurlyBraceSyntax()
+    {
+        $packages = self::parseSource('issues/002-011-namespace-has-higher-priority.php');
+
+        $class = $packages->current()
+                          ->getClasses()
+                          ->current();
+
+        $this->assertSame('bar', $class->getPackage()->getName());
+    }
+
+    /**
+     * Tests that the parser handles multiple namespaces in a single file correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesFileWithMultipleNamespacesCorrectSemicolonSyntax()
+    {
+        $packages = self::parseSource('issues/002-012-multiple-namespaces.php');
+
+        $this->assertSame(3, $packages->count());
+        
+        $package = $packages->current();
+        $types   = $package->getTypes();
+        $this->assertSame('bar', $package->getName());
+        $this->assertSame(1, $types->count());
+        $this->assertSame('BarFoo', $types->current()->getName());
+
+        $packages->next();
+
+        $package = $packages->current();
+        $types   = $package->getTypes();
+        $this->assertSame('baz', $package->getName());
+        $this->assertSame(1, $types->count());
+        $this->assertSame('FooBaz', $types->current()->getName());
+
+        $packages->next();
+
+        $package = $packages->current();
+        $types   = $package->getTypes();
+        $this->assertSame('foo', $package->getName());
+        $this->assertSame(1, $types->count());
+        $this->assertSame('FooBar', $types->current()->getName());
+    }
+
+    /**
+     * Tests that the parser handles multiple namespaces in a single file correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesFileWithMultipleNamespacesCorrectCurlyBraceSyntax()
+    {
+        $packages = self::parseSource('issues/002-013-multiple-namespaces.php');
+
+        $this->assertSame(3, $packages->count());
+
+        $package = $packages->current();
+        $types   = $package->getTypes();
+        $this->assertSame('bar', $package->getName());
+        $this->assertSame(1, $types->count());
+        $this->assertSame('BarFoo', $types->current()->getName());
+
+        $packages->next();
+
+        $package = $packages->current();
+        $types   = $package->getTypes();
+        $this->assertSame('baz', $package->getName());
+        $this->assertSame(1, $types->count());
+        $this->assertSame('FooBaz', $types->current()->getName());
+
+        $packages->next();
+
+        $package = $packages->current();
+        $types   = $package->getTypes();
+        $this->assertSame('foo', $package->getName());
+        $this->assertSame(1, $types->count());
+        $this->assertSame('FooBar', $types->current()->getName());
     }
 }
 ?>
