@@ -1,8 +1,9 @@
 <?php
-namespace bar;
+namespace bar {
 
-/**
- * @package foo
- */
-class FooBar {}
+    /**
+     * @package foo
+     */
+    class FooBar {}
+}
 ?>
