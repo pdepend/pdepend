@@ -284,7 +284,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_FUNCTION:
-                $this->_parseFunctionOrClosure();
+                $this->_parseFunctionOrClosureDeclaration();
                 break;
 
             case self::T_USE:
@@ -670,7 +670,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_AbstractCallable
      */
-    private function _parseFunctionOrClosure(array &$tokens = array())
+    private function _parseFunctionOrClosureDeclaration(array &$tokens = array())
     {
         // Read function keyword
         $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
@@ -1029,7 +1029,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_FUNCTION:
-                $this->_parseFunctionOrClosure();
+                $this->_parseFunctionOrClosureDeclaration();
                 break;
 
             case self::T_COMMENT:
