@@ -773,7 +773,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @param array(PHP_Depend_Token)          &$tokens Reference for parsed tokens.
+     * @param array(PHP_Depend_Token)          &$tokens  Reference for parsed tokens.
      * @param PHP_Depend_Code_AbstractCallable $function The context callable.
      *
      * @return void
