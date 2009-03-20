@@ -284,12 +284,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_FUNCTION:
-                $function = $this->_parseFunctionOrClosure();
-                $function->setSourceFile($this->tokenizer->getSourceFile());
-                $function->setDocComment($this->_docComment);
-                $this->_prepareCallable($function);
-                
-                $this->reset();
+                $this->_parseFunctionOrClosure();
                 break;
 
             case self::T_USE:
@@ -692,6 +687,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $callable->setStartLine($token->startLine);
         $callable->setTokens($tokens);
+        $callable->setSourceFile($this->tokenizer->getSourceFile());
+        $callable->setDocComment($this->_docComment);
+        $this->_prepareCallable($callable);
+
+        $this->reset();
 
         return $callable;
     }
