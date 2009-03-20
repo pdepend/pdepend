@@ -239,9 +239,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->reset();
 
-        // Position of the context type within the analyzed file.
-        $typePosition = 0;
-
         $tokenType = $this->tokenizer->peek();
 
         while ($tokenType !== self::T_EOF) {
@@ -295,7 +292,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $interface->setSourceFile($this->tokenizer->getSourceFile());
                 $interface->setStartLine($token->startLine);
                 $interface->setDocComment($this->_docComment);
-                $interface->setPosition($typePosition++);
                 $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
                 $interface->setUserDefined();
 
@@ -326,7 +322,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $class->setStartLine($token->startLine);
                 $class->setModifiers($this->_modifiers);
                 $class->setDocComment($this->_docComment);
-                $class->setPosition($typePosition++);
                 $class->setUserDefined();
 
                 $this->_parseClassDeclaration($class);
