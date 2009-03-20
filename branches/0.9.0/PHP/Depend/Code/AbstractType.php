@@ -421,28 +421,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     }
 
     /**
-     * Returns the position of this type within the source file.
-     *
-     * @return integer
-     */
-    public function getPosition()
-    {
-        return $this->_position;
-    }
-
-    /**
-     * Sets the source position of this type.
-     *
-     * @param integer $position Position within the source file.
-     *
-     * @return void
-     */
-    public function setPosition($position)
-    {
-        $this->_position = (int) $position;
-    }
-
-    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
