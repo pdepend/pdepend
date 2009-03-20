@@ -411,8 +411,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
         $interface->setUserDefined();
 
-        $this->builder->buildPackage($this->package)->addType($interface);
-
         // Strip comments and fetch next token type
         $this->_consumeComments($tokens);
         $tokenType = $this->tokenizer->peek();
