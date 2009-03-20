@@ -128,8 +128,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $sourceFile = dirname(__FILE__) . '/_code/not_closed_function.txt';
         $this->setExpectedException(
-            'RuntimeException',
-            "Invalid state, unclosed function body in '{$sourceFile}'."
+            'PHP_Depend_Parser_TokenStreamEndException',
+            'Unexpected end of token stream in file: '
         );
 
         self::parseSource($sourceFile);
