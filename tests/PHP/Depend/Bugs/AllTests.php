@@ -53,6 +53,7 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once dirname(__FILE__) . '/ClassDeclarationWithoutBodyBug065Test.php';
 require_once dirname(__FILE__) . '/ClosureResultsInExceptionBug070Test.php';
 require_once dirname(__FILE__) . '/SignedDefaultValueResultsInExceptionBug71Test.php';
 
@@ -88,6 +89,8 @@ class PHP_Depend_Bugs_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Bugs - AllTests');
+
+        $suite->addTestSuite('PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test');
         $suite->addTestSuite('PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test');
 
