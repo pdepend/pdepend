@@ -280,32 +280,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CLASS:
-                // Consume class keyword
-                $this->_consumeToken(self::T_CLASS);
-
-                // Remove leading comments and get class name
-                $this->_consumeComments();
-                $token = $this->_consumeToken(self::T_STRING);
-
-                $qualifiedName = sprintf('%s%s%s',
-                                    $this->package,
-                                    $this->packageSeparator,
-                                    $token->image);
-
-                $class = $this->builder->buildClass($qualifiedName);
-                $class->setSourceFile($this->tokenizer->getSourceFile());
-                $class->setStartLine($token->startLine);
-                $class->setModifiers($this->_modifiers);
-                $class->setDocComment($this->_docComment);
-                $class->setUserDefined();
-
-                $this->_parseClassDeclaration($class);
-
-                $this->builder->buildPackage($this->package)->addType($class);
-
-                $this->parseTypeBody($class);
-
-                $this->reset();
+                $this->_parseClassDeclaration();
                 break;
 
             case self::T_FUNCTION:
@@ -434,20 +409,34 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses the dependencies in a class signature.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
-     *
-     * @return void
+     * @return PHP_Depend_Code_Class
      */
-    private function _parseClassDeclaration(PHP_Depend_Code_Class $class)
+    private function _parseClassDeclaration()
     {
         $tokens = array();
+
+        // Consume class keyword
+        $this->_consumeToken(self::T_CLASS);
+
+        // Remove leading comments and get class name
+        $this->_consumeComments();
+        $token = $this->_consumeToken(self::T_STRING);
+
+        $qualifiedName = sprintf('%s%s%s',
+                            $this->package,
+                            $this->packageSeparator,
+                            $token->image);
+
+        $class = $this->builder->buildClass($qualifiedName);
+        $class->setSourceFile($this->tokenizer->getSourceFile());
+        $class->setStartLine($token->startLine);
+        $class->setModifiers($this->_modifiers);
+        $class->setDocComment($this->_docComment);
+        $class->setUserDefined();
+
         $this->_consumeComments($tokens);
-
         $tokenType = $this->tokenizer->peek();
-        if ($tokenType === self::T_CURLY_BRACE_OPEN) {
-            return $tokens;
-        }
-
+        
         if ($tokenType === self::T_EXTENDS) {
             $this->_consumeToken(self::T_EXTENDS, $tokens);
             $this->_consumeComments($tokens);
@@ -455,17 +444,23 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $qualifiedName = $this->_parseQualifiedName($tokens);
             $parentClass   = $this->builder->buildClass($qualifiedName);
             $class->setParentClass($parentClass);
-        }
-        $this->_consumeComments($tokens);
 
-        $tokenType = $this->tokenizer->peek();
-        if ($tokenType === self::T_CURLY_BRACE_OPEN) {
-            return $tokens;
+            $this->_consumeComments($tokens);
+            $tokenType = $this->tokenizer->peek();
         }
 
-        $this->_consumeToken(self::T_IMPLEMENTS, $tokens);
+        if ($tokenType === self::T_IMPLEMENTS) {
+            $this->_consumeToken(self::T_IMPLEMENTS, $tokens);
+            $tokens = array_merge($tokens, $this->_parseInterfaceList($class));
+        }
+        
+        // Handle class body
+        $this->parseTypeBody($class);
 
-        $tokens = array_merge($tokens, $this->_parseInterfaceList($class));
+        // Reset parser settings
+        $this->reset();
+
+        return $class;
     }
 
     /**
