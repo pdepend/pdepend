@@ -646,9 +646,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokenType = $this->tokenizer->peek();
         }
 
-        $fileName = (string) $this->tokenizer->getSourceFile();
-        $message  = "Invalid state, unclosed class body in file '{$fileName}'.";
-        throw new RuntimeException($message);
+        throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
     }
 
     /**
