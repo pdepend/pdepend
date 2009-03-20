@@ -526,7 +526,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Read function keyword for $startLine property
                 $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
 
-                $method = $this->_parseFunctionDeclaration($tokens, $type);
+                $method = $this->_parseCallableDeclaration($tokens, $type);
                 $method->setDocComment($this->_docComment);
                 $method->setStartLine($token->startLine);
                 $method->setSourceFile($this->tokenizer->getSourceFile());
@@ -681,7 +681,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
             $callable = $this->_parseClosureDeclaration($tokens);
         } else {
-            $callable = $this->_parseFunctionDeclaration($tokens);
+            $callable = $this->_parseCallableDeclaration($tokens);
         }
 
         $callable->setStartLine($token->startLine);
@@ -713,7 +713,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_parseBoundVariables($tokens, $closure);
         }
         
-        $this->_parseFunctionBody($tokens, $closure);
+        $this->_parseCallableBody($tokens, $closure);
 
         return $closure;
     }
@@ -726,7 +726,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_AbstractCallable
      */
-    private function _parseFunctionDeclaration(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
+    private function _parseCallableDeclaration(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
     {
         // Remove leading comments
         $this->_consumeComments($tokens);
@@ -760,7 +760,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies
-            $this->_parseFunctionBody($tokens, $callable);
+            $this->_parseCallableBody($tokens, $callable);
         } else {
             $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
             $callable->setEndLine($token->startLine);
@@ -916,7 +916,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    private function _parseFunctionBody(array &$outTokens,
+    private function _parseCallableBody(array &$outTokens,
                                         PHP_Depend_Code_AbstractCallable $function)
     {
         $this->_useSymbolTable->createScope();
