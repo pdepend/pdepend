@@ -207,5 +207,22 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
 
         self::parseSource('issues/002-009-namespace-declaration.php');
     }
+
+    /**
+     * Tests that an existing namespace declaration has a higher priority than
+     * a simply package annotation.
+     *
+     * @return void
+     */
+    public function testNamespaceHasHigherPriorityThanPackageAnnotation()
+    {
+        $packages = self::parseSource('issues/002-010-namespace-has-higher-priority.php');
+
+        $class = $packages->current()
+                          ->getClasses()
+                          ->current();
+
+        $this->assertSame('bar', $class->getPackage()->getName());
+    }
 }
 ?>
