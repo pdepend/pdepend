@@ -70,13 +70,6 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     protected $parent = null;
 
     /**
-     * Method position within its parent class or interface.
-     *
-     * @var integer $_position
-     */
-    private $_position = 0;
-
-    /**
      * Defined modifiers for this property node.
      *
      * @var integer $_modifiers
@@ -208,28 +201,6 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     public function setParent(PHP_Depend_Code_AbstractType $parent = null)
     {
         $this->parent = $parent;
-    }
-
-    /**
-     * Returns the position of this method within the parent class or interface.
-     *
-     * @return integer
-     */
-    public function getPosition()
-    {
-        return $this->_position;
-    }
-
-    /**
-     * Sets the source position of this method.
-     *
-     * @param integer $position Position within the parent class or interface.
-     *
-     * @return void
-     */
-    public function setPosition($position)
-    {
-        $this->_position = (int) $position;
     }
 
     /**
