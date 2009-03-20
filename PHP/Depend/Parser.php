@@ -528,9 +528,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
         $this->reset($defaultModifier);
 
-        // Method position within the type body
-        $methodPosition = 0;
-
         $tokenType = $this->tokenizer->peek();
 
         while ($tokenType !== self::T_EOF) {
@@ -544,7 +541,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $method = $this->_parseFunction($tokens, $type);
                 $method->setDocComment($this->_docComment);
                 $method->setStartLine($token->startLine);
-                $method->setPosition($methodPosition++);
                 $method->setSourceFile($this->tokenizer->getSourceFile());
                 $method->setModifiers($this->_modifiers);
 
