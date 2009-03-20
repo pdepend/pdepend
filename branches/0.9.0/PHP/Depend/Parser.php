@@ -508,9 +508,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function parseTypeBody(PHP_Depend_Code_AbstractType $type)
     {
-        $curly = 0;
-
         $tokens = array();
+
+        // Consume comments and read opening curly brace
+        $this->_consumeComments($tokens);
+        $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+
+        $curly = 1;
 
         $defaultModifier = self::IS_PUBLIC;
         if ($type instanceof PHP_Depend_Code_Interface) {
