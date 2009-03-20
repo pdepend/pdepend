@@ -111,8 +111,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $sourceFile = dirname(__FILE__) . '/_code/not_closed_class.txt';
         $this->setExpectedException(
-            'RuntimeException',
-            "Invalid state, unclosed class body in file '{$sourceFile}'."
+            'PHP_Depend_Parser_TokenStreamEndException',
+            "Unexpected end of token stream in file: {$sourceFile}."
         );
 
         self::parseSource($sourceFile);
