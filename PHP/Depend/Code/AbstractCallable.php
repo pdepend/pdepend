@@ -278,31 +278,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function addParameter(PHP_Depend_Code_Parameter $parameter)
     {
-        if ($parameter->getDeclaringFunction() !== null) {
-            $parameter->getDeclaringFunction()->removeParameter($parameter);
-        }
         // Set this as parent
         $parameter->setDeclaringFunction($this);
         // Store reference
         $this->_parameters[] = $parameter;
 
         return $parameter;
-    }
-
-    /**
-     * Removes the parameter from this callable.
-     *
-     * @param PHP_Depend_Code_Parameter $parameter The parameter instance.
-     *
-     * @return void
-     */
-    public function removeParameter(PHP_Depend_Code_Parameter $parameter)
-    {
-        if (($i = array_search($parameter, $this->_parameters, true)) !== false) {
-            // Remove this parent
-            $parameter->setParent(null);
-            // Remove internal reference
-            unset($this->_parameters[$i]);
-        }
     }
 }
