@@ -2095,16 +2095,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertFalse($types->current());
     }
 
-    public function testParserSetsCorrectMethodPositionIssue39()
-    {
-        $this->markTestIncomplete('Test not implemented yet.');
-
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/39-2.php');
-        $types    = $packages->current()->getTypes();
-
-        $this->assertEquals(2, $types->count());
-    }
-
     /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
