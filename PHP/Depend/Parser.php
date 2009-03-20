@@ -135,6 +135,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                              )ix';
 
     /**
+     * The name of the last detected namespace.
+     *
+     * @var string $_namespaceName
+     */
+    private $_namespaceName = null;
+
+    /**
      * Last parsed package tag.
      *
      * @var string $_packageName
@@ -248,16 +255,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             switch ($tokenType) {
 
-            case self::T_ABSTRACT:
-                $this->_consumeToken(self::T_ABSTRACT);
-                $this->_modifiers |= self::IS_EXPLICIT_ABSTRACT;
-                break;
-
-            case self::T_FINAL:
-                $this->_consumeToken(self::T_FINAL);
-                $this->_modifiers |= self::IS_FINAL;
-                break;
-
             case self::T_COMMENT:
                 $this->_consumeToken(self::T_COMMENT);
                 break;
@@ -283,6 +280,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CLASS:
+            case self::T_FINAL:
+            case self::T_ABSTRACT:
                 $this->_parseClassDeclaration();
                 break;
 
@@ -317,11 +316,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     }
 
                     // Create a package for this namespace
+                    $this->_namespaceName = $qualifiedName;
                     $this->_builder->buildPackage($qualifiedName);
                 } else {
                     $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
 
                     // Create a package for this namespace
+                    $this->_namespaceName = '';
                     $this->_builder->buildPackage('');
                 }
 
@@ -371,10 +372,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $localName = $this->_consumeToken(self::T_STRING)->image;
 
-        $qualifiedName = sprintf('%s%s%s',
-                            $this->_packageName,
-                            self::PACKAGE_SEPARATOR,
-                            $localName);
+        $qualifiedName = $this->_createQualifiedTypeName($localName);
 
         $interface = $this->_builder->buildInterface($qualifiedName);
         $interface->setSourceFile($this->_sourceFile);
@@ -412,21 +410,26 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $tokens = array();
 
-        // Consume class keyword
-        $this->_consumeToken(self::T_CLASS);
+        // Parse optional class modifiers
+        $startLine = $this->_parseClassModifiers($tokens);
+
+        // Consume class keyword and read class start line
+        $token = $this->_consumeToken(self::T_CLASS, $tokens);
+
+        // Check for previous read start line
+        if ($startLine === -1) {
+            $startLine = $token->startLine;
+        }
 
         // Remove leading comments and get class name
         $this->_consumeComments();
-        $token = $this->_consumeToken(self::T_STRING);
+        $localName = $this->_consumeToken(self::T_STRING, $tokens)->image;
 
-        $qualifiedName = sprintf('%s%s%s',
-                            $this->_packageName,
-                            self::PACKAGE_SEPARATOR,
-                            $token->image);
+        $qualifiedName = $this->_createQualifiedTypeName($localName);
 
         $class = $this->_builder->buildClass($qualifiedName);
         $class->setSourceFile($this->_sourceFile);
-        $class->setStartLine($token->startLine);
+        $class->setStartLine($startLine);
         $class->setModifiers($this->_modifiers);
         $class->setDocComment($this->_docComment);
         $class->setUserDefined();
@@ -458,6 +461,43 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->reset();
 
         return $class;
+    }
+
+    /**
+     * This method parses an optional class modifier. Valid class modifiers are
+     * <b>final</b> or <b>abstract</b>. The return value of this method is the
+     * start line number of a detected modifier. If no modifier was found, this
+     * method will return <b>-1</b>.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference array of parsed tokens.
+     *
+     * @return integer
+     */
+    private function _parseClassModifiers(array &$tokens)
+    {
+        // Strip optional comments
+        $this->_consumeComments($tokens);
+        
+        // Get next token type and check for abstract
+        $tokenType = $this->_tokenizer->peek();
+        if ($tokenType === self::T_ABSTRACT) {
+            // Consume abstract keyword and get line number
+            $line = $this->_consumeToken(self::T_ABSTRACT, $tokens)->startLine;
+            // Add explicit abstract modifier
+            $this->_modifiers |= self::IS_EXPLICIT_ABSTRACT;
+        } else if ($tokenType === self::T_FINAL) {
+            // Consume final keyword and get line number
+            $line = $this->_consumeToken(self::T_FINAL, $tokens)->startLine;
+            // Add final modifier
+            $this->_modifiers |= self::IS_FINAL;
+        } else {
+            $line = -1;
+        }
+        
+        // Strip optional comments
+        $this->_consumeComments($tokens);
+
+        return $line;
     }
 
     /**
@@ -1480,6 +1520,29 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         throw new RuntimeException('Unclosed array declaration.');
+    }
+
+    /**
+     * This method creates a qualified class or interface name based on the
+     * current parser state. By default method uses the current namespace scope
+     * as prefix for the given local name. And it will fallback to a previously
+     * parsed package annotation, when no namespace declaration was parsed.
+     *
+     * @param string $localName The local class or interface name.
+     *
+     * @return string
+     */
+    private function _createQualifiedTypeName($localName)
+    {
+        $separator = '\\';
+        $namespace = $this->_namespaceName;
+
+        if ($namespace === null) {
+            $separator = self::PACKAGE_SEPARATOR;
+            $namespace = $this->_packageName;
+        }
+
+        return $namespace . $separator . $localName;
     }
 
     /**
