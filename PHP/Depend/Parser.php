@@ -1053,6 +1053,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                     $qualifiedName = $this->_parseQualifiedName($tokens);
 
+                    // TODO Refs #66: This should be done in a post process
                     $class = $this->_builder->buildClassOrInterface($qualifiedName);
                     $callable->addDependency($class);
                 }
@@ -1121,6 +1122,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                 // Check for inline type definitions like: /* @var $o FooBar */
                 if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
+                    // TODO Refs #66: This should be done in a post process
                     // Create a referenced class or interface instance
                     $dependency = $this->_builder->buildClassOrInterface($match[1]);
 
@@ -1154,10 +1156,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->_tokenizer->peek();
         }
-        
-        $fileName = (string) $this->_sourceFile;
-        $message  = "Invalid state, unclosed function body in '{$fileName}'.";
-        throw new RuntimeException($message);
+
+        throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
     }
 
     /**
