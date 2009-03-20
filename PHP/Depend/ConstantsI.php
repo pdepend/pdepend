@@ -853,5 +853,9 @@ interface PHP_Depend_ConstantsI
      */
     const DEFAULT_PACKAGE = '+global';
 
+    /**
+     * The package separator token.
+     */
+    const PACKAGE_SEPARATOR = '\\';
 }
 ?>
