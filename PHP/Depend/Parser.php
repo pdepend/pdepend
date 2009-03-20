@@ -276,32 +276,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_INTERFACE:
-                // Consume interface keyword
-                $this->_consumeToken(self::T_INTERFACE);
-
-                // Remove leading comments and get interface name
-                $this->_consumeComments();
-                $token = $this->_consumeToken(self::T_STRING);
-
-                $qualifiedName = sprintf('%s%s%s',
-                                    $this->package,
-                                    $this->packageSeparator,
-                                    $token->image);
-
-                $interface = $this->builder->buildInterface($qualifiedName);
-                $interface->setSourceFile($this->tokenizer->getSourceFile());
-                $interface->setStartLine($token->startLine);
-                $interface->setDocComment($this->_docComment);
-                $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
-                $interface->setUserDefined();
-
-                $this->_parseInterfaceDeclaration($interface);
-
-                $this->builder->buildPackage($this->package)->addType($interface);
-
-                $this->parseTypeBody($interface);
-
-                $this->reset();
+                $this->_parseInterfaceDeclaration();
                 break;
 
             case self::T_CLASS:
@@ -411,24 +386,51 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses the dependencies in a interface signature.
      *
-     * @param PHP_Depend_Code_Interface $interface The context interface instance.
-     *
-     * @return array(PHP_Depend_Token)
+     * @return PHP_Depend_Code_Interface
      */
-    private function _parseInterfaceDeclaration(PHP_Depend_Code_Interface $interface)
+    private function _parseInterfaceDeclaration()
     {
         $tokens = array();
-        $this->_consumeComments($tokens);
 
+        // Consume interface keyword
+        $startLine = $this->_consumeToken(self::T_INTERFACE, $tokens)->startLine;
+
+        // Remove leading comments and get interface name
+        $this->_consumeComments();
+        $localName = $this->_consumeToken(self::T_STRING)->image;
+
+        $qualifiedName = sprintf('%s%s%s',
+                            $this->package,
+                            $this->packageSeparator,
+                            $localName);
+
+        $interface = $this->builder->buildInterface($qualifiedName);
+        $interface->setSourceFile($this->tokenizer->getSourceFile());
+        $interface->setStartLine($startLine);
+        $interface->setDocComment($this->_docComment);
+        $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
+        $interface->setUserDefined();
+
+        $this->builder->buildPackage($this->package)->addType($interface);
+
+        // Strip comments and fetch next token type
+        $this->_consumeComments($tokens);
         $tokenType = $this->tokenizer->peek();
-        if ($tokenType === self::T_CURLY_BRACE_OPEN) {
-            return $tokens;
+
+        // Check for extended interfaces
+        if ($tokenType === self::T_EXTENDS) {
+            $this->_consumeToken(self::T_EXTENDS, $tokens);
+            $this->_consumeComments($tokens);
+
+            $tokens = array_merge($tokens, $this->_parseInterfaceList($interface));
         }
+        // Handle interface body
+        $this->parseTypeBody($interface);
 
-        $this->_consumeToken(self::T_EXTENDS, $tokens);
-        $this->_consumeComments($tokens);
+        // Reset parser settings
+        $this->reset();
 
-        $tokens = array_merge($tokens, $this->_parseInterfaceList($interface));
+        return $interface;
     }
 
     /**
