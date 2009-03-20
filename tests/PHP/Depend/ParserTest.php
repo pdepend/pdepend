@@ -2067,35 +2067,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the parser sets the correct file position for classes and
-     * interfaces.
-     *
-     * @return void
-     */
-    public function testParserSetsCorrectTypePositionIssue39()
-    {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/39-1.php');
-        $types    = $packages->current()->getTypes();
-
-        $this->assertEquals(3, $types->count());
-
-        $expected = array(
-            'PHP_Depend_X'  =>  2,
-            'PHP_Depend_Y'  =>  1,
-            'PHP_Depend_Z'  =>  0
-        );
-
-        foreach ($expected as $typeName => $typePosition) {
-            $this->assertNotNull($types->current());
-            $this->assertEquals($typeName, $types->current()->getName());
-            $this->assertEquals($typePosition, $types->current()->getPosition());
-
-            $types->next();
-        }
-        $this->assertFalse($types->current());
-    }
-
-    /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
      *
