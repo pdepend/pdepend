@@ -263,7 +263,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = $this->_consumeToken(self::T_DOC_COMMENT);
 
                 $this->_docComment = $token->image;
-                $this->package = $this->parsePackage($token->image);
+                $this->package     = $this->parsePackage($token->image);
 
                 // Check for doc level comment
                 if ($this->globalPackage === self::DEFAULT_PACKAGE
