@@ -291,7 +291,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Parse a use statement. This method has no return value but it
                 // creates a new entry in the symbol map.
                 $this->_parseUseDeclarations();
-                $this->reset();
                 break;
 
             case self::T_NAMESPACE:
@@ -1228,6 +1227,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Consume closing semicolon
         $this->_consumeToken(self::T_SEMICOLON, $tokens);
+
+        // Reset any previous state
+        $this->reset();
     }
 
     /**
