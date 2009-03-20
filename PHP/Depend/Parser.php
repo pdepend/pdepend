@@ -523,17 +523,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             switch ($tokenType) {
 
             case self::T_FUNCTION:
-                // Read function keyword for $startLine property
-                $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
-
-                $method = $this->_parseCallableDeclaration($tokens, $type);
-                $method->setDocComment($this->_docComment);
-                $method->setStartLine($token->startLine);
-                $method->setSourceFile($this->tokenizer->getSourceFile());
-                $method->setModifiers($this->_modifiers);
-
-                $this->_prepareCallable($method);
-
+                $type->addMethod($this->_parseMethodDeclaration($tokens));
                 $this->reset($defaultModifier);
                 break;
 
@@ -681,7 +671,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
             $callable = $this->_parseClosureDeclaration($tokens);
         } else {
-            $callable = $this->_parseCallableDeclaration($tokens);
+            $callable = $this->_parseFunctionDeclaration($tokens);
         }
 
         $callable->setStartLine($token->startLine);
@@ -693,6 +683,75 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->reset();
 
         return $callable;
+    }
+
+    /**
+     * This method parses a function declaration.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference of parsed tokens.
+     *
+     * @return PHP_Depend_Code_Function
+     */
+    private function _parseFunctionDeclaration(array &$tokens)
+    {
+        // Remove leading comments
+        $this->_consumeComments($tokens);
+        
+        // Check for returns reference token
+        if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
+            $this->_consumeToken(self::T_BITWISE_AND, $tokens);
+            $this->_consumeComments($tokens);
+        }
+
+        // Next token must be the function identifier
+        $functionName = $this->_consumeToken(self::T_STRING, $tokens)->image;
+
+        $function = $this->builder->buildFunction($functionName);
+        $this->_parseCallableDeclaration($tokens, $function);
+
+        $packageName = $this->globalPackage;
+        if ($this->package !== self::DEFAULT_PACKAGE) {
+            $packageName = $this->package;
+        }
+        $this->builder->buildPackage($packageName)->addFunction($function);
+
+        return $function;
+    }
+
+    /**
+     * This method parses a method declaration.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference of parsed tokens.
+     *
+     * @return PHP_Depend_Code_Method
+     */
+    private function _parseMethodDeclaration(array &$tokens)
+    {
+        // Read function keyword for $startLine property
+        $startLine = $this->_consumeToken(self::T_FUNCTION, $tokens)->startLine;
+
+        // Remove leading comments
+        $this->_consumeComments($tokens);
+
+        // Check for returns reference token
+        if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
+            $this->_consumeToken(self::T_BITWISE_AND, $tokens);
+            $this->_consumeComments($tokens);
+        }
+
+        // Next token must be the function identifier
+        $methodName = $this->_consumeToken(self::T_STRING, $tokens)->image;
+
+        $method = $this->builder->buildMethod($methodName);
+        $method->setDocComment($this->_docComment);
+        $method->setStartLine($startLine);
+        $method->setSourceFile($this->tokenizer->getSourceFile());
+        $method->setModifiers($this->_modifiers);
+
+        $this->_parseCallableDeclaration($tokens, $method);
+        $this->_prepareCallable($method);
+
+        return $method;
     }
 
     /**
@@ -721,52 +780,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses a function or a method and adds it to the parent context node.
      *
-     * @param array(PHP_Depend_Token)      &$tokens Reference for all parsed tokens.
-     * @param PHP_Depend_Code_AbstractType $parent  Optional parent interface/class.
+     * @param array(PHP_Depend_Token)          &$tokens  Reference of parsed tokens.
+     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
      *
-     * @return PHP_Depend_Code_AbstractCallable
+     * @return void
      */
-    private function _parseCallableDeclaration(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
+    private function _parseCallableDeclaration(array &$tokens, 
+                                               PHP_Depend_Code_AbstractCallable $callable)
     {
-        // Remove leading comments
-        $this->_consumeComments($tokens);
-
-        // Check for returns reference token
-        if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
-            $this->_consumeToken(self::T_BITWISE_AND, $tokens);
-            $this->_consumeComments($tokens);
-        }
-
-        // Next token must be the function identifier
-        $token = $this->_consumeToken(self::T_STRING, $tokens);
-
-        $callable = null;
-        if ($parent === null) {
-            $callable = $this->builder->buildFunction($token->image);
-
-            $package = $this->globalPackage;
-            if ($this->package !== self::DEFAULT_PACKAGE) {
-                $package = $this->package;
-            }
-
-            $this->builder->buildPackage($package)->addFunction($callable);
-        } else {
-            $callable = $this->builder->buildMethod($token->image);
-            $parent->addMethod($callable);
-        }
-
         $this->_parseParameterList($tokens, $callable);
         $this->_consumeComments($tokens);
-
+        
         if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies
             $this->_parseCallableBody($tokens, $callable);
         } else {
             $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
-            $callable->setEndLine($token->startLine);
+            $callable->setEndLine($token->endLine);
         }
-
-        return $callable;
     }
 
     /**
@@ -931,7 +962,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             switch ($tokenType) {
         
             case self::T_CATCH:
-                // Consume catch and the opening parenthesis
+                // Consume catch keyword and the opening parenthesis
                 $this->_consumeToken(self::T_CATCH, $tokens);
                 $this->_consumeComments($tokens);
                 $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
