@@ -137,16 +137,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Last parsed package tag.
      *
-     * @var string $package
+     * @var string $_packageName
      */
-    protected $package = self::DEFAULT_PACKAGE;
+    private $_packageName = self::DEFAULT_PACKAGE;
 
     /**
      * The package defined in the file level comment.
      *
-     * @var string $globalPackage
+     * @var string $_globalPackageName
      */
-    protected $globalPackage = self::DEFAULT_PACKAGE;
+    private $_globalPackageName = self::DEFAULT_PACKAGE;
 
     /**
      * The package separator token.
@@ -262,14 +262,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_DOC_COMMENT:
                 $token = $this->_consumeToken(self::T_DOC_COMMENT);
 
-                $this->_docComment = $token->image;
-                $this->package     = $this->parsePackage($token->image);
+                $this->_packageName = $this->parsePackage($token->image);
+                $this->_docComment  = $token->image;
 
                 // Check for doc level comment
-                if ($this->globalPackage === self::DEFAULT_PACKAGE
+                if ($this->_globalPackageName === self::DEFAULT_PACKAGE
                  && $this->isFileComment() === true) {
 
-                    $this->globalPackage = $this->package;
+                    $this->_globalPackageName = $this->_packageName;
 
                     $this->tokenizer->getSourceFile()->setDocComment($token->image);
                 }
@@ -347,9 +347,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function reset($modifiers = 0)
     {
-        $this->package     = self::DEFAULT_PACKAGE;
-        $this->_docComment = null;
-        $this->_modifiers  = $modifiers;
+        $this->_packageName = self::DEFAULT_PACKAGE;
+        $this->_docComment  = null;
+        $this->_modifiers   = $modifiers;
     }
 
     /**
@@ -369,7 +369,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $localName = $this->_consumeToken(self::T_STRING)->image;
 
         $qualifiedName = sprintf('%s%s%s',
-                            $this->package,
+                            $this->_packageName,
                             $this->packageSeparator,
                             $localName);
 
@@ -417,7 +417,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_STRING);
 
         $qualifiedName = sprintf('%s%s%s',
-                            $this->package,
+                            $this->_packageName,
                             $this->packageSeparator,
                             $token->image);
 
@@ -656,6 +656,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return PHP_Depend_Code_AbstractCallable
+     * @since 0.9.5
      */
     private function _parseFunctionOrClosureDeclaration(array &$tokens = array())
     {
@@ -689,6 +690,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference of parsed tokens.
      *
      * @return PHP_Depend_Code_Function
+     * @since 0.9.5
      */
     private function _parseFunctionDeclaration(array &$tokens)
     {
@@ -707,9 +709,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $function = $this->builder->buildFunction($functionName);
         $this->_parseCallableDeclaration($tokens, $function);
 
-        $packageName = $this->globalPackage;
-        if ($this->package !== self::DEFAULT_PACKAGE) {
-            $packageName = $this->package;
+        $packageName = $this->_globalPackageName;
+        if ($this->_packageName !== self::DEFAULT_PACKAGE) {
+            $packageName = $this->_packageName;
         }
         $this->builder->buildPackage($packageName)->addFunction($function);
 
@@ -722,6 +724,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference of parsed tokens.
      *
      * @return PHP_Depend_Code_Method
+     * @since 0.9.5
      */
     private function _parseMethodDeclaration(array &$tokens)
     {
@@ -758,6 +761,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return PHP_Depend_Code_Closure
+     * @since 0.9.5
      */
     private function _parseClosureDeclaration(array &$tokens)
     {
@@ -805,6 +809,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_AbstractCallable $function The context callable.
      *
      * @return void
+     * @since 0.9.5
      */
     private function _parseParameterList(array &$tokens, PHP_Depend_Code_AbstractCallable $function)
     {
@@ -1111,6 +1116,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_Closure $closure The parent closure instance.
      *
      * @return void
+     * @since 0.9.5
      */
     private function _parseBoundVariables(array &$tokens, PHP_Depend_Code_Closure $closure)
     {
@@ -1189,6 +1195,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return array(string)
+     * @since 0.9.5
      */
     private function _parseQualifiedNameRaw(array &$tokens)
     {
@@ -1243,6 +1250,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return void
+     * @since 0.9.5
      */
     private function _parseUseDeclarations(array &$tokens = array())
     {
@@ -1268,6 +1276,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return void
+     * @since 0.9.5
      */
     private function _parseUseDeclaration(array &$tokens)
     {
