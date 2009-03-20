@@ -177,6 +177,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_useSymbolTable = null;
 
     /**
+     * The last parsed doc comment or <b>null</b>.
+     *
+     * @var string $_docComment
+     */
+    private $_docComment = null;
+
+    /**
      * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
      *
@@ -226,7 +233,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->reset();
 
         $modifiers = 0;
-        $comment   = null;
+
+        $this->_docComment = null;
 
         // Position of the context type within the analyzed file.
         $typePosition = 0;
@@ -250,7 +258,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_DOC_COMMENT:
                 $token = $this->_consumeToken(self::T_DOC_COMMENT);
 
-                $comment       = $token->image;
+                $this->_docComment       = $token->image;
                 $this->package = $this->parsePackage($token->image);
 
                 // Check for doc level comment
@@ -283,7 +291,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $interface = $this->builder->buildInterface($qualifiedName);
                 $interface->setSourceFile($this->tokenizer->getSourceFile());
                 $interface->setStartLine($token->startLine);
-                $interface->setDocComment($comment);
+                $interface->setDocComment($this->_docComment);
                 $interface->setPosition($typePosition++);
                 $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
                 $interface->setUserDefined();
@@ -295,7 +303,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->parseTypeBody($interface);
                 $this->reset();
 
-                $comment   = null;
+                $this->_docComment   = null;
                 $modifiers = 0;
                 break;
 
@@ -316,7 +324,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $class->setSourceFile($this->tokenizer->getSourceFile());
                 $class->setStartLine($token->startLine);
                 $class->setModifiers($modifiers);
-                $class->setDocComment($comment);
+                $class->setDocComment($this->_docComment);
                 $class->setPosition($typePosition++);
                 $class->setUserDefined();
 
@@ -327,26 +335,58 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->parseTypeBody($class);
                 $this->reset();
 
-                $comment   = null;
+                $this->_docComment   = null;
                 $modifiers = 0;
                 break;
 
             case self::T_FUNCTION:
                 $function = $this->_parseFunctionOrClosure();
                 $function->setSourceFile($this->tokenizer->getSourceFile());
-                $function->setDocComment($comment);
+                $function->setDocComment($this->_docComment);
 
                 $this->_prepareCallable($function);
 
                 $this->reset();
 
-                $comment = null;
+                $this->_docComment = null;
                 break;
 
             case self::T_USE:
                 // Parse a use statement. This method has no return value but it
                 // creates a new entry in the symbol map.
                 $this->_parseUseDeclarations();
+                
+                $this->_docComment = null;
+                break;
+
+            case self::T_NAMESPACE:
+                $tokens = array();
+
+                // Consume namespace keyword and strip optional comments
+                $this->_consumeToken(self::T_NAMESPACE, $tokens);
+                $this->_consumeComments($tokens);
+
+                // Search for a namespace identifier
+                if ($this->tokenizer->peek() === self::T_STRING) {
+                    // Read qualified namespace identifier
+                    $qualifiedName = $this->_parseQualifiedName($tokens);
+
+                    // Consume optional comments an check for namespace scope
+                    $this->_consumeComments($tokens);
+                    if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
+
+                    } else {
+                        $this->_consumeToken(self::T_SEMICOLON, $tokens);
+                    }
+
+                    // Create a package for this namespace
+                    $this->builder->buildPackage($qualifiedName);
+                } else {
+                    $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+
+                    // Create a package for this namespace
+                    $this->builder->buildPackage('');
+                }
                 break;
 
             default:
@@ -354,7 +394,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken($tokenType);
 
                 // TODO: Handle/log unused tokens
-                $comment = null;
+                $this->_docComment = null;
                 break;
             }
 
@@ -482,7 +522,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $curly = 0;
 
         $tokens  = array();
-        $comment = null;
+        $this->_docComment = null;
 
         $defaultModifier = self::IS_PUBLIC;
         if ($type instanceof PHP_Depend_Code_Interface) {
@@ -504,7 +544,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
 
                 $method = $this->_parseFunction($tokens, $type);
-                $method->setDocComment($comment);
+                $method->setDocComment($this->_docComment);
                 $method->setStartLine($token->startLine);
                 $method->setPosition($methodPosition++);
                 $method->setSourceFile($this->tokenizer->getSourceFile());
@@ -512,7 +552,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                 $this->_prepareCallable($method);
 
-                $comment   = null;
+                $this->_docComment   = null;
                 $modifiers = $defaultModifier;
                 break;
 
@@ -521,7 +561,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = $this->_consumeToken(self::T_VARIABLE, $tokens);
 
                 $property = $this->builder->buildProperty($token->image);
-                $property->setDocComment($comment);
+                $property->setDocComment($this->_docComment);
                 $property->setStartLine($token->startLine);
                 $property->setEndLine($token->startLine);
                 $property->setSourceFile($this->tokenizer->getSourceFile());
@@ -534,7 +574,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 //       code is correct?
                 $type->addProperty($property);
 
-                $comment   = null;
+                $this->_docComment   = null;
                 $modifiers = $defaultModifier;
                 break;
 
@@ -547,14 +587,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = $this->_consumeToken(self::T_STRING, $tokens);
 
                 $constant = $this->builder->buildTypeConstant($token->image);
-                $constant->setDocComment($comment);
+                $constant->setDocComment($this->_docComment);
                 $constant->setStartLine($token->startLine);
                 $constant->setEndLine($token->startLine);
                 $constant->setSourceFile($this->tokenizer->getSourceFile());
 
                 $type->addConstant($constant);
 
-                $comment   = null;
+                $this->_docComment   = null;
                 $modifiers = $defaultModifier;
                 break;
 
@@ -562,7 +602,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
 
                 ++$curly;
-                $comment = null;
+                $this->_docComment = null;
                 break;
 
             case self::T_CURLY_BRACE_CLOSE:
@@ -570,7 +610,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
 
                 --$curly;
-                $comment = null;
+                $this->_docComment = null;
                 break;
 
             case self::T_ABSTRACT:
@@ -609,7 +649,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Read comment token
                 $token = $this->_consumeToken(self::T_DOC_COMMENT, $tokens);
 
-                $comment = $token->image;
+                $this->_docComment = $token->image;
                 break;
 
             default:
@@ -617,7 +657,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken($tokenType, $tokens);
 
                 // TODO: Handle/log unused tokens
-                $comment = null;
+                $this->_docComment = null;
                 break;
             }
 
@@ -1405,7 +1445,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Extracts the @package information from the given comment.
      *
-     * @param string $comment A doc comment block.
+     * @param string $this->_docComment A doc comment block.
      *
      * @return string
      */

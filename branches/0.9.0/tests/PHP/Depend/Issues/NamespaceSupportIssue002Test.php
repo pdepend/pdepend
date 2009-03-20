@@ -134,5 +134,78 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
 
         self::parseSource('issues/002-004-use-declaration.php');
     }
+
+    /**
+     * Tests that the parser handles a namespace declaration with namespace
+     * identifier and curly brace syntax.
+     *
+     * @return void
+     */
+    public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax()
+    {
+        $packages = self::parseSource('issues/002-005-namespace-declaration.php');
+
+        $this->assertSame('foo', $packages->current()->getName());
+    }
+
+    /**
+     * Tests that the parser handles a namespace declaration with namespace
+     * identifier and semicolon syntax.
+     *
+     * @return void
+     */
+    public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax()
+    {
+        $packages = self::parseSource('issues/002-006-namespace-declaration.php');
+
+        $this->assertSame('foo', $packages->current()->getName());
+    }
+
+    /**
+     * Tests that the parser handles a namespace declaration without namespace
+     * identifier and semicolon syntax.
+     *
+     * @return void
+     */
+    public function testParserHandlesNamespaceDeclarationWithoutIdentifierAndCurlyBraceSyntax()
+    {
+        $packages = self::parseSource('issues/002-007-namespace-declaration.php');
+
+        $this->assertSame('', $packages->current()->getName());
+    }
+
+    /**
+     * Tests that the parser does not accept an empty namespace identifier for
+     * the semicolon syntax.
+     *
+     * @return void
+     */
+    public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: ;, line: 2, col: 18, file: '
+
+        );
+
+        self::parseSource('issues/002-008-namespace-declaration.php');
+    }
+
+    /**
+     * Tests that the parser does not accept a leading backslash in a namespace
+     * identifier.
+     *
+     * @return void
+     */
+    public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: \, line: 2, col: 11, file: '
+
+        );
+
+        self::parseSource('issues/002-009-namespace-declaration.php');
+    }
 }
 ?>
