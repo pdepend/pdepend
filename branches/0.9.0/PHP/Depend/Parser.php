@@ -526,7 +526,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Read function keyword for $startLine property
                 $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
 
-                $method = $this->_parseFunction($tokens, $type);
+                $method = $this->_parseFunctionDeclaration($tokens, $type);
                 $method->setDocComment($this->_docComment);
                 $method->setStartLine($token->startLine);
                 $method->setSourceFile($this->tokenizer->getSourceFile());
@@ -679,9 +679,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Check for closure or function
         if ($this->tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
-            $callable = $this->_parseClosure($tokens);
+            $callable = $this->_parseClosureDeclaration($tokens);
         } else {
-            $callable = $this->_parseFunction($tokens);
+            $callable = $this->_parseFunctionDeclaration($tokens);
         }
 
         $callable->setStartLine($token->startLine);
@@ -702,7 +702,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_Closure
      */
-    private function _parseClosure(array &$tokens)
+    private function _parseClosureDeclaration(array &$tokens)
     {
         $closure = $this->builder->buildClosure();
 
@@ -726,7 +726,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_AbstractCallable
      */
-    private function _parseFunction(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
+    private function _parseFunctionDeclaration(array &$tokens = array(), PHP_Depend_Code_AbstractType $parent = null)
     {
         // Remove leading comments
         $this->_consumeComments($tokens);
