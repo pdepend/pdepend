@@ -355,7 +355,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $class = $this->classes[$typeID][self::DEFAULT_PACKAGE];
         }
 
-        if ($class !== null) {
+        if ($class !== null && $class->isUserDefined() === false) {
             $package = $class->getPackage();
 
             // Only reparent if the found class is part of the default package
@@ -407,7 +407,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $this->buildPackage($pkg)->addType($interface);
         }
 
-        if ($class !== null) {
+        if ($class !== null && $class->isUserDefined() === false) {
             $this->replaceClassReferences($class, $interface);
         }
 
