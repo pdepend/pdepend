@@ -82,15 +82,22 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function __construct(array $nodes)
     {
+        $nodeNames = array();
+
         // First check all input nodes
         foreach ($nodes as $node) {
             if (!($node instanceof PHP_Depend_Code_NodeI)) {
                 throw new RuntimeException('Invalid object given.');
             }
-            $this->_nodes[$node->getName()] = $node;
+            
+            $id = $node->getUUID();
+            if (!isset($nodeNames[$id])) {
+                $nodeNames[$id] = $node->getName();
+                $this->_nodes[] = $node;
+            }
         }
-        // Sort by name
-        ksort($this->_nodes);
+
+        array_multisort($nodeNames, $this->_nodes);
 
         $this->_init(PHP_Depend_Code_Filter_Collection::getInstance());
     }
@@ -136,7 +143,11 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function key()
     {
-        return key($this->_nodes);
+        $node = current($this->_nodes);
+        if (is_object($node) === true) {
+            return $node->getName();
+        }
+        return null;
     }
 
     /**
