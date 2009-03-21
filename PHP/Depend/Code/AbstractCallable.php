@@ -250,8 +250,9 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function removeExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
     {
-        if (($i = array_search($exceptionType, $this->_exceptionTypes, true))) {
-            unset($this->_exceptionTypes[$i]);
+        $index = array_search($exceptionType, $this->_exceptionTypes, true);
+        if ($index !== false) {
+            unset($this->_exceptionTypes[$index]);
         }
     }
 
