@@ -165,6 +165,60 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
     }
 
     /**
+     * Tests that the parser handles the following code correct:
+     *
+     * <code>
+     * class Foo {}
+     * class Bar extends Foo {}
+     * class Foo {}
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage()
+    {
+        $packages = self::parseSource('bugs/073-005-inconsistent-object-graph.php');
+
+        $this->assertSame(2, $packages->count());
+
+        $package = $packages->current();
+        $this->assertSame(2, $package->getTypes()->count());
+        $this->assertSame(2, $package->getClasses()->count());
+
+        $packages->next();
+        $package = $packages->current();
+        $this->assertSame(1, $package->getTypes()->count());
+        $this->assertSame(1, $package->getClasses()->count());
+    }
+
+    /**
+     * Tests that the parser handles the following code correct:
+     *
+     * <code>
+     * interface Foo {}
+     * interface Bar extends Foo {}
+     * interface Foo {}
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage()
+    {
+        $packages = self::parseSource('bugs/073-006-inconsistent-object-graph.php');
+
+        $this->assertSame(2, $packages->count());
+
+        $package = $packages->current();
+        $this->assertSame(2, $package->getTypes()->count());
+        $this->assertSame(2, $package->getInterfaces()->count());
+
+        $packages->next();
+        $package = $packages->current();
+        $this->assertSame(1, $package->getTypes()->count());
+        $this->assertSame(1, $package->getInterfaces()->count());
+    }
+
+    /**
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
