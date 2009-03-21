@@ -233,6 +233,7 @@ class PHP_Depend_Tokenizer_Internal
         'array'          =>  self::T_ARRAY,
         'false'          =>  self::T_FALSE,
         'parent'         =>  self::T_PARENT,
+        'namespace'      =>  self::T_NAMESPACE,
         '__dir__'        =>  self::T_DIR,
         '__namespace__'  =>  self::T_NS_C,
     );
@@ -451,9 +452,6 @@ class PHP_Depend_Tokenizer_Internal
             }
 
             next($tokens);
-
-            // Rest skipped lines
-            $skippedLines = 0;
         }
 
         $this->count = count($this->tokens);
