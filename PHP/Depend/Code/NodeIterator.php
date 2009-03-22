@@ -82,7 +82,10 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function __construct(array $nodes)
     {
-        $nodeNames = array();
+        // Workaround for php 5.2.0 where array_multisort results in fatal error
+        // because it performs a to deep recursion > 100
+        $nodeObjects = array();
+        $nodeNames   = array();
 
         // First check all input nodes
         foreach ($nodes as $node) {
@@ -92,12 +95,19 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
             
             $id = $node->getUUID();
             if (!isset($nodeNames[$id])) {
-                $nodeNames[$id] = $node->getName();
-                $this->_nodes[] = $node;
+                $nodeNames[$id]   = $node->getName();
+                $nodeObjects[$id] = $node;
             }
         }
 
-        array_multisort($nodeNames, $this->_nodes);
+        // Sort node names and then apply to nodes
+        asort($nodeNames);
+
+        // Apply sorting to nodes, PHP 5.2.0 workaround for array_multisort
+        $this->_nodes = array();
+        foreach (array_keys($nodeNames) as $index) {
+            $this->_nodes[] = $nodeObjects[$index];
+        }
 
         $this->_init(PHP_Depend_Code_Filter_Collection::getInstance());
     }
