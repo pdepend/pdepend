@@ -537,6 +537,7 @@ class PHP_Depend_Code_Parameter
     }
 
     // Deprecated methods
+    // @codeCoverageIgnoreStart
 
     /**
      * Returns the type of this property. This method will return <b>null</b>
@@ -590,4 +591,6 @@ class PHP_Depend_Code_Parameter
         fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
         $this->setDeclaringFunction($parent);
     }
+
+    // @codeCoverageIgnoreEnd
 }
