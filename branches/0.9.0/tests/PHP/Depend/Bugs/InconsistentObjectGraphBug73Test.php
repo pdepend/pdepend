@@ -219,6 +219,69 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
     }
 
     /**
+     * Tests that the parser handles the following code correct:
+     *
+     * <code>
+     * namespace {
+     *     class Foo {}
+     *     class Bar extends Foo {}
+     * }
+     * namespace baz {
+     *     interface Foo {}
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace()
+    {
+        $packages = self::parseSource('bugs/073-007-inconsistent-object-graph.php');
+
+        $this->assertSame(2, $packages->count());
+
+        $package = $packages->current();
+        $this->assertSame(2, $package->getTypes()->count());
+        $this->assertSame(2, $package->getClasses()->count());
+
+        $packages->next();
+        $package = $packages->current();
+        $this->assertSame(1, $package->getTypes()->count());
+        $this->assertSame(1, $package->getInterfaces()->count());
+    }
+
+    /**
+     * Tests that the parser handles the following code correct:
+     *
+     * <code>
+     * namespace {
+     *     class Bar implements Foo {}
+     *     interface Foo {}
+     * }
+     * namespace baz {
+     *     class Foo {}
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace()
+    {
+        $packages = self::parseSource('bugs/073-008-inconsistent-object-graph.php');
+
+        $this->assertSame(2, $packages->count());
+
+        $package = $packages->current();
+        $this->assertSame(2, $package->getTypes()->count());
+        $this->assertSame(1, $package->getClasses()->count());
+        $this->assertSame(1, $package->getInterfaces()->count());
+
+        $packages->next();
+        $package = $packages->current();
+        $this->assertSame(1, $package->getTypes()->count());
+        $this->assertSame(1, $package->getClasses()->count());
+    }
+
+    /**
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
