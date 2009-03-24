@@ -1,3 +1,3 @@
 <?php
-namespace \foo {}
+namespace \ {}
 ?>
