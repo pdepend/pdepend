@@ -995,7 +995,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: $bar instanceof $className
                 if ($peekType === self::T_STRING
-                 || $peekType === self::T_BACKSLASH) {
+                 || $peekType === self::T_BACKSLASH
+                 || $peekType === self::T_NAMESPACE) {
 
                     $qualifiedName = $this->_parseQualifiedName($tokens);
 
@@ -1197,7 +1198,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Remove alias and add real namespace
             array_shift($fragments);
             array_unshift($fragments, $mapsTo);
-        } else if ($this->_namespaceName !== null) {
+            
+        } else if ($this->_namespaceName !== null
+                && $this->_namespaceName !== $fragments[0]) {
             // Prepend current namespace
             array_unshift($fragments, $this->_namespaceName, '\\');
         }
@@ -1233,6 +1236,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if ($tokenType !== self::T_BACKSLASH) {
                 return $qualifiedName;
             }
+        } else if ($tokenType === self::T_NAMESPACE) {
+            // Consume namespace keyword
+            $this->_consumeToken(self::T_NAMESPACE, $tokens);
+            $this->_consumeComments($tokens);
+
+            // Add current namespace as first token
+            $qualifiedName = array((string) $this->_namespaceName);
         }
 
         do {
