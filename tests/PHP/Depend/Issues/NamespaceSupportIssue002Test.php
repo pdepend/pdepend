@@ -329,11 +329,15 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
      * Tests that the parser expands a local name within the body of a
      * namespaced function correct.
      *
+     * @param string $fileName      Name of the test file.
+     * @param string $namespaceName Name of the expected namespace.
+     *
      * @return void
+     * @dataProvider dataProviderParserResolvesQualifiedTypeName
      */
-    public function testParserResolvesQualifiedTypeNameInAllocateExpression()
+    public function testParserResolvesQualifiedTypeName($fileName, $namespaceName)
     {
-        $packages = self::parseSource('issues/002-015-resolve-qualified-type-names.php');
+        $packages = self::parseSource($fileName);
         $function = $packages->current()
                              ->getFunctions()
                              ->current();
@@ -341,19 +345,24 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $dependency = $function->getDependencies()
                                ->current();
 
-        $this->assertSame('foo\bar', $function->getPackage()->getName());
-        $this->assertSame($function->getPackage(), $dependency->getPackage());
+        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        $this->assertContains($function->getPackage()->getName(),
+                              $dependency->getPackage()->getName());
     }
 
     /**
      * Tests that the parser does not expand a qualified name within the body of
      * a namespaced function correct.
      *
+     * @param string $fileName      Name of the test file.
+     * @param string $namespaceName Name of the expected namespace.
+     *
      * @return void
+     * @dataProvider dataProviderParserKeepsQualifiedTypeName
      */
-    public function testParserKeepsQualifiedTypeNameInAllocateExpression()
+    public function testParserKeepsQualifiedTypeName($fileName, $namespaceName)
     {
-        $packages = self::parseSource('issues/002-016-resolve-qualified-type-names.php');
+        $packages = self::parseSource($fileName);
 
         // Namespace '' found by expression: new \Foo;
         $class = $packages->current()
@@ -372,18 +381,22 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                                ->current();
 
         $this->assertSame($class, $dependency);
-        $this->assertSame('', $dependency->getPackage()->getName());
+        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
+     * @param string $fileName      Name of the test file.
+     * @param string $namespaceName Name of the expected namespace.
+     *
      * @return void
+     * @dataProvider dataProviderParserResolvesNamespaceKeywordSemicolonSyntax
      */
-    public function testParserResolvesNamespaceKeywordInAllocateExpressionSemicolonSyntax()
+    public function testParserResolvesNamespaceKeywordSemicolonSyntax($fileName, $namespaceName)
     {
-        $packages = self::parseSource('issues/002-017-resolve-qualified-type-names.php');
+        $packages = self::parseSource($fileName);
         $function = $packages->current()
                              ->getFunctions()
                              ->current();
@@ -391,19 +404,22 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $dependency = $function->getDependencies()
                                ->current();
 
-        $this->assertSame('foo\bar', $function->getPackage()->getName());
-        $this->assertSame($function->getPackage(), $dependency->getPackage());
+        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
+     * @param string $fileName      Name of the test file.
+     * @param string $namespaceName Name of the expected namespace.
+     *
      * @return void
+     * @dataProvider dataProviderParserResolvesNamespaceKeywordCurlyBraceSyntax
      */
-    public function testParserResolvesNamespaceKeywordInAllocateExpressionCurlyBraceSyntax()
+    public function testParserResolvesNamespaceKeywordCurlyBraceSyntax($fileName, $namespaceName)
     {
-        $packages = self::parseSource('issues/002-018-resolve-qualified-type-names.php');
+        $packages = self::parseSource($fileName);
         $function = $packages->current()
                              ->getFunctions()
                              ->current();
@@ -411,8 +427,67 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $dependency = $function->getDependencies()
                                ->current();
 
-        $this->assertSame('', $function->getPackage()->getName());
-        $this->assertSame($function->getPackage(), $dependency->getPackage());
+        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+    }
+
+    /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return array
+     */
+    public static function dataProviderParserResolvesQualifiedTypeName()
+    {
+        return array(
+            array('issues/002-015-resolve-qualified-type-names.php', 'foo\bar'),
+            array('issues/002-019-resolve-qualified-type-names.php', 'foo\bar'),
+            array('issues/002-023-resolve-qualified-type-names.php', 'foo\baz'),
+        );
+    }
+
+    /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return array
+     */
+    public static function dataProviderParserKeepsQualifiedTypeName()
+    {
+        return array(
+            array('issues/002-016-resolve-qualified-type-names.php', ''),
+            array('issues/002-020-resolve-qualified-type-names.php', ''),
+            array('issues/002-024-resolve-qualified-type-names.php', '\baz'),
+        );
+    }
+
+    /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return array
+     */
+    public static function dataProviderParserResolvesNamespaceKeywordSemicolonSyntax()
+    {
+        return array(
+            array('issues/002-017-resolve-qualified-type-names.php', 'foo\bar'),
+            array('issues/002-021-resolve-qualified-type-names.php', 'foo\bar'),
+            array('issues/002-025-resolve-qualified-type-names.php', 'foo\bar\baz'),
+        );
+    }
+
+    /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return array
+     */
+    public static function dataProviderParserResolvesNamespaceKeywordCurlyBraceSyntax()
+    {
+        return array(
+            array('issues/002-018-resolve-qualified-type-names.php', ''),
+            array('issues/002-022-resolve-qualified-type-names.php', ''),
+            array('issues/002-026-resolve-qualified-type-names.php', 'baz'),
+        );
     }
 }
 ?>

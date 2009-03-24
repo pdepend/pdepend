@@ -1015,7 +1015,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: $bar instanceof $className
                 if ($peekType === self::T_STRING
-                 || $peekType === self::T_BACKSLASH) {
+                 || $peekType === self::T_BACKSLASH
+                 || $peekType === self::T_NAMESPACE) {
 
                     $qualifiedName = $this->_parseQualifiedName($tokens);
 
@@ -1027,6 +1028,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_STRING:
             case self::T_BACKSLASH:
+            case self::T_NAMESPACE:
                 $qualifiedName = $this->_parseQualifiedName($tokens);
 
                 // Remove comments
