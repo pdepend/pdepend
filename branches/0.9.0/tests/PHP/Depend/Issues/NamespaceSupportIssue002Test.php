@@ -309,5 +309,40 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $this->assertSame(1, $types->count());
         $this->assertSame('FooBar', $types->current()->getName());
     }
+
+    /**
+     * Tests that the parser adds a function to a declared namespace.
+     *
+     * @return void
+     */
+    public function testParserAddsFunctionToDeclaredNamespaceSemicolonSyntax()
+    {
+        $packages = self::parseSource('issues/002-014-namespace-function.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $this->assertSame('foo\bar', $function->getPackage()->getName());
+    }
+
+    /**
+     * Tests that the parser exapnds a local name within the body of a
+     * namespaced function correct.
+     *
+     * @return void
+     */
+    public function testParserResolvesQualifiedTypeNameInAllocateExpression()
+    {
+        $packages = self::parseSource('issues/002-015-resolve-qualified-type-names.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $dependency = $function->getDependencies()
+                               ->current();
+
+        $this->assertSame('foo\bar', $function->getPackage()->getName());
+        $this->assertSame($function->getPackage(), $dependency->getPackage());
+    }
 }
 ?>
