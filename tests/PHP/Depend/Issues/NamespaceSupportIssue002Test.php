@@ -374,5 +374,45 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $this->assertSame($class, $dependency);
         $this->assertSame('', $dependency->getPackage()->getName());
     }
+
+    /**
+     * Tests that the parser resolves a type name when the name is prefixed with
+     * PHP's namespace keyword.
+     *
+     * @return void
+     */
+    public function testParserResolvesNamespaceKeywordInAllocateExpressionSemicolonSyntax()
+    {
+        $packages = self::parseSource('issues/002-017-resolve-qualified-type-names.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $dependency = $function->getDependencies()
+                               ->current();
+
+        $this->assertSame('foo\bar', $function->getPackage()->getName());
+        $this->assertSame($function->getPackage(), $dependency->getPackage());
+    }
+
+    /**
+     * Tests that the parser resolves a type name when the name is prefixed with
+     * PHP's namespace keyword.
+     *
+     * @return void
+     */
+    public function testParserResolvesNamespaceKeywordInAllocateExpressionCurlyBraceSyntax()
+    {
+        $packages = self::parseSource('issues/002-018-resolve-qualified-type-names.php');
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $dependency = $function->getDependencies()
+                               ->current();
+
+        $this->assertSame('', $function->getPackage()->getName());
+        $this->assertSame($function->getPackage(), $dependency->getPackage());
+    }
 }
 ?>
