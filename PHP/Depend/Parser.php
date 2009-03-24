@@ -713,9 +713,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $function = $this->_builder->buildFunction($functionName);
         $this->_parseCallableDeclaration($tokens, $function);
 
-        $packageName = $this->_globalPackageName;
-        if ($this->_packageName !== self::DEFAULT_PACKAGE) {
+        // First check for an existing namespace
+        if ($this->_namespaceName !== null) {
+            $packageName = $this->_namespaceName;
+        } else if ($this->_packageName !== self::DEFAULT_PACKAGE) {
             $packageName = $this->_packageName;
+        } else {
+            $packageName = $this->_globalPackageName;
         }
         $this->_builder->buildPackage($packageName)->addFunction($function);
 
@@ -1187,15 +1191,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return join('', $fragments);
         }
 
-        // Search for an alias
+        // Search for an use alias
         $mapsTo = $this->_useSymbolTable->lookup($fragments[0]);
-        if ($mapsTo === null) {
-            return join('', $fragments);
+        if ($mapsTo !== null) {
+            // Remove alias and add real namespace
+            array_shift($fragments);
+            array_unshift($fragments, $mapsTo);
+        } else if ($this->_namespaceName !== null) {
+            // Prepend current namespace
+            array_unshift($fragments, $this->_namespaceName, '\\');
         }
-
-        // Remove alias and add real namespace
-        array_shift($fragments);
-        array_unshift($fragments, $mapsTo);
 
         return join('', $fragments);
     }
@@ -1261,6 +1266,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Search for a namespace identifier
         if ($tokenType === self::T_STRING) {
+            // Reset namespace property
+            $this->_namespaceName = null;
+
             // Read qualified namespace identifier
             $qualifiedName = $this->_parseQualifiedName($tokens);
 
