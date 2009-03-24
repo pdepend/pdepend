@@ -326,7 +326,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     }
 
     /**
-     * Tests that the parser exapnds a local name within the body of a
+     * Tests that the parser expands a local name within the body of a
      * namespaced function correct.
      *
      * @return void
@@ -343,6 +343,36 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
 
         $this->assertSame('foo\bar', $function->getPackage()->getName());
         $this->assertSame($function->getPackage(), $dependency->getPackage());
+    }
+
+    /**
+     * Tests that the parser does not expand a qualified name within the body of
+     * a namespaced function correct.
+     *
+     * @return void
+     */
+    public function testParserKeepsQualifiedTypeNameInAllocateExpression()
+    {
+        $packages = self::parseSource('issues/002-016-resolve-qualified-type-names.php');
+
+        // Namespace '' found by expression: new \Foo;
+        $class = $packages->current()
+                          ->getClasses()
+                          ->current();
+
+        // Next package 'foo\bar' declared in file.
+        $packages->next();
+
+        // Get namespaced function
+        $function = $packages->current()
+                             ->getFunctions()
+                             ->current();
+
+        $dependency = $function->getDependencies()
+                               ->current();
+
+        $this->assertSame($class, $dependency);
+        $this->assertSame('', $dependency->getPackage()->getName());
     }
 }
 ?>
