@@ -260,19 +260,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_DOC_COMMENT:
-                $token = $this->_consumeToken(self::T_DOC_COMMENT);
+                $comment = $this->_consumeToken(self::T_DOC_COMMENT)->image;
 
-                $this->_packageName = $this->parsePackage($token->image);
-                $this->_docComment  = $token->image;
-
-                // Check for doc level comment
-                if ($this->_globalPackageName === self::DEFAULT_PACKAGE
-                 && $this->isFileComment() === true) {
-
-                    $this->_globalPackageName = $this->_packageName;
-
-                    $this->_sourceFile->setDocComment($token->image);
-                }
+                $this->_packageName = $this->_parsePackageAnnotation($comment);
+                $this->_docComment  = $comment;
                 break;
 
             case self::T_INTERFACE:
@@ -296,37 +287,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_NAMESPACE:
-                $tokens = array();
-
-                // Consume namespace keyword and strip optional comments
-                $this->_consumeToken(self::T_NAMESPACE, $tokens);
-                $this->_consumeComments($tokens);
-
-                // Search for a namespace identifier
-                if ($this->_tokenizer->peek() === self::T_STRING) {
-                    // Read qualified namespace identifier
-                    $qualifiedName = $this->_parseQualifiedName($tokens);
-
-                    // Consume optional comments an check for namespace scope
-                    $this->_consumeComments($tokens);
-                    if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
-
-                    } else {
-                        $this->_consumeToken(self::T_SEMICOLON, $tokens);
-                    }
-
-                    // Create a package for this namespace
-                    $this->_namespaceName = $qualifiedName;
-                    $this->_builder->buildPackage($qualifiedName);
-                } else {
-                    $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
-
-                    // Create a package for this namespace
-                    $this->_namespaceName = '';
-                    $this->_builder->buildPackage('');
-                }
-
-                $this->reset();
+                $this->_parseNamespaceDeclaration();
                 break;
 
             default:
@@ -1289,6 +1250,54 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $qualifiedName;
     }
 
+    private function _parseNamespaceDeclaration(array &$tokens = array())
+    {
+        // Consume namespace keyword and strip optional comments
+        $this->_consumeToken(self::T_NAMESPACE, $tokens);
+        $this->_consumeComments($tokens);
+
+        // Lookup next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        // Search for a namespace identifier
+        if ($tokenType === self::T_STRING) {
+            // Read qualified namespace identifier
+            $qualifiedName = $this->_parseQualifiedName($tokens);
+
+            // Consume optional comments an check for namespace scope
+            $this->_consumeComments($tokens);
+
+            if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
+                // Consume opening curly brace
+                $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+            } else {
+                // Consume closing semicolon token
+                $this->_consumeToken(self::T_SEMICOLON, $tokens);
+            }
+
+            // Create a package for this namespace
+            $this->_namespaceName = $qualifiedName;
+            $this->_builder->buildPackage($qualifiedName);
+        } else if ($tokenType === self::T_BACKSLASH) {
+            // Same namespace reference, something like:
+            //   new namespace\Foo();
+            // or:
+            //   $x = namespace\foo::bar();
+
+            // Now parse a qualified name
+            $this->_parseQualifiedNameRaw($tokens);
+        } else {
+            // Consume opening curly brace
+            $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
+
+            // Create a package for this namespace
+            $this->_namespaceName = '';
+            $this->_builder->buildPackage('');
+        }
+
+        $this->reset();
+    }
+
     /**
      * This method parses a list of PHP 5.3 use declarations and adds a mapping
      * between short name and full qualified name to the use symbol table.
@@ -1552,16 +1561,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return string
      */
-    protected function parsePackage($comment)
+    private function _parsePackageAnnotation($comment)
     {
+        $package = self::DEFAULT_PACKAGE;
         if (preg_match('#\*\s*@package\s+(.*)#', $comment, $match)) {
             $package = trim($match[1]);
             if (preg_match('#\*\s*@subpackage\s+(.*)#', $comment, $match)) {
                 $package .= self::PACKAGE_SEPARATOR . trim($match[1]);
             }
-            return $package;
         }
-        return self::DEFAULT_PACKAGE;
+
+        // Check for doc level comment
+        if ($this->_globalPackageName === self::DEFAULT_PACKAGE
+         && $this->isFileComment() === true) {
+
+            $this->_globalPackageName = $package;
+
+            $this->_sourceFile->setDocComment($comment);
+        }
+        return $package;
     }
 
     /**

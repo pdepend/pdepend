@@ -201,7 +201,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     {
         $this->setExpectedException(
             'PHP_Depend_Parser_UnexpectedTokenException',
-            'Unexpected token: \, line: 2, col: 11, file: '
+            'Unexpected token: {, line: 2, col: 13, file: '
 
         );
 
