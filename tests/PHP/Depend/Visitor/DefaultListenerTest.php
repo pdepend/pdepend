@@ -46,7 +46,7 @@
  * @link       http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 require_once dirname(__FILE__) . '/TestListener.php';
 
