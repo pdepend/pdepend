@@ -135,6 +135,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                              )ix';
 
     /**
+     * Internal state flag, that will be set to <b>true</b> when the parser has
+     * prefixed a qualified name with the actual namespace.
+     *
+     * @var boolean $_namespacePrefixReplaced
+     */
+    private $_namespacePrefixReplaced = false;
+
+    /**
      * The name of the last detected namespace.
      *
      * @var string $_namespaceName
@@ -1181,7 +1189,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * PHP\Depend\Parser::parse();
      * </code>
      *
-     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     * @param array(PHP_Depend_Token) &$tokens Reference array of all parsed tokens.
      *
      * @return string
      */
@@ -1200,13 +1208,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Remove alias and add real namespace
             array_shift($fragments);
             array_unshift($fragments, $mapsTo);
-            
-        } else if ($this->_namespaceName !== null
-                && $this->_namespaceName !== $fragments[0]) {
+        } else if ($this->_namespaceName !== null 
+                && $this->_namespacePrefixReplaced === false) {
+
             // Prepend current namespace
             array_unshift($fragments, $this->_namespaceName, '\\');
         }
-
         return join('', $fragments);
     }
 
@@ -1221,6 +1228,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseQualifiedNameRaw(array &$tokens)
     {
+        // Reset namespace prefix flag
+        $this->_namespacePrefixReplaced = false;
+
         // Consume comments and fetch first token type
         $this->_consumeComments($tokens);
         $tokenType = $this->_tokenizer->peek();
@@ -1245,6 +1255,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Add current namespace as first token
             $qualifiedName = array((string) $this->_namespaceName);
+
+            // Set prefixed flag to true
+            $this->_namespacePrefixReplaced = true;
         }
 
         do {

@@ -411,8 +411,10 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                           ->getClasses()
                           ->current();
 
-        // Next package 'foo\bar' declared in file.
-        $packages->next();
+        if ($packages->count() > 1) {
+            // Next package 'foo\bar' declared in file.
+            $packages->next();
+        }
 
         // Get namespaced function
         $function = $packages->current()
@@ -527,6 +529,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
             array('issues/002-019-resolve-qualified-type-names.php', 'foo\bar'),
             array('issues/002-023-resolve-qualified-type-names.php', 'foo\baz'),
             array('issues/002-027-resolve-qualified-type-names.php', 'foo\bar'),
+            array('issues/002-047-resolve-qualified-type-names.php', 'foo\foo'),
+            array('issues/002-051-resolve-qualified-type-names.php', 'baz\baz'),
         );
     }
 
@@ -542,6 +546,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
             array('issues/002-031-resolve-qualified-type-names.php', 'baz'),
             array('issues/002-035-resolve-qualified-type-names.php', 'baz'),
             array('issues/002-039-resolve-qualified-type-names.php', 'baz'),
+            array('issues/002-043-resolve-qualified-type-names.php', 'foo\bar'),
+            array('issues/002-046-resolve-qualified-type-names.php', 'foo\foo'),
         );
     }
 
@@ -558,6 +564,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
             array('issues/002-020-resolve-qualified-type-names.php', ''),
             array('issues/002-024-resolve-qualified-type-names.php', 'baz'),
             array('issues/002-028-resolve-qualified-type-names.php', 'bar'),
+            array('issues/002-048-resolve-qualified-type-names.php', 'foo'),
+            array('issues/002-052-resolve-qualified-type-names.php', 'bar'),
         );
     }
 
@@ -589,6 +597,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
             array('issues/002-021-resolve-qualified-type-names.php', 'foo\bar'),
             array('issues/002-025-resolve-qualified-type-names.php', 'foo\bar\baz'),
             array('issues/002-029-resolve-qualified-type-names.php', 'foo\bar\baz'),
+            array('issues/002-049-resolve-qualified-type-names.php', 'bar\bar'),
         );
     }
 
@@ -604,6 +613,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
             array('issues/002-033-resolve-qualified-type-names.php', 'baz\foo'),
             array('issues/002-037-resolve-qualified-type-names.php', 'baz\foo'),
             array('issues/002-041-resolve-qualified-type-names.php', 'baz\foo'),
+            array('issues/002-044-resolve-qualified-type-names.php', 'foo\foo'),
         );
     }
 
@@ -620,6 +630,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
             array('issues/002-022-resolve-qualified-type-names.php', ''),
             array('issues/002-026-resolve-qualified-type-names.php', 'baz'),
             array('issues/002-030-resolve-qualified-type-names.php', 'baz'),
+            array('issues/002-050-resolve-qualified-type-names.php', 'baz\baz'),
         );
     }
 
@@ -635,6 +646,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
             array('issues/002-034-resolve-qualified-type-names.php', 'baz\foo'),
             array('issues/002-038-resolve-qualified-type-names.php', 'baz\foo'),
             array('issues/002-042-resolve-qualified-type-names.php', 'baz\foo'),
+            array('issues/002-045-resolve-qualified-type-names.php', 'foo\foo'),
         );
     }
 }
