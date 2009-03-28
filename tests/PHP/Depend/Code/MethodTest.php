@@ -46,7 +46,7 @@
  */
 
 require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
-require_once dirname(__FILE__) . '/NodeVisitor/TestNodeVisitor.php';
+require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Method.php';
 
