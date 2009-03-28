@@ -1783,7 +1783,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                             ->current()
                             ->getPackage();
 
-        $this->assertSame('\PHP\Depend', $package->getName());
+        $this->assertSame('PHP\Depend', $package->getName());
     }
 
     /**
@@ -1825,7 +1825,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                             ->current()
                             ->getPackage();
 
-        $this->assertSame('\PHP\Depend', $package->getName());
+        $this->assertSame('PHP\Depend', $package->getName());
     }
 
     /**
@@ -1848,7 +1848,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                             ->current()
                             ->getPackage();
 
-        $this->assertSame('\PHP\Depend', $package->getName());
+        $this->assertSame('PHP\Depend', $package->getName());
     }
 
     /**

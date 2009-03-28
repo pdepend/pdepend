@@ -613,7 +613,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function extractPackageName($qualifiedName)
     {
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
-            return substr($qualifiedName, 0, $pos);
+            // Extract namespace part from qualified name
+            $namespaceName = substr($qualifiedName, 0, $pos);
+            // Check for leading backslash
+            if (strpos($namespaceName, '\\') === 0) {
+                return substr($namespaceName, 1);
+            }
+            return $namespaceName;
         } else if (PHP_Depend_Util_Type::isInternalType($qualifiedName)) {
             return PHP_Depend_Util_Type::getTypePackage($qualifiedName);
         }
