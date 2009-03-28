@@ -1221,7 +1221,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses a qualified PHP 5.3 class, interface and namespace
      * identifier and returns the collected tokens as a string array.
      *
-     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     * @param array(PHP_Depend_Token) &$tokens Reference for parsed tokens.
      *
      * @return array(string)
      * @since 0.9.5
@@ -1280,6 +1280,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $qualifiedName;
     }
 
+    /**
+     * This method parses a PHP 5.3 namespace declaration.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for parsed tokens.
+     *
+     * @return void
+     * @since 0.9.5
+     */
     private function _parseNamespaceDeclaration(array &$tokens = array())
     {
         // Consume namespace keyword and strip optional comments

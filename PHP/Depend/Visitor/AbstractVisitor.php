@@ -84,28 +84,14 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param PHP_Depend_Visitor_ListenerI $l The new visit listener.
+     * @param PHP_Depend_Visitor_ListenerI $listener The new visit listener.
      *
      * @return void
      */
-    public function addVisitListener(PHP_Depend_Visitor_ListenerI $l)
+    public function addVisitListener(PHP_Depend_Visitor_ListenerI $listener)
     {
-        if (in_array($l, $this->_listeners, true) === false) {
-            $this->_listeners[] = $l;
-        }
-    }
-
-    /**
-     * Removes the listener from this node visitor.
-     *
-     * @param PHP_Depend_Visitor_ListenerI $l The listener to remove.
-     *
-     * @return void
-     */
-    public function removeVisitListener(PHP_Depend_Visitor_ListenerI $l)
-    {
-        if (($i = array_search($l, $this->_listeners, true)) !== false) {
-            unset($this->_listeners[$i]);
+        if (in_array($listener, $this->_listeners, true) === false) {
+            $this->_listeners[] = $listener;
         }
     }
 
