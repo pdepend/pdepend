@@ -634,6 +634,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         return array(
             array('issues/002-034-resolve-qualified-type-names.php', 'baz\foo'),
             array('issues/002-038-resolve-qualified-type-names.php', 'baz\foo'),
+            array('issues/002-042-resolve-qualified-type-names.php', 'baz\foo'),
         );
     }
 }
