@@ -70,15 +70,6 @@ interface PHP_Depend_VisitorI
     function addVisitListener(PHP_Depend_Visitor_ListenerI $listener);
 
     /**
-     * Removes the listener from this node visitor.
-     *
-     * @param PHP_Depend_Visitor_ListenerI $listener The listener to remove.
-     *
-     * @return void
-     */
-    function removeVisitListener(PHP_Depend_Visitor_ListenerI $listener);
-
-    /**
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
