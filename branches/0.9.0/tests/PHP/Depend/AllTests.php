@@ -65,6 +65,7 @@ require_once dirname(__FILE__) . '/Log/AllTests.php';
 require_once dirname(__FILE__) . '/Metrics/AllTests.php';
 require_once dirname(__FILE__) . '/TextUI/AllTests.php';
 require_once dirname(__FILE__) . '/Util/AllTests.php';
+require_once dirname(__FILE__) . '/Visitor/AllTests.php';
 
 /**
  * Main test suite for the PHP_Depend package.
@@ -106,6 +107,7 @@ class PHP_Depend_AllTests
         $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
         $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_AllTests::suite());
+        $suite->addTest(PHP_Depend_Visitor_AllTests::suite());
 
         $suite->addTestSuite('PHP_Depend_Builder_DefaultTest');
         $suite->addTestSuite('PHP_Depend_InternalTest');
