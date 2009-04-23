@@ -57,6 +57,7 @@ require_once dirname(__FILE__) . '/ClassDeclarationWithoutBodyBug065Test.php';
 require_once dirname(__FILE__) . '/ClosureResultsInExceptionBug070Test.php';
 require_once dirname(__FILE__) . '/InconsistentObjectGraphBug73Test.php';
 require_once dirname(__FILE__) . '/SignedDefaultValueResultsInExceptionBug71Test.php';
+require_once dirname(__FILE__) . '/TokenizerKeywordSubstitutionBug76Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -95,6 +96,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test');
         $suite->addTestSuite('PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InconsistentObjectGraphBug73Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test');
 
         return $suite;
     }
