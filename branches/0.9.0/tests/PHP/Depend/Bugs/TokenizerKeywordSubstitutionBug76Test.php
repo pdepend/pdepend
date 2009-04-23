@@ -269,6 +269,61 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
                     PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
+            array(
+                'bugs/076-017-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-018-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-019-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-020-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-021-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
         );
     }
 }
