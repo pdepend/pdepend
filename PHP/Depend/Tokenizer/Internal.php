@@ -239,6 +239,47 @@ class PHP_Depend_Tokenizer_Internal
     );
 
     /**
+     * Context sensitive alternative mappings.
+     *
+     * @var array(integer=>array) $alternativeMap
+     */
+    protected static $alternativeMap = array(
+        self::T_USE => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_GOTO => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_NULL => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_SELF => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_TRUE => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_ARRAY => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_FALSE => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_PARENT => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_NAMESPACE => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_DIR => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+        self::T_NS_C => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+        ),
+    );
+
+    /**
      * The source file instance.
      *
      * @var PHP_Depend_Code_File $sourceFile
@@ -378,6 +419,9 @@ class PHP_Depend_Tokenizer_Internal
         $literalMap = self::$literalMap;
         $tokenMap   = self::$tokenMap;
 
+        // Previous found type
+        $previousType = null;
+
         while ($token = current($tokens)) {
             $type  = null;
             $image = null;
@@ -410,8 +454,13 @@ class PHP_Depend_Tokenizer_Internal
             } else {
                 $value = strtolower($token[1]);
                 if (isset($literalMap[$value])) {
-                    $type  = $literalMap[$value];
-                    $image = $value;
+                    // Fetch literal type
+                    $type = $literalMap[$value];
+                    // Check for a context sensitive alternative
+                    if (isset(self::$alternativeMap[$type][$previousType])) {
+                        $type = self::$alternativeMap[$type][$previousType];
+                    }
+                    $image = $token[1];
                 } else if (isset($tokenMap[$token[0]])) {
                     $type  = $tokenMap[$token[0]];
                     $image = $token[1];
@@ -449,6 +498,11 @@ class PHP_Depend_Tokenizer_Internal
                 }
 
                 $startLine += $lines;
+            }
+
+            // Store current type
+            if ($type !== self::T_COMMENT && $type !== self::T_DOC_COMMENT) {
+                $previousType = $type;
             }
 
             next($tokens);
