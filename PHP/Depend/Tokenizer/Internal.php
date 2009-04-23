@@ -246,9 +246,11 @@ class PHP_Depend_Tokenizer_Internal
     protected static $alternativeMap = array(
         self::T_USE => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_GOTO => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_NULL => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
@@ -275,12 +277,15 @@ class PHP_Depend_Tokenizer_Internal
         ),
         self::T_NAMESPACE => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_DIR => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_NS_C => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
     );
 
