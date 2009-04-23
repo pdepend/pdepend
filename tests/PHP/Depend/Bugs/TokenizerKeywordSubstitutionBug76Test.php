@@ -85,26 +85,6 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
     }
 
     /**
-     * This method tests that the parser does not substitute keyword tokens in
-     * type constant names.
-     *
-     * @param string         $sourceFile Name of the text file.
-     * @param array(integer) $tokenTypes List of all expected token types.
-     *
-     * @return void
-     * @dataProvider dataProviderTokenizerKeywordSubstitutionSpecialConstants
-     */
-    public function testTokenizerKeywordSubstitutionSpecialConstants($sourceFile, array $tokenTypes)
-    {
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($this->createCodeResourceURI($sourceFile));
-
-        foreach ($tokenTypes as $tokenType) {
-            $this->assertSame($tokenType, $tokenizer->next()->type);
-        }
-    }
-
-    /**
      * Data provider for the substitution bug in object and class operator
      * chains.
      *
@@ -234,25 +214,59 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
                     PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
-        );
-    }
-
-    public static function dataProviderTokenizerKeywordSubstitutionSpecialConstants()
-    {
-        return array(
             array(
                 'bugs/076-012-tokenizer-keyword-substitution.php',
                 array(
                     PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_CLASS,
+                    PHP_Depend_ConstantsI::T_ECHO,
                     PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN,
-                    PHP_Depend_ConstantsI::T_CONST,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
                     PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_EQUAL,
-                    PHP_Depend_ConstantsI::T_TRUE,
-                    PHP_Depend_ConstantsI::T_SEMICOLON,
-                    PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-013-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-014-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-015-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
+                )
+            ),
+            array(
+                'bugs/076-016-tokenizer-keyword-substitution.php',
+                array(
+                    PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    PHP_Depend_ConstantsI::T_ECHO,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    PHP_Depend_ConstantsI::T_STRING,
+                    PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
         );

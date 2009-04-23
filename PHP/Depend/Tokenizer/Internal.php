@@ -252,21 +252,26 @@ class PHP_Depend_Tokenizer_Internal
         ),
         self::T_NULL => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_SELF => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_TRUE => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_ARRAY => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
         ),
         self::T_FALSE => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_PARENT => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
         ),
         self::T_NAMESPACE => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
