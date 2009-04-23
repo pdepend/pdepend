@@ -561,21 +561,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CONST:
-                // Consume const keyword
-                $this->_consumeToken(self::T_CONST, $tokens);
-
-                // Remove leading comments and read constant name
-                $this->_consumeComments($tokens);
-                $token = $this->_consumeToken(self::T_STRING, $tokens);
-
-                $constant = $this->_builder->buildTypeConstant($token->image);
-                $constant->setDocComment($this->_docComment);
-                $constant->setStartLine($token->startLine);
-                $constant->setEndLine($token->startLine);
-                $constant->setSourceFile($this->_sourceFile);
-
-                $type->addConstant($constant);
-
+                $type->addConstant($this->_parseTypeConstant($tokens));
                 $this->reset($defaultModifier);
                 break;
 
@@ -1405,6 +1391,32 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $this->_parseUseDeclaration($tokens);
         }
+    }
+
+    /**
+     * This method parses a class or interface constant.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
+     * @return PHP_Depend_Code_Constant
+     * @since 0.9.5
+     */
+    private function _parseTypeConstant(array &$tokens)
+    {
+        // Consume const keyword
+        $this->_consumeToken(self::T_CONST, $tokens);
+
+        // Remove leading comments and read constant name
+        $this->_consumeComments($tokens);
+        $token = $this->_consumeToken(self::T_STRING, $tokens);
+
+        $constant = $this->_builder->buildTypeConstant($token->image);
+        $constant->setDocComment($this->_docComment);
+        $constant->setStartLine($token->startLine);
+        $constant->setEndLine($token->startLine);
+        $constant->setSourceFile($this->_sourceFile);
+
+        return $constant;
     }
 
     /**
