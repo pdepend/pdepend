@@ -130,7 +130,7 @@
             <arg line="-f ${basedir}/build/nightly/pdepend.php
                        --
                        -d memory_limit=1024M
-                       --ignore=*/tests*
+                       --ignore=tests,design
                        --summary-xml=${basedir}/build/nightly/build/tmp/ezc-summary.xml
                        --jdepend-chart=${basedir}/build/nightly/build/tmp/ezc-jdepend.svg
                        --jdepend-xml=${basedir}/build/nightly/build/tmp/ezc-jdepend.xml

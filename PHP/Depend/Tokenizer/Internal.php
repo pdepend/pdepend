@@ -536,11 +536,6 @@ class PHP_Depend_Tokenizer_Internal
         $this->count = count($this->tokens);
     }
 
-    private function _applyAlternative($type)
-    {
-
-    }
-
     /**
      * This method fetches all tokens until an opening php tag was found and it
      * returns the collected content. The returned value will be null if there
