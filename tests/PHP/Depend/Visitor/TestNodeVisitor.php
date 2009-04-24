@@ -129,18 +129,6 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
     }
 
     /**
-     * Removes the listener from this node visitor.
-     *
-     * @param PHP_Depend_Visitor_ListenerI $listener
-     *        The listener to remove.
-     *
-     * @return void
-     */
-    public function removeVisitListener(PHP_Depend_Visitor_ListenerI $listener)
-    {
-    }
-
-    /**
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
@@ -150,6 +138,18 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->class = $class;
+    }
+
+    /**
+     * Visits a closure node.
+     *
+     * @param PHP_Depend_Code_Closure $closure  The current closure node.
+     *
+     * @return void
+     */
+    public function visitClosure(PHP_Depend_Code_Closure $closure)
+    {
+
     }
 
     /**
