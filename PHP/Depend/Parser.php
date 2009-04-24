@@ -219,9 +219,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_TokenizerI $tokenizer The used code tokenizer.
      * @param PHP_Depend_BuilderI   $builder   The used node builder.
      */
-    public function __construct(PHP_Depend_TokenizerI $tokenizer,
-                                PHP_Depend_BuilderI $builder)
-    {
+    public function __construct(
+        PHP_Depend_TokenizerI $tokenizer,
+        PHP_Depend_BuilderI $builder
+    ) {
         $this->_tokenizer = $tokenizer;
         $this->_builder   = $builder;
 
@@ -789,9 +790,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    private function _parseCallableDeclaration(array &$tokens, 
-                                               PHP_Depend_Code_AbstractCallable $callable)
-    {
+    private function _parseCallableDeclaration(
+        array &$tokens,
+        PHP_Depend_Code_AbstractCallable $callable
+    ) {
         $this->_parseParameterList($tokens, $callable);
         $this->_consumeComments($tokens);
         
@@ -928,11 +930,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($parameterType !== null) {
             include_once 'PHP/Depend/Code/TypeHolder.php';
 
-            // TODO: Refs #66: This should be done in the post processing process.
-/*
-            $instance = $this->_builder->buildClassOrInterface($parameterType);
-            $parameter->setClass($instance);
-*/
             $typeHolder = new PHP_Depend_Code_TypeHolder(
                 $this->_builder,
                 $parameterType
@@ -961,9 +958,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    private function _parseCallableBody(array &$outTokens,
-                                        PHP_Depend_Code_AbstractCallable $callable)
-    {
+    private function _parseCallableBody(
+        array &$outTokens,
+        PHP_Depend_Code_AbstractCallable $callable
+    ) {
         $this->_useSymbolTable->createScope();
         
         $curly  = 0;
@@ -998,9 +996,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: $bar instanceof $className
                 if ($peekType === self::T_STRING
-                 || $peekType === self::T_BACKSLASH
-                 || $peekType === self::T_NAMESPACE) {
-
+                    || $peekType === self::T_BACKSLASH
+                    || $peekType === self::T_NAMESPACE
+                ) {
                     $qualifiedName = $this->_parseQualifiedName($tokens);
 
                     $class = $this->_builder->buildClass($qualifiedName);
@@ -1018,9 +1016,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // If this is a dynamic instantiation, do not add dependency.
                 // Something like: $bar instanceof $className
                 if ($peekType === self::T_STRING
-                 || $peekType === self::T_BACKSLASH
-                 || $peekType === self::T_NAMESPACE) {
-
+                    || $peekType === self::T_BACKSLASH
+                    || $peekType === self::T_NAMESPACE
+                ) {
                     $qualifiedName = $this->_parseQualifiedName($tokens);
 
                     // TODO Refs #66: This should be done in a post process
@@ -1051,8 +1049,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                 // T_STRING == method or constant, T_VARIABLE == property
                 if ($tokenType !== self::T_STRING
-                 && $tokenType !== self::T_VARIABLE) {
-                
+                    && $tokenType !== self::T_VARIABLE
+                ) {
                     break;
                 }
 
@@ -1140,8 +1138,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return void
      * @since 0.9.5
      */
-    private function _parseBoundVariables(array &$tokens, PHP_Depend_Code_Closure $closure)
-    {
+    private function _parseBoundVariables(
+        array &$tokens,
+        PHP_Depend_Code_Closure $closure
+    ) {
         // Consume use keyword
         $this->_consumeComments($tokens);
         $this->_consumeToken(self::T_USE, $tokens);
@@ -1204,8 +1204,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             array_shift($fragments);
             array_unshift($fragments, $mapsTo);
         } else if ($this->_namespaceName !== null 
-                && $this->_namespacePrefixReplaced === false) {
-
+            && $this->_namespacePrefixReplaced === false
+        ) {
             // Prepend current namespace
             array_unshift($fragments, $this->_namespaceName, '\\');
         }
@@ -1635,8 +1635,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Check for doc level comment
         if ($this->_globalPackageName === self::DEFAULT_PACKAGE
-         && $this->isFileComment() === true) {
-
+            && $this->isFileComment() === true
+        ) {
             $this->_globalPackageName = $package;
 
             $this->_sourceFile->setDocComment($comment);
