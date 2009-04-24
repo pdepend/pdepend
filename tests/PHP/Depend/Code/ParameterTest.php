@@ -52,6 +52,7 @@ require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Parameter.php';
+require_once 'PHP/Depend/Code/TypeHolder.php';
 require_once 'PHP/Depend/Code/Value.php';
 
 /**
@@ -187,6 +188,36 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
         $parameter->setDeclaringFunction($method);
 
         $this->assertSame($class, $parameter->getDeclaringClass());
+    }
+
+    /**
+     * Tests that the parameter class handles a type holder as expected.
+     *
+     * @return void
+     */
+    public function testParameterReturnsExpectedTypeFromTypeHolder()
+    {
+        $class  = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
+        $holder = $this->getMock('PHP_Depend_Code_TypeHolder', array(), array(), '', false);
+        $holder->expects($this->once())
+            ->method('getType')
+            ->will($this->returnValue($class));
+
+        $parameter = new PHP_Depend_Code_Parameter('foo');
+        $parameter->setClassTypeHolder($holder);
+
+        $this->assertSame($class, $parameter->getClass());
+    }
+
+    /**
+     * Tests that a parameter returns <b>null</b> when no type holder was set.
+     *
+     * @return void
+     */
+    public function testParameterReturnNullForTypeWhenNoTypeHolderWasSet()
+    {
+        $parameter = new PHP_Depend_Code_Parameter('foo');
+        $this->assertNull($parameter->getClass());
     }
 }
 ?>
