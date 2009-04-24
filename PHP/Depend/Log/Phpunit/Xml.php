@@ -236,9 +236,10 @@ class PHP_Depend_Log_Phpunit_Xml
         }
 
         // Create project metrics and apply phpunit translation table
-        $metrics = array_merge($this->projectMetrics, array(
-            'files'  =>  $this->_files
-        ));
+        $metrics = array_merge(
+            $this->projectMetrics,
+            array('files'  =>  $this->_files)
+        );
         $metrics = $this->_applyPHPUnitTranslationTable($metrics);
 
         // Sort metrics
@@ -414,10 +415,11 @@ class PHP_Depend_Log_Phpunit_Xml
      *
      * @return void
      */
-    private function _appendMetrics(DOMElement $xml,
-                                    PHP_Depend_Code_NodeI $node,
-                                    array $metrics = array())
-    {
+    private function _appendMetrics(
+        DOMElement $xml,
+        PHP_Depend_Code_NodeI $node,
+        array $metrics = array()
+    ) {
         // Collect all node metrics
         foreach ($this->_nodeAwareAnalyzers as $analyzer) {
             $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
