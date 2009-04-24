@@ -138,4 +138,29 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         
         $this->assertEquals($expected, $visitor->visits);
     }
+
+    /**
+     * Tests that the default visitor implementation emits the expected signals
+     * for a closure.
+     *
+     * @return void
+     */
+    public function testClosureHandlerEmitExpectedListenerSignal()
+    {
+        include_once 'PHP/Depend/Code/Closure.php';
+        include_once 'PHP/Depend/Visitor/ListenerI.php';
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->at(0))
+                 ->method('startVisitClosure');
+        $listener->expects($this->at(1))
+                 ->method('endVisitClosure');
+
+        $closure = $this->getMock('PHP_Depend_Code_Closure');
+
+        $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+        $visitor->visitClosure($closure);
+    }
+
 }

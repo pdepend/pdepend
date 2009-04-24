@@ -123,6 +123,21 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits a closure node.
+     *
+     * @param PHP_Depend_Code_Closure $closure  The current closure node.
+     *
+     * @return void
+     * @see PHP_Depend_VisitorI::visitClosure()
+     */
+    public function visitClosure(PHP_Depend_Code_Closure $closure)
+    {
+        $this->fireStartClosure($closure);
+
+        $this->fireEndClosure($closure);
+    }
+
+    /**
      * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.
@@ -290,6 +305,34 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitClass($class);
+        }
+    }
+
+    /**
+     * Sends a start closure event.
+     *
+     * @param PHP_Depend_Code_Closure $closure The context closure instance.
+     *
+     * @return void
+     */
+    protected function fireStartClosure(PHP_Depend_Code_Closure $closure)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitClosure($closure);
+        }
+    }
+
+    /**
+     * Sends a end closure event.
+     *
+     * @param PHP_Depend_Code_Closure $closure The context closure instance.
+     *
+     * @return void
+     */
+    protected function fireEndClosure(PHP_Depend_Code_Closure $closure)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitClosure($closure);
         }
     }
 
