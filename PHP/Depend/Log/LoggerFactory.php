@@ -108,7 +108,9 @@ class PHP_Depend_Log_LoggerFactory
             if (class_exists($className) === false) {
 
                 if (($fp = @fopen($classFile, 'r', true)) === false) {
-                    throw new RuntimeException("Unknown logger class '{$className}'.");
+                    throw new RuntimeException(
+                        "Unknown logger class '{$className}'."
+                    );
                 }
 
                 // Close file pointer and include class file
