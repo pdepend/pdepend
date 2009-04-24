@@ -289,21 +289,21 @@ class PHP_Depend_Log_Jdepend_Xml
 
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
-                 ->appendChild($doc->createTextNode($stats['tc']));
+            ->appendChild($doc->createTextNode($stats['tc']));
         $statsXml->appendChild($doc->createElement('ConcreteClasses'))
-                 ->appendChild($doc->createTextNode($stats['cc']));
+            ->appendChild($doc->createTextNode($stats['cc']));
         $statsXml->appendChild($doc->createElement('AbstractClasses'))
-                 ->appendChild($doc->createTextNode($stats['ac']));
+            ->appendChild($doc->createTextNode($stats['ac']));
         $statsXml->appendChild($doc->createElement('Ca'))
-                 ->appendChild($doc->createTextNode($stats['ca']));
+            ->appendChild($doc->createTextNode($stats['ca']));
         $statsXml->appendChild($doc->createElement('Ce'))
-                 ->appendChild($doc->createTextNode($stats['ce']));
+            ->appendChild($doc->createTextNode($stats['ce']));
         $statsXml->appendChild($doc->createElement('A'))
-                 ->appendChild($doc->createTextNode($stats['a']));
+            ->appendChild($doc->createTextNode($stats['a']));
         $statsXml->appendChild($doc->createElement('I'))
-                 ->appendChild($doc->createTextNode($stats['i']));
+            ->appendChild($doc->createTextNode($stats['i']));
         $statsXml->appendChild($doc->createElement('D'))
-                 ->appendChild($doc->createTextNode($stats['d']));
+            ->appendChild($doc->createTextNode($stats['d']));
 
         $dependsUpon = $doc->createElement('DependsUpon');
         foreach ($this->analyzer->getEfferents($package) as $efferent) {
@@ -333,7 +333,7 @@ class PHP_Depend_Log_Jdepend_Xml
 
             foreach ($cycles as $cycle) {
                 $cycleXml->appendChild($doc->createElement('Package'))
-                         ->appendChild($doc->createTextNode($cycle->getName()));
+                    ->appendChild($doc->createTextNode($cycle->getName()));
             }
 
             $this->cycles->appendChild($cycleXml);
