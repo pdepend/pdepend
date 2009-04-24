@@ -547,8 +547,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         // Remove default package if empty
         if ($this->defaultPackage->getTypes()->count() === 0
-         && $this->defaultPackage->getFunctions()->count() === 0) {
-
+            && $this->defaultPackage->getFunctions()->count() === 0
+        ) {
             unset($packages[self::DEFAULT_PACKAGE]);
         }
         return new PHP_Depend_Code_NodeIterator($packages);
@@ -652,9 +652,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @return void
      */
-    protected function replaceClassReferences(PHP_Depend_Code_Class $class,
-                                              PHP_Depend_Code_Interface $interface)
-    {
+    protected function replaceClassReferences(
+        PHP_Depend_Code_Class $class,
+        PHP_Depend_Code_Interface $interface
+    ) {
         foreach ($this->classes as $types) {
             foreach ($types as $type) {
                 foreach ($type->getUnfilteredRawDependencies() as $dependency) {
