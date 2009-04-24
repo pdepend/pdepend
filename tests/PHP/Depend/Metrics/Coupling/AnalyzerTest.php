@@ -76,10 +76,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource($source);
 
         // Count total packages
-        $this->assertEquals(4, $packages->count());
+        $this->assertEquals(3, $packages->count());
 
         // Expected package names with fallback for php5.3.0beta1 change
-        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        $packageNames = array('+global', '+spl', 'default\package');
         sort($packageNames);
 
         // Check package names
@@ -115,10 +115,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $source   = dirname(__FILE__) . '/../../_code/coupling/method.php';
         $packages = self::parseSource($source);
 
-        $this->assertEquals(4, $packages->count());
+        $this->assertEquals(3, $packages->count());
 
         // Expected package names with fallback for php5.3.0beta1 change
-        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        $packageNames = array('+global', '+spl', 'default\package');
         sort($packageNames);
 
         // Check package names

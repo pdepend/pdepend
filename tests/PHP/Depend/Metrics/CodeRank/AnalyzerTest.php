@@ -75,7 +75,6 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
         'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
         CORE_PACKAGE  =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
-        '+global'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.15),
         'pkg1Foo'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2FooI'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2Bar'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
@@ -87,7 +86,6 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
         'pkg1Bar'     =>  array('cr'  =>  0.59625,    'rcr'  =>  0.15),
         'pkg3FooI'    =>  array('cr'  =>  0.21375,    'rcr'  =>  0.2775),
         'Iterator'    =>  array('cr'  =>  0.3316875,  'rcr'  =>  0.15),
-        'Bar'         =>  array('cr'  =>  0.15,       'rcr'  =>  0.15)
     );
 
     /**
@@ -120,6 +118,9 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_AbstractTest
 
         $this->_expected = array();
         foreach ($packages as $package) {
+            if ($package->getTypes()->count() === 0) {
+                continue;
+            }
             $this->_expected[] = array($package, $this->_input[$package->getName()]);
             foreach ($package->getTypes() as $type) {
                 $this->_expected[] = array($type, $this->_input[$type->getName()]);
