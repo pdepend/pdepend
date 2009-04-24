@@ -134,8 +134,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
+        $typeHolder = $this->getMock('PHP_Depend_Code_TypeHolder', array(), array(), '', false);
+
         $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClass(new PHP_Depend_Code_Class(__CLASS__));
+        $parameter->setClassTypeHolder($typeHolder);
 
         $this->assertFalse($parameter->allowsNull());
     }
@@ -151,8 +153,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
         $value = new PHP_Depend_Code_Value();
         $value->setValue(null);
 
+        $typeHolder = $this->getMock('PHP_Depend_Code_TypeHolder', array(), array(), '', false);
+
         $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClass(new PHP_Depend_Code_Class(__CLASS__));
+        $parameter->setClassTypeHolder($typeHolder);
         $parameter->setValue($value);
 
         $this->assertTrue($parameter->allowsNull());
