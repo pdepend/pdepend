@@ -110,10 +110,14 @@ class PHP_Depend_Token
      * @param integer $startColumn The start column number for this token.
      * @param integer $endColumn   The end column number for this token.
      */
-    public function __construct($type, $image, 
-                                $startLine, $endLine,
-                                $startColumn, $endColumn)
-    {
+    public function __construct(
+        $type,
+        $image,
+        $startLine,
+        $endLine,
+        $startColumn, 
+        $endColumn
+    ) {
         $this->type        = $type;
         $this->image       = $image;
         $this->startLine   = $startLine;
