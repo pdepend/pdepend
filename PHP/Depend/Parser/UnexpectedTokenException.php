@@ -72,11 +72,13 @@ class PHP_Depend_Parser_UnexpectedTokenException extends RuntimeException
         // The parser must take care for this
         assert($token instanceof PHP_Depend_Token);
 
-        $message = sprintf('Unexpected token: %s, line: %d, col: %d, file: %s.',
-                           $token->image,
-                           $token->startLine,
-                           $token->startColumn,
-                           $tokenizer->getSourceFile());
+        $message = sprintf(
+            'Unexpected token: %s, line: %d, col: %d, file: %s.',
+            $token->image,
+            $token->startLine,
+            $token->startColumn,
+            $tokenizer->getSourceFile()
+        );
 
         parent::__construct($message);
     }
