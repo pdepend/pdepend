@@ -383,27 +383,47 @@ class PHP_Depend_TextUI_Command
         $l = $this->printLogOptions();
         $l = $this->printAnalyzerOptions($l);
 
-        $this->_printOption('--configuration=<file>',
-                            'Optional PHP_Depend configuration file.', $l);
+        $this->_printOption(
+            '--configuration=<file>',
+            'Optional PHP_Depend configuration file.', 
+            $l
+        );
         echo PHP_EOL;
 
-        $this->_printOption('--suffix=<ext[,...]>',
-                            'List of valid PHP file extensions.', $l);
-        $this->_printOption('--ignore=<dir[,...]>',
-                            'List of exclude directories.', $l);
-        $this->_printOption('--exclude=<pkg[,...]>',
-                            'List of exclude packages.', $l);
+        $this->_printOption(
+            '--suffix=<ext[,...]>',
+            'List of valid PHP file extensions.', 
+            $l
+        );
+        $this->_printOption(
+            '--ignore=<dir[,...]>',
+            'List of exclude directories.', 
+            $l
+        );
+        $this->_printOption(
+            '--exclude=<pkg[,...]>',
+            'List of exclude packages.', 
+            $l
+        );
         echo PHP_EOL;
 
-        $this->_printOption('--without-annotations',
-                            'Do not parse doc comment annotations.', $l);
-        $this->_printOption('--bad-documentation',
-                            'Fallback for projects with bad doc comments.', $l);
+        $this->_printOption(
+            '--without-annotations',
+            'Do not parse doc comment annotations.', 
+            $l
+        );
+        $this->_printOption(
+            '--bad-documentation',
+            'Fallback for projects with bad doc comments.', 
+            $l
+        );
         echo PHP_EOL;
 
-        $this->_printOption('--optimization=<mode>',
-                            'Runtime switch to influence the internal processing.',
-                            $l);
+        $this->_printOption(
+            '--optimization=<mode>',
+            'Runtime switch to influence the internal processing.',
+            $l
+        );
         foreach ($this->_optimizations as $name => $help) {
             $this->_printOption('               "' . $name . '"', $help, $l);
         }
