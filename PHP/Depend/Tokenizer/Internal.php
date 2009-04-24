@@ -469,7 +469,9 @@ class PHP_Depend_Tokenizer_Internal
                 if ($lines === 0) {
                     $startColumn += strlen($token[1]);
                 } else {
-                    $startColumn = strlen(substr($token[1], strrpos($token[1], "\n") + 1)) + 1;
+                    $startColumn = strlen(
+                        substr($token[1], strrpos($token[1], "\n") + 1)
+                    ) + 1;
                 }
 
                 $startLine += $lines;
@@ -504,7 +506,9 @@ class PHP_Depend_Tokenizer_Internal
                 if ($lines === 0) {
                     $endColumn = $startColumn + strlen(rtrim($image)) - 1;
                 } else {
-                    $endColumn = strlen(substr(rtrim($image), strrpos(rtrim($image), "\n") + 1));
+                    $endColumn = strlen(
+                        substr(rtrim($image), strrpos(rtrim($image), "\n") + 1)
+                    );
                 }
 
                 $endLine = $startLine + $lines;
@@ -521,7 +525,9 @@ class PHP_Depend_Tokenizer_Internal
                 if ($lines === 0) {
                     $startColumn += strlen($image);
                 } else {
-                    $startColumn = strlen(substr($image, strrpos($image, "\n") + 1)) + 1;
+                    $startColumn = strlen(
+                        substr($image, strrpos($image, "\n") + 1)
+                    ) + 1;
                 }
 
                 $startLine += $lines;

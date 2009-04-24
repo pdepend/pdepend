@@ -81,7 +81,7 @@ interface PHP_Depend_VisitorI
     /**
      * Visits a closure node.
      *
-     * @param PHP_Depend_Code_Closure $closure  The current closure node.
+     * @param PHP_Depend_Code_Closure $closure The current closure node.
      *
      * @return void
      */

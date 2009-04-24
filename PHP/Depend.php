@@ -193,7 +193,9 @@ class PHP_Depend
         $dir = realpath($directory);
 
         if (!is_dir($dir)) {
-            throw new InvalidArgumentException("Invalid directory '{$directory}' added.");
+            throw new InvalidArgumentException(
+                "Invalid directory '{$directory}' added."
+            );
         }
 
         $this->_directories[] = $dir;
