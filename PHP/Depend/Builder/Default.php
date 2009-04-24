@@ -718,11 +718,5 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
                 $property->setType($interface);
             }
         }
-
-        foreach ($this->_parameters as $parameter) {
-            if ($parameter->getClass() === $class) {
-                $parameter->setClass($interface);
-            }
-        }
     }
 }

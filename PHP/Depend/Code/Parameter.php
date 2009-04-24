@@ -298,7 +298,17 @@ class PHP_Depend_Code_Parameter
      */
     public function getClass()
     {
-        return $this->_class;
+        if ($this->_typeHolder === null) {
+            return null;
+        }
+        return $this->_typeHolder->getType();
+        //return $this->_class;
+    }
+
+    private $_typeHolder = null;
+    public function setClassTypeHolder(PHP_Depend_Code_TypeHolder $typeHolder)
+    {
+        $this->_typeHolder = $typeHolder;
     }
 
     /**
