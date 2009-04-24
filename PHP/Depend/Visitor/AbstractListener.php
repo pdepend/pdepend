@@ -89,6 +89,30 @@ abstract class PHP_Depend_Visitor_AbstractListener
     }
 
     /**
+     * Is called when the visitor starts a new closure instance.
+     *
+     * @param PHP_Depend_Code_Closure $closure The context closure instance.
+     *
+     * @return void
+     */
+    public function startVisitClosure(PHP_Depend_Code_Closure $closure)
+    {
+        $this->startVisitNode($closure);
+    }
+
+    /**
+     * Is called when the visitor ends with a closure instance.
+     *
+     * @param PHP_Depend_Code_Closure $closure The context closure instance.
+     *
+     * @return void
+     */
+    public function endVisitClosure(PHP_Depend_Code_Closure $closure)
+    {
+        $this->endVisitNode($closure);
+    }
+
+    /**
      * Is called when the visitor starts a new file instance.
      *
      * @param PHP_Depend_Code_File $file The context file instance.
