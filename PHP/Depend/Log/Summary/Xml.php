@@ -388,9 +388,10 @@ class PHP_Depend_Log_Summary_Xml
      *
      * @return void
      */
-    protected function writeFileReference(DOMElement $xml,
-                                          PHP_Depend_Code_File $file = null)
-    {
+    protected function writeFileReference(
+        DOMElement $xml,
+        PHP_Depend_Code_File $file = null
+    ) {
         if ($file === null || $file->getFileName() === null) {
             return;
         }
