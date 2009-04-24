@@ -73,10 +73,12 @@ class PHP_Depend_Parser_MissingValueException extends RuntimeException
         // The parser must take care for this
         assert($token instanceof PHP_Depend_Token);
 
-        $message = sprintf('Missing default value on line: %d, col: %d, file: %s.',
-                           $token->startLine,
-                           $token->startColumn,
-                           $tokenizer->getSourceFile());
+        $message = sprintf(
+            'Missing default value on line: %d, col: %d, file: %s.',
+            $token->startLine,
+            $token->startColumn,
+            $tokenizer->getSourceFile()
+        );
 
         parent::__construct($message);
     }
