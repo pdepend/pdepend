@@ -120,12 +120,12 @@ class PHP_Depend_Code_Parameter
     private $_position = 0;
 
     /**
-     * The type for this parameter. This value is <b>null</b> by default and for
-     * scalar types.
+     * The type holder for this parameter. This value is <b>null</b> by default
+     * and for scalar types.
      *
-     * @var PHP_Depend_Code_AbstractType $_class
+     * @var PHP_Depend_Code_TypeHolder $_typeHolder
      */
-    private $_class = null;
+    private $_typeHolder = null;
 
     /**
      * The parameter is declared with the array type hint, when this property is
@@ -302,30 +302,20 @@ class PHP_Depend_Code_Parameter
             return null;
         }
         return $this->_typeHolder->getType();
-        //return $this->_class;
-    }
-
-    private $_typeHolder = null;
-    public function setClassTypeHolder(PHP_Depend_Code_TypeHolder $typeHolder)
-    {
-        $this->_typeHolder = $typeHolder;
     }
 
     /**
-     * Sets the class type for this parameter. This method will only set its
+     * Sets the type holder for this parameter. This method will only set its
      * internal state on the first call.
      *
-     * @param PHP_Depend_Code_AbstractType $class The parameter class type.
+     * @param PHP_Depend_Code_TypeHolder $typeHolder The parameter type holder.
      *
      * @return void
      * @since 0.9.5
      */
-    public function setClass(PHP_Depend_Code_AbstractType $class)
+    public function setClassTypeHolder(PHP_Depend_Code_TypeHolder $typeHolder)
     {
-        // TODO Refs #66: Remove the "true" expression
-        if (true || $this->_class === null) {
-            $this->_class = $class;
-        }
+        $this->_typeHolder = $typeHolder;
     }
 
     /**
@@ -390,7 +380,7 @@ class PHP_Depend_Code_Parameter
      */
     public function allowsNull()
     {
-        return ($this->_array === false && $this->_class === null)
+        return ($this->_array === false && $this->_typeHolder === null)
             || ($this->_value !== null && $this->_value->getValue() === null);
     }
 
@@ -493,13 +483,15 @@ class PHP_Depend_Code_Parameter
             }
         }
 
-        return sprintf('Parameter #%d [ <%s>%s %s%s%s ]',
-                       $this->_position,
-                       $required,
-                       $typeHint,
-                       $reference,
-                       $this->_name,
-                       $default);
+        return sprintf(
+            'Parameter #%d [ <%s>%s %s%s%s ]',
+            $this->_position,
+            $required,
+            $typeHint,
+            $reference,
+            $this->_name,
+            $default
+        );
     }
 
     /**
