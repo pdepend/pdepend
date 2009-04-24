@@ -351,11 +351,13 @@ class PHP_Depend
         $iterator->append(new ArrayIterator($this->_files));
 
         foreach ($this->_directories as $directory) {
-            $iterator->append(new PHP_Depend_Input_Iterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($directory)
-                ), $this->_fileFilter
-            ));
+            $iterator->append(
+                new PHP_Depend_Input_Iterator(
+                    new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($directory)
+                    ), $this->_fileFilter
+                )
+            );
         }
 
         $this->_builder = new PHP_Depend_Builder_Default();

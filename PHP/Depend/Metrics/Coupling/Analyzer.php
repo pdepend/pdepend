@@ -285,8 +285,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                 continue;
             }
             // Skip first token
-            if (!isset($tokens[$i - 1])
-             || !in_array($tokens[$i - 1]->type, $callT)) {
+            if (!isset($tokens[$i - 1]) || !in_array($tokens[$i - 1]->type, $callT)
+            ) {
 
                 continue;
             }
@@ -299,8 +299,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                 $identifier = $tokens[$i - 2]->image . $tokens[$i - 1]->image;
                 for ($j = $i - 3; $j >= 0; --$j) {
                     if (!in_array($tokens[$j]->type, $callT)
-                     && !in_array($tokens[$j]->type, $chainT)) {
-
+                        && !in_array($tokens[$j]->type, $chainT)
+                    ) {
                         break;
                     }
                     $identifier = $tokens[$j]->image . $identifier;
