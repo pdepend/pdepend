@@ -415,9 +415,11 @@ class PHP_Depend_Tokenizer_Internal
         // Replace short open tags, short open tags will produce invalid results
         // in all environments with disabled short open tags.
         $source = $this->sourceFile->getSource();
-        $source = preg_replace(array('(<\?=)', '(<\?(\s))'),
-                               array('<?php echo ', '<?php\1'),
-                               $source);
+        $source = preg_replace(
+            array('(<\?=)', '(<\?(\s))'),
+            array('<?php echo ', '<?php\1'),
+            $source
+        );
 
         if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
             $tokens = $this->_php53BackslashWorkaround($source);
