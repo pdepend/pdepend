@@ -383,8 +383,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $token = $tokens[$i];
 
             if ($token->type === PHP_Depend_TokenizerI::T_COMMENT
-             || $token->type === PHP_Depend_TokenizerI::T_DOC_COMMENT) {
-
+                || $token->type === PHP_Depend_TokenizerI::T_DOC_COMMENT
+            ) {
                 $lines =& $clines;
             } else {
                 $lines =& $elines;
