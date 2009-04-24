@@ -815,8 +815,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return void
      * @since 0.9.5
      */
-    private function _parseParameterList(array &$tokens, PHP_Depend_Code_AbstractCallable $function)
-    {
+    private function _parseParameterList(
+        array &$tokens,
+        PHP_Depend_Code_AbstractCallable $function
+    ) {
         $this->_consumeComments($tokens);
         $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
         $this->_consumeComments($tokens);
@@ -1485,7 +1487,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CONSTANT_ENCAPSED_STRING:
-                $token = $this->_consumeToken(self::T_CONSTANT_ENCAPSED_STRING, $tokens);
+                $token = $this->_consumeToken(
+                    self::T_CONSTANT_ENCAPSED_STRING,
+                    $tokens
+                );
                 $defaultValue->setValue(substr($token->image, 1, -1));
                 break;
 
@@ -1524,7 +1529,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
-                throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
+                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                    $this->_tokenizer
+                );
             }
             
             $this->_consumeComments($tokens);
