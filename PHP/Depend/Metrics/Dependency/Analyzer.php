@@ -467,9 +467,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */
-    protected function collectCycle(SplObjectStorage $storage,
-                                    PHP_Depend_Code_Package $package)
-    {
+    protected function collectCycle(
+        SplObjectStorage $storage,
+        PHP_Depend_Code_Package $package
+    ) {
         if ($storage->contains($package)) {
             $storage->rewind();
             while (($tmp = $storage->current()) !== $package) {
