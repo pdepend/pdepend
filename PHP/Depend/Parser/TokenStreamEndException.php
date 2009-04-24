@@ -68,8 +68,12 @@ class PHP_Depend_Parser_TokenStreamEndException extends RuntimeException
      */
     public function __construct(PHP_Depend_TokenizerI $tokenizer)
     {
-        parent::__construct(sprintf('Unexpected end of token stream in file: %s.',
-                                    $tokenizer->getSourceFile()));
+        parent::__construct(
+            sprintf(
+                'Unexpected end of token stream in file: %s.',
+                $tokenizer->getSourceFile()
+            )
+        );
     }
 
 }
