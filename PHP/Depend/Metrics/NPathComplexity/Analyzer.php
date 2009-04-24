@@ -221,8 +221,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->fireStartFunction($function);
 
-        $this->_calculateMethodOrFunction($function->getUUID(),
-                                          $function->getTokens());
+        $this->_calculateMethodOrFunction(
+            $function->getUUID(),
+            $function->getTokens()
+        );
 
         $this->fireEndFunction($function);
     }
@@ -239,8 +241,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->fireStartMethod($method);
 
-        $this->_calculateMethodOrFunction($method->getUUID(),
-                                          $method->getTokens());
+        $this->_calculateMethodOrFunction(
+            $method->getUUID(),
+            $method->getTokens()
+        );
 
         $this->fireEndMethod($method);
     }
@@ -399,9 +403,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         // Remove <if> token
         next($this->_tokens);
 
-        $npath = $this->_sumExpressionComplexity();
-        $npath = PHP_Depend_Util_MathUtil::add($npath,
-                                               $this->_calculateScopeOrStatement());
+        $npath = PHP_Depend_Util_MathUtil::add(
+            $this->_sumExpressionComplexity(),
+            $this->_calculateScopeOrStatement()
+        );
 
         $value = '1';
         if ($token = current($this->_tokens)) {
