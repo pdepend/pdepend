@@ -119,9 +119,10 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      *
      * @return void
      */
-    private function _processType(PHP_Depend_Code_AbstractType $type,
-                                  PHP_Depend_Code_AbstractType $depType)
-    {
+    private function _processType(
+        PHP_Depend_Code_AbstractType $type,
+        PHP_Depend_Code_AbstractType $depType
+    ) {
         if ($type !== $depType) {
             $this->_initNode($type);
             $this->_initNode($depType);
