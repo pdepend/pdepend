@@ -125,7 +125,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     /**
      * Visits a closure node.
      *
-     * @param PHP_Depend_Code_Closure $closure  The current closure node.
+     * @param PHP_Depend_Code_Closure $closure The current closure node.
      *
      * @return void
      * @see PHP_Depend_VisitorI::visitClosure()

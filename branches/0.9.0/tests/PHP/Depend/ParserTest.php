@@ -1554,12 +1554,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/033-2.php');
         $this->assertEquals(1, $packages->count()); // +global
 
-        $classes = $packages->current()->getClasses();
-        $this->assertEquals(2, $classes->count());
-
-        $classes->next();
-
-        $class = $classes->current();
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+            
         $this->assertEquals('PHP_Depend_Parser', $class->getName());
 
         $method = $class->getMethods()->current();
@@ -1900,12 +1898,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/32-2.php');
         $this->assertEquals(1, $packages->count());
 
-        $classes = $packages->current()->getClasses();
-        $this->assertEquals(2, $classes->count());
-
-        $classes->next();
-
-        $class = $classes->current();
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
         $this->assertNotNull($class);
         $this->assertEquals('PHP_Depend_Parser', $class->getName());
 
