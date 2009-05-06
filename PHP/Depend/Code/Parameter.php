@@ -123,9 +123,9 @@ class PHP_Depend_Code_Parameter
      * The type holder for this parameter. This value is <b>null</b> by default
      * and for scalar types.
      *
-     * @var PHP_Depend_Code_TypeHolder $_typeHolder
+     * @var PHP_Depend_Code_TypeReference $_typeReference
      */
-    private $_typeHolder = null;
+    private $_typeReference = null;
 
     /**
      * The parameter is declared with the array type hint, when this property is
@@ -298,24 +298,24 @@ class PHP_Depend_Code_Parameter
      */
     public function getClass()
     {
-        if ($this->_typeHolder === null) {
+        if ($this->_typeReference === null) {
             return null;
         }
-        return $this->_typeHolder->getType();
+        return $this->_typeReference->getType();
     }
 
     /**
      * Sets the type holder for this parameter. This method will only set its
      * internal state on the first call.
      *
-     * @param PHP_Depend_Code_TypeHolder $typeHolder The parameter type holder.
+     * @param PHP_Depend_Code_TypeReference $typeReference The parameter type holder.
      *
      * @return void
      * @since 0.9.5
      */
-    public function setClassTypeHolder(PHP_Depend_Code_TypeHolder $typeHolder)
+    public function setClassTypeReference(PHP_Depend_Code_TypeReference $typeReference)
     {
-        $this->_typeHolder = $typeHolder;
+        $this->_typeReference = $typeReference;
     }
 
     /**
@@ -380,7 +380,7 @@ class PHP_Depend_Code_Parameter
      */
     public function allowsNull()
     {
-        return ($this->_array === false && $this->_typeHolder === null)
+        return ($this->_array === false && $this->_typeReference === null)
             || ($this->_value !== null && $this->_value->getValue() === null);
     }
 
