@@ -199,7 +199,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testParameterReturnsExpectedTypeFromTypeHolder()
+    public function testParameterReturnsExpectedTypeFromTypeReference()
     {
         $class     = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
         $reference = $this->getMock('PHP_Depend_Code_TypeReference', array(), array(), '', false);
@@ -218,7 +218,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testParameterReturnNullForTypeWhenNoTypeHolderWasSet()
+    public function testParameterReturnNullForTypeWhenNoTypeReferenceWasSet()
     {
         $parameter = new PHP_Depend_Code_Parameter('foo');
         $this->assertNull($parameter->getClass());
