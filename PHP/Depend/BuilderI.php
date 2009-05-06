@@ -102,15 +102,6 @@ interface PHP_Depend_BuilderI
     function buildClosure();
 
     /**
-     * Builds a new code class constant instance.
-     *
-     * @param string $name The constant name.
-     *
-     * @return PHP_Depend_Code_TypeConstant The created constant object.
-     */
-    function buildTypeConstant($name);
-
-    /**
      * Builds a new new interface instance.
      *
      * @param string $name The interface name.
@@ -163,4 +154,22 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_Function The function instance
      */
     function buildFunction($name);
+
+    /**
+     * Builds a new code class constant instance.
+     *
+     * @param string $name The constant name.
+     *
+     * @return PHP_Depend_Code_TypeConstant The created constant object.
+     */
+    function buildTypeConstant($name);
+
+    /**
+     * Builds a new code type reference instance.
+     *
+     * @param string $qualifiedName The qualified name of the referenced type.
+     *
+     * @return PHP_Depend_Code_TypeReference
+     */
+    function buildTypeReference($qualifiedName);
 }
