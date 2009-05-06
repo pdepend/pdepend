@@ -94,7 +94,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     {
         $this->fireStartProperty($property);
 
-        if (($depClass = $property->getType()) === null) {
+        if (($depClass = $property->getClass()) === null) {
             $this->fireEndProperty($property);
             return;
         }

@@ -238,7 +238,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $this->fireStartProperty($property);
 
         // Check for not null
-        if (($type = $property->getType()) !== null) {
+        if (($type = $property->getClass()) !== null) {
             $parent = $property->getParent();
 
             // Only increment if these types are not part of the same hierarchy
