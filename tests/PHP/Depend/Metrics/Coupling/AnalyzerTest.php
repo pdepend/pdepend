@@ -152,24 +152,13 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectPropertyCoupling()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling/property.php';
-        $packages = self::parseSource($source);
+        $packages = self::parseSource('coupling/property.php');
 
-        $this->assertEquals(4, $packages->count());
+        $this->assertEquals(1, $packages->count());
 
-        // Expected package names with fallback for php5.3.0beta1 change
-        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
-        sort($packageNames);
-
-        // Check package names
-        foreach ($packageNames as $packageName) {
-            $package = $packages->current();
-
-            $this->assertEquals($packageName, $package->getName());
-            $packages->next();
-        }
-
-        $this->assertEquals(1, $package->getClasses()->count());
+        $package = $packages->current();
+        $this->assertSame('default\package', $package->getName());
+        $this->assertSame(1, $package->getClasses()->count());
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
@@ -194,10 +183,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $source   = dirname(__FILE__) . '/../../_code/coupling/class.php';
         $packages = self::parseSource($source);
 
-        $this->assertEquals(4, $packages->count());
+        $this->assertEquals(3, $packages->count());
 
         // Expected package names with fallback for php5.3.0beta1 change
-        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        $packageNames = array('+global', '+spl', 'default\package');
         sort($packageNames);
 
         // Check package names
@@ -234,10 +223,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
         $source   = dirname(__FILE__) . '/../../_code/coupling';
         $packages = self::parseSource($source);
 
-        $this->assertEquals(4, $packages->count());
+        $this->assertEquals(3, $packages->count());
 
         // Expected package names with fallback for php5.3.0beta1 change
-        $packageNames = array('+global', '+spl', 'default\package', CORE_PACKAGE);
+        $packageNames = array('+global', '+spl', 'default\package');
         sort($packageNames);
 
         // Check package names

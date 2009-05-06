@@ -70,12 +70,11 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
     private $_parent = null;
 
     /**
-     * The type for this property. This value is <b>null</b> by default and for
-     * scalar types.
+     * A reference instance for the php type of this property.
      *
-     * @var PHP_Depend_Code_AbstractType $_type
+     * @var PHP_Depend_Code_TypeReference $_classReference
      */
-    private $_type = null;
+    private $_classReference = null;
 
     /**
      * Defined modifiers for this property node.
@@ -192,21 +191,24 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
      *
      * @return PHP_Depend_Code_AbstractType
      */
-    public function getType()
+    public function getClass()
     {
-        return $this->_type;
+        if ($this->_classReference === null) {
+            return null;
+        }
+        return $this->_classReference->getType();
     }
 
     /**
-     * Sets the type of this property.
+     * Sets a reference instance for the php type of this property.
      *
-     * @param PHP_Depend_Code_AbstractType $type The property type.
+     * @param PHP_Depend_Code_TypeReference $classReference Type of this property.
      *
      * @return void
      */
-    public function setType(PHP_Depend_Code_AbstractType $type)
+    public function setClassReference(PHP_Depend_Code_TypeReference $classReference)
     {
-        $this->_type = $type;
+        $this->_classReference = $classReference;
     }
 
     /**
@@ -241,6 +243,32 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
     public function setVisibility($visibility)
     {
         fwrite(STDERR, 'Since 0.9.4 setVisibility() is deprecated.' . PHP_EOL);
+    }
+
+    /**
+     * Returns the type of this property. This method will return <b>null</b>
+     * for all scalar type, only class properties will have a type.
+     *
+     * @return PHP_Depend_Code_AbstractType
+     * @deprecated Since version 0.9.5, use getClass() instead.
+     */
+    public function getType()
+    {
+        fwrite(STDERR, 'Since 0.9.5 getType() is deprecated.' . PHP_EOL);
+        return $this->getClass();
+    }
+
+    /**
+     * Sets the type of this property.
+     *
+     * @param PHP_Depend_Code_AbstractType $type The property type.
+     *
+     * @return void
+     * @deprecated Since version 0.9.5, use setClassReference() instead.
+     */
+    public function setType(PHP_Depend_Code_AbstractType $type)
+    {
+        fwrite(STDERR, 'Since 0.9.5 setType() is deprecated.' . PHP_EOL);
     }
 
     // @codeCoverageIgnoreEnd

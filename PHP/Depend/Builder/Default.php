@@ -131,13 +131,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     private $_parameters = array();
 
     /**
-     * All generated {@link PHP_Depend_Code_Property} instances.
-     *
-     * @var array(PHP_Depend_Code_Property) $_properties
-     */
-    private $_properties = array();
-
-    /**
      * All generated {@link PHP_Depend_Code_TypeConstant} instances.
      *
      * @var array(PHP_Depend_Code_TypeConstant) $_typeConstants
@@ -487,12 +480,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         PHP_Depend_Util_Log::debug('Creating property "' . $name . '"');
 
         // Create new property instance.
-        $property = new PHP_Depend_Code_Property($name);
-
-        // Store local reference
-        $this->_properties[] = $property;
-
-        return $property;
+        return new PHP_Depend_Code_Property($name);
     }
 
     /**
@@ -529,6 +517,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param string $qualifiedName The qualified name of the referenced type.
      *
      * @return PHP_Depend_Code_TypeReference
+     * @since 0.9.5
      */
     public function buildTypeReference($qualifiedName)
     {
@@ -725,12 +714,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             }
             if ($method->getReturnType() === $class) {
                 $method->setReturnType($interface);
-            }
-        }
-
-        foreach ($this->_properties as $property) {
-            if ($property->getType() === $class) {
-                $property->setType($interface);
             }
         }
     }
