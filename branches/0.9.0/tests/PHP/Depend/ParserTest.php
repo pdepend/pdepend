@@ -277,9 +277,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectFileComment()
     {
         $packages = self::parseSource('coupling/class.php');
-        $this->assertEquals(4, $packages->count()); // default, +global, +spl & +standard
+        $this->assertEquals(3, $packages->count()); // default, +global, +spl
 
-        $packages->next();
         $packages->next();
         $packages->next();
 
@@ -778,26 +777,26 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                           ->getProperties();
 
         $this->assertEquals('$property1', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getType());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $this->assertNotNull($nodes->current()->getClass());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property2', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getType());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $this->assertNotNull($nodes->current()->getClass());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property3', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getType());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $this->assertNotNull($nodes->current()->getClass());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property4', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getType());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getType()->getName());
+        $this->assertNotNull($nodes->current()->getClass());
+        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property5', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
         $nodes->next();
         $this->assertEquals('$property6', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
     }
 
     /**
@@ -824,7 +823,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $property = $class->getProperties()->current();
         $this->assertType('PHP_Depend_Code_Property', $property);
 
-        $type = $property->getType();
+        $type = $property->getClass();
         $this->assertType('PHP_Depend_Code_Class', $type);
         $this->assertSame('Runtime', $type->getName());
     }
@@ -853,7 +852,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $property = $class->getProperties()->current();
         $this->assertType('PHP_Depend_Code_Property', $property);
 
-        $type = $property->getType();
+        $type = $property->getClass();
         $this->assertType('PHP_Depend_Code_Class', $type);
         $this->assertSame('Session', $type->getName());
     }
@@ -932,32 +931,32 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                           ->getProperties();
 
         $this->assertEquals('$property1', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
 
         $nodes->next();
 
         $this->assertEquals('$property2', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
 
         $nodes->next();
 
         $this->assertEquals('$property3', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
 
         $nodes->next();
 
         $this->assertEquals('$property4', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
 
         $nodes->next();
 
         $this->assertEquals('$property5', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
 
         $nodes->next();
 
         $this->assertEquals('$property6', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getType());
+        $this->assertNull($nodes->current()->getClass());
     }
 
     /**

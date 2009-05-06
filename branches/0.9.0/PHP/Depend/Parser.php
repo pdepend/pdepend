@@ -930,12 +930,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $parameter->setArray($parameterArray);
 
         if ($parameterType !== null) {
-            include_once 'PHP/Depend/Code/TypeReference.php';
-
-            $typeReference = new PHP_Depend_Code_TypeReference(
-                $this->_builder,
-                $parameterType
-            );
+            $typeReference = $this->_builder->buildTypeReference($parameterType);
             $parameter->setClassTypeReference($typeReference);
         }
 
@@ -1767,9 +1762,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         // Get type annotation
-        $type = $this->_parseVarAnnotation($property->getDocComment());
-        if ($type !== null) {
-            $property->setType($this->_builder->buildClassOrInterface($type));
+        $qualifiedName = $this->_parseVarAnnotation($property->getDocComment());
+        if ($qualifiedName !== null) {
+            $property->setClassReference(
+                $this->_builder->buildTypeReference($qualifiedName)
+            );
         }
     }
 
