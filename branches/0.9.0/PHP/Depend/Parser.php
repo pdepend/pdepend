@@ -930,13 +930,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $parameter->setArray($parameterArray);
 
         if ($parameterType !== null) {
-            include_once 'PHP/Depend/Code/TypeHolder.php';
+            include_once 'PHP/Depend/Code/TypeReference.php';
 
-            $typeHolder = new PHP_Depend_Code_TypeHolder(
+            $typeReference = new PHP_Depend_Code_TypeReference(
                 $this->_builder,
                 $parameterType
             );
-            $parameter->setClassTypeHolder($typeHolder);
+            $parameter->setClassTypeReference($typeReference);
         }
 
         // Check for a default value

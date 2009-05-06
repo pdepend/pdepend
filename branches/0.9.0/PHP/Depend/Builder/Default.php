@@ -524,6 +524,20 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new code type reference instance.
+     *
+     * @param string $qualifiedName The qualified name of the referenced type.
+     *
+     * @return PHP_Depend_Code_TypeReference
+     */
+    public function buildTypeReference($qualifiedName)
+    {
+        include_once 'PHP/Depend/Code/TypeReference.php';
+
+        return new PHP_Depend_Code_TypeReference($this, $qualifiedName);
+    }
+
+    /**
      * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
      * objects.
      *
