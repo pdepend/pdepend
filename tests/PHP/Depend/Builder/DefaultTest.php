@@ -380,26 +380,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
 
     /**
      * Tests that the default builder updates an existing reference for a
-     * property type.
-     *
-     * @return void
-     */
-    public function testBuildInterfaceForcesUpdatePropertyType()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-
-        $property = $builder->buildProperty('$bar', 0);
-        $type0    = $builder->buildClassOrInterface('PDepend');
-
-        $property->setType($type0);
-        $this->assertSame($type0, $property->getType());
-
-        $type1 = $builder->buildInterface('PDepend');
-        $this->assertSame($type1, $property->getType());
-    }
-
-    /**
-     * Tests that the default builder updates an existing reference for a
      * method return type.
      *
      * @return void
