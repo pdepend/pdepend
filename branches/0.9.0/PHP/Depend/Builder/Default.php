@@ -43,7 +43,7 @@
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id: Default.php 675 2009-03-05 07:40:28Z mapi $
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/BuilderI.php';
@@ -69,7 +69,7 @@ require_once 'PHP/Depend/Util/Type.php';
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 {

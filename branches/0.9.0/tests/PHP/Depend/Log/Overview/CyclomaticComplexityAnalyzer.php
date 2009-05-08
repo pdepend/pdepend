@@ -43,7 +43,7 @@
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
@@ -58,7 +58,7 @@ require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Log_Overview_CyclomaticComplexityAnalyzer 
     extends PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
