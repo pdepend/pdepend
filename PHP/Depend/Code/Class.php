@@ -205,15 +205,29 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function getDependencies()
     {
+        return new PHP_Depend_Code_NodeIterator(
+            $this->getUnfilteredRawDependencies()
+        );
+    }
+
+    /**
+     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
+     * objects this type depends on. This method is only for internal usage.
+     *
+     * @return array(PHP_Depend_Code_AbstractType)
+     * @access private
+     */
+    public function getUnfilteredRawDependencies()
+    {
         // No parent? Then use the parent implementation
         if ($this->_parentClass === null) {
-            return parent::getDependencies();
+            return parent::getUnfilteredRawDependencies();
         }
-        
+
         $dependencies   = $this->dependencies;
         $dependencies[] = $this->_parentClass;
 
-        return new PHP_Depend_Code_NodeIterator($dependencies);
+        return $dependencies;
     }
 
     /**
