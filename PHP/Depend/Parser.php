@@ -1795,9 +1795,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         // Get return annotation
-        $type = $this->_parseReturnAnnotation($callable->getDocComment());
-        if ($type !== null) {
-            $callable->setReturnType($this->_builder->buildClassOrInterface($type));
+        $qualifiedName = $this->_parseReturnAnnotation($callable->getDocComment());
+        if ($qualifiedName !== null) {
+            $callable->setReturnClassReference(
+                $this->_builder->buildClassOrInterfaceReference($qualifiedName)
+            );
         }
     }
 

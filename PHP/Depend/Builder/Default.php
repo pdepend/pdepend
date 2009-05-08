@@ -694,9 +694,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
                     $function->addExceptionType($interface);
                 }
             }
-            if ($function->getReturnType() === $class) {
-                $function->setReturnType($interface);
-            }
         }
 
         foreach ($this->methods as $method) {
@@ -711,9 +708,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
                     $method->removeExceptionType($class);
                     $method->addExceptionType($interface);
                 }
-            }
-            if ($method->getReturnType() === $class) {
-                $method->setReturnType($interface);
             }
         }
     }

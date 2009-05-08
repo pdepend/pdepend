@@ -72,12 +72,13 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     protected $dependencies = array();
 
     /**
-     * The return type for this callable. By default and for scalar types this
-     * will be <b>null</b>.
+     * A reference instance for the return value of this this callable. By
+     * default and for any scalar type this property is <b>null</b>.
      *
-     * @var PHP_Depend_Code_AbstractType $_returnType
+     * @var PHP_Depend_Code_ClassOrInterfaceReference $_returnClassReference
+     * @since 0.9.5
      */
-    private $_returnType = null;
+    private $_returnClassReference = null;
 
     /**
      * A list of all thrown exception types.
@@ -183,26 +184,33 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Returns the return type of this callable. By default and for scalar types
-     * this will be <b>null</b>.
+     * This method will return a class or interface instance that represents
+     * the return value of this callable. The returned value will be <b>null</b>
+     * if there is no return value or the return value is scalat.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return PHP_Depend_Code_ClassOrInterfaceReference
      */
-    public function getReturnType()
+    public function getReturnClass()
     {
-        return $this->_returnType;
+        if ($this->_returnClassReference === null) {
+            return null;
+        }
+        return $this->_returnClassReference->getType();
     }
 
     /**
-     * Sets the return type of this callable.
+     * This method can be used to set a reference instance for the declared
+     * function return type.
      *
-     * @param PHP_Depend_Code_AbstractType $returnType The return type of this.
+     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Holder
+     *        instance for the declared function return type.
      *
      * @return void
      */
-    public function setReturnType(PHP_Depend_Code_AbstractType $returnType)
-    {
-        $this->_returnType = $returnType;
+    public function setReturnClassReference(
+        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+    ) {
+        $this->_returnClassReference = $classReference;
     }
 
     /**
@@ -286,4 +294,45 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
 
         return $parameter;
     }
+
+    // DEPRECATED METHODS AND PROPERTIES
+    // @codeCoverageIgnoreStart
+
+    /**
+     * The return type for this callable. By default and for scalar types this
+     * will be <b>null</b>.
+     *
+     * @var PHP_Depend_Code_AbstractType $_returnType
+     * @deprecated Since version 0.9.5
+     */
+    private $_returnType = null;
+
+    /**
+     * Returns the return type of this callable. By default and for scalar types
+     * this will be <b>null</b>.
+     *
+     * @return PHP_Depend_Code_AbstractType
+     * @deprecated Since version 0.9.5, use getReturnValueClass() instead.
+     */
+    public function getReturnType()
+    {
+        fwrite(STDERR, 'Since 0.9.5 getReturnType() is deprecated.' . PHP_EOL);
+        return $this->_returnType;
+    }
+
+    /**
+     * Sets the return type of this callable.
+     *
+     * @param PHP_Depend_Code_AbstractType $returnType The return type of this.
+     *
+     * @return void
+     * @deprecated Since version 0.9.5, use setReturnValueClassReference() instead.
+     */
+    public function setReturnType(PHP_Depend_Code_AbstractType $returnType)
+    {
+        fwrite(STDERR, 'Since 0.9.5 setReturnType() is deprecated.' . PHP_EOL);
+        $this->_returnType = $returnType;
+    }
+
+    // @codeCoverageIgnoreEnd
 }
