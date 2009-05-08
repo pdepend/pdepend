@@ -143,16 +143,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     }
 
     /**
-     * Returns an iterator with all child classes.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getChildClasses()
-    {
-        return new PHP_Depend_Code_NodeIterator($this->children);
-    }
-
-    /**
      * Returns all properties for this class.
      *
      * @return PHP_Depend_Code_NodeIterator
