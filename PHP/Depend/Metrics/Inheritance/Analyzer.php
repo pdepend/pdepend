@@ -169,13 +169,21 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     {
         $this->fireStartClass($class);
         
-        $this->_calculateNOC($class);
+        $this->_calculateNODC($class);
         $this->_calculateHIT($class);
 
         $this->fireEndClass($class);
     }
 
-    private function _calculateNOC(PHP_Depend_Code_Class $class)
+    /**
+     * Calculates the number of derived classes.
+     *
+     * @param PHP_Depend_Code_Class $class The current class node.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    private function _calculateNODC(PHP_Depend_Code_Class $class)
     {
         $uuid = $class->getUUID();
         if (isset($this->_derivedClasses[$uuid]) === false) {
@@ -211,8 +219,8 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
             $parent = $parent->getParentClass();
         }
 
-        if (isset($this->_rootClasses[$uuid]) === false ||
-            $this->_rootClasses[$uuid] < $dit
+        if (isset($this->_rootClasses[$uuid]) === false 
+            || $this->_rootClasses[$uuid] < $dit
         ) {
             $this->_rootClasses[$uuid] = $dit;
         }

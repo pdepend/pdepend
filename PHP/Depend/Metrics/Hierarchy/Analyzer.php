@@ -247,13 +247,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             }
             $this->_noneLeafs[$parentClass->getUUID()] = true;
         }
-/*
-        if ($class->getChildClasses()->count() === 0) {
-            ++$this->_leafs;
-        } else if ($class->getParentClass() === null) {
-            ++$this->_roots;
-        }
-*/
+
         // Get class dit value
         $dit = $this->getClassDIT($class);
         // Store node metric
