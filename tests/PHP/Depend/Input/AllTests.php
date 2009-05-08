@@ -43,7 +43,7 @@
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 if (defined('PHPUnit_MAIN_METHOD') === false) {
@@ -68,7 +68,7 @@ require_once dirname(__FILE__) . '/IteratorTest.php';
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Input_AllTests
 {
