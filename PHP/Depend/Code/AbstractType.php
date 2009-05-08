@@ -71,14 +71,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     protected $dependencies = array();
 
     /**
-     * List of {@link PHP_Depend_Code_AbstractType} objects that extend or implement
-     * this type.
-     *
-     * @var array(PHP_Depend_Code_AbstractType) $children
-     */
-    protected $children = array();
-
-    /**
      * The parent package for this class.
      *
      * @var PHP_Depend_Code_Package $_package
@@ -322,35 +314,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list
             unset($this->dependencies[$i]);
-            // Remove this as child type
-            $type->removeChildType($this);
-        }
-    }
-
-    /**
-     * Returns an iterator with all child types for this type.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getChildTypes()
-    {
-        return new PHP_Depend_Code_NodeIterator($this->children);
-    }
-    
-    /**
-     * Removes the given type from the list of known children.
-     *
-     * @param PHP_Depend_Code_AbstractType $type The child type instance.
-     *
-     * @return void
-     */
-    public function removeChildType(PHP_Depend_Code_AbstractType $type)
-    {
-        if (($i = array_search($type, $this->children, true)) !== false) {
-            // First remove this child
-            unset($this->children[$i]);
-            // Try to remove this as dependency
-            $type->removeDependency($this);
         }
     }
 
