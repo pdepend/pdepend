@@ -47,6 +47,8 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
+require_once 'PHP/Depend/Code/ClassOrInterfaceReferenceIterator.php';
 
 /**
  * Abstract base class for callable objects.
@@ -72,7 +74,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     protected $dependencies = array();
 
     /**
-     * A reference instance for the return value of this this callable. By
+     * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
      * @var PHP_Depend_Code_ClassOrInterfaceReference $_returnClassReference
@@ -81,11 +83,12 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     private $_returnClassReference = null;
 
     /**
-     * A list of all thrown exception types.
+     * List of all exceptions classes referenced by this callable.
      *
-     * @var array(PHP_Depend_Code_AbstractType) $_exceptionTypes
+     * @var array(PHP_Depend_Code_ClassOrInterfaceReference)
+     * @since 0.9.5
      */
-    private $_exceptionTypes = array();
+    private $_exceptionClassReferences = array();
 
     /**
      * List of method/function parameters.
@@ -216,54 +219,32 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Returns an iterator with all thrown exception types.
+     * Adds a reference holder for a thrown exception class or interface to
+     * this callable.
+     *
+     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference A
+     *        reference instance for a thrown exception.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function addExceptionClassReference(
+        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+    ) {
+        $this->_exceptionClassReferences[] = $classReference;
+    }
+
+    /**
+     * Returns an iterator with thrown exception {@link PHP_Depend_Code_AbstractType}
+     * instances.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
-    public function getExceptionTypes()
+    public function getExceptionClasses()
     {
-        return new PHP_Depend_Code_NodeIterator($this->_exceptionTypes);
-    }
-
-    /**
-     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
-     * objects this function may throw. This method is only for internal usage.
-     *
-     * @return array(PHP_Depend_Code_AbstractType)
-     * @access private
-     */
-    public function getUnfilteredRawExceptionTypes()
-    {
-        return $this->_exceptionTypes;
-    }
-
-    /**
-     * Adds an exception to the list of thrown exception types.
-     *
-     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
-     *
-     * @return void
-     */
-    public function addExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
-    {
-        if (in_array($exceptionType, $this->_exceptionTypes, true) === false) {
-            $this->_exceptionTypes[] = $exceptionType;
-        }
-    }
-
-    /**
-     * Removes an exception from the list of thrown exception types.
-     *
-     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
-     *
-     * @return void
-     */
-    public function removeExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
-    {
-        $index = array_search($exceptionType, $this->_exceptionTypes, true);
-        if ($index !== false) {
-            unset($this->_exceptionTypes[$index]);
-        }
+        return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
+            $this->_exceptionClassReferences
+        );
     }
 
     /**
@@ -334,6 +315,76 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     {
         fwrite(STDERR, 'Since 0.9.5 setReturnType() is deprecated.' . PHP_EOL);
         $this->_returnType = $returnType;
+    }
+
+    /**
+     * A list of all thrown exception types.
+     *
+     * @var array(PHP_Depend_Code_AbstractType) $_exceptionTypes
+     * @deprecated Since version 0.9.5
+     */
+    private $_exceptionTypes = array();
+
+    /**
+     * Returns an iterator with all thrown exception types.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     * @deprecated Since version 0.9.5, use getExceptionClasses() instead.
+     */
+    public function getExceptionTypes()
+    {
+        fwrite(STDERR, 'Since 0.9.5 getExceptionTypes() is deprecated.' . PHP_EOL);
+        return new PHP_Depend_Code_NodeIterator($this->_exceptionTypes);
+    }
+
+    /**
+     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
+     * objects this function may throw. This method is only for internal usage.
+     *
+     * @return array(PHP_Depend_Code_AbstractType)
+     * @access private
+     * @deprecated Since version 0.9.5
+     */
+    public function getUnfilteredRawExceptionTypes()
+    {
+        fwrite(
+            STDERR,
+            'Since 0.9.5 getUnfilteredRawExceptionTypes() is deprecated.' . PHP_EOL
+        );
+        return $this->_exceptionTypes;
+    }
+
+    /**
+     * Adds an exception to the list of thrown exception types.
+     *
+     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
+     *
+     * @return void
+     * @deprecated Since version 0.9.5, use addExceptionClass() instead.
+     */
+    public function addExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
+    {
+        fwrite(STDERR, 'Since 0.9.5 addExceptionType() is deprecated.' . PHP_EOL);
+        if (in_array($exceptionType, $this->_exceptionTypes, true) === false) {
+            $this->_exceptionTypes[] = $exceptionType;
+        }
+    }
+
+    /**
+     * Removes an exception from the list of thrown exception types.
+     *
+     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
+     *
+     * @return void
+     * @deprecated Since version 0.9.5
+     */
+    public function removeExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
+    {
+        fwrite(STDERR, 'Since 0.9.5 removeExceptionType() is deprecated.' . PHP_EOL);
+        $index = array_search($exceptionType, $this->_exceptionTypes, true);
+        if ($index !== false) {
+            unset($this->_exceptionTypes[$index]);
+        }
     }
 
     // @codeCoverageIgnoreEnd
