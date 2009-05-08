@@ -535,15 +535,15 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(3, $nodes->count());
 
         $this->assertEquals('func1', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
         $nodes->next();
         $this->assertEquals('func2', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnType());
-        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnType()->getName());
+        $this->assertNotNull($nodes->current()->getReturnClass());
+        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
         $nodes->next();
         $this->assertEquals('func3', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnType());
-        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnType()->getName());
+        $this->assertNotNull($nodes->current()->getReturnClass());
+        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
     }
 
     /**
@@ -596,19 +596,19 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
     }
 
     /**
@@ -643,15 +643,15 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(3, $nodes->count());
 
         $this->assertEquals('__construct', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
         $nodes->next();
         $this->assertEquals('method1', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnType());
-        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnType()->getName());
+        $this->assertNotNull($nodes->current()->getReturnClass());
+        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
         $nodes->next();
         $this->assertEquals('method2', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnType());
-        $this->assertEquals('SplSubject', $nodes->current()->getReturnType()->getName());
+        $this->assertNotNull($nodes->current()->getReturnClass());
+        $this->assertEquals('SplSubject', $nodes->current()->getReturnClass()->getName());
     }
 
     /**
@@ -708,19 +708,19 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
         $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
-        $this->assertNull($nodes->current()->getReturnType());
+        $this->assertNull($nodes->current()->getReturnClass());
     }
 
     /**
@@ -881,7 +881,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $method = $class->getMethods()->current();
         $this->assertType('PHP_Depend_Code_Method', $method);
 
-        $type = $method->getReturnType();
+        $type = $method->getReturnClass();
         $this->assertType('PHP_Depend_Code_Class', $type);
         $this->assertSame('Runtime', $type->getName());
     }
@@ -910,7 +910,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $method = $class->getMethods()->current();
         $this->assertType('PHP_Depend_Code_Method', $method);
 
-        $type = $method->getReturnType();
+        $type = $method->getReturnClass();
         $this->assertType('PHP_Depend_Code_Class', $type);
         $this->assertSame('Session', $type->getName());
     }
@@ -1281,7 +1281,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(1, $packages->count());
 
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(6, $classes->count());
+        $this->assertEquals(5, $classes->count());
 
         $testClass = null;
         foreach ($classes as $class) {
@@ -1426,6 +1426,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $this->assertNotNull($expectedToken);
             $this->assertEquals($expectedToken[0], $token->type);
         }
+
+        $this->assertSame(0, count($expected));
     }
 
     /**

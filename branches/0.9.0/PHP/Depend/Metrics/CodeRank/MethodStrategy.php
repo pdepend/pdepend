@@ -97,7 +97,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
         // Get owner type
         $type = $method->getParent();
 
-        if (($depType = $method->getReturnType()) !== null) {
+        if (($depType = $method->getReturnClass()) !== null) {
             $this->_processType($type, $depType);
         }
         foreach ($method->getExceptionTypes() as $depType) {
