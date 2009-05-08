@@ -308,13 +308,15 @@ class PHP_Depend_Code_Parameter
      * Sets the type holder for this parameter. This method will only set its
      * internal state on the first call.
      *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference The parameter type holder.
+     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Holder
+     *        for the declared parameter type.
      *
      * @return void
      * @since 0.9.5
      */
-    public function setClassReference(PHP_Depend_Code_ClassOrInterfaceReference $classReference)
-    {
+    public function setClassReference(
+        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+    ) {
         $this->_classReference = $classReference;
     }
 
