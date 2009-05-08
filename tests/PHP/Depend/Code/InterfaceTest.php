@@ -64,58 +64,6 @@ require_once 'PHP/Depend/Code/Interface.php';
 class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTest
 {
     /**
-     * Tests that {@link PHP_Depend_Code_Interface::getImplementingClasses()}
-     * only returns associated classes and no interfaces.
-     *
-     * @return void
-     */
-    public function testGetImplementingClassesReturnsOnlyClasses()
-    {
-        $i0 = new PHP_Depend_Code_Interface('i0');
-        $i1 = new PHP_Depend_Code_Interface('i1');
-        $i2 = new PHP_Depend_Code_Interface('i2');
-        $c0 = new PHP_Depend_Code_Class('c0');
-        $c1 = new PHP_Depend_Code_Class('c1');
-        
-        $i1->addDependency($i0);
-        $i2->addDependency($i0);
-        $c0->addDependency($i0);
-        $c1->addDependency($i0);
-        
-        $classes = $i0->getImplementingClasses();
-        $this->assertEquals(2, $classes->count());
-        $this->assertSame($c0, $classes->current());
-        $classes->next();
-        $this->assertSame($c1, $classes->current());
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Code_Interface::getChildInterfaces()}
-     * only returns associated interfaces and no classes.
-     *
-     * @return void
-     */
-    public function testGetChildInterfaces()
-    {
-        $i0 = new PHP_Depend_Code_Interface('i0');
-        $i1 = new PHP_Depend_Code_Interface('i1');
-        $i2 = new PHP_Depend_Code_Interface('i2');
-        $c0 = new PHP_Depend_Code_Class('c0');
-        $c1 = new PHP_Depend_Code_Class('c1');
-
-        $i1->addDependency($i0);
-        $i2->addDependency($i0);
-        $c0->addDependency($i0);
-        $c1->addDependency($i0);
-        
-        $interfaces = $i0->getChildInterfaces();
-        $this->assertEquals(2, $interfaces->count());
-        $this->assertSame($i1, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($i2, $interfaces->current());
-    }
-    
-    /**
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
@@ -177,7 +125,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
         $this->assertFalse($interfsA->isSubtypeOf($interfsB));
         
         // TODO: This should be fixed in the code and throw an exception.
-        $classC->addChildType($interfsA); // interface A extends C {}
+        $interfsA->addDependency($classC); // interface A extends C {}
         $this->assertFalse($interfsA->isSubtypeOf($classC));
     }
     
@@ -195,11 +143,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
         $interfsE = new PHP_Depend_Code_Interface('E');
         $interfsF = new PHP_Depend_Code_Interface('F');
         
-        $interfsA->addChildType($interfsB); // interface B extends A, C {}
-        $interfsC->addChildType($interfsB); // interface B extends A, C {}
-        $interfsD->addChildType($interfsC); // interface C extends D, E {}
-        $interfsE->addChildType($interfsC); // interface C extends D, E {}
-        $interfsF->addChildType($interfsA); // interface A extends F
+        $interfsB->addDependency($interfsA); // interface B extends A, C {}
+        $interfsB->addDependency($interfsC); // interface B extends A, C {}
+        $interfsC->addDependency($interfsD); // interface C extends D, E {}
+        $interfsC->addDependency($interfsE); // interface C extends D, E {}
+        $interfsA->addDependency($interfsF); // interface A extends F
         
         $this->assertTrue($interfsA->isSubtypeOf($interfsA));
         $this->assertFalse($interfsA->isSubtypeOf($interfsB));

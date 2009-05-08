@@ -140,7 +140,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     public function setParentClass(PHP_Depend_Code_Class $parentClass)
     {
         $this->_parentClass = $parentClass;
-        //$this->_parentClass->addChildType($this);
     }
 
     /**

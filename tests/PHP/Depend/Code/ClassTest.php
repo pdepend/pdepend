@@ -278,69 +278,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
     }
     
     /**
-     * Tests that {@link PHP_Depend_Code_Class::addDependency()} also adds the
-     * dependent classes as child types.
-     *
-     * @return void
-     */
-    public function testAddDependencyAlsoAddsChildType()
-    {
-        $a = new PHP_Depend_Code_Class('a');
-        $b = new PHP_Depend_Code_Class('b');
-        $c = new PHP_Depend_Code_Class('c');
-        $d = new PHP_Depend_Code_Class('d');
-        
-        $b->addDependency($a);
-        $c->addDependency($a);
-        
-        $d->addDependency($c);
-        
-        $typesA = $a->getChildTypes();
-        $this->assertEquals(2, $typesA->count());
-        $this->assertSame($b, $typesA->current());
-        $typesA->next();
-        $this->assertSame($c, $typesA->current());
-
-        $typesC = $c->getChildTypes();
-        $this->assertEquals(1, $typesC->count());
-        $this->assertSame($d, $typesC->current());
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Code_Class::removeDependency()} also removes
-     * the dependent child type.
-     *
-     * @return void
-     */
-    public function testRemoveDependencyAlsoRemovesChildType()
-    {
-        $a = new PHP_Depend_Code_Class('a');
-        $b = new PHP_Depend_Code_Class('b');
-        
-        $a->addDependency($b);
-        $this->assertEquals(1, $b->getChildTypes()->count());
-        $a->removeDependency($b);
-        $this->assertEquals(0, $b->getChildTypes()->count());
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Code_Class::removeChildType()} also removes
-     * the dependency instance.
-     *
-     * @return void
-     */
-    public function testRemoveChildTypeAlsoRemovesDependency()
-    {
-        $a = new PHP_Depend_Code_Class('a');
-        $b = new PHP_Depend_Code_Class('b');
-        
-        $b->addDependency($a);
-        $this->assertEquals(1, $b->getDependencies()->count());
-        $a->removeChildType($b);
-        $this->assertEquals(0, $b->getDependencies()->count());
-    }
-    
-    /**
      * Tests the remove constant method.
      *
      * @return void
