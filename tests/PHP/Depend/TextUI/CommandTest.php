@@ -239,7 +239,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $function = $package->getFunctions()->current();
         $this->assertType('PHP_Depend_Code_Function', $function);
         $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(0, $function->getExceptionTypes()->count());
+        $this->assertEquals(0, $function->getExceptionClasses()->count());
 
         $code->next();
 
