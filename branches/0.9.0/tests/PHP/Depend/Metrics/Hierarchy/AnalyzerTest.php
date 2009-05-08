@@ -75,7 +75,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
     public function testAnalyzeProjectMetrics()
     {
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
-        $analyzer->analyze(self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php'));
+        $analyzer->analyze(self::parseSource('metrics/hierarchy/project_metrics.php'));
 
         $project = $analyzer->getProjectMetrics();
 

@@ -123,16 +123,16 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all root classes within the analyzed source code.
      *
-     * @var integer $_roots
+     * @var array(string=>boolean) $_roots
      */
-    private $_roots = 0;
+    private $_roots = array();
 
     /**
-     * Number of all leaf classes within the analyzed source code
+     * Number of all none leaf classes within the analyzed source code
      *
-     * @var integer $_leafs
+     * @var array(string=>boolean) $_noneLeafs
      */
-    private $_leafs = 0;
+    private $_noneLeafs = array();
 
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
@@ -199,8 +199,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         return array(
             'clsa'     =>  $this->_clsa,
             'clsc'     =>  $this->_cls - $this->_clsa,
-            'roots'    =>  $this->_roots,
-            'leafs'    =>  $this->_leafs,
+            'roots'    =>  count($this->_roots),
+            'leafs'    =>  $this->_cls - count($this->_noneLeafs),
             'maxDIT'   =>  $this->_maxDIT,
         );
     }
@@ -240,12 +240,20 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             ++$this->_clsa;
         }
 
+        $parentClass = $class->getParentClass();
+        if ($parentClass !== null) {
+            if ($parentClass->getParentClass() === null) {
+                $this->_roots[$parentClass->getUUID()] = true;
+            }
+            $this->_noneLeafs[$parentClass->getUUID()] = true;
+        }
+/*
         if ($class->getChildClasses()->count() === 0) {
             ++$this->_leafs;
         } else if ($class->getParentClass() === null) {
             ++$this->_roots;
         }
-
+*/
         // Get class dit value
         $dit = $this->getClassDIT($class);
         // Store node metric
