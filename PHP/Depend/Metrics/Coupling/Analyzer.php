@@ -159,7 +159,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $this->fireStartFunction($function);
 
         $fanouts = array();
-        if (($type = $function->getReturnType()) !== null) {
+        if (($type = $function->getReturnClass()) !== null) {
             $fanouts[] = $type;
             ++$this->_fanout;
         }
@@ -195,7 +195,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $parent = $method->getParent();
 
         $fanouts = array();
-        if (($type = $method->getReturnType()) !== null) {
+        if (($type = $method->getReturnClass()) !== null) {
             if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
                 $fanouts[] = $type;
                 ++$this->_fanout;
