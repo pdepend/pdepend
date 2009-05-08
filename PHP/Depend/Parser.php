@@ -1788,10 +1788,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Get all @throws Types
         $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
-        // Append all exception types
-        foreach ($throws as $type) {
-            $exceptionType = $this->_builder->buildClassOrInterface($type);
-            $callable->addExceptionType($exceptionType);
+        foreach ($throws as $qualifiedName) {
+            $callable->addExceptionClassReference(
+                $this->_builder->buildClassOrInterfaceReference($qualifiedName)
+            );
         }
 
         // Get return annotation

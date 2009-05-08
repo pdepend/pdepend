@@ -561,14 +561,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(3, $nodes->count());
 
         $this->assertEquals('func1', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionTypes();
+        $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(1, $ex->count());
         $this->assertEquals('RuntimeException', $ex->current()->getName());
 
         $nodes->next();
 
         $this->assertEquals('func2', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionTypes();
+        $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(2, $ex->count());
         $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
         $ex->next();
@@ -577,7 +577,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $nodes->next();
 
         $this->assertEquals('func3', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionTypes();
+        $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(0, $ex->count());
     }
 
@@ -595,19 +595,19 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                           ->getFunctions();
 
         $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
         $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
         $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
         $this->assertNull($nodes->current()->getReturnClass());
     }
 
@@ -671,14 +671,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(3, $nodes->count());
 
         $this->assertEquals('__construct', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionTypes();
+        $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(1, $ex->count());
         $this->assertEquals('RuntimeException', $ex->current()->getName());
 
         $nodes->next();
 
         $this->assertEquals('method1', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionTypes();
+        $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(2, $ex->count());
         $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
         $ex->next();
@@ -687,7 +687,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $nodes->next();
 
         $this->assertEquals('method2', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionTypes();
+        $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(0, $ex->count());
     }
 
@@ -707,19 +707,19 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                           ->getMethods();
 
         $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
         $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
         $this->assertNull($nodes->current()->getReturnClass());
 
         $nodes->next();
 
         $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionTypes()->count());
+        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
         $this->assertNull($nodes->current()->getReturnClass());
     }
 

@@ -100,7 +100,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
         if (($depType = $method->getReturnClass()) !== null) {
             $this->_processType($type, $depType);
         }
-        foreach ($method->getExceptionTypes() as $depType) {
+        foreach ($method->getExceptionClasses() as $depType) {
             $this->_processType($type, $depType);
         }
         foreach ($method->getDependencies() as $depType) {

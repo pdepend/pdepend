@@ -174,7 +174,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         
         $this->assertNotNull($function);
         $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(0, $function->getExceptionTypes()->count());
+        $this->assertEquals(0, $function->getExceptionClasses()->count());
     }
     
     /**

@@ -163,7 +163,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             $fanouts[] = $type;
             ++$this->_fanout;
         }
-        foreach ($function->getExceptionTypes() as $type) {
+        foreach ($function->getExceptionClasses() as $type) {
             if (in_array($type, $fanouts, true) === false) {
                 $fanouts[] = $type;
                 ++$this->_fanout;
@@ -201,7 +201,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                 ++$this->_fanout;
             }
         }
-        foreach ($method->getExceptionTypes() as $type) {
+        foreach ($method->getExceptionClasses() as $type) {
             if (in_array($type, $fanouts, true) === true) {
                 continue;
             }
