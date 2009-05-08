@@ -52,6 +52,7 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once dirname(__FILE__) . '/ClassOrInterfaceReferenceTest.php';
 require_once dirname(__FILE__) . '/ClassTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
@@ -97,7 +98,8 @@ class PHP_Depend_Code_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
         
         $suite->addTest(PHP_Depend_Code_Filter_AllTests::suite());
-        
+
+        $suite->addTestSuite('PHP_Depend_Code_ClassOrInterfaceReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
