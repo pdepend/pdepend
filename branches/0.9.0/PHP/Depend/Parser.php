@@ -930,8 +930,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $parameter->setArray($parameterArray);
 
         if ($parameterType !== null) {
-            $typeReference = $this->_builder->buildTypeReference($parameterType);
-            $parameter->setClassTypeReference($typeReference);
+            $parameter->setClassReference(
+                $this->_builder->buildClassOrInterfaceReference($parameterType)
+            );
         }
 
         // Check for a default value
@@ -1765,7 +1766,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $qualifiedName = $this->_parseVarAnnotation($property->getDocComment());
         if ($qualifiedName !== null) {
             $property->setClassReference(
-                $this->_builder->buildTypeReference($qualifiedName)
+                $this->_builder->buildClassOrInterfaceReference($qualifiedName)
             );
         }
     }

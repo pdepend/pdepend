@@ -49,10 +49,10 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Parameter.php';
-require_once 'PHP/Depend/Code/TypeReference.php';
 require_once 'PHP/Depend/Code/Value.php';
 
 /**
@@ -134,10 +134,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
-        $typeReference = $this->getMock('PHP_Depend_Code_TypeReference', array(), array(), '', false);
+        $classReference = $this->getMock('PHP_Depend_Code_ClassOrInterfaceReference', array(), array(), '', false);
 
         $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClassTypeReference($typeReference);
+        $parameter->setClassReference($classReference);
 
         $this->assertFalse($parameter->allowsNull());
     }
@@ -153,10 +153,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
         $value = new PHP_Depend_Code_Value();
         $value->setValue(null);
 
-        $typeReference = $this->getMock('PHP_Depend_Code_TypeReference', array(), array(), '', false);
+        $classReference = $this->getMock('PHP_Depend_Code_ClassOrInterfaceReference', array(), array(), '', false);
 
         $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClassTypeReference($typeReference);
+        $parameter->setClassReference($classReference);
         $parameter->setValue($value);
 
         $this->assertTrue($parameter->allowsNull());
@@ -199,16 +199,16 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testParameterReturnsExpectedTypeFromTypeReference()
+    public function testParameterReturnsExpectedTypeFromClassOrInterfaceReference()
     {
         $class     = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
-        $reference = $this->getMock('PHP_Depend_Code_TypeReference', array(), array(), '', false);
+        $reference = $this->getMock('PHP_Depend_Code_ClassOrInterfaceReference', array(), array(), '', false);
         $reference->expects($this->once())
             ->method('getType')
             ->will($this->returnValue($class));
 
         $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClassTypeReference($reference);
+        $parameter->setClassReference($reference);
 
         $this->assertSame($class, $parameter->getClass());
     }
@@ -218,7 +218,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testParameterReturnNullForTypeWhenNoTypeReferenceWasSet()
+    public function testParameterReturnNullForTypeWhenNoClassOrInterfaceReferenceWasSet()
     {
         $parameter = new PHP_Depend_Code_Parameter('foo');
         $this->assertNull($parameter->getClass());
