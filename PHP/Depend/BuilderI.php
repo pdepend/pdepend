@@ -86,6 +86,16 @@ interface PHP_Depend_BuilderI
     function buildClassOrInterface($name);
 
     /**
+     * Builds a new code type reference instance.
+     *
+     * @param string $qualifiedName The qualified name of the referenced type.
+     *
+     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @since 0.9.5
+     */
+    function buildClassOrInterfaceReference($qualifiedName);
+
+    /**
      * Builds a new code class instance.
      *
      * @param string $name The class name.
@@ -93,6 +103,16 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_Class The created class object.
      */
     function buildClass($name);
+
+    /**
+     * Builds a new code type reference instance.
+     *
+     * @param string $qualifiedName The qualified name of the referenced type.
+     *
+     * @return PHP_Depend_Code_ClassReference
+     * @since 0.9.5
+     */
+    function buildClassReference($qualifiedName);
 
     /**
      * Builds a new closure instance.
@@ -163,14 +183,4 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_TypeConstant The created constant object.
      */
     function buildTypeConstant($name);
-
-    /**
-     * Builds a new code type reference instance.
-     *
-     * @param string $qualifiedName The qualified name of the referenced type.
-     *
-     * @return PHP_Depend_Code_ClassOrInterfaceReference
-     * @since 0.9.5
-     */
-    function buildClassOrInterfaceReference($qualifiedName);
 }
