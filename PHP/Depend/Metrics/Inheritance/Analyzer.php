@@ -168,16 +168,28 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->fireStartClass($class);
-
-        // Count all derived classes
-        $this->_derivedClasses[] = $class->getChildTypes()->count();
-
-        // Is this a root class?
-        if ($class->getParentClass() === null) {
-            $this->_rootClasses[] = $this->_calculateHIT($class);
-        }
+        
+        $this->_calculateNOC($class);
+        $this->_calculateHIT($class);
 
         $this->fireEndClass($class);
+    }
+
+    private function _calculateNOC(PHP_Depend_Code_Class $class)
+    {
+        $uuid = $class->getUUID();
+        if (isset($this->_derivedClasses[$uuid]) === false) {
+            $this->_derivedClasses[$uuid] = 0;
+        }
+
+        $parentClass = $class->getParentClass();
+        if ($parentClass !== null) {
+            $uuid = $parentClass->getUUID();
+            if (isset($this->_derivedClasses[$uuid]) === false) {
+                $this->_derivedClasses[$uuid] = 0;
+            }
+            ++$this->_derivedClasses[$uuid];
+        }
     }
 
     /**
@@ -185,21 +197,24 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
      *
-     * @return integer
+     * @return void
      */
     private function _calculateHIT(PHP_Depend_Code_Class $class)
     {
-        $childTypes = $class->getChildTypes();
-        if ($childTypes->count() === 0) {
-            return 0;
+        $uuid = $class->getUUID();
+        $dit  = 0;
+
+        $parent = $class->getParentClass();
+        while ($parent !== null) {
+            ++$dit;
+            $uuid   = $parent->getUUID();
+            $parent = $parent->getParentClass();
         }
 
-        $depth = 0;
-        foreach ($childTypes as $childType) {
-            if (($childDepth = $this->_calculateHIT($childType)) > $depth) {
-                $depth = $childDepth;
-            }
+        if (isset($this->_rootClasses[$uuid]) === false ||
+            $this->_rootClasses[$uuid] < $dit
+        ) {
+            $this->_rootClasses[$uuid] = $dit;
         }
-        return $depth + 1;
     }
 }
