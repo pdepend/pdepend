@@ -42,7 +42,7 @@
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id: DefaultTest.php 675 2009-03-05 07:40:28Z mapi $
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
@@ -59,7 +59,7 @@ require_once 'PHP/Depend/Code/File.php';
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
 {
