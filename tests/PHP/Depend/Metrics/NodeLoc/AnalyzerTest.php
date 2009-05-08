@@ -113,7 +113,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
             $expected = $expectedValues[$function->getName()];
             $actual   = $analyzer->getNodeMetrics($function);
 
-            $this->assertEquals($expected, $actual, 'Function: ', $function->getName());
+            $this->assertEquals($expected, $actual, 'Function: ' . $function->getName());
 
             unset($expectedValues[$function->getName()]);
         }
