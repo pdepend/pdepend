@@ -306,8 +306,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
         if (array_search($type, $this->dependencies, true) === false) {
             // Store type dependency
             $this->dependencies[] = $type;
-            // Add this as child type
-            $type->addChildType($this);
         }
     }
 
@@ -338,25 +336,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     {
         return new PHP_Depend_Code_NodeIterator($this->children);
     }
-
-    /**
-     * Adds a type instance that extends or implements this type.
-     *
-     * @param PHP_Depend_Code_AbstractType $type The child type instance.
-     *
-     * @return PHP_Depend_Code_AbstractType
-     */
-    public function addChildType(PHP_Depend_Code_AbstractType $type)
-    {
-        if (array_search($type, $this->children, true) === false) {
-            // First add the type as child
-            $this->children[] = $type;
-            // Try to add this as dependency...
-            $type->addDependency($this);
-        }
-        return $type;
-    }
-
+    
     /**
      * Removes the given type from the list of known children.
      *

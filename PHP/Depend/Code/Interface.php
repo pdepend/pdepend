@@ -81,41 +81,6 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
     }
 
     /**
-     * Returns an iterator with all implementing classes.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     * @todo TODO: Should we return all implementing classes? This would include
-     *             all classes that extend a implementing classes and all classes
-     *             that implement a child interface.
-     */
-    public function getImplementingClasses()
-    {
-        $classes = array();
-        foreach ($this->children as $child) {
-            if ($child instanceof PHP_Depend_Code_Class) {
-                $classes[] = $child;
-            }
-        }
-        return new PHP_Depend_Code_NodeIterator($classes);
-    }
-
-    /**
-     * Returns an iterator with all child interfaces.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getChildInterfaces()
-    {
-        $interfaces = array();
-        foreach ($this->children as $child) {
-            if ($child instanceof PHP_Depend_Code_Interface) {
-                $interfaces[] = $child;
-            }
-        }
-        return new PHP_Depend_Code_NodeIterator($interfaces);
-    }
-
-    /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
      * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
