@@ -230,22 +230,21 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $classA = new PHP_Depend_Code_Class('A');
         $classB = new PHP_Depend_Code_Class('B');
         $classC = new PHP_Depend_Code_Class('C');
+
+        $interfsB->addDependency($interfsA); // interface B extends A {}
+        $interfsC->addDependency($interfsA); // interface C extends A {}
+        $interfsD->addDependency($interfsB); // interface D extends B, E
+        $interfsD->addDependency($interfsE); // interface D extends B, E
+        $interfsE->addDependency($interfsF); // interface E extends F
         
-        $interfsA->addChildType($interfsB); // interface B extends A {}
-        $interfsA->addChildType($interfsC); // interface C extends A {}
-        $interfsB->addChildType($interfsD); // interface D extends B, E
-        $interfsE->addChildType($interfsD); // interface D extends B, E
-        $interfsF->addChildType($interfsE); // interface E extends F
-        
-        $interfsE->addChildType($classA); // class A implements E, C {}
-        $interfsC->addChildType($classA); // class A implements E, C {}
-        
-        $interfsD->addChildType($classB); // class B extends C implements D, A {}
-        $interfsA->addChildType($classB); // class B extends C implements D, A {}
-        
-        $interfsC->addChildType($classC); // class C implements C {}
-        
-        $classC->addChildType($classB); // class B extends C implements D, A {}
+        $classA->addDependency($interfsE); // class A implements E, C {}
+        $classA->addDependency($interfsC); // class A implements E, C {}
+
+        $classB->addDependency($interfsD); // class B extends C implements D, A {}
+        $classB->addDependency($interfsA); // class B extends C implements D, A {}
+        $classB->setParentClass($classC);  // class B extends C implements D, A {}
+
+        $classC->addDependency($interfsC); // class C implements C {}
         
         $interfaces = $classA->getInterfaces();
         $this->assertEquals(4, $interfaces->count());
@@ -325,37 +324,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
     }
     
     /**
-     * Tests that {@link PHP_Depend_Code_Class::addChildType()} also adds the
-     * dependent classes as dependencies.
-     *
-     * @return void
-     */
-    public function testAddChildTypeAlsoAddsDependency()
-    {
-        $a = new PHP_Depend_Code_Class('a');
-        $b = new PHP_Depend_Code_Class('b');
-        $c = new PHP_Depend_Code_Class('c');
-        $d = new PHP_Depend_Code_Class('d');
-        
-        $a->addChildType($b);
-        $a->addChildType($c);
-        
-        $c->addChildType($d);
-        
-        $depB = $b->getDependencies();
-        $this->assertEquals(1, $depB->count());
-        $this->assertSame($a, $depB->current());
-        
-        $depC = $c->getDependencies();
-        $this->assertEquals(1, $depC->count());
-        $this->assertSame($a, $depC->current());
-        
-        $depD = $d->getDependencies();
-        $this->assertEquals(1, $depD->count());
-        $this->assertSame($c, $depD->current());
-    }
-    
-    /**
      * Tests that {@link PHP_Depend_Code_Class::removeChildType()} also removes
      * the dependency instance.
      *
@@ -366,7 +334,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $a = new PHP_Depend_Code_Class('a');
         $b = new PHP_Depend_Code_Class('b');
         
-        $a->addChildType($b);
+        $b->addDependency($a);
         $this->assertEquals(1, $b->getDependencies()->count());
         $a->removeChildType($b);
         $this->assertEquals(0, $b->getDependencies()->count());
