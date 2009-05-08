@@ -43,7 +43,7 @@
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/Code/Filter/Composite.php';
@@ -59,7 +59,7 @@ require_once 'PHP/Depend/Code/Filter/Composite.php';
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 final class PHP_Depend_Code_Filter_Collection
     extends PHP_Depend_Code_Filter_Composite

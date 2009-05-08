@@ -43,7 +43,7 @@
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id: AbstractCallable.php 602 2009-01-04 15:10:10Z mapi $
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_AbstractItem
 {
