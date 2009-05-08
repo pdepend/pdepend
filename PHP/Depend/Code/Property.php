@@ -72,7 +72,7 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
     /**
      * A reference instance for the php type of this property.
      *
-     * @var PHP_Depend_Code_TypeReference $_classReference
+     * @var PHP_Depend_Code_ClassOrInterfaceReference $_classReference
      */
     private $_classReference = null;
 
@@ -202,11 +202,11 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
     /**
      * Sets a reference instance for the php type of this property.
      *
-     * @param PHP_Depend_Code_TypeReference $classReference Type of this property.
+     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Type of this property.
      *
      * @return void
      */
-    public function setClassReference(PHP_Depend_Code_TypeReference $classReference)
+    public function setClassReference(PHP_Depend_Code_ClassOrInterfaceReference $classReference)
     {
         $this->_classReference = $classReference;
     }
