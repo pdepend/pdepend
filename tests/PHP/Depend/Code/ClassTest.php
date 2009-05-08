@@ -443,24 +443,25 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
         $interfsE = new PHP_Depend_Code_Interface('E');
         $interfsF = new PHP_Depend_Code_Interface('F');
         
-        $interfsD->addChildType($classA); // class A implements D, E
-        $interfsE->addChildType($classA); // class A implements D, E
+        $classA->addDependency($interfsD); // class A implements D, E
+        $classA->addDependency($interfsE); // class A implements D, E
 
-        $interfsF->addChildType($classC); // class C extends B implements F {}
+        $classC->addDependency($interfsF); // class C extends B implements F {}
         
         $classB->setParentClass($classA); // class B extends A {}
         $classC->setParentClass($classB); // class C extends B implements F {}
-        
+
         $this->assertTrue($classA->isSubtypeOf($classA));
         $this->assertFalse($classA->isSubtypeOf($classB));
         $this->assertFalse($classA->isSubtypeOf($classC));
         $this->assertTrue($classA->isSubtypeOf($interfsD));
         $this->assertTrue($classA->isSubtypeOf($interfsE));
         $this->assertFalse($classA->isSubtypeOf($interfsF));
-        
+
         $this->assertTrue($classB->isSubtypeOf($classA));
         $this->assertTrue($classB->isSubtypeOf($classB));
         $this->assertFalse($classB->isSubtypeOf($classC));
+
         $this->assertTrue($classB->isSubtypeOf($interfsD));
         $this->assertTrue($classB->isSubtypeOf($interfsE));
         $this->assertFalse($classB->isSubtypeOf($interfsF));
