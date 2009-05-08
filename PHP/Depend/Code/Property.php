@@ -190,6 +190,7 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
      * for all scalar type, only class properties will have a type.
      *
      * @return PHP_Depend_Code_AbstractType
+     * @since 0.9.5
      */
     public function getClass()
     {
@@ -202,12 +203,15 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
     /**
      * Sets a reference instance for the php type of this property.
      *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Type of this property.
+     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Holder
+     *        instance for the declared property type.
      *
      * @return void
+     * @since 0.9.5
      */
-    public function setClassReference(PHP_Depend_Code_ClassOrInterfaceReference $classReference)
-    {
+    public function setClassReference(
+        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+    ) {
         $this->_classReference = $classReference;
     }
 

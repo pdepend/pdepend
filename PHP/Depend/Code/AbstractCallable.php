@@ -189,6 +189,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * if there is no return value or the return value is scalat.
      *
      * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @since 0.9.5
      */
     public function getReturnClass()
     {
@@ -206,6 +207,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      *        instance for the declared function return type.
      *
      * @return void
+     * @since 0.9.5
      */
     public function setReturnClassReference(
         PHP_Depend_Code_ClassOrInterfaceReference $classReference
