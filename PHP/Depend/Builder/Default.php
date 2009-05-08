@@ -516,14 +516,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_TypeReference
+     * @return PHP_Depend_Code_ClassOrInterfaceReference
      * @since 0.9.5
      */
-    public function buildTypeReference($qualifiedName)
+    public function buildClassOrInterfaceReference($qualifiedName)
     {
-        include_once 'PHP/Depend/Code/TypeReference.php';
+        include_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
 
-        return new PHP_Depend_Code_TypeReference($this, $qualifiedName);
+        return new PHP_Depend_Code_ClassOrInterfaceReference($this, $qualifiedName);
     }
 
     /**

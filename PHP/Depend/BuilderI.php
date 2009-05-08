@@ -169,8 +169,8 @@ interface PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_TypeReference
+     * @return PHP_Depend_Code_ClassOrInterfaceReference
      * @since 0.9.5
      */
-    function buildTypeReference($qualifiedName);
+    function buildClassOrInterfaceReference($qualifiedName);
 }

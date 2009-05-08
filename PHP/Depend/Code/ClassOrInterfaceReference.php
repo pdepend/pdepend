@@ -61,7 +61,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.5
  */
-class PHP_Depend_Code_TypeReference
+class PHP_Depend_Code_ClassOrInterfaceReference
 {
     /**
      * The associated AST builder.
