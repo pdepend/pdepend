@@ -77,10 +77,10 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
         $c0 = new PHP_Depend_Code_Class('c0');
         $c1 = new PHP_Depend_Code_Class('c1');
         
-        $i0->addChildType($i1);
-        $i0->addChildType($i2);
-        $i0->addChildType($c0);
-        $i0->addChildType($c1);
+        $i1->addDependency($i0);
+        $i2->addDependency($i0);
+        $c0->addDependency($i0);
+        $c1->addDependency($i0);
         
         $classes = $i0->getImplementingClasses();
         $this->assertEquals(2, $classes->count());
@@ -102,11 +102,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
         $i2 = new PHP_Depend_Code_Interface('i2');
         $c0 = new PHP_Depend_Code_Class('c0');
         $c1 = new PHP_Depend_Code_Class('c1');
-        
-        $i0->addChildType($i1);
-        $i0->addChildType($i2);
-        $i0->addChildType($c0);
-        $i0->addChildType($c1);
+
+        $i1->addDependency($i0);
+        $i2->addDependency($i0);
+        $c0->addDependency($i0);
+        $c1->addDependency($i0);
         
         $interfaces = $i0->getChildInterfaces();
         $this->assertEquals(2, $interfaces->count());
@@ -129,11 +129,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
         $interfsE = new PHP_Depend_Code_Interface('interfsE');
         $interfsF = new PHP_Depend_Code_Interface('interfsF');
         
-        $interfsA->addChildType($interfsB); // interface B extends A {}
-        $interfsA->addChildType($interfsC); // interface C extends A {}
-        $interfsC->addChildType($interfsD); // interface D extends C, E
-        $interfsE->addChildType($interfsD); // interface D extends C, E
-        $interfsF->addChildType($interfsE); // interface E extends F
+        $interfsB->addDependency($interfsA); // interface B extends A {}
+        $interfsC->addDependency($interfsA); // interface C extends A {}
+        $interfsD->addDependency($interfsC); // interface D extends C, E
+        $interfsD->addDependency($interfsE); // interface D extends C, E
+        $interfsE->addDependency($interfsF); // interface E extends F
         
         $this->assertEquals(0, $interfsA->getInterfaces()->count());
         
