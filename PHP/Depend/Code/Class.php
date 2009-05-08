@@ -64,13 +64,6 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
 class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
 {
     /**
-     * Marks this class as abstract.
-     *
-     * @var boolean $_abstract
-     */
-    private $_abstract = false;
-
-    /**
      * List of associated properties.
      *
      * @var array(PHP_Depend_Code_Property) $_properties
