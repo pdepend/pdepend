@@ -688,12 +688,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
                     $function->addDependency($interface);
                 }
             }
-            foreach ($function->getExceptionTypes() as $exceptionType) {
-                if ($exceptionType === $class) {
-                    $function->removeExceptionType($class);
-                    $function->addExceptionType($interface);
-                }
-            }
         }
 
         foreach ($this->methods as $method) {
@@ -701,12 +695,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
                 if ($dependency === $class) {
                     $method->removeDependency($class);
                     $method->addDependency($interface);
-                }
-            }
-            foreach ($method->getUnfilteredRawExceptionTypes() as $exceptionType) {
-                if ($exceptionType === $class) {
-                    $method->removeExceptionType($class);
-                    $method->addExceptionType($interface);
                 }
             }
         }
