@@ -194,6 +194,31 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
+     * @param string  $testCase          Qualified name of the test case.
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($class, $method) = explode('::', $testCase);
+
+        $fileName = substr(strtolower($class), 11, strrpos($class, '_') - 11);
+        $fileName = str_replace('_', '/', $fileName) . '/' . $method;
+
+        try {
+            $fileOrDirectory = self::createCodeResourceURI($fileName);
+        } catch (ErrorException $e) {
+            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
+        }
+
+        return self::parseSource($fileOrDirectory, $ignoreAnnotations);
+    }
+
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
      * @param string  $fileOrDirectory   A source file or a source directory.
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
      *
