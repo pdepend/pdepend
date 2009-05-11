@@ -508,56 +508,51 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateWMCMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
-        $classC->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classC->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classC->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classA->addDependency($classB); // class A extends B {}
-        $classB->addDependency($classC); // class B extends C {}
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(3, $m['wmc']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(3, $m['wmc']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(3, $m['wmc']);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(3, $metrics['wmc']);      
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMC metric.
+     *
+     * @return void
+     */
+    public function testCalculateWMCMetricOneLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(3, $metrics['wmc']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMC metric.
+     *
+     * @return void
+     */
+    public function testCalculateWMCMetricTwoLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(3, $metrics['wmc']);
     }
     
     /**
@@ -618,58 +613,53 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      * Tests that the analyzer calculates the correct WMCnp metric. 
      *
      * @return void
-     */    
+     */
     public function testCalculateWMCnpMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a2'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classB->addMethod(new PHP_Depend_Code_Method('c2'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
-        $classC->addMethod(new PHP_Depend_Code_Method('a3'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classC->addMethod(new PHP_Depend_Code_Method('b3'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classC->addMethod(new PHP_Depend_Code_Method('c3'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-               
-        $classA->addDependency($classB); // class A extends B {}
-        $classB->addDependency($classC); // class B extends C {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(1, $m['wmcnp']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(2, $m['wmcnp']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(1, $m['wmcnp']);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(1, $metrics['wmcnp']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCnp metric.
+     *
+     * @return void
+     */
+    public function testCalculateWMCnpMetricOneLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(2, $metrics['wmcnp']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCnp metric.
+     *
+     * @return void
+     */
+    public function testCalculateWMCnpMetricTwoLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(1, $metrics['wmcnp']);
     }
 }
