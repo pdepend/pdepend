@@ -202,58 +202,51 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateIMPLMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package1 = new PHP_Depend_Code_Package('package1');
-        $interfsA = $package1->addType(new PHP_Depend_Code_Interface('A'));
-        $interfsB = $package1->addType(new PHP_Depend_Code_Interface('B'));
-        $interfsC = $package1->addType(new PHP_Depend_Code_Interface('C'));
-        $interfsD = $package1->addType(new PHP_Depend_Code_Interface('D'));
-        $interfsE = $package1->addType(new PHP_Depend_Code_Interface('E'));
-        $interfsF = $package1->addType(new PHP_Depend_Code_Interface('F'));
-        
-        $package2 = new PHP_Depend_Code_Package('package2');
-        $classA   = $package2->addType(new PHP_Depend_Code_Class('A'));
-        $classB   = $package2->addType(new PHP_Depend_Code_Class('B'));
-        $classC   = $package2->addType(new PHP_Depend_Code_Class('C'));
-        
-        $interfsA->setSourceFile($file);
-        $interfsB->setSourceFile($file);
-        $interfsC->setSourceFile($file);
-        $interfsD->setSourceFile($file);
-        $interfsE->setSourceFile($file);
-        $interfsF->setSourceFile($file);
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-        
-        $interfsB->addDependency($interfsA); // interface B extends A {}
-        $interfsC->addDependency($interfsA); // interface C extends A {}
-        $interfsD->addDependency($interfsB); // interface D extends B, E
-        $interfsD->addDependency($interfsE); // interface D extends B, E
-        $interfsE->addDependency($interfsF); // interface E extends F
-        
-        $classA->addDependency($interfsE); // class A implements E, C {}
-        $classA->addDependency($interfsC); // class A implements E, C {}
-        
-        $classB->addDependency($interfsD); // class B extends C implements D, A {}
-        $classB->addDependency($interfsA); // class B extends C implements D, A {}
-        
-        $classC->addDependency($interfsC); // class C implements C {}
-        
-        $classB->addDependency($classC); // class B extends C implements D, A {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package1, $package2));
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(4, $m['impl']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(6, $m['impl']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(2, $m['impl']);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(4, $metrics['impl']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct IMPL values.
+     *
+     * @return void
+     */
+    public function testCalculateIMPLMetric1()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(6, $metrics['impl']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct IMPL values.
+     *
+     * @return void
+     */
+    public function testCalculateIMPLMetric2()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(2, $metrics['impl']);
     }
     
     /**
