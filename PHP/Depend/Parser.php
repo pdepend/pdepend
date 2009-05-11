@@ -492,6 +492,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parentInterface = $this->_builder->buildInterface($qualifiedName);
             $abstractType->addDependency($parentInterface);
 
+            $abstractType->addInterfaceReference(
+                $this->_builder->buildInterfaceReference($qualifiedName)
+            );
+
             $this->_consumeComments($tokens);
 
             $tokenType = $this->_tokenizer->peek();
