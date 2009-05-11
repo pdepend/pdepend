@@ -81,6 +81,23 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractType
     }
 
     /**
+     * Sets a reference onto the parent class of this class node.
+     *
+     * @param PHP_Depend_Code_ClassReference $classReference Reference to the
+     *        declared parent class.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setParentClassReference(
+        PHP_Depend_Code_ClassReference $classReference
+    ) {
+        throw new BadMethodCallException(
+            sprintf('Unsupported method "%s" called', __METHOD__)
+        );
+    }
+
+    /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
      * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.

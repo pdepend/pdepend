@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Class.php';
@@ -66,7 +66,7 @@ require_once 'PHP/Depend/Code/TypeConstant.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
+class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
      * Tests the ctor with and the {@link PHP_Depend_Code_Class::getName()} and
@@ -468,16 +468,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      * @return PHP_Depend_Code_AbstractItem
      */
     protected function createItem()
-    {
-        return new PHP_Depend_Code_Class('clazz', 0);
-    }
-    
-    /**
-     * Generates a node instance that can handle dependencies.
-     *
-     * @return PHP_Depend_Code_DependencyNodeI
-     */
-    protected function createDependencyNode()
     {
         return new PHP_Depend_Code_Class('clazz', 0);
     }

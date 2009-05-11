@@ -78,14 +78,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     private $_modifiers = 0;
 
     /**
-     * The parent for this class node.
-     *
-     * @var PHP_Depend_Code_ClassReference $_parentClassReference
-     * @since 0.9.5
-     */
-    private $_parentClassReference = null;
-
-    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
@@ -105,45 +97,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     {
         return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
                                  === PHP_Depend_ConstantsI::IS_FINAL);
-    }
-
-    /**
-     * Returns the parent class or <b>null</b> if this class has no parent.
-     *
-     * @return PHP_Depend_Code_Class
-     */
-    public function getParentClass()
-    {
-        // No parent? Stop here!
-        if ($this->_parentClassReference === null) {
-            return null;
-        }
-
-        $parentClass = $this->_parentClassReference->getType();
-
-        // Check parent against global filter
-        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-        if ($collection->accept($parentClass) === false) {
-            return null;
-        }
-
-        // Parent is valid, so return
-        return $parentClass;
-    }
-
-    /**
-     * Sets a reference onto the parent class of this class node.
-     *
-     * @param PHP_Depend_Code_ClassReference $classReference Reference to the
-     *        declared parent class.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setParentClassReference(
-        PHP_Depend_Code_ClassReference $classReference
-    ) {
-        $this->_parentClassReference = $classReference;
     }
 
     /**
@@ -189,39 +142,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
             // Remove from internal property list
             unset($this->_properties[$i]);
         }
-    }
-
-    /**
-     * Returns all {@link PHP_Depend_Code_AbstractType} objects this type depends on.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getDependencies()
-    {
-        return new PHP_Depend_Code_NodeIterator(
-            $this->getUnfilteredRawDependencies()
-        );
-    }
-
-    /**
-     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
-     * objects this type depends on. This method is only for internal usage.
-     *
-     * @return array(PHP_Depend_Code_AbstractType)
-     * @access private
-     */
-    public function getUnfilteredRawDependencies()
-    {
-        $dependencies = parent::getUnfilteredRawDependencies();
-
-        // No parent? Then use the parent implementation
-        if ($this->getParentClass() === null) {
-            return $dependencies;
-        }
-
-        $dependencies[] = $this->getParentClass();
-
-        return $dependencies;
     }
 
     /**
