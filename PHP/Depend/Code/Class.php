@@ -132,18 +132,14 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     }
 
     /**
-     * Sets the parent for this class node.
+     * Sets a reference onto the parent class of this class node.
      *
-     * @param PHP_Depend_Code_Class $parentClass The parent class for this this.
+     * @param PHP_Depend_Code_ClassReference $classReference Reference to the
+     *        declared parent class.
      *
      * @return void
      * @since 0.9.5
      */
-    public function setParentClass(PHP_Depend_Code_Class $parentClass)
-    {
-        //$this->_parentClass = $parentClass;
-    }
-
     public function setParentClassReference(
         PHP_Depend_Code_ClassReference $classReference
     ) {
