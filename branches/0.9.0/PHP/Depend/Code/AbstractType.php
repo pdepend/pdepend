@@ -335,21 +335,12 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getDependencies()
     {
-        $dependencies = array();
-
-        foreach ($this->_interfaceReferences as $interfaceReference) {
-            $interface = $interfaceReference->getType();
-            if (in_array($interface, $dependencies, true) === false) {
-                $dependencies[] = $interface;
-            }
-        }
-
-        // No parent? Then use the parent implementation
+        $references = $this->_interfaceReferences;
         if ($this->_parentClassReference !== null) {
-            $dependencies[] = $this->_parentClassReference->getType();
+            $references[] = $this->_parentClassReference;
         }
 
-        return new PHP_Depend_Code_NodeIterator($dependencies);
+        return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator($references);
     }
 
     /**
