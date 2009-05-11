@@ -525,13 +525,12 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue67Test extends PHP_Depend_Ab
     public function testParserNotSetsUserDefinedFlagForUnknownInterface()
     {
         $packages = self::parseSource('issues/067-032-user-defined-interface.php');
+        $package  = $packages->current();
 
-        $package    = $packages->current();
-        $interfaces = $package->getInterfaces();
+        $interface = $package->getInterfaces()->current();
+        $this->assertTrue($interface->isUserDefined());
 
-        $interfaces->next();
-        $interface = $interfaces->current();
-
+        $interface = $interface->getInterfaces()->current();
         $this->assertFalse($interface->isUserDefined());
     }
 
