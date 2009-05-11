@@ -68,46 +68,63 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
      *
      * @return void
      */
-    public function testGetInterfaces()
+    public function testGetInterfacesZeroInheritance()
     {
-        $interfsA = new PHP_Depend_Code_Interface('interfsA');
-        $interfsB = new PHP_Depend_Code_Interface('interfsB');
-        $interfsC = new PHP_Depend_Code_Interface('interfsC');
-        $interfsD = new PHP_Depend_Code_Interface('interfsD');
-        $interfsE = new PHP_Depend_Code_Interface('interfsE');
-        $interfsF = new PHP_Depend_Code_Interface('interfsF');
-        
-        $interfsB->addDependency($interfsA); // interface B extends A {}
-        $interfsC->addDependency($interfsA); // interface C extends A {}
-        $interfsD->addDependency($interfsC); // interface D extends C, E
-        $interfsD->addDependency($interfsE); // interface D extends C, E
-        $interfsE->addDependency($interfsF); // interface E extends F
-        
-        $this->assertEquals(0, $interfsA->getInterfaces()->count());
-        
-        $parents = $interfsB->getInterfaces();
-        $this->assertEquals(1, $parents->count());
-        $this->assertSame($interfsA, $parents->current());
-        
-        $parents = $interfsC->getInterfaces();
-        $this->assertEquals(1, $parents->count());
-        $this->assertSame($interfsA, $parents->current());
-        
-        $parents = $interfsD->getInterfaces();
-        $this->assertEquals(4, $parents->count());
-        $this->assertSame($interfsA, $parents->current());
-        $parents->next();
-        $this->assertSame($interfsC, $parents->current());
-        $parents->next();
-        $this->assertSame($interfsE, $parents->current());
-        $parents->next();
-        $this->assertSame($interfsF, $parents->current());
-        
-        $parents = $interfsE->getInterfaces();
-        $this->assertEquals(1, $parents->count());
-        $this->assertSame($interfsF, $parents->current());
-        
-        $this->assertEquals(0, $interfsF->getInterfaces()->count());
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $interface = $package->getInterfaces()
+            ->current();
+
+        $this->assertSame(0, $interface->getInterfaces()->count());
+    }
+
+    /**
+     * Tests the result of the <b>getInterfaces()</b> method.
+     *
+     * @return void
+     */
+    public function testGetInterfacesOneLevelInheritance()
+    {
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $interface = $package->getInterfaces()
+            ->current();
+
+        $this->assertSame(1, $interface->getInterfaces()->count());
+    }
+
+    /**
+     * Tests the result of the <b>getInterfaces()</b> method.
+     *
+     * @return void
+     */
+    public function testGetInterfacesTwoLevelInheritance()
+    {
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $interface = $package->getInterfaces()
+            ->current();
+
+        $this->assertSame(4, $interface->getInterfaces()->count());
+    }
+
+    /**
+     * Tests the result of the <b>getInterfaces()</b> method.
+     *
+     * @return void
+     */
+    public function testGetInterfacesComplexInheritance()
+    {
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $interface = $package->getInterfaces()
+            ->current();
+
+        $this->assertSame(5, $interface->getInterfaces()->count());
     }
     
     /**
@@ -136,60 +153,109 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
      */
     public function testIsSubtypeOnInheritanceHierarchy()
     {
-        $interfsA = new PHP_Depend_Code_Interface('A');
-        $interfsB = new PHP_Depend_Code_Interface('B');
-        $interfsC = new PHP_Depend_Code_Interface('C');
-        $interfsD = new PHP_Depend_Code_Interface('D');
-        $interfsE = new PHP_Depend_Code_Interface('E');
-        $interfsF = new PHP_Depend_Code_Interface('F');
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
         
-        $interfsB->addDependency($interfsA); // interface B extends A, C {}
-        $interfsB->addDependency($interfsC); // interface B extends A, C {}
-        $interfsC->addDependency($interfsD); // interface C extends D, E {}
-        $interfsC->addDependency($interfsE); // interface C extends D, E {}
-        $interfsA->addDependency($interfsF); // interface A extends F
-        
-        $this->assertTrue($interfsA->isSubtypeOf($interfsA));
-        $this->assertFalse($interfsA->isSubtypeOf($interfsB));
-        $this->assertFalse($interfsA->isSubtypeOf($interfsC));
-        $this->assertFalse($interfsA->isSubtypeOf($interfsD));
-        $this->assertFalse($interfsA->isSubtypeOf($interfsE));
-        $this->assertTrue($interfsA->isSubtypeOf($interfsF));
-        
-        $this->assertTrue($interfsB->isSubtypeOf($interfsA));
-        $this->assertTrue($interfsB->isSubtypeOf($interfsB));
-        $this->assertTrue($interfsB->isSubtypeOf($interfsC));
-        $this->assertTrue($interfsB->isSubtypeOf($interfsD));
-        $this->assertTrue($interfsB->isSubtypeOf($interfsE));
-        $this->assertTrue($interfsB->isSubtypeOf($interfsF));
-        
-        $this->assertFalse($interfsC->isSubtypeOf($interfsA));
-        $this->assertFalse($interfsC->isSubtypeOf($interfsB));
-        $this->assertTrue($interfsC->isSubtypeOf($interfsC));
-        $this->assertTrue($interfsC->isSubtypeOf($interfsD));
-        $this->assertTrue($interfsC->isSubtypeOf($interfsE));
-        $this->assertFalse($interfsC->isSubtypeOf($interfsF));
-        
-        $this->assertFalse($interfsD->isSubtypeOf($interfsA));
-        $this->assertFalse($interfsD->isSubtypeOf($interfsB));
-        $this->assertFalse($interfsD->isSubtypeOf($interfsC));
-        $this->assertTrue($interfsD->isSubtypeOf($interfsD));
-        $this->assertFalse($interfsD->isSubtypeOf($interfsE));
-        $this->assertFalse($interfsD->isSubtypeOf($interfsF));
-        
-        $this->assertFalse($interfsE->isSubtypeOf($interfsA));
-        $this->assertFalse($interfsE->isSubtypeOf($interfsB));
-        $this->assertFalse($interfsE->isSubtypeOf($interfsC));
-        $this->assertFalse($interfsE->isSubtypeOf($interfsD));
-        $this->assertTrue($interfsE->isSubtypeOf($interfsE));
-        $this->assertFalse($interfsE->isSubtypeOf($interfsF));
-        
-        $this->assertFalse($interfsF->isSubtypeOf($interfsA));
-        $this->assertFalse($interfsF->isSubtypeOf($interfsB));
-        $this->assertFalse($interfsF->isSubtypeOf($interfsC));
-        $this->assertFalse($interfsF->isSubtypeOf($interfsD));
-        $this->assertFalse($interfsF->isSubtypeOf($interfsE));
-        $this->assertTrue($interfsF->isSubtypeOf($interfsF));
+        $expected = array(
+            'A' => true,
+            'B' => false,
+            'C' => false,
+            'D' => false,
+            'E' => false,
+            'F' => true,
+        );
+
+        $current = $package->getInterfaces()->current();
+        foreach ($package->getInterfaces() as $interface) {
+            $this->assertSame(
+                $expected[$interface->getName()],
+                $current->isSubtypeOf($interface)
+            );
+        }
+    }
+
+    /**
+     * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
+     *
+     * @return void
+     */
+    public function testIsSubtypeOnInheritanceHierarchy1()
+    {
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $expected = array(
+            'A' => true,
+            'B' => true,
+            'C' => true,
+            'D' => true,
+            'E' => true,
+            'F' => true,
+        );
+
+        $current = $package->getInterfaces()->current();
+        foreach ($package->getInterfaces() as $interface) {
+            $this->assertSame(
+                $expected[$interface->getName()],
+                $current->isSubtypeOf($interface)
+            );
+        }
+    }
+
+    /**
+     * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
+     *
+     * @return void
+     */
+    public function testIsSubtypeOnInheritanceHierarchy2()
+    {
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $expected = array(
+            'B' => false,
+            'C' => false,
+            'A' => true,
+            'D' => true,
+            'E' => true,
+            'F' => false,
+        );
+
+        $current = $package->getInterfaces()->current();
+        foreach ($package->getInterfaces() as $interface) {
+            $this->assertSame(
+                $expected[$interface->getName()],
+                $current->isSubtypeOf($interface)
+            );
+        }
+    }
+
+    /**
+     * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
+     *
+     * @return void
+     */
+    public function testIsSubtypeOnInheritanceHierarchy3()
+    {
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $expected = array(
+            'B' => false,
+            'C' => false,
+            'D' => false,
+            'A' => true,
+            'E' => false,
+            'F' => false,
+        );
+
+        $current = $package->getInterfaces()->current();
+        foreach ($package->getInterfaces() as $interface) {
+            $this->assertSame(
+                $expected[$interface->getName()],
+                $current->isSubtypeOf($interface)
+            );
+        }
     }
     
     /**
