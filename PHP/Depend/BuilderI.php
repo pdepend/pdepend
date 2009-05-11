@@ -98,11 +98,11 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new code class instance.
      *
-     * @param string $name The class name.
+     * @param string $qualifiedName The class name.
      *
      * @return PHP_Depend_Code_Class The created class object.
      */
-    function buildClass($name);
+    function buildClass($qualifiedName);
 
     /**
      * Builds a new code type reference instance.
@@ -124,11 +124,21 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new new interface instance.
      *
-     * @param string $name The interface name.
+     * @param string $qualifiedName The interface name.
      *
      * @return PHP_Depend_Code_Interface The created interface object.
      */
-    function buildInterface($name);
+    function buildInterface($qualifiedName);
+
+    /**
+     * Builds a new code type reference instance.
+     *
+     * @param string $qualifiedName The qualified name of the referenced type.
+     *
+     * @return PHP_Depend_Code_InterfaceReference
+     * @since 0.9.5
+     */
+    function buildInterfaceReference($qualifiedName);
 
     /**
      * Builds a new package instance.

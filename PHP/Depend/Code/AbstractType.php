@@ -71,6 +71,13 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     protected $dependencies = array();
 
     /**
+     * List of all interfaces implemented/extended by the this type.
+     *
+     * @var array(PHP_Depend_Code_InterfaceReference) $_interfaceReferences
+     */
+    private $_interfaceReferences = array();
+
+    /**
      * The parent package for this class.
      *
      * @var PHP_Depend_Code_Package $_package
@@ -149,6 +156,20 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     public function getInterfaces()
     {
         $nodes = array();
+
+        foreach ($this->_interfaceReferences as $interfaceReference) {
+            $interface = $interfaceReference->getType();
+            if (in_array($interface, $nodes, true) === true) {
+                continue;
+            }
+            $nodes[] = $interface;
+            foreach ($interface->getInterfaces() as $parentInterface) {
+                if (in_array($parentInterface, $nodes, true) === false) {
+                    $nodes[] = $parentInterface;
+                }
+            }
+        }
+
         foreach ($this->getUnfilteredRawDependencies() as $dependency) {
             // Add parent interfaces of parent class
             if ($dependency instanceof PHP_Depend_Code_Class) {
@@ -157,17 +178,22 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
                 }
                 continue;
             }
-
-            // Add this interface first
-            $nodes[] = $dependency;
-            // Append all parent interfaces
-            foreach ($dependency->getInterfaces() as $parentInterface) {
-                if (in_array($parentInterface, $nodes, true) === false) {
-                    $nodes[] = $parentInterface;
-                }
-            }
         }
         return new PHP_Depend_Code_NodeIterator($nodes);
+    }
+
+    /**
+     * Adds a interface reference node.
+     *
+     * @param PHP_Depend_Code_InterfaceReference $interfaceReference The extended
+     *        or implemented interface reference.
+     *
+     * @return void
+     */
+    public function addInterfaceReference(
+        PHP_Depend_Code_InterfaceReference $interfaceReference
+    ) {
+        $this->_interfaceReferences[] = $interfaceReference;
     }
 
     /**
