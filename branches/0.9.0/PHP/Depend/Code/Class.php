@@ -212,12 +212,13 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function getUnfilteredRawDependencies()
     {
+        $dependencies = parent::getUnfilteredRawDependencies();
+
         // No parent? Then use the parent implementation
         if ($this->getParentClass() === null) {
-            return parent::getUnfilteredRawDependencies();
+            return $dependencies;
         }
 
-        $dependencies   = $this->dependencies;
         $dependencies[] = $this->getParentClass();
 
         return $dependencies;

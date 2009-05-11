@@ -66,9 +66,9 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * List of {@link PHP_Depend_Code_AbstractType} objects this type depends on.
      *
-     * @var array(PHP_Depend_Code_AbstractType) $dependencies
+     * @var array(PHP_Depend_Code_AbstractType) $_dependencies
      */
-    protected $dependencies = array();
+    private $_dependencies = array();
 
     /**
      * List of all interfaces implemented/extended by the this type.
@@ -297,7 +297,9 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getDependencies()
     {
-        return new PHP_Depend_Code_NodeIterator($this->dependencies);
+        return new PHP_Depend_Code_NodeIterator(
+            $this->getUnfilteredRawDependencies()
+        );
     }
 
     /**
@@ -309,7 +311,15 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getUnfilteredRawDependencies()
     {
-        return $this->dependencies;
+        $dependencies = $this->_dependencies;
+        foreach ($this->_interfaceReferences as $interfaceReference) {
+            $interface = $interfaceReference->getType();
+            if (in_array($interface, $dependencies, true) === false) {
+                $dependencies[] = $interface;
+            }
+        }
+
+        return $dependencies;
     }
 
     /**
@@ -321,9 +331,9 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function addDependency(PHP_Depend_Code_AbstractType $type)
     {
-        if (array_search($type, $this->dependencies, true) === false) {
+        if (array_search($type, $this->_dependencies, true) === false) {
             // Store type dependency
-            $this->dependencies[] = $type;
+            $this->_dependencies[] = $type;
         }
     }
 
@@ -337,9 +347,9 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function removeDependency(PHP_Depend_Code_AbstractType $type)
     {
-        if (($i = array_search($type, $this->dependencies, true)) !== false) {
+        if (($i = array_search($type, $this->_dependencies, true)) !== false) {
             // Remove from internal list
-            unset($this->dependencies[$i]);
+            unset($this->_dependencies[$i]);
         }
     }
 

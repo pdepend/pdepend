@@ -488,12 +488,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         while (true) {
             $this->_consumeComments($tokens);
 
-            $qualifiedName   = $this->_parseQualifiedName($tokens);
-            $parentInterface = $this->_builder->buildInterface($qualifiedName);
-            $abstractType->addDependency($parentInterface);
-
             $abstractType->addInterfaceReference(
-                $this->_builder->buildInterfaceReference($qualifiedName)
+                $this->_builder->buildInterfaceReference(
+                    $this->_parseQualifiedName($tokens)
+                )
             );
 
             $this->_consumeComments($tokens);
