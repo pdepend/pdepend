@@ -323,37 +323,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     }
 
     /**
-     * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
-     *
-     * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
-     *
-     * @return void
-     */
-    public function addDependency(PHP_Depend_Code_AbstractType $type)
-    {
-        if (array_search($type, $this->_dependencies, true) === false) {
-            // Store type dependency
-            $this->_dependencies[] = $type;
-        }
-    }
-
-    /**
-     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the
-     * dependency list.
-     *
-     * @param PHP_Depend_Code_AbstractType $type A type to remove.
-     *
-     * @return void
-     */
-    public function removeDependency(PHP_Depend_Code_AbstractType $type)
-    {
-        if (($i = array_search($type, $this->_dependencies, true)) !== false) {
-            // Remove from internal list
-            unset($this->_dependencies[$i]);
-        }
-    }
-
-    /**
      * Returns an <b>array</b> with all tokens within this type.
      *
      * @return array(PHP_Depend_Token)
@@ -421,4 +390,46 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      * @return integer
      */
     public abstract function getModifiers();
+
+    // DEPRECATED METHODS AND PROPERTIES
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
+     *
+     * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
+     *
+     * @return void
+     * @deprecated Since version 0.9.5, use addParentClassReference() and
+     *             addInterfaceReference() instead.
+     */
+    public function addDependency(PHP_Depend_Code_AbstractType $type)
+    {
+        fwrite(STDERR, 'Since 0.9.5 addDependency() is deprecated.' . PHP_EOL);
+        if (array_search($type, $this->_dependencies, true) === false) {
+            // Store type dependency
+            $this->_dependencies[] = $type;
+        }
+    }
+
+    /**
+     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the
+     * dependency list.
+     *
+     * @param PHP_Depend_Code_AbstractType $type A type to remove.
+     *
+     * @return void
+     * @deprecated Since version 0.9.5
+     */
+    public function removeDependency(PHP_Depend_Code_AbstractType $type)
+    {
+        fwrite(STDERR, 'Since 0.9.5 removeDependency() is deprecated.' . PHP_EOL);
+        if (($i = array_search($type, $this->_dependencies, true)) !== false) {
+            // Remove from internal list
+            unset($this->_dependencies[$i]);
+        }
+    }
+    
+    // @codeCoverageIgnoreEnd
+    
 }

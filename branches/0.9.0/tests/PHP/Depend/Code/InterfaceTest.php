@@ -135,15 +135,19 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
      */
     public function testIsSubtypeOfReturnsFalseForNonParents()
     {
-        $interfsA = new PHP_Depend_Code_Interface('A');
-        $interfsB = new PHP_Depend_Code_Interface('B');
-        $classC   = new PHP_Depend_Code_Class('C');
-        
-        $this->assertFalse($interfsA->isSubtypeOf($interfsB));
-        
-        // TODO: This should be fixed in the code and throw an exception.
-        $interfsA->addDependency($classC); // interface A extends C {}
-        $this->assertFalse($interfsA->isSubtypeOf($classC));
+        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $interfaces = $package->getInterfaces();
+        $interface  = $interfaces->current();
+
+        $interfaces->next();
+        while ($interfaces->valid()) {
+            $this->assertFalse(
+                $interface->isSubtypeOf($interfaces->current())
+            );
+            $interfaces->next();
+        }
     }
     
     /**
