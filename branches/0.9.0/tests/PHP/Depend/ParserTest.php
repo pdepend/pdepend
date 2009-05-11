@@ -1281,7 +1281,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(1, $packages->count());
 
         $classes = $packages->current()->getClasses();
-        $this->assertEquals(5, $classes->count());
+        $this->assertEquals(4, $classes->count());
 
         $testClass = null;
         foreach ($classes as $class) {

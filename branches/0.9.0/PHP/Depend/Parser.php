@@ -411,12 +411,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_EXTENDS, $tokens);
             $this->_consumeComments($tokens);
 
-            $qualifiedName = $this->_parseQualifiedName($tokens);
-            $parentClass   = $this->_builder->buildClass($qualifiedName);
-            $class->setParentClass($parentClass);
-
             $class->setParentClassReference(
-                $this->_builder->buildClassReference($qualifiedName)
+                $this->_builder->buildClassReference(
+                    $this->_parseQualifiedName($tokens)
+                )
             );
 
             $this->_consumeComments($tokens);
