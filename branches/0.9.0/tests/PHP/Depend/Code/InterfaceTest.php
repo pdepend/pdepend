@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Interface.php';
@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Code/Interface.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTest
+class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
      * Tests the result of the <b>getInterfaces()</b> method.
@@ -271,14 +271,4 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractDependencyTe
     {
         return new PHP_Depend_Code_Interface('interfs');
     }
-    
-    /**
-     * Generates a node instance that can handle dependencies.
-     *
-     * @return PHP_Depend_Code_DependencyNodeI
-     */
-    protected function createDependencyNode()
-    {
-        return new PHP_Depend_Code_Interface('interfs');
-    }   
 }

@@ -236,48 +236,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that a type recreate forces all class dependencies to be updated.
-     *
-     * @return void
-     */
-    public function testBuildInterfaceForcesUpdateClassDependencies()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-
-        $class = $builder->buildClass('Bar');
-        $type0 = $builder->buildClassOrInterface('FooBar');
-
-        $class->addDependency($type0);
-        $this->assertEquals(1, $class->getDependencies()->count());
-        $this->assertEquals($type0, $class->getDependencies()->current());
-
-        $type1 = $builder->buildInterface('FooBar');
-        $this->assertEquals(1, $class->getDependencies()->count());
-        $this->assertEquals($type1, $class->getDependencies()->current());
-    }
-
-    /**
-     * Tests that a type recreate forces all interface dependencies to be updated.
-     *
-     * @return void
-     */
-    public function testBuildInterfaceForcesUpdateInterfaceDependencies()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-
-        $interface = $builder->buildInterface('Bar');
-        $type0     = $builder->buildClassOrInterface('FooBar');
-
-        $interface->addDependency($type0);
-        $this->assertEquals(1, $interface->getDependencies()->count());
-        $this->assertEquals($type0, $interface->getDependencies()->current());
-
-        $type1 = $builder->buildInterface('FooBar');
-        $this->assertEquals(1, $interface->getDependencies()->count());
-        $this->assertEquals($type1, $interface->getDependencies()->current());
-    }
-
-    /**
      * Tests that a type recreate forces all function dependencies to be updated.
      *
      * @return void
