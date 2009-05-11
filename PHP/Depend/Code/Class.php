@@ -80,10 +80,10 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     /**
      * The parent for this class node.
      *
-     * @var PHP_Depend_Code_Class $_parentClass
+     * @var PHP_Depend_Code_ClassReference $_parentClassReference
      * @since 0.9.5
      */
-    private $_parentClass = null;
+    private $_parentClassReference = null;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -115,18 +115,20 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     public function getParentClass()
     {
         // No parent? Stop here!
-        if ($this->_parentClass === null) {
+        if ($this->_parentClassReference === null) {
             return null;
         }
 
+        $parentClass = $this->_parentClassReference->getType();
+
         // Check parent against global filter
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-        if ($collection->accept($this->_parentClass) === false) {
+        if ($collection->accept($parentClass) === false) {
             return null;
         }
 
         // Parent is valid, so return
-        return $this->_parentClass;
+        return $parentClass;
     }
 
     /**
@@ -139,7 +141,13 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
      */
     public function setParentClass(PHP_Depend_Code_Class $parentClass)
     {
-        $this->_parentClass = $parentClass;
+        //$this->_parentClass = $parentClass;
+    }
+
+    public function setParentClassReference(
+        PHP_Depend_Code_ClassReference $classReference
+    ) {
+        $this->_parentClassReference = $classReference;
     }
 
     /**
@@ -209,12 +217,12 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     public function getUnfilteredRawDependencies()
     {
         // No parent? Then use the parent implementation
-        if ($this->_parentClass === null) {
+        if ($this->getParentClass() === null) {
             return parent::getUnfilteredRawDependencies();
         }
 
         $dependencies   = $this->dependencies;
-        $dependencies[] = $this->_parentClass;
+        $dependencies[] = $this->getParentClass();
 
         return $dependencies;
     }

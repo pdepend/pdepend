@@ -220,61 +220,81 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      */
     public function testGetInterfaces()
     {
-        $interfsA = new PHP_Depend_Code_Interface('A');
-        $interfsB = new PHP_Depend_Code_Interface('B');
-        $interfsC = new PHP_Depend_Code_Interface('C');
-        $interfsD = new PHP_Depend_Code_Interface('D');
-        $interfsE = new PHP_Depend_Code_Interface('E');
-        $interfsF = new PHP_Depend_Code_Interface('F');
-        
-        $classA = new PHP_Depend_Code_Class('A');
-        $classB = new PHP_Depend_Code_Class('B');
-        $classC = new PHP_Depend_Code_Class('C');
+        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
 
-        $interfsB->addDependency($interfsA); // interface B extends A {}
-        $interfsC->addDependency($interfsA); // interface C extends A {}
-        $interfsD->addDependency($interfsB); // interface D extends B, E
-        $interfsD->addDependency($interfsE); // interface D extends B, E
-        $interfsE->addDependency($interfsF); // interface E extends F
-        
-        $classA->addDependency($interfsE); // class A implements E, C {}
-        $classA->addDependency($interfsC); // class A implements E, C {}
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
 
-        $classB->addDependency($interfsD); // class B extends C implements D, A {}
-        $classB->addDependency($interfsA); // class B extends C implements D, A {}
-        $classB->setParentClass($classC);  // class B extends C implements D, A {}
+        $expected = array('A' => 'A', 'C' => 'C', 'E' => 'E', 'F' => 'F');
 
-        $classC->addDependency($interfsC); // class C implements C {}
-        
-        $interfaces = $classA->getInterfaces();
-        $this->assertEquals(4, $interfaces->count());
-        $this->assertSame($interfsA, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsC, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsE, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsF, $interfaces->current());
-        
-        $interfaces = $classB->getInterfaces();
-        $this->assertEquals(6, $interfaces->count());
-        $this->assertSame($interfsA, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsB, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsC, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsD, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsE, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsF, $interfaces->current());
-        
-        $interfaces = $classC->getInterfaces();
-        $this->assertEquals(2, $interfaces->count());
-        $this->assertSame($interfsA, $interfaces->current());
-        $interfaces->next();
-        $this->assertSame($interfsC, $interfaces->current());
+        $interfaces = $class->getInterfaces();
+        $this->assertSame(4, $interfaces->count());
+
+        foreach ($interfaces as $interface) {
+            $this->assertArrayHasKey($interface->getName(), $expected);
+            unset($expected[$interface->getName()]);
+        }
+    }
+    
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::getInterfaces()}
+     * returns the expected result.
+     *
+     * @return void
+     */
+    public function testGetInterfacesByInheritence()
+    {
+        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $expected = array(
+            'A' => 'A',
+            'B' => 'B',
+            'C' => 'C',
+            'D' => 'D',
+            'E' => 'E',
+            'F' => 'F'
+        );
+
+        $interfaces = $class->getInterfaces();
+        $this->assertSame(count($expected), $interfaces->count());
+
+        foreach ($interfaces as $interface) {
+            $this->assertArrayHasKey($interface->getName(), $expected);
+            unset($expected[$interface->getName()]);
+        }
+    }
+
+    /**
+     * Tests that {@link PHP_Depend_Code_Class::getInterfaces()}
+     * returns the expected result.
+     *
+     * @return void
+     */
+    public function testGetInterfacesByClassInheritence()
+    {
+        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $expected = array(
+            'A' => 'A',
+            'B' => 'B',
+        );
+
+        $interfaces = $class->getInterfaces();
+        $this->assertSame(count($expected), $interfaces->count());
+
+        foreach ($interfaces as $interface) {
+            $this->assertArrayHasKey($interface->getName(), $expected);
+            unset($expected[$interface->getName()]);
+        }
     }
     
     /**
@@ -338,45 +358,92 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractDependencyTest
      *
      * @return void
      */
-    public function testIsSubtypeOnInheritanceHierarchy()
+    public function testIsSubtypeInInheritanceHierarchy()
     {
-        $classA = new PHP_Depend_Code_Class('A');
-        $classB = new PHP_Depend_Code_Class('B');
-        $classC = new PHP_Depend_Code_Class('C');
-        
-        $interfsD = new PHP_Depend_Code_Interface('D');
-        $interfsE = new PHP_Depend_Code_Interface('E');
-        $interfsF = new PHP_Depend_Code_Interface('F');
-        
-        $classA->addDependency($interfsD); // class A implements D, E
-        $classA->addDependency($interfsE); // class A implements D, E
+        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
 
-        $classC->addDependency($interfsF); // class C extends B implements F {}
-        
-        $classB->setParentClass($classA); // class B extends A {}
-        $classC->setParentClass($classB); // class C extends B implements F {}
+        $class = $package->getClasses()
+            ->current();
 
-        $this->assertTrue($classA->isSubtypeOf($classA));
-        $this->assertFalse($classA->isSubtypeOf($classB));
-        $this->assertFalse($classA->isSubtypeOf($classC));
-        $this->assertTrue($classA->isSubtypeOf($interfsD));
-        $this->assertTrue($classA->isSubtypeOf($interfsE));
-        $this->assertFalse($classA->isSubtypeOf($interfsF));
+        $expected = array(
+            'A' => true,
+            'B' => false,
+            'C' => false,
+            'D' => true,
+            'E' => true,
+            'F' => false
+        );
 
-        $this->assertTrue($classB->isSubtypeOf($classA));
-        $this->assertTrue($classB->isSubtypeOf($classB));
-        $this->assertFalse($classB->isSubtypeOf($classC));
+        foreach ($package->getTypes() as $classOrInterface) {
+            $this->assertArrayHasKey($classOrInterface->getName(), $expected);
+            $this->assertSame(
+                $expected[$classOrInterface->getName()],
+                $class->isSubtypeOf($classOrInterface)
+            );
+        }
+    }
 
-        $this->assertTrue($classB->isSubtypeOf($interfsD));
-        $this->assertTrue($classB->isSubtypeOf($interfsE));
-        $this->assertFalse($classB->isSubtypeOf($interfsF));
-        
-        $this->assertTrue($classC->isSubtypeOf($classA));
-        $this->assertTrue($classC->isSubtypeOf($classB));
-        $this->assertTrue($classC->isSubtypeOf($classC));
-        $this->assertTrue($classC->isSubtypeOf($interfsD));
-        $this->assertTrue($classC->isSubtypeOf($interfsE));
-        $this->assertTrue($classC->isSubtypeOf($interfsF));
+    /**
+     * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
+     *
+     * @return void
+     */
+    public function testIsSubtypeInClassInheritanceHierarchy()
+    {
+        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $class = $package->getClasses()
+            ->current();
+
+        $expected = array(
+            'A' => true,
+            'B' => true,
+            'C' => false,
+            'D' => true,
+            'E' => true,
+            'F' => false
+        );
+
+        foreach ($package->getTypes() as $classOrInterface) {
+            $this->assertArrayHasKey($classOrInterface->getName(), $expected);
+            $this->assertSame(
+                $expected[$classOrInterface->getName()],
+                $class->isSubtypeOf($classOrInterface)
+            );
+        }
+    }
+
+    /**
+     * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
+     *
+     * @return void
+     */
+    public function testIsSubtypeInClassAndInterfaceInheritanceHierarchy()
+    {
+        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $class = $package->getClasses()
+            ->current();
+
+        $expected = array(
+            'A' => true,
+            'B' => true,
+            'C' => true,
+            'D' => true,
+            'E' => true,
+            'F' => true
+        );
+
+        foreach ($package->getTypes() as $classOrInterface) {
+            $this->assertArrayHasKey($classOrInterface->getName(), $expected);
+            $this->assertSame(
+                $expected[$classOrInterface->getName()],
+                $class->isSubtypeOf($classOrInterface)
+            );
+        }
     }
     
     /**
