@@ -495,10 +495,9 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue67Test extends PHP_Depend_Ab
         $package = $packages->current();
         $classes = $package->getClasses();
 
-        $classes->next();
         $class = $classes->current();
 
-        $this->assertFalse($class->isUserDefined());
+        $this->assertFalse($class->getParentClass()->isUserDefined());
     }
 
     /**
