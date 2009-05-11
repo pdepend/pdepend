@@ -195,31 +195,29 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getInterfaces()
     {
-        $nodes = array();
-
+        $interfaces = array();
         foreach ($this->_interfaceReferences as $interfaceReference) {
             $interface = $interfaceReference->getType();
-            if (in_array($interface, $nodes, true) === true) {
+            if (in_array($interface, $interfaces, true) === true) {
                 continue;
             }
-            $nodes[] = $interface;
+            $interfaces[] = $interface;
             foreach ($interface->getInterfaces() as $parentInterface) {
-                if (in_array($parentInterface, $nodes, true) === false) {
-                    $nodes[] = $parentInterface;
+                if (in_array($parentInterface, $interfaces, true) === false) {
+                    $interfaces[] = $parentInterface;
                 }
             }
         }
 
-        foreach ($this->getUnfilteredRawDependencies() as $dependency) {
-            // Add parent interfaces of parent class
-            if ($dependency instanceof PHP_Depend_Code_Class) {
-                foreach ($dependency->getInterfaces() as $interface) {
-                    $nodes[] = $interface;
-                }
-                continue;
-            }
+        if ($this->_parentClassReference === null) {
+            return new PHP_Depend_Code_NodeIterator($interfaces);
         }
-        return new PHP_Depend_Code_NodeIterator($nodes);
+
+        $parentClass = $this->_parentClassReference->getType();
+        foreach ($parentClass->getInterfaces() as $interface) {
+            $interfaces[] = $interface;
+        }
+        return new PHP_Depend_Code_NodeIterator($interfaces);
     }
 
     /**
@@ -337,21 +335,8 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getDependencies()
     {
-        return new PHP_Depend_Code_NodeIterator(
-            $this->getUnfilteredRawDependencies()
-        );
-    }
+        $dependencies = array();
 
-    /**
-     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
-     * objects this type depends on. This method is only for internal usage.
-     *
-     * @return array(PHP_Depend_Code_AbstractType)
-     * @access private
-     */
-    public function getUnfilteredRawDependencies()
-    {
-        $dependencies = $this->_dependencies;
         foreach ($this->_interfaceReferences as $interfaceReference) {
             $interface = $interfaceReference->getType();
             if (in_array($interface, $dependencies, true) === false) {
@@ -360,13 +345,11 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
         }
 
         // No parent? Then use the parent implementation
-        if ($this->getParentClass() === null) {
-            return $dependencies;
+        if ($this->_parentClassReference !== null) {
+            $dependencies[] = $this->_parentClassReference->getType();
         }
 
-        $dependencies[] = $this->getParentClass();
-
-        return $dependencies;
+        return new PHP_Depend_Code_NodeIterator($dependencies);
     }
 
     /**
@@ -452,7 +435,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function addDependency(PHP_Depend_Code_AbstractType $type)
     {
-        fwrite(STDERR, 'Since 0.9.5 addDependency() is deprecated.' . PHP_EOL);
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         if (array_search($type, $this->_dependencies, true) === false) {
             // Store type dependency
             $this->_dependencies[] = $type;
@@ -470,11 +453,39 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function removeDependency(PHP_Depend_Code_AbstractType $type)
     {
-        fwrite(STDERR, 'Since 0.9.5 removeDependency() is deprecated.' . PHP_EOL);
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         if (($i = array_search($type, $this->_dependencies, true)) !== false) {
             // Remove from internal list
             unset($this->_dependencies[$i]);
         }
+    }
+
+    /**
+     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
+     * objects this type depends on. This method is only for internal usage.
+     *
+     * @return array(PHP_Depend_Code_AbstractType)
+     * @access private
+     */
+    public function getUnfilteredRawDependencies()
+    {
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        $dependencies = $this->_dependencies;
+        foreach ($this->_interfaceReferences as $interfaceReference) {
+            $interface = $interfaceReference->getType();
+            if (in_array($interface, $dependencies, true) === false) {
+                $dependencies[] = $interface;
+            }
+        }
+
+        // No parent? Then use the parent implementation
+        if ($this->getParentClass() === null) {
+            return $dependencies;
+        }
+
+        $dependencies[] = $this->getParentClass();
+
+        return $dependencies;
     }
     
     // @codeCoverageIgnoreEnd
