@@ -415,6 +415,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parentClass   = $this->_builder->buildClass($qualifiedName);
             $class->setParentClass($parentClass);
 
+            $class->setParentClassReference(
+                $this->_builder->buildClassReference($qualifiedName)
+            );
+
             $this->_consumeComments($tokens);
             $tokenType = $this->_tokenizer->peek();
         }

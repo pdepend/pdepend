@@ -94,37 +94,27 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testGetNodeMetrics()
     {
-        $a = new PHP_Depend_Code_Class('a');
-        $b = new PHP_Depend_Code_Class('b');
-        $c = new PHP_Depend_Code_Class('c');
-        $d = new PHP_Depend_Code_Class('d');
-        $e = new PHP_Depend_Code_Class('e');
-
-        $p = new PHP_Depend_Code_Package('p');
-        $p->addType($a);
-        $p->addType($b);
-        $p->addType($c);
-        $p->addType($d);
-        $p->addType($e);
-
-        $b->setParentClass($a);
-        $c->setParentClass($a);
-        $d->setParentClass($c);
-        $e->setParentClass($d);
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
 
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($p)));
+        $analyzer->analyze($packages);
 
         $expected = array(
-            array($a, array('dit'  =>  0)),
-            array($b, array('dit'  =>  1)),
-            array($c, array('dit'  =>  1)),
-            array($d, array('dit'  =>  2)),
-            array($e, array('dit'  =>  3)),
+            'A' => array('dit'  =>  0),
+            'B' => array('dit'  =>  1),
+            'C' => array('dit'  =>  1),
+            'D' => array('dit'  =>  2),
+            'E' => array('dit'  =>  3),
         );
 
-        foreach ($expected as $info) {
-            $this->assertEquals($info[1], $analyzer->getNodeMetrics($info[0]));
+        $this->assertSame(count($expected), $package->getClasses()->count());
+        foreach ($package->getClasses() as $class) {
+            $this->assertArrayHasKey($class->getName(), $expected);
+            $this->assertSame(
+                $expected[$class->getName()],
+                $analyzer->getNodeMetrics($class)
+            );
         }
     }
 
