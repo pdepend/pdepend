@@ -110,51 +110,89 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testCalculateDITMetric()
+    public function testCalculateDITMetricNoInheritance()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package1');
-        $interfs = $package->addType(new PHP_Depend_Code_Interface('interfs'));
-        $classA  = $package->addType(new PHP_Depend_Code_Class('classA'));
-        $classB  = $package->addType(new PHP_Depend_Code_Class('classB'));
-        $classC  = $package->addType(new PHP_Depend_Code_Class('classC'));
-        $classD  = $package->addType(new PHP_Depend_Code_Class('classD'));
-        $classE  = $package->addType(new PHP_Depend_Code_Class('classE'));
-        $classF  = $package->addType(new PHP_Depend_Code_Class('classF'));
-        
-        $interfs->setSourceFile($file);
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-        $classD->setSourceFile($file);
-        $classE->setSourceFile($file);
-        $classF->setSourceFile($file);
-        
-        $classA->addDependency($interfs); // class A implements I // DIT = 0
-        $classB->setParentClass($classA); // class B extends A {} // DIT = 1
-        $classC->setParentClass($classB); // class C extends B {} // DIT = 2
-        $classD->setParentClass($classC); // class D extends C {} // DIT = 3
-        $classE->setParentClass($classC); // class E extends C {} // DIT = 3
-        $classF->setParentClass($classE); // class F extends E {} // DIT = 4
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(0, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(1, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(2, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classD);
-        $this->assertEquals(3, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classE);
-        $this->assertEquals(3, $m['dit']);
-        $m = $analyzer->getNodeMetrics($classF);
-        $this->assertEquals(4, $m['dit']);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(0, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     */
+    public function testCalculateDITMetricOneLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(1, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     */
+    public function testCalculateDITMetricTwoLevelNoInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(2, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     */
+    public function testCalculateDITMetricThreeLevelNoInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(3, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     */
+    public function testCalculateDITMetricFourLevelNoInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(4, $metrics['dit']);
     }
     
     /**
@@ -398,48 +436,33 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSiMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classB = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$d'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$e'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classB->addProperty(new PHP_Depend_Code_Property('$f'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        
-        $classA->setParentClass($classB); // class A extends B {}
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(5, $m['varsi']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(4, $m['varsi']);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(4, $metrics['varsi']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct VARSi metric
+     *
+     * @return void
+     */
+    public function testCalculateVARSiMetricWithInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(5, $metrics['varsi']);
     }
     
     /**
@@ -449,48 +472,33 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testCalculateVARSnpMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classA->addProperty(new PHP_Depend_Code_Property('$b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classA->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classB = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classB->addProperty(new PHP_Depend_Code_Property('$d'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classB->addProperty(new PHP_Depend_Code_Property('$e'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classB->addProperty(new PHP_Depend_Code_Property('$f'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        
-        $classA->addDependency($classB); // class A extends B {}
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(1, $m['varsnp']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(2, $m['varsnp']);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(2, $metrics['varsnp']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct VARSnp metric
+     *
+     * @return void
+     */
+    public function testCalculateVARSnpMetricWithInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(1, $metrics['varsnp']);
     }
     
     /**
@@ -559,56 +567,51 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      */    
     public function testCalculateWMCiMetric()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package = new PHP_Depend_Code_Package('package');
-        
-        $classA = $package->addType(new PHP_Depend_Code_Class('A'));
-        $classA->addMethod(new PHP_Depend_Code_Method('a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classA->addMethod(new PHP_Depend_Code_Method('b'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classA->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classA->addProperty(new PHP_Depend_Code_Property('$a'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        
-        $classB  = $package->addType(new PHP_Depend_Code_Class('B'));
-        $classB->addMethod(new PHP_Depend_Code_Method('a2'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classB->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classB->addMethod(new PHP_Depend_Code_Method('c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classC  = $package->addType(new PHP_Depend_Code_Class('C'));
-        $classC->addMethod(new PHP_Depend_Code_Method('a3'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $classC->addMethod(new PHP_Depend_Code_Method('b2'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $classC->addMethod(new PHP_Depend_Code_Method('c2'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $classC->addProperty(new PHP_Depend_Code_Property('$c'))
-               ->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-               
-        $classA->setSourceFile($file);
-        $classB->setSourceFile($file);
-        $classC->setSourceFile($file);
-               
-        $classA->setParentClass($classB); // class A extends B {}
-        $classB->setParentClass($classC); // class B extends C {}
-        
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $m = $analyzer->getNodeMetrics($classA);
-        $this->assertEquals(5, $m['wmci']);
-        $m = $analyzer->getNodeMetrics($classB);
-        $this->assertEquals(4, $m['wmci']);
-        $m = $analyzer->getNodeMetrics($classC);
-        $this->assertEquals(3, $m['wmci']);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(3, $metrics['wmci']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCi metric.
+     *
+     * @return void
+     */
+    public function testCalculateWMCiMetricOneLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(4, $metrics['wmci']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCi metric.
+     *
+     * @return void
+     */
+    public function testCalculateWMCiMetricTwoLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(5, $metrics['wmci']);
     }
     
     /**
