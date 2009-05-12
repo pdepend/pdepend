@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Method.php';
@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
+class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
      * Tests the ctor and the {@link PHP_Depend_Code_Method::getName()} method.

@@ -65,7 +65,7 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
  * @deprecated Since version 0.9.5, use PHP_Depend_Code_AbstractClassOrInterface
  */
 abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
-{    
+{
 }
 
 // @codeCoverageIgnoreEnd

@@ -157,11 +157,17 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
             $classReferences
         );
-        
-        $dependencies = $this->getUnfilteredRawDependencies();
-        return new PHP_Depend_Code_NodeIterator($dependencies);
     }
 
+    /**
+     * Adds a reference holder for a class or interface used by this callable
+     * object.
+     *
+     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Referenced
+     *        class or interface used by this callable object.
+     *
+     * @return void
+     */
     public function addDependencyClassReference(
         PHP_Depend_Code_ClassOrInterfaceReference $classReference
     ) {

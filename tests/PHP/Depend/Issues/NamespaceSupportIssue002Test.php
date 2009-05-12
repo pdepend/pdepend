@@ -406,25 +406,15 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     {
         $packages = self::parseSource($fileName);
 
-        // Namespace '' found by expression: new \Foo;
-        $class = $packages->current()
-                          ->getClasses()
-                          ->current();
-
-        if ($packages->count() > 1) {
-            // Next package 'foo\bar' declared in file.
-            $packages->next();
-        }
-
         // Get namespaced function
         $function = $packages->current()
-                             ->getFunctions()
-                             ->current();
+            ->getFunctions()
+            ->current();
 
         $dependency = $function->getDependencies()
-                               ->current();
+            ->current();
 
-        $this->assertSame($class, $dependency);
+        $this->assertType('PHP_Depend_Code_Class', $dependency);
         $this->assertSame($namespaceName, $dependency->getPackage()->getName());
     }
 
