@@ -2,20 +2,20 @@
 /**
  * FANOUT := 7
  * CALLS  := 10
- * 
+ *
  * @package default
  * @subpackage package
  */
 
 /**
  * Simple test comment.
- * 
+ *
  * FANOUT := 4
  * CALLS  := 7
- * 
+ *
  * @param ArrayAccess $items The input items.
  * @param integer     $index The requested index.
- * 
+ *
  * @return MyObjectItem
  * @throws OutOfRangeException For invalid index values.
  * @throws InvalidArgumentException For invalid index values.
@@ -36,15 +36,15 @@ function getItemAt(ArrayAccess $items, $index)
 }
 
 /**
- * 
+ *
  * Simple test comment.
- * 
+ *
  * FANOUT := 3
  * CALLS  := 3
- * 
+ *
  * @param ArrayAccess $items The input items.
  * @param integer     $index The requested index.
- * 
+ *
  * @return void
  * @throws OutOfRangeException For invalid index values.
  */

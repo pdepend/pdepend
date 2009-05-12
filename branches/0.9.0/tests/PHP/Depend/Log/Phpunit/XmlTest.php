@@ -150,8 +150,7 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testPHPUnitLoggerResult()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coupling';
-        $packages = self::parseSource($source);
+        $packages = self::parseSource('log/phpunit');
 
         $packages->addFilter(new PHP_Depend_Code_Filter_DefaultPackage());
         $packages->addFilter(new PHP_Depend_Code_Filter_InternalPackage());
