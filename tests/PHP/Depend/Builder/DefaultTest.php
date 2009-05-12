@@ -236,48 +236,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that a type recreate forces all function dependencies to be updated.
-     *
-     * @return void
-     */
-    public function testBuildInterfaceForcesUpdateFunctionDependencies()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-
-        $function = $builder->buildFunction('bar', 0);
-        $type0    = $builder->buildClassOrInterface('FooBar');
-
-        $function->addDependency($type0);
-        $this->assertEquals(1, $function->getDependencies()->count());
-        $this->assertEquals($type0, $function->getDependencies()->current());
-
-        $type1 = $builder->buildInterface('FooBar');
-        $this->assertEquals(1, $function->getDependencies()->count());
-        $this->assertEquals($type1, $function->getDependencies()->current());
-    }
-
-    /**
-     * Tests that a type recreate forces all method dependencies to be updated.
-     *
-     * @return void
-     */
-    public function testBuildInterfaceForcesUpdateMethodDependencies()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-
-        $method = $builder->buildMethod('bar', 0);
-        $type0  = $builder->buildClassOrInterface('FooBar');
-
-        $method->addDependency($type0);
-        $this->assertEquals(1, $method->getDependencies()->count());
-        $this->assertEquals($type0, $method->getDependencies()->current());
-
-        $type1 = $builder->buildInterface('FooBar');
-        $this->assertEquals(1, $method->getDependencies()->count());
-        $this->assertEquals($type1, $method->getDependencies()->current());
-    }
-
-    /**
      * Tests that {@link PHP_Depend_Builder_Default::buildInterface()} creates
      * different interface instances for different parent packages.
      *
