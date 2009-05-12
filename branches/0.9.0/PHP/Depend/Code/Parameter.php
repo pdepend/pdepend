@@ -255,7 +255,7 @@ class PHP_Depend_Code_Parameter
      * This method will return the class where the parent method was declared.
      * The returned value will be <b>null</b> if the parent is a function.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      * @since 0.9.5
      */
     public function getDeclaringClass()
@@ -293,7 +293,7 @@ class PHP_Depend_Code_Parameter
      * Returns the class type of this parameter. This method will return
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      * @since 0.9.5
      */
     public function getClass()
@@ -547,7 +547,7 @@ class PHP_Depend_Code_Parameter
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      * @deprecated since 0.9.5
      */
     public function getType()
@@ -559,12 +559,12 @@ class PHP_Depend_Code_Parameter
     /**
      * Sets the type of this property.
      *
-     * @param PHP_Depend_Code_AbstractType $type The property type.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The property type.
      *
      * @return void
      * @deprecated since 0.9.5
      */
-    public function setType(PHP_Depend_Code_AbstractType $type)
+    public function setType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
         $this->setClass($type);

@@ -114,14 +114,14 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      * Extracts the coupling information between the two given types and their
      * parent packages.
      *
-     * @param PHP_Depend_Code_AbstractType $type    The context type instance.
-     * @param PHP_Depend_Code_AbstractType $depType The referenced type.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type    The type instance.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $depType The referenced type.
      *
      * @return void
      */
     private function _processType(
-        PHP_Depend_Code_AbstractType $type,
-        PHP_Depend_Code_AbstractType $depType
+        PHP_Depend_Code_AbstractClassOrInterface $type,
+        PHP_Depend_Code_AbstractClassOrInterface $depType
     ) {
         if ($type !== $depType) {
             $this->_initNode($type);
