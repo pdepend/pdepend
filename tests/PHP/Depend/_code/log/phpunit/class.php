@@ -12,22 +12,22 @@
  *
  * FANOUT := 2
  * CALLS  := 0
- * 
+ *
  * @package default
  * @subpackage package
  */
 interface MyCouplingInterface
 {
     /**
-     * 
+     *
      * Simple test comment.
-     * 
+     *
      * FANOUT := 2
      * CALLS  := 0
-     * 
+     *
      * @param ArrayAccess $items The input items.
      * @param integer     $index The requested index.
-     * 
+     *
      * @return void
      * @throws OutOfRangeException For invalid index values.
      */
@@ -39,7 +39,7 @@ interface MyCouplingInterface
  *
  * FANOUT := 10
  * CALLS  := 10
- * 
+ *
  * @package default
  * @subpackage package
  */
@@ -47,25 +47,25 @@ class MyCouplingClass
 {
     /**
      * Simple test comment.
-     * 
+     *
      * @var SplObjectStorage $_objects
      */
     private $_objects = null;
-    
+
     /**
      * Simple test comment.
      *
      * @var array(integer => MyObjectItem) $items
      */
     protected $items = array();
-    
+
     /**
      * Simple test comment.
      *
      * @var Iterator $_iterator
      */
     private $_iterator = null;
-    
+
     /**
      * Simple test comment.
      *
@@ -74,15 +74,15 @@ class MyCouplingClass
     public $index = 0;
 
     /**
-     * 
+     *
      * Simple test comment.
-     * 
+     *
      * FANOUT := 3
      * CALLS  := 3
-     * 
+     *
      * @param ArrayAccess $items The input items.
      * @param integer     $index The requested index.
-     * 
+     *
      * @return void
      * @throws OutOfRangeException For invalid index values.
      */
@@ -96,16 +96,16 @@ class MyCouplingClass
         }
         $items->offsetUnset($index);
     }
-    
+
     /**
      * Simple test comment.
-     * 
+     *
      * FANOUT := 4
      * CALLS  := 7
-     * 
+     *
      * @param ArrayAccess $items The input items.
      * @param integer     $index The requested index.
-     * 
+     *
      * @return MyObjectItem
      * @throws OutOfRangeException For invalid index values.
      * @throws InvalidArgumentException For invalid index values.
