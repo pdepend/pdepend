@@ -4,7 +4,6 @@
     <file name="???"/>
   </files>
   <package name="+global">
-    <class name="BarFoo"/>
     <function name="bar">
       <file name="???"/>
     </function>
