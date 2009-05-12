@@ -554,6 +554,74 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue67Test extends PHP_Depend_Ab
     }
 
     /**
+     * Tests that the parser flag a function with returns reference when its
+     * declaraction contains an amphersand.
+     *
+     * @return void
+     */
+    public function testParserFlagsFunctionWithReturnsReference()
+    {
+        $packages = self::parseSource('issues/067-037-' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $this->assertTrue($function->returnsReference());
+    }
+
+    /**
+     * Tests that the parser does not set the returns reference flag when the
+     * function declaration does not contain an amphersand.
+     *
+     * @return void
+     */
+    public function testParserDoesNotFlagFunctionWithReturnsReference()
+    {
+        $packages = self::parseSource('issues/067-038-' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $this->assertFalse($function->returnsReference());
+    }
+
+    /**
+     * Tests that the parser sets the returns reference flag when a method
+     * declaration contains an amphersand.
+     *
+     * @return void
+     */
+    public function testParserFlagsClassMethodWithReturnsReferences()
+    {
+        $packages = self::parseSource('issues/067-039-' . __FUNCTION__ . '.php');
+        $method   = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $this->assertTrue($method->returnsReference());
+    }
+
+    /**
+     * Tests that the parser does not set the returns reference flag when a
+     * method declaration does not contain an amphersand.
+     *
+     * @return void
+     */
+    public function testParserDoesNotFlagClassMethodWithReturnsReferences()
+    {
+        $packages = self::parseSource('issues/067-040-' . __FUNCTION__ . '.php');
+        $method   = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $this->assertFalse($method->returnsReference());
+    }
+
+    /**
      * Tests that the parser throws the expected exception when no default value
      * was defined.
      *

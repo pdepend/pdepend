@@ -99,6 +99,13 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     private $_parameters = array();
 
     /**
+     * Does this callable return a value by reference?
+     *
+     * @var boolean $_returnsReference
+     */
+    private $_returnsReference = false;
+
+    /**
      * Returns the tokens found in the function body.
      *
      * @return array(mixed)
@@ -280,6 +287,31 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         $this->_parameters[] = $parameter;
 
         return $parameter;
+    }
+
+    /**
+     * This method will return <b>true</b> when this method returns a value by
+     * reference, otherwise the return value will be <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.5
+     */
+    public function returnsReference()
+    {
+        return $this->_returnsReference;
+    }
+
+    /**
+     * A call to this method will flag the callable instance with the returns
+     * reference flag, which means that the context function or method returns
+     * a value by reference.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setReturnsReference()
+    {
+        $this->_returnsReference = true;
     }
 
     // DEPRECATED METHODS AND PROPERTIES
