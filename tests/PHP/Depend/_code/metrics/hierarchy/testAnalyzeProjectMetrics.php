@@ -43,7 +43,7 @@ class FooBar extends Bar {
     public final function x() {}
     protected function y(Bar $bar) {
         if ($bar !== null) {
-            $bar = new BarFoo($bar);
+            $bar = new BarBaz($bar);
         }
     }   
 }
@@ -59,4 +59,9 @@ function bar() {
 
 $bar = new FooBar();
 $bar->y();
+
+/**
+ * @package pkg42
+ */
+class BarFoo {}
 ?>

@@ -305,6 +305,18 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
+     * Returns a value holder for the class or interface type declared for this
+     * parameter or <b>null</b> when no parameter type hint was declared.
+     *
+     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @since 0.9.5
+     */
+    public function getClassReference()
+    {
+        return $this->_classReference;
+    }
+
+    /**
      * Sets the type holder for this parameter. This method will only set its
      * internal state on the first call.
      *
