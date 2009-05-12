@@ -118,11 +118,12 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param PHP_Depend_Code_AbstractType $type The context type instance.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The context type
+     *        instance.
      *
      * @return void
      */
-    protected function visitType(PHP_Depend_Code_AbstractType $type)
+    protected function visitType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         $pkg = $type->getPackage();
 
