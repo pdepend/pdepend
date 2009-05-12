@@ -176,8 +176,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserStaticCallBug01()
     {
         $packages = self::parseSource('bugs/001.php');
-        $packages->next();
-        $this->assertEquals(2, $packages->count());
+        $this->assertEquals(1, $packages->count());
 
         $package = $packages->current();
         $this->assertEquals('package0', $package->getName());
@@ -263,9 +262,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         );
 
         $packages = self::parseSource('/parser/parser-sets-expected-function-tokens.php');
-        $packages->next();
-
-        $function = $packages->current()->getFunctions()->current();
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+            
         $this->assertEquals($tokens, $function->getTokens());
     }
 
@@ -276,11 +276,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectFileComment()
     {
-        $packages = self::parseSource('coupling/class.php');
-        $this->assertEquals(3, $packages->count()); // default, +global, +spl
-
-        $packages->next();
-        $packages->next();
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $this->assertEquals(1, $packages->count()); // default
 
         $package = $packages->current();
         $this->assertEquals('default\package', $package->getName());
@@ -500,13 +497,15 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserParseNewInstancePHP53()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/php-5.3/new.txt');
+        $packages = self::parseSource('php-5.3/new.txt');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
 
-        $this->assertEquals(3, $packages->count());
-        $packages->next();
-        $this->assertEquals('php\depend1', $packages->current()->getName());
-        $packages->next();
-        $this->assertEquals('php\depend2', $packages->current()->getName());
+        $dependencies = $function->getDependencies();
+        $this->assertEquals('php\depend2', $dependencies->current()->getPackage()->getName());
+        $dependencies->next();
+        $this->assertEquals('php\depend1', $dependencies->current()->getPackage()->getName());
     }
 
     /**
@@ -1277,21 +1276,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectTypeTokensIssue30()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/030.php');
+        $packages = self::parseSource('bugs/030.php');
         $this->assertEquals(1, $packages->count());
 
-        $classes = $packages->current()->getClasses();
-        $this->assertEquals(4, $classes->count());
-
-        $testClass = null;
-        foreach ($classes as $class) {
-            if ($class->getName() === 'PHP_Depend_ParserTest') {
-                $testClass = $class;
-                break;
-            }
-        }
-
-        $this->assertNotNull($testClass);
+        $testClass = $packages->current()
+            ->getClasses()
+            ->current();
 
         $expected = array(
             array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 3),
@@ -1445,8 +1435,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDetectsTypeWithinInstanceOfOperatorIssue16()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/016-1.php');
-        $this->assertEquals(2, $packages->count()); // +global & +spl
+        $packages = self::parseSource('bugs/016-1.php');
+        $this->assertEquals(1, $packages->count()); // +global
 
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1506,8 +1496,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDetectsTypeWithinCatchBlockIssue17()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/017-1.php');
-        $this->assertEquals(2, $packages->count()); // +global & +spl
+        $packages = self::parseSource('bugs/017-1.php');
+        $this->assertEquals(1, $packages->count()); // +global
 
         $functions = $packages->current()->getFunctions();
         $this->assertEquals(1, $functions->count());
@@ -1710,7 +1700,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $this->assertSame(1, $class->getMethods()->count());
         $method = $class->getMethods()->current();
-        $this->assertSame($interface, $method->getDependencies()->current());
+
+        $this->assertSame(
+            $interface,
+            $method->getDependencies()->current()
+        );
     }
 
     /**
