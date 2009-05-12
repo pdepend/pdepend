@@ -92,6 +92,15 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     private $_exceptionClassReferences = array();
 
     /**
+     * List of class references for all classes or interfaces this callable
+     * depends on.
+     *
+     * @var array(PHP_Depend_Code_ClassOrInterfaceReference)
+     * @since 0.9.5
+     */
+    private $_dependencyClassReferences = array();
+
+    /**
      * List of method/function parameters.
      *
      * @var array(PHP_Depend_Code_Parameter) $_parameters
@@ -137,8 +146,26 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getDependencies()
     {
+        $classReferences = $this->_dependencyClassReferences;
+        foreach ($this->_parameters as $parameter) {
+            if ($parameter->getClassReference() === null) {
+                continue;
+            }
+            $classReferences[] = $parameter->getClassReference();
+        }
+
+        return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
+            $classReferences
+        );
+        
         $dependencies = $this->getUnfilteredRawDependencies();
         return new PHP_Depend_Code_NodeIterator($dependencies);
+    }
+
+    public function addDependencyClassReference(
+        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+    ) {
+        $this->_dependencyClassReferences[] = $classReference;
     }
 
     /**
@@ -173,9 +200,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      *        depends on.
      *
      * @return void
+     * @deprecated Since version 0.9.5, use addDependencyClassReference() instead.
      */
     public function addDependency(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         if (in_array($type, $this->dependencies, true) === false) {
             $this->dependencies[] = $type;
         }
@@ -188,9 +217,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * @param PHP_Depend_Code_AbstractClassOrInterface $type A type to remove.
      *
      * @return void
+     * @deprecated Since version 0.9.5
      */
     public function removeDependency(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list
             unset($this->dependencies[$i]);
@@ -335,7 +366,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getReturnType()
     {
-        fwrite(STDERR, 'Since 0.9.5 getReturnType() is deprecated.' . PHP_EOL);
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         return $this->_returnType;
     }
 

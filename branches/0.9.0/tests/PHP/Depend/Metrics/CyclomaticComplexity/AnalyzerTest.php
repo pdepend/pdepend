@@ -72,19 +72,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateFunctionCCNAndCNN2()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/ccn/function.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
-        
-        $packages->rewind();
-        
-        $this->assertEquals(2, $packages->count()); // +global & +standard
-
-        foreach ($packages as $package) {
-            if ($package->getName() === '+global') {
-                break;
-            }
-        }
 
         $functions = $package->getFunctions();
         $this->assertEquals(2, $functions->count());
@@ -118,18 +110,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateMethodCCNAndCNN2()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/ccn/method.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
-        
-        $packages->rewind();
-        
-        $this->assertEquals(2, $packages->count()); // +global & +standard|+core
-        foreach ($packages as $package) {
-            if ($package->getName() === '+global') {
-                break;
-            }
-        }
 
         $classes = $package->getClasses();
         $this->assertEquals(1, $classes->count());
@@ -158,7 +143,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateProjectMetrics()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/ccn');
+        $packages = self::parseSource('metrics/cyclomaticcomplexity');
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
         
