@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractItem.php';
+require_once 'PHP/Depend/Code/AbstractType.php';
 require_once 'PHP/Depend/Util/UUID.php';
 
 /**
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Util/UUID.php';
  * @link       http://pdepend.org/
  */
 abstract class PHP_Depend_Code_AbstractClassOrInterface
-    extends PHP_Depend_Code_AbstractItem
+    extends PHP_Depend_Code_AbstractType
 {
     /**
      * List of {@link PHP_Depend_Code_AbstractClassOrInterface} objects this
