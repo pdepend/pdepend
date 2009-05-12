@@ -999,12 +999,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_CATCH, $tokens);
                 $this->_consumeComments($tokens);
                 $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
-/*
-                $qualifiedName = $this->_parseQualifiedName($tokens);
-                
-                $type = $this->_builder->buildClassOrInterface($qualifiedName);
-                $callable->addDependency($type);
-*/
+
                 $callable->addDependencyClassReference(
                     $this->_builder->buildClassOrInterfaceReference(
                         $this->_parseQualifiedName($tokens)
@@ -1026,12 +1021,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     || $peekType === self::T_BACKSLASH
                     || $peekType === self::T_NAMESPACE
                 ) {
-/*
-                    $qualifiedName = $this->_parseQualifiedName($tokens);
-
-                    $class = $this->_builder->buildClass($qualifiedName);
-                    $callable->addDependency($class);
-*/
                     $callable->addDependencyClassReference(
                         $this->_builder->buildClassReference(
                             $this->_parseQualifiedName($tokens)
@@ -1053,13 +1042,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     || $peekType === self::T_BACKSLASH
                     || $peekType === self::T_NAMESPACE
                 ) {
-/*
-                    $qualifiedName = $this->_parseQualifiedName($tokens);
-                    // TODO Refs #66: This should be done in a post process
-                    $class = $this->_builder->buildClassOrInterface($qualifiedName);
-                    $callable->addDependency($class);
-*/
-
                     $callable->addDependencyClassReference(
                         $this->_builder->buildClassOrInterfaceReference(
                             $this->_parseQualifiedName($tokens)
@@ -1096,12 +1078,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 }
 
                 $this->_consumeToken($tokenType, $tokens);
-/*
-                // TODO Refs #66: This should be done in a post process
-                $dep = $this->_builder->buildClassOrInterface($qualifiedName);
 
-                $callable->addDependency($dep);
-*/
                 $callable->addDependencyClassReference(
                     $this->_builder->buildClassOrInterfaceReference($qualifiedName)
                 );
@@ -1138,11 +1115,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
                     // TODO Refs #66: This should be done in a post process
                     // Create a referenced class or interface instance
-/*
-                    $dependency = $this->_builder->buildClassOrInterface($match[1]);
 
-                    $callable->addDependency($dependency);
-*/
                     $callable->addDependencyClassReference(
                         $this->_builder->buildClassOrInterfaceReference($match[1])
                     );
