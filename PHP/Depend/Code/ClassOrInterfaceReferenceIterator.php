@@ -51,7 +51,7 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
 /**
  * This is a special implementation of the node iterator that will translate
  * a list of given {@link PHP_Depend_Code_ClassOrInterfaceReference} holders
- * into a list of unique {@link PHP_Depend_Code_AbstractType} instances.
+ * into a list of unique {@link PHP_Depend_Code_AbstractClassOrInterface} instances.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -77,13 +77,13 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIterator
     }
 
     /**
-     * This method creates a unique set of {@link PHP_Depend_Code_AbstractType}
+     * This method creates a set of {@link PHP_Depend_Code_AbstractClassOrInterface}
      * objects from the given reference array.
      *
      * @param array(PHP_Depend_Code_ClassOrInterfaceReference) $classReferences List
      *        of references to concrete type instances.
      *
-     * @return array(PHP_Depend_Code_AbstractType)
+     * @return array(PHP_Depend_Code_AbstractClassOrInterface)
      */
     protected function createClassesAndInterfaces(array $classReferences)
     {

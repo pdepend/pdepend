@@ -80,7 +80,7 @@ class PHP_Depend_Code_ClassOrInterfaceReference
     /**
      * An already loaded type instance.
      *
-     * @var PHP_Depend_Code_AbstractType $typeInstance
+     * @var PHP_Depend_Code_AbstractClassOrInterface $typeInstance
      */
     protected $typeInstance = null;
 
@@ -99,7 +99,7 @@ class PHP_Depend_Code_ClassOrInterfaceReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getType()
     {

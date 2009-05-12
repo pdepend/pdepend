@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractType.php';
+require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
+class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
 {
     /**
      * List of associated properties.
@@ -147,11 +147,11 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractType
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
-     * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type Possible parent type.
      *
      * @return boolean
      */
-    public function isSubtypeOf(PHP_Depend_Code_AbstractType $type)
+    public function isSubtypeOf(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         if ($type === $this) {
             return true;

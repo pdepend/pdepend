@@ -64,7 +64,7 @@ class PHP_Depend_Code_InterfaceReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getType()
     {

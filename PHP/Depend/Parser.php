@@ -477,12 +477,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * part of a interface declaration or in the <b>implements</b> part of a
      * class declaration.
      *
-     * @param PHP_Depend_Code_AbstractType $abstractType The declaring type
+     * @param PHP_Depend_Code_AbstractClassOrInterface $abstractType The declaring
+     *        type instance.
      *
      * @return array(PHP_Depend_Token)
      */
-    private function _parseInterfaceList(PHP_Depend_Code_AbstractType $abstractType)
-    {
+    private function _parseInterfaceList(
+        PHP_Depend_Code_AbstractClassOrInterface $abstractType
+    ) {
         $tokens = array();
 
         while (true) {
@@ -513,11 +515,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses a class/interface body.
      *
-     * @param PHP_Depend_Code_AbstractType $type The context type instance.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The context class
+     *        or interface instance.
      *
      * @return array(array)
      */
-    protected function parseTypeBody(PHP_Depend_Code_AbstractType $type)
+    protected function parseTypeBody(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         $tokens = array();
 
