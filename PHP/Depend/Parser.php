@@ -702,11 +702,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         // Remove leading comments
         $this->_consumeComments($tokens);
+
+        $returnsReference = false;
         
         // Check for returns reference token
         if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
             $this->_consumeToken(self::T_BITWISE_AND, $tokens);
             $this->_consumeComments($tokens);
+
+            $returnsReference = true;
         }
 
         // Next token must be the function identifier
@@ -714,6 +718,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $function = $this->_builder->buildFunction($functionName);
         $this->_parseCallableDeclaration($tokens, $function);
+
+        if ($returnsReference === true) {
+            $function->setReturnsReference();
+        }
 
         // First check for an existing namespace
         if ($this->_namespaceName !== null) {
@@ -744,10 +752,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Remove leading comments
         $this->_consumeComments($tokens);
 
+        $returnsReference = false;
+
         // Check for returns reference token
         if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
             $this->_consumeToken(self::T_BITWISE_AND, $tokens);
             $this->_consumeComments($tokens);
+
+            $returnsReference = true;
         }
 
         // Next token must be the function identifier
@@ -761,6 +773,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->_parseCallableDeclaration($tokens, $method);
         $this->_prepareCallable($method);
+
+        if ($returnsReference === true) {
+            $method->setReturnsReference();
+        }
 
         return $method;
     }
