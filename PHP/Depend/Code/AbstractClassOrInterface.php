@@ -229,6 +229,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      *        or implemented interface reference.
      *
      * @return void
+     * @since 0.9.5
      */
     public function addInterfaceReference(
         PHP_Depend_Code_InterfaceReference $interfaceReference
