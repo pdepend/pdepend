@@ -74,14 +74,14 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     /**
      * The parent type object.
      *
-     * @var PHP_Depend_Code_AbstractType $_parent
+     * @var PHP_Depend_Code_AbstractClassOrInterface $_parent
      */
     private $_parent = null;
 
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return PHP_Depend_Code_AbstractType|null
+     * @return PHP_Depend_Code_AbstractClassOrInterface|null
      */
     public function getParent()
     {
@@ -91,12 +91,13 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     /**
      * Sets the parent type object.
      *
-     * @param PHP_Depend_Code_AbstractType $parent The parent class.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $parent The parent class.
      *
      * @return void
      */
-    public function setParent(PHP_Depend_Code_AbstractType $parent = null)
-    {
+    public function setParent(
+        PHP_Depend_Code_AbstractClassOrInterface $parent = null
+    ) {
         $this->_parent = $parent;
     }
 

@@ -78,7 +78,7 @@ final class PHP_Depend_Code_Filter_InternalPackage
         // NOTE: This looks a little bit ugly and it seems better to exclude
         //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
         //       PDepend supports more node types, this could produce errors.
-        if ($node instanceof PHP_Depend_Code_AbstractType) {
+        if ($node instanceof PHP_Depend_Code_AbstractClassOrInterface) {
             $package = $node->getPackage()->getName();
         } else if ($node instanceof PHP_Depend_Code_Function) {
             $package = $node->getPackage()->getName();

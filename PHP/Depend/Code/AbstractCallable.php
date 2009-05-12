@@ -67,9 +67,10 @@ require_once 'PHP/Depend/Code/ClassOrInterfaceReferenceIterator.php';
 abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_AbstractItem
 {
     /**
-     * List of {@link PHP_Depend_Code_AbstractType} objects this function depends on.
+     * List of {@link PHP_Depend_Code_AbstractClassOrInterface} objects this
+     * function depends on.
      *
-     * @var array(PHP_Depend_Code_AbstractType) $dependencies
+     * @var array(PHP_Depend_Code_AbstractClassOrInterface) $dependencies
      */
     protected $dependencies = array();
 
@@ -122,8 +123,8 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Returns all {@link PHP_Depend_Code_AbstractType} objects this function
-     * depends on.
+     * Returns all {@link PHP_Depend_Code_AbstractClassOrInterface} objects this
+     * function depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -134,10 +135,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
-     * objects this function depends on. This method is only for internal usage.
+     * Returns an unfiltered, raw array of
+     * {@link PHP_Depend_Code_AbstractClassOrInterface} objects this function
+     * depends on. This method is only for internal usage.
      *
-     * @return array(PHP_Depend_Code_AbstractType)
+     * @return array(PHP_Depend_Code_AbstractClassOrInterface)
      * @access private
      */
     public function getUnfilteredRawDependencies()
@@ -157,13 +159,15 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Adds the given {@link PHP_Depend_Code_AbstractType} object as dependency.
+     * Adds the given {@link PHP_Depend_Code_AbstractClassOrInterface} object as
+     * dependency.
      *
-     * @param PHP_Depend_Code_AbstractType $type A type this function depends on.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type A type this function
+     *        depends on.
      *
      * @return void
      */
-    public function addDependency(PHP_Depend_Code_AbstractType $type)
+    public function addDependency(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         if (in_array($type, $this->dependencies, true) === false) {
             $this->dependencies[] = $type;
@@ -171,14 +175,14 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Removes the given {@link PHP_Depend_Code_AbstractType} object from the
-     * dependency list.
+     * Removes the given {@link PHP_Depend_Code_AbstractClassOrInterface} object
+     * from the dependency list.
      *
-     * @param PHP_Depend_Code_AbstractType $type A type to remove.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type A type to remove.
      *
      * @return void
      */
-    public function removeDependency(PHP_Depend_Code_AbstractType $type)
+    public function removeDependency(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         if (($i = array_search($type, $this->dependencies, true)) !== false) {
             // Remove from internal list
@@ -235,8 +239,8 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Returns an iterator with thrown exception {@link PHP_Depend_Code_AbstractType}
-     * instances.
+     * Returns an iterator with thrown exception
+     * {@link PHP_Depend_Code_AbstractClassOrInterface} instances.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -285,7 +289,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * The return type for this callable. By default and for scalar types this
      * will be <b>null</b>.
      *
-     * @var PHP_Depend_Code_AbstractType $_returnType
+     * @var PHP_Depend_Code_AbstractClassOrInterface $_returnType
      * @deprecated Since version 0.9.5
      */
     private $_returnType = null;
@@ -294,7 +298,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * Returns the return type of this callable. By default and for scalar types
      * this will be <b>null</b>.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      * @deprecated Since version 0.9.5, use getReturnValueClass() instead.
      */
     public function getReturnType()
@@ -306,13 +310,15 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     /**
      * Sets the return type of this callable.
      *
-     * @param PHP_Depend_Code_AbstractType $returnType The return type of this.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $returnType The return
+     *        type of this.
      *
      * @return void
      * @deprecated Since version 0.9.5, use setReturnValueClassReference() instead.
      */
-    public function setReturnType(PHP_Depend_Code_AbstractType $returnType)
-    {
+    public function setReturnType(
+        PHP_Depend_Code_AbstractClassOrInterface $returnType
+    ) {
         fwrite(STDERR, 'Since 0.9.5 setReturnType() is deprecated.' . PHP_EOL);
         $this->_returnType = $returnType;
     }
@@ -320,7 +326,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     /**
      * A list of all thrown exception types.
      *
-     * @var array(PHP_Depend_Code_AbstractType) $_exceptionTypes
+     * @var array(PHP_Depend_Code_AbstractClassOrInterface) $_exceptionTypes
      * @deprecated Since version 0.9.5
      */
     private $_exceptionTypes = array();
@@ -338,10 +344,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
-     * Returns an unfiltered, raw array of {@link PHP_Depend_Code_AbstractType}
-     * objects this function may throw. This method is only for internal usage.
+     * Returns an unfiltered, raw array of
+     * {@link PHP_Depend_Code_AbstractClassOrInterface} objects this function
+     * may throw. This method is only for internal usage.
      *
-     * @return array(PHP_Depend_Code_AbstractType)
+     * @return array(PHP_Depend_Code_AbstractClassOrInterface)
      * @access private
      * @deprecated Since version 0.9.5
      */
@@ -357,13 +364,15 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     /**
      * Adds an exception to the list of thrown exception types.
      *
-     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $exceptionType Thrown
+     *        exception.
      *
      * @return void
      * @deprecated Since version 0.9.5, use addExceptionClass() instead.
      */
-    public function addExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
-    {
+    public function addExceptionType(
+        PHP_Depend_Code_AbstractClassOrInterface $exceptionType
+    ) {
         fwrite(STDERR, 'Since 0.9.5 addExceptionType() is deprecated.' . PHP_EOL);
         if (in_array($exceptionType, $this->_exceptionTypes, true) === false) {
             $this->_exceptionTypes[] = $exceptionType;
@@ -373,13 +382,15 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     /**
      * Removes an exception from the list of thrown exception types.
      *
-     * @param PHP_Depend_Code_AbstractType $exceptionType Thrown exception.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $exceptionType Thrown
+     *        exception.
      *
      * @return void
      * @deprecated Since version 0.9.5
      */
-    public function removeExceptionType(PHP_Depend_Code_AbstractType $exceptionType)
-    {
+    public function removeExceptionType(
+        PHP_Depend_Code_AbstractClassOrInterface $exceptionType
+    ) {
         fwrite(STDERR, 'Since 0.9.5 removeExceptionType() is deprecated.' . PHP_EOL);
         $index = array_search($exceptionType, $this->_exceptionTypes, true);
         if ($index !== false) {

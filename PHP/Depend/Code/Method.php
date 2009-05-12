@@ -65,7 +65,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     /**
      * The parent type object.
      *
-     * @var PHP_Depend_Code_AbstractType $parent
+     * @var PHP_Depend_Code_AbstractClassOrInterface $parent
      */
     protected $parent = null;
 
@@ -184,7 +184,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return PHP_Depend_Code_AbstractType|null
+     * @return PHP_Depend_Code_AbstractClassOrInterface|null
      */
     public function getParent()
     {
@@ -194,12 +194,13 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     /**
      * Sets the parent type object.
      *
-     * @param PHP_Depend_Code_AbstractType $parent The parent type.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $parent The parent type.
      *
      * @return void
      */
-    public function setParent(PHP_Depend_Code_AbstractType $parent = null)
-    {
+    public function setParent(
+        PHP_Depend_Code_AbstractClassOrInterface $parent = null
+    ) {
         $this->parent = $parent;
     }
 
