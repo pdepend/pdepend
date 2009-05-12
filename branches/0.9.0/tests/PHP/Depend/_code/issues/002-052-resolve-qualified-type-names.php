@@ -2,6 +2,6 @@
 namespace bar;
 
 function foo($obj) {
-    return \bar\Foo::bar();;
+    return \bar\Foo::bar();
 }
 ?>
