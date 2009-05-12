@@ -49,7 +49,7 @@
 
 // @codeCoverageIgnoreStart
 
-require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
+require_once 'PHP/Depend/Code/AbstractItem.php';
 
 /**
  * Represents an interface or a class type.
@@ -64,8 +64,7 @@ require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
  * @link       http://pdepend.org/
  * @deprecated Since version 0.9.5, use PHP_Depend_Code_AbstractClassOrInterface
  */
-abstract class PHP_Depend_Code_AbstractType
-    extends PHP_Depend_Code_AbstractClassOrInterface
+abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
 {    
 }
 
