@@ -259,7 +259,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->reset();
 
         $tokenType = $this->_tokenizer->peek();
-
         while ($tokenType !== self::T_EOF) {
 
             switch ($tokenType) {
