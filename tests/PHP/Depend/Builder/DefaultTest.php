@@ -329,21 +329,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the function build method creates an unique function instance.
-     *
-     * @return void
-     */
-    public function testBuildFunctionUnique()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-
-        $function1 = $builder->buildFunction('foobar', 0);
-        $function2 = $builder->buildFunction('foobar', 0);
-
-        $this->assertSame($function1, $function2);
-    }
-
-    /**
      * Tests that the node builder appends a default package to all new created
      * functions.
      *

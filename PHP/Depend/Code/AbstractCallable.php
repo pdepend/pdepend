@@ -423,10 +423,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getUnfilteredRawExceptionTypes()
     {
-        fwrite(
-            STDERR,
-            'Since 0.9.5 getUnfilteredRawExceptionTypes() is deprecated.' . PHP_EOL
-        );
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         return $this->_exceptionTypes;
     }
 
@@ -442,7 +439,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function addExceptionType(
         PHP_Depend_Code_AbstractClassOrInterface $exceptionType
     ) {
-        fwrite(STDERR, 'Since 0.9.5 addExceptionType() is deprecated.' . PHP_EOL);
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         if (in_array($exceptionType, $this->_exceptionTypes, true) === false) {
             $this->_exceptionTypes[] = $exceptionType;
         }

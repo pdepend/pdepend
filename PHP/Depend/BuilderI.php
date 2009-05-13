@@ -85,6 +85,16 @@ interface PHP_Depend_BuilderI
      */
     function buildClassOrInterface($name);
 
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Class}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.9.5
+     */
     function getClassOrInterface($qualifiedName);
 
     /**
@@ -106,6 +116,16 @@ interface PHP_Depend_BuilderI
      */
     function buildClass($qualifiedName);
 
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Class}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_Class
+     * @since 0.9.5
+     */
     function getClass($qualifiedName);
 
     /**
@@ -134,6 +154,16 @@ interface PHP_Depend_BuilderI
      */
     function buildInterface($qualifiedName);
 
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Interface}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_Interface
+     * @since 0.9.5
+     */
     function getInterface($qualifiedName);
 
     /**
