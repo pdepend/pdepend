@@ -105,37 +105,37 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * All generated {@link PHP_Depend_Code_Package} objects
      *
-     * @var array(string=>PHP_Depend_Code_Package) $packages
+     * @var array(string=>PHP_Depend_Code_Package) $_packages
      */
-    protected $packages = array();
+    private $_packages = array();
 
     /**
-     * All generated {@link PHP_Depend_Code_Function} instances.
+     * Internal status flag used to check that a build request is internal.
      *
-     * @var array(string=>PHP_Depend_Code_Function) $functions
+     * @var boolean $_internal
      */
-    protected $functions = array();
+    private $_internal = false;
 
     /**
-     * All generated {@link PHP_Depend_Code_Method} instances.
+     * Internal used flag that marks the parsing process as frozen.
      *
-     * @var array(PHP_Depend_Code_Method) $methods
+     * @var boolean $_frozen
      */
-    protected $methods = array();
+    private $_frozen = false;
 
     /**
-     * All generated {@link PHP_Depend_Code_Parameter} instances.
+     * Cache of all classes created during the regular parsing process.
      *
-     * @var array(PHP_Depend_Code_Parameter) $_parameters
+     * @var array(PHP_Depend_Code_Class) $_frozenClasses
      */
-    private $_parameters = array();
+    private $_frozenClasses = array();
 
     /**
-     * All generated {@link PHP_Depend_Code_TypeConstant} instances.
+     * Cache of all interfaces created during the regular parsing process.
      *
-     * @var array(PHP_Depend_Code_TypeConstant) $_typeConstants
+     * @var array(PHP_Depend_Code_Interface) $_frozenInterfaces
      */
-    private $_typeConstants = array();
+    private $_frozenInterfaces = array();
 
     /**
      * Constructs a new builder instance.
@@ -145,89 +145,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
         $this->defaultFile    = new PHP_Depend_Code_File(null);
 
-        $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
-    }
-
-    /**
-     * Generic build class for classes and interfaces. This method should be used
-     * in cases when it is not clear what type is used in the current situation.
-     * This could happen if the parser analyzes a method signature. The default
-     * return type is {@link PHP_Depend_Code_Class}, but if there is already an
-     * interface for this name, the method will return this instance.
-     *
-     * <code>
-     *   $builder->buildInterface('PHP_DependI');
-     *
-     *   // Returns an instance of PHP_Depend_Code_Interface
-     *   $builder->buildClassOrInterface('PHP_DependI');
-     *
-     *   // Returns an instance of PHP_Depend_Code_Class
-     *   $builder->buildClassOrInterface('PHP_Depend');
-     * </code>
-     *
-     * @param string $name The class name.
-     *
-     * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface
-     *         The created class or interface instance.
-     */
-    public function buildClassOrInterface($name)
-    {
-        //throw new Exception('Deprecated');
-        fwrite(
-            STDERR, __METHOD__ . ' is deprecated.' . PHP_EOL
-        );
-        $cls = $this->extractTypeName($name);
-        $pkg = $this->extractPackageName($name);
-
-        $typeID = strtolower($cls);
-
-        if (isset($this->classes[$typeID][$pkg])) {
-            $instance = $this->classes[$typeID][$pkg];
-        } else if (isset($this->interfaces[$typeID][$pkg])) {
-            $instance = $this->interfaces[$typeID][$pkg];
-        } else if (isset($this->classes[$typeID])) {
-            $instance = reset($this->classes[$typeID]);
-        } else if (isset($this->interfaces[$typeID])) {
-            $instance = reset($this->interfaces[$typeID]);
-        } else {
-            $instance = $this->buildClass($name);
-        }
-        return $instance;
-    }
-
-    private $_internal = false;
-    private $_frozen = false;
-    private $_frozenClasses = array();
-    private $_frozenInterfaces = array();
-
-    private function freeze()
-    {
-        if ($this->_frozen === true) {
-            return;
-        }
-
-        $this->_frozen = true;
-
-        $this->_frozenClasses    = $this->classes;
-        $this->_frozenInterfaces = $this->interfaces;
-
-        $this->classes    = array();
-        $this->interfaces = array();
-    }
-
-    public function getClassOrInterface($qualifiedName)
-    {
-        $classOrInterface = $this->findClass($qualifiedName);
-        if ($classOrInterface !== null) {
-            return $classOrInterface;
-        }
-
-        $classOrInterface = $this->findInterface($qualifiedName);
-        if ($classOrInterface !== null) {
-            return $classOrInterface;
-        }
-        $this->_internal = true;
-        return $this->buildClass($qualifiedName);
+        $this->_packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
     }
 
     /**
@@ -243,6 +161,30 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         include_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
 
         return new PHP_Depend_Code_ClassOrInterfaceReference($this, $qualifiedName);
+    }
+
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Class}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.9.5
+     */
+    public function getClassOrInterface($qualifiedName)
+    {
+        $classOrInterface = $this->findClass($qualifiedName);
+        if ($classOrInterface !== null) {
+            return $classOrInterface;
+        }
+
+        $classOrInterface = $this->findInterface($qualifiedName);
+        if ($classOrInterface !== null) {
+            return $classOrInterface;
+        }
+        return $this->buildClassInternal($qualifiedName);
     }
 
     /**
@@ -275,11 +217,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildClass($name)
     {
-        if ($this->_frozen === true && $this->_internal === false) {
-            throw new ErrorException('Invalid builder state.');
-        }
-        $this->_internal = false;
-
+        $this->checkBuilderState();
+        
         $className   = $this->extractTypeName($name);
         $packageName = $this->extractPackageName($name);
 
@@ -298,62 +237,24 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         return $class;
     }
 
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Class}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_Class
+     * @since 0.9.5
+     */
     public function getClass($qualifiedName)
     {
         $class = $this->findClass($qualifiedName);
         if ($class === null) {
-            $this->_internal = true;
-            $class = $this->buildClass($qualifiedName);
+            $class = $this->buildClassInternal($qualifiedName);
         }
         return $class;
     }
-    /*
-    public function buildClass($name)
-    {
-        $cls = $this->extractTypeName($name);
-        $pkg = $this->extractPackageName($name);
-
-        $typeID = strtolower($cls);
-
-        $class = null;
-
-        // 1) check for an equal class version
-        if (isset($this->classes[$typeID][$pkg])) {
-            $class = $this->classes[$typeID][$pkg];
-
-            // 2) check for a default version that could be replaced
-        } else if (isset($this->classes[$typeID][self::DEFAULT_PACKAGE])) {
-            $class = $this->classes[$typeID][self::DEFAULT_PACKAGE];
-
-            unset($this->classes[$typeID][self::DEFAULT_PACKAGE]);
-
-            $this->classes[$typeID][$pkg] = $class;
-
-            $this->buildPackage($pkg)->addType($class);
-
-            // 3) check for any version that could be used instead of the default
-        } else if (isset($this->classes[$typeID]) && $this->isDefault($pkg)) {
-            $class = reset($this->classes[$typeID]);
-
-            // 4) Create a new class for the given package
-        } else {
-            // Debug class creation
-            PHP_Depend_Util_Log::debug('Creating class "' . $name . '"');
-
-            // Create a new class instance
-            $class = new PHP_Depend_Code_Class($cls);
-            $class->setSourceFile($this->defaultFile);
-
-            // Store class reference
-            $this->classes[$typeID][$pkg] = $class;
-
-            // Append to class package
-            $this->buildPackage($pkg)->addType($class);
-        }
-
-        return $class;
-    }
-     */
 
     /**
      * Builds a new code type reference instance.
@@ -365,6 +266,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildClassReference($qualifiedName)
     {
+        $this->checkBuilderState();
+        
         include_once 'PHP/Depend/Code/ClassReference.php';
 
         return new PHP_Depend_Code_ClassReference($this, $qualifiedName);
@@ -377,6 +280,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildClosure()
     {
+        $this->checkBuilderState();
+
         include_once 'PHP/Depend/Code/Closure.php';
 
         return new PHP_Depend_Code_Closure();
@@ -391,14 +296,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildTypeConstant($name)
     {
+        $this->checkBuilderState();
+
         // Debug type constant creation
         PHP_Depend_Util_Log::debug('Creating type constant "' . $name . '"');
 
         // Create new constant instance.
         $constant = new PHP_Depend_Code_TypeConstant($name);
-
-        // Store local reference
-        $this->_typeConstants[] = $constant;
 
         return $constant;
     }
@@ -439,10 +343,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildInterface($name)
     {
-        if ($this->_frozen === true && $this->_internal === false) {
-            throw new ErrorException('Invalid builder state.');
-        }
-        $this->_internal = false;
+        $this->checkBuilderState();
         
         $interfaceName = $this->extractTypeName($name);
         $packageName   = $this->extractPackageName($name);
@@ -462,137 +363,25 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         return $interface;
     }
 
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Interface}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_Interface
+     * @since 0.9.5
+     */
     public function getInterface($qualifiedName)
     {
         $interface = $this->findInterface($qualifiedName);
         if ($interface === null) {
-            $this->_internal = true;
-            $interface = $this->buildInterface($qualifiedName);
+            $interface = $this->buildInterfaceInternal($qualifiedName);
         }
         return $interface;
     }
-
-    protected function findInterface($qualifiedName)
-    {
-        $this->freeze();
-
-        return $this->findClassOrInterface(
-            array_merge_recursive(
-                $this->_frozenInterfaces,
-                $this->interfaces
-            ),
-            $qualifiedName
-        );
-    }
-
-    protected function findClass($qualifiedName)
-    {
-        $this->freeze();
-
-        return $this->findClassOrInterface(
-            array_merge_recursive(
-                $this->_frozenClasses,
-                $this->classes
-            ),
-            $qualifiedName
-        );
-    }
-
-    protected function findClassOrInterface(array $instances, $qualifiedName)
-    {
-        $classOrInterfaceName = $this->extractTypeName($qualifiedName);
-        $packageName          = $this->extractPackageName($qualifiedName);
-
-        $caseInsensitiveName = strtolower($classOrInterfaceName);
-
-        if (!isset($instances[$caseInsensitiveName])) {
-            return null;
-        }
-
-        // Check for exact match and return first matching instance
-        if (isset($instances[$caseInsensitiveName][$packageName])) {
-            return reset($instances[$caseInsensitiveName][$packageName]);
-        }
-        
-        if (!$this->isDefault($packageName)) {
-            return null;
-        }
-
-        $classesOrInterfaces = reset($instances[$caseInsensitiveName]);
-        return reset($classesOrInterfaces);
-    }
-/*
-    public function buildInterface($name)
-    {
-        $ife = $this->extractTypeName($name);
-        $pkg = $this->extractPackageName($name);
-
-        $typeID = strtolower($ife);
-
-        $class = null;
-        if (isset($this->classes[$typeID][$pkg])) {
-            $class = $this->classes[$typeID][$pkg];
-        } else if (isset($this->classes[$typeID][self::DEFAULT_PACKAGE])) {
-            // TODO: Implement something like: allwaysIsClass(),
-            //       This could be usefull for class names detected by 'new ...'
-            $class = $this->classes[$typeID][self::DEFAULT_PACKAGE];
-        }
-
-        if ($class !== null && $class->isUserDefined() === false) {
-            $package = $class->getPackage();
-
-            // Only reparent if the found class is part of the default package
-            if ($package === $this->defaultPackage) {
-                $package->removeType($class);
-
-                unset($this->classes[$typeID][$package->getName()]);
-
-                if (count($this->classes[$typeID]) === 0) {
-                    unset($this->classes[$typeID]);
-                }
-            } else {
-                // Unset class reference
-                $class = null;
-            }
-        }
-
-        // 1) check for an equal interface version
-        if (isset($this->interfaces[$typeID][$pkg])) {
-            $interface = $this->interfaces[$typeID][$pkg];
-
-            // 2) check for a default version that could be replaced
-        } else if (isset($this->interfaces[$typeID][self::DEFAULT_PACKAGE])) {
-            $interface = $this->interfaces[$typeID][self::DEFAULT_PACKAGE];
-
-            unset($this->interfaces[$typeID][self::DEFAULT_PACKAGE]);
-
-            $this->interfaces[$typeID][$pkg] = $interface;
-
-            $this->buildPackage($pkg)->addType($interface);
-
-            // 3) check for any version that could be used instead of the default
-        } else if (isset($this->interfaces[$typeID]) && $this->isDefault($pkg)) {
-            $interface = reset($this->interfaces[$typeID]);
-
-            // 4) Create a new interface for the given package
-        } else {
-            // Debug interface creation
-            PHP_Depend_Util_Log::debug('Creating interface "' . $name . '"');
-
-            // Create a new interface instance
-            $interface = new PHP_Depend_Code_Interface($ife);
-            $interface->setSourceFile($this->defaultFile);
-
-            // Store interface reference
-            $this->interfaces[$typeID][$pkg] = $interface;
-
-            // Append interface to package
-            $this->buildPackage($pkg)->addType($interface);
-        }
-
-        return $interface;
-    }
-*/
+    
     /**
      * Builds a new code type reference instance.
      *
@@ -603,6 +392,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildInterfaceReference($qualifiedName)
     {
+        $this->checkBuilderState();
+
         include_once 'PHP/Depend/Code/InterfaceReference.php';
 
         return new PHP_Depend_Code_InterfaceReference($this, $qualifiedName);
@@ -617,16 +408,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildMethod($name)
     {
+        $this->checkBuilderState();
+
         // Debug method creation
         PHP_Depend_Util_Log::debug('Creating method "' . $name . '()"');
 
         // Create a new method instance
-        $method = new PHP_Depend_Code_Method($name);
-
-        // Store instance an local map
-        $this->methods[] = $method;
-
-        return $method;
+        return new PHP_Depend_Code_Method($name);
     }
 
     /**
@@ -638,13 +426,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildPackage($name)
     {
-        if (!isset($this->packages[$name])) {
+        if (!isset($this->_packages[$name])) {
             // Debug package creation
             PHP_Depend_Util_Log::debug('Creating package "' . $name . '"');
 
-            $this->packages[$name] = new PHP_Depend_Code_Package($name);
+            $this->_packages[$name] = new PHP_Depend_Code_Package($name);
         }
-        return $this->packages[$name];
+        return $this->_packages[$name];
     }
 
     /**
@@ -656,14 +444,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildParameter($name)
     {
+        $this->checkBuilderState();
+        
         // Debug parameter creation
         PHP_Depend_Util_Log::debug('Creating parameter "' . $name . '"');
 
         // Create a new parameter instance
         $parameter = new PHP_Depend_Code_Parameter($name);
-
-        // Store local reference
-        $this->_parameters[] = $parameter;
 
         return $parameter;
     }
@@ -677,6 +464,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildProperty($name)
     {
+        $this->checkBuilderState();
+
         // Debug property creation
         PHP_Depend_Util_Log::debug('Creating property "' . $name . '"');
 
@@ -693,22 +482,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildFunction($name)
     {
-        if (isset($this->functions[$name])) {
-            $function = $this->functions[$name];
-        } else {
-            // Debug function creation
-            PHP_Depend_Util_Log::debug('Creating function "' . $name . '()"');
+        $this->checkBuilderState();
 
-            // Create new function
-            $function = new PHP_Depend_Code_Function($name);
-            $function->setSourceFile($this->defaultFile);
+        // Debug function creation
+        PHP_Depend_Util_Log::debug('Creating function "' . $name . '()"');
 
-            // Add to default package
-            $this->defaultPackage->addFunction($function);
-            // Store function reference
-            $this->functions[$name] = $function;
-        }
+        // Create new function
+        $function = new PHP_Depend_Code_Function($name);
+        $function->setSourceFile($this->defaultFile);
 
+        // Add to default package
+        $this->defaultPackage->addFunction($function);
+ 
         return $function;
     }
 
@@ -732,7 +517,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function getPackages()
     {
         // Create a package array copy
-        $packages = $this->packages;
+        $packages = $this->_packages;
 
         // Remove default package if empty
         if ($this->defaultPackage->getTypes()->count() === 0
@@ -742,6 +527,209 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
         return new PHP_Depend_Code_NodeIterator($packages);
     }
+
+    /**
+     * Builds a new new interface instance.
+     *
+     * If there is an existing class instance for the given name, this method
+     * checks if this class is part of the default namespace. If this is the
+     * case this method will update all references to the new interface and it
+     * removes the class instance. Otherwise it creates new interface instance.
+     *
+     * Where possible you should give a qualified interface name, that is
+     * prefixed with the package identifier.
+     *
+     * <code>
+     *   $builder->buildInterface('php::depend::Parser');
+     * </code>
+     *
+     * To determine the correct interface, this method implements the following
+     * algorithm.
+     *
+     * <ol>
+     *   <li>Check for an exactly matching instance and reuse it.</li>
+     *   <li>Check for a interface instance that belongs to the default package.
+     *   If such an instance exists, reuse it and replace the default package
+     *   with the newly given package information.</li>
+     *   <li>Check that the requested interface is in the default package, if
+     *   this is true, reuse the first interface instance and ignore the default
+     *   package.
+     *   </li>
+     *   <li>Create a new instance for the specified package.</li>
+     * </ol>
+     *
+     * @param string $qualifiedName The full qualified interface name.
+     *
+     * @return PHP_Depend_Code_Interface
+     * @since 0.9.5
+     */
+    public function buildInterfaceInternal($qualifiedName)
+    {
+        $this->_internal = true;
+        return $this->buildInterface($qualifiedName);
+    }
+
+    /**
+     * This method tries to find an interface instance matching for the given
+     * qualified name in all scopes already processed. It will return the best
+     * matching instance or <b>null</b> if no match exists.
+     *
+     * @param string $qualifiedName The qualified interface name.
+     *
+     * @return PHP_Depend_Code_Interface
+     * @since 0.9.5
+     */
+    protected function findInterface($qualifiedName)
+    {
+        $this->freeze();
+
+        $interface = $this->findClassOrInterface(
+            $this->_frozenInterfaces,
+            $qualifiedName
+        );
+
+        if ($interface === null) {
+            $interface = $this->findClassOrInterface(
+                $this->interfaces,
+                $qualifiedName
+            );
+        }
+        return $interface;
+    }
+
+    /**
+     * Builds a new class instance or reuses a previous created class.
+     *
+     * Where possible you should give a qualified class name, that is prefixed
+     * with the package identifier.
+     *
+     * <code>
+     *   $builder->buildClass('php::depend::Parser');
+     * </code>
+     *
+     * To determine the correct class, this method implements the following
+     * algorithm.
+     *
+     * <ol>
+     *   <li>Check for an exactly matching instance and reuse it.</li>
+     *   <li>Check for a class instance that belongs to the default package. If
+     *   such an instance exists, reuse it and replace the default package with
+     *   the newly given package information.</li>
+     *   <li>Check that the requested class is in the default package, if this
+     *   is true, reuse the first class instance and ignore the default package.
+     *   </li>
+     *   <li>Create a new instance for the specified package.</li>
+     * </ol>
+     *
+     * @param string $qualifiedName The qualified class name.
+     *
+     * @return PHP_Depend_Code_Class
+     * @since 0.9.5
+     */
+    protected function buildClassInternal($qualifiedName)
+    {
+        $this->_internal = true;
+        return $this->buildClass($qualifiedName);
+    }
+
+    /**
+     * This method tries to find a class instance matching for the given
+     * qualified name in all scopes already processed. It will return the best
+     * matching instance or <b>null</b> if no match exists.
+     *
+     * @param string $qualifiedName The qualified class name.
+     *
+     * @return PHP_Depend_Code_Class
+     * @since 0.9.5
+     */
+    protected function findClass($qualifiedName)
+    {
+        $this->freeze();
+
+        $class = $this->findClassOrInterface(
+            $this->_frozenClasses,
+            $qualifiedName
+        );
+
+        if ($class === null) {
+            $class = $this->findClassOrInterface($this->classes, $qualifiedName);
+        }
+        return $class;
+    }
+
+    /**
+     * This method tries to find an interface or class instance matching for the
+     * given qualified name in all scopes already processed. It will return the
+     * best matching instance or <b>null</b> if no match exists.
+     *
+     * @param array  $instances     Map of already created instances.
+     * @param string $qualifiedName The qualified interface or class name.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.9.5
+     */
+    protected function findClassOrInterface(array $instances, $qualifiedName)
+    {
+        $classOrInterfaceName = $this->extractTypeName($qualifiedName);
+        $packageName          = $this->extractPackageName($qualifiedName);
+
+        $caseInsensitiveName = strtolower($classOrInterfaceName);
+
+        if (!isset($instances[$caseInsensitiveName])) {
+            return null;
+        }
+
+        // Check for exact match and return first matching instance
+        if (isset($instances[$caseInsensitiveName][$packageName])) {
+            return reset($instances[$caseInsensitiveName][$packageName]);
+        }
+
+        if (!$this->isDefault($packageName)) {
+            return null;
+        }
+
+        $classesOrInterfaces = reset($instances[$caseInsensitiveName]);
+        return reset($classesOrInterfaces);
+    }
+
+    /**
+     * This method will freeze the actual builder state and create a second
+     * runtime scope.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    protected function freeze()
+    {
+        if ($this->_frozen === true) {
+            return;
+        }
+
+        $this->_frozen = true;
+
+        $this->_frozenClasses    = $this->classes;
+        $this->_frozenInterfaces = $this->interfaces;
+
+        $this->classes    = array();
+        $this->interfaces = array();
+    }
+
+    /**
+     * Checks that the parser is not frozen or a request is flagged as internal.
+     *
+     * @param boolean $internal The new internal flag value.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    protected function checkBuilderState($internal = false)
+    {
+        if ($this->_frozen === true && $this->_internal === false) {
+            throw new ErrorException('Invalid builder state.');
+        }
+        $this->_internal = $internal;
+    }
+
 
     /**
      * Returns <b>true</b> if the given package is the default package.
@@ -814,4 +802,55 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
         return self::DEFAULT_PACKAGE;
     }
+
+    // DEPRECATED METHODS AND PROPERTIES
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Generic build class for classes and interfaces. This method should be used
+     * in cases when it is not clear what type is used in the current situation.
+     * This could happen if the parser analyzes a method signature. The default
+     * return type is {@link PHP_Depend_Code_Class}, but if there is already an
+     * interface for this name, the method will return this instance.
+     *
+     * <code>
+     *   $builder->buildInterface('PHP_DependI');
+     *
+     *   // Returns an instance of PHP_Depend_Code_Interface
+     *   $builder->buildClassOrInterface('PHP_DependI');
+     *
+     *   // Returns an instance of PHP_Depend_Code_Class
+     *   $builder->buildClassOrInterface('PHP_Depend');
+     * </code>
+     *
+     * @param string $name The class name.
+     *
+     * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface
+     *         The created class or interface instance.
+     * @deprecated Since version 0.9.5, use getClassOrInterface() instead.
+     */
+    public function buildClassOrInterface($name)
+    {
+        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        
+        $cls = $this->extractTypeName($name);
+        $pkg = $this->extractPackageName($name);
+
+        $typeID = strtolower($cls);
+
+        if (isset($this->classes[$typeID][$pkg])) {
+            $instance = $this->classes[$typeID][$pkg];
+        } else if (isset($this->interfaces[$typeID][$pkg])) {
+            $instance = $this->interfaces[$typeID][$pkg];
+        } else if (isset($this->classes[$typeID])) {
+            $instance = reset($this->classes[$typeID]);
+        } else if (isset($this->interfaces[$typeID])) {
+            $instance = reset($this->interfaces[$typeID]);
+        } else {
+            $instance = $this->buildClass($name);
+        }
+        return $instance;
+    }
+    // @codeCoverageIgnoreEnd
+    
 }
