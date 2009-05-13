@@ -68,7 +68,10 @@ class PHP_Depend_Code_InterfaceReference
      */
     public function getType()
     {
-        return $this->builder->buildInterface($this->qualifiedName);
+        if ($this->typeInstance === null) {
+            $this->typeInstance = $this->builder->getInterface($this->qualifiedName);
+        }
+        return $this->typeInstance;
     }
 }
 ?>

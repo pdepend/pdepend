@@ -104,7 +104,7 @@ class PHP_Depend_Code_ClassOrInterfaceReference
     public function getType()
     {
         if ($this->typeInstance === null) {
-            $this->typeInstance = $this->builder->buildClassOrInterface(
+            $this->typeInstance = $this->builder->getClassOrInterface(
                 $this->qualifiedName
             );
         }
