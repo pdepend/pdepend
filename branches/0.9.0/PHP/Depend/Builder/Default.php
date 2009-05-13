@@ -172,6 +172,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildClassOrInterface($name)
     {
+        //throw new Exception('Deprecated');
+        fwrite(
+            STDERR, __METHOD__ . ' is deprecated.' . PHP_EOL
+        );
         $cls = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
 
@@ -189,6 +193,41 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $instance = $this->buildClass($name);
         }
         return $instance;
+    }
+
+    private $_internal = false;
+    private $_frozen = false;
+    private $_frozenClasses = array();
+    private $_frozenInterfaces = array();
+
+    private function freeze()
+    {
+        if ($this->_frozen === true) {
+            return;
+        }
+
+        $this->_frozen = true;
+
+        $this->_frozenClasses    = $this->classes;
+        $this->_frozenInterfaces = $this->interfaces;
+
+        $this->classes    = array();
+        $this->interfaces = array();
+    }
+
+    public function getClassOrInterface($qualifiedName)
+    {
+        $classOrInterface = $this->findClass($qualifiedName);
+        if ($classOrInterface !== null) {
+            return $classOrInterface;
+        }
+
+        $classOrInterface = $this->findInterface($qualifiedName);
+        if ($classOrInterface !== null) {
+            return $classOrInterface;
+        }
+        $this->_internal = true;
+        return $this->buildClass($qualifiedName);
     }
 
     /**
@@ -236,6 +275,41 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildClass($name)
     {
+        if ($this->_frozen === true && $this->_internal === false) {
+            throw new ErrorException('Invalid builder state.');
+        }
+        $this->_internal = false;
+
+        $className   = $this->extractTypeName($name);
+        $packageName = $this->extractPackageName($name);
+
+        $class = new PHP_Depend_Code_Class($className);
+        $class->setSourceFile($this->defaultFile);
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($class);
+
+        $classNameLower = strtolower($className);
+        if (isset($this->classes[$classNameLower][$packageName])) {
+            $this->classes[$classNameLower][$packageName] = array();
+        }
+        $this->classes[$classNameLower][$packageName][] = $class;
+
+        return $class;
+    }
+
+    public function getClass($qualifiedName)
+    {
+        $class = $this->findClass($qualifiedName);
+        if ($class === null) {
+            $this->_internal = true;
+            $class = $this->buildClass($qualifiedName);
+        }
+        return $class;
+    }
+    /*
+    public function buildClass($name)
+    {
         $cls = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
 
@@ -279,6 +353,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         return $class;
     }
+     */
 
     /**
      * Builds a new code type reference instance.
@@ -364,6 +439,91 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildInterface($name)
     {
+        if ($this->_frozen === true && $this->_internal === false) {
+            throw new ErrorException('Invalid builder state.');
+        }
+        $this->_internal = false;
+        
+        $interfaceName = $this->extractTypeName($name);
+        $packageName   = $this->extractPackageName($name);
+
+        $interface = new PHP_Depend_Code_Interface($interfaceName);
+        $interface->setSourceFile($this->defaultFile);
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($interface);
+
+        $caseInsensitiveName = strtolower($interfaceName);
+        if (isset($this->interfaces[$caseInsensitiveName][$packageName])) {
+            $this->interfaces[$caseInsensitiveName][$packageName] = array();
+        }
+        $this->interfaces[$caseInsensitiveName][$packageName][] = $interface;
+
+        return $interface;
+    }
+
+    public function getInterface($qualifiedName)
+    {
+        $interface = $this->findInterface($qualifiedName);
+        if ($interface === null) {
+            $this->_internal = true;
+            $interface = $this->buildInterface($qualifiedName);
+        }
+        return $interface;
+    }
+
+    protected function findInterface($qualifiedName)
+    {
+        $this->freeze();
+
+        return $this->findClassOrInterface(
+            array_merge_recursive(
+                $this->_frozenInterfaces,
+                $this->interfaces
+            ),
+            $qualifiedName
+        );
+    }
+
+    protected function findClass($qualifiedName)
+    {
+        $this->freeze();
+
+        return $this->findClassOrInterface(
+            array_merge_recursive(
+                $this->_frozenClasses,
+                $this->classes
+            ),
+            $qualifiedName
+        );
+    }
+
+    protected function findClassOrInterface(array $instances, $qualifiedName)
+    {
+        $classOrInterfaceName = $this->extractTypeName($qualifiedName);
+        $packageName          = $this->extractPackageName($qualifiedName);
+
+        $caseInsensitiveName = strtolower($classOrInterfaceName);
+
+        if (!isset($instances[$caseInsensitiveName])) {
+            return null;
+        }
+
+        // Check for exact match and return first matching instance
+        if (isset($instances[$caseInsensitiveName][$packageName])) {
+            return reset($instances[$caseInsensitiveName][$packageName]);
+        }
+        
+        if (!$this->isDefault($packageName)) {
+            return null;
+        }
+
+        $classesOrInterfaces = reset($instances[$caseInsensitiveName]);
+        return reset($classesOrInterfaces);
+    }
+/*
+    public function buildInterface($name)
+    {
         $ife = $this->extractTypeName($name);
         $pkg = $this->extractPackageName($name);
 
@@ -430,13 +590,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $this->buildPackage($pkg)->addType($interface);
         }
 
-        if ($class !== null && $class->isUserDefined() === false) {
-            $this->replaceClassReferences($class, $interface);
-        }
-
         return $interface;
     }
-
+*/
     /**
      * Builds a new code type reference instance.
      *
@@ -657,54 +813,5 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             return PHP_Depend_Util_Type::getTypePackage($qualifiedName);
         }
         return self::DEFAULT_PACKAGE;
-    }
-
-    /**
-     * This method will replace all existing references to the given <b>$class</b>
-     * instance with the interface instance.
-     *
-     * <code>
-     *   $class1 = $builder->buildClass('PHP_Depend');
-     *   $class2 = $builder->buildClassOrInterface('PHP_DependI');
-     *
-     *   $class1->addDependency($class2);
-     *
-     *   $builder->buildInterface('PHP_DependI');
-     *
-     *   var_dump($class->getDependencies());
-     *   // Results in
-     *   // array(1) {
-     *   //   [0]=>
-     *   //   object(PHP_Depend_Code_Interface)#1 (0) {
-     *   //   }
-     *   // }
-     * </code>
-     *
-     * @param PHP_Depend_Code_Class     $class     The old context class instance.
-     * @param PHP_Depend_Code_Interface $interface Tge new interface instance.
-     *
-     * @return void
-     */
-    protected function replaceClassReferences(
-        PHP_Depend_Code_Class $class,
-        PHP_Depend_Code_Interface $interface
-    ) {
-        foreach ($this->functions as $function) {
-            foreach ($function->getUnfilteredRawDependencies() as $dependency) {
-                if ($dependency === $class) {
-                    $function->removeDependency($class);
-                    $function->addDependency($interface);
-                }
-            }
-        }
-
-        foreach ($this->methods as $method) {
-            foreach ($method->getUnfilteredRawDependencies() as $dependency) {
-                if ($dependency === $class) {
-                    $method->removeDependency($class);
-                    $method->addDependency($interface);
-                }
-            }
-        }
     }
 }
