@@ -46,6 +46,8 @@
  * @since     0.9.5
  */
 
+require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
+
 /**
  * This is a classes only version of the class or interface reference .
  *
