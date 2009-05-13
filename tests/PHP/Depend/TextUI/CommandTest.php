@@ -230,6 +230,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $code->rewind();
 
         $package = $code->current();
+
         $this->assertType('PHP_Depend_Code_Package', $package);
         $this->assertEquals('pdepend.test', $package->getName());
 

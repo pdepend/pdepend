@@ -356,11 +356,19 @@ class PHP_Depend
             $iterator->append(
                 new PHP_Depend_Input_Iterator(
                     new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($directory)
-                    ), $this->_fileFilter
+                        new RecursiveDirectoryIterator($directory . '/')
+                    ),
+                    $this->_fileFilter
                 )
             );
         }
+
+        // TODO: It's important to validate this behavior, imho there is something
+        //       wrong in the iterator code used above.
+        // Strange: why is the iterator not unique and why does this loop fix it?
+        foreach ($iterator as $file) {
+        }
+        // END
 
         $this->_builder = new PHP_Depend_Builder_Default();
 
