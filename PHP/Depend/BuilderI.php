@@ -85,6 +85,8 @@ interface PHP_Depend_BuilderI
      */
     function buildClassOrInterface($name);
 
+    function getClassOrInterface($qualifiedName);
+
     /**
      * Builds a new code type reference instance.
      *
@@ -103,6 +105,8 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_Class The created class object.
      */
     function buildClass($qualifiedName);
+
+    function getClass($qualifiedName);
 
     /**
      * Builds a new code type reference instance.
@@ -129,6 +133,8 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_Interface The created interface object.
      */
     function buildInterface($qualifiedName);
+
+    function getInterface($qualifiedName);
 
     /**
      * Builds a new code type reference instance.

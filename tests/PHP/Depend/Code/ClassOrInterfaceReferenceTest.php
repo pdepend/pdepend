@@ -67,17 +67,22 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceTest extends PHP_Depend_AbstractT
 {
     public function testGetTypeInvokesBuildClassOrInterface()
     {
+        $class = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
+
         $builder = $this->getMock('PHP_Depend_BuilderI');
         $builder->expects($this->once())
-            ->method('buildClassOrInterface')
+            ->method('getClassOrInterface')
             ->with($this->equalTo(__CLASS__))
-            ->will($this->returnValue(42));
+            ->will($this->returnValue($class));
 
         $classOrInterfaceReference = new PHP_Depend_Code_ClassOrInterfaceReference(
             $builder, __CLASS__
         );
 
-        $this->assertSame(42, $classOrInterfaceReference->getType());
+        $this->assertType(
+            'PHP_Depend_Code_Class',
+            $classOrInterfaceReference->getType()
+        );
     }
 }
 ?>

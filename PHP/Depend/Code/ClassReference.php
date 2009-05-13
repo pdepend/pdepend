@@ -68,7 +68,10 @@ class PHP_Depend_Code_ClassReference
      */
     public function getType()
     {
-        return $this->builder->buildClass($this->qualifiedName);
+        if ($this->typeInstance === null) {
+            $this->typeInstance = $this->builder->getClass($this->qualifiedName);
+        }
+        return $this->typeInstance;
     }
 }
 ?>
