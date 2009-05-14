@@ -158,6 +158,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildClassOrInterfaceReference($qualifiedName)
     {
+        $this->checkBuilderState();
+
         include_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
 
         return new PHP_Depend_Code_ClassOrInterfaceReference($this, $qualifiedName);
@@ -229,7 +231,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $package->addType($class);
 
         $classNameLower = strtolower($className);
-        if (isset($this->classes[$classNameLower][$packageName])) {
+        if (!isset($this->classes[$classNameLower][$packageName])) {
             $this->classes[$classNameLower][$packageName] = array();
         }
         $this->classes[$classNameLower][$packageName][] = $class;
@@ -355,7 +357,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $package->addType($interface);
 
         $caseInsensitiveName = strtolower($interfaceName);
-        if (isset($this->interfaces[$caseInsensitiveName][$packageName])) {
+        if (!isset($this->interfaces[$caseInsensitiveName][$packageName])) {
             $this->interfaces[$caseInsensitiveName][$packageName] = array();
         }
         $this->interfaces[$caseInsensitiveName][$packageName][] = $interface;
@@ -725,7 +727,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function checkBuilderState($internal = false)
     {
         if ($this->_frozen === true && $this->_internal === false) {
-            throw new ErrorException('Invalid builder state.');
+            throw new BadMethodCallException(
+                'Cannot create new nodes, when internal state is frozen.'
+            );
         }
         $this->_internal = $internal;
     }
