@@ -282,6 +282,20 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             $this->getMock('PHP_Depend_Code_ClassReference', array(), array(), '', false)
         );
     }
+
+    /**
+     * Tests the returned modifiers of an interface.
+     *
+     * @return void
+     */
+    public function testInterfaceReturnsExpectedModifiers()
+    {
+        $interface = new PHP_Depend_Code_Interface('Foo');
+        $this->assertSame(
+            PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT,
+            $interface->getModifiers()
+        );
+    }
     
     /**
      * Creates an abstract item instance.
