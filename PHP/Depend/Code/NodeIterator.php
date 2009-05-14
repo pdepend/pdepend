@@ -154,10 +154,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function key()
     {
         $node = current($this->_nodes);
-        if (is_object($node) === true) {
-            return $node->getName();
-        }
-        return null;
+        return (is_object($node) === true ? $node->getName() : null);
     }
 
     /**
