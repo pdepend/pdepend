@@ -445,6 +445,19 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             );
         }
     }
+
+    public function testSetModifiersThrowsExpectedExceptionOnOverwrite()
+    {
+        $class = new PHP_Depend_Code_Class('FooBar');
+        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot overwrite previously set class modifiers.'
+        );
+
+        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+    }
     
     /**
      * Tests the visitor accept method.
