@@ -223,5 +223,81 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
         $parameter = new PHP_Depend_Code_Parameter('foo');
         $this->assertNull($parameter->getClass());
     }
+
+    /**
+     * Tests that a parameter returns the expected function instance.
+     *
+     * @return void
+     */
+    public function testParameterReturnsExpectedDeclaringFunction()
+    {
+        $packages = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $function = $package->getFunctions()
+            ->current();
+
+        $parameter = $function->getParameters()
+            ->current();
+
+        $this->assertSame($function, $parameter->getDeclaringFunction());
+    }
+
+    /**
+     * Tests that a parameter returns the expected method instance.
+     *
+     * @return void
+     */
+    public function testParameterReturnsExpectedDeclaringMethod()
+    {
+        $packages = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $method = $package->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $parameter = $method->getParameters()
+            ->current();
+
+        $this->assertSame($method, $parameter->getDeclaringFunction());
+    }
+
+    /**
+     * Tests that the export function throws the expected exception for an unknown
+     * function.
+     *
+     * @return void
+     */
+    public function testParameterExportThrowsReflectionExceptionForUnknownFunction()
+    {
+        $this->assertFalse(function_exists(__FUNCTION__));
+
+        $this->setExpectedException(
+            'ReflectionException',
+            'PHP_Depend_Code_Parameter::export() is not supported.'
+        );
+
+        PHP_Depend_Code_Parameter::export(__FUNCTION__, 'foo', true);
+    }
+
+    /**
+     * Tests that export creates the expected string representation of a
+     * function parameter.
+     *
+     * @return void
+     */
+    public function testParameterExportsExistingFunction()
+    {
+        $this->assertFalse(function_exists(__FUNCTION__));
+
+        function testParameterExportsExistingFunction($foo) {}
+
+        $this->assertSame(
+            'Parameter #0 [ <required> $foo ]',
+            PHP_Depend_Code_Parameter::export(__FUNCTION__, 'foo', true)
+        );
+    }
 }
 ?>
