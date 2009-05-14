@@ -163,4 +163,24 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $visitor->visitClosure($closure);
     }
 
+    public function testConstantHandlerEmitsExpectedListenerSignal()
+    {
+        include_once 'PHP/Depend/Code/TypeConstant.php';
+        include_once 'PHP/Depend/Visitor/ListenerI.php';
+        include_once 'PHP/Depend/Code/Closure.php';
+        include_once 'PHP/Depend/Visitor/ListenerI.php';
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->at(0))
+                 ->method('startVisitTypeConstant');
+        $listener->expects($this->at(1))
+                 ->method('endVisitTypeConstant');
+
+        $constant = $this->getMock('PHP_Depend_Code_TypeConstant', array(), array('FOO'));
+
+        $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+        $visitor->visitTypeConstant($constant);
+    }
+
 }
