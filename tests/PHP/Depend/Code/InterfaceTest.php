@@ -48,6 +48,7 @@
 require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/ClassReference.php';
 require_once 'PHP/Depend/Code/Interface.php';
 
 /**
@@ -260,6 +261,26 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
                 $current->isSubtypeOf($interface)
             );
         }
+    }
+
+    /**
+     * Tests that the interface implementation overwrites the
+     * setParentClassReference() method and throws an exception.
+     *
+     * @return void
+     */
+    public function testInterfaceThrowsExpectedExceptionOnSetParentClassReference()
+    {
+        $interface = new PHP_Depend_Code_Interface('IFooBar');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Unsupported method PHP_Depend_Code_Interface::setParentClassReference() called.'
+        );
+
+        $interface->setParentClassReference(
+            $this->getMock('PHP_Depend_Code_ClassReference', array(), array(), '', false)
+        );
     }
     
     /**
