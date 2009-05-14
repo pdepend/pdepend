@@ -350,6 +350,40 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * There was a missing check within an if statement, so that the builder
+     * has alway overwritten previously created instances.
+     *
+     * @return void
+     */
+    public function testBuildClassDoesNotOverwritePreviousInstances()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+
+        $class1 = $builder->buildClass('FooBar');
+        $class2 = $builder->buildClass('FooBar');
+
+        $this->assertNotSame($class1, $class2);
+        $this->assertSame($class1, $builder->getClass('FooBar'));
+    }
+
+    /**
+     * There was a missing check within an if statement, so that the builder
+     * has alway overwritten previously created instances.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceDoesNotOverwritePreviousInstances()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+
+        $interface1 = $builder->buildInterface('FooBar');
+        $interface2 = $builder->buildInterface('FooBar');
+
+        $this->assertNotSame($interface1, $interface2);
+        $this->assertSame($interface1, $builder->getInterface('FooBar'));
+    }
+
+    /**
      * Tests that the node builder works case insensitive for class names.
      *
      * @return void
@@ -410,18 +444,244 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the node builder works case insensitive for interface names.
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * /
-    public function testBuildClassOrInterfaceWorksCaseInsensitive3Issue26()
+     */
+    public function testBuildClassOrInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen()
     {
         $builder = new PHP_Depend_Builder_Default();
+        $builder->buildClassOrInterfaceReference('Foo');
 
-        $classA = $builder->buildClassOrInterface('PHP_Depend_Parser');
-        $classB = $builder->buildClassOrInterface('php_Depend_parser');
+        // Freeze object
+        $builder->getClass('Foo');
 
-        $this->assertSame($classA, $classB);
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildClassOrInterfaceReference('Bar');
     }
-    */
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildClassThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildClass('Foo');
+
+        // Freeze object
+        $builder->getClass('Foo');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildClass('Bar');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildClassReferenceThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildClassReference('Foo');
+
+        // Freeze object
+        $builder->getClass('Foo');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildClassReference('Bar');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildClosureThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildClosure('clo');
+
+        // Freeze object
+        $builder->getClass('Foo');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildClosure('sure');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildTypeConstantThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildTypeConstant('cons');
+
+        // Freeze object
+        $builder->getClass('Foo');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildTypeConstant('tant');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildInterface('Inter');
+
+        // Freeze object
+        $builder->getInterface('Inter');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildInterface('Face');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildInterfaceReference('Inter');
+
+        // Freeze object
+        $builder->getInterface('Inter');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildInterfaceReference('Face');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildMethodThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildMethod('call');
+
+        // Freeze object
+        $builder->getInterface('Inter');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildMethod('invoke');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildParameterThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildParameter('param');
+
+        // Freeze object
+        $builder->getInterface('Inter');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildParameter('param');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildPropertyThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildProperty('prop');
+
+        // Freeze object
+        $builder->getInterface('Inter');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildProperty('prop');
+    }
+
+    /**
+     * Tests that the builder throws the expected exception when some one tries
+     * to build a new node, when the internal state flag is frozen.
+     *
+     * @return void
+     */
+    public function testBuildFunctionThrowsExpectedExceptionWhenStateIsFrozen()
+    {
+        $builder = new PHP_Depend_Builder_Default();
+        $builder->buildFunction('func');
+
+        // Freeze object
+        $builder->getInterface('Inter');
+
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'Cannot create new nodes, when internal state is frozen.'
+        );
+
+        $builder->buildFunction('prop');
+    }
 }
