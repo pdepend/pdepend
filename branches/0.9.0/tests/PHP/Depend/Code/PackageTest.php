@@ -131,6 +131,22 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $this->assertSame($class, $package2->getTypes()->current());
         $this->assertEquals(0, $package1->getTypes()->count());
     }
+
+    /**
+     * Tests that you cannot add the same type multiple times to a package.
+     *
+     * @return void
+     */
+    public function testPackageAcceptsTheSameTypeOnlyOneTime()
+    {
+        $package = new PHP_Depend_Code_Package('foo');
+        $class   = new PHP_Depend_Code_Class('Bar');
+
+        $package->addType($class);
+        $package->addType($class);
+
+        $this->assertSame(1, count($package->getClasses()));
+    }
     
     /**
      * Tests that the {@link PHP_Depend_Code_Package::removeType()} method unsets
