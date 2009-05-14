@@ -198,7 +198,9 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     public function setModifiers($modifiers)
     {
         if ($this->_modifiers !== 0) {
-            return;
+            throw new BadMethodCallException(
+                'Cannot overwrite previously set class modifiers.'
+            );
         }
 
         $expected = ~PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
