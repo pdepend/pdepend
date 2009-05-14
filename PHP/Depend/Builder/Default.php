@@ -91,16 +91,16 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * All generated {@link PHP_Depend_Code_Class} objects
      *
-     * @var array(string=>PHP_Depend_Code_Class) $classes
+     * @var array(string=>PHP_Depend_Code_Class) $_classes
      */
-    protected $classes = array();
+    private $_classes = array();
 
     /**
      * All generated {@link PHP_Depend_Code_Interface} instances.
      *
-     * @var array(string=>PHP_Depend_Code_Interface) $interfaces
+     * @var array(string=>PHP_Depend_Code_Interface) $_interfaces
      */
-    protected $interfaces = array();
+    private $_interfaces = array();
 
     /**
      * All generated {@link PHP_Depend_Code_Package} objects
@@ -230,11 +230,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $package = $this->buildPackage($packageName);
         $package->addType($class);
 
-        $classNameLower = strtolower($className);
-        if (!isset($this->classes[$classNameLower][$packageName])) {
-            $this->classes[$classNameLower][$packageName] = array();
-        }
-        $this->classes[$classNameLower][$packageName][] = $class;
+        $this->storeClass($className, $packageName, $class);
 
         return $class;
     }
@@ -356,11 +352,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $package = $this->buildPackage($packageName);
         $package->addType($interface);
 
-        $caseInsensitiveName = strtolower($interfaceName);
-        if (!isset($this->interfaces[$caseInsensitiveName][$packageName])) {
-            $this->interfaces[$caseInsensitiveName][$packageName] = array();
-        }
-        $this->interfaces[$caseInsensitiveName][$packageName][] = $interface;
+        $this->storeInterface($interfaceName, $packageName, $interface);
 
         return $interface;
     }
@@ -592,7 +584,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         if ($interface === null) {
             $interface = $this->findClassOrInterface(
-                $this->interfaces,
+                $this->_interfaces,
                 $qualifiedName
             );
         }
@@ -654,7 +646,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         if ($class === null) {
-            $class = $this->findClassOrInterface($this->classes, $qualifiedName);
+            $class = $this->findClassOrInterface($this->_classes, $qualifiedName);
         }
         return $class;
     }
@@ -709,11 +701,51 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $this->_frozen = true;
 
-        $this->_frozenClasses    = $this->classes;
-        $this->_frozenInterfaces = $this->interfaces;
+        $this->_frozenClasses    = $this->_classes;
+        $this->_frozenInterfaces = $this->_interfaces;
 
-        $this->classes    = array();
-        $this->interfaces = array();
+        $this->_classes    = array();
+        $this->_interfaces = array();
+    }
+
+    /**
+     * This method will persist a class instance for later reuse.
+     *
+     * @param string                $className   The local class name.
+     * @param string                $packageName The package name
+     * @param PHP_Depend_Code_Class $class       The context class.
+     *
+     * @return void
+     * @@since 0.9.5
+     */
+    protected function storeClass(
+        $className, $packageName, PHP_Depend_Code_Class $class
+    ) {
+        $caseInsensitiveName = strtolower($className);
+        if (!isset($this->_classes[$caseInsensitiveName][$packageName])) {
+            $this->_classes[$caseInsensitiveName][$packageName] = array();
+        }
+        $this->_classes[$caseInsensitiveName][$packageName][] = $class;
+    }
+
+    /**
+     * This method will persist an interface instance for later reuse.
+     *
+     * @param string                    $interfaceName The local interface name.
+     * @param string                    $packageName   The package name
+     * @param PHP_Depend_Code_Interface $interface     The context interface.
+     *
+     * @return void
+     * @@since 0.9.5
+     */
+    protected function storeInterface(
+        $interfaceName, $packageName, PHP_Depend_Code_Interface $interface
+    ) {
+        $caseInsensitiveName = strtolower($interfaceName);
+        if (!isset($this->_interfaces[$caseInsensitiveName][$packageName])) {
+            $this->_interfaces[$caseInsensitiveName][$packageName] = array();
+        }
+        $this->_interfaces[$caseInsensitiveName][$packageName][] = $interface;
     }
 
     /**
@@ -842,14 +874,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $typeID = strtolower($cls);
 
-        if (isset($this->classes[$typeID][$pkg])) {
-            $instance = $this->classes[$typeID][$pkg];
-        } else if (isset($this->interfaces[$typeID][$pkg])) {
-            $instance = $this->interfaces[$typeID][$pkg];
-        } else if (isset($this->classes[$typeID])) {
-            $instance = reset($this->classes[$typeID]);
-        } else if (isset($this->interfaces[$typeID])) {
-            $instance = reset($this->interfaces[$typeID]);
+        if (isset($this->_classes[$typeID][$pkg])) {
+            $instance = $this->_classes[$typeID][$pkg];
+        } else if (isset($this->_interfaces[$typeID][$pkg])) {
+            $instance = $this->_interfaces[$typeID][$pkg];
+        } else if (isset($this->_classes[$typeID])) {
+            $instance = reset($this->_classes[$typeID]);
+        } else if (isset($this->_interfaces[$typeID])) {
+            $instance = reset($this->_interfaces[$typeID]);
         } else {
             $instance = $this->buildClass($name);
         }
