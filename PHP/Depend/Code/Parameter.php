@@ -520,7 +520,7 @@ class PHP_Depend_Code_Parameter
     public static function export($function, $parameter, $return = false)
     {
         if (is_callable($function) === false) {
-            throw new ReflectionException(__METHOD__ . '() is not suppored.');
+            throw new ReflectionException(__METHOD__ . '() is not supported.');
         }
         return parent::export($function, $parameter, $return);
     }
