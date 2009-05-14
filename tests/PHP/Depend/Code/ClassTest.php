@@ -446,6 +446,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         }
     }
 
+    /**
+     * Tests that it is not possible to overwrite previously set class modifiers.
+     *
+     * @return void
+     */
     public function testSetModifiersThrowsExpectedExceptionOnOverwrite()
     {
         $class = new PHP_Depend_Code_Class('FooBar');

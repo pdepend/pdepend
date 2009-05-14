@@ -347,7 +347,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $interface->setSourceFile($this->_sourceFile);
         $interface->setStartLine($startLine);
         $interface->setDocComment($this->_docComment);
-        $interface->setModifiers(PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT);
         $interface->setUserDefined();
 
         // Strip comments and fetch next token type
