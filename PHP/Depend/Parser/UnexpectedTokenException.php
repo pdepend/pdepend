@@ -46,6 +46,8 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once 'PHP/Depend/Parser/Exception.php';
+
 /**
  * This type of exception is thrown when the parser detects an unexpected token.
  *
@@ -58,7 +60,7 @@
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Parser_UnexpectedTokenException extends RuntimeException
+class PHP_Depend_Parser_UnexpectedTokenException extends PHP_Depend_Parser_Exception
 {
     /**
      * Constructs a new unexpected token exception.
