@@ -1215,6 +1215,32 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser throws an exception for an unclosed array
+     * declaration within the default value of a parameter.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: {, line: 2, col: 29, file: '
+        );
+
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: &, line: 2, col: 27, file: '
+        );
+
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
      * Tests that the parser ignores variable class instantiation.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
