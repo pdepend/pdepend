@@ -248,26 +248,31 @@ class PHP_Depend_Tokenizer_Internal
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_GOTO => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_NULL => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_SELF => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_TRUE => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_ARRAY => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
@@ -276,6 +281,7 @@ class PHP_Depend_Tokenizer_Internal
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_PARENT => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
@@ -286,16 +292,19 @@ class PHP_Depend_Tokenizer_Internal
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_DIR => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_NS_C => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
         ),
     );
 
@@ -480,6 +489,7 @@ class PHP_Depend_Tokenizer_Internal
                 if (isset($literalMap[$value])) {
                     // Fetch literal type
                     $type = $literalMap[$value];
+
                     // Check for a context sensitive alternative
                     if (isset(self::$alternativeMap[$type][$previousType])) {
                         $type = self::$alternativeMap[$type][$previousType];
