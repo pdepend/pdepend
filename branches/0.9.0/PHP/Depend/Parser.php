@@ -526,8 +526,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments($tokens);
         $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
 
-        $curly = 1;
-
         $defaultModifier = self::IS_PUBLIC;
         if ($type instanceof PHP_Depend_Code_Interface) {
             $defaultModifier |= self::IS_ABSTRACT;
@@ -571,20 +569,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->reset($defaultModifier);
                 break;
 
-            case self::T_CURLY_BRACE_OPEN:
-                $this->_consumeToken(self::T_CURLY_BRACE_OPEN, $tokens);
-
-                ++$curly;
-                $this->reset();
-                break;
-
             case self::T_CURLY_BRACE_CLOSE:
                 // Read close token, we need it for the $endLine property
                 $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE, $tokens);
 
-                --$curly;
+                $type->setEndLine($token->endLine);
+                $type->setTokens($tokens);
+
                 $this->reset($defaultModifier);
-                break;
+
+                // Stop processing
+                return $tokens;
 
             case self::T_ABSTRACT:
                 $this->_consumeToken(self::T_ABSTRACT, $tokens);
@@ -631,20 +626,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             default:
                 // Consume anything else
-                $this->_consumeToken($tokenType, $tokens);
+                $token = $this->_consumeToken($tokenType, $tokens);
+                //echo 'TOKEN: ', $token->image, PHP_EOL;
 
                 // TODO: Handle/log unused tokens
                 $this->reset($defaultModifier);
                 break;
-            }
-
-            if ($curly === 0) {
-                // Set end line number
-                $type->setEndLine($token->endLine);
-                // Set type tokens
-                $type->setTokens($tokens);
-                // Stop processing
-                return $tokens;
             }
 
             $tokenType = $this->_tokenizer->peek();
@@ -1069,17 +1056,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $tokenType = $this->_tokenizer->peek();
 
                 // T_STRING == method or constant, T_VARIABLE == property
-                if ($tokenType !== self::T_STRING
-                    && $tokenType !== self::T_VARIABLE
+                if ($tokenType === self::T_STRING
+                    || $tokenType === self::T_VARIABLE
                 ) {
-                    break;
+                    $this->_consumeToken($tokenType, $tokens);
+
+                    $callable->addDependencyClassReference(
+                        $this->_builder->buildClassOrInterfaceReference(
+                            $qualifiedName
+                        )
+                    );
                 }
-
-                $this->_consumeToken($tokenType, $tokens);
-
-                $callable->addDependencyClassReference(
-                    $this->_builder->buildClassOrInterfaceReference($qualifiedName)
-                );
                 break;
 
             case self::T_CURLY_BRACE_OPEN:
@@ -1594,14 +1581,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             switch ($tokenType) {
 
+            case self::T_PARENTHESIS_CLOSE:
+                if (--$parenthesis === 0) {
+                    break 2;
+                }
+                $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+                break;
+
             case self::T_PARENTHESIS_OPEN:
                 $this->_consumeToken(self::T_PARENTHESIS_OPEN, $tokens);
                 ++$parenthesis;
-                break;
-
-            case self::T_PARENTHESIS_CLOSE:
-                $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
-                --$parenthesis;
                 break;
 
             default:
@@ -1609,14 +1598,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
             }
 
-            if ($parenthesis === 0) {
-                return $defaultValue;
-            }
-
             $tokenType = $this->_tokenizer->peek();
         }
 
-        throw new RuntimeException('Unclosed array declaration.');
+        // Read closing parenthesis
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
+        
+        return $defaultValue;
     }
 
     /**
