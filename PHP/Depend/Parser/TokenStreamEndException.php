@@ -46,6 +46,8 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once 'PHP/Depend/Parser/Exception.php';
+
 /**
  * This type of exception is thrown when the parser reaches the end of the token
  * stream, but expects further tokens.
@@ -59,7 +61,7 @@
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Parser_TokenStreamEndException extends RuntimeException
+class PHP_Depend_Parser_TokenStreamEndException extends PHP_Depend_Parser_Exception
 {
     /**
      * Constructs a new end of token stream exception.

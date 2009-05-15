@@ -1177,8 +1177,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $class = $packages->current()->getClasses()->current();
         $this->assertType('PHP_Depend_Code_Class', $class);
         $this->assertTrue($class->isAbstract());
-        $this->assertSame(PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT,
-                          $class->getModifiers() & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
+        $this->assertSame(
+            PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT,
+            $class->getModifiers() & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
+        );
     }
 
     /**
@@ -1194,8 +1196,22 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $class = $packages->current()->getClasses()->current();
         $this->assertType('PHP_Depend_Code_Class', $class);
         $this->assertTrue($class->isFinal());
-        $this->assertSame(PHP_Depend_ConstantsI::IS_FINAL,
-                          $class->getModifiers() & PHP_Depend_ConstantsI::IS_FINAL);
+        $this->assertSame(
+            PHP_Depend_ConstantsI::IS_FINAL,
+            $class->getModifiers() & PHP_Depend_ConstantsI::IS_FINAL
+        );
+    }
+
+    /**
+     * Tests that the parser handles nested array structures as parameter
+     * default value correct.
+     *
+     * @return void
+     */
+    public function testParserHandlesNestedArraysAsParameterDefaultValue()
+    {
+        // Current implementation cannot handle nested structures
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
     }
 
     /**
