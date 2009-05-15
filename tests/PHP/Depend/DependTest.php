@@ -49,6 +49,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Input/ExtensionFilter.php';
+require_once 'PHP/Depend/Storage/EngineI.php';
 
 /**
  * Test case for PHP_Depend facade.
@@ -375,5 +376,47 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $package = $packages->current();
         $this->assertSame(1, $package->getClasses()->count());
         $this->assertSame(1, $package->getInterfaces()->count());
+    }
+
+    /**
+     * Tests that the addFile() method throws the expected exception when an
+     * added file does not exist.
+     *
+     * @return void
+     */
+    public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()
+    {
+        $pdepend = new PHP_Depend();
+
+        $fileName = '/tmp/' . uniqid('pdepend_', true) . '.php';
+        $this->assertFileNotExists($fileName);
+
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'does not exist.'
+        );
+
+        $pdepend->addFile($fileName);
+    }
+
+    /**
+     * Tests that the setStorage() method throws an exception when an invalid
+     * storage type was given.
+     *
+     * @return void
+     */
+    public function testSetStorageThrowsTheExpectedExceptionForAnUnknownStorageType()
+    {
+        $pdepend = new PHP_Depend();
+
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'Unknown storage identifier'
+        );
+
+        $pdepend->setStorage(
+            PHP_INT_MAX,
+            $this->getMock('PHP_Depend_Storage_EngineI')
+        );
     }
 }

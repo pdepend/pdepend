@@ -213,7 +213,9 @@ class PHP_Depend
         $fileName = realpath($file);
 
         if (!is_file($fileName)) {
-            throw new InvalidArgumentException("Invalid file '{$file}' added.");
+            throw new InvalidArgumentException(
+                sprintf('The given file "%s" does not exist.', $file)
+            );
         }
 
         $this->_files[] = $fileName;
@@ -246,12 +248,12 @@ class PHP_Depend
     /**
      * Sets a storage instance for a special usage.
      *
-     * @param integer                           $type   The target identifier.
-     * @param PHP_Depend_Storage_AbstractEngine $engine The storage instance.
+     * @param integer                    $type   The target identifier.
+     * @param PHP_Depend_Storage_EngineI $engine The storage instance.
      *
      * @return void
      */
-    public function setStorage($type, PHP_Depend_Storage_AbstractEngine $engine)
+    public function setStorage($type, PHP_Depend_Storage_EngineI $engine)
     {
         switch ($type) {
         case self::TOKEN_STORAGE:
