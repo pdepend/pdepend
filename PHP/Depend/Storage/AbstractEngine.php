@@ -46,6 +46,8 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once 'PHP/Depend/Storage/EngineI.php';
+
 /**
  * This is an abstract base class for all storage strategies.
  *
@@ -59,6 +61,7 @@
  * @link       http://www.pdepend.org/
  */
 abstract class PHP_Depend_Storage_AbstractEngine
+    implements PHP_Depend_Storage_EngineI
 {
     /**
      * Should the engine be pruned on destruction?
@@ -190,33 +193,5 @@ abstract class PHP_Depend_Storage_AbstractEngine
     {
 
     }
-
-    /**
-     * This method will store the given <b>$data</b> record under a key that is
-     * build from the other parameters.
-     *
-     * @param mixed  $data    The data object that should be stored.
-     * @param string $key     A unique identifier for the given <b>$data</b>.
-     * @param string $group   A data group identifier which can be used to group
-     *                        records.
-     * @param mixed  $version An optional version for the stored record.
-     *
-     * @return void
-     */
-    public abstract function store($data, $key, $group, $version = null);
-
-    /**
-     * This method will restore a record and return it to the calling client.
-     * The return value will be <b>null</b> if no record for the given identifier
-     * exists.
-     *
-     * @param string $key     A unique identifier for the given <b>$data</b>.
-     * @param string $group   A data group identifier which can be used to group
-     *                        records.
-     * @param mixed  $version An optional version for the stored record.
-     *
-     * @return mixed
-     */
-    public abstract function restore($key, $group, $version = null);
 }
 ?>

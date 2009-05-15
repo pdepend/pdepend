@@ -61,7 +61,7 @@ final class PHP_Depend_StorageRegistry
     /**
      * This property holds all registered storage instances.
      *
-     * @var array(string=>PHP_Depend_Storage_AbstractEngine) $_engines
+     * @var array(string=>PHP_Depend_Storage_EngineI) $_engines
      */
     private static $_engines = array();
 
@@ -72,7 +72,7 @@ final class PHP_Depend_StorageRegistry
      *
      * @param string $name The storage identifier.
      *
-     * @return PHP_Depend_Storage_AbstractEngine
+     * @return PHP_Depend_Storage_EngineI
      * @throws InvalidArgumentException When no storage engine was registered for
      *                                  the given <b>$name</b>.
      */
@@ -89,12 +89,12 @@ final class PHP_Depend_StorageRegistry
      * This method can be used to register a storage engine under the given
      * identifier <b>$name</b>.
      *
-     * @param string                            $name   The engine identifier.
-     * @param PHP_Depend_Storage_AbstractEngine $engine The used storage engine.
+     * @param string                     $name   The engine identifier.
+     * @param PHP_Depend_Storage_EngineI $engine The used storage engine.
      *
      * @return void
      */
-    public static function set($name, PHP_Depend_Storage_AbstractEngine $engine)
+    public static function set($name, PHP_Depend_Storage_EngineI $engine)
     {
         self::$_engines[$name] = $engine;
     }
