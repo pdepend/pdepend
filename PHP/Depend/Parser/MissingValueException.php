@@ -46,6 +46,8 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once 'PHP/Depend/Parser/Exception.php';
+
 /**
  * This type of exception is thrown when a parameter or property declaration
  * should contain a default value, but this value was not defined.
@@ -59,7 +61,7 @@
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Parser_MissingValueException extends RuntimeException
+class PHP_Depend_Parser_MissingValueException extends PHP_Depend_Parser_Exception
 {
     /**
      * Constructs a new missing value exception.
