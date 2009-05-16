@@ -914,6 +914,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Get next token type
             $tokenType = $this->_tokenizer->peek();
+        } else if ($tokenType === self::T_SELF || $tokenType === self::T_STATIC) {
+            // Consume token and remove comments
+            $this->_consumeToken($tokenType, $tokens);
+            $this->_consumeComments($tokens);
         }
 
         // Check for parameter by reference
@@ -1523,6 +1527,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_SELF:
             case self::T_NS_C:
             case self::T_FUNC_C:
+            case self::T_PARENT:
             case self::T_STRING:
             case self::T_STATIC:
             case self::T_CLASS_C:
@@ -1593,32 +1598,33 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 ++$parenthesis;
                 break;
 
+            case self::T_DIR:
+            case self::T_NULL:
+            case self::T_TRUE:
+            case self::T_FILE:
+            case self::T_LINE:
+            case self::T_NS_C:
+            case self::T_PLUS:
+            case self::T_SELF:
+            case self::T_ARRAY:
+            case self::T_FALSE:
+            case self::T_EQUAL:
+            case self::T_COMMA:
+            case self::T_MINUS:
             case self::T_COMMENT:
             case self::T_DOC_COMMENT:
             case self::T_DOUBLE_COLON:
             case self::T_STRING:
             case self::T_BACKSLASH:
-            case self::T_ARRAY:
-            case self::T_NULL:
-            case self::T_TRUE:
-            case self::T_FALSE:
-            case self::T_EQUAL:
-            case self::T_CONSTANT_ENCAPSED_STRING:
             case self::T_DNUMBER:
             case self::T_LNUMBER:
-            case self::T_DOUBLE_ARROW:
-            case self::T_FILE:
             case self::T_FUNC_C:
-            case self::T_LINE:
             case self::T_METHOD_C:
-            case self::T_NS_C:
-            case self::T_NUM_STRING:
             case self::T_STATIC:
-            case self::T_COMMA:
-            case self::T_PLUS:
-            case self::T_MINUS:
-            case self::T_SELF:
-            case self::T_DIR:
+            case self::T_PARENT:
+            case self::T_NUM_STRING:
+            case self::T_DOUBLE_ARROW:
+            case self::T_CONSTANT_ENCAPSED_STRING:
                 $this->_consumeToken($tokenType, $tokens);
                 break;
 
