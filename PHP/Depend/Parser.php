@@ -206,6 +206,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_modifiers = 0;
 
     /**
+     * The actually parsed class or interface instance.
+     *
+     * @var PHP_Depend_Code_AbstractClassOrInterface $_classOrInterface
+     */
+    private $_classOrInterface = null;
+
+    /**
      * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
      *
@@ -520,6 +527,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     protected function parseTypeBody(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
+        $this->_classOrInterface = $type;
+
         $tokens = array();
 
         // Consume comments and read opening curly brace
@@ -577,6 +586,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $type->setTokens($tokens);
 
                 $this->reset($defaultModifier);
+
+                // Reset context class or interface instance
+                $this->_classOrInterface = null;
 
                 // Stop processing
                 return $tokens;
@@ -890,6 +902,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $parameterRef   = false;
         $parameterType  = null;
         $parameterArray = false;
+        $parameterClass = null;
 
         $this->_consumeComments($tokens);
         $tokenType = $this->_tokenizer->peek();
@@ -921,6 +934,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Consume token and remove comments
             $this->_consumeToken($tokenType, $tokens);
             $this->_consumeComments($tokens);
+
+            // Store actual context class as parameter type
+            $parameterClass = $this->_classOrInterface;
         }
 
         // Check for parameter by reference
@@ -948,6 +964,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parameter->setClassReference(
                 $this->_builder->buildClassOrInterfaceReference($parameterType)
             );
+        } else if ($parameterClass !== null) {
+            $parameter->setClass($parameterClass);
         }
 
         // Check for a default value
