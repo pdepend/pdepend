@@ -1230,6 +1230,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         self::parseSource('parser/' . __FUNCTION__ . '.php');
     }
 
+    /**
+     * Tests that the parser throws an exception when it detects an invalid
+     * token within the parameter declaration of a function or method.
+     *
+     * @return void
+     */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue()
     {
         $this->setExpectedException(
