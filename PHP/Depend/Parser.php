@@ -914,7 +914,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Get next token type
             $tokenType = $this->_tokenizer->peek();
-        } else if ($tokenType === self::T_SELF || $tokenType === self::T_STATIC) {
+        } else if ($tokenType === self::T_SELF) {
+            // TODO: Question: NO STATIC???
+            // || $tokenType === self::T_STATIC
+            //
             // Consume token and remove comments
             $this->_consumeToken($tokenType, $tokens);
             $this->_consumeComments($tokens);
