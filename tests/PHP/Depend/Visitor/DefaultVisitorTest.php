@@ -163,6 +163,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $visitor->visitClosure($closure);
     }
 
+    
     public function testConstantHandlerEmitsExpectedListenerSignal()
     {
         include_once 'PHP/Depend/Code/TypeConstant.php';
