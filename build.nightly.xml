@@ -225,7 +225,7 @@
     <target name="extended.tests.flow3">
         <echo message="Testing PHP_Depend against flow3" />
         <exec executable="php" failonerror="true">
-            <arg line="${basedir}/build/nightly/pdepend.php
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
                        --
                        -d memory_limit=1024M
                        --summary-xml=${basedir}/build/nightly/build/tmp/flow3-summary.xml
