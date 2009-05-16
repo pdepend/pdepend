@@ -163,7 +163,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $visitor->visitClosure($closure);
     }
 
-    
+    /**
+     * Tests that the visitor emits the expected constant signal.
+     *
+     * @return void
+     */
     public function testConstantHandlerEmitsExpectedListenerSignal()
     {
         include_once 'PHP/Depend/Code/TypeConstant.php';
@@ -182,6 +186,106 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
         $visitor->visitTypeConstant($constant);
+    }
+
+    /**
+     * Tests that the visitor emits the expected signals for a class constant.
+     *
+     * @return void
+     */
+    public function testVisitorEmitsExpectedSignalsForClassConstant()
+    {
+        include_once 'PHP/Depend/Code/Class.php';
+        include_once 'PHP/Depend/Code/File.php';
+        include_once 'PHP/Depend/Code/TypeConstant.php';
+        include_once 'PHP/Depend/Visitor/ListenerI.php';
+        include_once 'PHP/Depend/Visitor/ListenerI.php';
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->at(0))
+                 ->method('startVisitTypeConstant');
+        $listener->expects($this->at(1))
+                 ->method('endVisitTypeConstant');
+
+        $class = $this->getMock(
+            'PHP_Depend_Code_Class',
+            array('getSourceFile', 'getConstants'),
+            array('Clazz')
+        );
+        $class->expects($this->once())
+            ->method('getSourceFile')
+            ->will(
+                $this->returnValue(
+                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
+                )
+            );
+        $class->expects($this->once())
+            ->method('getConstants')
+            ->will(
+                $this->returnValue(
+                    array(
+                        $this->getMock(
+                            'PHP_Depend_Code_TypeConstant',
+                            array(),
+                            array('FOO')
+                        )
+                    )
+                )
+            );
+
+        $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+        $class->accept($visitor);
+    }
+
+    /**
+     * Tests that the visitor emits the expected signals for an interface constant.
+     *
+     * @return void
+     */
+    public function testVisitorEmitsExpectedSignalsForInterfaceConstant()
+    {
+        include_once 'PHP/Depend/Code/File.php';
+        include_once 'PHP/Depend/Code/Interface.php';
+        include_once 'PHP/Depend/Code/TypeConstant.php';
+        include_once 'PHP/Depend/Visitor/ListenerI.php';
+        include_once 'PHP/Depend/Visitor/ListenerI.php';
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->at(0))
+                 ->method('startVisitTypeConstant');
+        $listener->expects($this->at(1))
+                 ->method('endVisitTypeConstant');
+
+        $interface = $this->getMock(
+            'PHP_Depend_Code_Interface',
+            array('getSourceFile', 'getConstants'),
+            array('Clazz')
+        );
+        $interface->expects($this->once())
+            ->method('getSourceFile')
+            ->will(
+                $this->returnValue(
+                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
+                )
+            );
+        $interface->expects($this->once())
+            ->method('getConstants')
+            ->will(
+                $this->returnValue(
+                    array(
+                        $this->getMock(
+                            'PHP_Depend_Code_TypeConstant',
+                            array(),
+                            array('FOO')
+                        )
+                    )
+                )
+            );
+
+        $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+        $interface->accept($visitor);
     }
 
 }

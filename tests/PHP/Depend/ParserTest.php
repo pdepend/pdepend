@@ -1285,6 +1285,25 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser handles the self keyword as parameter type hint.
+     *
+     * @return void
+     */
+    public function testParserHandlesSelfKeywordAsParameterTypeHint()
+    {
+        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
+
+        $this->assertNotNull($parameter);
+    }
+
+    /**
      * Tests that the parser ignores variable class instantiation.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
