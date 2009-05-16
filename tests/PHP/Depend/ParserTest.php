@@ -1247,6 +1247,44 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser handles the <b>parent</b> keyword within the default
+     * value of a function.
+     *
+     * @return void
+     */
+    public function testParserHandlesParentKeywordInFunctionParameterDefaultValue()
+    {
+        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters()
+            ->current();
+
+        $this->assertTrue($parameter->isDefaultValueAvailable());
+    }
+
+    /**
+     * Tests that the parser handles the <b>parent</b> keyword within the default
+     * value of a method.
+     *
+     * @return void
+     */
+    public function testParserHandlesParentKeywordInMethodParameterDefaultValue()
+    {
+        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
+
+        $this->assertTrue($parameter->isDefaultValueAvailable());
+    }
+
+    /**
      * Tests that the parser ignores variable class instantiation.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
