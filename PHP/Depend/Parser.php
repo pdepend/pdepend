@@ -368,7 +368,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokens = array_merge($tokens, $this->_parseInterfaceList($interface));
         }
         // Handle interface body
-        $this->parseTypeBody($interface);
+        $this->_parseClassOrInterfaceBody($interface);
 
         // Reset parser settings
         $this->reset();
@@ -432,7 +432,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
         
         // Handle class body
-        $this->parseTypeBody($class);
+        $this->_parseClassOrInterfaceBody($class);
 
         // Reset parser settings
         $this->reset();
@@ -525,8 +525,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return array(array)
      */
-    protected function parseTypeBody(PHP_Depend_Code_AbstractClassOrInterface $type)
-    {
+    private function _parseClassOrInterfaceBody(
+        PHP_Depend_Code_AbstractClassOrInterface $type
+    ) {
         $this->_classOrInterface = $type;
 
         $tokens = array();
