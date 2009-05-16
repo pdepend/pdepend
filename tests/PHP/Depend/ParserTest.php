@@ -1303,6 +1303,47 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertNotNull($parameter);
     }
 
+    public function testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $classes  = $packages->current()
+            ->getClasses();
+
+        $class1 = $classes->current();
+        $classes->next();
+        $class2 = $classes->current();
+
+        $parameter = $class1->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
+
+        $this->assertNotSame($class1, $parameter->getClass());
+        $this->assertSame($class2, $parameter->getClass());
+    }
+
+    /**
+     * Tests that the parser translates the self keyword into the same instance,
+     * even when a similar class exists.
+     *
+     * @return void
+     */
+    public function testParserSetsTheReallySameParameterHintInstanceForKeywordSelf()
+    {
+        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $parameter = $class->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
+
+        $this->assertSame($class, $parameter->getClass());
+    }
+
     /**
      * Tests that the parser ignores variable class instantiation.
      *
