@@ -342,59 +342,11 @@ class PHP_Depend
      */
     public function analyze()
     {
-        if (count($this->_directories) === 0 && count($this->_files) === 0) {
-            throw new RuntimeException('No source directory and file set.');
-        }
-
         $this->_initStorages();
-
-        $accept = $this->_createAnalyzerList();
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader($accept, $this->_options);
-
-        $iterator = new AppendIterator();
-        $iterator->append(new ArrayIterator($this->_files));
-
-        foreach ($this->_directories as $directory) {
-            $iterator->append(
-                new PHP_Depend_Input_Iterator(
-                    new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($directory . '/')
-                    ),
-                    $this->_fileFilter
-                )
-            );
-        }
-
-        // TODO: It's important to validate this behavior, imho there is something
-        //       wrong in the iterator code used above.
-        // Strange: why is the iterator not unique and why does this loop fix it?
-        foreach ($iterator as $file) {
-        }
-        // END
 
         $this->_builder = new PHP_Depend_Builder_Default();
 
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer = new PHP_Depend_Tokenizer_CacheDecorator($tokenizer);
-
-        $this->fireStartParseProcess($this->_builder);
-
-        foreach ($iterator as $file) {
-            $tokenizer->setSourceFile($file);
-
-            $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
-
-            // Disable annotation parsing?
-            if ($this->_withoutAnnotations === true) {
-                $parser->setIgnoreAnnotations();
-            }
-
-            $this->fireStartFileParsing($tokenizer);
-            $parser->parse();
-            $this->fireEndFileParsing($tokenizer);
-        }
-
-        $this->fireEndParseProcess($this->_builder);
+        $this->_performParsingProcess();
 
         // Initialize defaul filters
         if ($this->_supportBadDocumentation === false) {
@@ -420,8 +372,11 @@ class PHP_Depend
 
         $collection->removeFilter($this->_codeFilter);
 
+
+        $analyzerLoader = $this->_createAnalyzerLoader($this->_options);
+
         // Append all listeners
-        foreach ($loader as $analyzer) {
+        foreach ($analyzerLoader as $analyzer) {
             foreach ($this->_listeners as $listener) {
                 $analyzer->addAnalyzeListener($listener);
 
@@ -433,7 +388,7 @@ class PHP_Depend
 
         $this->fireStartAnalyzeProcess();
 
-        foreach ($loader as $analyzer) {
+        foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware
             if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
                 $collection->addFilter($this->_codeFilter);
@@ -674,22 +629,96 @@ class PHP_Depend
     }
 
     /**
-     * Creates an <b>array</b> with all expected analyzers.
+     * This method performs the parsing process of all source files. It expects
+     * that the <b>$_builder</b> property was initialized with a concrete builder
+     * implementation.
      *
-     * @return array(string)
+     * @return void
      */
-    private function _createAnalyzerList()
+    private function _performParsingProcess()
     {
-        $resultSets = array();
+        $tokenizer = new PHP_Depend_Tokenizer_CacheDecorator(
+            new PHP_Depend_Tokenizer_Internal()
+        );
+
+        $this->fireStartParseProcess($this->_builder);
+
+        foreach ($this->_createFileIterator() as $file) {
+            $tokenizer->setSourceFile($file);
+
+            $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
+
+            // Disable annotation parsing?
+            if ($this->_withoutAnnotations === true) {
+                $parser->setIgnoreAnnotations();
+            }
+
+            $this->fireStartFileParsing($tokenizer);
+            $parser->parse();
+            $this->fireEndFileParsing($tokenizer);
+        }
+
+        $this->fireEndParseProcess($this->_builder);
+    }
+
+    /**
+     * This method will create an iterator instance which contains all files
+     * that are part of the parsing process.
+     *
+     * @return Iterator
+     */
+    private function _createFileIterator()
+    {
+        if (count($this->_directories) === 0 && count($this->_files) === 0) {
+            throw new RuntimeException('No source directory and file set.');
+        }
+
+        $fileIterator = new AppendIterator();
+        $fileIterator->append(new ArrayIterator($this->_files));
+
+        foreach ($this->_directories as $directory) {
+            $fileIterator->append(
+                new PHP_Depend_Input_Iterator(
+                    new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($directory . '/')
+                    ),
+                    $this->_fileFilter
+                )
+            );
+        }
+
+        // TODO: It's important to validate this behavior, imho there is something
+        //       wrong in the iterator code used above.
+        // Strange: why is the iterator not unique and why does this loop fix it?
+        foreach ($fileIterator as $file) {
+        }
+        // END
+
+        return $fileIterator;
+    }
+
+    /**
+     * Creates a {@link PHP_Depend_Metrics_AnalyzerLoader} instance that will be
+     * used to create all analyzers required for the actually registered logger
+     * instances.
+     *
+     * @param array $options The command line options recieved for this run.
+     *
+     * @return PHP_Depend_Metrics_AnalyzerLoader
+     */
+    private function _createAnalyzerLoader(array $options)
+    {
+        $analyzerSet = array();
 
         foreach ($this->_loggers as $logger) {
             foreach ($logger->getAcceptedAnalyzers() as $type) {
                 // Check for type existence
-                if (!in_array($type, $resultSets)) {
-                    $resultSets[] = $type;
+                if (in_array($type, $analyzerSet) === false) {
+                    $analyzerSet[] = $type;
                 }
             }
         }
-        return $resultSets;
+
+        return new PHP_Depend_Metrics_AnalyzerLoader($analyzerSet, $options);
     }
 }
