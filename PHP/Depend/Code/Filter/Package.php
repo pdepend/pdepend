@@ -105,6 +105,7 @@ class PHP_Depend_Code_Filter_Package
         } else if ($node instanceof PHP_Depend_Code_Package) {
             $package = $node->getName();
         }
+
         return (preg_match($this->_pattern, $package) === 0);
     }
 }

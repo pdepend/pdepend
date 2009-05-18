@@ -46,6 +46,8 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
 /**
  * Test case for the Reflection API compatibility ticket #67.
  *

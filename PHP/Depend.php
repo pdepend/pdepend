@@ -163,6 +163,13 @@ class PHP_Depend
     private $_options = array();
 
     /**
+     * List of exceptions thrown during the parse process.
+     *
+     * @var array(PHP_Depend_Parser_Exception) $_parseExceptions
+     */
+    private $_parseExceptions = array();
+
+    /**
      * Configured storage engines.
      *
      * @var array(PHP_Depend_Storage_AbstractEngine) $_storages
@@ -346,16 +353,18 @@ class PHP_Depend
 
         $this->_builder = new PHP_Depend_Builder_Default();
 
-        $this->_performParsingProcess();
+        $this->_performParseProcess();
 
         // Initialize defaul filters
         if ($this->_supportBadDocumentation === false) {
-            $filter = new PHP_Depend_Code_Filter_DefaultPackage();
-            $this->_codeFilter->addFilter($filter);
+            $this->_codeFilter->addFilter(
+                new PHP_Depend_Code_Filter_DefaultPackage()
+            );
         }
 
-        $filter = new PHP_Depend_Code_Filter_InternalPackage();
-        $this->_codeFilter->addFilter($filter);
+        $this->_codeFilter->addFilter(
+            new PHP_Depend_Code_Filter_InternalPackage()
+        );
 
         // Get global filter collection
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
@@ -372,41 +381,9 @@ class PHP_Depend
 
         $collection->removeFilter($this->_codeFilter);
 
+        $this->_performAnalyzeProcess();
 
-        $analyzerLoader = $this->_createAnalyzerLoader($this->_options);
 
-        // Append all listeners
-        foreach ($analyzerLoader as $analyzer) {
-            foreach ($this->_listeners as $listener) {
-                $analyzer->addAnalyzeListener($listener);
-
-                if ($analyzer instanceof PHP_Depend_VisitorI) {
-                    $analyzer->addVisitListener($listener);
-                }
-            }
-        }
-
-        $this->fireStartAnalyzeProcess();
-
-        foreach ($analyzerLoader as $analyzer) {
-            // Add filters if this analyzer is filter aware
-            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
-                $collection->addFilter($this->_codeFilter);
-            }
-
-            $analyzer->analyze($this->_builder->getPackages());
-
-            // Remove filters if this analyzer is filter aware
-            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
-                $collection->removeFilter($this->_codeFilter);
-            }
-
-            foreach ($this->_loggers as $logger) {
-                $logger->log($analyzer);
-            }
-        }
-
-        $this->fireEndAnalyzeProcess();
 
         // Set global filter for logging
         $collection->addFilter($this->_codeFilter);
@@ -450,6 +427,11 @@ class PHP_Depend
             $classes += $package->getTypes()->count();
         }
         return $classes;
+    }
+
+    public function getExceptions()
+    {
+        return $this->_parseExceptions;
     }
 
     /**
@@ -608,6 +590,83 @@ class PHP_Depend
     }
 
     /**
+     * This method performs the parsing process of all source files. It expects
+     * that the <b>$_builder</b> property was initialized with a concrete builder
+     * implementation.
+     *
+     * @return void
+     */
+    private function _performParseProcess()
+    {
+        // Reset list of thrown exceptions
+        $this->_parseExceptions = array();
+
+        $tokenizer = new PHP_Depend_Tokenizer_CacheDecorator(
+            new PHP_Depend_Tokenizer_Internal()
+        );
+
+        $this->fireStartParseProcess($this->_builder);
+
+        foreach ($this->_createFileIterator() as $file) {
+            $tokenizer->setSourceFile($file);
+
+            $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
+
+            // Disable annotation parsing?
+            if ($this->_withoutAnnotations === true) {
+                $parser->setIgnoreAnnotations();
+            }
+
+            $this->fireStartFileParsing($tokenizer);
+
+            try {
+                $parser->parse();
+            } catch (PHP_Depend_Parser_Exception $e) {
+                $this->_parseExceptions[] = $e;
+            }
+            $this->fireEndFileParsing($tokenizer);
+        }
+
+        $this->fireEndParseProcess($this->_builder);
+    }
+
+    /**
+     * This method performs the analysing process of the parsed source files. It
+     * creates the required analyzers for the registered listeners and then
+     * applies them to the source tree.
+     *
+     * @return void
+     */
+    private function _performAnalyzeProcess()
+    {
+        $analyzerLoader = $this->_createAnalyzerLoader($this->_options);
+
+        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
+
+        $this->fireStartAnalyzeProcess();
+
+        foreach ($analyzerLoader as $analyzer) {
+            // Add filters if this analyzer is filter aware
+            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
+                $collection->addFilter($this->_codeFilter);
+            }
+
+            $analyzer->analyze($this->_builder->getPackages());
+
+            // Remove filters if this analyzer is filter aware
+            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
+                $collection->removeFilter($this->_codeFilter);
+            }
+
+            foreach ($this->_loggers as $logger) {
+                $logger->log($analyzer);
+            }
+        }
+
+        $this->fireEndAnalyzeProcess();
+    }
+
+    /**
      * This method initializes the storage strategies for node tokens that are
      * used during a single PHP_Depend run and the parser cache storage.
      *
@@ -629,36 +688,29 @@ class PHP_Depend
     }
 
     /**
-     * This method performs the parsing process of all source files. It expects
-     * that the <b>$_builder</b> property was initialized with a concrete builder
-     * implementation.
+     * This method will initialize all code analysers and register the
+     * interested listeners.
      *
-     * @return void
+     * @param PHP_Depend_Metrics_AnalyzerLoader $analyzerLoader The used loader
+     *        instance for all code analysers.
+     *
+     * @return PHP_Depend_Metrics_AnalyzerLoader
      */
-    private function _performParsingProcess()
-    {
-        $tokenizer = new PHP_Depend_Tokenizer_CacheDecorator(
-            new PHP_Depend_Tokenizer_Internal()
-        );
+    private function _initAnalyseListeners(
+        PHP_Depend_Metrics_AnalyzerLoader $analyzerLoader
+    ) {
+        // Append all listeners
+        foreach ($analyzerLoader as $analyzer) {
+            foreach ($this->_listeners as $listener) {
+                $analyzer->addAnalyzeListener($listener);
 
-        $this->fireStartParseProcess($this->_builder);
-
-        foreach ($this->_createFileIterator() as $file) {
-            $tokenizer->setSourceFile($file);
-
-            $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
-
-            // Disable annotation parsing?
-            if ($this->_withoutAnnotations === true) {
-                $parser->setIgnoreAnnotations();
+                if ($analyzer instanceof PHP_Depend_VisitorI) {
+                    $analyzer->addVisitListener($listener);
+                }
             }
-
-            $this->fireStartFileParsing($tokenizer);
-            $parser->parse();
-            $this->fireEndFileParsing($tokenizer);
         }
-
-        $this->fireEndParseProcess($this->_builder);
+        
+        return $analyzerLoader;
     }
 
     /**
@@ -719,6 +771,8 @@ class PHP_Depend
             }
         }
 
-        return new PHP_Depend_Metrics_AnalyzerLoader($analyzerSet, $options);
+        return $this->_initAnalyseListeners(
+            new PHP_Depend_Metrics_AnalyzerLoader($analyzerSet, $options)
+        );
     }
 }

@@ -389,10 +389,26 @@ class PHP_Depend_TextUI_Runner
 
         try {
             $pdepend->analyze();
+
+            foreach ($pdepend->getExceptions() as $exception) {
+                $this->_errors[] = $exception->getMessage();
+            }
         } catch (Exception $e) {
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         return self::SUCCESS_EXIT;
+    }
+    
+    private $_errors = array();
+
+    public function hasErrors()
+    {
+        return (count($this->_errors) > 0);
+    }
+
+    public function getErrors()
+    {
+        return $this->_errors;
     }
 }
