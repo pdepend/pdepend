@@ -178,6 +178,13 @@ class PHP_Depend_TextUI_Runner
     private $_processListeners = array();
 
     /**
+     * List of error messages for all parsing errors.
+     *
+     * @var array(string) $_parseErrors
+     */
+    private $_parseErrors = array();
+
+    /**
      * Sets a list of allowed file extensions.
      *
      * NOTE: If you call this method, it will replace the default file extensions.
@@ -391,7 +398,7 @@ class PHP_Depend_TextUI_Runner
             $pdepend->analyze();
 
             foreach ($pdepend->getExceptions() as $exception) {
-                $this->_errors[] = $exception->getMessage();
+                $this->_parseErrors[] = $exception->getMessage();
             }
         } catch (Exception $e) {
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
@@ -399,16 +406,26 @@ class PHP_Depend_TextUI_Runner
 
         return self::SUCCESS_EXIT;
     }
-    
-    private $_errors = array();
 
-    public function hasErrors()
+    /**
+     * This method will return <b>true</b> when there were errors during the
+     * parse process.
+     *
+     * @return boolean
+     */
+    public function hasParseErrors()
     {
-        return (count($this->_errors) > 0);
+        return (count($this->_parseErrors) > 0);
     }
 
-    public function getErrors()
+    /**
+     * This method will return an <b>array</b> with error messages for all
+     * failures that happened during the parsing process.
+     *
+     * @return array(string)
+     */
+    public function getParseErrors()
     {
-        return $this->_errors;
+        return $this->_parseErrors;
     }
 }

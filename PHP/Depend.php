@@ -163,7 +163,8 @@ class PHP_Depend
     private $_options = array();
 
     /**
-     * List of exceptions thrown during the parse process.
+     * List of all {@link PHP_Depend_Parser_Exception} that were caught during
+     * the parsing process.
      *
      * @var array(PHP_Depend_Parser_Exception) $_parseExceptions
      */
@@ -429,6 +430,12 @@ class PHP_Depend
         return $classes;
     }
 
+    /**
+     * Returns an <b>array</b> with all {@link PHP_Depend_Parser_Exception} that
+     * were caught during the parsing process.
+     *
+     * @return array(PHP_Depend_Parser_Exception)
+     */
     public function getExceptions()
     {
         return $this->_parseExceptions;
