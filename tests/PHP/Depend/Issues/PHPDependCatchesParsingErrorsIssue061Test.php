@@ -143,7 +143,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         );
         $runner->run();
 
-        $this->assertFalse($runner->hasErrors());
+        $this->assertFalse($runner->hasParseErrors());
     }
 
     /**
@@ -163,7 +163,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         );
         $runner->run();
 
-        $this->assertTrue($runner->hasErrors());
+        $this->assertTrue($runner->hasParseErrors());
     }
 
     /**
