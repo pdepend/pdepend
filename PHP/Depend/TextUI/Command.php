@@ -209,6 +209,14 @@ class PHP_Depend_TextUI_Command
 
             $result = $this->_runner->run();
 
+            if ($this->_runner->hasErrors() === true) {
+                echo PHP_EOL, 'Following errors occured:', PHP_EOL;
+                foreach ($this->_runner->getErrors() as $error) {
+                    echo $error, PHP_EOL;
+                }
+                echo PHP_EOL;
+            }
+
             echo PHP_EOL, 'Time: ', date('i:s', time() - $startTime);
             if (function_exists('memory_get_peak_usage')) {
                 $memory = (memory_get_peak_usage(true) / (1024 * 1024));
