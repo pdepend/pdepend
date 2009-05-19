@@ -73,16 +73,18 @@ final class PHP_Depend_StorageRegistry
      * @param string $name The storage identifier.
      *
      * @return PHP_Depend_Storage_EngineI
-     * @throws InvalidArgumentException When no storage engine was registered for
-     *                                  the given <b>$name</b>.
+     * @throws OutOfRangeException When no storage engine was registered for the
+     *                             given <b>$name</b>.
      */
     public static function get($name)
     {
         if (isset(self::$_engines[$name])) {
             return self::$_engines[$name];
         }
-        $message = sprintf('Invalid storage identifier "%s" given.', $name);
-        throw new InvalidArgumentException($message);
+        
+        throw new OutOfRangeException(
+            sprintf('Invalid storage identifier "%s" given.', $name)
+        );
     }
 
     /**
