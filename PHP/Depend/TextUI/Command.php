@@ -197,7 +197,7 @@ class PHP_Depend_TextUI_Command
 
         if (count($options) > 0) {
             $this->printHelp();
-            echo "Unknown option '", key($options), "' given.\n";
+            echo "Unknown option '", key($options), "' given.", PHP_EOL;
             return self::CLI_ERROR;
         }
 
@@ -228,7 +228,7 @@ class PHP_Depend_TextUI_Command
             return $result;
         } catch (RuntimeException $e) {
             // Print error message
-            echo $e->getMessage(), "\n";
+            echo $e->getMessage(), PHP_EOL;
             // Return exit code
             return $e->getCode();
         }
@@ -244,11 +244,12 @@ class PHP_Depend_TextUI_Command
         if (!isset($_SERVER['argv'])) {
             if (false === (boolean) ini_get('register_argc_argv')) {
                 // @codeCoverageIgnoreStart
-                echo "Please enable register_argc_argv in your php.ini.\n\n";
+                echo 'Please enable register_argc_argv in your php.ini.';
             } else {
                 // @codeCoverageIgnoreEnd
-                echo "Unknown error, no \$argv array available.\n\n";
+                echo 'Unknown error, no $argv array available.';
             }
+            echo PHP_EOL, PHP_EOL;
             return false;
         }
 
@@ -337,7 +338,8 @@ class PHP_Depend_TextUI_Command
             // First check config file
             if (file_exists($configFile) === false) {
                 // Print error message
-                echo "The configuration file '{$configFile}' doesn't exist.\n\n";
+                echo 'The configuration file "', $configFile,
+                     '" doesn\'t exist.', PHP_EOL, PHP_EOL;
                 // Return error
                 return false;
             }
@@ -365,7 +367,7 @@ class PHP_Depend_TextUI_Command
      */
     protected function printVersion()
     {
-        echo "PHP_Depend @package_version@ by Manuel Pichler\n\n";
+        echo 'PHP_Depend @package_version@ by Manuel Pichler', PHP_EOL, PHP_EOL;
     }
 
     /**
@@ -376,7 +378,7 @@ class PHP_Depend_TextUI_Command
     protected function printUsage()
     {
         $this->printVersion();
-        echo "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";
+        echo 'Usage: pdepend [options] [logger] <dir[,dir[,...]]>', PHP_EOL, PHP_EOL;
     }
 
     /**
@@ -476,13 +478,13 @@ class PHP_Depend_TextUI_Command
 
             $current = substr($option, 0, strrpos($option, '-'));
             if ($last !== null && $last !== $current) {
-                echo "\n";
+                echo PHP_EOL;
             }
             $last = $current;
 
             $this->_printOption($option, $message, $maxLength);
         }
-        echo "\n";
+        echo PHP_EOL;
 
         return $maxLength;
     }
@@ -565,7 +567,7 @@ class PHP_Depend_TextUI_Command
 
             $this->_printOption($option, $info['message'], $length);
         }
-        echo "\n";
+        echo PHP_EOL;
 
         return $length;
     }
@@ -634,13 +636,13 @@ class PHP_Depend_TextUI_Command
         $option = str_pad($option, $length, ' ', STR_PAD_RIGHT);
         echo '  ', $option, ' ';
 
-        $lines = explode("\n", wordwrap($message, $mlength, "\n"));
+        $lines = explode(PHP_EOL, wordwrap($message, $mlength, PHP_EOL));
         echo array_shift($lines);
 
         while (($line = array_shift($lines)) !== null) {
-            echo "\n", str_repeat(' ', $length + 3), $line;
+            echo PHP_EOL, str_repeat(' ', $length + 3), $line;
         }
-        echo "\n";
+        echo PHP_EOL;
     }
 
     /**
