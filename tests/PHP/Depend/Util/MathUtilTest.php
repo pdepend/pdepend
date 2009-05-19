@@ -36,63 +36,40 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHPUnit/Extensions/PhptTestSuite.php';
+
 /**
- * This is a simply utility class that will perform mathematical operations with
- * bcmath when the extension exists, otherwise it will use default math operations.
+ * Test case for the {@link PHP_Depend_Util_MathUtil} class.
  *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
+ * @link       http://pdepend.org/
  */
-final class PHP_Depend_Util_MathUtil
+class PHP_Depend_Util_MathUtilTest extends PHPUnit_Extensions_PhptTestSuite
 {
     /**
-     * This method will multiply the two given operands with the bcmath extension
-     * when available, otherwise it will use the default mathematical operations.
-     *
-     * @param string $left  The left arithmetic operand.
-     * @param string $right The right arithmetic operand.
-     *
-     * @return string
+     * Constructs a new test suite
      */
-    public static function mul($left, $right)
+    public function __construct()
     {
-        if (function_exists('bcmul') === true) {
-            return bcmul($left, $right);
-        }
-        return (string) ((int) $left * (int) $right);
-    }
-
-    /**
-     * This method will add the two given operands with the bcmath extension
-     * when available, otherwise it will use the default mathematical operations.
-     *
-     * @param string $left  The left arithmetic operand.
-     * @param string $right The right arithmetic operand.
-     *
-     * @return string
-     */
-    public static function add($left, $right)
-    {
-        if (function_exists('bcadd') === true) {
-            return bcadd($left, $right);
-        }
-        return (string) ((int) $left + (int) $right);
+        parent::__construct(
+            realpath(dirname(__FILE__) . '/../_code/util/mathutil/')
+        );
     }
 }
 ?>
