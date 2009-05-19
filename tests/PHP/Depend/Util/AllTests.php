@@ -54,6 +54,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/FileUtilTest.php';
 require_once dirname(__FILE__) . '/ImageConvertTest.php';
+require_once dirname(__FILE__) . '/MathUtilTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Util package.
@@ -88,6 +89,7 @@ class PHP_Depend_Util_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util - AllTests');
 
         $suite->addTest(new PHP_Depend_Util_FileUtilTest());
+        $suite->addTest(new PHP_Depend_Util_MathUtilTest());
 
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
 

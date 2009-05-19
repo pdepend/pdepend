@@ -62,6 +62,9 @@ require_once 'PHPUnit/Extensions/PhptTestSuite.php';
  */
 class PHP_Depend_Util_FileUtilTest extends PHPUnit_Extensions_PhptTestSuite
 {
+    /**
+     * Constructs a new test suite
+     */
     public function __construct()
     {
         parent::__construct(
