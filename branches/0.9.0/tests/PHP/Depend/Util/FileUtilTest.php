@@ -36,65 +36,37 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://pdepend.org/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Util
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://pdepend.org/
  */
-
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Util_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/FileUtilTest.php';
-require_once dirname(__FILE__) . '/ImageConvertTest.php';
+ 
+require_once 'PHPUnit/Extensions/PhptTestSuite.php';
 
 /**
- * Main test suite for the PHP_Depend_Util package.
+ * Test case for the {@link PHP_Depend_Util_FileUtil} class.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://pdepend.org/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Util
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://pdepend.org/
  */
-class PHP_Depend_Util_AllTests
+class PHP_Depend_Util_FileUtilTest extends PHPUnit_Extensions_PhptTestSuite
 {
-    /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
+    public function __construct()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util - AllTests');
-
-        $suite->addTest(new PHP_Depend_Util_FileUtilTest());
-
-        $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
-
-        return $suite;
+        parent::__construct(
+            realpath(dirname(__FILE__) . '/../_code/util/fileutil/')
+        );
     }
 }
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Util_AllTests::main') {
-    PHP_Depend_Util_AllTests::main();
-}
+?>
