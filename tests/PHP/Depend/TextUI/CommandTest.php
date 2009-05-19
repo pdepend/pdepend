@@ -132,7 +132,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
 
-        $startsWith = "Unknown error, no \$argv array available.\n\n";
+        $startsWith = 'Unknown error, no $argv array available.' . PHP_EOL . PHP_EOL;
         $this->assertHelpOutput($actual, $startsWith);
     }
 
@@ -407,9 +407,11 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $expected = "The configuration file '{$configFile}' doesn't exist.\n\n";
-        $this->assertTrue(strpos($actual, $expected) === 0);
-        $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        $this->assertSame(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        $this->assertContains(
+            sprintf('The configuration file "%s" doesn\'t exist.', $configFile),
+            $actual
+        );
     }
 
     /**
