@@ -454,7 +454,7 @@ class PHP_Depend
         }
         // TODO: This is internal knownhow, it is an ArrayIterator
         //       Replace it with a custom iterator interface
-        return $this->_packages->count();
+        return iterator_count($this->_packages);
     }
 
     /**
