@@ -1430,6 +1430,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->current();
 
         $expected = array(
+            array(PHP_Depend_TokenizerI::T_ABSTRACT, 2),
+            array(PHP_Depend_TokenizerI::T_CLASS, 2),
+            array(PHP_Depend_TokenizerI::T_STRING, 2),
+            array(PHP_Depend_TokenizerI::T_EXTENDS, 2),
+            array(PHP_Depend_TokenizerI::T_STRING, 2),
             array(PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN, 3),
             array(PHP_Depend_TokenizerI::T_DOC_COMMENT, 4),
             array(PHP_Depend_TokenizerI::T_PUBLIC, 11),
@@ -1560,7 +1565,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $expectedToken = array_shift($expected);
 
             $this->assertNotNull($expectedToken);
-            $this->assertEquals($expectedToken[0], $token->type);
+            $this->assertEquals($expectedToken[0], $token->type, 'Expected on line: ' . $expectedToken[1]);
         }
 
         $this->assertSame(0, count($expected));

@@ -85,6 +85,14 @@ class PHP_Depend_Code_Parameter
     private $_name = '';
 
     /**
+     * The source tokens used for this parameter declaration.
+     *
+     * @var array(PHP_Depend_Token) $_tokens
+     * @since 0.9.5
+     */
+    private $_tokens = null;
+
+    /**
      * The unique identifier for this function.
      *
      * @var PHP_Depend_Util_UUID $_uuid
@@ -180,6 +188,32 @@ class PHP_Depend_Code_Parameter
     public function getName()
     {
         return $this->_name;
+    }
+
+    /**
+     * Returns the source tokens used for this parameter declaration.
+     *
+     * @return array(PHP_Depend_Token)
+     * @since 0.9.5
+     */
+    public function getTokens()
+    {
+        return $this->_tokens;
+    }
+
+    /**
+     * Sets the source tokens used for this parameter declaration.
+     *
+     * @param array(PHP_Depend_Token) $tokens The source tokens.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setTokens(array $tokens)
+    {
+        if ($this->_tokens === null) {
+            $this->_tokens = $tokens;
+        }
     }
 
     /**
