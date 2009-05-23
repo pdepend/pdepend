@@ -100,20 +100,6 @@ class PHP_Depend_Code_Parameter
     private $_uuid = null;
 
     /**
-     * The line number where the item declaration starts.
-     *
-     * @var integer $_startLine
-     */
-    private $_startLine = 0;
-
-    /**
-     * The line number where the item declaration ends.
-     *
-     * @var integer $_endLine
-     */
-    private $_endLine = 0;
-
-    /**
      * The parent function or method instance.
      *
      * @var PHP_Depend_Code_AbstractCallable $_declaringFunction
@@ -233,19 +219,8 @@ class PHP_Depend_Code_Parameter
      */
     public function getStartLine()
     {
-        return $this->_startLine;
-    }
-
-    /**
-     * Sets the start line for this item.
-     *
-     * @param integer $startLine The start line for this item.
-     *
-     * @return void
-     */
-    public function setStartLine($startLine)
-    {
-        $this->_startLine = $startLine;
+        assert(($token = reset($this->_tokens)) instanceof PHP_Depend_Token);
+        return $token->startLine;
     }
 
     /**
@@ -255,19 +230,8 @@ class PHP_Depend_Code_Parameter
      */
     public function getEndLine()
     {
-        return $this->_endLine;
-    }
-
-    /**
-     * Sets the end line for this item.
-     *
-     * @param integer $endLine The end line for this item
-     *
-     * @return void
-     */
-    public function setEndLine($endLine)
-    {
-        $this->_endLine = $endLine;
+        assert(($token = end($this->_tokens)) instanceof PHP_Depend_Token);
+        return $token->endLine;
     }
 
     /**
@@ -667,6 +631,50 @@ class PHP_Depend_Code_Parameter
     {
         fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
         $this->setDeclaringFunction($parent);
+    }
+
+    /**
+     * The line number where the item declaration starts.
+     *
+     * @var integer $_startLine
+     * @deprecated since 0.9.6
+     */
+    private $_startLine = 0;
+
+    /**
+     * The line number where the item declaration ends.
+     *
+     * @var integer $_endLine
+     * @deprecated since 0.9.6
+     */
+    private $_endLine = 0;
+
+    /**
+     * Sets the start line for this item.
+     *
+     * @param integer $startLine The start line for this item.
+     *
+     * @return void
+     * @deprecated since 0.9.6
+     */
+    public function setStartLine($startLine)
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.6.' . PHP_EOL);
+        $this->_startLine = $startLine;
+    }
+
+    /**
+     * Sets the end line for this item.
+     *
+     * @param integer $endLine The end line for this item
+     *
+     * @return void
+     * @deprecated since 0.9.6
+     */
+    public function setEndLine($endLine)
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.6.' . PHP_EOL);
+        $this->_endLine = $endLine;
     }
 
     // @codeCoverageIgnoreEnd
