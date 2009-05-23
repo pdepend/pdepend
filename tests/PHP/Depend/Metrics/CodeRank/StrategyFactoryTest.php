@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -46,20 +46,12 @@
  * @link       http://pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Metrics_CodeRank_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/AnalyzerTest.php';
-require_once dirname(__FILE__) . '/MethodStrategyTest.php';
-require_once dirname(__FILE__) . '/PropertyStrategyTest.php';
-require_once dirname(__FILE__) . '/StrategyFactoryTest.php';
+require_once 'PHP/Depend/Metrics/CodeRank/StrategyFactory.php';
 
 /**
- * Main test suite for the PHP_Depend_Metrics_CodeRank package.
+ * Test case for the code rank property strategy.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -70,35 +62,23 @@ require_once dirname(__FILE__) . '/StrategyFactoryTest.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_CodeRank_AllTests
+class PHP_Depend_Metrics_CodeRank_StrategyFactoryTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the factory throws the expected exception for an invalid
+     * strategy identifier.
      *
      * @return void
      */
-    public static function main()
+    public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-    
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics_CodeRank - AllTests');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_AnalyzerTest');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_MethodStrategyTest');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_PropertyStrategyTest');
-        $suite->addTestSuite('PHP_Depend_Metrics_CodeRank_StrategyFactoryTest');
-        
-        return $suite;
-    }
-}
+        $factory = new PHP_Depend_Metrics_CodeRank_StrategyFactory();
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Metrics_CodeRank_AllTests::main') {
-    PHP_Depend_Metrics_CodeRank_AllTests::main();
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'Cannot load file for identifier "foo_bar_baz".'
+        );
+
+        $factory->createStrategy('foo_bar_baz');
+    }
 }
