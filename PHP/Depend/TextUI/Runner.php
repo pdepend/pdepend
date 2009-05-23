@@ -390,10 +390,6 @@ class PHP_Depend_TextUI_Runner
             $pdepend->addProcessListener($processListener);
         }
 
-        // TODO: Make the result printer class configurable
-        //$resultPrinter = new PHP_Depend_TextUI_ResultPrinter();
-        //$pdepend->addProcessListener($resultPrinter);
-
         try {
             $pdepend->analyze();
 
