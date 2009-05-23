@@ -109,13 +109,15 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
      * @param string $id The strategy identifier.
      *
      * @return PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
-     * @throws RuntimeException If the given <b>$id</b> is not valid or no
-     *                          matching class declaration exists.
+     * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
+     *                                  no matching class declaration exists.
      */
     public function createStrategy($id)
     {
         if (in_array($id, $this->_validStrategies) === false) {
-            throw new RuntimeException("Cannot load file for identifier '{$id}'.");
+            throw new InvalidArgumentException(
+                sprintf('Cannot load file for identifier "%s".', $id)
+            );
         }
 
         // Prepare identifier
@@ -125,10 +127,6 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
         $className = "PHP_Depend_Metrics_CodeRank_{$name}Strategy";
 
         include_once $fileName;
-
-        if (class_exists($className, false) === false) {
-            throw new RuntimeException("Unknown strategy class '{$className}'.");
-        }
 
         return new $className();
     }
