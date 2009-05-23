@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Property.php';
@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Code/Property.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_PropertyTest extends PHP_Depend_Code_AbstractItemTest
+class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that {@link PHP_Depend_Code_Property::setModifiers()} fails with
@@ -73,7 +73,7 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_Code_AbstractItemTest
     {
         $this->setExpectedException('InvalidArgumentException');
         
-        $property = $this->createItem();
+        $property = new PHP_Depend_Code_Property('$pdepend');
         $property->setModifiers(-1);
     }
     
@@ -85,7 +85,7 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testSetModifiersOnlyAcceptsTheFirstValue()
     {
-        $property = $this->createItem();
+        $property = new PHP_Depend_Code_Property('$pdepend');
         $this->assertFalse($property->isPublic());
         $property->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
         $this->assertTrue($property->isPublic());
@@ -120,21 +120,45 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = new PHP_Depend_Code_Class('clazz');
         
-        $property = $this->createItem();
+        $property = new PHP_Depend_Code_Property('$pdepend');
         $this->assertNull($property->getParent());
         $property->setParent($class);
         $this->assertSame($class, $property->getParent());
         $property->setParent();
         $this->assertNull($property->getParent());
     }
-    
+
+
     /**
-     * Creates an abstract item instance.
+     * Tests that build interface updates the source file information for null
+     * values.
      *
-     * @return PHP_Depend_Code_AbstractItem
+     * @return void
      */
-    protected function createItem()
+    public function testSetSourceFileInformationForNullValue()
     {
-        return new PHP_Depend_Code_Property('$pdepend', 0);
+        $item = new PHP_Depend_Code_Property('$pdepend');
+        $file = new PHP_Depend_Code_File(__FILE__);
+
+        $this->assertNull($item->getSourceFile());
+        $item->setSourceFile($file);
+        $this->assertSame($file, $item->getSourceFile());
+    }
+
+    /**
+     * Tests that the build interface method doesn't update an existing source
+     * file info.
+     *
+     * @return void
+     */
+    public function testDoesntSetSourceFileInformationForNotNullValue()
+    {
+        $item = new PHP_Depend_Code_Property('$pdepend');
+        $file = new PHP_Depend_Code_File(__FILE__);
+
+        $item->setSourceFile($file);
+        $item->setSourceFile(new PHP_Depend_Code_File('HelloWorld.php'));
+
+        $this->assertSame($file, $item->getSourceFile());
     }
 }

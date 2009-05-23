@@ -96,7 +96,7 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
      * was declared.
      *
      * @var PHP_Depend_Code_Value $value
-     * @since 0.9.5
+     * @since 0.9.6
      */
     private $_value = null;
 
@@ -236,7 +236,7 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
      * Returns the source tokens used for this property declaration.
      *
      * @return array(PHP_Depend_Token)
-     * @since 0.9.5
+     * @since 0.9.6
      */
     public function getTokens()
     {
@@ -249,7 +249,7 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
      * @param array(PHP_Depend_Token) $tokens The source tokens.
      *
      * @return void
-     * @since 0.9.5
+     * @since 0.9.6
      */
     public function setTokens(array $tokens)
     {
@@ -259,10 +259,35 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
     }
 
     /**
+     * Returns the line number where the property declaration can be found.
+     *
+     * @return integer
+     * @since 0.9.6
+     */
+    public function getStartLine()
+    {
+        assert(($token = reset($this->_tokens)) instanceof PHP_Depend_Token);
+        return $token->startLine;
+    }
+
+    /**
+     * Returns the line number where the property declaration ends.
+     *
+     * @return integer
+     * @since 0.9.6
+     */
+    public function getEndLine()
+    {
+        assert(($token = end($this->_tokens)) instanceof PHP_Depend_Token);
+        return $token->endLine;
+    }
+
+    /**
      * This method will return the default value for this property instance or
      * <b>null</b> when this property was only declared and not initialized.
      *
      * @return mixed
+     * @since 0.9.6
      */
     public function getValue()
     {
@@ -279,7 +304,7 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
      * @param PHP_Depend_Code_Value $value The declared property default value.
      *
      * @return void
-     * @since 0.9.5
+     * @since 0.9.6
      */
     public function setValue(PHP_Depend_Code_Value $value = null)
     {

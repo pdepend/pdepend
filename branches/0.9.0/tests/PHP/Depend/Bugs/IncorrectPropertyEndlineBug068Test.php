@@ -38,82 +38,103 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Parser
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.6
  */
 
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
 /**
- * This class provides a scoped collection for {@PHP_Depend_Token} objects.
+ * Test case for bug 68 where the property end line of a property was not set
+ * correct.
+ *
+ * http://tracker.pdepend.org/pdepend/issue_tracker/issue/68
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Parser
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.6
  */
-class PHP_Depend_Parser_TokenStack
+class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_AbstractTest
 {
     /**
-     * The actual token scope.
-     *
-     * @var array(PHP_Depend_Token) $_tokens
-     */
-    private $_tokens = array();
-
-    /**
-     * Stack with token scopes.
-     *
-     * @var array(array) $_stack
-     */
-    private $_stack = array();
-
-    /**
-     * This method will push a new token scope onto the stack,
+     * Tests that the parser sets the expected start and end line for a property.
      *
      * @return void
      */
-    public function push()
+    public function testParserSetsExpectedStartAndEndLineForPropertyWithoutDefaultValue()
     {
-        array_push($this->_stack, $this->_tokens);
-        $this->_tokens = array();
+        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertSame(3, $property->getStartLine());
+        $this->assertSame(5, $property->getEndLine());
     }
 
     /**
-     * This method will pop the top token scope from the stack and return an
-     * array with all collected tokens. Additionally this method will add all
-     * tokens of the removed scope onto the next token scope.
+     * Tests that the parser sets the expected start and end line for a property.
      *
-     * @return array(PHP_Depend_Token)
+     * @return void
      */
-    public function pop()
+    public function testParserSetsExpectedStartAndEndLineForPropertyWithCommentsInDeclaration()
     {
-        $tokens = $this->_tokens;
-        $this->_tokens = array_pop($this->_stack);
-        foreach ($tokens as $token) {
-            $this->_tokens[] = $token;
-        }
-        return $tokens;
+        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertSame(4, $property->getStartLine());
+        $this->assertSame(10, $property->getEndLine());
     }
 
     /**
-     * This method will add a new token to the currently active token scope.
+     * Tests that the parser sets the expected start and end line for a property.
      *
-     * @param PHP_Depend_Token $token The token to add.
-     *
-     * @return PHP_Depend_Token
+     * @return void
      */
-    public function add(PHP_Depend_Token $token)
+    public function testParserSetsExpectedStartAndEndLineForPropertyWithArrayDefaultValue()
     {
-        return ($this->_tokens[] = $token);
+        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertSame(3, $property->getStartLine());
+        $this->assertSame(7, $property->getEndLine());
+    }
+
+    /**
+     * Tests that the parser sets the expected start and end line for a property.
+     *
+     * @return void
+     */
+    public function testParserSetsExpectedStartAndEndLineForPropertyWithScalarDefaultValueAndComments()
+    {
+        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertSame(4, $property->getStartLine());
+        $this->assertSame(13, $property->getEndLine());
     }
 }
 ?>
