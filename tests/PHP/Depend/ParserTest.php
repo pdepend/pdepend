@@ -1247,6 +1247,54 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser throws an exception when it detects an invalid
+     * token in a class body.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: ;, line: 4, col: 5, file: '
+        );
+
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * Tests that the parser throws an exception when it detects an invalid
+     * token in a method or property declaration.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: &, line: 4, col: 12, file: '
+        );
+
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * Tests that the parser throws an exception when it detects an invalid
+     * token in a method or property declaration.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_UnexpectedTokenException',
+            'Unexpected token: const, line: 4, col: 13, file: '
+        );
+
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
      * Tests that the parser handles the <b>parent</b> keyword within the default
      * value of a function.
      *

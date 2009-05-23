@@ -605,13 +605,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
-                // Consume anything else
-                $token = $this->_consumeToken($tokenType);
-                //echo 'TOKEN: ', $token->image, PHP_EOL;
-
-                // TODO: Handle/log unused tokens
-                $this->reset();
-                break;
+                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                    $this->_tokenizer
+                );
             }
 
             $tokenType = $this->_tokenizer->peek();
@@ -1527,8 +1523,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $constant = $this->_builder->buildTypeConstant($token->image);
         $constant->setDocComment($this->_docComment);
-        $constant->setStartLine($token->startLine);
-        $constant->setEndLine($token->startLine);
         $constant->setSourceFile($this->_sourceFile);
 
         $this->_consumeComments();

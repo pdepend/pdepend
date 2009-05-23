@@ -139,6 +139,7 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
      * Returns the line number where the item declaration can be found.
      *
      * @return integer
+     * @since 0.9.6
      */
     public function getStartLine()
     {
@@ -149,7 +150,8 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     /**
      * Returns the line number where the item declaration ends.
      *
-     * @return integer The last source line for this item.
+     * @return integer
+     * @since 0.9.6
      */
     public function getEndLine()
     {
@@ -160,8 +162,7 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
+     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
      *
      * @return void
      */
