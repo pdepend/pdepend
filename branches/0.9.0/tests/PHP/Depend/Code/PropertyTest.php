@@ -161,4 +161,110 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
 
         $this->assertSame($file, $item->getSourceFile());
     }
+
+    /**
+     * Tests that the <b>isDefaultValueAvailable()</b> method returns the
+     * expected result.
+     *
+     * @return void
+     */
+    public function testPropertyIsDefaultValueAvailableReturnsFalseWhenNoValueExists()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertFalse($property->isDefaultValueAvailable());
+        $this->assertNull($property->getDefaultValue());
+    }
+
+    /**
+     * Tests that the <b>isDefaultValueAvailable()</b> method returns the
+     * expected result.
+     *
+     * @return void
+     */
+    public function testPropertyIsDefaultValueAvailableReturnsTrueWhenValueExists()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertTrue($property->isDefaultValueAvailable());
+        $this->assertNull($property->getDefaultValue());
+    }
+
+    /**
+     * Tests that the property default value matches the expected PHP type.
+     *
+     * @return void
+     */
+    public function testPropertyContainsExpectDefaultValueBooleanTrue()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertTrue($property->getDefaultValue());
+    }
+
+    /**
+     * Tests that the property default value matches the expected PHP type.
+     *
+     * @return void
+     */
+    public function testPropertyContainsExpectDefaultValueBooleanFalse()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertFalse($property->getDefaultValue());
+    }
+
+    /**
+     * Tests that the property default value matches the expected PHP type.
+     *
+     * @return void
+     */
+    public function testPropertyContainsExpectDefaultValueArray()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertType('array', $property->getDefaultValue());
+    }
+
+    /**
+     * Tests that the property default value matches the expected PHP type.
+     *
+     * @return void
+     */
+    public function testPropertyContainsExpectedDefaultValueFloat()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertEquals(3.14, $property->getDefaultValue(), '', 0.001);
+    }
 }

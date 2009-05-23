@@ -702,8 +702,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $property = $this->_builder->buildProperty($token->image);
         $property->setDocComment($this->_docComment);
-        $property->setStartLine($token->startLine);
-        $property->setEndLine($token->startLine);
         $property->setSourceFile($this->_sourceFile);
 
         $this->_prepareProperty($property);
@@ -713,7 +711,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_EQUAL);
             $this->_consumeComments();
 
-            $property->setValue($this->_parseStaticValueOrStaticArray());
+            $property->setDefaultValue($this->_parseStaticValueOrStaticArray());
         }
 
         return $property;
