@@ -79,6 +79,14 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     private $_parent = null;
 
     /**
+     * The source tokens used for this constant declaration.
+     *
+     * @var array(PHP_Depend_Token) $_tokens
+     * @since 0.9.6
+     */
+    private $_tokens = null;
+
+    /**
      * Returns the parent type object or <b>null</b>
      *
      * @return PHP_Depend_Code_AbstractClassOrInterface|null
@@ -99,6 +107,54 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
         PHP_Depend_Code_AbstractClassOrInterface $parent = null
     ) {
         $this->_parent = $parent;
+    }
+
+    /**
+     * Returns the source tokens used for this constant declaration.
+     *
+     * @return array(PHP_Depend_Token)
+     * @since 0.9.6
+     */
+    public function getTokens()
+    {
+        return $this->_tokens;
+    }
+
+    /**
+     * Sets the source tokens used for this constant declaration.
+     *
+     * @param array(PHP_Depend_Token) $tokens The source tokens.
+     *
+     * @return void
+     * @since 0.9.6
+     */
+    public function setTokens(array $tokens)
+    {
+        if ($this->_tokens === null) {
+            $this->_tokens = $tokens;
+        }
+    }
+
+    /**
+     * Returns the line number where the item declaration can be found.
+     *
+     * @return integer
+     */
+    public function getStartLine()
+    {
+        assert(($token = reset($this->_tokens)) instanceof PHP_Depend_Token);
+        return $token->startLine;
+    }
+
+    /**
+     * Returns the line number where the item declaration ends.
+     *
+     * @return integer The last source line for this item.
+     */
+    public function getEndLine()
+    {
+        assert(($token = end($this->_tokens)) instanceof PHP_Depend_Token);
+        return $token->endLine;
     }
 
     /**

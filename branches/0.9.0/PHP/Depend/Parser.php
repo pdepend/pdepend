@@ -717,7 +717,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_EQUAL);
             $this->_consumeComments();
 
-            $property->setValue($this->_parseDefaultValue());
+            $property->setValue($this->_parseStaticValueOrStaticArray());
         }
 
         return $property;
@@ -1048,7 +1048,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_EQUAL, $tokens);
             $this->_consumeComments($tokens);
 
-            $parameter->setValue($this->_parseDefaultValue($tokens));
+            $parameter->setValue($this->_parseStaticValueOrStaticArray($tokens));
         }
 
         return $parameter;
@@ -1516,6 +1516,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseTypeConstant()
     {
+        $this->_tokenStack->push();
+
         // Consume const keyword
         $this->_consumeToken(self::T_CONST);
 
@@ -1529,19 +1531,47 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $constant->setEndLine($token->startLine);
         $constant->setSourceFile($this->_sourceFile);
 
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_EQUAL);
+
+        $this->_parseStaticValue();
+
+        $constant->setTokens($this->_tokenStack->pop());
+
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_SEMICOLON);
+
         return $constant;
     }
 
     /**
-     * This method will parse the default value of a parameter or property
-     * declaration.
+     * This method will parse a static value or a static array as it is
+     * used as default value for a parameter or property declaration.
+     *
+     * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
+     *
+     * @return PHP_Depend_Code_Value
+     * @since 0.9.6
+     */
+    private function _parseStaticValueOrStaticArray(array &$tokens = array())
+    {
+        $this->_consumeComments($tokens);
+        if ($this->_tokenizer->peek() === self::T_ARRAY) {
+            return $this->_parseStaticArray($tokens);
+        }
+        return $this->_parseStaticValue($tokens);
+    }
+
+    /**
+     * This method will parse a static default value as it is used for a
+     * parameter, property or constant declaration.
      *
      * @param array(PHP_Depend_Token) &$tokens Reference for all parsed tokens.
      *
      * @return PHP_Depend_Code_Value
      * @since 0.9.5
      */
-    private function _parseDefaultValue(array &$tokens = array())
+    private function _parseStaticValue(array &$tokens = array())
     {
         $defaultValue = new PHP_Depend_Code_Value();
 
@@ -1594,10 +1624,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $tokens
                 );
                 $defaultValue->setValue(substr($token->image, 1, -1));
-                break;
-
-            case self::T_ARRAY:
-                $defaultValue->setValue($this->_parseDefaultValueArray($tokens));
                 break;
 
             case self::T_DOUBLE_COLON:
@@ -1662,9 +1688,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return array
      * @since 0.9.5
      */
-    private function _parseDefaultValueArray(array &$tokens)
+    private function _parseStaticArray(array &$tokens = array())
     {
-        $defaultValue = array();
+        $staticValue = array();
 
         // Fetch all tokens that belong to this array
         $this->_consumeToken(self::T_ARRAY, $tokens);
@@ -1729,7 +1755,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Read closing parenthesis
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE, $tokens);
-        
+
+        $defaultValue = new PHP_Depend_Code_Value();
+        $defaultValue->setValue($staticValue);
+
         return $defaultValue;
     }
 
