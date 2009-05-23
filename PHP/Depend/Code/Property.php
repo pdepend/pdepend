@@ -118,14 +118,6 @@ class PHP_Depend_Code_Property
     private $_modifiers = 0;
 
     /**
-     * The source tokens used for this parameter declaration.
-     *
-     * @var array(PHP_Depend_Token) $_tokens
-     * @since 0.9.5
-     */
-    private $_tokens = null;
-
-    /**
      * The default value for this property or <b>null</b> when no default value
      * was declared.
      *
@@ -341,7 +333,8 @@ class PHP_Depend_Code_Property
      */
     public function getTokens()
     {
-        return $this->_tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        return (array) $storage->restore($this->getUUID(), __CLASS__);
     }
 
     /**
@@ -354,9 +347,8 @@ class PHP_Depend_Code_Property
      */
     public function setTokens(array $tokens)
     {
-        if ($this->_tokens === null) {
-            $this->_tokens = $tokens;
-        }
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        $storage->store($tokens, $this->getUUID(), __CLASS__);
     }
 
     /**
@@ -367,7 +359,8 @@ class PHP_Depend_Code_Property
      */
     public function getStartLine()
     {
-        assert(($token = reset($this->_tokens)) instanceof PHP_Depend_Token);
+        $tokens = $this->getTokens();
+        assert(($token = reset($tokens)) instanceof PHP_Depend_Token);
         return $token->startLine;
     }
 
@@ -379,7 +372,8 @@ class PHP_Depend_Code_Property
      */
     public function getEndLine()
     {
-        assert(($token = end($this->_tokens)) instanceof PHP_Depend_Token);
+        $tokens = $this->getTokens();
+        assert(($token = end($tokens)) instanceof PHP_Depend_Token);
         return $token->endLine;
     }
 
