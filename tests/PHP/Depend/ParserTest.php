@@ -1032,7 +1032,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(1, $constants->count());
         $this->assertEquals('FOOBAR', $constants->current()->getName());
-        $this->assertSame($interface, $constants->current()->getParent());
+        $this->assertSame($interface, $constants->current()->getDeclaringClass());
     }
 
     /**
@@ -1092,12 +1092,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(2, $constants->count());
         $this->assertEquals('BAR', $constants->current()->getName());
-        $this->assertSame($class, $constants->current()->getParent());
+        $this->assertSame($class, $constants->current()->getDeclaringClass());
 
         $constants->next();
 
         $this->assertEquals('FOO', $constants->current()->getName());
-        $this->assertSame($class, $constants->current()->getParent());
+        $this->assertSame($class, $constants->current()->getDeclaringClass());
     }
 
     /**
