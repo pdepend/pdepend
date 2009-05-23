@@ -109,25 +109,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
                               | PHP_Depend_ConstantsI::IS_STATIC);
         $this->assertTrue($property->isStatic());
     }
-    
-    /**
-     * Tests the default behaviour of the <b>setParent()</b> and <b>getParent()</b>
-     * methods.
-     *
-     * @return void
-     */
-    public function testSetParentWithNullResetsParentReference()
-    {
-        $class = new PHP_Depend_Code_Class('clazz');
-        
-        $property = new PHP_Depend_Code_Property('$pdepend');
-        $this->assertNull($property->getParent());
-        $property->setParent($class);
-        $this->assertSame($class, $property->getParent());
-        $property->setParent();
-        $this->assertNull($property->getParent());
-    }
-
 
     /**
      * Tests that build interface updates the source file information for null
