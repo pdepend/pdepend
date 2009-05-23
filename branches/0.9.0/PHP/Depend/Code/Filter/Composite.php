@@ -61,7 +61,7 @@ require_once 'PHP/Depend/Code/FilterI.php';
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Code_Filter_Composite
-    implements PHP_Depend_Code_FilterI, Countable, IteratorAggregate
+    implements PHP_Depend_Code_FilterI, IteratorAggregate
 {
     /**
      * List of all registered filters.
@@ -114,16 +114,6 @@ class PHP_Depend_Code_Filter_Composite
             }
         }
         return true;
-    }
-
-    /**
-     * Returns the number of available filters.
-     *
-     * @return integer
-     */
-    public function count()
-    {
-        return count($this->_filters);
     }
 
     /**

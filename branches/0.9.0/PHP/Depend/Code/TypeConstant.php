@@ -79,14 +79,6 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     private $_parent = null;
 
     /**
-     * The source tokens used for this constant declaration.
-     *
-     * @var array(PHP_Depend_Token) $_tokens
-     * @since 0.9.6
-     */
-    private $_tokens = null;
-
-    /**
      * Returns the parent type object or <b>null</b>
      *
      * @return PHP_Depend_Code_AbstractClassOrInterface|null
@@ -117,7 +109,8 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
      */
     public function getTokens()
     {
-        return $this->_tokens;
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        return (array) $storage->restore($this->getUUID(), __CLASS__);
     }
 
     /**
@@ -130,9 +123,8 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
      */
     public function setTokens(array $tokens)
     {
-        if ($this->_tokens === null) {
-            $this->_tokens = $tokens;
-        }
+        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
+        $storage->store($tokens, $this->getUUID(), __CLASS__);
     }
 
     /**
@@ -143,7 +135,8 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
      */
     public function getStartLine()
     {
-        assert(($token = reset($this->_tokens)) instanceof PHP_Depend_Token);
+        $tokens = $this->getTokens();
+        assert(($token = reset($tokens)) instanceof PHP_Depend_Token);
         return $token->startLine;
     }
 
@@ -155,7 +148,8 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
      */
     public function getEndLine()
     {
-        assert(($token = end($this->_tokens)) instanceof PHP_Depend_Token);
+        $tokens = $this->getTokens();
+        assert(($token = end($tokens)) instanceof PHP_Depend_Token);
         return $token->endLine;
     }
 
