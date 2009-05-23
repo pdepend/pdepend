@@ -70,15 +70,15 @@ class PHP_Depend_Code_Property
      * @var string $_name
      * @since 0.9.6
      */
-    protected $_name = '';
+    private $_name = '';
 
     /**
      * The unique identifier for this function.
      *
-     * @var PHP_Depend_Util_UUID $uuid
+     * @var PHP_Depend_Util_UUID $_uuid
      * @since 0.9.6
      */
-    protected $uuid = null;
+    private $_uuid = null;
 
     /**
      * The source file for this item.
@@ -86,7 +86,7 @@ class PHP_Depend_Code_Property
      * @var PHP_Depend_Code_File $_sourceFile
      * @since 0.9.6
      */
-    protected $_sourceFile = null;
+    private $_sourceFile = null;
 
     /**
      * The comment for this type.
@@ -94,7 +94,7 @@ class PHP_Depend_Code_Property
      * @var string $_docComment
      * @since 0.9.6
      */
-    protected $_docComment = null;
+    private $_docComment = null;
     
     /**
      * The parent type object.
@@ -423,7 +423,7 @@ class PHP_Depend_Code_Property
      * @return mixed
      * @since 0.9.6
      */
-    public function getDefaultValue($object = null)
+    public function getDefaultValue()
     {
         if ($this->_value === null) {
             return null;
@@ -435,7 +435,7 @@ class PHP_Depend_Code_Property
      * This method is used by the parser to the a declared default value for
      * this property.
      *
-     * @param PHP_Depend_Code_Value $object The declared default value for this
+     * @param PHP_Depend_Code_Value $value The declared default value for this
      *        property instance.
      *
      * @return void
