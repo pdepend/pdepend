@@ -56,6 +56,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once dirname(__FILE__) . '/NamespaceSupportIssue002Test.php';
 require_once dirname(__FILE__) . '/PHPDependCatchesParsingErrorsIssue061Test.php';
 require_once dirname(__FILE__) . '/ReflectionCompatibilityIssue67Test.php';
+require_once dirname(__FILE__) . '/StoreTokensForAllNodeTypesIssue079Test.php';
 
 /**
  * Test suite for issues meta package.
@@ -93,6 +94,7 @@ class PHP_Depend_Issues_AllTests
         $suite->addTestSuite('PHP_Depend_Issues_NamespaceSupportIssue002Test');
         $suite->addTestSuite('PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test');
         $suite->addTestSuite('PHP_Depend_Issues_ReflectionCompatibilityIssue67Test');
+        $suite->addTestSuite('PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test');
 
         return $suite;
     }
