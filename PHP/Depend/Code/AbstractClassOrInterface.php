@@ -256,32 +256,12 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function addConstant(PHP_Depend_Code_TypeConstant $constant)
     {
-        if ($constant->getParent() !== null) {
-            $constant->getParent()->removeConstant($constant);
-        }
         // Set this as owner type
-        $constant->setParent($this);
+        $constant->setDeclaringClass($this);
         // Store constant
         $this->_constants[] = $constant;
 
         return $constant;
-    }
-
-    /**
-     * Removes the given constant from this type.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The constant to remove.
-     *
-     * @return void
-     */
-    public function removeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        if (($i = array_search($constant, $this->_constants, true)) !== false) {
-            // Remove this as owner
-            $constant->setParent(null);
-            // Remove from internal list
-            unset($this->_constants[$i]);
-        }
     }
 
     /**

@@ -74,31 +74,31 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     /**
      * The parent type object.
      *
-     * @var PHP_Depend_Code_AbstractClassOrInterface $_parent
+     * @var PHP_Depend_Code_AbstractClassOrInterface $_declaringClass
      */
-    private $_parent = null;
+    private $_declaringClass = null;
 
     /**
-     * Returns the parent type object or <b>null</b>
+     * Returns the declaring class or interface instance or <b>null</b>
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface|null
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      */
-    public function getParent()
+    public function getDeclaringClass()
     {
-        return $this->_parent;
+        return $this->_declaringClass;
     }
 
     /**
-     * Sets the parent type object.
+     * Sets the declaring class or interface instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $parent The parent class.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $declaringClass The class.
      *
      * @return void
      */
-    public function setParent(
-        PHP_Depend_Code_AbstractClassOrInterface $parent = null
+    public function setDeclaringClass(
+        PHP_Depend_Code_AbstractClassOrInterface $declaringClass = null
     ) {
-        $this->_parent = $parent;
+        $this->_declaringClass = $declaringClass;
     }
 
     /**
@@ -164,4 +164,36 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
     {
         $visitor->visitTypeConstant($this);
     }
+
+    // DEPRECATED METHODS
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Returns the parent type object or <b>null</b>
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface|null
+     * @deprecated Since version 0.9.6, use getDeclaringClass() instead.
+     */
+    public function getParent()
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        return $this->getDeclaringClass();
+    }
+
+    /**
+     * Sets the parent type object.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $parent The parent class.
+     *
+     * @return void
+     * @deprecated Since version 0.9.6, use setDeclaringClass() instead.
+     */
+    public function setParent(
+        PHP_Depend_Code_AbstractClassOrInterface $parent = null
+    ) {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        $this->setDeclaringClass($parent);
+    }
+
+    // @codeCoverageIgnoreEnd
 }
