@@ -452,8 +452,6 @@ class PHP_Depend
             $msg = 'countPackages() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
-        // TODO: This is internal knownhow, it is an ArrayIterator
-        //       Replace it with a custom iterator interface
         return iterator_count($this->_packages);
     }
 
