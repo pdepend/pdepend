@@ -189,7 +189,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $class->getSourceFile()->accept($this);
 
-        list($cloc, $eloc) = $this->_linesOfCode($class->getTokens());
+        list($cloc, $eloc) = $this->_linesOfCode($class->getTokens(), true);
 
         $loc   = $class->getEndLine() - $class->getStartLine() + 1;
         $ncloc = $loc - $cloc;
@@ -294,7 +294,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $interface->getSourceFile()->accept($this);
 
-        list($cloc, $eloc) = $this->_linesOfCode($interface->getTokens());
+        list($cloc, $eloc) = $this->_linesOfCode($interface->getTokens(), true);
 
         $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
         $ncloc = $loc - $cloc;

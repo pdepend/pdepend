@@ -84,6 +84,23 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
     private $_modifiers = 0;
 
     /**
+     * The source tokens used for this parameter declaration.
+     *
+     * @var array(PHP_Depend_Token) $_tokens
+     * @since 0.9.5
+     */
+    private $_tokens = null;
+
+    /**
+     * The default value for this property or <b>null</b> when no default value
+     * was declared.
+     *
+     * @var PHP_Depend_Code_Value $value
+     * @since 0.9.5
+     */
+    private $_value = null;
+
+    /**
      * This method sets a OR combined integer of the declared modifiers for this
      * node.
      *
@@ -213,6 +230,60 @@ class PHP_Depend_Code_Property extends PHP_Depend_Code_AbstractItem
         PHP_Depend_Code_ClassOrInterfaceReference $classReference
     ) {
         $this->_classReference = $classReference;
+    }
+
+    /**
+     * Returns the source tokens used for this property declaration.
+     *
+     * @return array(PHP_Depend_Token)
+     * @since 0.9.5
+     */
+    public function getTokens()
+    {
+        return $this->_tokens;
+    }
+
+    /**
+     * Sets the source tokens used for this property declaration.
+     *
+     * @param array(PHP_Depend_Token) $tokens The source tokens.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setTokens(array $tokens)
+    {
+        if ($this->_tokens === null) {
+            $this->_tokens = $tokens;
+        }
+    }
+
+    /**
+     * This method will return the default value for this property instance or
+     * <b>null</b> when this property was only declared and not initialized.
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        if ($this->_value === null) {
+            return null;
+        }
+        return $this->_value->getValue();
+    }
+
+    /**
+     * This method is used by the parser to the a declared default value for
+     * this property.
+     *
+     * @param PHP_Depend_Code_Value $value The declared property default value.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setValue(PHP_Depend_Code_Value $value = null)
+    {
+        $this->_value = $value;
     }
 
     /**
