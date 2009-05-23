@@ -1,12 +1,31 @@
+PHP_Depend 0.9.6
+----------------
+
 PHP_Depend 0.9.5
 ----------------
 
-- Fixed #65:
-- Unused interface PHP_Depend_Code_TypeAwareI removed from object graph.
-- Uneccessary inheritence between parameter class and the abstract item class
-  refactored.
-- Builder method signatures simplified and inconsistent usage of the optional
-  $line ctor argument replaces with setStartLine() invokations.
+- Closed #2: Support PHP 5.3 namespace syntax, implemented since svn
+  revision #789.
+- Closed #61: Catch parser errors and continue processing, implemented
+  in svn revision #880.
+- Closed #63: Make ResultPrinter a configurable option, implemented in
+  svn revision #668.
+- Fixed #64: The single cache directory causes permission denied on
+  UNIX systems, fixed in svn revision #667.
+- Fixed #65: Endless loop for class and interface declarations without
+  body, fixed in svn revision #672.
+- Closed #66: Dependency wiring should be done at the end of the
+  parsing process, implemented in svn revision #855.
+- Fixed #69: Parser does not handle PHP 5.3 class names in function
+  and method bodies, fixed in svn revision #688.
+- Fixed #70: Parser throws an unexpected token exception for closure,
+  fixed in svn revision #726.
+- Fixed #71: Parser throws an unexpected token exception for signed
+  default values, fixed in svn revision #740.
+- Fixed #73: Inconsistent state when an interface and a class with the
+  same name exists, fixed in svn revision #776.
+- Fixed #76: Tokenizer keyword detection is broken, fixed in svn
+  revision #871.
 
 
 PHP_Depend 0.9.4
