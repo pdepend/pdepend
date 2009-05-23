@@ -99,9 +99,9 @@ class PHP_Depend_Code_Property
     /**
      * The parent type object.
      *
-     * @var PHP_Depend_Code_Class $_parent
+     * @var PHP_Depend_Code_Class $_declaringClass
      */
-    private $_parent = null;
+    private $_declaringClass = null;
 
     /**
      * A reference instance for the php type of this property.
@@ -258,28 +258,6 @@ class PHP_Depend_Code_Property
     }
 
     /**
-     * Returns the parent class object or <b>null</b>
-     *
-     * @return PHP_Depend_Code_Class
-     */
-    public function getParent()
-    {
-        return $this->_parent;
-    }
-
-    /**
-     * Sets the parent class object.
-     *
-     * @param PHP_Depend_Code_Class $parent The parent class.
-     *
-     * @return void
-     */
-    public function setParent(PHP_Depend_Code_Class $parent = null)
-    {
-        $this->_parent = $parent;
-    }
-
-    /**
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
@@ -413,7 +391,20 @@ class PHP_Depend_Code_Property
      */
     public function getDeclaringClass()
     {
+        return $this->_declaringClass;
+    }
 
+    /**
+     * Sets the declaring class object.
+     *
+     * @param PHP_Depend_Code_Class $declaringClass The declaring class.
+     *
+     * @return void
+     * @since 0.9.6
+     */
+    public function setDeclaringClass(PHP_Depend_Code_Class $declaringClass)
+    {
+        $this->_declaringClass = $declaringClass;
     }
 
     /**
@@ -613,6 +604,32 @@ class PHP_Depend_Code_Property
     public function setType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         fwrite(STDERR, 'Since 0.9.5 setType() is deprecated.' . PHP_EOL);
+    }
+
+    /**
+     * Returns the parent class object or <b>null</b>
+     *
+     * @return PHP_Depend_Code_Class
+     * @deprecated Since version 0.9.6, use getDeclaringClass() instead.
+     */
+    public function getParent()
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        return $this->getDeclaringClass();
+    }
+
+    /**
+     * Sets the parent class object.
+     *
+     * @param PHP_Depend_Code_Class $parent The parent class.
+     *
+     * @return void
+     * @deprecated Since version 0.9.6, use setDeclaringClass() instead.
+     */
+    public function setParent(PHP_Depend_Code_Class $parent = null)
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        $this->setDeclaringClass($parent);
     }
 
     // @codeCoverageIgnoreEnd

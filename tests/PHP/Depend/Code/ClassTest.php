@@ -331,29 +331,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
     
     /**
-     * Tests that 
-     *
-     */
-    public function testRemovePropertyAlsoUnsetsParentClass()
-    {
-        $class = new PHP_Depend_Code_Class('a');
-        $prop1 = new PHP_Depend_Code_Property('$p1');
-        $prop2 = new PHP_Depend_Code_Property('$p2');
-        
-        $class->addProperty($prop1);
-        $this->assertSame($class, $prop1->getParent());
-        
-        $class->addProperty($prop2);
-        $this->assertSame($class, $prop2->getParent());
-        
-        $this->assertEquals(2, $class->getProperties()->count());
-        
-        $class->removeProperty($prop1);
-        $this->assertNull($prop1->getParent());
-        $this->assertEquals(1, $class->getProperties()->count());
-    }
-    
-    /**
      * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
      *
      * @return void

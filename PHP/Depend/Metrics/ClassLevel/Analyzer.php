@@ -273,7 +273,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         $this->fireStartProperty($property);
 
         // Get parent class uuid
-        $uuid = $property->getParent()->getUUID();
+        $uuid = $property->getDeclaringClass()->getUUID();
 
         // Increment VARS value
         ++$this->_nodeMetrics[$uuid]['vars'];
