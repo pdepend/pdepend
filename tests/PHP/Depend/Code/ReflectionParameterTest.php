@@ -239,6 +239,40 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the output of __toString() is compatible with the native
+     * reflection api.
+     *
+     * @return void
+     */
+    public function testToStringReturnsExpectedStringForParameterWithDefaultValueBooleanTrue()
+    {
+        // Include test code for native reflection
+        include_once self::createCodeResourceUri('issues/067/' . __FUNCTION__ . '.php');
+
+        $native   = new ReflectionParameter(__FUNCTION__, 0);
+        $userland = self::parseParameter('issues/067/' . __FUNCTION__ . '.php');
+
+        $this->assertSame((string) $native, (string) $userland);
+    }
+
+    /**
+     * Tests that the output of __toString() is compatible with the native
+     * reflection api.
+     *
+     * @return void
+     */
+    public function testToStringReturnsExpectedStringForParameterWithDefaultValueFloat()
+    {
+        // Include test code for native reflection
+        include_once self::createCodeResourceUri('issues/067/' . __FUNCTION__ . '.php');
+
+        $native   = new ReflectionParameter(__FUNCTION__, 0);
+        $userland = self::parseParameter('issues/067/' . __FUNCTION__ . '.php');
+
+        $this->assertSame((string) $native, (string) $userland);
+    }
+
+    /**
      * This method will return the last parameter of the first function found in
      * the given file.
      *
