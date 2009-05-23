@@ -298,39 +298,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
     
     /**
-     * Tests the remove constant method.
-     *
-     * @return void
-     */
-    public function testRemoveConstant()
-    {
-        $a = new PHP_Depend_Code_Class('a');
-        
-        $this->assertEquals(0, $a->getConstants()->count());
-        $c = $a->addConstant(new PHP_Depend_Code_TypeConstant('FOO_BAR'));
-        $this->assertEquals(1, $a->getConstants()->count());
-        $a->removeConstant($c);
-        $this->assertEquals(0, $a->getConstants()->count());
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Code_Class::addConstant()} reparents the
-     * an already associated class instance.
-     * 
-     * @return void
-     */
-    public function testAddConstantReparentsClassInstance()
-    {
-        $a = new PHP_Depend_Code_Class('a');
-        $b = new PHP_Depend_Code_Class('b');
-        
-        $c = $a->addConstant(new PHP_Depend_Code_TypeConstant('FOO_BAR'));
-        $this->assertSame($a, $c->getParent());
-        $b->addConstant($c);
-        $this->assertSame($b, $c->getParent());
-    }
-    
-    /**
      * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
      *
      * @return void
