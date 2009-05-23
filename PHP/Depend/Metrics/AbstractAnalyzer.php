@@ -105,20 +105,6 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     }
 
     /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     *
-     * @return void
-     */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
-    {
-        if (($i = array_search($listener, $this->_listeners, true)) !== false) {
-            unset($this->_listeners[$i]);
-        }
-    }
-
-    /**
      * The analyzer implementation should call this method when it starts the
      * code processing. This method will send an analyzer start event to all
      * registered listeners.
