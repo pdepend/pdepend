@@ -122,26 +122,9 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             // Add to internal list
             $this->_properties[] = $property;
             // Set this as parent
-            $property->setParent($this);
+            $property->setDeclaringClass($this);
         }
         return $property;
-    }
-
-    /**
-     * Removes the given property from this class.
-     *
-     * @param PHP_Depend_Code_Property $property The property to remove.
-     *
-     * @return void
-     */
-    public function removeProperty(PHP_Depend_Code_Property $property)
-    {
-        if (($i = array_search($property, $this->_properties, true)) !== false) {
-            // Remove this as parent
-            $property->setParent(null);
-            // Remove from internal property list
-            unset($this->_properties[$i]);
-        }
     }
 
     /**

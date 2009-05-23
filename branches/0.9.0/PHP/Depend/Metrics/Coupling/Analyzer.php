@@ -239,10 +239,12 @@ class PHP_Depend_Metrics_Coupling_Analyzer
 
         // Check for not null
         if (($type = $property->getClass()) !== null) {
-            $parent = $property->getParent();
+            $declaringClass = $property->getDeclaringClass();
 
             // Only increment if these types are not part of the same hierarchy
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
+            if (!$type->isSubtypeOf($declaringClass)
+                && !$declaringClass->isSubtypeOf($type)
+            ) {
                 ++$this->_fanout;
             }
         }
