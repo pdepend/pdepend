@@ -101,7 +101,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
 
         $depPackage = $depClass->getPackage();
 
-        $class   = $property->getParent();
+        $class   = $property->getDeclaringClass();
         $package = $class->getPackage();
 
         if ($depClass !== $class) {
