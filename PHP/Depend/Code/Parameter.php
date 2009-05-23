@@ -485,6 +485,33 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
+     * This method is used by the parser to the a declared default value for
+     * this parameter.
+     *
+     * @param PHP_Depend_Code_Value $value The declared parameter default value.
+     *
+     * @return void
+     * @since 0.9.5
+     */
+    public function setValue(PHP_Depend_Code_Value $value = null)
+    {
+        $this->_value = $value;
+    }
+
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Depend_VisitorI $visitor The context visitor
+     *                                              implementation.
+     *
+     * @return void
+     */
+    public function accept(PHP_Depend_VisitorI $visitor)
+    {
+        $visitor->visitParameter($this);
+    }
+
+    /**
      * This method returns a string representation of this parameter.
      *
      * @return string
@@ -548,33 +575,6 @@ class PHP_Depend_Code_Parameter
             throw new ReflectionException(__METHOD__ . '() is not supported.');
         }
         return parent::export($function, $parameter, $return);
-    }
-
-    /**
-     * This method is used by the parser to the a declared default value for
-     * this parameter.
-     *
-     * @param PHP_Depend_Code_Value $value The declared parameter default value.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setValue(PHP_Depend_Code_Value $value = null)
-    {
-        $this->_value = $value;
-    }
-
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
-     *
-     * @return void
-     */
-    public function accept(PHP_Depend_VisitorI $visitor)
-    {
-        $visitor->visitParameter($this);
     }
 
     // Deprecated methods
