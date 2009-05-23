@@ -80,15 +80,6 @@ interface PHP_Depend_Metrics_AnalyzerI
     function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener);
     
     /**
-     * Removes the listener from this analyzer.
-     *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
-     */
-    function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener);
-    
-    /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
