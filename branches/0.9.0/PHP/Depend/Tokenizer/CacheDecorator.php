@@ -130,9 +130,9 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
     {
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::PARSER_STORAGE);
 
-        $id    = '$Id$';
+        $id    = '$Id$-@package_version@';
         $key   = md5_file($sourceFile);
-        $group = 'parser-tokenizer';
+        $group = get_class($this->_tokenizer);
 
         $tokens = $storage->restore($key, $group, $id);
         if (is_array($tokens)) {

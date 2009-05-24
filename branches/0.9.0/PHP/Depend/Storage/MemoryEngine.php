@@ -81,7 +81,7 @@ class PHP_Depend_Storage_MemoryEngine extends PHP_Depend_Storage_AbstractEngine
      *
      * @return void
      */
-    public function store($data, $key, $group, $version = null)
+    public function store($data, $key, $group, $version = '@package_version@')
     {
         $this->_data[$key . '.' . $group . '.' . $version] = $data;
     }
@@ -98,7 +98,7 @@ class PHP_Depend_Storage_MemoryEngine extends PHP_Depend_Storage_AbstractEngine
      *
      * @return mixed
      */
-    public function restore($key, $group, $version = null)
+    public function restore($key, $group, $version = '@package_version@')
     {
         $storageId = $key . '.' . $group . '.' . $version;
         if (isset($this->_data[$storageId])) {
