@@ -104,7 +104,7 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
      *
      * @return void
      */
-    public function store($data, $key, $group, $version = null)
+    public function store($data, $key, $group, $version = '@package_version@')
     {
         $pathname = $this->_createPathname($key, $group, $version);
         file_put_contents($pathname, serialize($data));
@@ -122,7 +122,7 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
      *
      * @return mixed
      */
-    public function restore($key, $group, $version = null)
+    public function restore($key, $group, $version = '@package_version@')
     {
         $pathname = $this->_createPathname($key, $group, $version);
         if (file_exists($pathname)) {
