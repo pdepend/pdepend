@@ -126,7 +126,7 @@ interface PHP_Depend_Storage_EngineI
      *
      * @return void
      */
-    function store($data, $key, $group, $version = null);
+    function store($data, $key, $group, $version = '@package_version@');
 
     /**
      * This method will restore a record and return it to the calling client.
@@ -140,6 +140,6 @@ interface PHP_Depend_Storage_EngineI
      *
      * @return mixed
      */
-    function restore($key, $group, $version = null);
+    function restore($key, $group, $version = '@package_version@');
 }
 ?>
