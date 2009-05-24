@@ -114,7 +114,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function getTokens()
     {
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore($this->getUUID(), 'tokens-callable');
+        return (array) $storage->restore($this->getUUID(), get_class($this));
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function setTokens(array $tokens)
     {
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, $this->getUUID(), 'tokens-callable');
+        $storage->store($tokens, $this->getUUID(), get_class($this));
     }
 
     /**
