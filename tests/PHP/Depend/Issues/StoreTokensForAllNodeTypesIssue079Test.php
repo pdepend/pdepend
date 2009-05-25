@@ -463,6 +463,44 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
     }
 
     /**
+     * Tests that the function uses the start line of the first token.
+     *
+     * @return void
+     */
+    public function testFunctionContainsStartLineOfFirstToken()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $tokens = $function->getTokens();
+        $token  = reset($tokens);
+
+        $this->assertSame(2, $token->startLine);
+        $this->assertSame($token->startLine, $function->getStartLine());
+    }
+
+    /**
+     * Tests that the function uses the end line of the last token.
+     *
+     * @return void
+     */
+    public function testFunctionContainsEndLineOfLastToken()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $tokens = $function->getTokens();
+        $token  = end($tokens);
+
+        $this->assertSame(7, $token->endLine);
+        $this->assertSame($token->endLine, $function->getEndLine());
+    }
+
+    /**
      * Tests that the parser stores the expected method tokens.
      *
      * @return void
@@ -556,6 +594,50 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         );
 
         $this->assertEquals($expected, $method->getTokens());
+    }
+
+    /**
+     * Tests that the method uses the start line of the first token.
+     *
+     * @return void
+     */
+    public function testMethodContainsStartLineOfFirstToken()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $method = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $tokens = $method->getTokens();
+        $token  = reset($tokens);
+
+        $this->assertSame(4, $token->startLine);
+        $this->assertSame($token->startLine, $method->getStartLine());
+    }
+
+    /**
+     * Tests that the method uses the end line of the last token.
+     *
+     * @return void
+     */
+    public function testMethodContainsEndLineOfLastToken()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $method = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $tokens = $method->getTokens();
+        $token  = end($tokens);
+
+        $this->assertSame(11, $token->endLine);
+        $this->assertSame($token->endLine, $method->getEndLine());
     }
 }
 ?>
