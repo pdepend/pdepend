@@ -407,7 +407,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
     public function testParserStoresExpectedFunctionTokens()
     {
         $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $constant = $packages->current()
+        $function = $packages->current()
             ->getFunctions()
             ->current();
 
@@ -423,7 +423,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
-        $this->assertEquals($expected, $constant->getTokens());
+        $this->assertEquals($expected, $function->getTokens());
     }
 
     /**
@@ -434,7 +434,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
     public function testParserStoresExpectedFunctionTokensWithParameters()
     {
         $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $constant = $packages->current()
+        $function = $packages->current()
             ->getFunctions()
             ->current();
 
@@ -459,7 +459,103 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
-        $this->assertEquals($expected, $constant->getTokens());
+        $this->assertEquals($expected, $function->getTokens());
+    }
+
+    /**
+     * Tests that the parser stores the expected method tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedMethodTokens()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $method = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 7, 7, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 12, 19),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 21, 23),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 24, 24),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 25, 25),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 9, 14),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 16, 20),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 21, 21),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
+        );
+
+        $this->assertEquals($expected, $method->getTokens());
+    }
+
+    /**
+     * Tests that the parser stores the expected method tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedMethodTokensWithStaticModifier()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $method = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STATIC, 'static', 7, 7, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 7, 7, 12, 17),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 19, 26),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 28, 30),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 31, 31),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 32, 32),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 9, 14),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 16, 20),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 21, 21),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
+        );
+
+        $this->assertEquals($expected, $method->getTokens());
+    }
+
+    /**
+     * Tests that the parser stores the expected method tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $method = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STATIC, 'static', 7, 7, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 7, 7, 12, 17),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FINAL, 'final', 7, 7, 19, 23),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 25, 32),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 34, 36),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 37, 37),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 38, 38),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 9, 14),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 16, 20),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 21, 21),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
+        );
+
+        $this->assertEquals($expected, $method->getTokens());
     }
 }
 ?>
