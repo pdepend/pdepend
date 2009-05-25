@@ -731,7 +731,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
 
         // Read function keyword
-        $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
+        $this->_consumeToken(self::T_FUNCTION, $tokens);
 
         // Remove leading comments
         $this->_consumeComments($tokens);
@@ -743,7 +743,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $callable = $this->_parseFunctionDeclaration($tokens);
         }
 
-        $callable->setStartLine($token->startLine);
         $callable->setTokens($tokens);
         $callable->setSourceFile($this->_sourceFile);
         $callable->setDocComment($this->_docComment);
@@ -809,10 +808,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseMethodDeclaration()
     {
-        // Read function keyword for $startLine property
-        $startLine = $this->_consumeToken(self::T_FUNCTION)->startLine;
-
-        // Remove leading comments
+        // Read function keyword
+        $this->_consumeToken(self::T_FUNCTION);
         $this->_consumeComments();
 
         $returnsReference = false;
@@ -830,7 +827,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $method = $this->_builder->buildMethod($methodName);
         $method->setDocComment($this->_docComment);
-        $method->setStartLine($startLine);
         $method->setSourceFile($this->_sourceFile);
 
         $this->_parseCallableDeclaration($method);
@@ -886,8 +882,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Get function body dependencies
             $this->_parseCallableBody($tokens, $callable);
         } else {
-            $token = $this->_consumeToken(self::T_SEMICOLON, $tokens);
-            $callable->setEndLine($token->endLine);
+            $this->_consumeToken(self::T_SEMICOLON, $tokens);
         }
     }
 
@@ -1208,11 +1203,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
 
             if ($curly === 0) {
-                // Get the last token
-                $token = end($tokens);
-                // Set end line number
-                $callable->setEndLine($token->startLine);
-
                 // Append all tokens to parent's reference array
                 foreach ($tokens as $token) {
                     $outTokens[] = $token;

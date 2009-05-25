@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Method.php';
@@ -61,17 +61,22 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
+class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the ctor and the {@link PHP_Depend_Code_Method::getName()} method.
+     * Tests that build interface updates the source file information for null
+     * values.
      *
      * @return void
      */
-    public function testCreateNewMethodInstance()
+    public function testSetSourceFileInformationForNullValue()
     {
-        $method = new PHP_Depend_Code_Method('method', 0);
-        $this->assertEquals('method', $method->getName());
+        $item = new PHP_Depend_Code_Method('method');
+        $file = new PHP_Depend_Code_File(__FILE__);
+
+        $this->assertNull($item->getSourceFile());
+        $item->setSourceFile($file);
+        $this->assertSame($file, $item->getSourceFile());
     }
     
     /**
@@ -229,25 +234,5 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $this->assertTrue($method->isPublic());
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $this->assertTrue($method->isPublic());
-    }
-    
-    /**
-     * Creates an abstract item instance.
-     *
-     * @return PHP_Depend_Code_AbstractItem
-     */
-    protected function createItem()
-    {
-        return new PHP_Depend_Code_Method('method', 0);
-    }
-    
-    /**
-     * Generates a node instance that can handle dependencies.
-     *
-     * @return PHP_Depend_Code_DependencyNodeI
-     */
-    protected function createDependencyNode()
-    {
-        return new PHP_Depend_Code_Method('method', 0);
     }
 }
