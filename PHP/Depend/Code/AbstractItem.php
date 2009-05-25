@@ -136,50 +136,6 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     }
 
     /**
-     * Returns the line number where the item declaration can be found.
-     *
-     * @return integer
-     */
-    public function getStartLine()
-    {
-        return $this->startLine;
-    }
-
-    /**
-     * Sets the start line for this item.
-     *
-     * @param integer $startLine The start line for this item.
-     *
-     * @return void
-     */
-    public function setStartLine($startLine)
-    {
-        $this->startLine = $startLine;
-    }
-
-    /**
-     * Returns the line number where the item declaration ends.
-     *
-     * @return integer The last source line for this item.
-     */
-    public function getEndLine()
-    {
-        return $this->endLine;
-    }
-
-    /**
-     * Sets the end line for this item.
-     *
-     * @param integer $endLine The end line for this item
-     *
-     * @return void
-     */
-    public function setEndLine($endLine)
-    {
-        $this->endLine = $endLine;
-    }
-
-    /**
      * Returns the source file for this item.
      *
      * @return PHP_Depend_Code_File
