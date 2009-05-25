@@ -361,7 +361,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $interface = $this->_builder->buildInterface($qualifiedName);
         $interface->setSourceFile($this->_sourceFile);
-        $interface->setStartLine($startLine);
         $interface->setDocComment($this->_docComment);
         $interface->setUserDefined();
 
@@ -413,7 +412,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $class = $this->_builder->buildClass($qualifiedName);
         $class->setSourceFile($this->_sourceFile);
-        $class->setStartLine($startLine);
         $class->setModifiers($this->_modifiers);
         $class->setDocComment($this->_docComment);
         $class->setUserDefined();
@@ -580,10 +578,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CURLY_BRACE_CLOSE:
-                // Read close token, we need it for the $endLine property
-                $token = $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
-
-                $type->setEndLine($token->endLine);
+                $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
 
                 $this->reset();
 

@@ -639,5 +639,126 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         $this->assertSame(11, $token->endLine);
         $this->assertSame($token->endLine, $method->getEndLine());
     }
+
+    /**
+     * Tests that the parser stores the expected class tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedClassTokens()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CLASS, 'class', 2, 2, 1, 5),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 7, 9),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+        );
+
+        $this->assertEquals($expected, $class->getTokens());
+    }
+
+    /**
+     * Tests that the parser stores the expected class tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedClassTokensWithFinalModifier()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FINAL, 'final', 2, 2, 1, 5),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CLASS, 'class', 2, 2, 7, 11),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 13, 15),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+        );
+
+        $this->assertEquals($expected, $class->getTokens());
+    }
+
+    /**
+     * Tests that the parser stores the expected class tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedClassTokensWithAbstractModifier()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ABSTRACT, 'abstract', 2, 2, 1, 8),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CLASS, 'class', 2, 2, 10, 14),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 16, 18),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+        );
+
+        $this->assertEquals($expected, $class->getTokens());
+    }
+
+    /**
+     * Tests that the parser stores the expected interface tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedInterfaceTokens()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+
+        $interface = $packages->current()
+            ->getInterfaces()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_INTERFACE, 'interface', 2, 2, 1, 9),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 11, 13),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 4, 4, 26, 26),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+        );
+
+        $this->assertEquals($expected, $interface->getTokens());
+    }
 }
 ?>
