@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Function.php';
@@ -62,8 +62,24 @@ require_once 'PHP/Depend/Code/Package.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
+class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * Tests that build interface updates the source file information for null
+     * values.
+     *
+     * @return void
+     */
+    public function testSetSourceFileInformationForNullValue()
+    {
+        $item = new PHP_Depend_Code_Function('func');
+        $file = new PHP_Depend_Code_File(__FILE__);
+
+        $this->assertNull($item->getSourceFile());
+        $item->setSourceFile($file);
+        $this->assertSame($file, $item->getSourceFile());
+    }
+    
     /**
      * Tests the ctor and the {@link PHP_Depend_Code_Function::getName()} method.
      *
@@ -91,19 +107,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $this->assertSame($package, $function->getPackage());
         $function->setPackage(null);
         $this->assertNull($function->getPackage());
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Code_Function#getStartLine()} works as expected.
-     *
-     * @return void
-     */
-    public function testGetStartLineNumber()
-    {
-        $function = new PHP_Depend_Code_Function('function1');
-        $function->setStartLine(23);
-
-        $this->assertEquals(23, $function->getStartLine());
     }
     
     /**
@@ -139,25 +142,5 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $this->assertNull($visitor->function);
         $function->accept($visitor);
         $this->assertSame($function, $visitor->function);
-    }
-    
-    /**
-     * Creates an abstract item instance.
-     *
-     * @return PHP_Depend_Code_AbstractItem
-     */
-    protected function createItem()
-    {
-        return new PHP_Depend_Code_Function('func');
-    }
-    
-    /**
-     * Generates a node instance that can handle dependencies.
-     *
-     * @return PHP_Depend_Code_DependencyNodeI
-     */
-    protected function createDependencyNode()
-    {
-        return new PHP_Depend_Code_Function('func');
     }
 }
