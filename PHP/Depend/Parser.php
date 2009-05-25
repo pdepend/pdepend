@@ -728,6 +728,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFunctionOrClosureDeclaration(array &$tokens = array())
     {
+        $this->_tokenStack->push();
+
         // Read function keyword
         $token = $this->_consumeToken(self::T_FUNCTION, $tokens);
 
@@ -745,6 +747,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $callable->setTokens($tokens);
         $callable->setSourceFile($this->_sourceFile);
         $callable->setDocComment($this->_docComment);
+        $callable->setTokens($this->_tokenStack->pop());
         $this->_prepareCallable($callable);
 
         $this->reset();
@@ -1209,8 +1212,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = end($tokens);
                 // Set end line number
                 $callable->setEndLine($token->startLine);
-                // Set all tokens for this function
-                $callable->setTokens($tokens);
 
                 // Append all tokens to parent's reference array
                 foreach ($tokens as $token) {
