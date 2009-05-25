@@ -200,19 +200,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
     
     /**
-     * Tests that {@link PHP_Depend_Code_Class#getStartLine()} works as expected.
-     * 
-     * @return void
-     */
-    public function testGetStartLineNumber()
-    {
-        $class = new PHP_Depend_Code_Class('foo');
-        $class->setStartLine(42);
-        
-        $this->assertEquals(42, $class->getStartLine());
-    }
-    
-    /**
      * Tests that {@link PHP_Depend_Code_Class::getInterfaces()}
      * returns the expected result.
      *

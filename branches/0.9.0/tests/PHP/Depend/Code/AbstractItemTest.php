@@ -95,34 +95,6 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the start line number is set correct.
-     *
-     * @return void
-     */
-    public function testSetStartLineNumberForZeroValue()
-    {
-        $item = $this->createItem();
-        
-        $this->assertEquals(0, $item->getStartLine());
-        $item->setStartLine(42);
-        $this->assertEquals(42, $item->getStartLine());
-    }
-    
-    /**
-     * Tests that the end line number is set correct.
-     *
-     * @return void
-     */
-    public function testSetEndLineNumberForZeroValue()
-    {
-        $item = $this->createItem();
-        
-        $this->assertEquals(0, $item->getEndLine());
-        $item->setEndLine(42);
-        $this->assertEquals(42, $item->getEndLine());
-    }
-    
-    /**
      * Creates an abstract item instance.
      *
      * @return PHP_Depend_Code_AbstractItem

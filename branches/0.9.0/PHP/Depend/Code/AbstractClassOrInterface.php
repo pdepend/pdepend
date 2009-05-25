@@ -352,6 +352,36 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * Returns the line number where the class or interface declaration starts.
+     *
+     * @return integer
+     * @since 0.9.6
+     */
+    public function getStartLine()
+    {
+        $tokens = $this->getTokens();
+        if (isset($tokens[0]) === false) {
+            return 0;
+        }
+        return reset($tokens)->startLine;
+    }
+
+    /**
+     * Returns the line number where the class or interface declaration ends.
+     *
+     * @return integer
+     * @since 0.9.6
+     */
+    public function getEndLine()
+    {
+        $tokens = $this->getTokens();
+        if (isset($tokens[0]) === false) {
+            return 0;
+        }
+        return end($tokens)->endLine;
+    }
+
+    /**
      * Returns the parent package for this class.
      *
      * @return PHP_Depend_Code_Package
@@ -402,6 +432,34 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
 
     // DEPRECATED METHODS AND PROPERTIES
     // @codeCoverageIgnoreStart
+
+    /**
+     * Sets the start line for this item.
+     *
+     * @param integer $startLine The start line for this item.
+     *
+     * @return void
+     * @deprecated Since version 0.9.6
+     */
+    public function setStartLine($startLine)
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        $this->startLine = $startLine;
+    }
+
+    /**
+     * Sets the end line for this item.
+     *
+     * @param integer $endLine The end line for this item
+     *
+     * @return void
+     * @deprecated Since version 0.9.6
+     */
+    public function setEndLine($endLine)
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        $this->endLine = $endLine;
+    }
 
     /**
      * Adds the given {@link PHP_Depend_Code_AbstractClassOrInterface} object as
