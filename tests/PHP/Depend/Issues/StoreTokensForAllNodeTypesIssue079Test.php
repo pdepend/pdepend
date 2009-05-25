@@ -398,5 +398,68 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
 
         $this->assertSame(7, $constant->getEndLine());
     }
+
+    /**
+     * Tests that the parser stores the expected function tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedFunctionTokens()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+        $constant = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 1, 8),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 10, 12),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 14, 14),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 1, 1),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 12, 16),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 17, 17),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
+        );
+
+        $this->assertEquals($expected, $constant->getTokens());
+    }
+
+    /**
+     * Tests that the parser stores the expected function tokens.
+     *
+     * @return void
+     */
+    public function testParserStoresExpectedFunctionTokensWithParameters()
+    {
+        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+        $constant = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $expected = array(
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 1, 8),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 10, 12),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 7, 7, 14, 17),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMA, ',', 7, 7, 18, 18),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$bar', 7, 7, 20, 23),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 7, 7, 25, 25),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '42', 7, 7, 27, 28),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMA, ',', 7, 7, 29, 29),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$baz', 7, 7, 31, 34),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 7, 7, 36, 36),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'T_42', 7, 7, 38, 41),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 42, 42),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 1, 1),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 5, 10),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 12, 16),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 17, 17),
+            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
+        );
+
+        $this->assertEquals($expected, $constant->getTokens());
+    }
 }
 ?>
