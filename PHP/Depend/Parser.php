@@ -1153,6 +1153,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_skipEncapsultedBlock(self::T_DOUBLE_QUOTE);
                 break;
 
+            case self::T_STATIC:
+                $declaration = $this->_parseStaticVariableDeclaration();
+                if ($declaration !== null) {
+                    $callable->addChild($declaration);
+                }
+                break;
+
             case self::T_BACKTICK:
                 $this->_consumeToken(self::T_BACKTICK);
                 $this->_skipEncapsultedBlock(self::T_BACKTICK);
@@ -1167,9 +1174,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
                 // Check for inline type definitions like: /* @var $o FooBar */
                 if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
-                    // TODO Refs #66: This should be done in a post process
-                    // Create a referenced class or interface instance
-
                     $callable->addDependencyClassReference(
                         $this->_builder->buildClassOrInterfaceReference($match[1])
                     );
@@ -1487,6 +1491,109 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_SEMICOLON);
 
         return $constant;
+    }
+
+    /**
+     * This method will parse a static variable declaration.
+     *
+     * <code>
+     * function foo()
+     * {
+     *     // First declaration
+     *     static $foo;
+     *     // Second declaration
+     *     static $bar = array();
+     *     // Third declaration
+     *     static $baz    = array(),
+     *            $foobar = null,
+     *            $barbaz;
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_StaticVariableDeclaration
+     * @since 0.9.6
+     */
+    private function _parseStaticVariableDeclaration()
+    {
+        $this->_tokenStack->push();
+
+        $token = $this->_consumeToken(self::T_STATIC);
+        $this->_consumeComments();
+
+        $tokenType = $this->_tokenizer->peek();
+        if ($tokenType === self::T_PARENTHESIS_OPEN
+            || $tokenType === self::T_DOUBLE_COLON
+        ) {
+            $this->_tokenStack->pop();
+            return;
+        }
+
+        $staticDeclaration = $this->_builder->buildStaticVariableDeclaration(
+            $token->image
+        );
+
+        while ($tokenType !== self::T_EOF) {
+            $staticDeclaration->addChild(
+                $this->_parseVariableDeclarator()
+            );
+            
+            $this->_consumeComments();
+
+            // Semicolon terminates static declaration
+            $tokenType = $this->_tokenizer->peek();
+            if ($tokenType === self::T_SEMICOLON) {
+                break;
+            }
+            // We are here, so there must be a next declarator
+            $this->_consumeToken(self::T_COMMA);
+        }
+
+        $staticDeclaration->setTokens($this->_tokenStack->pop());
+
+        return $staticDeclaration;
+    }
+
+    /**
+     * This method will parse a variable declarator.
+     *
+     * <code>
+     * // Parameter declarator
+     * function foo($x = 23) {
+     * }
+     * // Property declarator
+     * class Foo{
+     *     protected $bar = 42;
+     * }
+     * // Static declarator
+     * function baz() {
+     *     static $foo;
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_VariableDeclarator
+     * @since 0.9.6
+     */
+    private function _parseVariableDeclarator()
+    {
+        $this->_consumeComments();
+
+        $this->_tokenStack->push();
+
+        $name = $this->_consumeToken(self::T_VARIABLE)->image;
+        $this->_consumeComments();
+
+        $declarator = $this->_builder->buildVariableDeclarator($name);
+
+        if ($this->_tokenizer->peek() === self::T_EQUAL) {
+            $this->_consumeToken(self::T_EQUAL);
+            $this->_consumeComments();
+
+            $declarator->setValue($this->_parseStaticValueOrStaticArray());
+        }
+
+        $declarator->setTokens($this->_tokenStack->pop());
+
+        return $declarator;
     }
 
     /**

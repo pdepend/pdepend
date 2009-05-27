@@ -229,4 +229,24 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_TypeConstant The created constant object.
      */
     function buildTypeConstant($name);
+
+    /**
+     * Builds a new variable declarator node.
+     *
+     * @param string $image The source image for the variable declarator.
+     *
+     * @return PHP_Depend_Code_VariableDeclarator
+     * @since 0.9.6
+     */
+    function buildVariableDeclarator($image);
+
+    /**
+     * Builds a new static variable declaration node.
+     *
+     * @param string $image The source image for the statuc declaration.
+     *
+     * @return PHP_Depend_Code_StaticVariableDeclaration
+     * @since 0.9.6
+     */
+    function buildStaticVariableDeclaration($image);
 }

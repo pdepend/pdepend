@@ -107,6 +107,73 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     private $_returnsReference = false;
 
     /**
+     * List of all parsed child nodes.
+     *
+     * @var array(PHP_Depend_Code_ASTNodeI) $_nodes
+     * @since 0.9.6
+     */
+    private $_nodes = array();
+
+    /**
+     * Adds a parsed child node to this node.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node A parsed child node instance.
+     *
+     * @return void
+     * @access private
+     * @since 0.9.6
+     */
+    public function addChild(PHP_Depend_Code_ASTNodeI $node)
+    {
+        $this->_nodes[] = $node;
+    }
+
+    /**
+     * This method will search recursive for the first child node that is an
+     * instance of the given <b>$targetType</b>. The returned value will be
+     * <b>null</b> if no child exists for that.
+     *
+     * @param string $targetType Searched class or interface type.
+     *
+     * @return PHP_Depend_Code_ASTNodeI
+     * @access private
+     * @since 0.9.6
+     */
+    public function getFirstChildOfType($targetType)
+    {
+        foreach ($this->_nodes as $node) {
+            if ($node instanceof $targetType) {
+                return $node;
+            }
+            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
+                return $child;
+            }
+        }
+        return $child;
+    }
+
+    /**
+     * Will find all children for the given type.
+     *
+     * @param string $targetType The target class or interface type.
+     * @param array  &$results   The found children.
+     *
+     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @access private
+     * @since 0.9.6
+     */
+    public function findChildrenOfType($targetType, array &$results = array())
+    {
+        foreach ($this->_nodes as $node) {
+            if ($node instanceof $targetType) {
+                $results[] = $node;
+            }
+            $node->findChildrenOfType($targetType, $results);
+        }
+        return $results;
+    }
+
+    /**
      * Returns the tokens found in the function body.
      *
      * @return array(mixed)
@@ -307,6 +374,36 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function setReturnsReference()
     {
         $this->_returnsReference = true;
+    }
+
+    /**
+     * Returns an array with all declared static variables.
+     *
+     * @return array(string=>mixed)
+     * @since 0.9.6
+     */
+    public function getStaticVariables()
+    {
+        $staticVariables = array();
+
+        $declarations = $this->findChildrenOfType(
+            'PHP_Depend_Code_StaticVariableDeclaration'
+        );
+        foreach ($declarations as $declaration) {
+            $variables = $declaration->findChildrenOfType(
+                'PHP_Depend_Code_VariableDeclarator'
+            );
+            foreach ($variables as $variable) {
+                $image = $variable->getImage();
+                $value = $variable->getValue();
+                if ($value !== null) {
+                    $value = $value->getValue();
+                }
+
+                $staticVariables[substr($image, 1)] = $value;
+            }
+        }
+        return $staticVariables;
     }
 
     // DEPRECATED METHODS AND PROPERTIES
