@@ -64,6 +64,8 @@ require_once dirname(__FILE__) . '/ParameterTest.php';
 require_once dirname(__FILE__) . '/PropertyTest.php';
 require_once dirname(__FILE__) . '/ReflectionParameterTest.php';
 require_once dirname(__FILE__) . '/ReflectionPropertyTest.php';
+require_once dirname(__FILE__) . '/StaticVariableDeclarationTest.php';
+require_once dirname(__FILE__) . '/VariableDeclaratorTest.php';
 require_once dirname(__FILE__) . '/Filter/AllTests.php';
 
 /**
@@ -110,6 +112,9 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_PackageTest');
         $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
         $suite->addTestSuite('PHP_Depend_Code_ParameterTest');
+
+        $suite->addTestSuite('PHP_Depend_Code_StaticVariableDeclarationTest');
+        $suite->addTestSuite('PHP_Depend_Code_VariableDeclaratorTest');
 
         $suite->addTestSuite('PHP_Depend_Code_ReflectionParameterTest');
         $suite->addTestSuite('PHP_Depend_Code_ReflectionPropertyTest');

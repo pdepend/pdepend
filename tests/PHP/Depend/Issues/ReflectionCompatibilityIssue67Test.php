@@ -645,6 +645,129 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue67Test extends PHP_Depend_Ab
     }
 
     /**
+     * Tests that the <b>getStaticVariables()</b> method returns the expected
+     * result.
+     *
+     * @return void
+     */
+    public function testParserSetsFunctionStaticVariableSingleUninitialized()
+    {
+        $packages = self::parseSource('issues/067/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $expected = array(
+            'x'  =>  null
+        );
+
+        $this->assertSame($expected, $function->getStaticVariables());
+    }
+
+    /**
+     * Tests that the <b>getStaticVariables()</b> method returns the expected
+     * result.
+     *
+     * @return void
+     */
+    public function testParserSetsFunctionStaticVariableSingleInitialized()
+    {
+        $packages = self::parseSource('issues/067/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $expected = array(
+            'x'  =>  42
+        );
+
+        $this->assertSame($expected, $function->getStaticVariables());
+    }
+
+    /**
+     * Tests that the <b>getStaticVariables()</b> method returns the expected
+     * result.
+     *
+     * @return void
+     */
+    public function testParserSetsFunctionStaticVariablesInSingleDeclaration()
+    {
+        $packages = self::parseSource('issues/067/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $expected = array(
+            'x'  =>  true,
+            'y'  =>  null,
+            'z'  =>  array()
+        );
+
+        $this->assertSame($expected, $function->getStaticVariables());
+    }
+
+    /**
+     * Tests that the <b>getStaticVariables()</b> method returns the expected
+     * result.
+     *
+     * @return void
+     */
+    public function testParserSetsFunctionStaticVariablesInMultipleDeclarations()
+    {
+        $packages = self::parseSource('issues/067/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $expected = array(
+            'x'  =>  false,
+            'y'  =>  null,
+            'z'  =>  3.14
+        );
+
+        $this->assertSame($expected, $function->getStaticVariables());
+    }
+
+    /**
+     * Tests that the parser handles a static invoke as expected.
+     *
+     * @return void
+     */
+    public function testParserStaticVariablesDoNotConflictWithStaticInvoke()
+    {
+        $packages = self::parseSource('issues/067/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $this->assertSame(array(), $function->getStaticVariables());
+    }
+
+    /**
+     * Tests that the parser handles a static object allocation as expected.
+     *
+     * @return void
+     */
+    public function testParserStaticVariablesDoNotConflictWithStaticAllocation()
+    {
+        $packages = self::parseSource('issues/067/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $expected = array(
+            'x'  =>  true,
+            'y'  =>  false
+        );
+
+        $this->assertSame($expected, $function->getStaticVariables());
+    }
+
+    /**
      * Tests that the parser throws the expected exception when no default value
      * was defined.
      *
