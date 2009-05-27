@@ -492,6 +492,36 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new variable declarator node.
+     *
+     * @param string $image The source image for the variable declarator.
+     *
+     * @return PHP_Depend_Code_VariableDeclarator
+     * @since 0.9.6
+     */
+    public function buildVariableDeclarator($image)
+    {
+        include_once 'PHP/Depend/Code/VariableDeclarator.php';
+
+        return new PHP_Depend_Code_VariableDeclarator($image);
+    }
+
+    /**
+     * Builds a new static variable declaration node.
+     *
+     * @param string $image The source image for the statuc declaration.
+     *
+     * @return PHP_Depend_Code_StaticVariableDeclaration
+     * @since 0.9.6
+     */
+    public function buildStaticVariableDeclaration($image)
+    {
+        include_once 'PHP/Depend/Code/StaticVariableDeclaration.php';
+
+        return new PHP_Depend_Code_StaticVariableDeclaration($image);
+    }
+
+    /**
      * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
      * objects.
      *
