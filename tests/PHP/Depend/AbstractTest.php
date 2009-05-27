@@ -89,6 +89,8 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             }
         }
 
+        include_once 'PHP/Depend.php';
+        include_once 'PHP/Depend/StorageRegistry.php';
         include_once 'PHP/Depend/Storage/MemoryEngine.php';
 
         PHP_Depend_StorageRegistry::set(
