@@ -71,7 +71,7 @@ class PHP_Depend_Code_ClassReference
     public function getType()
     {
         if ($this->typeInstance === null) {
-            $this->typeInstance = $this->builder->getClass($this->qualifiedName);
+            $this->typeInstance = $this->builder->getClass($this->getImage());
         }
         return $this->typeInstance;
     }

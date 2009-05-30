@@ -559,7 +559,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_VARIABLE:
             case self::T_VAR:
 
-                $methodOrProperty = $this->_parseMethodOrPropertyDeclaration(
+                $methodOrProperty = $this->_parseMethodOrFieldDeclaration(
                     $defaultModifier
                 );
 
@@ -618,10 +618,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param integer $modifiers Optional default modifiers for the property
      *        or method node that will be parsed.
      *
-     * @return PHP_Depend_Code_Method|PHP_Depend_Code_Property
+     * @return PHP_Depend_Code_Method|PHP_Depend_Code_FieldDeclaration
      * @since 0.9.6
      */
-    private function _parseMethodOrPropertyDeclaration($modifiers = 0)
+    private function _parseMethodOrFieldDeclaration($modifiers = 0)
     {
         $this->_tokenStack->push();
 
@@ -668,17 +668,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $declaration->setTokens($this->_tokenStack->pop());
 
                 return $declaration;
-/*
-                x
-                $property = $this->_parsePropertyDeclaration();
-                $property->setModifiers($modifiers);
-                $property->setTokens($this->_tokenStack->pop());
-
-                $this->_consumeComments();
-                $this->_consumeToken(self::T_SEMICOLON);
-
-                return $property;
-*/
+                
             default:
                 break 2;
             }
