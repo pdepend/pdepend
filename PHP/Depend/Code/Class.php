@@ -68,7 +68,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var array(PHP_Depend_Code_Property) $_properties
      */
-    private $_properties = array();
+    private $_properties = null;
 
     /**
      * The modifiers for this class instance.
@@ -106,25 +106,41 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getProperties()
     {
-        return new PHP_Depend_Code_NodeIterator($this->_properties);
-    }
+        if ($this->_properties === null) {
+            $this->_properties = array();
 
-    /**
-     * Adds a new property to this class instance.
-     *
-     * @param PHP_Depend_Code_Property $property The new class property.
-     *
-     * @return PHP_Depend_Code_Property
-     */
-    public function addProperty(PHP_Depend_Code_Property $property)
-    {
-        if (in_array($property, $this->_properties, true) === false) {
-            // Add to internal list
-            $this->_properties[] = $property;
-            // Set this as parent
-            $property->setDeclaringClass($this);
+            $declarations = $this->findChildrenOfType(
+                'PHP_Depend_Code_FieldDeclaration'
+            );
+            foreach ($declarations as $declaration) {
+                $declarators = $declaration->findChildrenOfType(
+                    'PHP_Depend_Code_VariableDeclarator'
+                );
+
+                foreach ($declarators as $declarator) {
+
+                    $property = new PHP_Depend_Code_Property(
+                        $declarator->getImage()
+                    );
+                    $property->setDeclaringClass($this);
+                    $property->setTokens($declarator->getTokens());
+                    $property->setModifiers($declaration->getModifiers());
+                    $property->setDocComment($declaration->getComment());
+                    $property->setSourceFile($this->getSourceFile());
+                    $property->setClassReference(
+                        $declaration->getClassOrInterfaceReference()
+                    );
+
+                    if ($declarator->getValue() !== null) {
+                        $property->setDefaultValue($declarator->getValue());
+                    }
+
+                    $this->_properties[] = $property;
+                }
+            }
         }
-        return $property;
+
+        return new PHP_Depend_Code_NodeIterator($this->_properties);
     }
 
     /**
@@ -236,6 +252,31 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     {
         fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         return $this->getInterfaces();
+    }
+
+    /**
+     * Adds a new property to this class instance.
+     *
+     * @param PHP_Depend_Code_Property $property The new class property.
+     *
+     * @return PHP_Depend_Code_Property
+     * @deprecated Since version 0.9.6, use addNode() instead.
+     */
+    public function addProperty(PHP_Depend_Code_Property $property)
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+
+        if ($this->_properties === null) {
+            $this->_properties = array();
+        }
+
+        if (in_array($property, $this->_properties, true) === false) {
+            // Add to internal list
+            $this->_properties[] = $property;
+            // Set this as parent
+            $property->setDeclaringClass($this);
+        }
+        return $property;
     }
     
     // @codeCoverageIgnoreEnd

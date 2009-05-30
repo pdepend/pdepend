@@ -274,7 +274,7 @@ class PHP_Depend_Code_Property
      * @since 0.9.5
      */
     public function setClassReference(
-        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+        PHP_Depend_Code_ClassOrInterfaceReference $classReference = null
     ) {
         $this->_classReference = $classReference;
     }
