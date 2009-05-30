@@ -15,7 +15,7 @@ and the NDepend metric tool.
   </lead>
   <date>2009-05-18</date>
   <version>
-    <release>0.9.5</release>
+    <release>0.9.6</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,27 +24,11 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- #2 + Support PHP 5.3 namespace syntax, implemented since svn revision #789.
-  (Closed)
-- #61 + Catch parser errors and continue processing, implemented in svn revision
-  #880. (Closed)
-- #63 + Make ResultPrinter a configurable option, implemented in svn revision #668.
-  (Closed)
-- #64 + The single cache directory causes permission denied on *NIX systems,
-  fixed in svn revision #667. (Fixed)
-- #65 + Endless loop for class and interface declarations without body, fixed in
-  svn revision #672. (Fixed)
-- #66 + Dependency wiring should be done at the end of the parsing process,
-  implemented in svn revision #855. (Closed)
-- #69 + Parser does not handle PHP 5.3 class names in function and method bodies,
-  fixed in svn revision #688. (Fixed)
-- #70 + Parser throws an unexpected token exception for closure, fixed in svn
-  revision #726. (Fixed)
-- #71 + Parser throws an unexpected token exception for signed default values,
-  fixed in svn revision #740. (Fixed)
-- #73 + Inconsistent state when an interface and a class with the same name
-  exists, fixed in svn revision #776. (Fixed)
-- #76 + Tokenizer keyword detection is broken, fixed in svn revision #871. (Fixed)
+- Closed #80: Store default value for class properties.
+- Fixed #81: PHP_Depend does not support comma separated property declarations,
+  fixed in svn revision #916.
+- Closed #83: Make ClassOrInterfaceReference an ASTNode, implemented in svn
+  revision #917.
   </notes>
   <contents>
     <dir name="/">
@@ -2082,7 +2066,44 @@ and the NDepend metric tool.
 - Support for class final modifier added.
 - Support for chained types like "false|Iterator" or "array(false|Iterator)" in
   doc comments added.
-            </notes>
+        </notes>
     </release>
+    
+    <release>
+        <date>2009-05-18</date>
+        <version>
+            <release>0.9.5</release>
+            <api>1.0.0</api>
+        </version>
+        <stability>
+            <release>beta</release>
+            <api>beta</api>
+        </stability>
+        <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+        <notes>
+- #2 + Support PHP 5.3 namespace syntax, implemented since svn revision #789.
+  (Closed)
+- #61 + Catch parser errors and continue processing, implemented in svn revision
+  #880. (Closed)
+- #63 + Make ResultPrinter a configurable option, implemented in svn revision #668.
+  (Closed)
+- #64 + The single cache directory causes permission denied on *NIX systems,
+  fixed in svn revision #667. (Fixed)
+- #65 + Endless loop for class and interface declarations without body, fixed in
+  svn revision #672. (Fixed)
+- #66 + Dependency wiring should be done at the end of the parsing process,
+  implemented in svn revision #855. (Closed)
+- #69 + Parser does not handle PHP 5.3 class names in function and method bodies,
+  fixed in svn revision #688. (Fixed)
+- #70 + Parser throws an unexpected token exception for closure, fixed in svn
+  revision #726. (Fixed)
+- #71 + Parser throws an unexpected token exception for signed default values,
+  fixed in svn revision #740. (Fixed)
+- #73 + Inconsistent state when an interface and a class with the same name
+  exists, fixed in svn revision #776. (Fixed)
+- #76 + Tokenizer keyword detection is broken, fixed in svn revision #871. (Fixed)
+        </notes>
+    </release>
+
   </changelog>
 </package>
