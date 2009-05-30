@@ -80,7 +80,7 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $class     = $package->addType(new PHP_Depend_Code_Class('clazz'));
         $method1   = $class->addMethod(new PHP_Depend_Code_Method('m1'));
         $method2   = $class->addMethod(new PHP_Depend_Code_Method('m2'));
-        $property  = $class->addProperty(new PHP_Depend_Code_Property('$p1'));
+//        $property  = $class->addProperty(new PHP_Depend_Code_Property('$p1'));
         $interface = $package->addType(new PHP_Depend_Code_Interface('interfs'));
         $method3   = $interface->addMethod(new PHP_Depend_Code_Method('m3'));
         $method4   = $interface->addMethod(new PHP_Depend_Code_Method('m4'));
@@ -113,8 +113,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $this->assertArrayHasKey($method3->getUUID() . '#end', $listener->nodes);
         $this->assertArrayHasKey($method4->getUUID() . '#start', $listener->nodes);
         $this->assertArrayHasKey($method4->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($property->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($property->getUUID() . '#end', $listener->nodes);
     }
 
     /**

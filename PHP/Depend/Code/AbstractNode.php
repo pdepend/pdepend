@@ -79,6 +79,13 @@ abstract class PHP_Depend_Code_AbstractNode implements PHP_Depend_Code_ASTNodeI
     protected $nodes = array();
 
     /**
+     * An optional doc comment for this node.
+     *
+     * @var string $comment
+     */
+    protected $comment = null;
+
+    /**
      * Constructs a new ast node instance.
      *
      * @param string $image The source image for this node.
@@ -208,6 +215,29 @@ abstract class PHP_Depend_Code_AbstractNode implements PHP_Depend_Code_ASTNodeI
     public function addChild(PHP_Depend_Code_ASTNodeI $node)
     {
         $this->nodes[] = $node;
+    }
+
+    /**
+     * Returns a doc comment for this node or <b>null</b> when no comment was
+     * found.
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Sets the raw doc comment for this node.
+     *
+     * @param string $comment The doc comment block for this node.
+     *
+     * @return void
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
     }
 
     /**

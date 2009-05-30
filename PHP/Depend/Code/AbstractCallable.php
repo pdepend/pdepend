@@ -149,7 +149,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
                 return $child;
             }
         }
-        return $child;
+        return null;
     }
 
     /**

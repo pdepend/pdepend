@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
@@ -36,101 +36,34 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://pdepend.org/
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
-require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
-
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Package.php';
 
 /**
- * Test case implementation for the PHP_Depend_Code_Function class.
+ * Abstract test case for classes derived {@link PHP_Depend_Code_AbstractNode}ö
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://pdepend.org/
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
+abstract class PHP_Depend_Code_AbstractNodeTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that build interface updates the source file information for null
-     * values.
-     *
-     * @return void
-     */
-    public function testSetSourceFileInformationForNullValue()
-    {
-        $item = new PHP_Depend_Code_Function('func');
-        $file = new PHP_Depend_Code_File(__FILE__);
-
-        $this->assertNull($item->getSourceFile());
-        $item->setSourceFile($file);
-        $this->assertSame($file, $item->getSourceFile());
-    }
-    
-    /**
-     * Tests the ctor and the {@link PHP_Depend_Code_Function::getName()} method.
-     *
-     * @return void
-     */
-    public function testCreateNewFunctionInstance()
-    {
-        $function = new PHP_Depend_Code_Function('func');
-        $this->assertEquals('func', $function->getName());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Depend_Code_Function::getPackage()} returns as
-     * default value <b>null</b> and that the package could be set and unset.
-     *
-     * @return void
-     */
-    public function testGetSetPackage()
-    {
-        $package  = new PHP_Depend_Code_Package('package');
-        $function = new PHP_Depend_Code_Function('func');
-        
-        $this->assertNull($function->getPackage());
-        $function->setPackage($package);
-        $this->assertSame($package, $function->getPackage());
-        $function->setPackage(null);
-        $this->assertNull($function->getPackage());
-    }
-    
-    /**
-     * Tests that {@link PHP_Depend_Code_Function#getTokens()} works as expected.
-     * 
-     * @return void
-     */
-    public function testGetTokens()
-    {
-        $tokens = array(
-            array(PHP_Depend_TokenizerI::T_VARIABLE, '$foo', 3),
-            array(PHP_Depend_TokenizerI::T_EQUAL, '=', 3),
-            array(PHP_Depend_TokenizerI::T_LNUMBER, '42', 3),
-            array(PHP_Depend_TokenizerI::T_SEMICOLON, ';', 3),
-        );
-        
-        $function = new PHP_Depend_Code_Function('function1');
-        $function->setTokens($tokens);
-        
-        $this->assertEquals($tokens, $function->getTokens());
-    }
-
-    /**
-     * Tests the behavior of {@link PHP_Depend_Code_Function::getFirstChildOfType()}.
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
      */
@@ -156,16 +89,16 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $function = new PHP_Depend_Code_Function('Method');
-        $function->addChild($node1);
-        $function->addChild($node2);
+        $abstractNode = $this->createNodeInstance();
+        $abstractNode->addChild($node1);
+        $abstractNode->addChild($node2);
 
-        $child = $function->getFirstChildOfType(get_class($node2));
+        $child = $abstractNode->getFirstChildOfType(get_class($node2));
         $this->assertSame($node2, $child);
     }
 
     /**
-     * Tests the behavior of {@link PHP_Depend_Code_Function::getFirstChildOfType()}.
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
      */
@@ -200,16 +133,16 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue($node1));
 
-        $function = new PHP_Depend_Code_Function('Method');
-        $function->addChild($node2);
-        $function->addChild($node3);
+        $abstractNode = $this->createNodeInstance();
+        $abstractNode->addChild($node2);
+        $abstractNode->addChild($node3);
 
-        $child = $function->getFirstChildOfType(get_class($node1));
+        $child = $abstractNode->getFirstChildOfType(get_class($node1));
         $this->assertSame($node1, $child);
     }
 
     /**
-     * Tests the behavior of {@link PHP_Depend_Code_Function::getFirstChildOfType()}.
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
      */
@@ -235,16 +168,16 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $function = new PHP_Depend_Code_Function('Method');
-        $function->addChild($node1);
-        $function->addChild($node2);
+        $abstractNode = $this->createNodeInstance();
+        $abstractNode->addChild($node1);
+        $abstractNode->addChild($node2);
 
-        $child = $function->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
+        $child = $abstractNode->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
         $this->assertNull($child);
     }
 
     /**
-     * Tests the behavior of {@link PHP_Depend_Code_Function::findChildrenOfType()}.
+     * Tests the behavior of {@link PHP_Depend_Code_Method::findChildrenOfType()}.
      *
      * @return void
      */
@@ -270,26 +203,19 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
             ->method('findChildrenOfType')
             ->will($this->returnValue(array()));
 
-        $function = new PHP_Depend_Code_Function('Method');
-        $function->addChild($node1);
-        $function->addChild($node2);
+        $abstractNode = $this->createNodeInstance();
+        $abstractNode->addChild($node1);
+        $abstractNode->addChild($node2);
 
-        $children = $function->findChildrenOfType(get_class($node2));
+        $children = $abstractNode->findChildrenOfType(get_class($node2));
         $this->assertSame(array($node2), $children);
     }
-    
+
     /**
-     * Tests the visitor accept method.
+     * Creates a concrete node implementation.
      *
-     * @return void
+     * @return PHP_Depend_Code_AbstractNode
      */
-    public function testVisitorAccept()
-    {
-        $function = new PHP_Depend_Code_Function('func');
-        $visitor  = new PHP_Depend_Visitor_TestNodeVisitor();
-        
-        $this->assertNull($visitor->function);
-        $function->accept($visitor);
-        $this->assertSame($function, $visitor->function);
-    }
+    protected abstract function createNodeInstance();
 }
+?>
