@@ -59,6 +59,7 @@ require_once dirname(__FILE__) . '/InconsistentObjectGraphBug73Test.php';
 require_once dirname(__FILE__) . '/IncorrectPropertyEndlineBug068Test.php';
 require_once dirname(__FILE__) . '/ParserKeywordAsConstantNameBug76Test.php';
 require_once dirname(__FILE__) . '/SignedDefaultValueResultsInExceptionBug71Test.php';
+require_once dirname(__FILE__) . '/SupportCommaSeparatedPropertyDeclarationsBug081Test.php';
 require_once dirname(__FILE__) . '/TokenizerKeywordSubstitutionBug76Test.php';
 
 /**
@@ -97,6 +98,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test');
         $suite->addTestSuite('PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InconsistentObjectGraphBug73Test');
         $suite->addTestSuite('PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserKeywordAsConstantNameBug76Test');

@@ -231,6 +231,14 @@ interface PHP_Depend_BuilderI
     function buildTypeConstant($name);
 
     /**
+     * Builds a new field declaration node.
+     *
+     * @return PHP_Depend_Code_FieldDeclaration
+     * @since 0.9.6
+     */
+    function buildFieldDeclaration();
+
+    /**
      * Builds a new variable declarator node.
      *
      * @param string $image The source image for the variable declarator.

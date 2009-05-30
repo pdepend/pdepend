@@ -49,10 +49,10 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Test case for bug 68 where the property end line of a property was not set
- * correct.
+ * Test case for bug 081 where PHP_Depend does not handle comma separated property
+ * declarations.
  *
- * http://tracker.pdepend.org/pdepend/issue_tracker/issue/68
+ * http://tracker.pdepend.org/pdepend/issue_tracker/issue/81/
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -63,78 +63,68 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test
+    extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that the parser sets the expected start and end line for a property.
-     *
+     * Tests that the parser handles a comma separated property declaration.
+     * 
      * @return void
      */
-    public function testParserSetsExpectedStartAndEndLineForPropertyWithoutDefaultValue()
+    public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration()
     {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
+        $packages = self::parseSource('bugs/081/' . __FUNCTION__ . '.php');
+
+        $properties = $packages->current()
             ->getClasses()
             ->current()
-            ->getProperties()
-            ->current();
+            ->getProperties();
 
-        $this->assertSame(5, $property->getStartLine());
-        $this->assertSame(5, $property->getEndLine());
+        $this->assertSame(2, count($properties));
     }
 
     /**
-     * Tests that the parser sets the expected start and end line for a property.
+     * Tests that the parser handles a comma separated property declaration.
      *
      * @return void
      */
-    public function testParserSetsExpectedStartAndEndLineForPropertyWithCommentsInDeclaration()
+    public function testParserSetsSameVisibilityForAllPropertyDeclarations()
     {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
+        $packages = self::parseSource('bugs/081/' . __FUNCTION__ . '.php');
+
+        $properties = $packages->current()
             ->getClasses()
             ->current()
-            ->getProperties()
-            ->current();
+            ->getProperties();
 
-        $this->assertSame(9, $property->getStartLine());
-        $this->assertSame(10, $property->getEndLine());
+        $this->assertTrue($properties->current()->isPublic());
+        $properties->next();
+        $this->assertTrue($properties->current()->isPublic());
+        $properties->next();
+
+        $this->assertTrue($properties->current()->isPrivate());
+        $properties->next();
+        $this->assertTrue($properties->current()->isPrivate());
+        $properties->next();
     }
 
     /**
-     * Tests that the parser sets the expected start and end line for a property.
+     * Tests that the parser handles a comma separated property declaration.
      *
      * @return void
      */
-    public function testParserSetsExpectedStartAndEndLineForPropertyWithArrayDefaultValue()
+    public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations()
     {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
+        $packages = self::parseSource('bugs/081/' . __FUNCTION__ . '.php');
+
+        $properties = $packages->current()
             ->getClasses()
             ->current()
-            ->getProperties()
-            ->current();
+            ->getProperties();
 
-        $this->assertSame(3, $property->getStartLine());
-        $this->assertSame(7, $property->getEndLine());
-    }
-
-    /**
-     * Tests that the parser sets the expected start and end line for a property.
-     *
-     * @return void
-     */
-    public function testParserSetsExpectedStartAndEndLineForPropertyWithScalarDefaultValueAndComments()
-    {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
-        $this->assertSame(8, $property->getStartLine());
-        $this->assertSame(13, $property->getEndLine());
+        $this->assertTrue($properties->current()->isStatic());
+        $properties->next();
+        $this->assertTrue($properties->current()->isStatic());
     }
 }
 ?>

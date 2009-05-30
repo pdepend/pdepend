@@ -85,17 +85,13 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         
         $class2 = $package1->addType(new PHP_Depend_Code_Class('classB'));
         $class2->setSourceFile($file);
-        $class2->addMethod(new PHP_Depend_Code_Method('methodBB'));
         $class2->addMethod(new PHP_Depend_Code_Method('methodBA'));
-        $class2->addProperty(new PHP_Depend_Code_Property('propBB'));
-        $class2->addProperty(new PHP_Depend_Code_Property('propBA'));
+        $class2->addMethod(new PHP_Depend_Code_Method('methodBB'));
         
         $class1 = $package1->addType(new PHP_Depend_Code_Class('classA'));
         $class1->setSourceFile($file);
         $class1->addMethod(new PHP_Depend_Code_Method('methodAB'));
         $class1->addMethod(new PHP_Depend_Code_Method('methodAA'));
-        $class1->addProperty(new PHP_Depend_Code_Property('propAB'));
-        $class1->addProperty(new PHP_Depend_Code_Property('propAA'));
         
         $package2 = new PHP_Depend_Code_Package('pkgB');
         
@@ -117,14 +113,10 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
             'pkgA',
             'classA',
             __FILE__,
-            'propAA',
-            'propAB',
             'methodAA',
             'methodAB',
             'classB',
             __FILE__,
-            'propBA',
-            'propBB',
             'methodBA',
             'methodBB',
             'pkgB',

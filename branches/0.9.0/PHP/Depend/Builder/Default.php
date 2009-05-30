@@ -492,6 +492,19 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new field declaration node.
+     *
+     * @return PHP_Depend_Code_FieldDeclaration
+     * @since 0.9.6
+     */
+    public function buildFieldDeclaration()
+    {
+        include_once 'PHP/Depend/Code/FieldDeclaration.php';
+
+        return new PHP_Depend_Code_FieldDeclaration();
+    }
+
+    /**
      * Builds a new variable declarator node.
      *
      * @param string $image The source image for the variable declarator.

@@ -48,6 +48,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
+require_once 'PHP/Depend/Code/ASTNodeI.php';
 require_once 'PHP/Depend/Code/Method.php';
 
 /**
@@ -234,5 +235,154 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
         $this->assertTrue($method->isPublic());
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $this->assertTrue($method->isPublic());
+    }
+
+    /**
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     *
+     * @return void
+     */
+    public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
+    {
+        $node1 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node1->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $node2 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node2->expects($this->never())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $method = new PHP_Depend_Code_Method('Method');
+        $method->addChild($node1);
+        $method->addChild($node2);
+
+        $child = $method->getFirstChildOfType(get_class($node2));
+        $this->assertSame($node2, $child);
+    }
+
+    /**
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     *
+     * @return void
+     */
+    public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
+    {
+        $node1 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node1->expects($this->never())
+            ->method('getFirstChildOfType');
+
+        $node2 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node2->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $node3 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node3->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue($node1));
+
+        $method = new PHP_Depend_Code_Method('Method');
+        $method->addChild($node2);
+        $method->addChild($node3);
+
+        $child = $method->getFirstChildOfType(get_class($node1));
+        $this->assertSame($node1, $child);
+    }
+
+    /**
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     *
+     * @return void
+     */
+    public function testGetFirstChildOfTypeReturnsTheExpectedNull()
+    {
+        $node1 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node1->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $node2 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node2->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $method = new PHP_Depend_Code_Method('Method');
+        $method->addChild($node1);
+        $method->addChild($node2);
+
+        $child = $method->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
+        $this->assertNull($child);
+    }
+
+    /**
+     * Tests the behavior of {@link PHP_Depend_Code_Method::findChildrenOfType()}.
+     *
+     * @return void
+     */
+    public function testFindChildrenOfTypeReturnsExpectedResult()
+    {
+        $node1 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node1->expects($this->once())
+            ->method('findChildrenOfType')
+            ->will($this->returnValue(array()));
+
+        $node2 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node2->expects($this->once())
+            ->method('findChildrenOfType')
+            ->will($this->returnValue(array()));
+
+        $method = new PHP_Depend_Code_Method('Method');
+        $method->addChild($node1);
+        $method->addChild($node2);
+
+        $children = $method->findChildrenOfType(get_class($node2));
+        $this->assertSame(array($node2), $children);
     }
 }
