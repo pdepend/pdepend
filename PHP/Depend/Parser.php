@@ -566,7 +566,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 if ($methodOrProperty instanceof PHP_Depend_Code_Method) {
                     $type->addMethod($methodOrProperty);
                 } else {
-                    $type->addProperty($methodOrProperty);
+                    $type->addChild($methodOrProperty);
                 }
                 
                 $this->reset();
@@ -663,6 +663,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 return $method;
 
             case self::T_VARIABLE:
+                $declaration = $this->_parseFieldDeclaration();
+                $declaration->setModifiers($modifiers);
+                $declaration->setTokens($this->_tokenStack->pop());
+
+                return $declaration;
+/*
+                x
                 $property = $this->_parsePropertyDeclaration();
                 $property->setModifiers($modifiers);
                 $property->setTokens($this->_tokenStack->pop());
@@ -671,7 +678,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_SEMICOLON);
 
                 return $property;
-
+*/
             default:
                 break 2;
             }
@@ -685,31 +692,56 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method will parse a class property instance and it's default value.
+     * This method will parse a class field declaration with all it's variables.
      *
-     * @return PHP_Depend_Code_Property
+     * <code>
+     * // Simple field declaration
+     * class Foo {
+     *     protected $foo;
+     * }
+     *
+     * // Field declaration with multiple properties
+     * class Foo {
+     *     protected $foo = 23
+     *               $bar = 42,
+     *               $baz = null;
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_FieldDeclaration
      * @since 0.9.6
      */
-    private function _parsePropertyDeclaration()
+    private function _parseFieldDeclaration()
     {
-        $token = $this->_consumeToken(self::T_VARIABLE);
+        $declaration = $this->_builder->buildFieldDeclaration();
+        $declaration->setComment($this->_docComment);
+        $declaration->setClassOrInterfaceReference(
+            $this->_parseFieldDeclarationClassOrInterfaceReference()
+        );
+        
         $this->_consumeComments();
-
-        $property = $this->_builder->buildProperty($token->image);
-        $property->setDocComment($this->_docComment);
-        $property->setSourceFile($this->_sourceFile);
-
-        $this->_prepareProperty($property);
-
         $tokenType = $this->_tokenizer->peek();
-        if ($tokenType === self::T_EQUAL) {
-            $this->_consumeToken(self::T_EQUAL);
+        
+        while ($tokenType !== self::T_EOF) {
+
+            $declaration->addChild(
+                $this->_parseVariableDeclarator()
+            );
+
             $this->_consumeComments();
+            $tokenType = $this->_tokenizer->peek();
 
-            $property->setDefaultValue($this->_parseStaticValueOrStaticArray());
+            if ($tokenType !== self::T_COMMA) {
+                break;
+            }
+            $this->_consumeToken(self::T_COMMA);
+
+            $this->_consumeComments();
+            $tokenType = $this->_tokenizer->peek();
         }
+        $this->_consumeToken(self::T_SEMICOLON);
 
-        return $property;
+        return $declaration;
     }
 
     /**
@@ -1956,27 +1988,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Extracts non scalar types from the property doc comment and sets the
+     * Extracts non scalar types from a field doc comment and creates a
      * matching type instance.
      *
-     * @param PHP_Depend_Code_Property $property The context property instance.
-     *
-     * @return void
+     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @since 0.9.6
      */
-    private function _prepareProperty(PHP_Depend_Code_Property $property)
+    private function _parseFieldDeclarationClassOrInterfaceReference()
     {
         // Skip, if ignore annotations is set
         if ($this->_ignoreAnnotations === true) {
-            return;
+            return null;
         }
 
         // Get type annotation
-        $qualifiedName = $this->_parseVarAnnotation($property->getDocComment());
-        if ($qualifiedName !== null) {
-            $property->setClassReference(
-                $this->_builder->buildClassOrInterfaceReference($qualifiedName)
-            );
+        $qualifiedName = $this->_parseVarAnnotation($this->_docComment);
+        if ($qualifiedName === null) {
+            return null;
         }
+        return $this->_builder->buildClassOrInterfaceReference($qualifiedName);
     }
 
     /**
@@ -2029,8 +2059,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->_tokenizer->peek() !== $tokenType) {
             throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
         }
-
-        // FIXME: Remove tokens array
         return $this->_tokenStack->add($this->_tokenizer->next());
     }
 
@@ -2047,8 +2075,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if (in_array($type, $comments, true) === false) {
                 break;
             }
-
-            // FIXME: Remove tokens array
             $this->_tokenStack->add($this->_tokenizer->next());
         }
     }

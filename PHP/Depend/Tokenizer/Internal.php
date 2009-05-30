@@ -523,9 +523,14 @@ class PHP_Depend_Tokenizer_Internal
 
                 $endLine = $startLine + $lines;
 
-                $token = new PHP_Depend_Token($type, rtrim($image),
-                                              $startLine, $endLine,
-                                              $startColumn, $endColumn);
+                $token = new PHP_Depend_Token(
+                    $type,
+                    rtrim($image),
+                    $startLine,
+                    $endLine,
+                    $startColumn, 
+                    $endColumn
+                );
 
                 // Store token in internal list
                 $this->tokens[] = $token;

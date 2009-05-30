@@ -54,6 +54,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/ClassOrInterfaceReferenceTest.php';
 require_once dirname(__FILE__) . '/ClassTest.php';
+require_once dirname(__FILE__) . '/FieldDeclarationTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/InterfaceTest.php';
@@ -104,6 +105,7 @@ class PHP_Depend_Code_AllTests
 
         $suite->addTestSuite('PHP_Depend_Code_ClassOrInterfaceReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
+        $suite->addTestSuite('PHP_Depend_Code_FieldDeclarationTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
         $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');

@@ -127,6 +127,49 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     private $_userDefined = false;
 
     /**
+     * List of all parsed child nodes.
+     *
+     * @var array(PHP_Depend_Code_ASTNodeI) $_nodes
+     * @since 0.9.6
+     */
+    private $_nodes = array();
+
+    /**
+     * Adds a parsed child node to this node.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node A parsed child node instance.
+     *
+     * @return void
+     * @access private
+     * @since 0.9.6
+     */
+    public function addChild(PHP_Depend_Code_ASTNodeI $node)
+    {
+        $this->_nodes[] = $node;
+    }
+
+    /**
+     * Will find all children for the given type.
+     *
+     * @param string $targetType The target class or interface type.
+     * @param array  &$results   The found children.
+     *
+     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @access private
+     * @since 0.9.6
+     */
+    public function findChildrenOfType($targetType, array &$results = array())
+    {
+        foreach ($this->_nodes as $node) {
+            if ($node instanceof $targetType) {
+                $results[] = $node;
+            }
+            $node->findChildrenOfType($targetType, $results);
+        }
+        return $results;
+    }
+
+    /**
      * This method will return <b>true</b> when this type has a declaration in
      * the analyzed source files.
      *

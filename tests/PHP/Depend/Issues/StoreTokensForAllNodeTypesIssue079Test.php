@@ -80,8 +80,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PRIVATE, 'private', 3, 3, 5, 11),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STATIC, 'static', 3, 3, 13, 18),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$bar', 3, 3, 20, 23),
         );
 
@@ -103,7 +101,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 3, 3, 5, 10),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$bar', 3, 3, 12, 15),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 3, 3, 17, 17),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ARRAY, 'array', 3, 3, 19, 23),
@@ -132,10 +129,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PROTECTED, 'protected', 3, 3, 5, 13),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '/*foo*/', 3, 3, 15, 21),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STATIC, 'static', 4, 4, 5, 10),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '// bar', 5, 5, 5, 10),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$value', 6, 6, 5, 10),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '#test', 7, 7, 5, 9),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 9, 9, 5, 5),
