@@ -47,6 +47,8 @@
  * @since      0.9.5
  */
 
+require_once 'PHP/Depend/Code/AbstractNode.php';
+
 /**
  * This class is used as a placeholder for unknown classes or interfaces. It
  * will resolve the concrete type instance on demand.
@@ -61,7 +63,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.5
  */
-class PHP_Depend_Code_ClassOrInterfaceReference
+class PHP_Depend_Code_ClassOrInterfaceReference extends PHP_Depend_Code_AbstractNode
 {
     /**
      * The associated AST builder.
@@ -69,13 +71,6 @@ class PHP_Depend_Code_ClassOrInterfaceReference
      * @var PHP_Depend_BuilderI $builder
      */
     protected $builder = null;
-
-    /**
-     * The qualified name for this type.
-     *
-     * @var string $qualifiedName
-     */
-    protected $qualifiedName = null;
 
     /**
      * An already loaded type instance.
@@ -92,8 +87,9 @@ class PHP_Depend_Code_ClassOrInterfaceReference
      */
     public function __construct(PHP_Depend_BuilderI $builder, $qualifiedName)
     {
-        $this->builder       = $builder;
-        $this->qualifiedName = $qualifiedName;
+        parent::__construct($qualifiedName);
+
+        $this->builder = $builder;
     }
 
     /**
@@ -105,7 +101,7 @@ class PHP_Depend_Code_ClassOrInterfaceReference
     {
         if ($this->typeInstance === null) {
             $this->typeInstance = $this->builder->getClassOrInterface(
-                $this->qualifiedName
+                $this->getImage()
             );
         }
         return $this->typeInstance;
