@@ -705,9 +705,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $declaration = $this->_builder->buildFieldDeclaration();
         $declaration->setComment($this->_docComment);
-        $declaration->setClassOrInterfaceReference(
-            $this->_parseFieldDeclarationClassOrInterfaceReference()
-        );
+
+        $reference = $this->_parseFieldDeclarationClassOrInterfaceReference();
+        if ($reference !== null) {
+            $declaration->addChild($reference);
+        }
         
         $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
