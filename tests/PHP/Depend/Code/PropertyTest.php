@@ -168,4 +168,112 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(3.14, $property->getDefaultValue(), '', 0.001);
     }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Property::isArray()} method returns
+     * <b>true</b> for an as array annotated property.
+     *
+     * @return void
+     */
+    public function testIsArrayReturnsExpectedValueTrueForVarAnnotationWithArray()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertTrue($property->isArray());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Property::isArray()} method returns
+     * <b>false</b> for an as class/interface annotated property.
+     *
+     * @return void
+     */
+    public function testIsArrayReturnsExpectedValueFalseForVarAnnotationWithClassType()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertFalse($property->isArray());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Property::isArray()} method returns
+     * <b>false</b> for an property without var annotation.
+     *
+     * @return void
+     */
+    public function testIsArrayReturnsExpectedValueFalseForPropertyWithoutVarAnnotation()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertFalse($property->isArray());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Property::isPrimitive()} method
+     * returns <b>true</b> for an as integer annotated property.
+     *
+     * @return void
+     */
+    public function testIsPrimitiveReturnsExpectedValueTrueForVarAnnotationWithIntegerTypeHint()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertTrue($property->isPrimitive());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Property::isPrimitive()} method
+     * returns <b>false</b> for an as class/interface annotated property.
+     *
+     * @return void
+     */
+    public function testIsPrimitiveReturnsExpectedValueFalseForVarAnnotationWithClassType()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertFalse($property->isPrimitive());
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Code_Property::isPrimitive()} method
+     * returns <b>false</b> for an property without var annotation.
+     *
+     * @return void
+     */
+    public function testIsPrimitiveReturnsExpectedValueFalseForPropertyWithoutVarAnnotation()
+    {
+        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
+        $property = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getProperties()
+            ->current();
+
+        $this->assertFalse($property->isPrimitive());
+    }
 }
