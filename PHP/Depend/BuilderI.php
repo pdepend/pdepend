@@ -251,10 +251,18 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new static variable declaration node.
      *
-     * @param string $image The source image for the statuc declaration.
+     * @param string $image The source image for the static declaration.
      *
      * @return PHP_Depend_Code_StaticVariableDeclaration
      * @since 0.9.6
      */
     function buildStaticVariableDeclaration($image);
+
+    /**
+     * Builds a new formal parameters node.
+     *
+     * @return PHP_Depend_Code_FormalParameters
+     * @since 0.9.6
+     */
+    function buildFormalParameters();
 }

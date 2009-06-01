@@ -901,13 +901,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @param PHP_Depend_Code_AbstractCallable $function The context callable.
      *
-     * @return void
+     * @return PHP_Depend_Code_FormalParameters
      * @since 0.9.5
      */
     private function _parseParameterList(
         PHP_Depend_Code_AbstractCallable $function
     ) {
         $this->_consumeComments();
+
+        $this->_tokenStack->push();
+
+        $formalParameter = $this->_builder->buildFormalParameters();
+        
         $this->_consumeToken(self::T_PARENTHESIS_OPEN);
         $this->_consumeComments();
 
@@ -916,7 +921,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Check for function without parameters
         if ($tokenType === self::T_PARENTHESIS_CLOSE) {
             $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
-            return;
+            $formalParameter->setTokens($this->_tokenStack->pop());
+
+            return $formalParameter;
         }
 
         $position   = 0;
@@ -961,6 +968,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+        $formalParameter->setTokens($this->_tokenStack->pop());
+        
+        return $formalParameter;
     }
 
     /**
