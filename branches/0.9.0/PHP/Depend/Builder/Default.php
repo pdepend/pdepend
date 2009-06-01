@@ -450,24 +450,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
-     * Builds a new property instance.
-     *
-     * @param string $name The property variable name.
-     *
-     * @return PHP_Depend_Code_Property The created property instance.
-     */
-    public function buildProperty($name)
-    {
-        $this->checkBuilderState();
-
-        // Debug property creation
-        PHP_Depend_Util_Log::debug('Creating property "' . $name . '"');
-
-        // Create new property instance.
-        return new PHP_Depend_Code_Property($name);
-    }
-
-    /**
      * Builds a new function instance.
      *
      * @param string $name The function name.
@@ -501,6 +483,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         include_once 'PHP/Depend/Code/FieldDeclaration.php';
 
+        PHP_Depend_Util_Log::debug(
+            'Creating field declaration.'
+        );
+
         return new PHP_Depend_Code_FieldDeclaration();
     }
 
@@ -515,6 +501,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildVariableDeclarator($image)
     {
         include_once 'PHP/Depend/Code/VariableDeclarator.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating variable declarator "' . $image . '".'
+        );
 
         return new PHP_Depend_Code_VariableDeclarator($image);
     }
@@ -531,6 +521,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         include_once 'PHP/Depend/Code/StaticVariableDeclaration.php';
 
+        PHP_Depend_Util_Log::debug(
+            'Creating static variable declaration "' . $image . '".'
+        );
+
         return new PHP_Depend_Code_StaticVariableDeclaration($image);
     }
 
@@ -544,7 +538,47 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         include_once 'PHP/Depend/Code/FormalParameters.php';
 
+        PHP_Depend_Util_Log::debug(
+            'Creating formal parameters.'
+        );
+
         return new PHP_Depend_Code_FormalParameters();
+    }
+
+    /**
+     * Builds a new array type node.
+     *
+     * @return PHP_Depend_Code_ArrayType
+     * @since 0.9.6
+     */
+    public function buildArrayType()
+    {
+        include_once 'PHP/Depend/Code/ArrayType.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating array type.'
+        );
+
+        return new PHP_Depend_Code_ArrayType();
+    }
+
+    /**
+     * Builds a new primitive type node.
+     *
+     * @param string $image The source image for the primitive type.
+     *
+     * @return PHP_Depend_Code_PrimitiveType
+     * @since 0.9.6
+     */
+    public function buildPrimitiveType($image)
+    {
+        include_once 'PHP/Depend/Code/PrimitiveType.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating primitive type.'
+        );
+
+        return new PHP_Depend_Code_PrimitiveType($image);
     }
 
     /**

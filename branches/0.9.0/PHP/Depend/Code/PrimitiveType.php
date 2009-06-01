@@ -38,71 +38,42 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Issues
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Issues_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/KeepTypeInformationForPrimitivesIssue084Test.php';
-require_once dirname(__FILE__) . '/NamespaceSupportIssue002Test.php';
-require_once dirname(__FILE__) . '/PHPDependCatchesParsingErrorsIssue061Test.php';
-require_once dirname(__FILE__) . '/ReflectionCompatibilityIssue67Test.php';
-require_once dirname(__FILE__) . '/StoreTokensForAllNodeTypesIssue079Test.php';
+require_once 'PHP/Depend/Code/AbstractTypeNode.php';
 
 /**
- * Test suite for issues meta package.
+ * This class represents primitive types like integer, float, boolean, string
+ * etc.
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Issues
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
-class PHP_Depend_Issues_AllTests
+class PHP_Depend_Code_PrimitiveType extends PHP_Depend_Code_AbstractTypeNode
 {
     /**
-     * Test suite main method.
+     * This method will return <b>true</b> when this type is a php primitive.
+     * For this concrete implementation the return value will be always true.
      *
-     * @return void
+     * @return boolean
      */
-    public static function main()
+    public function isPrimitive()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        return true;
     }
-
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Issues - AllTests');
-
-        $suite->addTestSuite('PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test');
-        $suite->addTestSuite('PHP_Depend_Issues_NamespaceSupportIssue002Test');
-        $suite->addTestSuite('PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test');
-        $suite->addTestSuite('PHP_Depend_Issues_ReflectionCompatibilityIssue67Test');
-        $suite->addTestSuite('PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test');
-
-        return $suite;
-    }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Issues_AllTests::main') {
-    PHP_Depend_Issues_AllTests::main();
 }
 ?>

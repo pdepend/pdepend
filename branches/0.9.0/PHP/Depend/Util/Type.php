@@ -95,6 +95,25 @@ final class PHP_Depend_Util_Type
     );
 
     /**
+     * List of primitive php types.
+     *
+     * @var array(string=>string) $_primitiveTypes
+     */
+    private static $_primitiveTypes = array(
+        'bool'     => 'boolean',
+        'boolean'  => 'boolean',
+        'double'   => 'float',
+        'float'    => 'float',
+        'int'      => 'integer',
+        'integer'  => 'integer',
+        'mixed'    => 'float',
+        'real'     => 'float',
+        'string'   => 'string',
+        'false'    => 'boolean',
+        'true'     => 'boolean',
+    );
+
+    /**
      * Returns <b>true</b> if the given type is internal or part of an
      * extension.
      *
@@ -165,6 +184,51 @@ final class PHP_Depend_Util_Type
     public static function isScalarType($scalarType)
     {
         return in_array(strtolower($scalarType), self::$_scalarTypes);
+    }
+
+    /**
+     * This method will return <b>true</b> when the given type identifier is in
+     * the list of primitive types.
+     *
+     * @param string $image The type image.
+     *
+     * @return boolean
+     * @since 0.9.6
+     */
+    public static function isPrimitiveType($image)
+    {
+        return isset(self::$_primitiveTypes[strtolower($image)]);
+    }
+
+    /**
+     * This method will return a unified type image for a detected source type
+     * image.
+     *
+     * @param string $image The found primitive type image.
+     *
+     * @return string
+     * @since 0.9.6
+     */
+    public static function getPrimitiveType($image)
+    {
+        if (self::isPrimitiveType($image) === true) {
+            return self::$_primitiveTypes[strtolower($image)];
+        }
+        return null;
+    }
+
+    /**
+     * This method will return <b>true</b> when the given image describes a
+     * php array type.
+     *
+     * @param string $image The found type image.
+     *
+     * @return boolean
+     * @since 0.9.6
+     */
+    public static function isArrayType($image)
+    {
+        return (strtolower($image) === 'array');
     }
 
     /**

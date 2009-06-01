@@ -125,18 +125,10 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
                 foreach ($declarators as $declarator) {
 
                     $property = new PHP_Depend_Code_Property(
-                        $declarator->getImage()
+                        $declaration, $declarator
                     );
                     $property->setDeclaringClass($this);
-                    $property->setTokens($declarator->getTokens());
-                    $property->setModifiers($declaration->getModifiers());
-                    $property->setDocComment($declaration->getComment());
                     $property->setSourceFile($this->getSourceFile());
-                    $property->setClassReference($classOrInterfaceReference);
-
-                    if ($declarator->getValue() !== null) {
-                        $property->setDefaultValue($declarator->getValue());
-                    }
 
                     $this->_properties[] = $property;
                 }

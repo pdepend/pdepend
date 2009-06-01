@@ -339,7 +339,10 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      */
     public function testSetAccessibleThrowsExceptionBecauseThisFeatureIsNotSupported()
     {
-        $property = new PHP_Depend_Code_Property('');
+        $property = new PHP_Depend_Code_Property(
+            $this->getMock('PHP_Depend_Code_FieldDeclaration'),
+            $this->getMock('PHP_Depend_Code_VariableDeclarator', array(), array(null))
+        );
 
         $this->setExpectedException(
             'ReflectionException',
@@ -357,7 +360,10 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      */
     public function testGetValueThrowsExceptionBecauseThisFeatureIsNotSupported()
     {
-        $property = new PHP_Depend_Code_Property('');
+        $property = new PHP_Depend_Code_Property(
+            $this->getMock('PHP_Depend_Code_FieldDeclaration'),
+            $this->getMock('PHP_Depend_Code_VariableDeclarator', array(), array(null))
+        );
 
         $this->setExpectedException(
             'ReflectionException',
@@ -375,7 +381,10 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      */
     public function testSetValueThrowsExceptionBecauseThisFeatureIsNotSupported()
     {
-        $property = new PHP_Depend_Code_Property('');
+        $property = new PHP_Depend_Code_Property(
+            $this->getMock('PHP_Depend_Code_FieldDeclaration'),
+            $this->getMock('PHP_Depend_Code_VariableDeclarator', array(), array(null))
+        );
 
         $this->setExpectedException(
             'ReflectionException',

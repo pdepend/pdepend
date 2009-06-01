@@ -38,71 +38,60 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Issues
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Issues_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/KeepTypeInformationForPrimitivesIssue084Test.php';
-require_once dirname(__FILE__) . '/NamespaceSupportIssue002Test.php';
-require_once dirname(__FILE__) . '/PHPDependCatchesParsingErrorsIssue061Test.php';
-require_once dirname(__FILE__) . '/ReflectionCompatibilityIssue67Test.php';
-require_once dirname(__FILE__) . '/StoreTokensForAllNodeTypesIssue079Test.php';
+require_once 'PHP/Depend/Code/AbstractNode.php';
 
 /**
- * Test suite for issues meta package.
+ * This ast class represents a list for formal parameters. This means the
+ * parameters of a method, function or closure declaration.
+ *
+ * <code>
+ * //          --
+ * function foo() {}
+ * //          --
+ *
+ * //           --------
+ * $x = function($x, $y) {}
+ * //           --------
+ *
+ * class Foo {
+ *     //                 -----------------
+ *     public function bar(Foo $obj = null) {}
+ *     //                 -----------------
+ * }
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Issues
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
-class PHP_Depend_Issues_AllTests
+class PHP_Depend_Code_FormalParameters extends PHP_Depend_Code_AbstractNode
 {
     /**
-     * Test suite main method.
-     *
-     * @return void
+     * The image type of this node.
      */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
+    const IMAGE = __CLASS__;
 
     /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
+     * Constructs a new field declaration.
      */
-    public static function suite()
+    public function __construct()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Issues - AllTests');
-
-        $suite->addTestSuite('PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test');
-        $suite->addTestSuite('PHP_Depend_Issues_NamespaceSupportIssue002Test');
-        $suite->addTestSuite('PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test');
-        $suite->addTestSuite('PHP_Depend_Issues_ReflectionCompatibilityIssue67Test');
-        $suite->addTestSuite('PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test');
-
-        return $suite;
+        parent::__construct(self::IMAGE);
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Issues_AllTests::main') {
-    PHP_Depend_Issues_AllTests::main();
 }
 ?>
