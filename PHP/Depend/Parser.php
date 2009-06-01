@@ -977,6 +977,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a formal parameter in all it's variations.
+     *
+     * <code>
+     * //                ------------
+     * function traverse(Iterator $it) {}
+     * //                ------------
+     *
+     * //                ---------
+     * function traverse(array $ar) {}
+     * //                ---------
+     * 
+     * //                ---
+     * function traverse(&$x) {}
+     * //                ---
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
      * @since 0.9.6
      */
@@ -1017,6 +1033,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a formal parameter that has an array type hint.
+     *
+     * <code>
+     * //                ---------
+     * function traverse(array $ar) {}
+     * //                ---------
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
      * @since 0.9.6
      */
@@ -1031,6 +1055,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a formal parameter that has a regular class type hint.
+     * 
+     * <code>
+     * //                ------------
+     * function traverse(Iterator $it) {}
+     * //                ------------
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
      * @since 0.9.6
      */
@@ -1050,7 +1082,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method will parse a formal parameter that has the keyword parent as
+     * parameter type hint.
+     *
+     * <code>
+     * class Foo extends Bar
+     * {
+     *     //                   ---------
+     *     public function test(parent $o) {}
+     *     //                   ---------
+     * }
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
+     * @throws PHP_Depend_Parser_InvalidStateException When this type hint is
+     *         used outside the scope of a class. When this type hint is used
+     *         for a class that has no parent.
      * @since 0.9.6
      */
     private function _parseFormalParameterAndParentTypeHint()
@@ -1089,6 +1136,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method will parse a formal parameter that has the keyword self as
+     * parameter type hint.
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //                   -------
+     *     public function test(self $o) {}
+     *     //                   -------
+     * }
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
      * @since 0.9.6
      */
@@ -1106,6 +1165,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method will parse a formal parameter that can optionally be passed
+     * by reference.
+     *
+     * <code>
+     * //                 ---  -------
+     * function foo(array &$x, $y = 42) {}
+     * //                 ---  -------
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
      * @since 0.9.6
      */
@@ -1116,18 +1184,26 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         switch ($tokenType) {
 
-            case self::T_BITWISE_AND:
-                $parameter = $this->_parseFormalParameterAndByReference();
-                break;
+        case self::T_BITWISE_AND:
+            $parameter = $this->_parseFormalParameterAndByReference();
+            break;
 
-            default:
-                $parameter = $this->_parseFormalParameter();
-                break;
+        default:
+            $parameter = $this->_parseFormalParameter();
+            break;
         }
         return $parameter;
     }
 
     /**
+     * This method will parse a formal parameter that is passed by reference.
+     *
+     * <code>
+     * //                 ---  --------
+     * function foo(array &$x, &$y = 42) {}
+     * //                 ---  --------
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
      * @since 0.9.6
      */
@@ -1142,6 +1218,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method will parse a formal parameter. A formal parameter is at least
+     * a variable name, but can also contain a default parameter value.
+     *
+     * <code>
+     * //               --  -------
+     * function foo(Bar $x, $y = 42) {}
+     * //               --  -------
+     * </code>
+     *
      * @return PHP_Depend_Code_Parameter
      * @since 0.9.6
      */
