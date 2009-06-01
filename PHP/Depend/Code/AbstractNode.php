@@ -180,7 +180,7 @@ abstract class PHP_Depend_Code_AbstractNode implements PHP_Depend_Code_ASTNodeI
                 return $child;
             }
         }
-        return $child;
+        return null;
     }
 
     /**
