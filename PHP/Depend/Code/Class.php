@@ -113,6 +113,11 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
                 'PHP_Depend_Code_FieldDeclaration'
             );
             foreach ($declarations as $declaration) {
+
+                $classOrInterfaceReference = $declaration->getFirstChildOfType(
+                    'PHP_Depend_Code_ClassOrInterfaceReference'
+                );
+
                 $declarators = $declaration->findChildrenOfType(
                     'PHP_Depend_Code_VariableDeclarator'
                 );
@@ -127,9 +132,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
                     $property->setModifiers($declaration->getModifiers());
                     $property->setDocComment($declaration->getComment());
                     $property->setSourceFile($this->getSourceFile());
-                    $property->setClassReference(
-                        $declaration->getClassOrInterfaceReference()
-                    );
+                    $property->setClassReference($classOrInterfaceReference);
 
                     if ($declarator->getValue() !== null) {
                         $property->setDefaultValue($declarator->getValue());
