@@ -482,8 +482,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @return PHP_Depend_Code_SelfReference
      * @since 0.9.6
      */
-    public function buildSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type)
-    {
+    public function buildSelfReference(
+        PHP_Depend_Code_AbstractClassOrInterface $type
+    ) {
         include_once 'PHP/Depend/Code/SelfReference.php';
 
         return new PHP_Depend_Code_SelfReference($type);
