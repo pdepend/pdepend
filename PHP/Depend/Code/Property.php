@@ -197,6 +197,42 @@ class PHP_Depend_Code_Property
     }
 
     /**
+     * This method will return <b>true</b> when this property doc comment
+     * contains an array type hint, otherwise the it will return <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.6
+     */
+    public function isArray()
+    {
+        $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
+            'PHP_Depend_Code_AbstractTypeNode'
+        );
+        if ($typeNode === null) {
+            return false;
+        }
+        return $typeNode->isArray();
+    }
+
+    /**
+     * This method will return <b>true</b> when this property doc comment
+     * contains a primitive type hint, otherwise the it will return <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.6
+     */
+    public function isPrimitive()
+    {
+        $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
+            'PHP_Depend_Code_AbstractTypeNode'
+        );
+        if ($typeNode === null) {
+            return false;
+        }
+        return $typeNode->isPrimitive();
+    }
+
+    /**
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
