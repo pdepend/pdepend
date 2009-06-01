@@ -46,71 +46,71 @@
  * @link       http://www.pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Bugs_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/ClassDeclarationWithoutBodyBug065Test.php';
-require_once dirname(__FILE__) . '/IncorrectPropertyEndlineBug068Test.php';
-require_once dirname(__FILE__) . '/ClosureResultsInExceptionBug070Test.php';
-require_once dirname(__FILE__) . '/SignedDefaultValueResultsInExceptionBug71Test.php';
-require_once dirname(__FILE__) . '/InconsistentObjectGraphBug73Test.php';
-require_once dirname(__FILE__) . '/ParserKeywordAsConstantNameBug76Test.php';
-require_once dirname(__FILE__) . '/TokenizerKeywordSubstitutionBug76Test.php';
-require_once dirname(__FILE__) . '/SupportCommaSeparatedPropertyDeclarationsBug081Test.php';
-require_once dirname(__FILE__) . '/ParentKeywordAsParameterTypeHintBug087Test.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Test suite for bugs meta package.
+ * Test case for the parent keyword type hint bug no #87.
+ *
+ * http://tracker.pdepend.org/pdepend/issue_tracker/issue/87
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Issues
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_AllTests
+class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
+    extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the parser handles the parent type hint as expected.
      *
      * @return void
      */
-    public static function main()
+    public function testParserSetsExpectedParentTypeHintReference()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $packages = self::parseSource('bugs/087/' . __FUNCTION__ . '.php');
+
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
+
+        $this->assertSame('Bar', $parameter->getClass()->getName());
     }
 
     /**
-     * Creates the phpunit test suite for this package.
+     * Tests that the parser throws an exception when the parent keyword is used
+     * within a function signature.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Bugs - AllTests');
+        $this->setExpectedException(
+            'PHP_Depend_Parser_InvalidStateException',
+            'The keyword "parent" was used as type hint but the parameter ' .
+            'declaration is not in a class scope.'
+        );
 
-        $suite->addTestSuite('PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_InconsistentObjectGraphBug73Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_ParserKeywordAsConstantNameBug76Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test');
-
-        return $suite;
+        self::parseSource('bugs/087/' . __FUNCTION__ . '.php');
     }
-}
 
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Bugs_AllTests::main') {
-    PHP_Depend_Bugs_AllTests::main();
+    public function testParserThrowsExpectedExceptionForParentTypeHintClassWithoutParent()
+    {
+        $this->setExpectedException(
+            'PHP_Depend_Parser_InvalidStateException',
+            'The keyword "parent" was used as type hint but the parent ' .
+            'class "Baz" does not declare a parent.'
+        );
+
+        self::parseSource('bugs/087/' . __FUNCTION__ . '.php');
+    }
 }
 ?>

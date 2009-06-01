@@ -53,6 +53,7 @@ require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
 require_once 'PHP/Depend/Parser/SymbolTable.php';
 require_once 'PHP/Depend/Parser/TokenStack.php';
+require_once 'PHP/Depend/Parser/InvalidStateException.php';
 require_once 'PHP/Depend/Parser/MissingValueException.php';
 require_once 'PHP/Depend/Parser/TokenStreamEndException.php';
 require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
@@ -1000,7 +1001,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
 
         case self::T_PARENT:
-
+            $parameter = $this->_parseFormalParameterAndParentTypeHint();
             break;
 
         case self::T_BITWISE_AND:
@@ -1048,7 +1049,44 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $parameter;
     }
 
+    /**
+     * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
+     */
+    private function _parseFormalParameterAndParentTypeHint()
+    {
+        $token = $this->_consumeToken(self::T_PARENT);
 
+        if ($this->_classOrInterface === null) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $token->startLine,
+                (string) $this->_sourceFile,
+                'The keyword "parent" was used as type hint but the parameter ' .
+                'declaration is not in a class scope.'
+            );
+        }
+
+        $classReference = $this->_classOrInterface->getParentClassReference();
+        if ($classReference === null) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $token->startLine,
+                (string) $this->_sourceFile,
+                sprintf(
+                    'The keyword "parent" was used as type hint but the parent ' .
+                    'class "%s" does not declare a parent.',
+                    $this->_classOrInterface->getName()
+                )
+            );
+        }
+
+        $classReference = clone $classReference;
+        $classReference->setTokens(array($token));
+
+        $parameter = $this->_parseFormalParameterOrByReference();
+        $parameter->setClassReference($classReference);
+
+        return $parameter;
+    }
 
     /**
      * @return PHP_Depend_Code_Parameter
