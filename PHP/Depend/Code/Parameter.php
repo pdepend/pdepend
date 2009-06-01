@@ -106,15 +106,6 @@ class PHP_Depend_Code_Parameter
     private $_position = 0;
 
     /**
-     * The type of this parameter. Normally this property is only set when the
-     * parameter declaration uses the keyword self. This value is <b>null</b> by
-     * default and for scalar types.
-     *
-     * @var PHP_Depend_Code_AbstractClassOrInterface $_class
-     */
-    private $_class = null;
-
-    /**
      * The type holder for this parameter. This value is <b>null</b> by default
      * and for scalar types.
      *
@@ -299,28 +290,10 @@ class PHP_Depend_Code_Parameter
      */
     public function getClass()
     {
-        if ($this->_class !== null) {
-            return $this->_class;
-        }
         if ($this->_classReference === null) {
             return null;
         }
         return $this->_classReference->getType();
-    }
-
-    /**
-     * Sets the declared type for this parameter. This method is normally only
-     * called when the parameter declaration uses the keyword <b>self</b>,
-     * because it means it must be an instance of the same class type.
-     *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $class The concrete class
-     *        or interface type declared for this parameter.
-     *
-     * @return void
-     */
-    public function setClass(PHP_Depend_Code_AbstractClassOrInterface $class)
-    {
-        $this->_class = $class;
     }
 
     /**

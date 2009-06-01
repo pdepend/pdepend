@@ -226,7 +226,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Stack with all active token scopes.
      *
-     * @var array(PHP_Depend_Token) $_tokenStack
+     * @var PHP_Depend_Parser_TokenStack $_tokenStack
      */
     private $_tokenStack = null;
 
@@ -936,7 +936,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Create a new token stack instance
             $this->_tokenStack->push();
 
-            $parameter = $this->_parseParameter();
+            $parameter = $this->_parseFormalParameterOrTypeHintOrByReference();
             $parameter->setPosition(count($parameters));
 
             // Destroy actual token scope
@@ -976,82 +976,144 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parses a single function or method parameter and returns the
-     * corresponding ast instance. Additionally this method fills the tokens
-     * array with all found tokens.
-     * 
      * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
      */
-    private function _parseParameter()
+    private function _parseFormalParameterOrTypeHintOrByReference()
     {
-        $parameterRef   = false;
-        $parameterType  = null;
-        $parameterArray = false;
-        $parameterClass = null;
-
         $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
 
-        // Check for class/interface type hint
-        if ($tokenType === self::T_STRING || $tokenType === self::T_BACKSLASH) {
-            // Get type identifier
-            $parameterType = $this->_parseQualifiedName();
+        switch ($tokenType) {
 
-            // Remove ending comments
-            $this->_consumeComments();
+        case self::T_ARRAY:
+            $parameter = $this->_parseFormalParameterAndArrayTypeHint();
+            break;
 
-            // Get next token type
-            $tokenType = $this->_tokenizer->peek();
-        } else if ($tokenType === self::T_ARRAY) {
-            // Mark as array parameter
-            $parameterArray = true;
+        case self::T_STRING:
+        case self::T_BACKSLASH:
+            $parameter = $this->_parseFormalParameterAndTypeHint();
+            break;
 
-            // Consume array token and remove comments
-            $this->_consumeToken(self::T_ARRAY);
-            $this->_consumeComments();
+        case self::T_SELF:
+            $parameter = $this->_parseFormalParameterAndSelfTypeHint();
+            break;
 
-            // Get next token type
-            $tokenType = $this->_tokenizer->peek();
-        } else if ($tokenType === self::T_SELF) {
-            // TODO: Question: NO STATIC???
-            // || $tokenType === self::T_STATIC
-            //
-            // Consume token and remove comments
-            $this->_consumeToken($tokenType);
-            $this->_consumeComments();
+        case self::T_PARENT:
 
-            // Store actual context class as parameter type
-            $parameterClass = $this->_classOrInterface;
+            break;
+
+        case self::T_BITWISE_AND:
+            $parameter = $this->_parseFormalParameterAndByReference();
+            break;
+
+        default:
+            $parameter = $this->_parseFormalParameter();
+            break;
         }
+        
+        return $parameter;
+    }
 
-        // Check for parameter by reference
-        if ($tokenType === self::T_BITWISE_AND) {
-            // Set by ref flag
-            $parameterRef = true;
+    /**
+     * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
+     */
+    private function _parseFormalParameterAndArrayTypeHint()
+    {
+        $this->_consumeToken(self::T_ARRAY);
 
-            // Consume bitwise and token
-            $this->_consumeToken(self::T_BITWISE_AND);
-            $this->_consumeComments();
+        $parameter = $this->_parseFormalParameterOrByReference();
+        $parameter->setArray(true);
 
-            // Get next token type
-            $tokenType = $this->_tokenizer->peek();
+        return $parameter;
+    }
+
+    /**
+     * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
+     */
+    private function _parseFormalParameterAndTypeHint()
+    {
+        $this->_tokenStack->push();
+
+        $classOrInterfaceReference = $this->_builder->buildClassOrInterfaceReference(
+            $this->_parseQualifiedName()
+        );
+        $classOrInterfaceReference->setTokens($this->_tokenStack->pop());
+
+        $parameter = $this->_parseFormalParameterOrByReference();
+        $parameter->setClassReference($classOrInterfaceReference);
+
+        return $parameter;
+    }
+
+
+
+    /**
+     * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
+     */
+    private function _parseFormalParameterAndSelfTypeHint()
+    {
+        $selfReference = $this->_builder->buildSelfReference(
+            $this->_classOrInterface
+        );
+        $selfReference->setTokens(array($this->_consumeToken(self::T_SELF)));
+
+        $parameter = $this->_parseFormalParameterOrByReference();
+        $parameter->setClassReference($selfReference);
+
+        return $parameter;
+    }
+
+    /**
+     * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
+     */
+    private function _parseFormalParameterOrByReference()
+    {
+        $this->_consumeComments();
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+            case self::T_BITWISE_AND:
+                $parameter = $this->_parseFormalParameterAndByReference();
+                break;
+
+            default:
+                $parameter = $this->_parseFormalParameter();
+                break;
         }
+        return $parameter;
+    }
 
+    /**
+     * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
+     */
+    private function _parseFormalParameterAndByReference()
+    {
+        $this->_consumeToken(self::T_BITWISE_AND);
+
+        $parameter = $this->_parseFormalParameter();
+        $parameter->setPassedByReference(true);
+
+        return $parameter;
+    }
+
+    /**
+     * @return PHP_Depend_Code_Parameter
+     * @since 0.9.6
+     */
+    private function _parseFormalParameter()
+    {
         // Next token must be the parameter variable
         $token = $this->_consumeToken(self::T_VARIABLE);
         $this->_consumeComments();
 
         $parameter = $this->_builder->buildParameter($token->image);
-        $parameter->setPassedByReference($parameterRef);
-        $parameter->setArray($parameterArray);
-
-        if ($parameterType !== null) {
-            $parameter->setClassReference(
-                $this->_builder->buildClassOrInterfaceReference($parameterType)
-            );
-        } else if ($parameterClass !== null) {
-            $parameter->setClass($parameterClass);
-        }
 
         // Check for a default value
         if ($this->_tokenizer->peek() === self::T_EQUAL) {

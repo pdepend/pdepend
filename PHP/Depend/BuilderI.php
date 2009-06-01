@@ -213,6 +213,17 @@ interface PHP_Depend_BuilderI
     function buildFunction($name);
 
     /**
+     * Builds a new self reference instance.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
+     *        that reference the concrete target of self.
+     *
+     * @return PHP_Depend_Code_SelfReference
+     * @since 0.9.6
+     */
+    function buildSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
+
+    /**
      * Builds a new code class constant instance.
      *
      * @param string $name The constant name.
