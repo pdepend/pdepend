@@ -149,6 +149,30 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * This method will search recursive for the first child node that is an
+     * instance of the given <b>$targetType</b>. The returned value will be
+     * <b>null</b> if no child exists for that.
+     *
+     * @param string $targetType Searched class or interface type.
+     *
+     * @return PHP_Depend_Code_ASTNodeI
+     * @access private
+     * @since 0.9.6
+     */
+    public function getFirstChildOfType($targetType)
+    {
+        foreach ($this->_nodes as $node) {
+            if ($node instanceof $targetType) {
+                return $node;
+            }
+            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
+                return $child;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Will find all children for the given type.
      *
      * @param string $targetType The target class or interface type.

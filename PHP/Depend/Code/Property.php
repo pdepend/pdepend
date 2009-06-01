@@ -65,18 +65,9 @@ class PHP_Depend_Code_Property
     implements PHP_Depend_Code_NodeI
 {
     /**
-     * The name for this item.
-     *
-     * @var string $_name
-     * @since 0.9.6
-     */
-    private $_name = '';
-
-    /**
      * The unique identifier for this function.
      *
      * @var PHP_Depend_Util_UUID $_uuid
-     * @since 0.9.6
      */
     private $_uuid = null;
 
@@ -84,17 +75,8 @@ class PHP_Depend_Code_Property
      * The source file for this item.
      *
      * @var PHP_Depend_Code_File $_sourceFile
-     * @since 0.9.6
      */
     private $_sourceFile = null;
-
-    /**
-     * The comment for this type.
-     *
-     * @var string $_docComment
-     * @since 0.9.6
-     */
-    private $_docComment = null;
     
     /**
      * The parent type object.
@@ -104,36 +86,37 @@ class PHP_Depend_Code_Property
     private $_declaringClass = null;
 
     /**
-     * A reference instance for the php type of this property.
+     * The wrapped field declaration instance.
      *
-     * @var PHP_Depend_Code_ClassOrInterfaceReference $_classReference
-     */
-    private $_classReference = null;
-
-    /**
-     * Defined modifiers for this property node.
-     *
-     * @var integer $_modifiers
-     */
-    private $_modifiers = 0;
-
-    /**
-     * The default value for this property or <b>null</b> when no default value
-     * was declared.
-     *
-     * @var PHP_Depend_Code_Value $value
+     * @var PHP_Depend_Code_FieldDeclaration $_fieldDeclaration
      * @since 0.9.6
      */
-    private $_value = null;
+    private $_fieldDeclaration = null;
 
     /**
-     * Constructs a new item for the given <b>$name</b>.
+     * The wrapped variable declarator instance.
      *
-     * @param string $name The item name.
+     * @var PHP_Depend_Code_VariableDeclarator $_variableDeclarator
+     * @since 0.9.6
      */
-    public function __construct($name)
-    {
-        $this->_name = $name;
+    private $_variableDeclarator = null;
+
+    /**
+     * Constructs a new item for the given field declaration and variable
+     * declarator.
+     *
+     * @param PHP_Depend_Code_FieldDeclaration   $fieldDeclaration   The context
+     *        field declaration where this property was declared in the source.
+     * @param PHP_Depend_Code_VariableDeclarator $variableDeclarator The context
+     *        variable declarator for this property instance.
+     */
+    public function __construct(
+        PHP_Depend_Code_FieldDeclaration $fieldDeclaration,
+        PHP_Depend_Code_VariableDeclarator $variableDeclarator
+    ) {
+        $this->_fieldDeclaration   = $fieldDeclaration;
+        $this->_variableDeclarator = $variableDeclarator;
+
         $this->_uuid = new PHP_Depend_Util_UUID();
     }
 
@@ -144,7 +127,7 @@ class PHP_Depend_Code_Property
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->_variableDeclarator->getImage();
     }
 
     /**
@@ -166,39 +149,7 @@ class PHP_Depend_Code_Property
      */
     public function getModifiers()
     {
-        return $this->_modifiers;
-    }
-
-    /**
-     * This method sets a OR combined integer of the declared modifiers for this
-     * node.
-     *
-     * This method will throw an exception when the value of given <b>$modifiers</b> 
-     * contains an invalid/unexpected modifier
-     *
-     * @param integer $modifiers The declared modifiers for this node.
-     *
-     * @return void
-     * @throws InvalidArgumentException If the given modifier contains unexpected
-     *                                  values.
-     * @since 0.9.4
-     */
-    public function setModifiers($modifiers)
-    {
-        if ($this->_modifiers !== 0) {
-            return;
-        }
-
-        $expected = ~PHP_Depend_ConstantsI::IS_PUBLIC
-                  & ~PHP_Depend_ConstantsI::IS_PROTECTED
-                  & ~PHP_Depend_ConstantsI::IS_PRIVATE
-                  & ~PHP_Depend_ConstantsI::IS_STATIC;
-
-        if (($expected & $modifiers) !== 0) {
-            throw new InvalidArgumentException('Invalid property modifier given.');
-        }
-
-        $this->_modifiers = $modifiers;
+        return $this->_fieldDeclaration->getModifiers();
     }
 
     /**
@@ -209,8 +160,7 @@ class PHP_Depend_Code_Property
      */
     public function isPublic()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
-                                 === PHP_Depend_ConstantsI::IS_PUBLIC);
+        return $this->_fieldDeclaration->isPublic();
     }
 
     /**
@@ -221,8 +171,7 @@ class PHP_Depend_Code_Property
      */
     public function isProtected()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
-                                 === PHP_Depend_ConstantsI::IS_PROTECTED);
+        return $this->_fieldDeclaration->isProtected();
     }
 
     /**
@@ -233,8 +182,7 @@ class PHP_Depend_Code_Property
      */
     public function isPrivate()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
-                                 === PHP_Depend_ConstantsI::IS_PRIVATE);
+        return $this->_fieldDeclaration->isPrivate();
     }
 
     /**
@@ -245,8 +193,7 @@ class PHP_Depend_Code_Property
      */
     public function isStatic()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_STATIC)
-                                 === PHP_Depend_ConstantsI::IS_STATIC);
+        return $this->_fieldDeclaration->isStatic();
     }
 
     /**
@@ -258,25 +205,13 @@ class PHP_Depend_Code_Property
      */
     public function getClass()
     {
-        if ($this->_classReference === null) {
+        $reference = $this->_fieldDeclaration->getFirstChildOfType(
+            'PHP_Depend_Code_ClassOrInterfaceReference'
+        );
+        if ($reference === null) {
             return null;
         }
-        return $this->_classReference->getType();
-    }
-
-    /**
-     * Sets a reference instance for the php type of this property.
-     *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Holder
-     *        instance for the declared property type.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setClassReference(
-        PHP_Depend_Code_ClassOrInterfaceReference $classReference = null
-    ) {
-        $this->_classReference = $classReference;
+        return $reference->getType();
     }
 
     /**
@@ -310,19 +245,7 @@ class PHP_Depend_Code_Property
      */
     public function getDocComment()
     {
-        return $this->_docComment;
-    }
-
-    /**
-     * Sets the doc comment for this item.
-     *
-     * @param string $docComment The doc comment block.
-     *
-     * @return void
-     */
-    public function setDocComment($docComment)
-    {
-        $this->_docComment = $docComment;
+        return $this->_fieldDeclaration->getComment();
     }
 
     /**
@@ -333,22 +256,7 @@ class PHP_Depend_Code_Property
      */
     public function getTokens()
     {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore($this->getUUID(), __CLASS__);
-    }
-
-    /**
-     * Sets the source tokens used for this property declaration.
-     *
-     * @param array(PHP_Depend_Token) $tokens The source tokens.
-     *
-     * @return void
-     * @since 0.9.6
-     */
-    public function setTokens(array $tokens)
-    {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, $this->getUUID(), __CLASS__);
+        return $this->_variableDeclarator->getTokens();
     }
 
     /**
@@ -359,9 +267,7 @@ class PHP_Depend_Code_Property
      */
     public function getStartLine()
     {
-        $tokens = $this->getTokens();
-        assert(($token = reset($tokens)) instanceof PHP_Depend_Token);
-        return $token->startLine;
+        return $this->_variableDeclarator->getStartLine();
     }
 
     /**
@@ -372,9 +278,7 @@ class PHP_Depend_Code_Property
      */
     public function getEndLine()
     {
-        $tokens = $this->getTokens();
-        assert(($token = end($tokens)) instanceof PHP_Depend_Token);
-        return $token->endLine;
+        return $this->_variableDeclarator->getEndLine();
     }
 
     /**
@@ -410,10 +314,11 @@ class PHP_Depend_Code_Property
      */
     public function isDefaultValueAvailable()
     {
-        if ($this->_value === null) {
+        $value = $this->_variableDeclarator->getValue();
+        if ($value === null) {
             return false;
         }
-        return $this->_value->isValueAvailable();
+        return $value->isValueAvailable();
     }
 
     /**
@@ -425,27 +330,11 @@ class PHP_Depend_Code_Property
      */
     public function getDefaultValue()
     {
-        if ($this->_value === null) {
+        $value = $this->_variableDeclarator->getValue();
+        if ($value === null) {
             return null;
         }
-        return $this->_value->getValue();
-    }
-
-    /**
-     * This method is used by the parser to the a declared default value for
-     * this property.
-     *
-     * @param PHP_Depend_Code_Value $value The declared default value for this
-     *        property instance.
-     *
-     * @return void
-     * @since 0.9.6
-     */
-    public function setDefaultValue(PHP_Depend_Code_Value $value)
-    {
-        if ($this->_value === null) {
-            $this->_value = $value;
-        }
+        return $value->getValue();
     }
 
     /**
@@ -548,7 +437,7 @@ class PHP_Depend_Code_Property
             $default,
             $visibility,
             $static,
-            $this->_name,
+            $this->getName(),
             PHP_EOL
         );
     }

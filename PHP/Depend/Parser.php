@@ -133,6 +133,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                                \)
                                |
                                ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*))\s+
+                               |
+                               (array)\(\s*\)\s+
                              )ix';
 
     /**
@@ -706,9 +708,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $declaration = $this->_builder->buildFieldDeclaration();
         $declaration->setComment($this->_docComment);
 
-        $reference = $this->_parseFieldDeclarationClassOrInterfaceReference();
-        if ($reference !== null) {
-            $declaration->addChild($reference);
+        $type = $this->_parseFieldDeclarationType();
+        if ($type !== null) {
+            $declaration->addChild($type);
         }
         
         $this->_consumeComments();
@@ -1971,19 +1973,48 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
     /**
      * This method parses the given doc comment text for a var annotation and
-     * it returns the found property type.
+     * it returns the found property types.
      *
      * @param string $comment A doc comment text.
      *
-     * @return string
+     * @return array(string)
      */
     private function _parseVarAnnotation($comment)
     {
         if (preg_match(self::REGEXP_VAR_TYPE, $comment, $match) > 0) {
-            foreach (explode('|', end($match)) as $type) {
-                if (PHP_Depend_Util_Type::isScalarType($type) === false) {
-                    return $type;
-                }
+            return array_map('trim', explode('|', end($match)));
+        }
+        return array();
+    }
+
+    /**
+     * This method will extract the type information of a property from it's
+     * doc comment information. The returned value will be <b>null</b> when no
+     * type information exists.
+     *
+     * @return PHP_Depend_Code_AbstractTypeNode
+     * @since 0.9.6
+     */
+    private function _parseFieldDeclarationType()
+    {
+        // Skip, if ignore annotations is set
+        if ($this->_ignoreAnnotations === true) {
+            return null;
+        }
+
+        $reference = $this->_parseFieldDeclarationClassOrInterfaceReference();
+        if ($reference !== null) {
+            return $reference;
+        }
+
+        $annotations = $this->_parseVarAnnotation($this->_docComment);
+        foreach ($annotations as $annotation) {
+            if (PHP_Depend_Util_Type::isPrimitiveType($annotation) === true) {
+                return $this->_builder->buildPrimitiveType(
+                    PHP_Depend_Util_Type::getPrimitiveType($annotation)
+                );
+            } else if (PHP_Depend_Util_Type::isArrayType($annotation) === true) {
+                return $this->_builder->buildArrayType();
             }
         }
         return null;
@@ -2003,12 +2034,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return null;
         }
 
-        // Get type annotation
-        $qualifiedName = $this->_parseVarAnnotation($this->_docComment);
-        if ($qualifiedName === null) {
-            return null;
+        $annotations = $this->_parseVarAnnotation($this->_docComment);
+        foreach ($annotations as $annotation) {
+            if (PHP_Depend_Util_Type::isScalarType($annotation) === false) {
+                return $this->_builder->buildClassOrInterfaceReference($annotation);
+            }
         }
-        return $this->_builder->buildClassOrInterfaceReference($qualifiedName);
+        return null;
     }
 
     /**
