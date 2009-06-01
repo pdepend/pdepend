@@ -65,6 +65,120 @@ require_once 'PHP/Depend/Code/Interface.php';
 class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     *
+     * @return void
+     */
+    public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
+    {
+        $node1 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node1->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $node2 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node2->expects($this->never())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $interface = new PHP_Depend_Code_Interface('Interface');
+        $interface->addChild($node1);
+        $interface->addChild($node2);
+
+        $child = $interface->getFirstChildOfType(get_class($node2));
+        $this->assertSame($node2, $child);
+    }
+
+    /**
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     *
+     * @return void
+     */
+    public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
+    {
+        $node1 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node1->expects($this->never())
+            ->method('getFirstChildOfType');
+
+        $node2 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node2->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $node3 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node3->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue($node1));
+
+        $interface = new PHP_Depend_Code_Interface('Interface');
+        $interface->addChild($node2);
+        $interface->addChild($node3);
+
+        $child = $interface->getFirstChildOfType(get_class($node1));
+        $this->assertSame($node1, $child);
+    }
+
+    /**
+     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     *
+     * @return void
+     */
+    public function testGetFirstChildOfTypeReturnsTheExpectedNull()
+    {
+        $node1 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node1->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $node2 = $this->getMock(
+            'PHP_Depend_Code_ASTNodeI',
+            array(),
+            array(),
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
+        $node2->expects($this->once())
+            ->method('getFirstChildOfType')
+            ->will($this->returnValue(null));
+
+        $interface = new PHP_Depend_Code_Interface('Interface');
+        $interface->addChild($node1);
+        $interface->addChild($node2);
+
+        $child = $interface->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
+        $this->assertNull($child);
+    }
+
+    /**
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void

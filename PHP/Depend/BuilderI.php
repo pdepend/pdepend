@@ -195,15 +195,6 @@ interface PHP_Depend_BuilderI
     function buildParameter($name);
 
     /**
-     * Builds a new property instance.
-     *
-     * @param string $name The property variable name.
-     *
-     * @return PHP_Depend_Code_Property The created property instance.
-     */
-    function buildProperty($name);
-
-    /**
      * Builds a new method instance.
      *
      * @param string $name The method name.
@@ -265,4 +256,22 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildFormalParameters();
+
+    /**
+     * Builds a new array type node.
+     *
+     * @return PHP_Depend_Code_ArrayType
+     * @since 0.9.6
+     */
+    function buildArrayType();
+
+    /**
+     * Builds a new primitive type node.
+     *
+     * @param string $image The source image for the primitive type.
+     *
+     * @return PHP_Depend_Code_PrimitiveType
+     * @since 0.9.6
+     */
+    function buildPrimitiveType($image);
 }

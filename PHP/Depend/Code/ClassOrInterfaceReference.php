@@ -47,7 +47,7 @@
  * @since      0.9.5
  */
 
-require_once 'PHP/Depend/Code/AbstractNode.php';
+require_once 'PHP/Depend/Code/AbstractTypeNode.php';
 
 /**
  * This class is used as a placeholder for unknown classes or interfaces. It
@@ -63,7 +63,8 @@ require_once 'PHP/Depend/Code/AbstractNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.5
  */
-class PHP_Depend_Code_ClassOrInterfaceReference extends PHP_Depend_Code_AbstractNode
+class PHP_Depend_Code_ClassOrInterfaceReference 
+    extends PHP_Depend_Code_AbstractTypeNode
 {
     /**
      * The associated AST builder.

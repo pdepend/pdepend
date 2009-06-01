@@ -138,5 +138,53 @@ class PHP_Depend_Code_FieldDeclaration extends PHP_Depend_Code_AbstractNode
 
         $this->modifiers = $modifiers;
     }
+
+    /**
+     * Returns <b>true</b> if this node is marked as public, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
+                                 === PHP_Depend_ConstantsI::IS_PUBLIC);
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as protected, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isProtected()
+    {
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
+                                 === PHP_Depend_ConstantsI::IS_PROTECTED);
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as private, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isPrivate()
+    {
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
+                                 === PHP_Depend_ConstantsI::IS_PRIVATE);
+    }
+
+    /**
+     * Returns <b>true</b> when this node is declared as static, otherwise
+     * the returned value will be <b>false</b>.
+     *
+     * @return boolean
+     */
+    public function isStatic()
+    {
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_STATIC)
+                                 === PHP_Depend_ConstantsI::IS_STATIC);
+    }
 }
 ?>
