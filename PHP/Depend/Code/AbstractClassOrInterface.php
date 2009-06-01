@@ -242,6 +242,17 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * Returns a reference onto the parent class of this class node or <b>null</b>.
+     *
+     * @return PHP_Depend_Code_ClassReference
+     * @since 0.9.5
+     */
+    public function getParentClassReference()
+    {
+        return $this->_parentClassReference;
+    }
+
+    /**
      * Sets a reference onto the parent class of this class node.
      *
      * @param PHP_Depend_Code_ClassReference $classReference Reference to the
