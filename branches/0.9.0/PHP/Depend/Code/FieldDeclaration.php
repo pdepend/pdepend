@@ -91,14 +91,6 @@ class PHP_Depend_Code_FieldDeclaration extends PHP_Depend_Code_AbstractNode
     protected $modifiers = 0;
 
     /**
-     * A referenced class or interface type that was declared in the <b>var</b>
-     * annotation of this field declaration.
-     *
-     * @var PHP_Depend_Code_ClassOrInterfaceReference $classOrInterfaceReference
-     */
-    protected $classOrInterfaceReference = null;
-
-    /**
      * Constructs a new field declaration.
      */
     public function __construct()
@@ -145,30 +137,6 @@ class PHP_Depend_Code_FieldDeclaration extends PHP_Depend_Code_AbstractNode
         }
 
         $this->modifiers = $modifiers;
-    }
-
-    /**
-     * Returns the referenced class or interface type for this field or
-     * <b>null</b> when no type was declared.
-     *
-     * @return PHP_Depend_Code_ClassOrInterfaceReference
-     */
-    public function getClassOrInterfaceReference()
-    {
-        return $this->classOrInterfaceReference;
-    }
-
-    /**
-     * Sets the referenced class or interface type for this field declaration.
-     *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classOrInterfaceReference .
-     *
-     * @return void
-     */
-    public function setClassOrInterfaceReference(
-        PHP_Depend_Code_ClassOrInterfaceReference $classOrInterfaceReference = null
-    ) {
-        $this->classOrInterfaceReference = $classOrInterfaceReference;
     }
 }
 ?>
