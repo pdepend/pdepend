@@ -474,6 +474,22 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new self reference instance.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
+     *        that reference the concrete target of self.
+     *
+     * @return PHP_Depend_Code_SelfReference
+     * @since 0.9.6
+     */
+    public function buildSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type)
+    {
+        include_once 'PHP/Depend/Code/SelfReference.php';
+
+        return new PHP_Depend_Code_SelfReference($type);
+    }
+
+    /**
      * Builds a new field declaration node.
      *
      * @return PHP_Depend_Code_FieldDeclaration
