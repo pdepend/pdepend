@@ -6,6 +6,8 @@ PHP_Depend 0.9.6
   fixed in svn revision #916.
 - Closed #83: Make ClassOrInterfaceReference an ASTNode, implemented in svn
   revision #917.
+- Fixed #87: The parent keyword is not accepted as parameter type hint, fixed in
+  svn revision #925.
 
 PHP_Depend 0.9.5
 ----------------
