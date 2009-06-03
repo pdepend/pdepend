@@ -44,14 +44,17 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.5
+ * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/AbstractTypeNode.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * This class is used as a placeholder for unknown classes or interfaces. It
- * will resolve the concrete type instance on demand.
+ * This class represents a formal parameter within the signature of a function,
+ * method or closure.
+ *
+ * Formal parameters can include a type hint, a by reference identifier and a
+ * default value. The only mandatory part is the parameter identifier.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,51 +64,50 @@ require_once 'PHP/Depend/Code/AbstractTypeNode.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.5
+ * @since      0.9.6
  */
-class PHP_Depend_Code_ClassOrInterfaceReference 
-    extends PHP_Depend_Code_AbstractTypeNode
+class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
 {
     /**
-     * The associated AST builder.
-     *
-     * @var PHP_Depend_BuilderI $builder
+     * The image type of this node.
      */
-    protected $builder = null;
+    const IMAGE = __CLASS__;
 
     /**
-     * An already loaded type instance.
+     * This property is set to <b>true</b> when the parameter is passed by
+     * reference.
      *
-     * @var PHP_Depend_Code_AbstractClassOrInterface $typeInstance
+     * @var boolean $passedByReference
      */
-    protected $typeInstance = null;
+    protected $passedByReference = false;
 
     /**
-     * Constructs a new type holder instance.
-     *
-     * @param PHP_Depend_BuilderI $builder       The associated AST builder instance.
-     * @param string              $qualifiedName The qualified type name.
+     * Constructs a new field declaration.
      */
-    public function __construct(PHP_Depend_BuilderI $builder, $qualifiedName)
+    public function __construct()
     {
-        parent::__construct($qualifiedName);
-
-        $this->builder = $builder;
+        parent::__construct(self::IMAGE);
     }
 
     /**
-     * Returns the concrete type instance associated with with this placeholder.
+     * This method will return <b>true</b> when the parameter is passed by
+     * reference.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return boolean
      */
-    public function getType()
+    public function isPassedByReference()
     {
-        if ($this->typeInstance === null) {
-            $this->typeInstance = $this->builder->getClassOrInterface(
-                $this->getImage()
-            );
-        }
-        return $this->typeInstance;
+        return $this->passedByReference;
+    }
+
+    /**
+     * This method can be used to mark this parameter as passed by reference.
+     *
+     * @return void
+     */
+    public function setPassedByReference()
+    {
+        $this->passedByReference = true;
     }
 }
 ?>

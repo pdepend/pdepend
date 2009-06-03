@@ -102,10 +102,10 @@ interface PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.5
      */
-    function buildClassOrInterfaceReference($qualifiedName);
+    function buildASTClassOrInterfaceReference($qualifiedName);
 
     /**
      * Builds a new code class instance.
@@ -133,10 +133,10 @@ interface PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_ClassReference
+     * @return PHP_Depend_Code_ASTClassReference
      * @since 0.9.5
      */
-    function buildClassReference($qualifiedName);
+    function buildASTClassReference($qualifiedName);
 
     /**
      * Builds a new closure instance.
@@ -171,7 +171,7 @@ interface PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_InterfaceReference
+     * @return PHP_Depend_Code_ASTInterfaceReference
      * @since 0.9.5
      */
     function buildInterfaceReference($qualifiedName);
@@ -209,10 +209,10 @@ interface PHP_Depend_BuilderI
      * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
      *        that reference the concrete target of self.
      *
-     * @return PHP_Depend_Code_SelfReference
+     * @return PHP_Depend_Code_ASTSelfReference
      * @since 0.9.6
      */
-    function buildSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
+    function buildASTSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
 
     /**
      * Builds a new code class constant instance.
@@ -226,62 +226,62 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new field declaration node.
      *
-     * @return PHP_Depend_Code_FieldDeclaration
+     * @return PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
-    function buildFieldDeclaration();
+    function buildASTFieldDeclaration();
 
     /**
      * Builds a new variable declarator node.
      *
      * @param string $image The source image for the variable declarator.
      *
-     * @return PHP_Depend_Code_VariableDeclarator
+     * @return PHP_Depend_Code_ASTVariableDeclarator
      * @since 0.9.6
      */
-    function buildVariableDeclarator($image);
+    function buildASTVariableDeclarator($image);
 
     /**
      * Builds a new static variable declaration node.
      *
      * @param string $image The source image for the static declaration.
      *
-     * @return PHP_Depend_Code_StaticVariableDeclaration
+     * @return PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
      */
-    function buildStaticVariableDeclaration($image);
+    function buildASTStaticVariableDeclaration($image);
 
     /**
      * Builds a new formal parameters node.
      *
-     * @return PHP_Depend_Code_FormalParameters
+     * @return PHP_Depend_Code_ASTFormalParameters
      * @since 0.9.6
      */
-    function buildFormalParameters();
+    function buildASTFormalParameters();
 
     /**
      * Builds a new formal parameter node.
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
-    function buildFormalParameter();
+    function buildASTFormalParameter();
 
     /**
      * Builds a new array type node.
      *
-     * @return PHP_Depend_Code_ArrayType
+     * @return PHP_Depend_Code_ASTArrayType
      * @since 0.9.6
      */
-    function buildArrayType();
+    function buildASTArrayType();
 
     /**
      * Builds a new primitive type node.
      *
      * @param string $image The source image for the primitive type.
      *
-     * @return PHP_Depend_Code_PrimitiveType
+     * @return PHP_Depend_Code_ASTPrimitiveType
      * @since 0.9.6
      */
-    function buildPrimitiveType($image);
+    function buildASTPrimitiveType($image);
 }

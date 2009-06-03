@@ -48,7 +48,7 @@
 require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/ClassReference.php';
+require_once 'PHP/Depend/Code/ASTClassReference.php';
 require_once 'PHP/Depend/Code/Interface.php';
 
 /**
@@ -393,7 +393,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         );
 
         $interface->setParentClassReference(
-            $this->getMock('PHP_Depend_Code_ClassReference', array(), array(), '', false)
+            $this->getMock('PHP_Depend_Code_ASTClassReference', array(), array(), '', false)
         );
     }
 

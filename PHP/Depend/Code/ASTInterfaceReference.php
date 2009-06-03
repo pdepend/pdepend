@@ -46,7 +46,7 @@
  * @since     0.9.5
  */
 
-require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
 
 /**
  * This is a interfaces only version of the class or interface reference .
@@ -60,8 +60,8 @@ require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
  * @link      http://www.pdepend.org/
  * @since     0.9.5
  */
-class PHP_Depend_Code_InterfaceReference
-    extends PHP_Depend_Code_ClassOrInterfaceReference
+class PHP_Depend_Code_ASTInterfaceReference
+    extends PHP_Depend_Code_ASTClassOrInterfaceReference
 {
     /**
      * Returns the concrete type instance associated with with this placeholder.

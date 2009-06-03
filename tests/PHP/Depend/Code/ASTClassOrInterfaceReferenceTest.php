@@ -44,14 +44,15 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/Depend/BuilderI.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
 
 /**
- * This is a special reference container that is used whenever the keyword
- * <b>self</b> is used to reference a class or interface.
+ * description
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,27 +62,27 @@ require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.6
  */
-final class PHP_Depend_Code_SelfReference
-    extends PHP_Depend_Code_ClassOrInterfaceReference
+class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_AbstractTest
 {
-    /**
-     * The source image of this node.
-     */
-    const IMAGE = 'self';
+    public function testGetTypeInvokesBuildClassOrInterface()
+    {
+        $class = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
 
-    /**
-     * Constructs a new type holder instance.
-     *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
-     *        that reference the concrete target of self.
-     */
-    public function __construct(
-        PHP_Depend_Code_AbstractClassOrInterface $type
-    ) {
-        $this->image        = self::IMAGE;
-        $this->typeInstance = $type;
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('getClassOrInterface')
+            ->with($this->equalTo(__CLASS__))
+            ->will($this->returnValue($class));
+
+        $classOrInterfaceReference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $builder, __CLASS__
+        );
+
+        $this->assertType(
+            'PHP_Depend_Code_Class',
+            $classOrInterfaceReference->getType()
+        );
     }
 }
 ?>

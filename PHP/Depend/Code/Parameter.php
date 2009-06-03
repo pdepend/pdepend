@@ -103,28 +103,28 @@ class PHP_Depend_Code_Parameter
     /**
      * The wrapped formal parameter instance.
      *
-     * @var PHP_Depend_Code_FormalParameter $_formalParameter
+     * @var PHP_Depend_Code_ASTFormalParameter $_formalParameter
      */
     private $_formalParameter = null;
 
     /**
      * The wrapped variable declarator instance.
      *
-     * @var PHP_Depend_Code_VariableDeclarator $_variableDeclarator
+     * @var PHP_Depend_Code_ASTVariableDeclarator $_ASTVariableDeclarator
      */
-    private $_variableDeclarator = null;
+    private $_ASTVariableDeclarator = null;
 
     /**
      * Constructs a new parameter instance for the given AST node.
      *
-     * @param PHP_Depend_Code_FormalParameter $formalParameter The wrapped AST
+     * @param PHP_Depend_Code_ASTFormalParameter $formalParameter The wrapped AST
      *        parameter node.
      */
-    public function __construct(PHP_Depend_Code_FormalParameter $formalParameter)
+    public function __construct(PHP_Depend_Code_ASTFormalParameter $formalParameter)
     {
         $this->_formalParameter    = $formalParameter;
-        $this->_variableDeclarator = $formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_VariableDeclarator'
+        $this->_ASTVariableDeclarator = $formalParameter->getFirstChildOfType(
+            'PHP_Depend_Code_ASTVariableDeclarator'
         );
 
         $this->_uuid = new PHP_Depend_Util_UUID();
@@ -137,7 +137,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getName()
     {
-        return $this->_variableDeclarator->getImage();
+        return $this->_ASTVariableDeclarator->getImage();
     }
 
     /**
@@ -253,7 +253,7 @@ class PHP_Depend_Code_Parameter
     public function getClass()
     {
         $classReference = $this->_formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_ClassOrInterfaceReference'
+            'PHP_Depend_Code_ASTClassOrInterfaceReference'
         );
         if ($classReference === null) {
             return null;
@@ -265,13 +265,13 @@ class PHP_Depend_Code_Parameter
      * Returns a value holder for the class or interface type declared for this
      * parameter or <b>null</b> when no parameter type hint was declared.
      *
-     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.5
      */
     public function getClassReference()
     {
         return $this->_formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_ClassOrInterfaceReference'
+            'PHP_Depend_Code_ASTClassOrInterfaceReference'
         );
     }
 
@@ -297,7 +297,7 @@ class PHP_Depend_Code_Parameter
     public function isArray()
     {
         $arrayType = $this->_formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_ArrayType'
+            'PHP_Depend_Code_ASTArrayType'
         );
         return ($arrayType !== null);
     }
@@ -360,7 +360,7 @@ class PHP_Depend_Code_Parameter
      */
     public function isDefaultValueAvailable()
     {
-        $value = $this->_variableDeclarator->getValue();
+        $value = $this->_ASTVariableDeclarator->getValue();
         if ($value === null) {
             return false;
         }
@@ -379,7 +379,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getDefaultValue()
     {
-        $value = $this->_variableDeclarator->getValue();
+        $value = $this->_ASTVariableDeclarator->getValue();
         if ($value === null) {
             return null;
         }

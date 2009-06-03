@@ -47,10 +47,27 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/AbstractNode.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * Abstract base class for a type node.
+ * This ast class represents a list for formal parameters. This means the
+ * parameters of a method, function or closure declaration.
+ *
+ * <code>
+ * //          --
+ * function foo() {}
+ * //          --
+ *
+ * //           --------
+ * $x = function($x, $y) {}
+ * //           --------
+ *
+ * class Foo {
+ *     //                 -----------------
+ *     public function bar(Foo $obj = null) {}
+ *     //                 -----------------
+ * }
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,27 +79,19 @@ require_once 'PHP/Depend/Code/AbstractNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_AbstractTypeNode extends PHP_Depend_Code_AbstractNode
+class PHP_Depend_Code_ASTFormalParameters extends PHP_Depend_Code_ASTNode
 {
     /**
-     * This method will return <b>true</b> when the underlying type is an array.
-     *
-     * @return boolean
+     * The image type of this node.
      */
-    public function isArray()
-    {
-        return false;
-    }
+    const IMAGE = __CLASS__;
 
     /**
-     * This method will return <b>true</b> when the underlying data type is a
-     * php primitive.
-     *
-     * @return boolean
+     * Constructs a new field declaration.
      */
-    public function isPrimitive()
+    public function __construct()
     {
-        return false;
+        parent::__construct(self::IMAGE);
     }
 }
 ?>

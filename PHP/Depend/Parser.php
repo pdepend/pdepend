@@ -427,7 +427,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeComments();
 
             $class->setParentClassReference(
-                $this->_builder->buildClassReference(
+                $this->_builder->buildASTClassReference(
                     $this->_parseQualifiedName()
                 )
             );
@@ -621,7 +621,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param integer $modifiers Optional default modifiers for the property
      *        or method node that will be parsed.
      *
-     * @return PHP_Depend_Code_Method|PHP_Depend_Code_FieldDeclaration
+     * @return PHP_Depend_Code_Method|PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
     private function _parseMethodOrFieldDeclaration($modifiers = 0)
@@ -701,12 +701,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_FieldDeclaration
+     * @return PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
     private function _parseFieldDeclaration()
     {
-        $declaration = $this->_builder->buildFieldDeclaration();
+        $declaration = $this->_builder->buildASTFieldDeclaration();
         $declaration->setComment($this->_docComment);
 
         $type = $this->_parseFieldDeclarationType();
@@ -905,7 +905,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @return PHP_Depend_Code_FormalParameters
+     * @return PHP_Depend_Code_ASTFormalParameters
      * @since 0.9.5
      */
     private function _parseFormalParameters()
@@ -914,7 +914,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->_tokenStack->push();
 
-        $formalParameters = $this->_builder->buildFormalParameters();
+        $formalParameters = $this->_builder->buildASTFormalParameters();
         
         $this->_consumeToken(self::T_PARENTHESIS_OPEN);
         $this->_consumeComments();
@@ -970,7 +970,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                ---
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterOrTypeHintOrByReference()
@@ -1021,14 +1021,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                ---------
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndArrayTypeHint()
     {
         $token = $this->_consumeToken(self::T_ARRAY);
 
-        $array = $this->_builder->buildArrayType();
+        $array = $this->_builder->buildASTArrayType();
         $array->setTokens(array($token));
 
         $parameter = $this->_parseFormalParameterOrByReference();
@@ -1046,20 +1046,20 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                ------------
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndTypeHint()
     {
         $this->_tokenStack->push();
 
-        $classOrInterfaceReference = $this->_builder->buildClassOrInterfaceReference(
+        $classReference = $this->_builder->buildASTClassOrInterfaceReference(
             $this->_parseQualifiedName()
         );
-        $classOrInterfaceReference->setTokens($this->_tokenStack->pop());
+        $classReference->setTokens($this->_tokenStack->pop());
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->addChild($classOrInterfaceReference);
+        $parameter->addChild($classReference);
 
         return $parameter;
     }
@@ -1077,7 +1077,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @throws PHP_Depend_Parser_InvalidStateException When this type hint is
      *         used outside the scope of a class. When this type hint is used
      *         for a class that has no parent.
@@ -1131,12 +1131,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndSelfTypeHint()
     {
-        $selfReference = $this->_builder->buildSelfReference(
+        $selfReference = $this->_builder->buildASTSelfReference(
             $this->_classOrInterface
         );
         $selfReference->setTokens(array($this->_consumeToken(self::T_SELF)));
@@ -1157,7 +1157,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                 ---  -------
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterOrByReference()
@@ -1187,7 +1187,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                 ---  --------
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndByReference()
@@ -1210,12 +1210,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //               --  -------
      * </code>
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameter()
     {
-        $parameter = $this->_builder->buildFormalParameter();
+        $parameter = $this->_builder->buildASTFormalParameter();
         $parameter->addChild(
             $this->_parseVariableDeclarator()
         );
@@ -1250,7 +1250,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_PARENTHESIS_OPEN);
 
                 $callable->addDependencyClassReference(
-                    $this->_builder->buildClassOrInterfaceReference(
+                    $this->_builder->buildASTClassOrInterfaceReference(
                         $this->_parseQualifiedName()
                     )
                 );
@@ -1271,7 +1271,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     || $peekType === self::T_NAMESPACE
                 ) {
                     $callable->addDependencyClassReference(
-                        $this->_builder->buildClassReference(
+                        $this->_builder->buildASTClassReference(
                             $this->_parseQualifiedName()
                         )
                     );
@@ -1292,7 +1292,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     || $peekType === self::T_NAMESPACE
                 ) {
                     $callable->addDependencyClassReference(
-                        $this->_builder->buildClassOrInterfaceReference(
+                        $this->_builder->buildASTClassOrInterfaceReference(
                             $this->_parseQualifiedName()
                         )
                     );
@@ -1326,7 +1326,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $this->_consumeToken($tokenType);
 
                     $callable->addDependencyClassReference(
-                        $this->_builder->buildClassOrInterfaceReference(
+                        $this->_builder->buildASTClassOrInterfaceReference(
                             $qualifiedName
                         )
                     );
@@ -1370,7 +1370,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Check for inline type definitions like: /* @var $o FooBar */
                 if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
                     $callable->addDependencyClassReference(
-                        $this->_builder->buildClassOrInterfaceReference($match[1])
+                        $this->_builder->buildASTClassOrInterfaceReference($match[1])
                     );
                 }
                 break;
@@ -1705,7 +1705,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_StaticVariableDeclaration
+     * @return PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
      */
     private function _parseStaticVariableDeclaration()
@@ -1723,7 +1723,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return;
         }
 
-        $staticDeclaration = $this->_builder->buildStaticVariableDeclaration(
+        $staticDeclaration = $this->_builder->buildASTStaticVariableDeclaration(
             $token->image
         );
 
@@ -1765,7 +1765,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_VariableDeclarator
+     * @return PHP_Depend_Code_ASTVariableDeclarator
      * @since 0.9.6
      */
     private function _parseVariableDeclarator()
@@ -1777,7 +1777,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $name = $this->_consumeToken(self::T_VARIABLE)->image;
         $this->_consumeComments();
 
-        $declarator = $this->_builder->buildVariableDeclarator($name);
+        $declarator = $this->_builder->buildASTVariableDeclarator($name);
 
         if ($this->_tokenizer->peek() === self::T_EQUAL) {
             $this->_consumeToken(self::T_EQUAL);
@@ -2151,7 +2151,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * doc comment information. The returned value will be <b>null</b> when no
      * type information exists.
      *
-     * @return PHP_Depend_Code_AbstractTypeNode
+     * @return PHP_Depend_Code_ASTTypeNode
      * @since 0.9.6
      */
     private function _parseFieldDeclarationType()
@@ -2169,11 +2169,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $annotations = $this->_parseVarAnnotation($this->_docComment);
         foreach ($annotations as $annotation) {
             if (PHP_Depend_Util_Type::isPrimitiveType($annotation) === true) {
-                return $this->_builder->buildPrimitiveType(
+                return $this->_builder->buildASTPrimitiveType(
                     PHP_Depend_Util_Type::getPrimitiveType($annotation)
                 );
             } else if (PHP_Depend_Util_Type::isArrayType($annotation) === true) {
-                return $this->_builder->buildArrayType();
+                return $this->_builder->buildASTArrayType();
             }
         }
         return null;
@@ -2183,7 +2183,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Extracts non scalar types from a field doc comment and creates a
      * matching type instance.
      *
-     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.6
      */
     private function _parseFieldDeclarationClassOrInterfaceReference()
@@ -2196,7 +2196,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $annotations = $this->_parseVarAnnotation($this->_docComment);
         foreach ($annotations as $annotation) {
             if (PHP_Depend_Util_Type::isScalarType($annotation) === false) {
-                return $this->_builder->buildClassOrInterfaceReference($annotation);
+                return $this->_builder->buildASTClassOrInterfaceReference(
+                    $annotation
+                );
             }
         }
         return null;
@@ -2221,7 +2223,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $throws = $this->_parseThrowsAnnotations($callable->getDocComment());
         foreach ($throws as $qualifiedName) {
             $callable->addExceptionClassReference(
-                $this->_builder->buildClassOrInterfaceReference($qualifiedName)
+                $this->_builder->buildASTClassOrInterfaceReference($qualifiedName)
             );
         }
 
@@ -2229,7 +2231,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $qualifiedName = $this->_parseReturnAnnotation($callable->getDocComment());
         if ($qualifiedName !== null) {
             $callable->setReturnClassReference(
-                $this->_builder->buildClassOrInterfaceReference($qualifiedName)
+                $this->_builder->buildASTClassOrInterfaceReference($qualifiedName)
             );
         }
     }

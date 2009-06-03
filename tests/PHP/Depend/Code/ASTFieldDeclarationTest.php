@@ -46,13 +46,13 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractNodeTest.php';
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/FieldDeclaration.php';
+require_once 'PHP/Depend/Code/ASTFieldDeclaration.php';
 require_once 'PHP/Depend/ConstantsI.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_FieldDeclaration} class.
+ * Test case for the {@link PHP_Depend_Code_ASTFieldDeclaration} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/ConstantsI.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_FieldDeclarationTest extends PHP_Depend_Code_AbstractNodeTest
+class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
      * Tests that the field declaration <b>setModifiers()</b> method accepts all
@@ -76,7 +76,7 @@ class PHP_Depend_Code_FieldDeclarationTest extends PHP_Depend_Code_AbstractNodeT
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
     {
-        $declaration = new PHP_Depend_Code_FieldDeclaration();
+        $declaration = new PHP_Depend_Code_ASTFieldDeclaration();
         $declaration->setModifiers($modifiers);
         $this->assertSame($modifiers, $declaration->getModifiers());
     }
@@ -92,7 +92,7 @@ class PHP_Depend_Code_FieldDeclarationTest extends PHP_Depend_Code_AbstractNodeT
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
     {
-        $declaration = new PHP_Depend_Code_FieldDeclaration();
+        $declaration = new PHP_Depend_Code_ASTFieldDeclaration();
 
         $this->setExpectedException(
             'InvalidArgumentException',
@@ -106,11 +106,11 @@ class PHP_Depend_Code_FieldDeclarationTest extends PHP_Depend_Code_AbstractNodeT
     /**
      * Creates a field declaration node.
      *
-     * @return PHP_Depend_Code_FieldDeclaration
+     * @return PHP_Depend_Code_ASTFieldDeclaration
      */
     protected function createNodeInstance()
     {
-        return new PHP_Depend_Code_FieldDeclaration();
+        return new PHP_Depend_Code_ASTFieldDeclaration();
     }
 
     /**

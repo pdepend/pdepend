@@ -88,34 +88,34 @@ class PHP_Depend_Code_Property
     /**
      * The wrapped field declaration instance.
      *
-     * @var PHP_Depend_Code_FieldDeclaration $_fieldDeclaration
+     * @var PHP_Depend_Code_ASTFieldDeclaration $_ASTFieldDeclaration
      * @since 0.9.6
      */
-    private $_fieldDeclaration = null;
+    private $_ASTFieldDeclaration = null;
 
     /**
      * The wrapped variable declarator instance.
      *
-     * @var PHP_Depend_Code_VariableDeclarator $_variableDeclarator
+     * @var PHP_Depend_Code_ASTVariableDeclarator $_ASTVariableDeclarator
      * @since 0.9.6
      */
-    private $_variableDeclarator = null;
+    private $_ASTVariableDeclarator = null;
 
     /**
      * Constructs a new item for the given field declaration and variable
      * declarator.
      *
-     * @param PHP_Depend_Code_FieldDeclaration   $fieldDeclaration   The context
+     * @param PHP_Depend_Code_ASTFieldDeclaration   $fieldDeclaration   The context
      *        field declaration where this property was declared in the source.
-     * @param PHP_Depend_Code_VariableDeclarator $variableDeclarator The context
+     * @param PHP_Depend_Code_ASTVariableDeclarator $variableDeclarator The context
      *        variable declarator for this property instance.
      */
     public function __construct(
-        PHP_Depend_Code_FieldDeclaration $fieldDeclaration,
-        PHP_Depend_Code_VariableDeclarator $variableDeclarator
+        PHP_Depend_Code_ASTFieldDeclaration $fieldDeclaration,
+        PHP_Depend_Code_ASTVariableDeclarator $variableDeclarator
     ) {
-        $this->_fieldDeclaration   = $fieldDeclaration;
-        $this->_variableDeclarator = $variableDeclarator;
+        $this->_ASTFieldDeclaration   = $fieldDeclaration;
+        $this->_ASTVariableDeclarator = $variableDeclarator;
 
         $this->_uuid = new PHP_Depend_Util_UUID();
     }
@@ -127,7 +127,7 @@ class PHP_Depend_Code_Property
      */
     public function getName()
     {
-        return $this->_variableDeclarator->getImage();
+        return $this->_ASTVariableDeclarator->getImage();
     }
 
     /**
@@ -149,7 +149,7 @@ class PHP_Depend_Code_Property
      */
     public function getModifiers()
     {
-        return $this->_fieldDeclaration->getModifiers();
+        return $this->_ASTFieldDeclaration->getModifiers();
     }
 
     /**
@@ -160,7 +160,7 @@ class PHP_Depend_Code_Property
      */
     public function isPublic()
     {
-        return $this->_fieldDeclaration->isPublic();
+        return $this->_ASTFieldDeclaration->isPublic();
     }
 
     /**
@@ -171,7 +171,7 @@ class PHP_Depend_Code_Property
      */
     public function isProtected()
     {
-        return $this->_fieldDeclaration->isProtected();
+        return $this->_ASTFieldDeclaration->isProtected();
     }
 
     /**
@@ -182,7 +182,7 @@ class PHP_Depend_Code_Property
      */
     public function isPrivate()
     {
-        return $this->_fieldDeclaration->isPrivate();
+        return $this->_ASTFieldDeclaration->isPrivate();
     }
 
     /**
@@ -193,7 +193,7 @@ class PHP_Depend_Code_Property
      */
     public function isStatic()
     {
-        return $this->_fieldDeclaration->isStatic();
+        return $this->_ASTFieldDeclaration->isStatic();
     }
 
     /**
@@ -205,8 +205,8 @@ class PHP_Depend_Code_Property
      */
     public function isArray()
     {
-        $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
-            'PHP_Depend_Code_AbstractTypeNode'
+        $typeNode = $this->_ASTFieldDeclaration->getFirstChildOfType(
+            'PHP_Depend_Code_ASTTypeNode'
         );
         if ($typeNode === null) {
             return false;
@@ -223,8 +223,8 @@ class PHP_Depend_Code_Property
      */
     public function isPrimitive()
     {
-        $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
-            'PHP_Depend_Code_AbstractTypeNode'
+        $typeNode = $this->_ASTFieldDeclaration->getFirstChildOfType(
+            'PHP_Depend_Code_ASTTypeNode'
         );
         if ($typeNode === null) {
             return false;
@@ -241,8 +241,8 @@ class PHP_Depend_Code_Property
      */
     public function getClass()
     {
-        $reference = $this->_fieldDeclaration->getFirstChildOfType(
-            'PHP_Depend_Code_ClassOrInterfaceReference'
+        $reference = $this->_ASTFieldDeclaration->getFirstChildOfType(
+            'PHP_Depend_Code_ASTClassOrInterfaceReference'
         );
         if ($reference === null) {
             return null;
@@ -281,7 +281,7 @@ class PHP_Depend_Code_Property
      */
     public function getDocComment()
     {
-        return $this->_fieldDeclaration->getComment();
+        return $this->_ASTFieldDeclaration->getComment();
     }
 
     /**
@@ -292,7 +292,7 @@ class PHP_Depend_Code_Property
      */
     public function getTokens()
     {
-        return $this->_variableDeclarator->getTokens();
+        return $this->_ASTVariableDeclarator->getTokens();
     }
 
     /**
@@ -303,7 +303,7 @@ class PHP_Depend_Code_Property
      */
     public function getStartLine()
     {
-        return $this->_variableDeclarator->getStartLine();
+        return $this->_ASTVariableDeclarator->getStartLine();
     }
 
     /**
@@ -314,7 +314,7 @@ class PHP_Depend_Code_Property
      */
     public function getEndLine()
     {
-        return $this->_variableDeclarator->getEndLine();
+        return $this->_ASTVariableDeclarator->getEndLine();
     }
 
     /**
@@ -350,7 +350,7 @@ class PHP_Depend_Code_Property
      */
     public function isDefaultValueAvailable()
     {
-        $value = $this->_variableDeclarator->getValue();
+        $value = $this->_ASTVariableDeclarator->getValue();
         if ($value === null) {
             return false;
         }
@@ -366,7 +366,7 @@ class PHP_Depend_Code_Property
      */
     public function getDefaultValue()
     {
-        $value = $this->_variableDeclarator->getValue();
+        $value = $this->_ASTVariableDeclarator->getValue();
         if ($value === null) {
             return null;
         }
@@ -518,7 +518,7 @@ class PHP_Depend_Code_Property
      * @param PHP_Depend_Code_AbstractClassOrInterface $type The property type.
      *
      * @return void
-     * @deprecated Since version 0.9.5, use setClassReference() instead.
+     * @deprecated Since version 0.9.5, use setASTClassReference() instead.
      */
     public function setType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
