@@ -625,28 +625,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testBuildParameterThrowsExpectedExceptionWhenStateIsFrozen()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-        $builder->buildParameter('param');
-
-        // Freeze object
-        $builder->getInterface('Inter');
-
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
-
-        $builder->buildParameter('param');
-    }
-
-    /**
-     * Tests that the builder throws the expected exception when some one tries
-     * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
-     */
     public function testBuildFunctionThrowsExpectedExceptionWhenStateIsFrozen()
     {
         $builder = new PHP_Depend_Builder_Default();
