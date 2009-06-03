@@ -153,23 +153,26 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.5
      */
-    public function buildClassOrInterfaceReference($qualifiedName)
+    public function buildASTClassOrInterfaceReference($qualifiedName)
     {
         $this->checkBuilderState();
 
-        include_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
+        include_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
 
         // Debug method creation
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ClassOrInterfaceReference(' .
+            'Creating: PHP_Depend_Code_ASTClassOrInterfaceReference(' .
             $qualifiedName .
             ')'
         );
 
-        return new PHP_Depend_Code_ClassOrInterfaceReference($this, $qualifiedName);
+        return new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $this,
+            $qualifiedName
+        );
     }
 
     /**
@@ -266,21 +269,21 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_ClassReference
+     * @return PHP_Depend_Code_ASTClassReference
      * @since 0.9.5
      */
-    public function buildClassReference($qualifiedName)
+    public function buildASTClassReference($qualifiedName)
     {
         $this->checkBuilderState();
         
-        include_once 'PHP/Depend/Code/ClassReference.php';
+        include_once 'PHP/Depend/Code/ASTClassReference.php';
 
         // Debug method creation
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ClassReference(' . $qualifiedName . ')'
+            'Creating: PHP_Depend_Code_ASTClassReference(' . $qualifiedName . ')'
         );
 
-        return new PHP_Depend_Code_ClassReference($this, $qualifiedName);
+        return new PHP_Depend_Code_ASTClassReference($this, $qualifiedName);
     }
 
     /**
@@ -400,21 +403,21 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_InterfaceReference
+     * @return PHP_Depend_Code_ASTInterfaceReference
      * @since 0.9.5
      */
     public function buildInterfaceReference($qualifiedName)
     {
         $this->checkBuilderState();
 
-        include_once 'PHP/Depend/Code/InterfaceReference.php';
+        include_once 'PHP/Depend/Code/ASTInterfaceReference.php';
 
         // Debug method creation
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_InterfaceReference(' . $qualifiedName . ')'
+            'Creating: PHP_Depend_Code_ASTInterfaceReference(' . $qualifiedName . ')'
         );
 
-        return new PHP_Depend_Code_InterfaceReference($this, $qualifiedName);
+        return new PHP_Depend_Code_ASTInterfaceReference($this, $qualifiedName);
     }
 
     /**
@@ -489,36 +492,36 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
      *        that reference the concrete target of self.
      *
-     * @return PHP_Depend_Code_SelfReference
+     * @return PHP_Depend_Code_ASTSelfReference
      * @since 0.9.6
      */
-    public function buildSelfReference(
+    public function buildASTSelfReference(
         PHP_Depend_Code_AbstractClassOrInterface $type
     ) {
-        include_once 'PHP/Depend/Code/SelfReference.php';
+        include_once 'PHP/Depend/Code/ASTSelfReference.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_SelfReference(' . $type->getName() . ')'
+            'Creating: PHP_Depend_Code_ASTSelfReference(' . $type->getName() . ')'
         );
 
-        return new PHP_Depend_Code_SelfReference($type);
+        return new PHP_Depend_Code_ASTSelfReference($type);
     }
 
     /**
      * Builds a new field declaration node.
      *
-     * @return PHP_Depend_Code_FieldDeclaration
+     * @return PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
-    public function buildFieldDeclaration()
+    public function buildASTFieldDeclaration()
     {
-        include_once 'PHP/Depend/Code/FieldDeclaration.php';
+        include_once 'PHP/Depend/Code/ASTFieldDeclaration.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_FieldDeclaration()'
+            'Creating: PHP_Depend_Code_ASTFieldDeclaration()'
         );
 
-        return new PHP_Depend_Code_FieldDeclaration();
+        return new PHP_Depend_Code_ASTFieldDeclaration();
     }
 
     /**
@@ -526,18 +529,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the variable declarator.
      *
-     * @return PHP_Depend_Code_VariableDeclarator
+     * @return PHP_Depend_Code_ASTVariableDeclarator
      * @since 0.9.6
      */
-    public function buildVariableDeclarator($image)
+    public function buildASTVariableDeclarator($image)
     {
-        include_once 'PHP/Depend/Code/VariableDeclarator.php';
+        include_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_VariableDeclarator(' . $image . ')'
+            'Creating: PHP_Depend_Code_ASTVariableDeclarator(' . $image . ')'
         );
 
-        return new PHP_Depend_Code_VariableDeclarator($image);
+        return new PHP_Depend_Code_ASTVariableDeclarator($image);
     }
 
     /**
@@ -545,69 +548,69 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the statuc declaration.
      *
-     * @return PHP_Depend_Code_StaticVariableDeclaration
+     * @return PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
      */
-    public function buildStaticVariableDeclaration($image)
+    public function buildASTStaticVariableDeclaration($image)
     {
-        include_once 'PHP/Depend/Code/StaticVariableDeclaration.php';
+        include_once 'PHP/Depend/Code/ASTStaticVariableDeclaration.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_StaticVariableDeclaration(' . $image . ')'
+            'Creating: PHP_Depend_Code_ASTStaticVariableDeclaration(' . $image . ')'
         );
 
-        return new PHP_Depend_Code_StaticVariableDeclaration($image);
+        return new PHP_Depend_Code_ASTStaticVariableDeclaration($image);
     }
 
     /**
      * Builds a new formal parameters node.
      *
-     * @return PHP_Depend_Code_FormalParameters
+     * @return PHP_Depend_Code_ASTFormalParameters
      * @since 0.9.6
      */
-    public function buildFormalParameters()
+    public function buildASTFormalParameters()
     {
-        include_once 'PHP/Depend/Code/FormalParameters.php';
+        include_once 'PHP/Depend/Code/ASTFormalParameters.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_FormalParameters()'
+            'Creating: PHP_Depend_Code_ASTFormalParameters()'
         );
 
-        return new PHP_Depend_Code_FormalParameters();
+        return new PHP_Depend_Code_ASTFormalParameters();
     }
 
     /**
      * Builds a new formal parameter node.
      *
-     * @return PHP_Depend_Code_FormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
-    public function buildFormalParameter()
+    public function buildASTFormalParameter()
     {
-        include_once 'PHP/Depend/Code/FormalParameter.php';
+        include_once 'PHP/Depend/Code/ASTFormalParameter.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_FormalParameter()'
+            'Creating: PHP_Depend_Code_ASTFormalParameter()'
         );
 
-        return new PHP_Depend_Code_FormalParameter();
+        return new PHP_Depend_Code_ASTFormalParameter();
     }
 
     /**
      * Builds a new array type node.
      *
-     * @return PHP_Depend_Code_ArrayType
+     * @return PHP_Depend_Code_ASTArrayType
      * @since 0.9.6
      */
-    public function buildArrayType()
+    public function buildASTArrayType()
     {
-        include_once 'PHP/Depend/Code/ArrayType.php';
+        include_once 'PHP/Depend/Code/ASTArrayType.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ArrayType()'
+            'Creating: PHP_Depend_Code_ASTArrayType()'
         );
 
-        return new PHP_Depend_Code_ArrayType();
+        return new PHP_Depend_Code_ASTArrayType();
     }
 
     /**
@@ -615,18 +618,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the primitive type.
      *
-     * @return PHP_Depend_Code_PrimitiveType
+     * @return PHP_Depend_Code_ASTPrimitiveType
      * @since 0.9.6
      */
-    public function buildPrimitiveType($image)
+    public function buildASTPrimitiveType($image)
     {
-        include_once 'PHP/Depend/Code/PrimitiveType.php';
+        include_once 'PHP/Depend/Code/ASTPrimitiveType.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_PrimitiveType(' . $image . ')'
+            'Creating: PHP_Depend_Code_ASTPrimitiveType(' . $image . ')'
         );
 
-        return new PHP_Depend_Code_PrimitiveType($image);
+        return new PHP_Depend_Code_ASTPrimitiveType($image);
     }
 
     /**

@@ -80,8 +80,8 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
         $type = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_FieldDeclaration')
-            ->getFirstChildOfType('PHP_Depend_Code_AbstractTypeNode');
+            ->getFirstChildOfType('PHP_Depend_Code_ASTFieldDeclaration')
+            ->getFirstChildOfType('PHP_Depend_Code_ASTTypeNode');
             
         $this->assertTrue($type->isPrimitive());
         $this->assertSame($expected, $type->getImage());
@@ -99,8 +99,8 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
         $type = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_FieldDeclaration')
-            ->getFirstChildOfType('PHP_Depend_Code_AbstractTypeNode');
+            ->getFirstChildOfType('PHP_Depend_Code_ASTFieldDeclaration')
+            ->getFirstChildOfType('PHP_Depend_Code_ASTTypeNode');
 
         $this->assertTrue($type->isArray());
         $this->assertSame('array', $type->getImage());
@@ -118,8 +118,8 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
         $type = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_FieldDeclaration')
-            ->getFirstChildOfType('PHP_Depend_Code_AbstractTypeNode');
+            ->getFirstChildOfType('PHP_Depend_Code_ASTFieldDeclaration')
+            ->getFirstChildOfType('PHP_Depend_Code_ASTTypeNode');
 
         $this->assertTrue($type->isArray());
         $this->assertSame('array', $type->getImage());

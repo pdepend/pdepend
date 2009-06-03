@@ -49,7 +49,7 @@
 require_once 'PHP/Depend/AbstractTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_StaticVariableDeclaration} class.
+ * Test case for the {@link PHP_Depend_Code_ASTStaticVariableDeclaration} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_StaticVariableDeclarationTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that the declaration has the expected start line value.
@@ -69,13 +69,13 @@ class PHP_Depend_Code_StaticVariableDeclarationTest extends PHP_Depend_AbstractT
      */
     public function testStaticVariableDeclarationHasExpectedStartLine()
     {
-        $packages = self::parseSource('code/staticvariabledeclaration/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declaration = $function->getFirstChildOfType(
-            'PHP_Depend_Code_StaticVariableDeclaration'
+            'PHP_Depend_Code_ASTStaticVariableDeclaration'
         );
 
         $this->assertSame(4, $declaration->getStartLine());
@@ -88,13 +88,13 @@ class PHP_Depend_Code_StaticVariableDeclarationTest extends PHP_Depend_AbstractT
      */
     public function testStaticVariableDeclarationHasExpectedStartColumn()
     {
-        $packages = self::parseSource('code/staticvariabledeclaration/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declaration = $function->getFirstChildOfType(
-            'PHP_Depend_Code_StaticVariableDeclaration'
+            'PHP_Depend_Code_ASTStaticVariableDeclaration'
         );
 
         $this->assertSame(5, $declaration->getStartColumn());
@@ -107,13 +107,13 @@ class PHP_Depend_Code_StaticVariableDeclarationTest extends PHP_Depend_AbstractT
      */
     public function testStaticVariableDeclarationHasExpectedEndLine()
     {
-        $packages = self::parseSource('code/staticvariabledeclaration/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declaration = $function->getFirstChildOfType(
-            'PHP_Depend_Code_StaticVariableDeclaration'
+            'PHP_Depend_Code_ASTStaticVariableDeclaration'
         );
 
         $this->assertSame(5, $declaration->getEndLine());
@@ -126,13 +126,13 @@ class PHP_Depend_Code_StaticVariableDeclarationTest extends PHP_Depend_AbstractT
      */
     public function testStaticVariableDeclarationHasExpectedEndColumn()
     {
-        $packages = self::parseSource('code/staticvariabledeclaration/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declaration = $function->getFirstChildOfType(
-            'PHP_Depend_Code_StaticVariableDeclaration'
+            'PHP_Depend_Code_ASTStaticVariableDeclaration'
         );
 
         $this->assertSame(23, $declaration->getEndColumn());

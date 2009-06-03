@@ -47,7 +47,7 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/AbstractNode.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
  * This class represents a field or property declaration of a class.
@@ -76,7 +76,7 @@ require_once 'PHP/Depend/Code/AbstractNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_FieldDeclaration extends PHP_Depend_Code_AbstractNode
+class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
 {
     /**
      * The image type of this node.

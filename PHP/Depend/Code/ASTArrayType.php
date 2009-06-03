@@ -44,15 +44,11 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
-
 /**
- * description
+ * This class represents an array type node.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,27 +58,33 @@ require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
-class PHP_Depend_Code_ClassOrInterfaceReferenceTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ASTArrayType extends PHP_Depend_Code_ASTTypeNode
 {
-    public function testGetTypeInvokesBuildClassOrInterface()
+    /**
+     * The visual image for this node type.
+     */
+    const IMAGE = 'array';
+
+    /**
+     * Constructs a new array type node.
+     */
+    public function __construct()
     {
-        $class = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
+        parent::__construct(self::IMAGE);
+    }
 
-        $builder = $this->getMock('PHP_Depend_BuilderI');
-        $builder->expects($this->once())
-            ->method('getClassOrInterface')
-            ->with($this->equalTo(__CLASS__))
-            ->will($this->returnValue($class));
-
-        $classOrInterfaceReference = new PHP_Depend_Code_ClassOrInterfaceReference(
-            $builder, __CLASS__
-        );
-
-        $this->assertType(
-            'PHP_Depend_Code_Class',
-            $classOrInterfaceReference->getType()
-        );
+    /**
+     * This method will return <b>true</b> when the underlying type is an array.
+     * For this concrete type implementation the returned value will be always
+     * <b>true</b>.
+     *
+     * @return boolean
+     */
+    public function isArray()
+    {
+        return true;
     }
 }
 ?>
