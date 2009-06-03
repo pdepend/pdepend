@@ -50,6 +50,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/FormalParameter.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Parameter.php';
@@ -76,7 +77,15 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForSimpleVariableIssue67()
     {
-        $parameter = new PHP_Depend_Code_Parameter('foo');
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
+
         $this->assertTrue($parameter->allowsNull());
     }
 
@@ -88,40 +97,54 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67()
     {
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setPassedByReference(true);
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertTrue($parameter->allowsNull());
     }
 
     /**
-     * Tests that the allows null method returns <b>false</b> for a array
+     * Tests that the allows null method returns <b>false</b> for an array
      * parameter without explicit <b>null</b> default value.
      *
      * @return void
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67()
     {
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setArray(true);
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertFalse($parameter->allowsNull());
     }
 
     /**
-     * Tests that the allows null method returns <b>false</b> for a array
-     * parameter without explicit <b>null</b> default value.
+     * Tests that the allows null method returns <b>true</b> for an array
+     * parameter with explicit <b>null</b> default value.
      *
      * @return void
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67()
     {
-        $value = new PHP_Depend_Code_Value();
-        $value->setValue(null);
-
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setArray(true);
-        $parameter->setValue($value);
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertTrue($parameter->allowsNull());
     }
@@ -134,30 +157,34 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
-        $classReference = $this->getMock('PHP_Depend_Code_ClassOrInterfaceReference', array(), array(), '', false);
-
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClassReference($classReference);
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertFalse($parameter->allowsNull());
     }
 
     /**
-     * Tests that the allows null method returns <b>false</b> for a type
-     * parameter without explicit <b>null</b> default value.
+     * Tests that the allows null method returns <b>true</b> for a type
+     * parameter with explicit <b>null</b> default value.
      *
      * @return void
      */
     public function testParameterAllowsNullForTypeHintVariableIssue67()
     {
-        $value = new PHP_Depend_Code_Value();
-        $value->setValue(null);
-
-        $classReference = $this->getMock('PHP_Depend_Code_ClassOrInterfaceReference', array(), array(), '', false);
-
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClassReference($classReference);
-        $parameter->setValue($value);
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertTrue($parameter->allowsNull());
     }
@@ -170,8 +197,12 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterDeclaringClassReturnsNullForFunctionIssue67()
     {
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setDeclaringFunction(new PHP_Depend_Code_Function('bar'));
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertNull($parameter->getDeclaringClass());
     }
@@ -184,12 +215,16 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67()
     {
-        $class  = new PHP_Depend_Code_Class('foobar');
-        $method = new PHP_Depend_Code_Method('bar');
-        $method->setParent($class);
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
 
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setDeclaringFunction($method);
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $parameter = $class->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertSame($class, $parameter->getDeclaringClass());
     }
@@ -201,14 +236,16 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnsExpectedTypeFromClassOrInterfaceReference()
     {
-        $class     = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
-        $reference = $this->getMock('PHP_Depend_Code_ClassOrInterfaceReference', array(), array(), '', false);
-        $reference->expects($this->once())
-            ->method('getType')
-            ->will($this->returnValue($class));
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
 
-        $parameter = new PHP_Depend_Code_Parameter('foo');
-        $parameter->setClassReference($reference);
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $parameter = $class->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
 
         $this->assertSame($class, $parameter->getClass());
     }
@@ -220,7 +257,15 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnNullForTypeWhenNoClassOrInterfaceReferenceWasSet()
     {
-        $parameter = new PHP_Depend_Code_Parameter('foo');
+        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $parameter = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getParameters()
+            ->current();
+            
         $this->assertNull($parameter->getClass());
     }
 

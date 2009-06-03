@@ -50,14 +50,6 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 require_once dirname(__FILE__) . '/TestListener.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Property.php';
-
 /**
  * Test case for the default visit listener implementation.
  *
@@ -74,45 +66,186 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 {
     public function testDefaultImplementationCallsListeners()
     {
-        $file = new PHP_Depend_Code_File(null);
-        
-        $package   = new PHP_Depend_Code_Package('package');
-        $class     = $package->addType(new PHP_Depend_Code_Class('clazz'));
-        $method1   = $class->addMethod(new PHP_Depend_Code_Method('m1'));
-        $method2   = $class->addMethod(new PHP_Depend_Code_Method('m2'));
-//        $property  = $class->addProperty(new PHP_Depend_Code_Property('$p1'));
-        $interface = $package->addType(new PHP_Depend_Code_Interface('interfs'));
-        $method3   = $interface->addMethod(new PHP_Depend_Code_Method('m3'));
-        $method4   = $interface->addMethod(new PHP_Depend_Code_Method('m4'));
-        $function  = $package->addFunction(new PHP_Depend_Code_Function('func'));
-        
-        $class->setSourceFile($file);
-        $function->setSourceFile($file);
-        $interface->setSourceFile($file);
+        $codeUri  = self::createCodeResourceURI('visitor/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource($codeUri);
+        $package  = $packages->current();
         
         $listener = new PHP_Depend_Visitor_TestListener();
         $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
         $visitor->visitPackage($package);
         
-        $this->assertArrayHasKey($file->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($file->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($package->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($package->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($class->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($class->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($function->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($function->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($interface->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($interface->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($method1->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($method1->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($method2->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($method2->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($method3->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($method3->getUUID() . '#end', $listener->nodes);
-        $this->assertArrayHasKey($method4->getUUID() . '#start', $listener->nodes);
-        $this->assertArrayHasKey($method4->getUUID() . '#end', $listener->nodes);
+        $this->assertArrayHasKey($codeUri . '#start', $listener->nodes);
+        $this->assertArrayHasKey($codeUri . '#end', $listener->nodes);
+        $this->assertArrayHasKey('package#start', $listener->nodes);
+        $this->assertArrayHasKey('package#end', $listener->nodes);
+        $this->assertArrayHasKey('clazz#start', $listener->nodes);
+        $this->assertArrayHasKey('clazz#end', $listener->nodes);
+        $this->assertArrayHasKey('func#start', $listener->nodes);
+        $this->assertArrayHasKey('func#end', $listener->nodes);
+        $this->assertArrayHasKey('interfs#start', $listener->nodes);
+        $this->assertArrayHasKey('interfs#end', $listener->nodes);
+        $this->assertArrayHasKey('m1#start', $listener->nodes);
+        $this->assertArrayHasKey('m1#end', $listener->nodes);
+        $this->assertArrayHasKey('m2#start', $listener->nodes);
+        $this->assertArrayHasKey('m2#end', $listener->nodes);
+        $this->assertArrayHasKey('m3#start', $listener->nodes);
+        $this->assertArrayHasKey('m3#end', $listener->nodes);
+        $this->assertArrayHasKey('m4#start', $listener->nodes);
+        $this->assertArrayHasKey('m4#end', $listener->nodes);
+        $this->assertArrayHasKey('$_p1#start', $listener->nodes);
+        $this->assertArrayHasKey('$_p1#end', $listener->nodes);
+    }
+
+    /**
+     * Tests that the default listener implementation delegates a class call
+     * to the startVisitNode() and endVisitNode() methods.
+     *
+     * @return void
+     */
+    public function testListenerCallsStartNodeEndNodeForClass()
+    {
+        include_once 'PHP/Depend/Code/Class.php';
+
+        $class = $this->getMock(
+            'PHP_Depend_Code_Class',
+            array(
+                'getName', 'getSourceFile'
+            ),
+            array(__FUNCTION__)
+        );
+        $class->expects($this->atLeastOnce())
+            ->method('getName')
+            ->will($this->returnValue(__FUNCTION__));
+        $class->expects($this->atLeastOnce())
+            ->method('getSourceFile')
+            ->will(
+                $this->returnValue(
+                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
+                )
+            );
+
+        $listener = new PHP_Depend_Visitor_TestListener();
+        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+
+        $class->accept($visitor);
+
+        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
+        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+    }
+
+    /**
+     * Tests that the default listener implementation delegates an interface
+     * call to the startVisitNode() and endVisitNode() methods.
+     *
+     * @return void
+     */
+    public function testListenerCallsStartNodeEndNodeForInterface()
+    {
+        include_once 'PHP/Depend/Code/Interface.php';
+
+        $interface = $this->getMock(
+            'PHP_Depend_Code_Interface',
+            array(
+                'getName', 'getSourceFile'
+            ),
+            array(__FUNCTION__)
+        );
+        $interface->expects($this->atLeastOnce())
+            ->method('getName')
+            ->will($this->returnValue(__FUNCTION__));
+        $interface->expects($this->atLeastOnce())
+            ->method('getSourceFile')
+            ->will(
+                $this->returnValue(
+                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
+                )
+            );
+
+        $listener = new PHP_Depend_Visitor_TestListener();
+        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+
+        $interface->accept($visitor);
+
+        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
+        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+    }
+
+    /**
+     * Tests that the default listener implementation delegates a function
+     * call to the startVisitNode() and endVisitNode() methods.
+     *
+     * @return void
+     */
+    public function testListenerCallsStartNodeEndNodeForFunction()
+    {
+        include_once 'PHP/Depend/Code/Function.php';
+
+        $function = $this->getMock(
+            'PHP_Depend_Code_Function',
+            array(
+                'getName', 'getSourceFile', 'getParameters'
+            ),
+            array(__FUNCTION__)
+        );
+        $function->expects($this->atLeastOnce())
+            ->method('getName')
+            ->will($this->returnValue(__FUNCTION__));
+        $function->expects($this->atLeastOnce())
+            ->method('getSourceFile')
+            ->will(
+                $this->returnValue(
+                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
+                )
+            );
+        $function->expects($this->atLeastOnce())
+            ->method('getParameters')
+            ->will($this->returnValue(array()));
+
+        $listener = new PHP_Depend_Visitor_TestListener();
+        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+
+        $function->accept($visitor);
+
+        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
+        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+    }
+
+    /**
+     * Tests that the default listener implementation delegates a method call to
+     * the startVisitNode() and endVisitNode() methods.
+     *
+     * @return void
+     */
+    public function testListenerCallsStartNodeEndNodeForMethod()
+    {
+        include_once 'PHP/Depend/Code/Method.php';
+
+        $method = $this->getMock(
+            'PHP_Depend_Code_Method',
+            array(
+                'getName', 'getSourceFile', 'getParameters'
+            ),
+            array(__FUNCTION__)
+        );
+        $method->expects($this->atLeastOnce())
+            ->method('getName')
+            ->will($this->returnValue(__FUNCTION__));
+        $method->expects($this->atLeastOnce())
+            ->method('getParameters')
+            ->will($this->returnValue(array()));
+
+        $listener = new PHP_Depend_Visitor_TestListener();
+        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $visitor->addVisitListener($listener);
+
+        $method->accept($visitor);
+
+        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
+        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
     }
 
     /**
@@ -125,9 +258,9 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
     {
         include_once 'PHP/Depend/Code/Closure.php';
 
-        $closure = $this->getMock('PHP_Depend_Code_Closure', array('getUUID'));
+        $closure = $this->getMock('PHP_Depend_Code_Closure', array('getName'));
         $closure->expects($this->atLeastOnce())
-            ->method('getUUID')
+            ->method('getName')
             ->will($this->returnValue(__FUNCTION__));
 
         $listener = new PHP_Depend_Visitor_TestListener();
@@ -150,9 +283,9 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
     {
         include_once 'PHP/Depend/Code/TypeConstant.php';
 
-        $constant = $this->getMock('PHP_Depend_Code_TypeConstant', array('getUUID'), array('BAR'));
+        $constant = $this->getMock('PHP_Depend_Code_TypeConstant', array('getName'), array('BAR'));
         $constant->expects($this->atLeastOnce())
-            ->method('getUUID')
+            ->method('getName')
             ->will($this->returnValue(__FUNCTION__));
 
         $listener = new PHP_Depend_Visitor_TestListener();

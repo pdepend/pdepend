@@ -78,13 +78,6 @@ class PHP_Depend_Code_Parameter
     implements PHP_Depend_Code_NodeI
 {
     /**
-     * The name for this item.
-     *
-     * @var string $_name
-     */
-    private $_name = '';
-
-    /**
      * The unique identifier for this function.
      *
      * @var PHP_Depend_Util_UUID $_uuid
@@ -105,47 +98,35 @@ class PHP_Depend_Code_Parameter
      */
     private $_position = 0;
 
-    /**
-     * The type holder for this parameter. This value is <b>null</b> by default
-     * and for scalar types.
-     *
-     * @var PHP_Depend_Code_ClassOrInterfaceReference $_classReference
-     */
-    private $_classReference = null;
+    private $_optional = false;
 
     /**
-     * The parameter is declared with the array type hint, when this property is
-     * set to <b>true</b>.
+     * The wrapped formal parameter instance.
      *
-     * @var boolean $_array
+     * @var PHP_Depend_Code_FormalParameter $_formalParameter
      */
-    private $_array = false;
+    private $_formalParameter = null;
 
     /**
-     * This property is set to <b>true</b> when the parameter is passed by
-     * reference.
+     * The wrapped variable declarator instance.
      *
-     * @var boolean $_passedByReference
-     * @since 0.9.5
+     * @var PHP_Depend_Code_VariableDeclarator $_variableDeclarator
      */
-    private $_passedByReference = false;
+    private $_variableDeclarator = null;
 
     /**
-     * The default value for this parameter or <b>null</b> when no default value
-     * was declared.
+     * Constructs a new parameter instance for the given AST node.
      *
-     * @var PHP_Depend_Code_Value $value
+     * @param PHP_Depend_Code_FormalParameter $formalParameter The wrapped AST
+     *        parameter node.
      */
-    private $_value = null;
-
-    /**
-     * Constructs a new parameter instance for the given <b>$name</b>.
-     *
-     * @param string $name The item name.
-     */
-    public function __construct($name)
+    public function __construct(PHP_Depend_Code_FormalParameter $formalParameter)
     {
-        $this->_name = $name;
+        $this->_formalParameter    = $formalParameter;
+        $this->_variableDeclarator = $formalParameter->getFirstChildOfType(
+            'PHP_Depend_Code_VariableDeclarator'
+        );
+
         $this->_uuid = new PHP_Depend_Util_UUID();
     }
 
@@ -156,7 +137,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->_variableDeclarator->getImage();
     }
 
     /**
@@ -167,22 +148,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getTokens()
     {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore($this->getUUID(), __CLASS__);
-    }
-
-    /**
-     * Sets the source tokens used for this parameter declaration.
-     *
-     * @param array(PHP_Depend_Token) $tokens The source tokens.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setTokens(array $tokens)
-    {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, $this->getUUID(), __CLASS__);
+        return $this->_formalParameter->getTokens();
     }
 
     /**
@@ -202,9 +168,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getStartLine()
     {
-        $tokens = $this->getTokens();
-        assert(($token = reset($tokens)) instanceof PHP_Depend_Token);
-        return $token->startLine;
+        return $this->_formalParameter->getStartLine();
     }
 
     /**
@@ -214,9 +178,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getEndLine()
     {
-        $tokens = $this->getTokens();
-        assert(($token = end($tokens)) instanceof PHP_Depend_Token);
-        return $token->endLine;
+        return $this->_formalParameter->getEndLine();
     }
 
     /**
@@ -290,10 +252,13 @@ class PHP_Depend_Code_Parameter
      */
     public function getClass()
     {
-        if ($this->_classReference === null) {
+        $classReference = $this->_formalParameter->getFirstChildOfType(
+            'PHP_Depend_Code_ClassOrInterfaceReference'
+        );
+        if ($classReference === null) {
             return null;
         }
-        return $this->_classReference->getType();
+        return $classReference->getType();
     }
 
     /**
@@ -305,23 +270,9 @@ class PHP_Depend_Code_Parameter
      */
     public function getClassReference()
     {
-        return $this->_classReference;
-    }
-
-    /**
-     * Sets the type holder for this parameter. This method will only set its
-     * internal state on the first call.
-     *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Holder
-     *        for the declared parameter type.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setClassReference(
-        PHP_Depend_Code_ClassOrInterfaceReference $classReference
-    ) {
-        $this->_classReference = $classReference;
+        return $this->_formalParameter->getFirstChildOfType(
+            'PHP_Depend_Code_ClassOrInterfaceReference'
+        );
     }
 
     /**
@@ -333,20 +284,7 @@ class PHP_Depend_Code_Parameter
      */
     public function isPassedByReference()
     {
-        return $this->_passedByReference;
-    }
-
-    /**
-     * This method can be used to mark this parameter as passed by reference.
-     *
-     * @param boolean $passedByReference Boolean flag.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setPassedByReference($passedByReference)
-    {
-        $this->_passedByReference = (boolean) $passedByReference;
+        return $this->_formalParameter->isPassedByReference();
     }
 
     /**
@@ -358,22 +296,10 @@ class PHP_Depend_Code_Parameter
      */
     public function isArray()
     {
-        return $this->_array;
-    }
-
-    /**
-     * This method sets the is array flag of this parameter. This means the
-     * parameter was declared with the array type hint when this will be set to
-     * <b>true</b>.
-     *
-     * @param boolean $array Boolean flag that indicates declared as array?
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setArray($array)
-    {
-        $this->_array = (boolean) $array;
+        $arrayType = $this->_formalParameter->getFirstChildOfType(
+            'PHP_Depend_Code_ArrayType'
+        );
+        return ($arrayType !== null);
     }
 
     /**
@@ -386,8 +312,15 @@ class PHP_Depend_Code_Parameter
      */
     public function allowsNull()
     {
-        return ($this->_array === false && $this->_classReference === null)
-            || ($this->_value !== null && $this->_value->getValue() === null);
+        return (
+            (
+                $this->isArray() === false
+                && $this->getClass() === null
+            ) || (
+                $this->isDefaultValueAvailable() === true
+                && $this->getDefaultValue() === null
+            )
+        );
     }
 
     /**
@@ -427,10 +360,11 @@ class PHP_Depend_Code_Parameter
      */
     public function isDefaultValueAvailable()
     {
-        if ($this->_value === null) {
+        $value = $this->_variableDeclarator->getValue();
+        if ($value === null) {
             return false;
         }
-        return $this->_value->isValueAvailable();
+        return $value->isValueAvailable();
     }
 
     /**
@@ -445,24 +379,11 @@ class PHP_Depend_Code_Parameter
      */
     public function getDefaultValue()
     {
-        if ($this->_value === null) {
+        $value = $this->_variableDeclarator->getValue();
+        if ($value === null) {
             return null;
         }
-        return $this->_value->getValue();
-    }
-
-    /**
-     * This method is used by the parser to the a declared default value for
-     * this parameter.
-     *
-     * @param PHP_Depend_Code_Value $value The declared parameter default value.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setValue(PHP_Depend_Code_Value $value = null)
-    {
-        $this->_value = $value;
+        return $value->getValue();
     }
 
     /**
@@ -522,7 +443,7 @@ class PHP_Depend_Code_Parameter
             $required,
             $typeHint,
             $reference,
-            $this->_name,
+            $this->getName(),
             $default
         );
     }

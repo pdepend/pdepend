@@ -865,8 +865,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseClosureDeclaration()
     {
         $closure = $this->_builder->buildClosure();
-
-        $this->_parseParameterList($closure);
+        $closure->addChild(
+            $this->_parseFormalParameters()
+        );
 
         $this->_consumeComments();
         if ($this->_tokenizer->peek() === self::T_USE) {
@@ -888,7 +889,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseCallableDeclaration(
         PHP_Depend_Code_AbstractCallable $callable
     ) {
-        $this->_parseParameterList($callable);
+        $callable->addChild(
+            $this->_parseFormalParameters()
+        );
         $this->_consumeComments();
         
         if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
@@ -902,19 +905,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @param PHP_Depend_Code_AbstractCallable $function The context callable.
-     *
      * @return PHP_Depend_Code_FormalParameters
      * @since 0.9.5
      */
-    private function _parseParameterList(
-        PHP_Depend_Code_AbstractCallable $function
-    ) {
+    private function _parseFormalParameters()
+    {
         $this->_consumeComments();
 
         $this->_tokenStack->push();
 
-        $formalParameter = $this->_builder->buildFormalParameters();
+        $formalParameters = $this->_builder->buildFormalParameters();
         
         $this->_consumeToken(self::T_PARENTHESIS_OPEN);
         $this->_consumeComments();
@@ -924,33 +924,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Check for function without parameters
         if ($tokenType === self::T_PARENTHESIS_CLOSE) {
             $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
-            $formalParameter->setTokens($this->_tokenStack->pop());
+            $formalParameters->setTokens($this->_tokenStack->pop());
 
-            return $formalParameter;
+            return $formalParameters;
         }
-
-        $position   = 0;
-        $parameters = array();
 
         while ($tokenType !== self::T_EOF) {
 
-            // Create a new token stack instance
-            $this->_tokenStack->push();
-
-            $parameter = $this->_parseFormalParameterOrTypeHintOrByReference();
-            $parameter->setPosition(count($parameters));
-
-            // Destroy actual token scope
-            $parameter->setTokens($this->_tokenStack->pop());
-
-            // Add new parameter to function
-            $function->addParameter($parameter);
-
-            // Store parameter for later isOptional calculation.
-            $parameters[] = $parameter;
+            $formalParameters->addChild(
+                $this->_parseFormalParameterOrTypeHintOrByReference()
+            );
 
             $this->_consumeComments();
-
             $tokenType = $this->_tokenizer->peek();
 
             // Check for following parameter
@@ -962,18 +947,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_COMMA);
         }
 
-        $optional = true;
-        foreach (array_reverse($parameters) as $parameter) {
-            if ($parameter->isDefaultValueAvailable() === false) {
-                $optional = false;
-            }
-            $parameter->setOptional($optional);
-        }
-
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
-        $formalParameter->setTokens($this->_tokenStack->pop());
+        $formalParameters->setTokens($this->_tokenStack->pop());
         
-        return $formalParameter;
+        return $formalParameters;
     }
 
     /**
@@ -993,13 +970,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                ---
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterOrTypeHintOrByReference()
     {
         $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
+
+        $this->_tokenStack->push();
 
         switch ($tokenType) {
 
@@ -1028,7 +1007,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parameter = $this->_parseFormalParameter();
             break;
         }
-        
+
+        $parameter->setTokens($this->_tokenStack->pop());
         return $parameter;
     }
 
@@ -1041,15 +1021,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                ---------
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndArrayTypeHint()
     {
-        $this->_consumeToken(self::T_ARRAY);
+        $token = $this->_consumeToken(self::T_ARRAY);
+
+        $array = $this->_builder->buildArrayType();
+        $array->setTokens(array($token));
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->setArray(true);
+        $parameter->addChild($array);
 
         return $parameter;
     }
@@ -1063,7 +1046,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                ------------
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndTypeHint()
@@ -1076,7 +1059,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $classOrInterfaceReference->setTokens($this->_tokenStack->pop());
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->setClassReference($classOrInterfaceReference);
+        $parameter->addChild($classOrInterfaceReference);
 
         return $parameter;
     }
@@ -1094,7 +1077,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @throws PHP_Depend_Parser_InvalidStateException When this type hint is
      *         used outside the scope of a class. When this type hint is used
      *         for a class that has no parent.
@@ -1130,7 +1113,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $classReference->setTokens(array($token));
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->setClassReference($classReference);
+        $parameter->addChild($classReference);
 
         return $parameter;
     }
@@ -1148,7 +1131,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndSelfTypeHint()
@@ -1159,7 +1142,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $selfReference->setTokens(array($this->_consumeToken(self::T_SELF)));
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->setClassReference($selfReference);
+        $parameter->addChild($selfReference);
 
         return $parameter;
     }
@@ -1174,7 +1157,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                 ---  -------
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterOrByReference()
@@ -1204,7 +1187,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //                 ---  --------
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameterAndByReference()
@@ -1212,7 +1195,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_BITWISE_AND);
 
         $parameter = $this->_parseFormalParameter();
-        $parameter->setPassedByReference(true);
+        $parameter->setPassedByReference();
 
         return $parameter;
     }
@@ -1227,24 +1210,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //               --  -------
      * </code>
      *
-     * @return PHP_Depend_Code_Parameter
+     * @return PHP_Depend_Code_FormalParameter
      * @since 0.9.6
      */
     private function _parseFormalParameter()
     {
-        // Next token must be the parameter variable
-        $token = $this->_consumeToken(self::T_VARIABLE);
-        $this->_consumeComments();
-
-        $parameter = $this->_builder->buildParameter($token->image);
-
-        // Check for a default value
-        if ($this->_tokenizer->peek() === self::T_EQUAL) {
-            $this->_consumeToken(self::T_EQUAL);
-            $this->_consumeComments();
-
-            $parameter->setValue($this->_parseStaticValueOrStaticArray());
-        }
+        $parameter = $this->_builder->buildFormalParameter();
+        $parameter->addChild(
+            $this->_parseVariableDeclarator()
+        );
 
         return $parameter;
     }
