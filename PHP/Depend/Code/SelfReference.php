@@ -44,6 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 
 require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
@@ -60,6 +61,7 @@ require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 final class PHP_Depend_Code_SelfReference
     extends PHP_Depend_Code_ClassOrInterfaceReference
