@@ -79,53 +79,31 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testDefaultVisitOrder()
     {
-        $file = new PHP_Depend_Code_File(__FILE__);
-        
-        $package1 = new PHP_Depend_Code_Package('pkgA');
-        
-        $class2 = $package1->addType(new PHP_Depend_Code_Class('classB'));
-        $class2->setSourceFile($file);
-        $class2->addMethod(new PHP_Depend_Code_Method('methodBA'));
-        $class2->addMethod(new PHP_Depend_Code_Method('methodBB'));
-        
-        $class1 = $package1->addType(new PHP_Depend_Code_Class('classA'));
-        $class1->setSourceFile($file);
-        $class1->addMethod(new PHP_Depend_Code_Method('methodAB'));
-        $class1->addMethod(new PHP_Depend_Code_Method('methodAA'));
-        
-        $package2 = new PHP_Depend_Code_Package('pkgB');
-        
-        $interface1 = $package2->addType(new PHP_Depend_Code_Interface('interfsC'));
-        
-        $function1 = $package2->addFunction(new PHP_Depend_Code_Function('funcD'));
-        $function1->setSourceFile($file);
-        
-        $interface1->setSourceFile($file);
-        $interface1->addMethod(new PHP_Depend_Code_Method('methodCB'));
-        $interface1->addMethod(new PHP_Depend_Code_Method('methodCA'));
+        $codeUri  = self::createCodeResourceURI('visitor/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource($codeUri);
         
         $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();        
-        foreach (array($package1, $package2) as $package) {
+        foreach ($packages as $package) {
             $package->accept($visitor);
         }
         
         $expected = array(
             'pkgA',
             'classA',
-            __FILE__,
+            $codeUri,
             'methodAA',
             'methodAB',
             'classB',
-            __FILE__,
+            $codeUri,
             'methodBA',
             'methodBB',
             'pkgB',
             'interfsC',
-            __FILE__,
+            $codeUri,
             'methodCA',
             'methodCB',
             'funcD',
-            __FILE__
+            $codeUri
         );
         
         $this->assertEquals($expected, $visitor->visits);

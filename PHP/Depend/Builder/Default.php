@@ -162,6 +162,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         include_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
 
+        // Debug method creation
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ClassOrInterfaceReference(' .
+            $qualifiedName .
+            ')'
+        );
+
         return new PHP_Depend_Code_ClassOrInterfaceReference($this, $qualifiedName);
     }
 
@@ -268,6 +275,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         
         include_once 'PHP/Depend/Code/ClassReference.php';
 
+        // Debug method creation
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ClassReference(' . $qualifiedName . ')'
+        );
+
         return new PHP_Depend_Code_ClassReference($this, $qualifiedName);
     }
 
@@ -281,6 +293,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         include_once 'PHP/Depend/Code/Closure.php';
+
+        // Debug type constant creation
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_Closure()'
+        );
 
         return new PHP_Depend_Code_Closure();
     }
@@ -297,7 +314,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug type constant creation
-        PHP_Depend_Util_Log::debug('Creating type constant "' . $name . '"');
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_TypeConstant(' . $name . ')'
+        );
 
         // Create new constant instance.
         $constant = new PHP_Depend_Code_TypeConstant($name);
@@ -390,6 +409,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         include_once 'PHP/Depend/Code/InterfaceReference.php';
 
+        // Debug method creation
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_InterfaceReference(' . $qualifiedName . ')'
+        );
+
         return new PHP_Depend_Code_InterfaceReference($this, $qualifiedName);
     }
 
@@ -405,7 +429,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug method creation
-        PHP_Depend_Util_Log::debug('Creating method "' . $name . '()"');
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_Method(' . $name . ')'
+        );
 
         // Create a new method instance
         return new PHP_Depend_Code_Method($name);
@@ -422,31 +448,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         if (!isset($this->_packages[$name])) {
             // Debug package creation
-            PHP_Depend_Util_Log::debug('Creating package "' . $name . '"');
+            PHP_Depend_Util_Log::debug(
+                'Creating: PHP_Depend_Code_Package(' . $name . ')'
+            );
 
             $this->_packages[$name] = new PHP_Depend_Code_Package($name);
         }
         return $this->_packages[$name];
-    }
-
-    /**
-     * Builds a new parameter instance.
-     *
-     * @param string $name The parameter variable name.
-     *
-     * @return PHP_Depend_Code_Parameter The created parameter instance.
-     */
-    public function buildParameter($name)
-    {
-        $this->checkBuilderState();
-        
-        // Debug parameter creation
-        PHP_Depend_Util_Log::debug('Creating parameter "' . $name . '"');
-
-        // Create a new parameter instance
-        $parameter = new PHP_Depend_Code_Parameter($name);
-
-        return $parameter;
     }
 
     /**
@@ -461,7 +469,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug function creation
-        PHP_Depend_Util_Log::debug('Creating function "' . $name . '()"');
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_Function(' . $name . ')'
+        );
 
         // Create new function
         $function = new PHP_Depend_Code_Function($name);
@@ -487,6 +497,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     ) {
         include_once 'PHP/Depend/Code/SelfReference.php';
 
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_SelfReference(' . $type->getName() . ')'
+        );
+
         return new PHP_Depend_Code_SelfReference($type);
     }
 
@@ -501,7 +515,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         include_once 'PHP/Depend/Code/FieldDeclaration.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating field declaration.'
+            'Creating: PHP_Depend_Code_FieldDeclaration()'
         );
 
         return new PHP_Depend_Code_FieldDeclaration();
@@ -520,7 +534,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         include_once 'PHP/Depend/Code/VariableDeclarator.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating variable declarator "' . $image . '".'
+            'Creating: PHP_Depend_Code_VariableDeclarator(' . $image . ')'
         );
 
         return new PHP_Depend_Code_VariableDeclarator($image);
@@ -539,7 +553,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         include_once 'PHP/Depend/Code/StaticVariableDeclaration.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating static variable declaration "' . $image . '".'
+            'Creating: PHP_Depend_Code_StaticVariableDeclaration(' . $image . ')'
         );
 
         return new PHP_Depend_Code_StaticVariableDeclaration($image);
@@ -556,10 +570,27 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         include_once 'PHP/Depend/Code/FormalParameters.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating formal parameters.'
+            'Creating: PHP_Depend_Code_FormalParameters()'
         );
 
         return new PHP_Depend_Code_FormalParameters();
+    }
+
+    /**
+     * Builds a new formal parameter node.
+     *
+     * @return PHP_Depend_Code_FormalParameter
+     * @since 0.9.6
+     */
+    public function buildFormalParameter()
+    {
+        include_once 'PHP/Depend/Code/FormalParameter.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_FormalParameter()'
+        );
+
+        return new PHP_Depend_Code_FormalParameter();
     }
 
     /**
@@ -573,7 +604,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         include_once 'PHP/Depend/Code/ArrayType.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating array type.'
+            'Creating: PHP_Depend_Code_ArrayType()'
         );
 
         return new PHP_Depend_Code_ArrayType();
@@ -592,7 +623,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         include_once 'PHP/Depend/Code/PrimitiveType.php';
 
         PHP_Depend_Util_Log::debug(
-            'Creating primitive type.'
+            'Creating: PHP_Depend_Code_PrimitiveType(' . $image . ')'
         );
 
         return new PHP_Depend_Code_PrimitiveType($image);

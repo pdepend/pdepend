@@ -95,9 +95,9 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     /**
      * List of method/function parameters.
      *
-     * @var array(PHP_Depend_Code_Parameter) $_parameters
+     * @var PHP_Depend_Code_NodeIterator $_parameters
      */
-    private $_parameters = array();
+    private $_parameters = null;
 
     /**
      * Does this callable return a value by reference?
@@ -232,7 +232,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function getDependencies()
     {
         $classReferences = $this->_dependencyClassReferences;
-        foreach ($this->_parameters as $parameter) {
+        foreach ($this->getParameters() as $parameter) {
             if ($parameter->getClassReference() === null) {
                 continue;
             }
@@ -331,24 +331,12 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getParameters()
     {
-        return new PHP_Depend_Code_NodeIterator($this->_parameters);
-    }
-
-    /**
-     * Adds a parameter to the list of method/function parameters.
-     *
-     * @param PHP_Depend_Code_Parameter $parameter The parameter instance.
-     *
-     * @return PHP_Depend_Code_Parameter
-     */
-    public function addParameter(PHP_Depend_Code_Parameter $parameter)
-    {
-        // Set this as parent
-        $parameter->setDeclaringFunction($this);
-        // Store reference
-        $this->_parameters[] = $parameter;
-
-        return $parameter;
+        if ($this->_parameters === null) {
+            $this->_initParameters();
+        }
+        $this->_parameters->rewind();
+        
+        return $this->_parameters;
     }
 
     /**
@@ -404,6 +392,45 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
             }
         }
         return $staticVariables;
+    }
+
+    /**
+     * This method will initialize the <b>$_parameters</b> property.
+     *
+     * @return void
+     * @since 0.9.6
+     */
+    private function _initParameters()
+    {
+        $parameters = array();
+
+        $formalParameters = $this->getFirstChildOfType(
+            'PHP_Depend_Code_FormalParameters'
+        );
+
+        $formalParameters = $formalParameters->findChildrenOfType(
+            'PHP_Depend_Code_FormalParameter'
+        );
+
+        foreach ($formalParameters as $formalParameter) {
+            $parameter = new PHP_Depend_Code_Parameter(
+                $formalParameter
+            );
+            $parameter->setDeclaringFunction($this);
+            $parameter->setPosition(count($parameters));
+
+            $parameters[] = $parameter;
+        }
+
+        $optional = true;
+        foreach (array_reverse($parameters) as $parameter) {
+            if ($parameter->isDefaultValueAvailable() === false) {
+                $optional = false;
+            }
+            $parameter->setOptional($optional);
+        }
+
+        $this->_parameters = new PHP_Depend_Code_NodeIterator($parameters);
     }
 
     // DEPRECATED METHODS AND PROPERTIES

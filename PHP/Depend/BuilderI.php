@@ -186,15 +186,6 @@ interface PHP_Depend_BuilderI
     function buildPackage($name);
 
     /**
-     * Builds a new parameter instance.
-     *
-     * @param string $name The parameter variable name.
-     *
-     * @return PHP_Depend_Code_Parameter The created parameter instance.
-     */
-    function buildParameter($name);
-
-    /**
      * Builds a new method instance.
      *
      * @param string $name The method name.
@@ -267,6 +258,14 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildFormalParameters();
+
+    /**
+     * Builds a new formal parameter node.
+     *
+     * @return PHP_Depend_Code_FormalParameter
+     * @since 0.9.6
+     */
+    function buildFormalParameter();
 
     /**
      * Builds a new array type node.
