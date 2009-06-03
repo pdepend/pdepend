@@ -97,9 +97,9 @@ final class PHP_Depend_Util_Type
     /**
      * List of primitive php types.
      *
-     * @var array(string=>string) $_primitiveTypes
+     * @var array(string=>string) $_ASTPrimitiveTypes
      */
-    private static $_primitiveTypes = array(
+    private static $_ASTPrimitiveTypes = array(
         'bool'     => 'boolean',
         'boolean'  => 'boolean',
         'double'   => 'float',
@@ -197,7 +197,7 @@ final class PHP_Depend_Util_Type
      */
     public static function isPrimitiveType($image)
     {
-        return isset(self::$_primitiveTypes[strtolower($image)]);
+        return isset(self::$_ASTPrimitiveTypes[strtolower($image)]);
     }
 
     /**
@@ -212,7 +212,7 @@ final class PHP_Depend_Util_Type
     public static function getPrimitiveType($image)
     {
         if (self::isPrimitiveType($image) === true) {
-            return self::$_primitiveTypes[strtolower($image)];
+            return self::$_ASTPrimitiveTypes[strtolower($image)];
         }
         return null;
     }

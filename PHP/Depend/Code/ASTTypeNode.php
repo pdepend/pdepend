@@ -36,44 +36,53 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  PHP
- * @package   PHP_Depend_Code
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.pdepend.org/
- * @since     0.9.5
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * This is a classes only version of the class or interface reference .
+ * Abstract base class for a type node.
  *
- * @category  PHP
- * @package   PHP_Depend_Code
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.pdepend.org/
- * @since     0.9.5
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
-class PHP_Depend_Code_ClassReference
-    extends PHP_Depend_Code_ClassOrInterfaceReference
+class PHP_Depend_Code_ASTTypeNode extends PHP_Depend_Code_ASTNode
 {
     /**
-     * Returns the concrete type instance associated with with this placeholder.
+     * This method will return <b>true</b> when the underlying type is an array.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return boolean
      */
-    public function getType()
+    public function isArray()
     {
-        if ($this->typeInstance === null) {
-            $this->typeInstance = $this->builder->getClass($this->getImage());
-        }
-        return $this->typeInstance;
+        return false;
+    }
+
+    /**
+     * This method will return <b>true</b> when the underlying data type is a
+     * php primitive.
+     *
+     * @return boolean
+     */
+    public function isPrimitive()
+    {
+        return false;
     }
 }
 ?>

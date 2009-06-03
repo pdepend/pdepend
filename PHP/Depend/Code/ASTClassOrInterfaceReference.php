@@ -44,14 +44,14 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @since      0.9.5
  */
 
-require_once 'PHP/Depend/Code/AbstractTypeNode.php';
+require_once 'PHP/Depend/Code/ASTTypeNode.php';
 
 /**
- * This class represents primitive types like integer, float, boolean, string
- * etc.
+ * This class is used as a placeholder for unknown classes or interfaces. It
+ * will resolve the concrete type instance on demand.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,19 +61,51 @@ require_once 'PHP/Depend/Code/AbstractTypeNode.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @since      0.9.5
  */
-class PHP_Depend_Code_PrimitiveType extends PHP_Depend_Code_AbstractTypeNode
+class PHP_Depend_Code_ASTClassOrInterfaceReference 
+    extends PHP_Depend_Code_ASTTypeNode
 {
     /**
-     * This method will return <b>true</b> when this type is a php primitive.
-     * For this concrete implementation the return value will be always true.
+     * The associated AST builder.
      *
-     * @return boolean
+     * @var PHP_Depend_BuilderI $builder
      */
-    public function isPrimitive()
+    protected $builder = null;
+
+    /**
+     * An already loaded type instance.
+     *
+     * @var PHP_Depend_Code_AbstractClassOrInterface $typeInstance
+     */
+    protected $typeInstance = null;
+
+    /**
+     * Constructs a new type holder instance.
+     *
+     * @param PHP_Depend_BuilderI $builder       The associated AST builder instance.
+     * @param string              $qualifiedName The qualified type name.
+     */
+    public function __construct(PHP_Depend_BuilderI $builder, $qualifiedName)
     {
-        return true;
+        parent::__construct($qualifiedName);
+
+        $this->builder = $builder;
+    }
+
+    /**
+     * Returns the concrete type instance associated with with this placeholder.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     */
+    public function getType()
+    {
+        if ($this->typeInstance === null) {
+            $this->typeInstance = $this->builder->getClassOrInterface(
+                $this->getImage()
+            );
+        }
+        return $this->typeInstance;
     }
 }
 ?>

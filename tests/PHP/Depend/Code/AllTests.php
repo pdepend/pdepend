@@ -52,9 +52,9 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/ClassOrInterfaceReferenceTest.php';
+require_once dirname(__FILE__) . '/ASTClassOrInterfaceReferenceTest.php';
 require_once dirname(__FILE__) . '/ClassTest.php';
-require_once dirname(__FILE__) . '/FieldDeclarationTest.php';
+require_once dirname(__FILE__) . '/ASTFieldDeclarationTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
 require_once dirname(__FILE__) . '/FunctionTest.php';
 require_once dirname(__FILE__) . '/InterfaceTest.php';
@@ -65,8 +65,8 @@ require_once dirname(__FILE__) . '/ParameterTest.php';
 require_once dirname(__FILE__) . '/PropertyTest.php';
 require_once dirname(__FILE__) . '/ReflectionParameterTest.php';
 require_once dirname(__FILE__) . '/ReflectionPropertyTest.php';
-require_once dirname(__FILE__) . '/StaticVariableDeclarationTest.php';
-require_once dirname(__FILE__) . '/VariableDeclaratorTest.php';
+require_once dirname(__FILE__) . '/ASTStaticVariableDeclarationTest.php';
+require_once dirname(__FILE__) . '/ASTVariableDeclaratorTest.php';
 require_once dirname(__FILE__) . '/Filter/AllTests.php';
 
 /**
@@ -103,9 +103,9 @@ class PHP_Depend_Code_AllTests
         
         $suite->addTest(PHP_Depend_Code_Filter_AllTests::suite());
 
-        $suite->addTestSuite('PHP_Depend_Code_ClassOrInterfaceReferenceTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTClassOrInterfaceReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
-        $suite->addTestSuite('PHP_Depend_Code_FieldDeclarationTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTFieldDeclarationTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
         $suite->addTestSuite('PHP_Depend_Code_InterfaceTest');
@@ -115,8 +115,8 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
         $suite->addTestSuite('PHP_Depend_Code_ParameterTest');
 
-        $suite->addTestSuite('PHP_Depend_Code_StaticVariableDeclarationTest');
-        $suite->addTestSuite('PHP_Depend_Code_VariableDeclaratorTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTStaticVariableDeclarationTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTVariableDeclaratorTest');
 
         $suite->addTestSuite('PHP_Depend_Code_ReflectionParameterTest');
         $suite->addTestSuite('PHP_Depend_Code_ReflectionPropertyTest');

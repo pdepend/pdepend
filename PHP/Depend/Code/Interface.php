@@ -83,14 +83,14 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
     /**
      * Sets a reference onto the parent class of this class node.
      *
-     * @param PHP_Depend_Code_ClassReference $classReference Reference to the
+     * @param PHP_Depend_Code_ASTClassReference $classReference Reference to the
      *        declared parent class.
      *
      * @return void
      * @since 0.9.5
      */
     public function setParentClassReference(
-        PHP_Depend_Code_ClassReference $classReference
+        PHP_Depend_Code_ASTClassReference $classReference
     ) {
         throw new BadMethodCallException(
             'Unsupported method ' . __METHOD__ . '() called.'

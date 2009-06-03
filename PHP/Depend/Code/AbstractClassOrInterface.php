@@ -75,7 +75,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * The parent for this class node.
      *
-     * @var PHP_Depend_Code_ClassReference $_parentClassReference
+     * @var PHP_Depend_Code_ASTClassReference $_parentClassReference
      * @since 0.9.5
      */
     private $_parentClassReference = null;
@@ -83,7 +83,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * List of all interfaces implemented/extended by the this type.
      *
-     * @var array(PHP_Depend_Code_InterfaceReference) $_interfaceReferences
+     * @var array(PHP_Depend_Code_ASTInterfaceReference) $_interfaceReferences
      */
     private $_interfaceReferences = array();
 
@@ -244,7 +244,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * Returns a reference onto the parent class of this class node or <b>null</b>.
      *
-     * @return PHP_Depend_Code_ClassReference
+     * @return PHP_Depend_Code_ASTClassReference
      * @since 0.9.5
      */
     public function getParentClassReference()
@@ -255,14 +255,14 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * Sets a reference onto the parent class of this class node.
      *
-     * @param PHP_Depend_Code_ClassReference $classReference Reference to the
+     * @param PHP_Depend_Code_ASTClassReference $classReference Reference to the
      *        declared parent class.
      *
      * @return void
      * @since 0.9.5
      */
     public function setParentClassReference(
-        PHP_Depend_Code_ClassReference $classReference
+        PHP_Depend_Code_ASTClassReference $classReference
     ) {
         $this->_parentClassReference = $classReference;
     }
@@ -303,14 +303,14 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * Adds a interface reference node.
      *
-     * @param PHP_Depend_Code_InterfaceReference $interfaceReference The extended
+     * @param PHP_Depend_Code_ASTInterfaceReference $interfaceReference The extended
      *        or implemented interface reference.
      *
      * @return void
      * @since 0.9.5
      */
     public function addInterfaceReference(
-        PHP_Depend_Code_InterfaceReference $interfaceReference
+        PHP_Depend_Code_ASTInterfaceReference $interfaceReference
     ) {
         $this->_interfaceReferences[] = $interfaceReference;
     }

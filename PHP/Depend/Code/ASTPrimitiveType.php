@@ -47,8 +47,11 @@
  * @since      0.9.6
  */
 
+require_once 'PHP/Depend/Code/ASTTypeNode.php';
+
 /**
- * This class represents an array type node.
+ * This class represents primitive types like integer, float, boolean, string
+ * etc.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -60,29 +63,15 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_ArrayType extends PHP_Depend_Code_AbstractTypeNode
+class PHP_Depend_Code_ASTPrimitiveType extends PHP_Depend_Code_ASTTypeNode
 {
     /**
-     * The visual image for this node type.
-     */
-    const IMAGE = 'array';
-
-    /**
-     * Constructs a new array type node.
-     */
-    public function __construct()
-    {
-        parent::__construct(self::IMAGE);
-    }
-
-    /**
-     * This method will return <b>true</b> when the underlying type is an array.
-     * For this concrete type implementation the returned value will be always
-     * <b>true</b>.
+     * This method will return <b>true</b> when this type is a php primitive.
+     * For this concrete implementation the return value will be always true.
      *
      * @return boolean
      */
-    public function isArray()
+    public function isPrimitive()
     {
         return true;
     }
