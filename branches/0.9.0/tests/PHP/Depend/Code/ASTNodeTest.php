@@ -49,7 +49,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Abstract test case for classes derived {@link PHP_Depend_Code_AbstractNode}ö
+ * Abstract test case for classes derived {@link PHP_Depend_Code_ASTNode}ö
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-abstract class PHP_Depend_Code_AbstractNodeTest extends PHP_Depend_AbstractTest
+abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
@@ -89,11 +89,11 @@ abstract class PHP_Depend_Code_AbstractNodeTest extends PHP_Depend_AbstractTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $abstractNode = $this->createNodeInstance();
-        $abstractNode->addChild($node1);
-        $abstractNode->addChild($node2);
+        $node = $this->createNodeInstance();
+        $node->addChild($node1);
+        $node->addChild($node2);
 
-        $child = $abstractNode->getFirstChildOfType(get_class($node2));
+        $child = $node->getFirstChildOfType(get_class($node2));
         $this->assertSame($node2, $child);
     }
 
@@ -133,11 +133,11 @@ abstract class PHP_Depend_Code_AbstractNodeTest extends PHP_Depend_AbstractTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue($node1));
 
-        $abstractNode = $this->createNodeInstance();
-        $abstractNode->addChild($node2);
-        $abstractNode->addChild($node3);
+        $node = $this->createNodeInstance();
+        $node->addChild($node2);
+        $node->addChild($node3);
 
-        $child = $abstractNode->getFirstChildOfType(get_class($node1));
+        $child = $node->getFirstChildOfType(get_class($node1));
         $this->assertSame($node1, $child);
     }
 
@@ -168,11 +168,11 @@ abstract class PHP_Depend_Code_AbstractNodeTest extends PHP_Depend_AbstractTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $abstractNode = $this->createNodeInstance();
-        $abstractNode->addChild($node1);
-        $abstractNode->addChild($node2);
+        $node = $this->createNodeInstance();
+        $node->addChild($node1);
+        $node->addChild($node2);
 
-        $child = $abstractNode->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
+        $child = $node->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
         $this->assertNull($child);
     }
 
@@ -203,18 +203,18 @@ abstract class PHP_Depend_Code_AbstractNodeTest extends PHP_Depend_AbstractTest
             ->method('findChildrenOfType')
             ->will($this->returnValue(array()));
 
-        $abstractNode = $this->createNodeInstance();
-        $abstractNode->addChild($node1);
-        $abstractNode->addChild($node2);
+        $node = $this->createNodeInstance();
+        $node->addChild($node1);
+        $node->addChild($node2);
 
-        $children = $abstractNode->findChildrenOfType(get_class($node2));
+        $children = $node->findChildrenOfType(get_class($node2));
         $this->assertSame(array($node2), $children);
     }
 
     /**
      * Creates a concrete node implementation.
      *
-     * @return PHP_Depend_Code_AbstractNode
+     * @return PHP_Depend_Code_ASTNode
      */
     protected abstract function createNodeInstance();
 }

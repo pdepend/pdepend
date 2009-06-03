@@ -70,7 +70,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var PHP_Depend_Code_ClassOrInterfaceReference $_returnClassReference
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference $_returnClassReference
      * @since 0.9.5
      */
     private $_returnClassReference = null;
@@ -78,7 +78,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     /**
      * List of all exceptions classes referenced by this callable.
      *
-     * @var array(PHP_Depend_Code_ClassOrInterfaceReference)
+     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
      * @since 0.9.5
      */
     private $_exceptionClassReferences = array();
@@ -87,7 +87,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * List of class references for all classes or interfaces this callable
      * depends on.
      *
-     * @var array(PHP_Depend_Code_ClassOrInterfaceReference)
+     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
      * @since 0.9.5
      */
     private $_dependencyClassReferences = array();
@@ -248,15 +248,15 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * Adds a reference holder for a class or interface used by this callable
      * object.
      *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Referenced
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference $reference Referenced
      *        class or interface used by this callable object.
      *
      * @return void
      */
     public function addDependencyClassReference(
-        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+        PHP_Depend_Code_ASTClassOrInterfaceReference $reference
     ) {
-        $this->_dependencyClassReferences[] = $classReference;
+        $this->_dependencyClassReferences[] = $reference;
     }
 
     /**
@@ -264,7 +264,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * the return value of this callable. The returned value will be <b>null</b>
      * if there is no return value or the return value is scalat.
      *
-     * @return PHP_Depend_Code_ClassOrInterfaceReference
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.5
      */
     public function getReturnClass()
@@ -279,14 +279,14 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * This method can be used to set a reference instance for the declared
      * function return type.
      *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference Holder
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference $classReference Holder
      *        instance for the declared function return type.
      *
      * @return void
      * @since 0.9.5
      */
     public function setReturnClassReference(
-        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+        PHP_Depend_Code_ASTClassOrInterfaceReference $classReference
     ) {
         $this->_returnClassReference = $classReference;
     }
@@ -295,14 +295,14 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * Adds a reference holder for a thrown exception class or interface to
      * this callable.
      *
-     * @param PHP_Depend_Code_ClassOrInterfaceReference $classReference A
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference $classReference A
      *        reference instance for a thrown exception.
      *
      * @return void
      * @since 0.9.5
      */
     public function addExceptionClassReference(
-        PHP_Depend_Code_ClassOrInterfaceReference $classReference
+        PHP_Depend_Code_ASTClassOrInterfaceReference $classReference
     ) {
         $this->_exceptionClassReferences[] = $classReference;
     }
@@ -375,11 +375,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         $staticVariables = array();
 
         $declarations = $this->findChildrenOfType(
-            'PHP_Depend_Code_StaticVariableDeclaration'
+            'PHP_Depend_Code_ASTStaticVariableDeclaration'
         );
         foreach ($declarations as $declaration) {
             $variables = $declaration->findChildrenOfType(
-                'PHP_Depend_Code_VariableDeclarator'
+                'PHP_Depend_Code_ASTVariableDeclarator'
             );
             foreach ($variables as $variable) {
                 $image = $variable->getImage();
@@ -405,11 +405,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         $parameters = array();
 
         $formalParameters = $this->getFirstChildOfType(
-            'PHP_Depend_Code_FormalParameters'
+            'PHP_Depend_Code_ASTFormalParameters'
         );
 
         $formalParameters = $formalParameters->findChildrenOfType(
-            'PHP_Depend_Code_FormalParameter'
+            'PHP_Depend_Code_ASTFormalParameter'
         );
 
         foreach ($formalParameters as $formalParameter) {
@@ -465,7 +465,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      *        type of this.
      *
      * @return void
-     * @deprecated Since version 0.9.5, use setReturnValueClassReference() instead.
+     * @deprecated Since version 0.9.5, use setReturnClassReference() instead.
      */
     public function setReturnType(
         PHP_Depend_Code_AbstractClassOrInterface $returnType

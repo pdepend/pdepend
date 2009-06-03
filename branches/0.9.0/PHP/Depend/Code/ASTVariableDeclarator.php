@@ -47,24 +47,12 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/AbstractNode.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * This node class represents a static variable declaration.
- *
- * <code>
- * function foo()
- * {
- *     // First declaration
- *     static $foo;
- *     // Second declaration
- *     static $bar = array();
- *     // Third declaration
- *     static $baz    = array(),
- *            $foobar = null,
- *            $barbaz;
- * }
- * </code>
+ * This node type represents a variable declarator. A variable declarator always
+ * contains a variable name and it can optionally provide a variable default
+ * value.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -76,7 +64,36 @@ require_once 'PHP/Depend/Code/AbstractNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_StaticVariableDeclaration extends PHP_Depend_Code_AbstractNode
+class PHP_Depend_Code_ASTVariableDeclarator extends PHP_Depend_Code_ASTNode
 {
+    /**
+     * The initial declaration value for this node or <b>null</b>.
+     *
+     * @var PHP_Depend_Code_Value $value
+     */
+    protected $value = null;
+
+    /**
+     * Returns the initial declaration value for this node or <b>null</b> when
+     * no default value exists.
+     *
+     * @return PHP_Depend_Code_Value
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Sets the declared default value for this variable node.
+     *
+     * @param PHP_Depend_Code_Value $value The node default value.
+     *
+     * @return void
+     */
+    public function setValue(PHP_Depend_Code_Value $value)
+    {
+        $this->value = $value;
+    }
 }
 ?>

@@ -44,30 +44,10 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/AbstractNode.php';
-
 /**
- * This ast class represents a list for formal parameters. This means the
- * parameters of a method, function or closure declaration.
- *
- * <code>
- * //          --
- * function foo() {}
- * //          --
- *
- * //           --------
- * $x = function($x, $y) {}
- * //           --------
- *
- * class Foo {
- *     //                 -----------------
- *     public function bar(Foo $obj = null) {}
- *     //                 -----------------
- * }
- * </code>
+ * description
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -77,21 +57,8 @@ require_once 'PHP/Depend/Code/AbstractNode.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.6
  */
-class PHP_Depend_Code_FormalParameters extends PHP_Depend_Code_AbstractNode
+class PHP_Depend_Code_ASTConstantDefinition extends PHP_Depend_Code_ASTNode
 {
-    /**
-     * The image type of this node.
-     */
-    const IMAGE = __CLASS__;
-
-    /**
-     * Constructs a new field declaration.
-     */
-    public function __construct()
-    {
-        parent::__construct(self::IMAGE);
-    }
 }
 ?>

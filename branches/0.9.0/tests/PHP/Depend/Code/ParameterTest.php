@@ -49,8 +49,8 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/ClassOrInterfaceReference.php';
-require_once 'PHP/Depend/Code/FormalParameter.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/ASTFormalParameter.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Parameter.php';
@@ -234,7 +234,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testParameterReturnsExpectedTypeFromClassOrInterfaceReference()
+    public function testParameterReturnsExpectedTypeFromASTClassOrInterfaceReference()
     {
         $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
 
@@ -255,7 +255,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testParameterReturnNullForTypeWhenNoClassOrInterfaceReferenceWasSet()
+    public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet()
     {
         $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
         $parameter = $packages->current()

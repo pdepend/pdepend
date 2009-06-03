@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/ASTNodeI.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-abstract class PHP_Depend_Code_AbstractNode implements PHP_Depend_Code_ASTNodeI
+abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 {
     /**
      * The source image for this node instance.

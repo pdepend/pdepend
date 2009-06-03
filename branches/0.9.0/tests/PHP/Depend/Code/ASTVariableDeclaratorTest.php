@@ -49,7 +49,7 @@
 require_once 'PHP/Depend/AbstractTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_VariableDeclarator} class.
+ * Test case for the {@link PHP_Depend_Code_ASTVariableDeclarator} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_VariableDeclaratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that the declaration has the expected start line value.
@@ -69,13 +69,13 @@ class PHP_Depend_Code_VariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedStartLine()
     {
-        $packages = self::parseSource('code/variabledeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declarators = $function->findChildrenOfType(
-            'PHP_Depend_Code_VariableDeclarator'
+            'PHP_Depend_Code_ASTVariableDeclarator'
         );
 
         $this->assertSame(4, $declarators[0]->getStartLine());
@@ -89,13 +89,13 @@ class PHP_Depend_Code_VariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedStartColumn()
     {
-        $packages = self::parseSource('code/variabledeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declarators = $function->findChildrenOfType(
-            'PHP_Depend_Code_VariableDeclarator'
+            'PHP_Depend_Code_ASTVariableDeclarator'
         );
 
         $this->assertSame(12, $declarators[0]->getStartColumn());
@@ -109,13 +109,13 @@ class PHP_Depend_Code_VariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedEndLine()
     {
-        $packages = self::parseSource('code/variabledeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declarator = $function->getFirstChildOfType(
-            'PHP_Depend_Code_VariableDeclarator'
+            'PHP_Depend_Code_ASTVariableDeclarator'
         );
 
         $this->assertSame(7, $declarator->getEndLine());
@@ -128,13 +128,13 @@ class PHP_Depend_Code_VariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedEndColumn()
     {
-        $packages = self::parseSource('code/variabledeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
 
         $declarator = $function->getFirstChildOfType(
-            'PHP_Depend_Code_VariableDeclarator'
+            'PHP_Depend_Code_ASTVariableDeclarator'
         );
 
         $this->assertSame(17, $declarator->getEndColumn());

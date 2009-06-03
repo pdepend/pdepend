@@ -110,16 +110,16 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             $this->_properties = array();
 
             $declarations = $this->findChildrenOfType(
-                'PHP_Depend_Code_FieldDeclaration'
+                'PHP_Depend_Code_ASTFieldDeclaration'
             );
             foreach ($declarations as $declaration) {
 
                 $classOrInterfaceReference = $declaration->getFirstChildOfType(
-                    'PHP_Depend_Code_ClassOrInterfaceReference'
+                    'PHP_Depend_Code_ASTClassOrInterfaceReference'
                 );
 
                 $declarators = $declaration->findChildrenOfType(
-                    'PHP_Depend_Code_VariableDeclarator'
+                    'PHP_Depend_Code_ASTVariableDeclarator'
                 );
 
                 foreach ($declarators as $declarator) {

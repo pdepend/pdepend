@@ -449,10 +449,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testBuildClassOrInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen()
+    public function testBuildASTClassOrInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen()
     {
         $builder = new PHP_Depend_Builder_Default();
-        $builder->buildClassOrInterfaceReference('Foo');
+        $builder->buildASTClassOrInterfaceReference('Foo');
 
         // Freeze object
         $builder->getClass('Foo');
@@ -462,7 +462,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
             'Cannot create new nodes, when internal state is frozen.'
         );
 
-        $builder->buildClassOrInterfaceReference('Bar');
+        $builder->buildASTClassOrInterfaceReference('Bar');
     }
 
     /**
@@ -493,10 +493,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      *
      * @return void
      */
-    public function testBuildClassReferenceThrowsExpectedExceptionWhenStateIsFrozen()
+    public function testBuildASTClassReferenceThrowsExpectedExceptionWhenStateIsFrozen()
     {
         $builder = new PHP_Depend_Builder_Default();
-        $builder->buildClassReference('Foo');
+        $builder->buildASTClassReference('Foo');
 
         // Freeze object
         $builder->getClass('Foo');
@@ -506,7 +506,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
             'Cannot create new nodes, when internal state is frozen.'
         );
 
-        $builder->buildClassReference('Bar');
+        $builder->buildASTClassReference('Bar');
     }
 
     /**

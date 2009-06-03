@@ -47,14 +47,24 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/AbstractNode.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * This class represents a formal parameter within the signature of a function,
- * method or closure.
+ * This node class represents a static variable declaration.
  *
- * Formal parameters can include a type hint, a by reference identifier and a
- * default value. The only mandatory part is the parameter identifier.
+ * <code>
+ * function foo()
+ * {
+ *     // First declaration
+ *     static $foo;
+ *     // Second declaration
+ *     static $bar = array();
+ *     // Third declaration
+ *     static $baz    = array(),
+ *            $foobar = null,
+ *            $barbaz;
+ * }
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -66,48 +76,7 @@ require_once 'PHP/Depend/Code/AbstractNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_FormalParameter extends PHP_Depend_Code_AbstractNode
+class PHP_Depend_Code_ASTStaticVariableDeclaration extends PHP_Depend_Code_ASTNode
 {
-    /**
-     * The image type of this node.
-     */
-    const IMAGE = __CLASS__;
-
-    /**
-     * This property is set to <b>true</b> when the parameter is passed by
-     * reference.
-     *
-     * @var boolean $passedByReference
-     */
-    protected $passedByReference = false;
-
-    /**
-     * Constructs a new field declaration.
-     */
-    public function __construct()
-    {
-        parent::__construct(self::IMAGE);
-    }
-
-    /**
-     * This method will return <b>true</b> when the parameter is passed by
-     * reference.
-     *
-     * @return boolean
-     */
-    public function isPassedByReference()
-    {
-        return $this->passedByReference;
-    }
-
-    /**
-     * This method can be used to mark this parameter as passed by reference.
-     *
-     * @return void
-     */
-    public function setPassedByReference()
-    {
-        $this->passedByReference = true;
-    }
 }
 ?>

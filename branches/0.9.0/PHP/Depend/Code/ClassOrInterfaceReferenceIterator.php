@@ -50,7 +50,7 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
  * This is a special implementation of the node iterator that will translate
- * a list of given {@link PHP_Depend_Code_ClassOrInterfaceReference} holders
+ * a list of given {@link PHP_Depend_Code_ASTClassOrInterfaceReference} holders
  * into a list of unique {@link PHP_Depend_Code_AbstractClassOrInterface} instances.
  *
  * @category   PHP
@@ -68,29 +68,29 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIterator
     /**
      * Constructs a new reference iterator instance.
      *
-     * @param array(PHP_Depend_Code_ClassOrInterfaceReference) $classReferences List
+     * @param array(PHP_Depend_Code_ASTClassOrInterfaceReference) $references List
      *        of references to concrete type instances.
      */
-    public function __construct(array $classReferences)
+    public function __construct(array $references)
     {
-        parent::__construct($this->createClassesAndInterfaces($classReferences));
+        parent::__construct($this->createClassesAndInterfaces($references));
     }
 
     /**
      * This method creates a set of {@link PHP_Depend_Code_AbstractClassOrInterface}
      * objects from the given reference array.
      *
-     * @param array(PHP_Depend_Code_ClassOrInterfaceReference) $classReferences List
+     * @param array(PHP_Depend_Code_ASTClassOrInterfaceReference) $references List
      *        of references to concrete type instances.
      *
      * @return array(PHP_Depend_Code_AbstractClassOrInterface)
      */
-    protected function createClassesAndInterfaces(array $classReferences)
+    protected function createClassesAndInterfaces(array $references)
     {
         $classesAndInterfaces = array();
 
-        foreach ($classReferences as $classReference) {
-            $classOrInterface = $classReference->getType();
+        foreach ($references as $reference) {
+            $classOrInterface = $reference->getType();
 
             if (isset($classesAndInterfaces[$classOrInterface->getUUID()])) {
                 continue;
