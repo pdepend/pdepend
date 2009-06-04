@@ -291,55 +291,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
     }
 
     /**
-     * Tests that the parser stores the expected constant tokens.
-     *
-     * @return void
-     */
-    public function testParserStoresConstantTokensWithSignedDefaultValue()
-    {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getConstants()
-            ->current();
-
-        $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'FOO', 3, 3, 11, 13),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 3, 3, 15, 15),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_MINUS, '-', 3, 3, 17, 17),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PLUS, '+', 3, 3, 18, 18),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '42', 3, 3, 19, 20),
-        );
-
-        $this->assertEquals($expected, $constant->getTokens());
-    }
-
-    /**
-     * Tests that the parser stores the expected constant tokens.
-     *
-     * @return void
-     */
-    public function testParserStoresConstantTokensWithInlineComments()
-    {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getConstants()
-            ->current();
-
-        $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'FOO', 4, 4, 5, 7),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 5, 5, 5, 5),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '//', 6, 6, 5, 6),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 7, 7, 5, 8),
-        );
-
-        $this->assertEquals($expected, $constant->getTokens());
-    }
-
-    /**
      * Tests that the parser throws an exception when a constant declaration
      * contains an invalid token.
      *
@@ -353,40 +304,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         );
 
         self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-    }
-
-    /**
-     * Tests that the constant contains the start line of the first token.
-     *
-     * @return void
-     */
-    public function testConstantContainsStartLineOfFirstToken()
-    {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getConstants()
-            ->current();
-
-        $this->assertSame(4, $constant->getStartLine());
-    }
-
-    /**
-     * Tests that the constant contains the end line of the last token.
-     *
-     * @return void
-     */
-    public function testConstantContainsEndLineOfLastToken()
-    {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getConstants()
-            ->current();
-
-        $this->assertSame(7, $constant->getEndLine());
     }
 
     /**

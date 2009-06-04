@@ -109,9 +109,6 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
 
         $class->getSourceFile()->accept($this);
 
-        foreach ($class->getConstants() as $constant) {
-            $constant->accept($this);
-        }
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
@@ -265,19 +262,6 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     {
         $this->fireStartProperty($property);
         $this->fireEndProperty($property);
-    }
-
-    /**
-     * Visits a class constant node.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     *
-     * @return void
-     */
-    public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        $this->fireStartTypeConstant($constant);
-        $this->fireEndTypeConstant($constant);
     }
 
     /**
@@ -529,34 +513,6 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitProperty($property);
-        }
-    }
-
-    /**
-     * Sends a start constant event.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
-     *
-     * @return void
-     */
-    protected function fireStartTypeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        foreach ($this->_listeners as $listener) {
-            $listener->startVisitTypeConstant($constant);
-        }
-    }
-
-    /**
-     * Sends an end constant event.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
-     *
-     * @return void
-     */
-    protected function fireEndTypeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        foreach ($this->_listeners as $listener) {
-            $listener->endVisitTypeConstant($constant);
         }
     }
 }

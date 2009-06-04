@@ -1657,40 +1657,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parses a class or interface constant.
-     *
-     * @return PHP_Depend_Code_Constant
-     * @since 0.9.5
-     */
-    private function _parseTypeConstant()
-    {
-        $this->_tokenStack->push();
-
-        // Consume const keyword
-        $this->_consumeToken(self::T_CONST);
-
-        // Remove leading comments and read constant name
-        $this->_consumeComments();
-        $token = $this->_consumeToken(self::T_STRING);
-
-        $constant = $this->_builder->buildTypeConstant($token->image);
-        $constant->setDocComment($this->_docComment);
-        $constant->setSourceFile($this->_sourceFile);
-
-        $this->_consumeComments();
-        $this->_consumeToken(self::T_EQUAL);
-
-        $this->_parseStaticValue();
-
-        $constant->setTokens($this->_tokenStack->pop());
-
-        $this->_consumeComments();
-        $this->_consumeToken(self::T_SEMICOLON);
-
-        return $constant;
-    }
-
-    /**
      * Parses a single constant definition with one or more constant declarators.
      *
      * <code>
@@ -1731,8 +1697,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_COMMA);
         } while ($tokenType !== self::T_EOF);
 
-        $this->_consumeToken(self::T_SEMICOLON);
         $definition->setTokens($this->_tokenStack->pop());
+        $this->_consumeToken(self::T_SEMICOLON);
         
         return $definition;
     }

@@ -310,9 +310,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }
-        foreach ($interface->getConstants() as $constant) {
-            $constant->accept($this);
-        }
 
         $this->fireEndInterface($interface);
     }
