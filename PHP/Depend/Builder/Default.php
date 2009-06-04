@@ -633,6 +633,81 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new constant definition node.
+     *
+     * <code>
+     * class Foo
+     * {
+     * //  ------------------------
+     *     const FOO = 42, BAR = 23;
+     * //  ------------------------
+     * }
+     * </code>
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTConstantDefinition
+     * @since 0.9.6
+     */
+    public function buildASTConstantDefinition($image)
+    {
+        include_once 'PHP/Depend/Code/ASTConstantDefinition.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTConstantDefinition()'
+        );
+
+        return new PHP_Depend_Code_ASTConstantDefinition($image);
+    }
+
+    /**
+     * Builds a new constant declarator node.
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //    --------
+     *     const BAR = 42;
+     *     //    --------
+     * }
+     * </code>
+     *
+     * Or in a comma separated constant defintion:
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //    --------
+     *     const BAR = 42,
+     *     //    --------
+     *
+     *     //    --------------
+     *     const BAZ = 'Foobar',
+     *     //    --------------
+     *
+     *     //    ----------
+     *     const FOO = 3.14;
+     *     //    ----------
+     * }
+     * </code>
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTConstantDeclarator
+     * @since 0.9.6
+     */
+    public function buildASTConstantDeclarator($image)
+    {
+        include_once 'PHP/Depend/Code/ASTConstantDeclarator.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTConstantDeclarator(' . $image . ')'
+        );
+
+        return new PHP_Depend_Code_ASTConstantDeclarator($image);
+    }
+
+    /**
      * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
      * objects.
      *

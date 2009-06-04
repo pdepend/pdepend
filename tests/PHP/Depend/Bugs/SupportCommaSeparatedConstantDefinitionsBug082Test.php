@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,31 +46,77 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * This class represents a single constant definition as it can occure in
- * class definition or interface declaration.
+ * Test case for bug #82 where PHP_Depend does not handle comma separated
+ * constant definitions.
  *
- * <code>
- * class Foo
- * {
- * //  ------------------------
- *     const FOO = 42, BAR = 23;
- * //  ------------------------
- * }
- * </code>
+ * http://tracker.pdepend.org/pdepend/issue_tracker/issue/82/
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTConstantDefinition extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
+    extends PHP_Depend_AbstractTest
 {
+    /**
+     * Tests that the parser handles a comma separated constant definition.
+     *
+     * @return void
+     */
+    public function testParserHandlesSimpleCommaSeparatedConstantDefinition()
+    {
+        $packages = self::parseSource('bugs/082/' . __FUNCTION__ . '.php');
+
+        $constants = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getConstants();
+
+        $this->assertSame(2, count($constants));
+    }
+
+    /**
+     * Tests that the parser handles a comma separated constant definition with
+     * inline comments.
+     *
+     * @return void
+     */
+    public function testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments()
+    {
+        $packages = self::parseSource('bugs/082/' . __FUNCTION__ . '.php');
+
+        $constants = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getConstants();
+
+        $this->assertSame(2, count($constants));
+    }
+
+    /**
+     * Tests that the parser handles multiple comma separated constant 
+     * definitions as expected.
+     *
+     * @return void
+     */
+    public function testParserHandlesMultipleCommaSeparatedConstantDefinitions()
+    {
+        $packages = self::parseSource('bugs/082/' . __FUNCTION__ . '.php');
+
+        $constants = $packages->current()
+            ->getInterfaces()
+            ->current()
+            ->getConstants();
+
+        $this->assertSame(5, count($constants));
+    }
 }
 ?>

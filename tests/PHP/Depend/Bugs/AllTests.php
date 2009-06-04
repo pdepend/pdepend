@@ -61,6 +61,7 @@ require_once dirname(__FILE__) . '/InconsistentObjectGraphBug73Test.php';
 require_once dirname(__FILE__) . '/ParserKeywordAsConstantNameBug76Test.php';
 require_once dirname(__FILE__) . '/TokenizerKeywordSubstitutionBug76Test.php';
 require_once dirname(__FILE__) . '/SupportCommaSeparatedPropertyDeclarationsBug081Test.php';
+require_once dirname(__FILE__) . '/SupportCommaSeparatedConstantDefinitionsBug082Test.php';
 require_once dirname(__FILE__) . '/ParentKeywordAsParameterTypeHintBug087Test.php';
 
 /**
@@ -97,13 +98,14 @@ class PHP_Depend_Bugs_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Bugs - AllTests');
 
         $suite->addTestSuite('PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test');
         $suite->addTestSuite('PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InconsistentObjectGraphBug73Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserKeywordAsConstantNameBug76Test');
         $suite->addTestSuite('PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test');
 
         return $suite;
