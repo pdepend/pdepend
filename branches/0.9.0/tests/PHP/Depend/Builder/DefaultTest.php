@@ -254,20 +254,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests the {@link PHP_Depend_Builder_Default::buildTypeConstant()}
-     * method.
-     *
-     * @return void
-     */
-    public function testBuildConstant()
-    {
-        $builder  = new PHP_Depend_Builder_Default();
-        $constant = $builder->buildTypeConstant('CONSTANT', 0);
-
-        $this->assertType('PHP_Depend_Code_TypeConstant', $constant);
-    }
-
-    /**
      * Tests that the node builder creates a package for the same name only once.
      *
      * @return void
@@ -529,28 +515,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         );
 
         $builder->buildClosure('sure');
-    }
-
-    /**
-     * Tests that the builder throws the expected exception when some one tries
-     * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
-     */
-    public function testBuildTypeConstantThrowsExpectedExceptionWhenStateIsFrozen()
-    {
-        $builder = new PHP_Depend_Builder_Default();
-        $builder->buildTypeConstant('cons');
-
-        // Freeze object
-        $builder->getClass('Foo');
-
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
-
-        $builder->buildTypeConstant('tant');
     }
 
     /**

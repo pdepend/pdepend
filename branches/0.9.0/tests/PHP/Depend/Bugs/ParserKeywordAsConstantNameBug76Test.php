@@ -78,14 +78,12 @@ class PHP_Depend_Bugs_ParserKeywordAsConstantNameBug76Test extends PHP_Depend_Ab
     {
         $packages = self::parseSource($sourceFile);
 
-        /* @var PHP_Depend_Code_AbstractClassOrInterface $type */
-        $constant = $packages->current()
-                             ->getTypes()
-                             ->current()
-                             ->getConstants()
-                             ->current();
-        $this->assertNotNull($constant);
-        $this->assertSame($constantName, $constant->getName());
+        $constants = $packages->current()
+            ->getTypes()
+            ->current()
+            ->getConstants();
+
+        $this->assertArrayHasKey($constantName, $constants);
     }
 
     /**
