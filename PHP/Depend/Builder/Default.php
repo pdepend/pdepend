@@ -48,7 +48,6 @@
 
 require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/TypeConstant.php';
 require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Function.php';
@@ -303,28 +302,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_Closure();
-    }
-
-    /**
-     * Builds a new code class constant instance.
-     *
-     * @param string $name The constant name.
-     *
-     * @return PHP_Depend_Code_TypeConstant The created constant object.
-     */
-    public function buildTypeConstant($name)
-    {
-        $this->checkBuilderState();
-
-        // Debug type constant creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_TypeConstant(' . $name . ')'
-        );
-
-        // Create new constant instance.
-        $constant = new PHP_Depend_Code_TypeConstant($name);
-
-        return $constant;
     }
 
     /**
@@ -1103,6 +1080,25 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
         return $instance;
     }
+
+    /**
+     * Builds a new code class constant instance.
+     *
+     * @param string $name The constant name.
+     *
+     * @return PHP_Depend_Code_TypeConstant The created constant object.
+     * @deprecated Since version 0.9.6
+     */
+    public function buildTypeConstant($name)
+    {
+        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+
+        // Include class definition
+        include_once 'PHP/Depend/Code/TypeConstant.php';
+
+        // Create new constant instance.
+        return new PHP_Depend_Code_TypeConstant($name);
+    }
+
     // @codeCoverageIgnoreEnd
-    
 }

@@ -44,9 +44,12 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
+ * @deprecated Since version 0.9.6
  */
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
+
+// @codeCoverageIgnoreStart
 
 /**
  * An instance of this class represents a class or interface constant within the
@@ -68,6 +71,7 @@ require_once 'PHP/Depend/Code/AbstractItem.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * @deprecated Since version 0.9.6
  */
 class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
 {
@@ -162,11 +166,8 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
      */
     public function accept(PHP_Depend_VisitorI $visitor)
     {
-        $visitor->visitTypeConstant($this);
+        throw new Exception('INVALID');
     }
-
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
 
     /**
      * Returns the parent type object or <b>null</b>
@@ -194,6 +195,6 @@ class PHP_Depend_Code_TypeConstant extends PHP_Depend_Code_AbstractItem
         fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         $this->setDeclaringClass($parent);
     }
-
-    // @codeCoverageIgnoreEnd
 }
+
+// @codeCoverageIgnoreEnd

@@ -281,30 +281,6 @@ abstract class PHP_Depend_Visitor_AbstractListener
     }
 
     /**
-     * Is called when the visitor starts a new constant instance.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
-     *
-     * @return void
-     */
-    public function startVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        $this->startVisitNode($constant);
-    }
-
-    /**
-     * Is called when the visitor ends with a constant instance.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The context constant instance.
-     *
-     * @return void
-     */
-    public function endVisitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        $this->endVisitNode($constant);
-    }
-
-    /**
      * Generic notification method that is called for every node start.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.

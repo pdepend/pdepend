@@ -215,15 +215,6 @@ interface PHP_Depend_BuilderI
     function buildASTSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
 
     /**
-     * Builds a new code class constant instance.
-     *
-     * @param string $name The constant name.
-     *
-     * @return PHP_Depend_Code_TypeConstant The created constant object.
-     */
-    function buildTypeConstant($name);
-
-    /**
      * Builds a new field declaration node.
      *
      * @return PHP_Depend_Code_ASTFieldDeclaration
@@ -341,4 +332,14 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildASTConstantDeclarator($image);
+
+    /**
+     * Builds a new code class constant instance.
+     *
+     * @param string $name The constant name.
+     *
+     * @return PHP_Depend_Code_TypeConstant The created constant object.
+     * @deprecated Since version 0.9.6
+     */
+    function buildTypeConstant($name);
 }
