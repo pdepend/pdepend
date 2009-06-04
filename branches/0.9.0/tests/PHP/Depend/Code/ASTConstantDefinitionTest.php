@@ -147,6 +147,48 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
+     * Tests that the constant definition has the expected doc comment block.
+     *
+     * @return void
+     */
+    public function testConstantDefinitionHasExpectedDocComment()
+    {
+        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $constant = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+
+        $this->assertSame(
+            "/**\n" .
+            "     * Foo bar baz foobar.\n" .
+            "     */",
+            $constant->getComment()
+        );
+    }
+
+    /**
+     * Tests that the constant definition has the expected doc comment block.
+     *
+     * @return void
+     */
+    public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
+    {
+        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $constant = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+
+        $this->assertSame(
+            "/**\n" .
+            "     * Foo bar baz foobar.\n" .
+            "     */",
+            $constant->getComment()
+        );
+    }
+
+    /**
      * Creates a concrete node implementation.
      *
      * @return PHP_Depend_Code_ASTConstantDefinition
