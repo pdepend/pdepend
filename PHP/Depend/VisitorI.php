@@ -149,13 +149,4 @@ interface PHP_Depend_VisitorI
      * @return void
      */
     function visitProperty(PHP_Depend_Code_Property $property);
-
-    /**
-     * Visits a class constant node.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     *
-     * @return void
-     */
-    function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant);
 }

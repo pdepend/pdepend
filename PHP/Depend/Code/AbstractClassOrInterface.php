@@ -102,10 +102,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     private $_methods = array();
 
     /**
-     * Iterator of {@link PHP_Depend_Code_TypeConstant} objects that belong to
-     * this type.
+     * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var PHP_Depend_Code_NodeIterator $_constants
+     * @var array(string=>mixed) $_constants
      */
     private $_constants = null;
 
@@ -309,18 +308,51 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
-     * Returns all {@link PHP_Depend_Code_TypeConstant} objects in this type.
+     * Returns an <b>array</b> with all constants defined in this class or
+     * interface.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return array(string=>mixed)
      */
     public function getConstants()
     {
         if ($this->_constants === null) {
             $this->_initConstants();
         }
-
-        $this->_constants->rewind();
         return $this->_constants;
+    }
+
+    /**
+     * This method returns <b>true</b> when a constant for <b>$name</b> exists,
+     * otherwise it returns <b>false</b>.
+     *
+     * @param string $name Name of the searched constant.
+     *
+     * @return boolean
+     * @since 0.9.6
+     */
+    public function hasConstant($name)
+    {
+        if ($this->_constants === null) {
+            $this->_initConstants();
+        }
+        return array_key_exists($name, $this->_constants);
+    }
+
+    /**
+     * This method will return the value of a constant for <b>$name</b> or it
+     * will return <b>false</b> when no constant for that name exists.
+     *
+     * @param string $name Name of the searched constant.
+     *
+     * @return mixed
+     * @since 0.9.6
+     */
+    public function getConstant($name)
+    {
+        if ($this->hasConstant($name) === true) {
+            return $this->_constants[$name];
+        }
+        return false;
     }
 
     /**
@@ -497,7 +529,17 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     private function _initConstants()
     {
-        $constants = array();
+        $this->_constants = array();
+        if (($parentClass = $this->getParentClass()) !== null) {
+            $this->_constants = $parentClass->getConstants();
+        }
+
+        foreach ($this->getInterfaces() as $interface) {
+            $this->_constants = array_merge(
+                $this->_constants,
+                $interface->getConstants()
+            );
+        }
 
         $definitions = $this->findChildrenOfType(
             'PHP_Depend_Code_ASTConstantDefinition'
@@ -509,19 +551,13 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
             );
 
             foreach ($declarators as $declarator) {
-                $constant = new PHP_Depend_Code_TypeConstant(
-                    $declarator->getImage()
-                );
+                $image = $declarator->getImage();
+                $value = $declarator->getValue()->getValue();
 
-                $constant->setDeclaringClass($this);
-                $constant->setTokens($declarator->getTokens());
-                $constant->setDocComment($definition->getComment());
-                $constant->setSourceFile($this->getSourceFile());
-
-                $constants[] = $constant;
+                $this->_constants[$image] = $value;
             }
         }
-        $this->_constants = new PHP_Depend_Code_NodeIterator($constants);
+        //$this->_constants = new PHP_Depend_Code_NodeIterator($constants);
     }
 
     // DEPRECATED METHODS AND PROPERTIES

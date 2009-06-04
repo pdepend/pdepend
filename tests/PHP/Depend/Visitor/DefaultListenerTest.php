@@ -272,29 +272,4 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
         $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
     }
-
-    /**
-     * Tests that the default listener implementation delegates a constant call
-     * to the startVisitNode() and endVisitNode() methods.
-     *
-     * @return void
-     */
-    public function testListenerCallsStartNodeEndNodeForConstant()
-    {
-        include_once 'PHP/Depend/Code/TypeConstant.php';
-
-        $constant = $this->getMock('PHP_Depend_Code_TypeConstant', array('getName'), array('BAR'));
-        $constant->expects($this->atLeastOnce())
-            ->method('getName')
-            ->will($this->returnValue(__FUNCTION__));
-
-        $listener = new PHP_Depend_Visitor_TestListener();
-        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
-        $visitor->addVisitListener($listener);
-
-        $constant->accept($visitor);
-
-        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
-        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
-    }
 }
