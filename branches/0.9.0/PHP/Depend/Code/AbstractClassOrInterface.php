@@ -102,19 +102,12 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     private $_methods = array();
 
     /**
-     * The tokens for this type.
+     * Iterator of {@link PHP_Depend_Code_TypeConstant} objects that belong to
+     * this type.
      *
-     * @var array(array) $_tokens
+     * @var PHP_Depend_Code_NodeIterator $_constants
      */
-    private $_tokens = array();
-
-    /**
-     * List of {@link PHP_Depend_Code_TypeConstant} objects that belong to this
-     * type.
-     *
-     * @var array(PHP_Depend_Code_TypeConstant) $_constants
-     */
-    private $_constants = array();
+    private $_constants = null;
 
     /**
      * This property will indicate that the class or interface is user defined.
@@ -322,24 +315,12 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getConstants()
     {
-        return new PHP_Depend_Code_NodeIterator($this->_constants);
-    }
+        if ($this->_constants === null) {
+            $this->_initConstants();
+        }
 
-    /**
-     * Adds the given constant to this type.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant A new type constant.
-     *
-     * @return PHP_Depend_Code_TypeConstant
-     */
-    public function addConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        // Set this as owner type
-        $constant->setDeclaringClass($this);
-        // Store constant
-        $this->_constants[] = $constant;
-
-        return $constant;
+        $this->_constants->rewind();
+        return $this->_constants;
     }
 
     /**
@@ -507,6 +488,41 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @return integer
      */
     public abstract function getModifiers();
+
+    /**
+     * This method initializes the constants defined in this class or interface.
+     *
+     * @return void
+     * @since 0.9.6
+     */
+    private function _initConstants()
+    {
+        $constants = array();
+
+        $definitions = $this->findChildrenOfType(
+            'PHP_Depend_Code_ASTConstantDefinition'
+        );
+
+        foreach ($definitions as $definition) {
+            $declarators = $definition->findChildrenOfType(
+                'PHP_Depend_Code_ASTConstantDeclarator'
+            );
+
+            foreach ($declarators as $declarator) {
+                $constant = new PHP_Depend_Code_TypeConstant(
+                    $declarator->getImage()
+                );
+
+                $constant->setDeclaringClass($this);
+                $constant->setTokens($declarator->getTokens());
+                $constant->setDocComment($definition->getComment());
+                $constant->setSourceFile($this->getSourceFile());
+
+                $constants[] = $constant;
+            }
+        }
+        $this->_constants = new PHP_Depend_Code_NodeIterator($constants);
+    }
 
     // DEPRECATED METHODS AND PROPERTIES
     // @codeCoverageIgnoreStart

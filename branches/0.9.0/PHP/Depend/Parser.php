@@ -576,7 +576,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CONST:
-                $type->addConstant($this->_parseTypeConstant());
+                $type->addChild(
+                    $this->_parseConstantDefinition()
+                );
                 $this->reset();
                 break;
 
@@ -1686,6 +1688,105 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_SEMICOLON);
 
         return $constant;
+    }
+
+    /**
+     * Parses a single constant definition with one or more constant declarators.
+     *
+     * <code>
+     * class Foo
+     * {
+     * //  ------------------------
+     *     const FOO = 42, BAR = 23;
+     * //  ------------------------
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTConstantDefinition
+     * @since 0.9.6
+     */
+    private function _parseConstantDefinition()
+    {
+        // Remove leading comments and create a new token stack
+        $this->_consumeComments();
+        $this->_tokenStack->push();
+
+        // Consume const keyword
+        $token = $this->_consumeToken(self::T_CONST);
+
+        $definition = $this->_builder->buildASTConstantDefinition($token->image);
+        $definition->setComment($this->_docComment);
+
+        do {
+            $definition->addChild(
+                $this->_parseConstantDeclarator()
+            );
+
+            $this->_consumeComments();
+            $tokenType = $this->_tokenizer->peek();
+
+            if ($tokenType === self::T_SEMICOLON) {
+                break;
+            }
+            $this->_consumeToken(self::T_COMMA);
+        } while ($tokenType !== self::T_EOF);
+
+        $this->_consumeToken(self::T_SEMICOLON);
+        $definition->setTokens($this->_tokenStack->pop());
+        
+        return $definition;
+    }
+
+    /**
+     * Parses a single constant declarator.
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //    --------
+     *     const BAR = 42;
+     *     //    --------
+     * }
+     * </code>
+     *
+     * Or in a comma separated constant defintion:
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //    --------
+     *     const BAR = 42,
+     *     //    --------
+     *
+     *     //    --------------
+     *     const BAZ = 'Foobar',
+     *     //    --------------
+     *
+     *     //    ----------
+     *     const FOO = 3.14;
+     *     //    ----------
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTConstantDeclarator
+     * @since 0.9.6
+     */
+    private function _parseConstantDeclarator()
+    {
+        // Remove leading comments and create a new token stack
+        $this->_consumeComments();
+        $this->_tokenStack->push();
+
+        $token = $this->_consumeToken(self::T_STRING);
+
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_EQUAL);
+
+        $declarator = $this->_builder->buildASTConstantDeclarator($token->image);
+        $declarator->setValue($this->_parseStaticValue());
+        $declarator->setTokens($this->_tokenStack->pop());
+        
+        return $declarator;
     }
 
     /**

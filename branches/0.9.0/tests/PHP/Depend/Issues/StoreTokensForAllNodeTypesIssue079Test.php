@@ -305,7 +305,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CONST, 'const', 3, 3, 5, 9),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'FOO', 3, 3, 11, 13),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 3, 3, 15, 15),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_MINUS, '-', 3, 3, 17, 17),
@@ -331,8 +330,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CONST, 'const', 3, 3, 5, 9),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '/*const*/', 3, 3, 10, 18),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'FOO', 4, 4, 5, 7),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 5, 5, 5, 5),
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '//', 6, 6, 5, 6),
@@ -372,7 +369,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->getConstants()
             ->current();
 
-        $this->assertSame(3, $constant->getStartLine());
+        $this->assertSame(4, $constant->getStartLine());
     }
 
     /**

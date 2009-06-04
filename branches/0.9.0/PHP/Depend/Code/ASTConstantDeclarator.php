@@ -49,15 +49,34 @@
 require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * This class represents a single constant definition as it can occure in
- * class definition or interface declaration.
+ * This class represents a single constant declarator within a constant
+ * definition.
  *
  * <code>
  * class Foo
  * {
- * //  ------------------------
- *     const FOO = 42, BAR = 23;
- * //  ------------------------
+ *     //    --------
+ *     const BAR = 42;
+ *     //    --------
+ * }
+ * </code>
+ *
+ * Or in a comma separated constant defintion:
+ *
+ * <code>
+ * class Foo
+ * {
+ *     //    --------
+ *     const BAR = 42,
+ *     //    --------
+ *
+ *     //    --------------
+ *     const BAZ = 'Foobar',
+ *     //    --------------
+ *
+ *     //    ----------
+ *     const FOO = 3.14;
+ *     //    ----------
  * }
  * </code>
  *
@@ -70,7 +89,35 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTConstantDefinition extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Code_ASTConstantDeclarator extends PHP_Depend_Code_ASTNode
 {
+    /**
+     * The initial declaration value for this node or <b>null</b>.
+     *
+     * @var PHP_Depend_Code_Value $value
+     */
+    protected $value = null;
+
+    /**
+     * Returns the initial declaration value for this node.
+     *
+     * @return PHP_Depend_Code_Value
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Sets the declared default value for this constant node.
+     *
+     * @param PHP_Depend_Code_Value $value The node default value.
+     *
+     * @return void
+     */
+    public function setValue(PHP_Depend_Code_Value $value)
+    {
+        $this->value = $value;
+    }
 }
 ?>
