@@ -284,4 +284,61 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildASTPrimitiveType($image);
+
+    /**
+     * Builds a new constant definition node.
+     *
+     * <code>
+     * class Foo
+     * {
+     * //  ------------------------
+     *     const FOO = 42, BAR = 23;
+     * //  ------------------------
+     * }
+     * </code>
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTConstantDefinition
+     * @since 0.9.6
+     */
+    function buildASTConstantDefinition($image);
+
+    /**
+     * Builds a new constant declarator node.
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //    --------
+     *     const BAR = 42;
+     *     //    --------
+     * }
+     * </code>
+     *
+     * Or in a comma separated constant defintion:
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //    --------
+     *     const BAR = 42,
+     *     //    --------
+     *
+     *     //    --------------
+     *     const BAZ = 'Foobar',
+     *     //    --------------
+     *
+     *     //    ----------
+     *     const FOO = 3.14;
+     *     //    ----------
+     * }
+     * </code>
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTConstantDeclarator
+     * @since 0.9.6
+     */
+    function buildASTConstantDeclarator($image);
 }
