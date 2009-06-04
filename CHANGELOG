@@ -4,6 +4,8 @@ PHP_Depend 0.9.6
 - Closed #80: Store default value for class properties.
 - Fixed #81: PHP_Depend does not support comma separated property declarations,
   fixed in svn revision #916.
+- Fixed #82: PHP_Depend does not support comma separated constant definitions,
+  fixed in svn revision #931.
 - Closed #83: Make ClassOrInterfaceReference an ASTNode, implemented in svn
   revision #917.
 - Fixed #87: The parent keyword is not accepted as parameter type hint, fixed in
