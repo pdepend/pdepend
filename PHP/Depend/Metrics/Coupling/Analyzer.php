@@ -100,6 +100,26 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     private $_fanout = -1;
 
     /**
+     * This array holds tokens types that are valid PHP callable identifiers.
+     *
+     * @var array(integer)
+     */
+    private $_callableTokens = array(
+        PHP_Depend_TokenizerI::T_STRING,
+        PHP_Depend_TokenizerI::T_VARIABLE
+    );
+
+    /**
+     * This array holds token types that are used in method invocation chains.
+     *
+     * @var array(integer)
+     */
+    private $_methodChainTokens = array(
+        PHP_Depend_TokenizerI::T_DOUBLE_COLON,
+        PHP_Depend_TokenizerI::T_OBJECT_OPERATOR,
+    );
+
+    /**
      * Provides the project summary as an <b>array</b>.
      *
      * <code>
@@ -261,61 +281,116 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $callT  = array(
-            PHP_Depend_TokenizerI::T_STRING,
-            PHP_Depend_TokenizerI::T_VARIABLE
-        );
-        $chainT = array(
-            PHP_Depend_TokenizerI::T_DOUBLE_COLON,
-            PHP_Depend_TokenizerI::T_OBJECT_OPERATOR,
-        );
-
         $called = array();
 
         $tokens = $callable->getTokens();
         $count  = count($tokens);
-        for ($i = 0; $i < $count; ++$i) {
-            // break on function body open
-            if ($tokens[$i]->type === PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN) {
+        for ($i = $this->_findOpenCurlyBrace($tokens); $i < $count; ++$i) {
+
+            if ($this->_isCallableOpenParenthesis($tokens, $i) === false) {
+                continue;
+            }
+
+            if ($this->_isMethodInvocation($tokens, $i) === true) {
+                $image = $this->_getInvocationChainImage($tokens, $i);
+            } else if ($this->_isFunctionInvocation($tokens, $i) === true) {
+                $image = $tokens[$i - 1]->image;
+            } else {
+                $image = null;
+            }
+
+            if ($image !== null) {
+                $called[$image] = $image;
+            }
+        }
+
+        $this->_calls += count($called);
+    }
+
+    /**
+     * Finds the offset of the curly brace that opens the function or method
+     * body.
+     *
+     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
+     *
+     * @return integer
+     */
+    private function _findOpenCurlyBrace(array $tokens)
+    {
+        foreach ($tokens as $i => $token) {
+            if ($token->type === PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN) {
+                return $i;
+            }
+        }
+
+        return count($tokens);
+    }
+
+    /**
+     * Returns <b>true</b> when the actual token is a parenthesis and the
+     * previous token is a valid callable identifier.
+     *
+     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
+     * @param integer                 $index  The actual token array index.
+     *
+     * @return boolean
+     */
+    private function _isCallableOpenParenthesis(array $tokens, $index)
+    {
+        return ($tokens[$index]->type === PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN
+            && isset($tokens[$index - 1]) === true
+            && in_array($tokens[$index - 1]->type, $this->_callableTokens) === true);
+    }
+
+    /**
+     * Returns <b>true</b> when the actual index is a function invocation and
+     * not an object allocate expression.
+     *
+     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
+     * @param integer                 $index  The actual token array index.
+     *
+     * @return boolean
+     */
+    private function _isFunctionInvocation(array $tokens, $index)
+    {
+        return (isset($tokens[$index - 2]) === false
+            || $tokens[$index - 2]->type !== PHP_Depend_TokenizerI::T_NEW);
+    }
+
+    /**
+     * Returns <b>true</b> when the actual index is part of a method invocation
+     * chain expression.
+     *
+     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
+     * @param integer                 $index  The actual token array index.
+     *
+     * @return boolean
+     */
+    private function _isMethodInvocation(array $tokens, $index)
+    {
+        return (isset($tokens[$index - 2]) === true &&
+            in_array($tokens[$index - 2]->type, $this->_methodChainTokens));
+    }
+
+    /**
+     * This method returns the source image of a method invocation chain.
+     *
+     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
+     * @param integer                 $index  The actual token array index.
+     *
+     * @return string
+     */
+    private function _getInvocationChainImage(array $tokens, $index)
+    {
+        $image = $tokens[$index - 2]->image . $tokens[$index - 1]->image;
+        for ($j = $index - 3; $j >= 0; --$j) {
+            if (!in_array($tokens[$j]->type, $this->_callableTokens)
+                && !in_array($tokens[$j]->type, $this->_methodChainTokens)
+            ) {
                 break;
             }
+            $image = $tokens[$j]->image . $image;
         }
-
-        for (; $i < $count; ++$i) {
-            // Skip non parenthesis tokens
-            if ($tokens[$i]->type !== PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN) {
-                continue;
-            }
-            // Skip first token
-            if (!isset($tokens[$i - 1]) || !in_array($tokens[$i - 1]->type, $callT)
-            ) {
-
-                continue;
-            }
-            // Count if no other token exists
-            if (!isset($tokens[$i - 2]) && !isset($called[$tokens[$i - 1]->image])) {
-                $called[$tokens[$i - 1]->image] = true;
-                ++$this->_calls;
-                continue;
-            } else if (in_array($tokens[$i - 2]->type, $chainT)) {
-                $identifier = $tokens[$i - 2]->image . $tokens[$i - 1]->image;
-                for ($j = $i - 3; $j >= 0; --$j) {
-                    if (!in_array($tokens[$j]->type, $callT)
-                        && !in_array($tokens[$j]->type, $chainT)
-                    ) {
-                        break;
-                    }
-                    $identifier = $tokens[$j]->image . $identifier;
-                }
-
-                if (!isset($called[$identifier])) {
-                    $called[$identifier] = true;
-                    ++$this->_calls;
-                }
-            } else if ($tokens[$i - 2]->type !== PHP_Depend_TokenizerI::T_NEW) {
-                $called[$tokens[$i - 1]->image] = true;
-                ++$this->_calls;
-            }
-        }
+        return $image;
     }
 }
