@@ -61,6 +61,58 @@
 final class PHP_Depend_Util_Type
 {
     /**
+     * Constants for valid php data types.
+     */
+    const PHP_TYPE_ARRAY   = 'array',
+          PHP_TYPE_BOOLEAN = 'boolean',
+          PHP_TYPE_FLOAT   = 'float',
+          PHP_TYPE_INTEGER = 'integer',
+          PHP_TYPE_STRING  = 'string';
+    /**
+     * Constants with valid php data type identifiers.
+     */         
+    const IMAGE_ARRAY    = 'array',
+          IMAGE_BOOL     = 'bool',
+          IMAGE_BOOLEAN  = 'boolean',
+          IMAGE_DOUBLE   = 'double',
+          IMAGE_FLOAT    = 'float',
+          IMAGE_INT      = 'int',
+          IMAGE_INTEGER  = 'integer',
+          IMAGE_MIXED    = 'mixed',
+          IMAGE_REAL     = 'real',
+          IMAGE_RESOURCE = 'resource',
+          IMAGE_OBJECT   = 'object',
+          IMAGE_STRING   = 'string',
+          IMAGE_STDCLASS = 'stdclass',
+          IMAGE_VOID     = 'void';
+
+    /**
+     * Constants with the metaphone representation of multiple php data types.
+     */
+    const IMAGE_METAPHONE_ARRAY        = 'AR',
+          IMAGE_METAPHONE_BOOLEAN      = 'BLN',
+          IMAGE_METAPHONE_DOUBLE       = 'TBL',
+          IMAGE_METAPHONE_FLOAT        = 'FLT',
+          IMAGE_METAPHONE_INTEGER      = 'INTJR',
+          IMAGE_METAPHONE_MIXED        = 'MKST',
+          IMAGE_METAPHONE_REAL         = 'RL',
+          IMAGE_METAPHONE_RESOURCE     = 'RSRS',
+          IMAGE_METAPHONE_OBJECT       = 'OBJKT',
+          IMAGE_METAPHONE_STRING       = 'STRNK',
+          IMAGE_METAPHONE_STDCLASS     = 'STTKLS',
+          IMAGE_METAPHONE_UNKNOWN      = 'UNKNN',
+          IMAGE_METAPHONE_UNKNOWN_TYPE = 'UNKNNTP';
+ 
+    /**
+     * Constants for other types/keywords frequently used.
+     */
+    const IMAGE_OTHER_NULL         = 'null',
+          IMAGE_OTHER_FALSE        = 'false',
+          IMAGE_OTHER_TRUE         = 'true',
+          IMAGE_OTHER_UNKNOWN      = 'unknown',
+          IMAGE_OTHER_UNKNOWN_TYPE = 'unknown_type';
+
+    /**
      * This property contains a mapping between a unified lower case type name
      * and the corresponding PHP extension that declares this type.
      *
@@ -74,43 +126,62 @@ final class PHP_Depend_Util_Type
      * @var array(string) $_scalarTypes
      */
     private static $_scalarTypes = array(
-        'array',
-        'bool',
-        'boolean',
-        'double',
-        'float',
-        'int',
-        'integer',
-        'mixed',
-        'null',
-        'real',
-        'resource',
-        'object',
-        'string',
-        'void',
-        'false',
-        'true',
-        'unknown',      // Eclipse default return type
-        'unknown_type', // Eclipse default property type
+        self::IMAGE_ARRAY                   =>  true,
+        self::IMAGE_BOOL                    =>  true,
+        self::IMAGE_BOOLEAN                 =>  true,
+        self::IMAGE_DOUBLE                  =>  true,
+        self::IMAGE_FLOAT                   =>  true,
+        self::IMAGE_INT                     =>  true,
+        self::IMAGE_INTEGER                 =>  true,
+        self::IMAGE_MIXED                   =>  true,
+        self::IMAGE_REAL                    =>  true,
+        self::IMAGE_RESOURCE                =>  true,
+        self::IMAGE_OBJECT                  =>  true,
+        self::IMAGE_STRING                  =>  true,
+        self::IMAGE_STDCLASS                =>  true,
+        self::IMAGE_VOID                    =>  true,
+        self::IMAGE_OTHER_NULL              =>  true,
+        self::IMAGE_OTHER_FALSE             =>  true,
+        self::IMAGE_OTHER_TRUE              =>  true,
+        self::IMAGE_OTHER_UNKNOWN           =>  true,
+        self::IMAGE_OTHER_UNKNOWN_TYPE      =>  true,
+        self::IMAGE_METAPHONE_ARRAY         =>  true,
+        self::IMAGE_METAPHONE_BOOLEAN       =>  true,
+        self::IMAGE_METAPHONE_DOUBLE        =>  true,
+        self::IMAGE_METAPHONE_FLOAT         =>  true,
+        self::IMAGE_METAPHONE_INTEGER       =>  true,
+        self::IMAGE_METAPHONE_MIXED         =>  true,
+        self::IMAGE_METAPHONE_OBJECT        =>  true,
+        self::IMAGE_METAPHONE_REAL          =>  true,
+        self::IMAGE_METAPHONE_RESOURCE      =>  true,
+        self::IMAGE_METAPHONE_STRING        =>  true,
+        self::IMAGE_METAPHONE_STDCLASS      =>  true,
+        self::IMAGE_METAPHONE_UNKNOWN       =>  true,
+        self::IMAGE_METAPHONE_UNKNOWN_TYPE  =>  true,
     );
 
     /**
      * List of primitive php types.
      *
-     * @var array(string=>string) $_ASTPrimitiveTypes
+     * @var array(string=>string) $_primitiveTypes
      */
-    private static $_ASTPrimitiveTypes = array(
-        'bool'     => 'boolean',
-        'boolean'  => 'boolean',
-        'double'   => 'float',
-        'float'    => 'float',
-        'int'      => 'integer',
-        'integer'  => 'integer',
-        'mixed'    => 'float',
-        'real'     => 'float',
-        'string'   => 'string',
-        'false'    => 'boolean',
-        'true'     => 'boolean',
+    private static $_primitiveTypes = array(
+        self::IMAGE_BOOL               =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_BOOLEAN            =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_OTHER_FALSE        =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_OTHER_TRUE         =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_METAPHONE_BOOLEAN  =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_REAL               =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_FLOAT              =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_DOUBLE             =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_METAPHONE_REAL     =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_METAPHONE_FLOAT    =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_METAPHONE_DOUBLE   =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_INT                =>  self::PHP_TYPE_INTEGER,
+        self::IMAGE_INTEGER            =>  self::PHP_TYPE_INTEGER,
+        self::IMAGE_METAPHONE_INTEGER  =>  self::PHP_TYPE_INTEGER,
+        self::IMAGE_STRING             =>  self::PHP_TYPE_STRING,
+        self::IMAGE_METAPHONE_STRING   =>  self::PHP_TYPE_STRING,
     );
 
     /**
@@ -183,7 +254,11 @@ final class PHP_Depend_Util_Type
      */
     public static function isScalarType($scalarType)
     {
-        return in_array(strtolower($scalarType), self::$_scalarTypes);
+        $image = strtolower($scalarType);
+        if (isset(self::$_scalarTypes[$image]) === false) {
+            return isset(self::$_scalarTypes[metaphone($image)]);
+        }
+        return true;
     }
 
     /**
@@ -197,7 +272,7 @@ final class PHP_Depend_Util_Type
      */
     public static function isPrimitiveType($image)
     {
-        return isset(self::$_ASTPrimitiveTypes[strtolower($image)]);
+        return (self::getPrimitiveType($image) !== null);
     }
 
     /**
@@ -211,8 +286,13 @@ final class PHP_Depend_Util_Type
      */
     public static function getPrimitiveType($image)
     {
-        if (self::isPrimitiveType($image) === true) {
-            return self::$_ASTPrimitiveTypes[strtolower($image)];
+        $image = strtolower($image);
+        if (isset(self::$_primitiveTypes[$image]) === true) {
+            return self::$_primitiveTypes[$image];
+        }
+        $image = metaphone($image);
+        if (isset(self::$_primitiveTypes[$image]) === true) {
+            return self::$_primitiveTypes[$image];
         }
         return null;
     }
