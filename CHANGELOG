@@ -8,6 +8,8 @@ PHP_Depend 0.9.6
   fixed in svn revision #931.
 - Closed #83: Make ClassOrInterfaceReference an ASTNode, implemented in svn
   revision #917.
+- Closed #85: Use soundex to detect typos in type annotations, implemented in
+  svn revision #937.
 - Fixed #87: The parent keyword is not accepted as parameter type hint, fixed in
   svn revision #925.
 
