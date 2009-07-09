@@ -283,8 +283,9 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     {
         $called = array();
 
-        $tokens = $callable->getTokens();
+        $tokens = $this->_stripCommentTokens($callable->getTokens());
         $count  = count($tokens);
+
         for ($i = $this->_findOpenCurlyBrace($tokens); $i < $count; ++$i) {
 
             if ($this->_isCallableOpenParenthesis($tokens, $i) === false) {
@@ -392,5 +393,25 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             $image = $tokens[$j]->image . $image;
         }
         return $image;
+    }
+
+    /**
+     * Removes all comment and doc comment tokens from the given input array.
+     *
+     * @param array(PHP_Depend_Token) $tokens The input token array
+     *
+     * @return array(PHP_Depend_Token)
+     */
+    private function _stripCommentTokens(array $tokens)
+    {
+        $result = array();
+        foreach ($tokens as $token) {
+            if ($token->type !== PHP_Depend_TokenizerI::T_COMMENT
+                && $token->type !== PHP_Depend_TokenizerI::T_DOC_COMMENT
+            ) {
+                $result[] = $token;
+            }
+        }
+        return $result;
     }
 }

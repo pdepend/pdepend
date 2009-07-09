@@ -63,6 +63,7 @@ require_once dirname(__FILE__) . '/TokenizerKeywordSubstitutionBug76Test.php';
 require_once dirname(__FILE__) . '/SupportCommaSeparatedPropertyDeclarationsBug081Test.php';
 require_once dirname(__FILE__) . '/SupportCommaSeparatedConstantDefinitionsBug082Test.php';
 require_once dirname(__FILE__) . '/ParentKeywordAsParameterTypeHintBug087Test.php';
+require_once dirname(__FILE__) . '/WrongCouplingAnalyzerForCommentsBug089Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -107,6 +108,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test');
         $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test');
 
         return $suite;
     }
