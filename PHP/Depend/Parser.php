@@ -1751,6 +1751,33 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_builder->buildASTVariable($token->image);
     }
 
+    /**
+     * This method is a decision point between the different variable types
+     * availanle in PHP. It peeks the next token and then decides whether it is
+     * a regular variable or when the next token is of type <b>T_DOLLAR</b> a
+     * compound- or variable-variable.
+     *
+     * <code>
+     * ----
+     * $foo;
+     * ----
+     *
+     * -----
+     * $$foo;
+     * -----
+     *
+     * ------
+     * ${FOO};
+     * ------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
+     *         is not a valid variable token.
+     * @since 0.9.6
+     */
     private function _parseCompoundVariableOrVariableVariableOrVariable()
     {
         $this->_consumeComments();
@@ -1759,14 +1786,30 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->_tokenizer->peek();
 
         switch ($tokenType) {
-            case self::T_DOLLAR:
-                return $this->_parseCompoundVariableOrVariableVariable();
 
-            default:
-                return $this->_parseVariable();
+        case self::T_DOLLAR:
+            return $this->_parseCompoundVariableOrVariableVariable();
+
+        default:
+            return $this->_parseVariable();
         }
     }
-    
+
+    /**
+     * This method implements a decision point between compound-variables and
+     * variable-variable. It expects that the next token in the token-stream is
+     * of type <b>T_DOLLAR</b> and removes it from the stream. Then this method
+     * peeks the next available token when it is of type <b>T_CURLY_BRACE_OPEN</b>
+     * this is compound variable, otherwise it can be a variable-variable or a
+     * compound-variable.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
+     *         is not a valid variable token.
+     * @since 0.9.6
+     */
     private function _parseCompoundVariableOrVariableVariable()
     {
         // Read the dollar token
@@ -1797,7 +1840,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $variable;
     }
 
-
+    /**
+     * This method parses a compound expression node.
+     *
+     * <code>
+     * ------------------
+     * {'_' . foo . $bar}
+     * ------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTCompoundExpression
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
+     *         is not a valid variable token.
+     * @since 0.9.6
+     */
     private function _parseCompoundExpression()
     {
         return $this->_parseBraceExpression(
@@ -2313,6 +2371,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * </code>
      *
      * @return string
+     * @link http://php.net/manual/en/language.namespaces.importing.php
      */
     private function _parseQualifiedName()
     {
@@ -2497,6 +2556,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $fragments = $this->_parseQualifiedNameRaw();
         $this->_consumeComments();
 
+        // Add leading backslash, because aliases must be full qualified
+        // http://php.net/manual/en/language.namespaces.importing.php
+        if ($fragments[0] !== '\\') {
+            array_unshift($fragments, '\\');
+        }
+
         if ($this->_tokenizer->peek() === self::T_AS) {
             $this->_consumeToken(self::T_AS);
             $this->_consumeComments();
@@ -2619,6 +2684,39 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $declarator;
     }
 
+    /**
+     * This method parses a static variable declaration list or a member primary
+     * prefix invoked in the static context of a class.
+     *
+     * <code>
+     * function foo() {
+     * //  ------------------------------
+     *     static $foo, $bar, $baz = null;
+     * //  ------------------------------
+     * }
+     *
+     *
+     * class Foo {
+     *     public function baz() {
+     * //      ----------------
+     *         static::foobar();
+     * //      ----------------
+     *     }
+     *     public function foobar() {}
+     * }
+     *
+     * class Bar extends Foo {
+     *     public function foobar() {}
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTConstant
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
+     *         is not a valid variable token.
+     * @since 0.9.6
+     */
     private function _parseStaticVariableDeclarationOrMemberPrimaryPrefix()
     {
         $this->_tokenStack->push();
@@ -2662,6 +2760,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *            $barbaz;
      * }
      * </code>
+     *
+     * @param PHP_Depend_Token $token Token with the "static" keyword.
      *
      * @return PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
