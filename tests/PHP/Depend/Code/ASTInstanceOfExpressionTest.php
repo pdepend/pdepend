@@ -167,6 +167,23 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     }
 
     /**
+     * Tests that the created instanceof object graph has the expected structure.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testInstanceOfExpressionGraphWithStaticProperty()
+    {
+        $this->assertInstanceOfGraphProperty(
+            self::parseTestCaseSource(__METHOD__)
+                ->current()
+                ->getFunctions()
+                ->current(),
+                '::'
+        );
+    }
+
+    /**
      * Tests the instanceof expression object graph.
      *
      * @param object $parent The parent ast node.
@@ -176,12 +193,47 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      */
     protected function assertInstanceOfGraphStatic($parent, $image)
     {
+        $this->assertInstanceOfGraph(
+            $parent,
+            $image,
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+        );
+    }
+
+    /**
+     * Tests the instanceof expression object graph.
+     *
+     * @param object $parent The parent ast node.
+     * @param string $image  The expected type image.
+     *
+     * @return void
+     */
+    protected function assertInstanceOfGraphProperty($parent, $image)
+    {
+        $this->assertInstanceOfGraph(
+            $parent,
+            $image,
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        );
+    }
+
+    /**
+     * Tests the instanceof expression object graph.
+     *
+     * @param object $parent The parent ast node.
+     * @param string $image  The expected type image.
+     * @param string $type   The expected class or interface type.
+     *
+     * @return void
+     */
+    protected function assertInstanceOfGraph($parent, $image, $type)
+    {
         $instanceOf = $parent->getFirstChildOfType(
             PHP_Depend_Code_ASTInstanceOfExpression::CLAZZ
         );
 
         $reference = $instanceOf->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
+        $this->assertType($type, $reference);
         $this->assertSame($image, $reference->getImage());
     }
 
