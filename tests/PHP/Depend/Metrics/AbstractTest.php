@@ -36,46 +36,54 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTInvocation.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * This class represents a function postfix expression.
+ * Abstract base class for tests of the metrics package.
  *
- * <code>
- * //-------
- * foo($bar);
- * //-------
- *
- * //--------
- * $foo($bar);
- * //--------
- * </code>
- *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @link       http://pdepend.org/
  */
-class PHP_Depend_Code_ASTFunctionPostfix extends PHP_Depend_Code_ASTInvocation
+abstract class PHP_Depend_Metrics_AbstractTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Type of this node class.
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string  $testCase          Qualified test case name.
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
      */
-    const CLAZZ = __CLASS__;
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($class, $method) = explode('::', $testCase);
+
+        $parts = explode('_', $class);
+
+        return parent::parseSource(
+            sprintf(
+                'metrics/%s/%s.php',
+                $parts[count($parts) - 2],
+                $method
+            ),
+            $ignoreAnnotations
+        );
+    }
 }

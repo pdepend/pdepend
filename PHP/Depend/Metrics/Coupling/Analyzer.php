@@ -46,6 +46,9 @@
  * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Code/ASTInvocation.php';
+require_once 'PHP/Depend/Code/ASTMemberPrimaryPrefix.php';
+
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
@@ -281,172 +284,29 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $called = array();
+        $invocations = $callable->findChildrenOfType(
+            PHP_Depend_Code_ASTInvocation::CLAZZ
+        );
 
-        $tokens = $this->_stripCommentTokens($callable->getTokens());
-        $count  = count($tokens);
+        $invoked = array();
 
-        for ($i = $this->_findOpenCurlyBrace($tokens); $i < $count; ++$i) {
+        foreach ($invocations as $invocation) {
+            $parents = $invocation->getParentsOfType(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+            );
 
-            if ($this->_isCallableOpenParenthesis($tokens, $i) === false) {
-                continue;
+            $image = '';
+            foreach ($parents as $parent) {
+                $child = $parent->getChild(0);
+                if ($child !== $invocation) {
+                    $image .= $child->getImage() . '.';
+                }
             }
+            $image .= $invocation->getImage() . '()';
 
-            if ($this->_isMethodInvocation($tokens, $i) === true) {
-                $image = $this->_getInvocationChainImage($tokens, $i);
-            } else if ($this->_isFunctionInvocation($tokens, $i) === true) {
-                $image = $tokens[$i - 1]->image;
-            } else {
-                $image = null;
-            }
-
-            if ($image !== null) {
-                $called[$image] = $image;
-            }
+            $invoked[$image] = $image;
         }
 
-        $this->_calls += count($called);
-    }
-
-    /**
-     * Finds the offset of the curly brace that opens the function or method
-     * body.
-     *
-     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
-     *
-     * @return integer
-     */
-    private function _findOpenCurlyBrace(array $tokens)
-    {
-        foreach ($tokens as $i => $token) {
-            if ($token->type === PHP_Depend_TokenizerI::T_CURLY_BRACE_OPEN) {
-                return $i;
-            }
-        }
-
-        return count($tokens);
-    }
-
-    /**
-     * Returns <b>true</b> when the actual token is a parenthesis and the
-     * previous token is a valid callable identifier.
-     *
-     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
-     * @param integer                 $index  The actual token array index.
-     *
-     * @return boolean
-     */
-    private function _isCallableOpenParenthesis(array $tokens, $index)
-    {
-        return ($tokens[$index]->type === PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN
-            && isset($tokens[$index - 1]) === true
-            && in_array($tokens[$index - 1]->type, $this->_callableTokens) === true);
-    }
-
-    /**
-     * Returns <b>true</b> when the actual index is a function invocation and
-     * not an object allocate expression.
-     *
-     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
-     * @param integer                 $index  The actual token array index.
-     *
-     * @return boolean
-     */
-    private function _isFunctionInvocation(array $tokens, $index)
-    {
-        return (isset($tokens[$index - 2]) === false
-            || $tokens[$index - 2]->type !== PHP_Depend_TokenizerI::T_NEW);
-    }
-
-    /**
-     * Returns <b>true</b> when the actual index is part of a method invocation
-     * chain expression.
-     *
-     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
-     * @param integer                 $index  The actual token array index.
-     *
-     * @return boolean
-     */
-    private function _isMethodInvocation(array $tokens, $index)
-    {
-        return (isset($tokens[$index - 2]) === true &&
-            in_array($tokens[$index - 2]->type, $this->_methodChainTokens));
-    }
-
-    /**
-     * This method returns the source image of a method invocation chain.
-     *
-     * @param array(PHP_Depend_Token) $tokens The function or method tokens.
-     * @param integer                 $index  The actual token array index.
-     *
-     * @return string
-     */
-    private function _getInvocationChainImage(array $tokens, $index)
-    {
-        $image = $tokens[$index - 2]->image . $tokens[$index - 1]->image;
-        for ($j = $index - 3; $j >= 0; --$j) {
-
-            $token = $tokens[$j];
-
-            if (in_array($token->type, $this->_callableTokens) === true
-                || in_array($token->type, $this->_methodChainTokens)
-                || $token->type === PHP_Depend_TokenizerI::T_BACKSLASH
-            ) {
-                $image = $tokens[$j]->image . $image;
-            } else if ($token->type === PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE) {
-                $image = '()' . $image;
-                $j     = $this->_getParametersStartOffset($tokens, $j);
-            } else {
-                 break;
-            }
-        }
-        return $image;
-    }
-
-    /**
-     * Returns the parameters start offset.
-     *
-     * @param array(PHP_Depend_Token) $tokens Actual token array.
-     * @param integer                 $index  Actual token array index.
-     *
-     * @return integer
-     */
-    private function _getParametersStartOffset(array $tokens, $index)
-    {
-        $parenthesis = 0;
-        for ($i = $index; $i >= 0; --$i) {
-
-            $token = $tokens[$i];
-
-            if ($token->type === PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE) {
-                --$parenthesis;
-            } else if ($token->type === PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN) {
-                ++$parenthesis;
-            }
-            if ($parenthesis === 0) {
-                return $i;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Removes all comment and doc comment tokens from the given input array.
-     *
-     * @param array(PHP_Depend_Token) $tokens The input token array
-     *
-     * @return array(PHP_Depend_Token)
-     */
-    private function _stripCommentTokens(array $tokens)
-    {
-        $result = array();
-        foreach ($tokens as $token) {
-            if ($token->type !== PHP_Depend_TokenizerI::T_COMMENT
-                && $token->type !== PHP_Depend_TokenizerI::T_DOC_COMMENT
-            ) {
-                $result[] = $token;
-            }
-        }
-        return $result;
+        $this->_calls += count($invoked);
     }
 }

@@ -47,6 +47,8 @@
  * @since      0.9.6
  */
 
+require_once 'PHP/Depend/Code/ASTInvocation.php';
+
 /**
  * This class represents a method postfix expression..
  *
@@ -70,7 +72,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_ASTMethodPostfix extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Code_ASTMethodPostfix extends PHP_Depend_Code_ASTInvocation
 {
     /**
      * Type of this node class.

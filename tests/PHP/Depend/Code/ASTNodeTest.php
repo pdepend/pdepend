@@ -235,7 +235,6 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      */
     protected abstract function createNodeInstance();
 
-
     /**
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
