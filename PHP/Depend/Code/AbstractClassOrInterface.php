@@ -542,12 +542,12 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
 
         $definitions = $this->findChildrenOfType(
-            'PHP_Depend_Code_ASTConstantDefinition'
+            PHP_Depend_Code_ASTConstantDefinition::CLAZZ
         );
 
         foreach ($definitions as $definition) {
             $declarators = $definition->findChildrenOfType(
-                'PHP_Depend_Code_ASTConstantDeclarator'
+                PHP_Depend_Code_ASTConstantDeclarator::CLAZZ
             );
 
             foreach ($declarators as $declarator) {

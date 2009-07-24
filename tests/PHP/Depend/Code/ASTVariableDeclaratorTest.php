@@ -75,7 +75,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
             ->current();
 
         $declarators = $function->findChildrenOfType(
-            'PHP_Depend_Code_ASTVariableDeclarator'
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
         $this->assertSame(4, $declarators[0]->getStartLine());
@@ -95,7 +95,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
             ->current();
 
         $declarators = $function->findChildrenOfType(
-            'PHP_Depend_Code_ASTVariableDeclarator'
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
         $this->assertSame(12, $declarators[0]->getStartColumn());
@@ -115,7 +115,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
             ->current();
 
         $declarator = $function->getFirstChildOfType(
-            'PHP_Depend_Code_ASTVariableDeclarator'
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
         $this->assertSame(7, $declarator->getEndLine());
@@ -134,7 +134,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
             ->current();
 
         $declarator = $function->getFirstChildOfType(
-            'PHP_Depend_Code_ASTVariableDeclarator'
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
         $this->assertSame(17, $declarator->getEndColumn());
