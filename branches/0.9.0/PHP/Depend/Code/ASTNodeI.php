@@ -144,5 +144,31 @@ interface PHP_Depend_Code_ASTNodeI
      * @return void
      */
     function addChild(PHP_Depend_Code_ASTNodeI $node);
+
+    /**
+     * Returns the parent node of this node or <b>null</b> when this node is
+     * the root of a node tree.
+     *
+     * @return PHP_Depend_Code_ASTNodeI
+     */
+    function getParent();
+
+    /**
+     * Traverses up the node tree and finds all parent nodes that are  instances
+     * of <b>$parentType</b>.
+     *
+     * @param string $parentType Class/interface type you are looking for,
+     *
+     * @return array(PHP_Depend_Code_ASTNodeI)
+     */
+    function getParentsOfType($parentType);
+
+    /**
+     * Sets the parent node of this node.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The parent node of this node.
+     *
+     * @return void
+     */
+    function setParent(PHP_Depend_Code_ASTNodeI $node);
 }
-?>
