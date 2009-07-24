@@ -3024,6 +3024,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_DNUMBER:
             case self::T_LNUMBER:
             case self::T_FUNC_C:
+            case self::T_CLASS_C:
             case self::T_METHOD_C:
             case self::T_STATIC:
             case self::T_PARENT:
