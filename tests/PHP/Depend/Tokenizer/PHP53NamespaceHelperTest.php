@@ -91,7 +91,7 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
                 array(T_WHITESPACE, ' ', 1),
                 array(T_CLOSE_TAG, '?>', 1)
             ),
-            $tokens
+            $this->appendLineNumberInPHP522($tokens)
         );
     }
 
@@ -123,7 +123,7 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
                 array(T_WHITESPACE, ' ', 1),
                 array(T_CLOSE_TAG, '?>', 1)
             ),
-            $tokens
+            $this->appendLineNumberInPHP522($tokens)
         );
     }
 
@@ -153,7 +153,7 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
                 array(T_WHITESPACE, ' ', 1),
                 array(T_CLOSE_TAG, '?>', 1)
             ),
-            $tokens
+            $this->appendLineNumberInPHP522($tokens)
         );
     }
 
@@ -177,7 +177,7 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
                 array(T_CONSTANT_ENCAPSED_STRING, '"foo\"bar"', 1),
                 ';'
             ),
-            $tokens
+            $this->appendLineNumberInPHP522($tokens)
         );
     }
 
@@ -201,7 +201,7 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
                 array(T_CONSTANT_ENCAPSED_STRING, "'foo\'bar'", 1),
                 ';'
             ),
-            $tokens
+            $this->appendLineNumberInPHP522($tokens)
         );
     }
 
@@ -227,7 +227,29 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
                 array(T_CONSTANT_ENCAPSED_STRING, '"foo\\bar"', 1),
                 ';'
             ),
-            $tokens
+            $this->appendLineNumberInPHP522($tokens)
         );
+    }
+
+    /**
+     * This method will append the third token array element, which contains the
+     * line number of a token. This feature was introdcued with PHP version
+     * 5.2.2.
+     *
+     * @param array(mixed) $tokens The input token array.
+     *
+     * @return array(mixed)
+     */
+    protected function appendLineNumberInPHP522(array $tokens)
+    {
+        if (version_compare(phpversion(), '5.2.2') >= 0) {
+            return $tokens;
+        }
+        foreach ($tokens as $idx => $token) {
+            if (is_array($token) === true) {
+                $tokens[$idx][2] = 1;
+            }
+        }
+        return $tokens;
     }
 }

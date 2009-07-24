@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Token.php';
 require_once 'PHP/Depend/ConstantsI.php';
@@ -64,7 +64,7 @@ require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
      * Tests that the analyzer calculates correct fanout and call metrics for
@@ -177,7 +177,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerCalculatesCorrectCoupling()
     {
-        $packages = self::parseSource('metrics/coupling');
+        $packages = self::parseSource('metrics/Coupling/Project');
         $package = $packages->current();
 
         $this->assertEquals(3, $package->getClasses()->count());
@@ -199,28 +199,18 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * Tests that the analyzer calculates the expected call count.
      *
-     * @param array(PHP_Depend_Token) $tokens The method/function tokens.
-     * @param integer                 $calls  Number of expected calls.
+     * @param string  $fileName File with test source.
+     * @param integer $calls    Number of expected calls.
      *
      * @return void
      * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
-    public function testAnalyzerCalculatesExpectedCallCount(array $tokens, $calls)
+    public function testAnalyzerCalculatesExpectedCallCount($fileName, $calls)
     {
-        $function = $this->getMock('PHP_Depend_Code_Function', array(), array(null));
-        $function->expects($this->atLeastOnce())
-            ->method('getTokens')
-            ->will($this->returnValue($tokens));
-        $function->expects($this->atLeastOnce())
-            ->method('getExceptionClasses')
-            ->will($this->returnValue(array()));
-        $function->expects($this->atLeastOnce())
-            ->method('getDependencies')
-            ->will($this->returnValue(array()));
+        $packages = self::parseTestCaseSource($fileName);
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($this->getMock('PHP_Depend_Code_NodeIterator', array(), array(array())));
-        $analyzer->visitFunction($function);
+        $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertSame($calls, $project['calls']);
@@ -251,211 +241,33 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Data provider that returns different token array that can be used as
-     * function or method tokens.
+     * Data provider that returns different test files and the corresponding
+     * invocation count value.
      *
      * @return array
      */
     public static function dataProviderAnalyzerCalculatesExpectedCallCount()
     {
+        return array(array(__METHOD__ . '#19', 1));
         return array(
-            array(
-                array(), 0
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                0
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                0
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                0
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                1
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                1
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                2
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                1
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                1
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                1
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'baz', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                2
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                2
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_COLON, '::', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                1
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_COLON, '::', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                2
-            ),
-            array(
-                array(
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_COLON, '::', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'f00', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_COLON, '::', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-                ),
-                4
-            ),
+            array(__METHOD__ . '#01', 0),
+            array(__METHOD__ . '#02', 0),
+            array(__METHOD__ . '#03', 0),
+            array(__METHOD__ . '#04', 1),
+            array(__METHOD__ . '#05', 1),
+            array(__METHOD__ . '#06', 2),
+            array(__METHOD__ . '#07', 1),
+            array(__METHOD__ . '#08', 1),
+            array(__METHOD__ . '#09', 1),
+            array(__METHOD__ . '#10', 2),
+            array(__METHOD__ . '#11', 2),
+            array(__METHOD__ . '#12', 1),
+            array(__METHOD__ . '#13', 0),
+            array(__METHOD__ . '#14', 0),
+            array(__METHOD__ . '#15', 1),
+            array(__METHOD__ . '#16', 2),
+            array(__METHOD__ . '#17', 4),
+            array(__METHOD__ . '#18', 1),
         );
     }
 }

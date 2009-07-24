@@ -67,16 +67,24 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     /**
      * The source image for this node instance.
      *
-     * @var string $image
+     * @var string
      */
     protected $image = null;
 
     /**
      * Parsed child nodes of this node.
      *
-     * @var array(PHP_Depend_Code_ASTNodeI) $nodes
+     * @var array(PHP_Depend_Code_ASTNodeI)
      */
     protected $nodes = array();
+
+    /**
+     * The parent node of this node or <b>null</b> when this node is the root
+     * of a node tree.
+     *
+     * @var PHP_Depend_Code_ASTNodeI
+     */
+    protected $parent = null;
 
     /**
      * An optional doc comment for this node.
@@ -246,7 +254,54 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function addChild(PHP_Depend_Code_ASTNodeI $node)
     {
+        // Store child node
         $this->nodes[] = $node;
+
+        // Set this as parent
+        $node->setParent($this);
+    }
+
+    /**
+     * Returns the parent node of this node or <b>null</b> when this node is
+     * the root of a node tree.
+     *
+     * @return PHP_Depend_Code_ASTNodeI
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Traverses up the node tree and finds all parent nodes that are  instances
+     * of <b>$parentType</b>.
+     *
+     * @param string $parentType Class/interface type you are looking for,
+     *
+     * @return array(PHP_Depend_Code_ASTNodeI)
+     */
+    public function getParentsOfType($parentType)
+    {
+        $parents = array();
+
+        $parentNode = $this->parent;
+        while ($parentNode instanceof $parentType) {
+            array_unshift($parents, $parentNode);
+            $parentNode = $parentNode->getParent();
+        }
+        return $parents;
+    }
+
+    /**
+     * Sets the parent node of this node.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The parent node of this node.
+     *
+     * @return void
+     */
+    public function setParent(PHP_Depend_Code_ASTNodeI $node)
+    {
+        $this->parent = $node;
     }
 
     /**

@@ -47,20 +47,10 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTInvocation.php';
+require_once 'PHP/Depend/Code/ASTNodeI.php';
 
 /**
- * This class represents a function postfix expression.
- *
- * <code>
- * //-------
- * foo($bar);
- * //-------
- *
- * //--------
- * $foo($bar);
- * //--------
- * </code>
+ * This is an abstract base class for invocation nodes.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -72,10 +62,7 @@ require_once 'PHP/Depend/Code/ASTInvocation.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_ASTFunctionPostfix extends PHP_Depend_Code_ASTInvocation
+abstract class PHP_Depend_Code_ASTInvocation extends PHP_Depend_Code_ASTNode
 {
-    /**
-     * Type of this node class.
-     */
     const CLAZZ = __CLASS__;
 }
