@@ -574,6 +574,25 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new allocation expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTAllocationExpression
+     * @since 0.9.6
+     */
+    public function buildASTAllocationExpression($image)
+    {
+        include_once 'PHP/Depend/Code/ASTAllocationExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTAllocationExpression()'
+        );
+
+        return new PHP_Depend_Code_ASTAllocationExpression($image);
+    }
+
+    /**
      * Builds a new array type node.
      *
      * @return PHP_Depend_Code_ASTArrayType

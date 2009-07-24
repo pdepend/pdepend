@@ -67,6 +67,11 @@ final class PHP_Depend_Code_ASTSelfReference
     extends PHP_Depend_Code_ASTClassOrInterfaceReference
 {
     /**
+     * The image type of this node.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The source image of this node.
      */
     const IMAGE = 'self';

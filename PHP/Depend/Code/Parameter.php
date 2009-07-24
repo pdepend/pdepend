@@ -46,6 +46,10 @@
  * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Code/ASTArrayType.php';
+require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+
 require_once 'PHP/Depend/Code/NodeI.php';
 
 /**
@@ -124,7 +128,7 @@ class PHP_Depend_Code_Parameter
     {
         $this->_formalParameter    = $formalParameter;
         $this->_ASTVariableDeclarator = $formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_ASTVariableDeclarator'
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
         $this->_uuid = new PHP_Depend_Util_UUID();
@@ -253,7 +257,7 @@ class PHP_Depend_Code_Parameter
     public function getClass()
     {
         $classReference = $this->_formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_ASTClassOrInterfaceReference'
+             PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
         );
         if ($classReference === null) {
             return null;
@@ -271,7 +275,7 @@ class PHP_Depend_Code_Parameter
     public function getClassReference()
     {
         return $this->_formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_ASTClassOrInterfaceReference'
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
         );
     }
 
@@ -297,7 +301,7 @@ class PHP_Depend_Code_Parameter
     public function isArray()
     {
         $arrayType = $this->_formalParameter->getFirstChildOfType(
-            'PHP_Depend_Code_ASTArrayType'
+            PHP_Depend_Code_ASTArrayType::CLAZZ
         );
         return ($arrayType !== null);
     }

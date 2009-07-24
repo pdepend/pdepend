@@ -75,7 +75,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
         $constant = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
 
         $expected = array(
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CONST, 'const', 3, 3, 5, 9),
@@ -100,7 +100,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
         $constant = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
 
         $expected = array(
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CONST, 'const', 3, 3, 5, 9),
@@ -125,7 +125,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
         $constant = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
 
         $this->assertSame(3, $constant->getStartLine());
     }
@@ -141,7 +141,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
         $constant = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
 
         $this->assertSame(7, $constant->getEndLine());
     }
@@ -157,7 +157,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
         $constant = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
 
         $this->assertSame(
             "/**\n" .
@@ -178,7 +178,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
         $constant = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PHP_Depend_Code_ASTConstantDefinition');
+            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
 
         $this->assertSame(
             "/**\n" .

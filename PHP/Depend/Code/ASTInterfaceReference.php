@@ -64,6 +64,11 @@ class PHP_Depend_Code_ASTInterfaceReference
     extends PHP_Depend_Code_ASTClassOrInterfaceReference
 {
     /**
+     * The image type of this node.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * Returns the concrete type instance associated with with this placeholder.
      *
      * @return PHP_Depend_Code_AbstractClassOrInterface

@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,96 +46,104 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTStaticVariableDeclaration} class.
+ * Test case for bug 090 where the coupling analyzer calculates wrong results
+ * for functions calls and object allocations that use PHP 5.3's namespace
+ * syntax.
+ *
+ * http://tracker.pdepend.org/pdepend/issue_tracker/issue/90/
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test
+    extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that the declaration has the expected start line value.
-     * 
-     * @return void
-     */
-    public function testStaticVariableDeclarationHasExpectedStartLine()
-    {
-        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
-
-        $this->assertSame(4, $declaration->getStartLine());
-    }
-
-    /**
-     * Tests that the declaration has the expected start column value.
+     * Tests that the analyzer calculates the expected result.
      *
      * @return void
      */
-    public function testStaticVariableDeclarationHasExpectedStartColumn()
+    public function testAnalyzerIgnoresObjectAllocation()
     {
-        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
+        $packages = self::parseSource('bugs/090/' . __FUNCTION__ . '.php');
 
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
 
-        $this->assertSame(5, $declaration->getStartColumn());
+        $project = $analyzer->getProjectMetrics();
+        $this->assertSame(0, $project['calls']);
     }
 
     /**
-     * Tests that the declaration has the expected end line value.
+     * Tests that the analyzer calculates the expected result.
      *
      * @return void
      */
-    public function testStaticVariableDeclarationHasExpectedEndLine()
+    public function testAnalyzerDetectsIdenticalFunctionCalls()
     {
-        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
+        $packages = self::parseSource('bugs/090/' . __FUNCTION__ . '.php');
 
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
 
-        $this->assertSame(5, $declaration->getEndLine());
+        $project = $analyzer->getProjectMetrics();
+        $this->assertSame(1, $project['calls']);
     }
 
     /**
-     * Tests that the declaration has the expected end column value.
+     * Tests that the analyzer calculates the expected result.
      *
      * @return void
      */
-    public function testStaticVariableDeclarationHasExpectedEndColumn()
+    public function testAnalyzerDetectsDifferentFunctionCalls()
     {
-        $packages = self::parseSource('code/ASTStaticVariableDeclaration/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
+        $packages = self::parseSource('bugs/090/' . __FUNCTION__ . '.php');
 
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
 
-        $this->assertSame(23, $declaration->getEndColumn());
+        $project = $analyzer->getProjectMetrics();
+        $this->assertSame(2, $project['calls']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the expected result.
+     *
+     * @return void
+     */
+    public function testAnalyzerDetectsIdenticalMethodCalls()
+    {
+        $packages = self::parseSource('bugs/090/' . __FUNCTION__ . '.php');
+
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
+
+        $project = $analyzer->getProjectMetrics();
+        $this->assertSame(1, $project['calls']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the expected result.
+     *
+     * @return void
+     */
+    public function testAnalyzerDetectsDifferentMethodCalls()
+    {
+        $packages = self::parseSource('bugs/090/' . __FUNCTION__ . '.php');
+
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
+
+        $project = $analyzer->getProjectMetrics();
+        $this->assertSame(2, $project['calls']);
     }
 }
-?>

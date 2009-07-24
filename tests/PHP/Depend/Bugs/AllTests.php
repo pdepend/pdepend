@@ -64,6 +64,7 @@ require_once dirname(__FILE__) . '/SupportCommaSeparatedPropertyDeclarationsBug0
 require_once dirname(__FILE__) . '/SupportCommaSeparatedConstantDefinitionsBug082Test.php';
 require_once dirname(__FILE__) . '/ParentKeywordAsParameterTypeHintBug087Test.php';
 require_once dirname(__FILE__) . '/WrongCouplingAnalyzerForCommentsBug089Test.php';
+require_once dirname(__FILE__) . '/NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -109,6 +110,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test');
         $suite->addTestSuite('PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test');
 
         return $suite;
     }
