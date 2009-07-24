@@ -49,6 +49,7 @@
 require_once 'PHP/Depend/Token.php';
 require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/File.php';
+require_once 'PHP/Depend/Tokenizer/PHP53NamespaceHelper.php';
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
@@ -431,7 +432,7 @@ class PHP_Depend_Tokenizer_Internal
         );
 
         if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
-            $tokens = $this->_php53BackslashWorkaround($source);
+            $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize($source);
         } else {
             $tokens = token_get_all($source);
         }
@@ -592,39 +593,6 @@ class PHP_Depend_Tokenizer_Internal
         }
 
         return $content;
-    }
-
-    /**
-     * Workaround to tokenize the backslash namespace separator.
-     *
-     * @param string $source The raw source code.
-     *
-     * @return array The tokens.
-     */
-    private function _php53BackslashWorkaround($source)
-    {
-        // Replace backslash with valid token
-        $source = preg_replace('#\\\\([^"\'`\\\\])#i', ':::\\1', $source);
-
-        $tokens = token_get_all($source);
-
-        $result = array();
-        for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
-            if (is_string($tokens[$i])) {
-                $result[] = str_replace(':::', '\\', $tokens[$i]);
-            } else if ($tokens[$i][0] !== T_DOUBLE_COLON) {
-                $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
-                $result[]      = $tokens[$i];
-            } else if (!isset($tokens[$i + 1]) || $tokens[$i + 1] !== ':') {
-                $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
-                $result[]      = $tokens[$i];
-            } else {
-                $result[] = '\\';
-                ++$i;
-            }
-        }
-
-        return $result;
     }
 
     /**

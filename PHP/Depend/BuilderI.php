@@ -215,6 +215,32 @@ interface PHP_Depend_BuilderI
     function buildASTSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
 
     /**
+     * Builds a new parent reference instance.
+     *
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference $reference The type
+     *        instance that reference the concrete target of parent.
+     *
+     * @return PHP_Depend_Code_ASTParentReference
+     * @since 0.9.6
+     */
+    function buildASTParentReference(
+        PHP_Depend_Code_ASTClassOrInterfaceReference $reference
+    );
+
+    /**
+     * Builds a new static reference instance.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $owner The owning instance
+     *        that reference the concrete target of static.
+     *
+     * @return PHP_Depend_Code_ASTStaticReference
+     * @since 0.9.6
+     */
+    function buildASTStaticReference(
+        PHP_Depend_Code_AbstractClassOrInterface $owner
+    );
+
+    /**
      * Builds a new field declaration node.
      *
      * @return PHP_Depend_Code_ASTFieldDeclaration
@@ -231,6 +257,54 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildASTVariableDeclarator($image);
+
+    /**
+     * Builds a new constant node.
+     *
+     * @param string $image The source image for the constant.
+     *
+     * @return PHP_Depend_Code_ASTConstant
+     * @since 0.9.6
+     */
+    function buildASTConstant($image);
+
+    /**
+     * Builds a new variable node.
+     *
+     * @param string $image The source image for the variable.
+     *
+     * @return PHP_Depend_Code_ASTVariable
+     * @since 0.9.6
+     */
+    function buildASTVariable($image);
+
+    /**
+     * Builds a new variable variable node.
+     *
+     * @param string $image The source image for the variable variable.
+     *
+     * @return PHP_Depend_Code_ASTVariableVariable
+     * @since 0.9.6
+     */
+    function buildASTVariableVariable($image);
+
+    /**
+     * Builds a new compound variable node.
+     *
+     * @param string $image The source image for the compound variable.
+     *
+     * @return PHP_Depend_Code_ASTCompoundVariable
+     * @since 0.9.6
+     */
+    function buildASTCompoundVariable($image);
+
+    /**
+     * Builds a new compound expression node.
+     *
+     * @return PHP_Depend_Code_ASTCompoundExpression
+     * @since 0.9.6
+     */
+    function buildASTCompoundExpression();
 
     /**
      * Builds a new static variable declaration node.
@@ -269,6 +343,148 @@ interface PHP_Depend_BuilderI
     function buildASTAllocationExpression($image);
 
     /**
+     * Builds a new instanceof expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTInstanceOfExpression
+     * @since 0.9.6
+     */
+    function buildASTInstanceOfExpression($image);
+
+    /**
+     * Builds a new member primary expression node.
+     *
+     * <code>
+     * //--------
+     * Foo::bar();
+     * //--------
+     *
+     * //---------
+     * Foo::$bar();
+     * //---------
+     *
+     * //---------
+     * $obj->bar();
+     * //---------
+     *
+     * //----------
+     * $obj->$bar();
+     * //----------
+     * </code>
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @since 0.9.6
+     */
+    function buildASTMemberPrimaryPrefix($image);
+
+    /**
+     * Builds a new identifier node.
+     *
+     * @param string $image The image of this identifier.
+     *
+     * @return PHP_Depend_Code_ASTIdentifier
+     * @since 0.9.6
+     */
+    function buildASTIdentifier($image);
+
+    /**
+     * Builds a new function postfix expression.
+     *
+     * <code>
+     * //-------
+     * foo($bar);
+     * //-------
+     *
+     * //--------
+     * $foo($bar);
+     * //--------
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTFunctionPostfix
+     * @since 0.9.6
+     */
+    function buildASTFunctionPostfix($image);
+
+    /**
+     * Builds a new method postfix expression.
+     *
+     * <code>
+     * //   ---------
+     * Foo::bar($baz);
+     * //   ---------
+     *
+     * //   ----------
+     * Foo::$bar($baz);
+     * //   ----------
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTMethodPostfix
+     * @since 0.9.6
+     */
+    function buildASTMethodPostfix($image);
+
+    /**
+     * Builds a new constant postfix expression.
+     *
+     * <code>
+     * //   ---
+     * Foo::BAR;
+     * //   ---
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTConstantPostfix
+     * @since 0.9.6
+     */
+    function buildASTConstantPostfix($image);
+
+    /**
+     * Builds a new property postfix expression.
+     *
+     * <code>
+     * //   ----
+     * Foo::$bar;
+     * //   ----
+     *
+     * //       ---
+     * $object->bar;
+     * //       ---
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTPropertyPostfix
+     * @since 0.9.6
+     */
+    function buildASTPropertyPostfix($image);
+
+    /**
+     * Builds a new arguments list.
+     *
+     * <code>
+     * //      ------------
+     * Foo::bar($x, $y, $z);
+     * //      ------------
+     *
+     * //       ------------
+     * $foo->bar($x, $y, $z);
+     * //       ------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTArguments();
+     * @since 0.9.6
+     */
+    function buildASTArguments();
+
+    /**
      * Builds a new array type node.
      *
      * @return PHP_Depend_Code_ASTArrayType
@@ -285,6 +501,16 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildASTPrimitiveType($image);
+
+    /**
+     * Builds a new literal node.
+     *
+     * @param string $image The source image for the literal node.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @since 0.9.6
+     */
+    function buildASTLiteral($image);
 
     /**
      * Builds a new constant definition node.

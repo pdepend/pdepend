@@ -54,7 +54,6 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 require_once dirname(__FILE__) . '/DependTest.php';
-require_once dirname(__FILE__) . '/InternalTest.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/StorageRegistryTest.php';
 require_once dirname(__FILE__) . '/Builder/DefaultTest.php';
@@ -65,6 +64,7 @@ require_once dirname(__FILE__) . '/Issues/AllTests.php';
 require_once dirname(__FILE__) . '/Log/AllTests.php';
 require_once dirname(__FILE__) . '/Metrics/AllTests.php';
 require_once dirname(__FILE__) . '/TextUI/AllTests.php';
+require_once dirname(__FILE__) . '/Tokenizer/AllTests.php';
 require_once dirname(__FILE__) . '/Util/AllTests.php';
 require_once dirname(__FILE__) . '/Visitor/AllTests.php';
 
@@ -107,11 +107,11 @@ class PHP_Depend_AllTests
         $suite->addTest(PHP_Depend_Input_AllTests::suite());
         $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
         $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
+        $suite->addTest(PHP_Depend_Tokenizer_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_AllTests::suite());
         $suite->addTest(PHP_Depend_Visitor_AllTests::suite());
 
         $suite->addTestSuite('PHP_Depend_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Depend_InternalTest');
         $suite->addTestSuite('PHP_Depend_ParserTest');
         $suite->addTestSuite('PHP_Depend_DependTest');
         $suite->addTestSuite('PHP_Depend_StorageRegistryTest');
