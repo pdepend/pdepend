@@ -67,6 +67,11 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
     extends PHP_Depend_Code_ASTTypeNode
 {
     /**
+     * The image type of this node.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The associated AST builder.
      *
      * @var PHP_Depend_BuilderI $builder

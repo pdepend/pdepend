@@ -63,6 +63,11 @@
 class PHP_Depend_Code_ASTArrayType extends PHP_Depend_Code_ASTTypeNode
 {
     /**
+     * The image type of this node.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The visual image for this node type.
      */
     const IMAGE = 'array';

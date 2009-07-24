@@ -385,14 +385,41 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     {
         $image = $tokens[$index - 2]->image . $tokens[$index - 1]->image;
         for ($j = $index - 3; $j >= 0; --$j) {
-            if (!in_array($tokens[$j]->type, $this->_callableTokens)
-                && !in_array($tokens[$j]->type, $this->_methodChainTokens)
+
+            $token = $tokens[$j];
+
+            if (in_array($token->type, $this->_callableTokens) === true
+                || in_array($token->type, $this->_methodChainTokens)
+                || $token->type === PHP_Depend_TokenizerI::T_BACKSLASH
             ) {
-                break;
+                $image = $tokens[$j]->image . $image;
+            } else if ($token->type === PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE) {
+                $image = '()' . $image;
+                $j     = $this->_getParametersStartOffset($tokens, $j);
+            } else {
+                 break;
             }
-            $image = $tokens[$j]->image . $image;
         }
         return $image;
+    }
+
+    private function _getParametersStartOffset(array $tokens, $index)
+    {
+        $parenthesis = 0;
+        for ($i = $index; $i >= 0; --$i) {
+
+            $token = $tokens[$i];
+
+            if ($token->type === PHP_Depend_TokenizerI::T_PARENTHESIS_CLOSE) {
+                --$parenthesis;
+            } else if ($token->type === PHP_Depend_TokenizerI::T_PARENTHESIS_OPEN) {
+                ++$parenthesis;
+            }
+            if ($parenthesis === 0) {
+                return $i;
+            }
+        }
+        return 0;
     }
 
     /**

@@ -71,6 +71,11 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
     /**
      * The image type of this node.
      */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * The image type of this node.
+     */
     const IMAGE = __CLASS__;
 
     /**

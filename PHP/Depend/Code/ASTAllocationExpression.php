@@ -47,11 +47,23 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTTypeNode.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * This class represents primitive types like integer, float, boolean, string
- * etc.
+ * An instance of this class represents an object allocation.
+ *
+ * <code>
+ * function foo()
+ * {
+ * //  -------------
+ *     new bar\Baz();
+ * //  -------------
+ *
+ * //  ---------
+ *     new Foo();
+ * //  ---------
+ * }
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -63,22 +75,10 @@ require_once 'PHP/Depend/Code/ASTTypeNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_ASTPrimitiveType extends PHP_Depend_Code_ASTTypeNode
+class PHP_Depend_Code_ASTAllocationExpression extends PHP_Depend_Code_ASTNode
 {
     /**
-     * The image type of this node.
+     * The type of this class.
      */
     const CLAZZ = __CLASS__;
-
-    /**
-     * This method will return <b>true</b> when this type is a php primitive.
-     * For this concrete implementation the return value will be always true.
-     *
-     * @return boolean
-     */
-    public function isPrimitive()
-    {
-        return true;
-    }
 }
-?>

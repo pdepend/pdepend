@@ -72,5 +72,8 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  */
 class PHP_Depend_Code_ASTConstantDefinition extends PHP_Depend_Code_ASTNode
 {
+    /**
+     * The image type of this node.
+     */
+    const CLAZZ = __CLASS__;
 }
-?>

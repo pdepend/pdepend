@@ -259,6 +259,16 @@ interface PHP_Depend_BuilderI
     function buildASTFormalParameter();
 
     /**
+     * Builds a new allocation expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTAllocationExpression
+     * @since 0.9.6
+     */
+    function buildASTAllocationExpression($image);
+
+    /**
      * Builds a new array type node.
      *
      * @return PHP_Depend_Code_ASTArrayType

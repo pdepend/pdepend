@@ -67,6 +67,11 @@ require_once 'PHP/Depend/Code/ASTNode.php';
 class PHP_Depend_Code_ASTVariableDeclarator extends PHP_Depend_Code_ASTNode
 {
     /**
+     * The image type of this node.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The initial declaration value for this node or <b>null</b>.
      *
      * @var PHP_Depend_Code_Value $value
@@ -96,4 +101,3 @@ class PHP_Depend_Code_ASTVariableDeclarator extends PHP_Depend_Code_ASTNode
         $this->value = $value;
     }
 }
-?>
