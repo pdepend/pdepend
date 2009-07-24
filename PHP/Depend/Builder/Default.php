@@ -485,6 +485,48 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new parent reference instance.
+     *
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference $reference The type
+     *        instance that reference the concrete target of parent.
+     *
+     * @return PHP_Depend_Code_ASTParentReference
+     * @since 0.9.6
+     */
+    public function buildASTParentReference(
+        PHP_Depend_Code_ASTClassOrInterfaceReference $reference
+    ) {
+        include_once 'PHP/Depend/Code/ASTParentReference.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTParentReference()'
+        );
+
+        return new PHP_Depend_Code_ASTParentReference($reference);
+    }
+
+    /**
+     * Builds a new static reference instance.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $owner The owning instance
+     *        that reference the concrete target of static.
+     *
+     * @return PHP_Depend_Code_ASTStaticReference
+     * @since 0.9.6
+     */
+    public function buildASTStaticReference(
+        PHP_Depend_Code_AbstractClassOrInterface $owner
+    ) {
+        include_once 'PHP/Depend/Code/ASTStaticReference.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTStaticReference()'
+        );
+
+        return new PHP_Depend_Code_ASTStaticReference($owner);
+    }
+
+    /**
      * Builds a new field declaration node.
      *
      * @return PHP_Depend_Code_ASTFieldDeclaration
@@ -537,6 +579,99 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTStaticVariableDeclaration($image);
+    }
+
+    /**
+     * Builds a new constant node.
+     *
+     * @param string $image The source image for the constant.
+     *
+     * @return PHP_Depend_Code_ASTConstant
+     * @since 0.9.6
+     */
+    public function buildASTConstant($image)
+    {
+        include_once 'PHP/Depend/Code/ASTConstant.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTConstant(' . $image . ')'
+        );
+
+        return new PHP_Depend_Code_ASTConstant($image);
+    }
+
+    /**
+     * Builds a new variable node.
+     *
+     * @param string $image The source image for the variable.
+     *
+     * @return PHP_Depend_Code_ASTVariable
+     * @since 0.9.6
+     */
+    public function buildASTVariable($image)
+    {
+        include_once 'PHP/Depend/Code/ASTVariable.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTVariable(' . $image . ')'
+        );
+
+        return new PHP_Depend_Code_ASTVariable($image);
+    }
+
+    /**
+     * Builds a new variable variable node.
+     *
+     * @param string $image The source image for the variable variable.
+     *
+     * @return PHP_Depend_Code_ASTVariableVariable
+     * @since 0.9.6
+     */
+    public function buildASTVariableVariable($image)
+    {
+        include_once 'PHP/Depend/Code/ASTVariableVariable.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTVariableVariable(' . $image . ')'
+        );
+
+        return new PHP_Depend_Code_ASTVariableVariable($image);
+    }
+
+    /**
+     * Builds a new compound variable node.
+     *
+     * @param string $image The source image for the compound variable.
+     *
+     * @return PHP_Depend_Code_ASTCompoundVariable
+     * @since 0.9.6
+     */
+    public function buildASTCompoundVariable($image)
+    {
+        include_once 'PHP/Depend/Code/ASTCompoundVariable.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTCompoundVariable(' . $image . ')'
+        );
+
+        return new PHP_Depend_Code_ASTCompoundVariable($image);
+    }
+
+    /**
+     * Builds a new compound expression node.
+     *
+     * @return PHP_Depend_Code_ASTCompoundExpression
+     * @since 0.9.6
+     */
+    public function buildASTCompoundExpression()
+    {
+        include_once 'PHP/Depend/Code/ASTCompoundExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTCompoundExpression()'
+        );
+        
+        return new PHP_Depend_Code_ASTCompoundExpression();
     }
 
     /**
@@ -593,6 +728,220 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new instanceof expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTInstanceOfExpression
+     * @since 0.9.6
+     */
+    public function buildASTInstanceOfExpression($image)
+    {
+        include_once 'PHP/Depend/Code/ASTInstanceOfExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTInstanceOfExpression()'
+        );
+
+        return new PHP_Depend_Code_ASTInstanceOfExpression($image);
+    }
+
+    /**
+     * Builds a new member primary expression node.
+     *
+     * <code>
+     * //--------
+     * Foo::bar();
+     * //--------
+     *
+     * //---------
+     * Foo::$bar();
+     * //---------
+     *
+     * //---------
+     * $obj->bar();
+     * //---------
+     *
+     * //----------
+     * $obj->$bar();
+     * //----------
+     * </code>
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @since 0.9.6
+     */
+    public function buildASTMemberPrimaryPrefix($image)
+    {
+        include_once 'PHP/Depend/Code/ASTMemberPrimaryPrefix.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTMemberPrimaryPrefix()'
+        );
+
+        return new PHP_Depend_Code_ASTMemberPrimaryPrefix($image);
+    }
+
+    /**
+     * Builds a new identifier node.
+     *
+     * @param string $image The image of this identifier.
+     *
+     * @return PHP_Depend_Code_ASTIdentifier
+     * @since 0.9.6
+     */
+    public function buildASTIdentifier($image)
+    {
+        include_once 'PHP/Depend/Code/ASTIdentifier.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTIdentifier()'
+        );
+
+        return new PHP_Depend_Code_ASTIdentifier($image);
+    }
+
+    /**
+     * Builds a new function postfix expression.
+     *
+     * <code>
+     * //-------
+     * foo($bar);
+     * //-------
+     *
+     * //--------
+     * $foo($bar);
+     * //--------
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTFunctionPostfix
+     * @since 0.9.6
+     */
+    public function buildASTFunctionPostfix($image)
+    {
+        include_once 'PHP/Depend/Code/ASTFunctionPostfix.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTFunctionPostfix()'
+        );
+
+        return new PHP_Depend_Code_ASTFunctionPostfix($image);
+    }
+
+    /**
+     * Builds a new method postfix expression.
+     *
+     * <code>
+     * //   ---------
+     * Foo::bar($baz);
+     * //   ---------
+     *
+     * //   ----------
+     * Foo::$bar($baz);
+     * //   ----------
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTMethodPostfix
+     * @since 0.9.6
+     */
+    public function buildASTMethodPostfix($image)
+    {
+        include_once 'PHP/Depend/Code/ASTMethodPostfix.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTMethodPostfix()'
+        );
+
+        return new PHP_Depend_Code_ASTMethodPostfix($image);
+    }
+
+    /**
+     * Builds a new constant postfix expression.
+     *
+     * <code>
+     * //   ---
+     * Foo::BAR;
+     * //   ---
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTConstantPostfix
+     * @since 0.9.6
+     */
+    public function buildASTConstantPostfix($image)
+    {
+        include_once 'PHP/Depend/Code/ASTConstantPostfix.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTConstantPostfix()'
+        );
+
+        return new PHP_Depend_Code_ASTConstantPostfix($image);
+    }
+
+    /**
+     * Builds a new property postfix expression.
+     *
+     * <code>
+     * //   ----
+     * Foo::$bar;
+     * //   ----
+     *
+     * //       ---
+     * $object->bar;
+     * //       ---
+     * </code>
+     *
+     * @param string $image The image of this node.
+     *
+     * @return PHP_Depend_Code_ASTPropertyPostfix
+     * @since 0.9.6
+     */
+    public function buildASTPropertyPostfix($image)
+    {
+        include_once 'PHP/Depend/Code/ASTPropertyPostfix.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTPropertyPostfix()'
+        );
+
+        return new PHP_Depend_Code_ASTPropertyPostfix($image);
+    }
+
+    /**
+     * Builds a new arguments list.
+     *
+     * <code>
+     * //      ------------
+     * Foo::bar($x, $y, $z);
+     * //      ------------
+     *
+     * //       ------------
+     * $foo->bar($x, $y, $z);
+     * //       ------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTArguments();
+     * @since 0.9.6
+     */
+    public function buildASTArguments()
+    {
+        include_once 'PHP/Depend/Code/ASTArguments.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTArguments()'
+        );
+
+        return new PHP_Depend_Code_ASTArguments();
+    }
+
+    /**
      * Builds a new array type node.
      *
      * @return PHP_Depend_Code_ASTArrayType
@@ -626,6 +975,25 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTPrimitiveType($image);
+    }
+
+    /**
+     * Builds a new literal node.
+     *
+     * @param string $image The source image for the literal node.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @since 0.9.6
+     */
+    public function buildASTLiteral($image)
+    {
+        include_once 'PHP/Depend/Code/ASTLiteral.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTLiteral(' . $image . ')'
+        );
+
+        return new PHP_Depend_Code_ASTLiteral($image);
     }
 
     /**

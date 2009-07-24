@@ -257,7 +257,7 @@ class PHP_Depend_Code_Parameter
     public function getClass()
     {
         $classReference = $this->_formalParameter->getFirstChildOfType(
-             PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
         );
         if ($classReference === null) {
             return null;

@@ -403,6 +403,14 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         return $image;
     }
 
+    /**
+     * Returns the parameters start offset.
+     *
+     * @param array(PHP_Depend_Token) $tokens Actual token array.
+     * @param integer                 $index  Actual token array index.
+     *
+     * @return integer
+     */
     private function _getParametersStartOffset(array $tokens, $index)
     {
         $parenthesis = 0;
