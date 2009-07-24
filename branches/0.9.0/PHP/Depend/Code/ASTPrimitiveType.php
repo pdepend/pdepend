@@ -81,4 +81,3 @@ class PHP_Depend_Code_ASTPrimitiveType extends PHP_Depend_Code_ASTTypeNode
         return true;
     }
 }
-?>

@@ -183,9 +183,6 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
 
         $interface->getSourceFile()->accept($this);
 
-        foreach ($interface->getConstants() as $constant) {
-            $constant->accept($this);
-        }
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
         }

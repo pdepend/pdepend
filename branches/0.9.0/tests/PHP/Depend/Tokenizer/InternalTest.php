@@ -36,40 +36,44 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://pdepend.org/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Tokenizer
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/Depend/Token.php';
 require_once 'PHP/Depend/Tokenizer/Internal.php';
 
 /**
- * Abstract test case implementation for the PHP_Depend package.
+ * Test case for the {@link PHP_Depend_Tokenizer_Internal} class.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://pdepend.org/
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Tokenizer
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://pdepend.org/
  */
-class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests the tokenizer with a source file that contains only classes.
      *
      * @return void
+     * @group tokenizer
      */
     public function testInternalWithClasses()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/_code/classes.php');
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/classes.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -124,10 +128,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * classes and functions.
      *
      * @return void
+     * @group tokenizer
      */
     public function testInternalWithMixedContent()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/_code/func_class.php');
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -176,10 +181,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * token.
      *
      * @return void
+     * @group tokenizer
      */
     public function testInternalReturnsBOFTokenForPrevCall()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/_code/func_class.php');
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -190,10 +196,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * Tests the tokenizer with a combination of procedural code and functions.
      *
      * @return void
+     * @group tokenizer
      */
     public function testInternalWithProceduralCodeAndFunction()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/_code/func_code.php');
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_code.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -247,10 +254,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * Test case for undetected static method call added.
      *
      * @return void
+     * @group tokenizer
      */
     public function testInternalStaticCallBug01()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/001.php';
+        $sourceFile = dirname(__FILE__) . '/../_code/bugs/001.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -297,10 +305,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * http://bugs.xplib.de/index.php?do=details&task_id=9&project=3
      *
      * @return void
+     * @group tokenizer
      */
     public function testInternalDollarSyntaxBug09()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/005.php';
+        $sourceFile = dirname(__FILE__) . '/../_code/bugs/005.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -339,10 +348,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * Test case for the inline html bug.
      *
      * @return void
+     * @group tokenizer
      */
     public function testTokenizerWithInlineHtmlBug24()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/024.php';
+        $sourceFile = dirname(__FILE__) . '/../_code/bugs/024.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -399,6 +409,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * this bug only occures for PHP versions < 5.3.0alpha3.
      *
      * @return void
+     * @group tokenizer
      */
     public function testTokenizerHandlesBackslashInStringCorrectBug84()
     {
@@ -406,7 +417,7 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Only relevant for php versions < 5.3.0alpha3');
         }
 
-        $sourceFile = dirname(__FILE__) . '/_code/bugs/054-namespace-separator.php';
+        $sourceFile = dirname(__FILE__) . '/../_code/bugs/054-namespace-separator.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -433,10 +444,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * Tests the tokenizers column calculation implementation.
      *
      * @return void
+     * @group tokenizer
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/issues/088-1.phtml';
+        $sourceFile = dirname(__FILE__) . '/../_code/issues/088-1.phtml';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
@@ -479,10 +491,11 @@ class PHP_Depend_InternalTest extends PHP_Depend_AbstractTest
      * Tests the tokenizers column calculation implementation.
      *
      * @return void
+     * @group tokenizer
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88()
     {
-        $sourceFile = dirname(__FILE__) . '/_code/issues/088-2.php';
+        $sourceFile = dirname(__FILE__) . '/../_code/issues/088-2.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 

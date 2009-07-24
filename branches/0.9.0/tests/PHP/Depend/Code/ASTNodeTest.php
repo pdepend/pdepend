@@ -212,10 +212,51 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the {@link PHP_Depend_Code_ASTNode::getChild()} method throws
+     * an exception for an undefined node offset.
+     *
+     * @return void
+     */
+    public function testGetChildThrowsExpectedExceptionForUndefinedOffset()
+    {
+        $node = $this->createNodeInstance();
+
+        $this->setExpectedException(
+            'OutOfBoundsException',
+            'No node found at index 42 in node of type: ' . get_class($node)
+        );
+        $node->getChild(42);
+    }
+
+    /**
      * Creates a concrete node implementation.
      *
      * @return PHP_Depend_Code_ASTNode
      */
     protected abstract function createNodeInstance();
+
+
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string  $testCase          Qualified test case name.
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($class, $method) = explode('::', $testCase);
+
+        return parent::parseSource(
+            sprintf(
+                'code/%s/%s.php',
+                substr($class, strrpos($class, '_') + 1, -4),
+                $method
+            ),
+            $ignoreAnnotations
+        );
+    }
 }
 ?>

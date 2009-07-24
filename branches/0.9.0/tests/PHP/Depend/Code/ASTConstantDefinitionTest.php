@@ -71,7 +71,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testParserStoresConstantDefinitionTokensWithSignedDefaultValue()
     {
-        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $constant = $packages->current()
             ->getClasses()
             ->current()
@@ -96,7 +96,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testParserStoresConstantDefinitionTokensWithInlineComments()
     {
-        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $constant = $packages->current()
             ->getClasses()
             ->current()
@@ -121,7 +121,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testConstantDefinitionContainsStartLineOfFirstToken()
     {
-        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $constant = $packages->current()
             ->getClasses()
             ->current()
@@ -137,7 +137,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testConstantDefinitionContainsEndLineOfLastToken()
     {
-        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $constant = $packages->current()
             ->getClasses()
             ->current()
@@ -153,7 +153,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testConstantDefinitionHasExpectedDocComment()
     {
-        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $constant = $packages->current()
             ->getClasses()
             ->current()
@@ -174,7 +174,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
     {
-        $packages = self::parseSource('code/ASTConstantDefinition/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $constant = $packages->current()
             ->getClasses()
             ->current()
@@ -198,4 +198,3 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
         return new PHP_Depend_Code_ASTConstantDefinition('const');
     }
 }
-?>

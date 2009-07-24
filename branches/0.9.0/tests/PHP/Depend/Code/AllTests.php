@@ -52,9 +52,20 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once dirname(__FILE__) . '/ASTAllocationExpressionTest.php';
+require_once dirname(__FILE__) . '/ASTArgumentsTest.php';
 require_once dirname(__FILE__) . '/ASTClassOrInterfaceReferenceTest.php';
+require_once dirname(__FILE__) . '/ASTCompoundVariableTest.php';
 require_once dirname(__FILE__) . '/ASTConstantDefinitionTest.php';
+require_once dirname(__FILE__) . '/ASTConstantPostfixTest.php';
+require_once dirname(__FILE__) . '/ASTConstantTest.php';
 require_once dirname(__FILE__) . '/ASTFieldDeclarationTest.php';
+require_once dirname(__FILE__) . '/ASTFunctionPostfixTest.php';
+require_once dirname(__FILE__) . '/ASTMethodPostfixTest.php';
+require_once dirname(__FILE__) . '/ASTLiteralTest.php';
+require_once dirname(__FILE__) . '/ASTInstanceOfExpressionTest.php';
+require_once dirname(__FILE__) . '/ASTPropertyPostfixTest.php';
+require_once dirname(__FILE__) . '/ASTStaticReferenceTest.php';
 require_once dirname(__FILE__) . '/ASTStaticVariableDeclarationTest.php';
 require_once dirname(__FILE__) . '/ASTVariableDeclaratorTest.php';
 
@@ -118,9 +129,20 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_PropertyTest');
         $suite->addTestSuite('PHP_Depend_Code_ParameterTest');
 
+        $suite->addTestSuite('PHP_Depend_Code_ASTAllocationExpressionTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTArgumentsTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTClassOrInterfaceReferenceTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTCompoundVariableTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantDefinitionTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTConstantPostfixTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTConstantTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFieldDeclarationTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTFunctionPostfixTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTLiteralTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTInstanceOfExpressionTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTMethodPostfixTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTPropertyPostfixTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTStaticReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTStaticVariableDeclarationTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTVariableDeclaratorTest');
 

@@ -98,6 +98,23 @@ interface PHP_Depend_Code_ASTNodeI
     function getEndColumn();
 
     /**
+     * Returns the node instance for the given index or throws an exception.
+     *
+     * @param integer $index Index of the requested node.
+     *
+     * @return PHP_Depend_Code_ASTNodeI
+     * @throws OutOfBoundsException When no node exists at the given index.
+     */
+    function getChild($index);
+
+    /**
+     * This method returns all direct children of the actual node.
+     *
+     * @return array(PHP_Depend_Code_ASTNodeI)
+     */
+    function getChildren();
+
+    /**
      * This method will search recursive for the first child node that is an
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
