@@ -46,6 +46,10 @@
  * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Code/ASTFieldDeclaration.php';
+require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+
 require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 
@@ -110,16 +114,16 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             $this->_properties = array();
 
             $declarations = $this->findChildrenOfType(
-                'PHP_Depend_Code_ASTFieldDeclaration'
+                PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
             );
             foreach ($declarations as $declaration) {
 
                 $classOrInterfaceReference = $declaration->getFirstChildOfType(
-                    'PHP_Depend_Code_ASTClassOrInterfaceReference'
+                    PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
                 );
 
                 $declarators = $declaration->findChildrenOfType(
-                    'PHP_Depend_Code_ASTVariableDeclarator'
+                    PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
                 );
 
                 foreach ($declarators as $declarator) {

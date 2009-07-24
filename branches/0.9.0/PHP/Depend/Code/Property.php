@@ -46,6 +46,9 @@
  * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Code/ASTTypeNode.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+
 require_once 'PHP/Depend/Code/AbstractItem.php';
 
 /**
@@ -88,18 +91,18 @@ class PHP_Depend_Code_Property
     /**
      * The wrapped field declaration instance.
      *
-     * @var PHP_Depend_Code_ASTFieldDeclaration $_ASTFieldDeclaration
+     * @var PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
-    private $_ASTFieldDeclaration = null;
+    private $_fieldDeclaration = null;
 
     /**
      * The wrapped variable declarator instance.
      *
-     * @var PHP_Depend_Code_ASTVariableDeclarator $_ASTVariableDeclarator
+     * @var PHP_Depend_Code_ASTVariableDeclarator
      * @since 0.9.6
      */
-    private $_ASTVariableDeclarator = null;
+    private $_variableDeclarator = null;
 
     /**
      * Constructs a new item for the given field declaration and variable
@@ -114,8 +117,8 @@ class PHP_Depend_Code_Property
         PHP_Depend_Code_ASTFieldDeclaration $fieldDeclaration,
         PHP_Depend_Code_ASTVariableDeclarator $variableDeclarator
     ) {
-        $this->_ASTFieldDeclaration   = $fieldDeclaration;
-        $this->_ASTVariableDeclarator = $variableDeclarator;
+        $this->_fieldDeclaration   = $fieldDeclaration;
+        $this->_variableDeclarator = $variableDeclarator;
 
         $this->_uuid = new PHP_Depend_Util_UUID();
     }
@@ -127,7 +130,7 @@ class PHP_Depend_Code_Property
      */
     public function getName()
     {
-        return $this->_ASTVariableDeclarator->getImage();
+        return $this->_variableDeclarator->getImage();
     }
 
     /**
@@ -149,7 +152,7 @@ class PHP_Depend_Code_Property
      */
     public function getModifiers()
     {
-        return $this->_ASTFieldDeclaration->getModifiers();
+        return $this->_fieldDeclaration->getModifiers();
     }
 
     /**
@@ -160,7 +163,7 @@ class PHP_Depend_Code_Property
      */
     public function isPublic()
     {
-        return $this->_ASTFieldDeclaration->isPublic();
+        return $this->_fieldDeclaration->isPublic();
     }
 
     /**
@@ -171,7 +174,7 @@ class PHP_Depend_Code_Property
      */
     public function isProtected()
     {
-        return $this->_ASTFieldDeclaration->isProtected();
+        return $this->_fieldDeclaration->isProtected();
     }
 
     /**
@@ -182,7 +185,7 @@ class PHP_Depend_Code_Property
      */
     public function isPrivate()
     {
-        return $this->_ASTFieldDeclaration->isPrivate();
+        return $this->_fieldDeclaration->isPrivate();
     }
 
     /**
@@ -193,7 +196,7 @@ class PHP_Depend_Code_Property
      */
     public function isStatic()
     {
-        return $this->_ASTFieldDeclaration->isStatic();
+        return $this->_fieldDeclaration->isStatic();
     }
 
     /**
@@ -205,8 +208,8 @@ class PHP_Depend_Code_Property
      */
     public function isArray()
     {
-        $typeNode = $this->_ASTFieldDeclaration->getFirstChildOfType(
-            'PHP_Depend_Code_ASTTypeNode'
+        $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
+            PHP_Depend_Code_ASTTypeNode::CLAZZ
         );
         if ($typeNode === null) {
             return false;
@@ -223,8 +226,8 @@ class PHP_Depend_Code_Property
      */
     public function isPrimitive()
     {
-        $typeNode = $this->_ASTFieldDeclaration->getFirstChildOfType(
-            'PHP_Depend_Code_ASTTypeNode'
+        $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
+            PHP_Depend_Code_ASTTypeNode::CLAZZ
         );
         if ($typeNode === null) {
             return false;
@@ -241,8 +244,8 @@ class PHP_Depend_Code_Property
      */
     public function getClass()
     {
-        $reference = $this->_ASTFieldDeclaration->getFirstChildOfType(
-            'PHP_Depend_Code_ASTClassOrInterfaceReference'
+        $reference = $this->_fieldDeclaration->getFirstChildOfType(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
         );
         if ($reference === null) {
             return null;
@@ -281,7 +284,7 @@ class PHP_Depend_Code_Property
      */
     public function getDocComment()
     {
-        return $this->_ASTFieldDeclaration->getComment();
+        return $this->_fieldDeclaration->getComment();
     }
 
     /**
@@ -292,7 +295,7 @@ class PHP_Depend_Code_Property
      */
     public function getTokens()
     {
-        return $this->_ASTVariableDeclarator->getTokens();
+        return $this->_variableDeclarator->getTokens();
     }
 
     /**
@@ -303,7 +306,7 @@ class PHP_Depend_Code_Property
      */
     public function getStartLine()
     {
-        return $this->_ASTVariableDeclarator->getStartLine();
+        return $this->_variableDeclarator->getStartLine();
     }
 
     /**
@@ -314,7 +317,7 @@ class PHP_Depend_Code_Property
      */
     public function getEndLine()
     {
-        return $this->_ASTVariableDeclarator->getEndLine();
+        return $this->_variableDeclarator->getEndLine();
     }
 
     /**
@@ -350,7 +353,7 @@ class PHP_Depend_Code_Property
      */
     public function isDefaultValueAvailable()
     {
-        $value = $this->_ASTVariableDeclarator->getValue();
+        $value = $this->_variableDeclarator->getValue();
         if ($value === null) {
             return false;
         }
@@ -366,7 +369,7 @@ class PHP_Depend_Code_Property
      */
     public function getDefaultValue()
     {
-        $value = $this->_ASTVariableDeclarator->getValue();
+        $value = $this->_variableDeclarator->getValue();
         if ($value === null) {
             return null;
         }

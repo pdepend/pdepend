@@ -429,6 +429,33 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_AbstractTest
                 ),
                 2
             ),
+            array(
+                array(
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_COLON, '::', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'f00', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_COLON, '::', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_OBJECT_OPERATOR, '->', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
+                    new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
+                ),
+                4
+            ),
         );
     }
 }

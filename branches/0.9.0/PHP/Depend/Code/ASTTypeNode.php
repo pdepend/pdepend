@@ -65,6 +65,11 @@ require_once 'PHP/Depend/Code/ASTNode.php';
 class PHP_Depend_Code_ASTTypeNode extends PHP_Depend_Code_ASTNode
 {
     /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
+    
+    /**
      * This method will return <b>true</b> when the underlying type is an array.
      *
      * @return boolean
@@ -85,4 +90,3 @@ class PHP_Depend_Code_ASTTypeNode extends PHP_Depend_Code_ASTNode
         return false;
     }
 }
-?>

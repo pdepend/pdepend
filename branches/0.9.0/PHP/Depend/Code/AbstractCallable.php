@@ -46,6 +46,13 @@
  * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Code/ASTFormalParameter.php';
+require_once 'PHP/Depend/Code/ASTFormalParameters.php';
+require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
+require_once 'PHP/Depend/Code/ASTAllocationExpression.php';
+require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/ASTStaticVariableDeclaration.php';
+
 require_once 'PHP/Depend/Code/AbstractItem.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/ClassOrInterfaceReferenceIterator.php';
@@ -239,6 +246,18 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
             $classReferences[] = $parameter->getClassReference();
         }
 
+        $exprs = $this->findChildrenOfType(
+            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+        );
+        foreach ($exprs as $expr) {
+            $classReference = $expr->getFirstChildOfType(
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+            );
+            if ($classReference !== null) {
+                $classReferences[] = $classReference;
+            }
+        }
+
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
             $classReferences
         );
@@ -375,11 +394,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         $staticVariables = array();
 
         $declarations = $this->findChildrenOfType(
-            'PHP_Depend_Code_ASTStaticVariableDeclaration'
+            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
         );
         foreach ($declarations as $declaration) {
             $variables = $declaration->findChildrenOfType(
-                'PHP_Depend_Code_ASTVariableDeclarator'
+                PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
             );
             foreach ($variables as $variable) {
                 $image = $variable->getImage();
@@ -405,11 +424,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         $parameters = array();
 
         $formalParameters = $this->getFirstChildOfType(
-            'PHP_Depend_Code_ASTFormalParameters'
+            PHP_Depend_Code_ASTFormalParameters::CLAZZ
         );
 
         $formalParameters = $formalParameters->findChildrenOfType(
-            'PHP_Depend_Code_ASTFormalParameter'
+            PHP_Depend_Code_ASTFormalParameter::CLAZZ
         );
 
         foreach ($formalParameters as $formalParameter) {

@@ -905,6 +905,52 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses an allocation expression.
+     *
+     * <code>
+     * function foo()
+     * {
+     * //  -------------
+     *     new bar\Baz();
+     * //  -------------
+     *
+     * //  ---------
+     *     new Foo();
+     * //  ---------
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTAllocationExpression
+     * @since 0.9.6
+     */
+    private function _parseAllocationExpression()
+    {
+        // Consume the
+        $token = $this->_consumeToken(self::T_NEW);
+        $this->_consumeComments();
+
+        // Create a new allocation expression
+        $expr = $this->_builder->buildASTAllocationExpression($token->image);
+
+        // Peek next token and look for a static type identifier
+        $peek = $this->_tokenizer->peek();
+
+        // If this is a dynamic instantiation, do not add dependency.
+        // Something like: $bar instanceof $className
+        if ($peek === self::T_STRING
+            || $peek === self::T_BACKSLASH
+            || $peek === self::T_NAMESPACE
+        ) {
+            $expr->addChild(
+                $this->_builder->buildASTClassReference(
+                    $this->_parseQualifiedName()
+                )
+            );
+        }
+        return $expr;
+    }
+
+    /**
      * Extracts all dependencies from a callable signature.
      *
      * @return PHP_Depend_Code_ASTFormalParameters
@@ -1259,25 +1305,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_NEW:
-                // Consume the
-                $this->_consumeToken(self::T_NEW);
-                $this->_consumeComments();
-
-                // Peek next token and look for a static type identifier
-                $peekType = $this->_tokenizer->peek();
-
-                // If this is a dynamic instantiation, do not add dependency.
-                // Something like: $bar instanceof $className
-                if ($peekType === self::T_STRING
-                    || $peekType === self::T_BACKSLASH
-                    || $peekType === self::T_NAMESPACE
-                ) {
-                    $callable->addDependencyClassReference(
-                        $this->_builder->buildASTClassReference(
-                            $this->_parseQualifiedName()
-                        )
-                    );
-                }
+                $callable->addChild($this->_parseAllocationExpression());
                 break;
 
             case self::T_INSTANCEOF:
