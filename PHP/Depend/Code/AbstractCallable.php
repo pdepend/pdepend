@@ -246,16 +246,11 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
             $classReferences[] = $parameter->getClassReference();
         }
 
-        $exprs = $this->findChildrenOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+        $references = $this->findChildrenOfType(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
         );
-        foreach ($exprs as $expr) {
-            $classReference = $expr->getFirstChildOfType(
-                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-            );
-            if ($classReference !== null) {
-                $classReferences[] = $classReference;
-            }
+        foreach ($references as $reference) {
+            $classReferences[] = $reference;
         }
 
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(

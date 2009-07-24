@@ -46,7 +46,9 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/AbstractTest.php';
+require_once 'PHP/Depend/Code/ASTNodeTest.php';
+
+require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTVariableDeclarator} class.
@@ -60,7 +62,7 @@ require_once 'PHP/Depend/AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
      * Tests that the declaration has the expected start line value.
@@ -69,7 +71,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedStartLine()
     {
-        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -89,7 +91,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedStartColumn()
     {
-        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -109,7 +111,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedEndLine()
     {
-        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -128,7 +130,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
      */
     public function testVariableDeclaratorHasExpectedEndColumn()
     {
-        $packages = self::parseSource('code/ASTVariableDeclarator/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -138,6 +140,16 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_AbstractTest
         );
 
         $this->assertSame(17, $declarator->getEndColumn());
+    }
+
+    /**
+     * Creates a field declaration node.
+     *
+     * @return PHP_Depend_Code_ASTVariableDeclarator
+     */
+    protected function createNodeInstance()
+    {
+        return new PHP_Depend_Code_ASTVariableDeclarator('$foo');
     }
 }
 ?>

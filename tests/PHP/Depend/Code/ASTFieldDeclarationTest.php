@@ -66,6 +66,50 @@ require_once 'PHP/Depend/ConstantsI.php';
 class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * Tests that a field declaration contains the expected class reference.
+     * 
+     * @return void
+     */
+    public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__, false);
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $declaration = $class->getFirstChildOfType(
+            PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
+        );
+
+        $reference = $declaration->getChild(0);
+        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
+        $this->assertSame(__FUNCTION__, $reference->getType()->getName());
+    }
+
+    /**
+     * Tests that a field declaration does not contain a class reference.
+     *
+     * @return void
+     */
+    public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__, true);
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $declaration = $class->getFirstChildOfType(
+            PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
+        );
+        $reference = $declaration->getFirstChildOfType(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+        );
+        $this->assertNull($reference);
+    }
+
+    /**
      * Tests that the field declaration <b>setModifiers()</b> method accepts all
      * valid combinations of modifiers.
      *

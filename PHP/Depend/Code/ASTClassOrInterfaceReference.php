@@ -113,4 +113,3 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
         return $this->typeInstance;
     }
 }
-?>

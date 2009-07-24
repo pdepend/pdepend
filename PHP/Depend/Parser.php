@@ -925,29 +925,923 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseAllocationExpression()
     {
-        // Consume the
+        // Consume the new keyword and strip comments
         $token = $this->_consumeToken(self::T_NEW);
         $this->_consumeComments();
 
-        // Create a new allocation expression
-        $expr = $this->_builder->buildASTAllocationExpression($token->image);
+        // Create a new allocation expression and parse identifier
+        return $this->_parseExpressionTypeReference(
+            $this->_builder->buildASTAllocationExpression($token->image), true
+        );
+    }
 
+    /**
+     * This method parse an instance of expression with its associated class or
+     * interface reference.
+     *
+     * <code>
+     *          ----------------
+     * ($object instanceof Clazz);
+     *          ----------------
+     *
+     *          ------------------------
+     * ($object instanceof Clazz::$clazz);
+     *          ------------------------
+     *
+     *          -----------------
+     * ($object instanceof $clazz);
+     *          -----------------
+     *
+     *          -----------------------
+     * ($object instanceof $clazz->type);
+     *          -----------------------
+     *
+     *          -----------------------------
+     * ($object instanceof static|self|parent);
+     *          -----------------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTInstanceOfExpression
+     * @since 0.9.6
+     */
+    private function _parseInstanceOfExpression()
+    {
+        // Consume the "instanceof" keyword and strip comments
+        $token = $this->_consumeToken(self::T_INSTANCEOF);
+        $this->_consumeComments();
+
+        // Create a new instanceof expression and parse identifier
+        return $this->_parseExpressionTypeReference(
+            $this->_builder->buildASTInstanceOfExpression($token->image), false
+        );
+    }
+
+    /**
+     * This method parse a type identifier as it is used in expression nodes
+     * like {@link PHP_Depend_Code_ASTInstanceOfExpression} or an object
+     * allocation node like {@link PHP_Depend_Code_ASTAllocationExpression}.
+     *
+     * @param PHP_Depend_Code_ASTNode $expression     The parent expression node.
+     * @param boolean                 $classReference Create a class reference.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     */
+    private function _parseExpressionTypeReference(
+        PHP_Depend_Code_ASTNode $expression, $classReference
+    ) {
         // Peek next token and look for a static type identifier
-        $peek = $this->_tokenizer->peek();
+        $tokenType = $this->_tokenizer->peek();
 
-        // If this is a dynamic instantiation, do not add dependency.
-        // Something like: $bar instanceof $className
-        if ($peek === self::T_STRING
-            || $peek === self::T_BACKSLASH
-            || $peek === self::T_NAMESPACE
-        ) {
-            $expr->addChild(
-                $this->_builder->buildASTClassReference(
-                    $this->_parseQualifiedName()
+        switch ($tokenType) {
+
+        case self::T_DOLLAR:
+        case self::T_VARIABLE:
+            // TODO: Parse variable or Member Primary Prefix + Property Postfix
+            $expression->addChild(
+                $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix()
+            );
+            break;
+
+        case self::T_SELF:
+            $expression->addChild(
+                $this->_parseSelfReference(
+                    $this->_consumeToken(self::T_SELF)
+                )
+            );
+            break;
+
+        case self::T_PARENT:
+            $expression->addChild(
+                $this->_parseParentReference(
+                    $this->_consumeToken(self::T_PARENT)
+                )
+            );
+            break;
+
+        case self::T_STATIC:
+            $expression->addChild(
+                $this->_parseStaticReference(
+                    $this->_consumeToken(self::T_STATIC)
+                )
+            );
+            break;
+
+        default:
+            if ($classReference === true) {
+                $expression->addChild(
+                    $this->_builder->buildASTClassReference(
+                        $this->_parseQualifiedName()
+                    )
+                );
+            } else {
+                $expression->addChild(
+                    $this->_builder->buildASTClassOrInterfaceReference(
+                        $this->_parseQualifiedName()
+                    )
+                );
+            }
+            break;
+        }
+
+        return $expression;
+    }
+
+    /**
+     * This method parses a brace expression and adds all parsed node instances
+     * to the given {@link PHP_Depend_Code_ASTNode} object. Finally it returns
+     * the prepared input node.
+     *
+     * A brace expression can be a compound:
+     *
+     * <code>
+     * $this->{$foo ? 'foo' : 'bar'}();
+     * </code>
+     *
+     * or a parameter list:
+     *
+     * <code>
+     * $this->foo($bar, $baz);
+     * </code>
+     *
+     * or an array index:
+     *
+     * <code>
+     * $foo[$bar];
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNode $node       The context node instance.
+     * @param integer                 $openToken  The brace open token type.
+     * @param integer                 $closeToken The brace close token type.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_TokenStreamEndException When this method reaches
+     *         the token stream end without terminating the brache expression.
+     * @since 0.9.6
+     */
+    private function _parseBraceExpression(
+        PHP_Depend_Code_ASTNode $node,
+        $openToken,
+        $closeToken
+    ) {
+        // Strip comments and read open token
+        $this->_consumeComments();
+        $token = $this->_consumeToken($openToken);
+
+        $braceCount = 1;
+
+        // Remove all comments
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        while ($tokenType !== self::T_EOF) {
+
+            if (($expr = $this->_parseOptionalExpression()) !== null) {
+                $node->addChild($expr);
+            } else {
+                if ($tokenType === $openToken) {
+                    ++$braceCount;
+                } else if ($tokenType === $closeToken) {
+                    --$braceCount;
+                }
+                $this->_consumeToken($tokenType);
+            }
+
+            if ($braceCount === 0) {
+                return $node;
+            }
+
+            // Remove all comments
+            $this->_consumeComments();
+
+            // Get next token type
+            $tokenType = $this->_tokenizer->peek();
+        }
+
+        throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
+    }
+
+    /**
+     * This method optionally parses an expression node and returns it. When no
+     * expression was found this method will return <b>null</b>.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseOptionalExpression()
+    {
+        // Strip optional comments.
+        $this->_consumeComments();
+
+        // Peek next token
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_BACKTICK:
+        case self::T_DOUBLE_QUOTE:
+        case self::T_CONSTANT_ENCAPSED_STRING:
+            return $this->_parseLiteral();
+
+        case self::T_NEW:
+            return $this->_parseAllocationExpression();
+
+        case self::T_INSTANCEOF:
+            return $this->_parseInstanceOfExpression();
+
+        case self::T_STRING:
+        case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
+            return $this->_parseMemberPrefixOrFunctionPostfix();
+
+        case self::T_SELF:
+            return $this->_parseConstantOrSelfMemberPrimaryPrefix();
+
+        case self::T_PARENT:
+            return $this->_parseConstantOrParentMemberPrimaryPrefix();
+
+        case self::T_DOLLAR:
+        case self::T_VARIABLE:
+            return $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+
+        case self::T_STATIC:
+            return $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+        }
+        return null;
+    }
+
+    /**
+     * This method parses a single expression node. It will throw an exception
+     * when it cannot detect an expression node at the actual token stream
+     * possition.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When there is no
+     *         expression that can be parsed.
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseExpression()
+    {
+        if (($expr = $this->_parseOptionalExpression()) === null) {
+            throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
+        }
+        return $expr;
+    }
+
+    /**
+     * This method parses a member primary prefix expression or a function
+     * postfix expression node.
+     *
+     * A member primary prefix can be a method call:
+     *
+     * <code>
+     * $object->foo();
+     *
+     * clazz::foo();
+     * </code>
+     *
+     * a property access:
+     *
+     * <code>
+     * $object->foo;
+     *
+     * clazz::$foo;
+     * </code>
+     *
+     * or a class constant access:
+     *
+     * <code>
+     * clazz::FOO;
+     * </code>
+     *
+     * A function postfix represents any kind of function call:
+     *
+     * <code>
+     * $function();
+     *
+     * func();
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseMemberPrefixOrFunctionPostfix()
+    {
+        $qualifiedName = $this->_parseQualifiedName();
+
+        // Remove comments
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_DOUBLE_COLON:
+            return $this->_parseStaticMemberPrimaryPrefix(
+                $this->_builder->buildASTClassOrInterfaceReference($qualifiedName)
+            );
+
+        case self::T_PARENTHESIS_OPEN:
+            return $this->_parseFunctionPostfix(
+                $this->_builder->buildASTIdentifier($qualifiedName)
+            );
+        }
+        return $this->_builder->buildASTConstant($qualifiedName);
+    }
+
+    /**
+     * This method parses a function postfix expression. An object of type
+     * {@link PHP_Depend_Code_ASTFunctionPostfix} represents any valid php
+     * function call.
+     *
+     * This method will delegate the call to another method that returns a
+     * member primary prefix object when the function postfix expression is
+     * followed by an object operator.
+     *
+     * @param PHP_Depend_Code_ASTNode $node This node represents the function
+     *        identifier. An identifier can be a static string, a variable, a
+     *        compound variable or any other valid php function identifier.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseFunctionPostfix(PHP_Depend_Code_ASTNode $node)
+    {
+        // Remove comments
+        $this->_consumeComments();
+
+        $function = $this->_builder->buildASTFunctionPostfix($node->getImage());
+        $function->addChild($node);
+        $function->addChild($this->_parseArguments());
+
+        // Remove comments
+        $this->_consumeComments();
+
+        // Test for method or property access
+        return $this->_parseOptionalMemberPrimaryPrefix($function);
+    }
+
+    /**
+     * This method parses an optional member primary expression. It will parse
+     * the primary expression when an object operator can be found at the actual
+     * token stream position. Otherwise this method simply returns the input
+     * {@link PHP_Depend_Code_ASTNode} instance.
+     *
+     * @param PHP_Depend_Code_ASTNode $node This node represents primary prefix
+     *        left expression. It will be the first child of the parsed member
+     *        primary expression.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseOptionalMemberPrimaryPrefix(PHP_Depend_Code_ASTNode $node)
+    {
+        // Strip optional comments.
+        $this->_consumeComments();
+
+        if ($this->_tokenizer->peek() === self::T_OBJECT_OPERATOR) {
+            return $this->_parseMemberPrimaryPrefix($node);
+        }
+        return $node;
+    }
+
+    /**
+     * This method parses a dynamic or object bound member primary expression.
+     * A member primary prefix can be a method call:
+     *
+     * <code>
+     * $object->foo();
+     * </code>
+     *
+     * or a property access:
+     *
+     * <code>
+     * $object->foo;
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNode $node The left node in the parsed member
+     *        primary expression.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseMemberPrimaryPrefix(PHP_Depend_Code_ASTNode $node)
+    {
+        // Consume double colon and optional comments
+        $token = $this->_consumeToken(self::T_OBJECT_OPERATOR);
+        $this->_consumeComments();
+
+        $prefix = $this->_builder->buildASTMemberPrimaryPrefix($token->image);
+        $prefix->addChild($node);
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_STRING:
+            $prefix->addChild(
+                $this->_parseMethodOrPropertyPostfix(
+                    $this->_builder->buildASTIdentifier(
+                        $this->_consumeToken(self::T_STRING)->image
+                    )
+                )
+            );
+            break;
+
+        case self::T_CURLY_BRACE_OPEN:
+            $prefix->addChild(
+                $this->_parseMethodOrPropertyPostfix(
+                    $this->_parseCompoundExpression()
+                )
+            );
+            break;
+
+        default:
+            $prefix->addChild(
+                $this->_parseMethodOrPropertyPostfix(
+                    $this->_parseCompoundVariableOrVariableVariableOrVariable()
+                )
+            );
+            break;
+        }
+        return $prefix;
+    }
+
+    /**
+     * This method parses a static member primary expression. The given node
+     * contains the used static class or interface identifier. A static member
+     * primary prefix can represent the following code expressions:
+     *
+     * A static method class:
+     *
+     * <code>
+     * Foo::bar();
+     * </code>
+     *
+     * a static property access:
+     *
+     * <code>
+     * Foo::$bar;
+     * </code>
+     *
+     * or a static constant access:
+     *
+     * <code>
+     * Foo::BAR;
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNode $node The left node in the parsed member
+     *        primary expression.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseStaticMemberPrimaryPrefix(PHP_Depend_Code_ASTNode $node)
+    {
+        // Consume double colon and optional comments
+        $token = $this->_consumeToken(self::T_DOUBLE_COLON);
+        $this->_consumeComments();
+
+        $prefix = $this->_builder->buildASTMemberPrimaryPrefix($token->image);
+        $prefix->addChild($node);
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_STRING:
+            $prefix->addChild(
+                $this->_parseMethodOrConstantPostfix(
+                    $this->_builder->buildASTIdentifier(
+                        $this->_consumeToken(self::T_STRING)->image
+                    )
+                )
+            );
+            break;
+
+        default:
+            $prefix->addChild(
+                $this->_parseMethodOrPropertyPostfix(
+                    $this->_parseCompoundVariableOrVariableVariableOrVariable()
+                )
+            );
+            break;
+        }
+        return $prefix;
+    }
+
+    /**
+     * This method parses a method- or constant-postfix expression. This expression
+     * will contain the given node as method or constant identifier.
+     *
+     * @param PHP_Depend_Code_ASTNode $node The identifier for the parsed postfix
+     *        expression node. This node will be the first child of the returned
+     *        postfix node instance.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseMethodOrConstantPostfix(PHP_Depend_Code_ASTNode $node)
+    {
+        // Strip optional comments
+        $this->_consumeComments();
+
+        // Get next token type
+        if ($this->_tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
+            $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
+            $postfix->addChild($node);
+            $postfix->addChild($this->_parseArguments());
+
+            return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+        }
+
+        $postfix = $this->_builder->buildASTConstantPostfix($node->getImage());
+        $postfix->addChild($node);
+        
+        return $postfix;
+    }
+
+    /**
+     * This method parses a method- or property-postfix expression. This expression
+     * will contain the given node as method or property identifier.
+     *
+     * @param PHP_Depend_Code_ASTNode $node The identifier for the parsed postfix
+     *        expression node. This node will be the first child of the returned
+     *        postfix node instance.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseMethodOrPropertyPostfix(
+        PHP_Depend_Code_ASTNode $node
+    ) {
+        // Strip optional comments
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        // T_PARENTHESIS_OPEN === method, everything else property
+        switch ($tokenType) {
+
+        case self::T_PARENTHESIS_OPEN:
+            $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
+            $postfix->addChild($node);
+            $postfix->addChild($this->_parseArguments());
+            break;
+
+        default:
+            $postfix = $this->_builder->buildASTPropertyPostfix($node->getImage());
+            $postfix->addChild($node);
+            break;
+        }
+
+        return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+    }
+
+    /**
+     * This method parses the arguments passed to a function- or method-call.
+     *
+     * @return PHP_Depend_Code_ASTArguments
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseArguments()
+    {
+        return $this->_parseBraceExpression(
+            $this->_builder->buildASTArguments(),
+            self::T_PARENTHESIS_OPEN,
+            self::T_PARENTHESIS_CLOSE
+        );
+    }
+
+    /**
+     * This method parses any type of variable, function postfix expressions or
+     * any kind of member primary prefix.
+     *
+     * This method expects that the actual token represents any kind of valid
+     * php variable: simple variable, compound variable or variable variable.
+     *
+     * It will parse a function postfix or member primary expression when this
+     * variable is followed by an object operator, double colon or opening
+     * parenthesis.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 0.9.6
+     */
+    private function _parseVariableOrFunctionPostfixOrMemberPrimaryPrefix()
+    {
+        $variable = $this->_parseCompoundVariableOrVariableVariableOrVariable();
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_DOUBLE_COLON:
+            return $this->_parseStaticMemberPrimaryPrefix($variable);
+
+        case self::T_OBJECT_OPERATOR:
+            return $this->_parseMemberPrimaryPrefix($variable);
+
+        case self::T_PARENTHESIS_OPEN:
+            return $this->_parseFunctionPostfix($variable);
+        }
+        return $variable;
+    }
+
+    /**
+     * This method parses a {@link PHP_Depend_Code_ASTStaticReference} node.
+     *
+     * @param PHP_Depend_Token $token The "static" keyword token.
+     *
+     * @return PHP_Depend_Code_ASTStaticReference
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_InvalidStateException When the keyword static
+     *         was used outside of a class or interface scope.
+     * @since 0.9.6
+     */
+    private function _parseStaticReference(PHP_Depend_Token $token)
+    {
+        // Strip optional comments
+        $this->_consumeComments();
+
+        if ($this->_classOrInterface === null) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $token->startLine,
+                (string) $this->_sourceFile,
+                'The keyword "static" was used outside of a class/method scope.'
+            );
+        }
+
+        return $this->_builder->buildASTStaticReference($this->_classOrInterface);
+    }
+
+    /**
+     * This method parses a {@link PHP_Depend_Code_ASTSelfReference} node.
+     *
+     * @param PHP_Depend_Token $token The "self" keyword token.
+     *
+     * @return PHP_Depend_Code_ASTSelfReference
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_InvalidStateException When the keyword self
+     *         was used outside of a class or interface scope.
+     * @since 0.9.6
+     */
+    private function _parseSelfReference(PHP_Depend_Token $token)
+    {
+        if ($this->_classOrInterface === null) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $token->startLine,
+                (string) $this->_sourceFile,
+                'The keyword "self" was used outside of a class/method scope.'
+            );
+        }
+        return $this->_builder->buildASTSelfReference($this->_classOrInterface);
+    }
+
+    /**
+     * This method parses a {@link PHP_Depend_Code_ASTConstant} node or an
+     * instance of {@link PHP_Depend_Code_ASTSelfReference} as part of
+     * a {@link PHP_Depend_Code_MemberPrimaryPrefix} that contains the self
+     * reference as its first child when the self token is followed by a
+     * double colon token.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_InvalidStateException When the keyword self
+     *         was used outside of a class or interface scope.
+     * @since 0.9.6
+     */
+    private function _parseConstantOrSelfMemberPrimaryPrefix()
+    {
+        // Read self token and strip optional comments
+        $token = $this->_consumeToken(self::T_SELF);
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_DOUBLE_COLON:
+            return $this->_parseStaticMemberPrimaryPrefix(
+                $this->_parseSelfReference($token)
+            );
+        }
+        return $this->_builder->buildASTConstant($token->image);
+    }
+
+    /**
+     * This method parses a {@link PHP_Depend_Code_ASTParentReference} node.
+     *
+     * @param PHP_Depend_Token $token The "self" keyword token.
+     *
+     * @return PHP_Depend_Code_AST_Node
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_InvalidStateException When the keyword parent
+     *         was used outside of a class or interface scope.
+     * @since 0.9.6
+     */
+    private function _parseParentReference(PHP_Depend_Token $token)
+    {
+        if ($this->_classOrInterface === null) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $token->startLine,
+                (string) $this->_sourceFile,
+                'The keyword "parent" was used outside of a class/method scope.'
+            );
+        }
+
+        $classReference = $this->_classOrInterface->getParentClassReference();
+        if ($classReference === null) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $token->startLine,
+                (string) $this->_sourceFile,
+                sprintf(
+                    'The keyword "parent" was used but the ' .
+                    'class "%s" does not declare a parent.',
+                    $this->_classOrInterface->getName()
                 )
             );
         }
-        return $expr;
+
+        return $this->_builder->buildASTParentReference($classReference);
+    }
+
+    /**
+     * This method parses a {@link PHP_Depend_Code_ASTConstant} node or an
+     * instance of {@link PHP_Depend_Code_ASTParentReference} as part of
+     * a {@link PHP_Depend_Code_MemberPrimaryPrefix} that contains the parent
+     * reference as its first child when the self token is followed by a
+     * double colon token.
+     *
+     * @return PHP_Depend_Code_AST_Node
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @throws PHP_Depend_Parser_InvalidStateException When the keyword parent
+     *         was used outside of a class or interface scope.
+     * @since 0.9.6
+     */
+    private function _parseConstantOrParentMemberPrimaryPrefix()
+    {
+        // Consume parent token and strip optional comments
+        $token = $this->_consumeToken(self::T_PARENT);
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_DOUBLE_COLON:
+            return $this->_parseStaticMemberPrimaryPrefix(
+                $this->_parseParentReference($token)
+            );
+        }
+        return $this->_builder->buildASTConstant($token->image);
+    }
+
+    /**
+     * This method parses a simple PHP variable.
+     *
+     * @return PHP_Depend_Code_ASTVariable
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
+     *         is not a valid variable token.
+     * @since 0.9.6
+     */
+    private function _parseVariable()
+    {
+        // Read variable token
+        $token = $this->_consumeToken(self::T_VARIABLE);
+        $this->_consumeComments();
+
+        // TODO: ASTThisVariable
+
+        return $this->_builder->buildASTVariable($token->image);
+    }
+
+    private function _parseCompoundVariableOrVariableVariableOrVariable()
+    {
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+            case self::T_DOLLAR:
+                return $this->_parseCompoundVariableOrVariableVariable();
+
+            default:
+                return $this->_parseVariable();
+        }
+    }
+    
+    private function _parseCompoundVariableOrVariableVariable()
+    {
+        // Read the dollar token
+        $token = $this->_consumeToken(self::T_DOLLAR);
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        // T_DOLLAR|T_VARIABLE === Variable variable,
+        // T_CURLY_BRACE_OPEN === Compound variable
+        switch ($tokenType) {
+
+        case self::T_DOLLAR:
+        case self::T_VARIABLE:
+            $variable = $this->_builder->buildASTVariableVariable($token->image);
+            $variable->addChild(
+                $this->_parseCompoundVariableOrVariableVariableOrVariable()
+            );
+            break;
+
+        default:
+            $variable = $this->_builder->buildASTCompoundVariable($token->image);
+            $variable->addChild($this->_parseCompoundExpression());
+            break;
+        }
+
+        return $variable;
+    }
+
+
+    private function _parseCompoundExpression()
+    {
+        return $this->_parseBraceExpression(
+            $this->_builder->buildASTCompoundExpression(),
+            self::T_CURLY_BRACE_OPEN,
+            self::T_CURLY_BRACE_CLOSE
+        );
+    }
+
+    /**
+     * This method parses a {@link PHP_Depend_Code_ASTLiteral} node. A literal
+     * can be a single/double quote string or a backtick literal string.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When this method
+     *         reaches the end of the token stream without terminating the
+     *         literal string.
+     */
+    private function _parseLiteral()
+    {
+        // Consume tokens
+        $this->_consumeComments();
+
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_BACKTICK:
+        case self::T_DOUBLE_QUOTE:
+            $endToken = $tokenType;
+
+            $image = '';
+            do {
+                $image .= $this->_consumeToken($tokenType)->image;
+            } while (($tokenType = $this->_tokenizer->peek()) !== $endToken);
+            $image .= $this->_consumeToken($endToken)->image;
+            
+            return $this->_builder->buildASTLiteral($image);
+
+        default:
+            return $this->_builder->buildASTLiteral(
+                $this->_consumeToken(self::T_CONSTANT_ENCAPSED_STRING)->image
+            );
+        }
     }
 
     /**
@@ -1278,9 +2172,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return void
      */
-    private function _parseCallableBody(
-        PHP_Depend_Code_AbstractCallable $callable
-    ) {
+    private function _parseCallableBody(PHP_Depend_Code_AbstractCallable $callable)
+    {
         $this->_useSymbolTable->createScope();
         
         $curly = 0;
@@ -1290,6 +2183,19 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         while ($tokenType !== self::T_EOF) {
 
             switch ($tokenType) {
+
+            case self::T_NEW:
+            case self::T_SELF:
+            case self::T_DOLLAR:
+            case self::T_PARENT:
+            case self::T_STATIC:
+            case self::T_STRING:
+            case self::T_VARIABLE:
+            case self::T_BACKSLASH:
+            case self::T_NAMESPACE:
+            case self::T_INSTANCEOF:
+                $callable->addChild($this->_parseExpression());
+                break;
         
             case self::T_CATCH:
                 // Consume catch keyword and the opening parenthesis
@@ -1304,65 +2210,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 );
                 break;
 
-            case self::T_NEW:
-                $callable->addChild($this->_parseAllocationExpression());
-                break;
-
-            case self::T_INSTANCEOF:
-                $this->_consumeToken(self::T_INSTANCEOF);
-                $this->_consumeComments();
-
-                // Peek next token and look for a static type identifier
-                $peekType = $this->_tokenizer->peek();
-
-                // If this is a dynamic instantiation, do not add dependency.
-                // Something like: $bar instanceof $className
-                if ($peekType === self::T_STRING
-                    || $peekType === self::T_BACKSLASH
-                    || $peekType === self::T_NAMESPACE
-                ) {
-                    $callable->addDependencyClassReference(
-                        $this->_builder->buildASTClassOrInterfaceReference(
-                            $this->_parseQualifiedName()
-                        )
-                    );
-                }
-                break;
-
-            case self::T_STRING:
-            case self::T_BACKSLASH:
-            case self::T_NAMESPACE:
-                $qualifiedName = $this->_parseQualifiedName();
-
-                // Remove comments
-                $this->_consumeComments();
-
-                // Test for static method, property or constant access
-                if ($this->_tokenizer->peek() !== self::T_DOUBLE_COLON) {
-                    break;
-                }
-
-                // Consume double colon and optional comments
-                $this->_consumeToken(self::T_DOUBLE_COLON);
-                $this->_consumeComments();
-
-                // Get next token type
-                $tokenType = $this->_tokenizer->peek();
-
-                // T_STRING == method or constant, T_VARIABLE == property
-                if ($tokenType === self::T_STRING
-                    || $tokenType === self::T_VARIABLE
-                ) {
-                    $this->_consumeToken($tokenType);
-
-                    $callable->addDependencyClassReference(
-                        $this->_builder->buildASTClassOrInterfaceReference(
-                            $qualifiedName
-                        )
-                    );
-                }
-                break;
-
             case self::T_CURLY_BRACE_OPEN:
                 $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
                 ++$curly;
@@ -1373,21 +2220,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 --$curly;
                 break;
 
-            case self::T_DOUBLE_QUOTE:
-                $this->_consumeToken(self::T_DOUBLE_QUOTE);
-                $this->_skipEncapsultedBlock(self::T_DOUBLE_QUOTE);
-                break;
-
-            case self::T_STATIC:
-                $declaration = $this->_parseStaticVariableDeclaration();
-                if ($declaration !== null) {
-                    $callable->addChild($declaration);
-                }
-                break;
-
             case self::T_BACKTICK:
-                $this->_consumeToken(self::T_BACKTICK);
-                $this->_skipEncapsultedBlock(self::T_BACKTICK);
+            case self::T_DOUBLE_QUOTE:
+                $this->_consumeToken($tokenType);
+                $this->_skipEncapsultedBlock($tokenType);
                 break;
 
             case self::T_FUNCTION:
@@ -1783,6 +2619,33 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $declarator;
     }
 
+    private function _parseStaticVariableDeclarationOrMemberPrimaryPrefix()
+    {
+        $this->_tokenStack->push();
+
+        // Consume static token and strip optional comments
+        $token = $this->_consumeToken(self::T_STATIC);
+        $this->_consumeComments();
+
+        // Fetch next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        if ($tokenType === self::T_PARENTHESIS_OPEN
+            || $tokenType === self::T_DOUBLE_COLON
+        ) {
+            $static = $this->_parseStaticReference($token);
+            $prefix = $this->_parseStaticMemberPrimaryPrefix($static);
+            $prefix->setTokens($this->_tokenStack->pop());
+
+            return $prefix;
+        }
+        $declaration = $this->_parseStaticVariableDeclaration($token);
+        $declaration->setTokens($this->_tokenStack->pop());
+        
+        return $declaration;
+
+    }
+
     /**
      * This method will parse a static variable declaration.
      *
@@ -1803,30 +2666,23 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
      */
-    private function _parseStaticVariableDeclaration()
+    private function _parseStaticVariableDeclaration(PHP_Depend_Token $token)
     {
-        $this->_tokenStack->push();
-
-        $token = $this->_consumeToken(self::T_STATIC);
-        $this->_consumeComments();
-
-        $tokenType = $this->_tokenizer->peek();
-        if ($tokenType === self::T_PARENTHESIS_OPEN
-            || $tokenType === self::T_DOUBLE_COLON
-        ) {
-            $this->_tokenStack->pop();
-            return;
-        }
-
         $staticDeclaration = $this->_builder->buildASTStaticVariableDeclaration(
             $token->image
         );
+
+        // Strip optional comments
+        $this->_consumeComments();
+
+        // Fetch next token type
+        $tokenType = $this->_tokenizer->peek();
 
         while ($tokenType !== self::T_EOF) {
             $staticDeclaration->addChild(
                 $this->_parseVariableDeclarator()
             );
-            
+
             $this->_consumeComments();
 
             // Semicolon terminates static declaration
@@ -1837,8 +2693,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // We are here, so there must be a next declarator
             $this->_consumeToken(self::T_COMMA);
         }
-
-        $staticDeclaration->setTokens($this->_tokenStack->pop());
 
         return $staticDeclaration;
     }
@@ -2283,11 +3137,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFieldDeclarationClassOrInterfaceReference()
     {
-        // Skip, if ignore annotations is set
-        if ($this->_ignoreAnnotations === true) {
-            return null;
-        }
-
         $annotations = $this->_parseVarAnnotation($this->_docComment);
         foreach ($annotations as $annotation) {
             if (PHP_Depend_Util_Type::isScalarType($annotation) === false) {
@@ -2369,4 +3218,3 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
     }
 }
-?>

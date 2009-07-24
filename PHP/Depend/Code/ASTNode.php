@@ -90,7 +90,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @param string $image The source image for this node.
      */
-    public function __construct($image)
+    public function __construct($image = null)
     {
         $this->image = $image;
     }
@@ -159,6 +159,38 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 
         assert($token instanceof PHP_Depend_Token);
         return $token->endColumn;
+    }
+
+    /**
+     * Returns the node instance for the given index or throws an exception.
+     *
+     * @param integer $index Index of the requested node.
+     *
+     * @return PHP_Depend_Code_ASTNodeI
+     * @throws OutOfBoundsException When no node exists at the given index.
+     */
+    public function getChild($index)
+    {
+        if (isset($this->nodes[$index])) {
+            return $this->nodes[$index];
+        }
+        throw new OutOfBoundsException(
+            sprintf(
+                'No node found at index %d in node of type: %s',
+                $index,
+                get_class($this)
+            )
+        );
+    }
+
+    /**
+     * This method returns all direct children of the actual node.
+     *
+     * @return array(PHP_Depend_Code_ASTNodeI)
+     */
+    public function getChildren()
+    {
+        return $this->nodes;
     }
 
     /**
