@@ -362,6 +362,7 @@
        title="Average Number of Derived Classes"
        id="text5010"><tspan
          sodipodi:role="line"
+         title="Average Number of Derived Classes"
          id="tspan5012"
          x="158"
          y="135">ANDC</tspan></text>
@@ -373,6 +374,7 @@
        title="Average Hierarchy Height"
        id="text5014"><tspan
          sodipodi:role="line"
+         title="Average Hierarchy Height"
          id="tspan5016"
          x="158"
          y="151">AHH</tspan></text>
@@ -384,6 +386,7 @@
        title="Number Of Packages"
        id="text5018"><tspan
          sodipodi:role="line"
+         title="Number Of Packages"
          id="tspan5020"
          x="158"
          y="168">NOP</tspan></text>
@@ -396,6 +399,7 @@
        title="Number Of Classes"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number Of Classes"
          id="tspan5024"
          x="119"
          y="183.00002">NOC</tspan></text>
@@ -408,6 +412,7 @@
        title="Number Of Methods (Methods+Functions)"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number Of Methods (Methods+Functions)"
          id="tspan5028"
          x="81"
          y="198.00002">NOM</tspan></text>
@@ -420,6 +425,7 @@
        title="Lines Of Code (Non Comment and Non Whitespace Lines)"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Lines Of Code (Non Comment and Non Whitespace Lines)"
          id="tspan5032"
          x="42"
          y="213.00002">LOC</tspan></text>
@@ -432,6 +438,7 @@
        title="Cyclomatic Complexity"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Cyclomatic Complexity"
          id="tspan5036"
          x="3"
          y="230.00002">CYCLO</tspan></text>
@@ -441,9 +448,10 @@
        x="308.85785"
        y="198.00043"
        id="text5038"
-       title="Number Of Methods"
+       title="Number Of Methods (Methods+Functions)"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number Of Methods (Methods+Functions)"
          id="tspan5040"
          x="308.85785"
          y="198.00043">NOM</tspan></text>
@@ -456,6 +464,7 @@
        title="Number of Operation Calls"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number of Operation Calls"
          id="tspan5044"
          x="348"
          y="213.00002">CALLS</tspan></text>
@@ -468,17 +477,20 @@
        title="Number of Called Classes"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number of Called Classes"
          id="tspan5048"
          x="387"
          y="230.00002">FANOUT</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Number of Called Classes"
        x="236"
        y="230.00002"
        id="text5050"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number of Called Classes"
          id="tspan5052"
          xml:id="pdepend.fanout"
          x="236"
@@ -486,11 +498,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Number of Operation Calls"
        x="236"
        y="213.00002"
        id="text5054"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number of Operation Calls"
          id="tspan5056"
          xml:id="pdepend.calls"
          x="236"
@@ -498,11 +512,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Cyclomatic Complexity"
        x="232"
        y="230.00002"
        id="text5058"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Cyclomatic Complexity"
          id="tspan5060"
          xml:id="pdepend.cyclo"
          x="232"
@@ -510,23 +526,27 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Lines Of Code (Non Comment and Non Whitespace Lines)"
        x="232"
        y="213.00002"
        id="text5062"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
          xml:id="pdepend.loc"
+         title="Lines Of Code (Non Comment and Non Whitespace Lines)"
          id="tspan5064"
          x="232"
          y="213.00002">35175</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Number Of Methods (Methods+Functions)"
        x="232"
        y="198.00002"
        id="text5066"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number Of Methods (Methods+Functions)"
          id="tspan5068"
          xml:id="pdepend.nom"
          x="232"
@@ -534,11 +554,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Number Of Packages"
        x="232"
        y="168.00002"
        id="text5070"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number Of Packages"
          id="tspan5072"
          xml:id="pdepend.nop"
          x="232"
@@ -546,11 +568,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Number Of Classes"
        x="232"
        y="183.00002"
        id="text5074"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Number Of Classes"
          id="tspan5076"
          xml:id="pdepend.noc"
          x="232"
@@ -558,11 +582,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Average Number of Derived Classes"
        x="232"
        y="135.00002"
        id="text5078"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Average Number of Derived Classes"
          id="tspan5080"
          xml:id="pdepend.andc"
          x="232"
@@ -570,11 +596,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Average Hierarchy Height"
        x="232"
        y="151.00002"
        id="text5082"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Average Hierarchy Height"
          id="tspan5084"
          xml:id="pdepend.ahh"
          x="232"
@@ -582,11 +610,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Ratio: Number of Classes / Number of Packages"
        x="119"
        y="168.00002"
        id="text5086"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Ratio: Number of Classes / Number of Packages"
          id="tspan5088"
          xml:id="pdepend.noc-nop"
          x="119"
@@ -594,11 +624,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Ratio: Number of Methods / Number of Classes"
        x="81"
        y="183.00002"
        id="text5090"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Ratio: Number of Methods / Number of Classes"
          id="tspan5092"
          xml:id="pdepend.nom-noc"
          x="81"
@@ -606,11 +638,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Ratio: Lines of Code / Number of Methods"
        x="42"
        y="198.00002"
        id="text5094"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Ratio: Lines of Code / Number of Methods"
          id="tspan5096"
          xml:id="pdepend.loc-nom"
          x="42"
@@ -618,11 +652,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Ratio: Cyclomatic Complexity / Lines of Code"
        x="3"
        y="213.00002"
        id="text5098"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Ratio: Cyclomatic Complexity / Lines of Code"
          id="tspan5100"
          xml:id="pdepend.cyclo-loc"
          x="3"
@@ -630,11 +666,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Ratio: Number of Called Classes(FANOUT) / Number of Operation Calls"
        x="388.56299"
        y="213.00002"
        id="text5102"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Ratio: Number of Called Classes(FANOUT) / Number of Operation Calls"
          id="tspan5104"
          xml:id="pdepend.fanout-calls"
          x="388.56299"
@@ -642,11 +680,13 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-anchor:end;fill:#eeeeec;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial"
+       title="Ratio: Number of Operation Calls / Number of Methods (Methods+Functions)"
        x="348"
        y="198.00002"
        id="text5106"
        transform="scale(0.9999985,1.0000015)"><tspan
          sodipodi:role="line"
+         title="Ratio: Number of Operation Calls / Number of Methods (Methods+Functions)"
          id="tspan5108"
          xml:id="pdepend.calls-nom"
          x="348"
