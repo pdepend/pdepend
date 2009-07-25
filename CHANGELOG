@@ -1,6 +1,8 @@
 PHP_Depend 0.9.6
 ----------------
 
+- Closed #57: Display caption for abbreviations in overview pyramid, implemented
+  in svn revision #947.
 - Closed #80: Store default value for class properties.
 - Fixed #81: PHP_Depend does not support comma separated property declarations,
   fixed in svn revision #916.
@@ -13,6 +15,10 @@ PHP_Depend 0.9.6
 - Fixed #87: The parent keyword is not accepted as parameter type hint, fixed in
   svn revision #925.
 - Fixed #89: Coupling analyzer reports wrong results, fixed in svn revision #939
+- Fixed #90: Coupling analyzer does not handle PHP 5.3 function chains, fixed in
+  svn revision #943.
+- Fixed #91: Parser throws an exception when __CLASS__ as default value of an
+  array property, fixed in svn revision #944.
 
 PHP_Depend 0.9.5
 ----------------
