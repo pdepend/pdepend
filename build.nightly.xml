@@ -99,6 +99,7 @@
         <antcall target="extended.tests.zend-framework" />
         <antcall target="extended.tests.flow3" />
         <antcall target="extended.tests.yii" />
+        <antcall target="extended.tests.drupal" />
     </target>
 
     <!--
@@ -254,6 +255,26 @@
                        --phpunit-xml=${basedir}/build/nightly/build/tmp/yii-phpunit.xml
                        --coderank-mode=inheritance,property,method
                        ${test.source}/yii/framework"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the drupal source code.
+    -->
+    <target name="extended.tests.drupal">
+        <echo message="Testing PHP_Depend against drupal" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --bad-documentation
+                       --summary-xml=${basedir}/build/nightly/build/tmp/drupal-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/drupal-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/drupal-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/drupal-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/drupal-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/drupal"/>
         </exec>
     </target>
     
