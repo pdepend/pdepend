@@ -193,12 +193,13 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $this->assertTrue($log->log($resultOne));
         $this->assertTrue($log->log($resultTwo));
 
-        $fileName = 'project-aware-result-set-without-code.xml';
-        $expected = dirname(__FILE__) . "/_expected/{$fileName}";
-
         $log->close();
 
-        $this->assertXmlFileEqualsXmlFile($expected, $this->resultFile);
+        $fileName = 'project-aware-result-set-without-code.xml';
+        $this->assertXmlStringEqualsXmlString(
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            file_get_contents($this->resultFile)
+        );
     }
 
     public function testNodeAwareAnalyzer()
@@ -256,15 +257,17 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
 
     protected function getNormalizedPathXml($fileName)
     {
-        $expected                     = new DOMDocument('1.0', 'UTF-8');
-        $expected->preserveWhiteSpace = false;
-        $expected->load($fileName);
+        $dom                     = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->load($fileName);
 
         // Adjust file path
-        foreach ($expected->getElementsByTagName('file') as $file) {
+        foreach ($dom->getElementsByTagName('file') as $file) {
             $file->setAttribute('name', $this->testFileName);
         }
 
-        return $expected->saveXML();
+        $dom->documentElement->setAttribute('generated', date('Y-m-d\TH:i:s'));
+
+        return $dom->saveXML();
     }
 }
