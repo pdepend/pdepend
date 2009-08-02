@@ -75,6 +75,17 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
                PHP_Depend_Metrics_ProjectAwareI
 {
     /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_AVERAGE_NUMBER_DERIVED_CLASSES = 'andc',
+          M_AVERAGE_HIERARCHY_HEIGHT       = 'ahh';
+
+    /**
      * Contains the number of derived classes for each processed class. The array
      * size is equal to the number of analyzed classes.
      *
@@ -120,8 +131,8 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     public function getProjectMetrics()
     {
         return array(
-            'andc'  =>  $this->_andc,
-            'ahh'   =>  $this->_ahh
+            self::M_AVERAGE_NUMBER_DERIVED_CLASSES  =>  $this->_andc,
+            self::M_AVERAGE_HIERARCHY_HEIGHT        =>  $this->_ahh
         );
     }
 

@@ -73,6 +73,20 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
                PHP_Depend_Metrics_ProjectAwareI
 {
     /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_NUMBER_OF_PACKAGES   = 'nop',
+          M_NUMBER_OF_CLASSES    = 'noc',
+          M_NUMBER_OF_INTERFACES = 'noi',
+          M_NUMBER_OF_METHODS    = 'nom',
+          M_NUMBER_OF_FUNCTIONS  = 'nof';
+
+    /**
      * Number Of Packages.
      *
      * @var integer $_nop
@@ -158,11 +172,11 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     public function getProjectMetrics()
     {
         return array(
-            'nop'  =>  $this->_nop,
-            'noc'  =>  $this->_noc,
-            'noi'  =>  $this->_noi,
-            'nom'  =>  $this->_nom,
-            'nof'  =>  $this->_nof
+            self::M_NUMBER_OF_PACKAGES    =>  $this->_nop,
+            self::M_NUMBER_OF_CLASSES     =>  $this->_noc,
+            self::M_NUMBER_OF_INTERFACES  =>  $this->_noi,
+            self::M_NUMBER_OF_METHODS     =>  $this->_nom,
+            self::M_NUMBER_OF_FUNCTIONS   =>  $this->_nof
         );
     }
 
@@ -208,9 +222,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         ++$this->_noc;
 
         // Update parent package
-        ++$this->_nodeMetrics[$class->getPackage()->getUUID()]['noc'];
+        $packageUUID = $class->getPackage()->getUUID();
+        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_CLASSES];
 
-        $this->_nodeMetrics[$class->getUUID()] = array('nom'  =>  0);
+        $this->_nodeMetrics[$class->getUUID()] = array(
+            self::M_NUMBER_OF_METHODS  =>  0
+        );
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -235,7 +252,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         ++$this->_nof;
 
         // Update parent package
-        ++$this->_nodeMetrics[$function->getPackage()->getUUID()]['nof'];
+        $packageUUID = $function->getPackage()->getUUID();
+        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_FUNCTIONS];
 
         $this->fireEndFunction($function);
     }
@@ -256,9 +274,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         ++$this->_noi;
 
         // Update parent package
-        ++$this->_nodeMetrics[$interface->getPackage()->getUUID()]['noi'];
+        $packageUUID = $interface->getPackage()->getUUID();
+        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_INTERFACES];
 
-        $this->_nodeMetrics[$interface->getUUID()] = array('nom'  =>  0);
+        $this->_nodeMetrics[$interface->getUUID()] = array(
+            self::M_NUMBER_OF_METHODS  =>  0
+        );
 
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
@@ -285,9 +306,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         $parent = $method->getParent();
 
         // Update parent class or interface
-        ++$this->_nodeMetrics[$parent->getUUID()]['nom'];
+        $parentUUID = $parent->getUUID();
+        ++$this->_nodeMetrics[$parentUUID][self::M_NUMBER_OF_METHODS];
+
         // Update parent package
-        ++$this->_nodeMetrics[$parent->getPackage()->getUUID()]['nom'];
+        $packageUUID = $parent->getPackage()->getUUID();
+        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_METHODS];
 
         $this->fireEndMethod($method);
     }
@@ -308,10 +332,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         ++$this->_nop;
 
         $this->_nodeMetrics[$package->getUUID()] = array(
-            'noc'  =>  0,
-            'noi'  =>  0,
-            'nom'  =>  0,
-            'nof'  =>  0
+            self::M_NUMBER_OF_CLASSES     =>  0,
+            self::M_NUMBER_OF_INTERFACES  =>  0,
+            self::M_NUMBER_OF_METHODS     =>  0,
+            self::M_NUMBER_OF_FUNCTIONS   =>  0
         );
 
 

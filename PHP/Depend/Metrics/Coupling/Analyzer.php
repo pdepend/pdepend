@@ -89,6 +89,17 @@ class PHP_Depend_Metrics_Coupling_Analyzer
                PHP_Depend_Metrics_ProjectAwareI
 {
     /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_CALLS  = 'calls',
+          M_FANOUT = 'fanout';
+
+    /**
      * The number of method or function calls.
      *
      * @var integer $_calls
@@ -101,26 +112,6 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @var integer $_fanout
      */
     private $_fanout = -1;
-
-    /**
-     * This array holds tokens types that are valid PHP callable identifiers.
-     *
-     * @var array(integer)
-     */
-    private $_callableTokens = array(
-        PHP_Depend_TokenizerI::T_STRING,
-        PHP_Depend_TokenizerI::T_VARIABLE
-    );
-
-    /**
-     * This array holds token types that are used in method invocation chains.
-     *
-     * @var array(integer)
-     */
-    private $_methodChainTokens = array(
-        PHP_Depend_TokenizerI::T_DOUBLE_COLON,
-        PHP_Depend_TokenizerI::T_OBJECT_OPERATOR,
-    );
 
     /**
      * Provides the project summary as an <b>array</b>.
@@ -137,8 +128,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     public function getProjectMetrics()
     {
         return array(
-            'calls'   =>  $this->_calls,
-            'fanout'  =>  $this->_fanout
+            self::M_CALLS   =>  $this->_calls,
+            self::M_FANOUT  =>  $this->_fanout
         );
     }
 

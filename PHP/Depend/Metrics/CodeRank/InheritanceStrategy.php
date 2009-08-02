@@ -159,8 +159,8 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(
-                'in'   =>  array(),
-                'out'  =>  array(),
+                'in'    =>  array(),
+                'out'   =>  array(),
                 'name'  =>  $node->getName(),
                 'type'  =>  get_class($node)
             );

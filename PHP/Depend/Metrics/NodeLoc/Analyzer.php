@@ -88,6 +88,19 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
                PHP_Depend_Metrics_ProjectAwareI
 {
     /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_LINES_OF_CODE             = 'loc',
+          M_COMMENT_LINES_OF_CODE     = 'cloc',
+          M_EXECUTABLE_LINES_OF_CODE  = 'eloc',
+          M_NON_COMMENT_LINES_OF_CODE = 'ncloc';
+
+    /**
      * Collected node metrics
      *
      * @var array(string=>array) $_nodeMetrics
@@ -100,10 +113,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @var array(string=>integer) $_projectMetrics
      */
     private $_projectMetrics = array(
-        'loc'    =>  0,
-        'cloc'   =>  0,
-        'eloc'   =>  0,
-        'ncloc'  =>  0
+        self::M_LINES_OF_CODE              =>  0,
+        self::M_COMMENT_LINES_OF_CODE      =>  0,
+        self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
+        self::M_NON_COMMENT_LINES_OF_CODE  =>  0
     );
 
     /**
@@ -197,10 +210,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$class->getUUID()] = array(
-            'loc'    =>  $loc,
-            'cloc'   =>  $cloc,
-            'eloc'   =>  $eloc,
-            'ncloc'  =>  $ncloc,
+            self::M_LINES_OF_CODE              =>  $loc,
+            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
         );
 
         foreach ($class->getMethods() as $method) {
@@ -238,17 +251,17 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$uuid] = array(
-            'loc'    =>  $loc,
-            'cloc'   =>  $cloc,
-            'eloc'   =>  $eloc,
-            'ncloc'  =>  $ncloc
+            self::M_LINES_OF_CODE              =>  $loc,
+            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
         // Update project metrics
-        $this->_projectMetrics['loc']   += $loc;
-        $this->_projectMetrics['cloc']  += $cloc;
-        $this->_projectMetrics['eloc']  += $eloc;
-        $this->_projectMetrics['ncloc'] += $ncloc;
+        $this->_projectMetrics[self::M_LINES_OF_CODE]             += $loc;
+        $this->_projectMetrics[self::M_COMMENT_LINES_OF_CODE]     += $cloc;
+        $this->_projectMetrics[self::M_EXECUTABLE_LINES_OF_CODE]  += $eloc;
+        $this->_projectMetrics[self::M_NON_COMMENT_LINES_OF_CODE] += $ncloc;
 
         $this->fireEndFile($file);
     }
@@ -273,10 +286,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$function->getUUID()] = array(
-            'loc'    =>  $loc,
-            'cloc'   =>  $cloc,
-            'eloc'   =>  $eloc,
-            'ncloc'  =>  $ncloc
+            self::M_LINES_OF_CODE              =>  $loc,
+            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
         $this->fireEndFunction($function);
@@ -302,10 +315,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$interface->getUUID()] = array(
-            'loc'    =>  $loc,
-            'cloc'   =>  $cloc,
-            'eloc'   =>  $eloc,
-            'ncloc'  =>  $ncloc
+            self::M_LINES_OF_CODE              =>  $loc,
+            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
         foreach ($interface->getMethods() as $method) {
@@ -333,10 +346,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$method->getUUID()] = array(
-            'loc'    =>  $loc,
-            'cloc'   =>  $cloc,
-            'eloc'   =>  $eloc,
-            'ncloc'  =>  $ncloc
+            self::M_LINES_OF_CODE              =>  $loc,
+            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
         $this->fireEndMethod($method);

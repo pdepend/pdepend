@@ -79,6 +79,21 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
                PHP_Depend_Metrics_ProjectAwareI
 {
     /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_NUMBER_OF_ABSTRACT_CLASSES = 'clsa',
+          M_NUMBER_OF_CONCRETE_CLASSES = 'clsc',
+          M_NUMBER_OF_ROOT_CLASSES     = 'roots',
+          M_NUMBER_OF_LEAF_CLASSES     = 'leafs',
+          M_INHERITANCE_DEPTH          = 'dit',
+          M_MAXIMUM_INHERITANCE_DEPTH  = 'maxDIT';
+
+    /**
      * Number of all analyzed packages.
      *
      * @var integer $_pkgs
@@ -196,12 +211,15 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function getProjectMetrics()
     {
+        // Count none leaf classes
+        $noneLeafs = count($this->_noneLeafs);
+
         return array(
-            'clsa'     =>  $this->_clsa,
-            'clsc'     =>  $this->_cls - $this->_clsa,
-            'roots'    =>  count($this->_roots),
-            'leafs'    =>  $this->_cls - count($this->_noneLeafs),
-            'maxDIT'   =>  $this->_maxDIT,
+            self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  $this->_clsa,
+            self::M_NUMBER_OF_CONCRETE_CLASSES  =>  $this->_cls - $this->_clsa,
+            self::M_NUMBER_OF_ROOT_CLASSES      =>  count($this->_roots),
+            self::M_NUMBER_OF_LEAF_CLASSES      =>  $this->_cls - $noneLeafs,
+            self::M_MAXIMUM_INHERITANCE_DEPTH   =>  $this->_maxDIT,
         );
     }
 
@@ -251,7 +269,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
         // Get class dit value
         $dit = $this->getClassDIT($class);
         // Store node metric
-        $this->_nodeMetrics[$class->getUUID()] = array('dit'  =>  $dit);
+        $this->_nodeMetrics[$class->getUUID()] = array(
+            self::M_INHERITANCE_DEPTH  =>  $dit
+        );
+        
         // Collect max dit value
         $this->_maxDIT = max($this->_maxDIT, $dit);
 
