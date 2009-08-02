@@ -98,6 +98,7 @@
         <antcall target="extended.tests.typo3v4" />
         <antcall target="extended.tests.zend-framework" />
         <antcall target="extended.tests.flow3" />
+        <antcall target="extended.tests.symfony" />
         <antcall target="extended.tests.yii" />
         <antcall target="extended.tests.drupal" />
     </target>
@@ -236,6 +237,26 @@
                        --phpunit-xml=${basedir}/build/nightly/build/tmp/flow3-phpunit.xml
                        --coderank-mode=inheritance,property,method
                        ${test.source}/flow3"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the symfony source code.
+    -->
+    <target name="extended.tests.symfony">
+        <echo message="Testing PHP_Depend against symfony" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       -d xdebug.max_nesting_level=1000 
+                       --summary-xml=${basedir}/build/nightly/build/tmp/symfony-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/symfony-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/symfony-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/symfony-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/symfony-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/symfony/lib"/>
         </exec>
     </target>
 

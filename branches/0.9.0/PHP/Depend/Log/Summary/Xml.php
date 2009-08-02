@@ -202,6 +202,8 @@ class PHP_Depend_Log_Summary_Xml
         ksort($this->projectMetrics);
 
         $metrics = $dom->createElement('metrics');
+        $metrics->setAttribute('generated', date('Y-m-d\TH:i:s'));
+        $metrics->setAttribute('pdepend', '@package_version@');
 
         foreach ($this->projectMetrics as $name => $value) {
             $metrics->setAttribute($name, $value);
