@@ -51,6 +51,7 @@ require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
+require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 require_once 'PHP/Depend/Util/FileUtil.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
 
@@ -113,7 +114,7 @@ class PHP_Depend_Log_Jdepend_Chart
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PHP_Depend_Metrics_Dependency_Analyzer');
+        return array(PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
     }
 
     /**

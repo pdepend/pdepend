@@ -50,6 +50,7 @@ require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 
 /**
  * Generates some class level based metrics. This analyzer is based on the
@@ -72,6 +73,25 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI
 {
+    /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_DEPTH_OF_INHERITANCE_TREE    = 'dit',
+          M_IMPLEMENTED_INTERFACES       = 'impl',
+          M_CLASS_INTERFACE_SIZE         = 'cis',
+          M_CLASS_SIZE                   = 'csz',
+          M_PROPERTIES                   = 'vars',
+          M_PROPERTIES_INHERIT           = 'varsi',
+          M_PROPERTIES_NON_PRIVATE       = 'varsnp',
+          M_WEIGHTED_METHODS             = 'wmc',
+          M_WEIGHTED_METHODS_INHERIT     = 'wmci',
+          M_WEIGHTED_METHODS_NON_PRIVATE = 'wmcnp';
+
     /**
      * Hash with all calculated node metrics.
      *
@@ -141,7 +161,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     public function getRequiredAnalyzers()
     {
         return array(
-            'PHP_Depend_Metrics_CyclomaticComplexity_Analyzer'
+            PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ
         );
     }
 
@@ -192,16 +212,16 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         $this->fireStartClass($class);
 
         $this->_nodeMetrics[$class->getUUID()] = array(
-            'dit'     =>  $this->_calculateDIT($class),
-            'impl'    =>  $class->getInterfaces()->count(),
-            'cis'     =>  0,
-            'csz'     =>  0,
-            'vars'    =>  0,
-            'varsi'   =>  $this->_calculateVARSi($class),
-            'varsnp'  =>  0,
-            'wmc'     =>  0,
-            'wmci'    =>  $this->_calculateWMCi($class),
-            'wmcnp'   =>  0
+            self::M_DEPTH_OF_INHERITANCE_TREE    => $this->_calculateDIT($class),
+            self::M_IMPLEMENTED_INTERFACES       => $class->getInterfaces()->count(),
+            self::M_CLASS_INTERFACE_SIZE         => 0,
+            self::M_CLASS_SIZE                   => 0,
+            self::M_PROPERTIES                   => 0,
+            self::M_PROPERTIES_INHERIT           => $this->_calculateVARSi($class),
+            self::M_PROPERTIES_NON_PRIVATE       => 0,
+            self::M_WEIGHTED_METHODS             => 0,
+            self::M_WEIGHTED_METHODS_INHERIT     => $this->_calculateWMCi($class),
+            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0
         );
 
         foreach ($class->getProperties() as $property) {
@@ -242,19 +262,19 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         // Get parent class uuid
         $uuid = $method->getParent()->getUUID();
 
-        $ccn2 = $this->_cyclomaticAnalyzer->getCCN2($method);
+        $ccn = $this->_cyclomaticAnalyzer->getCCN2($method);
 
         // Increment Weighted Methods Per Class(WMC) value
-        $this->_nodeMetrics[$uuid]['wmc'] += $ccn2;
+        $this->_nodeMetrics[$uuid][self::M_WEIGHTED_METHODS] += $ccn;
         // Increment Class Size(CSZ) value
-        $this->_nodeMetrics[$uuid]['csz'] += $ccn2;
+        $this->_nodeMetrics[$uuid][self::M_CLASS_SIZE] += $ccn;
 
         // Increment Non Private values
         if ($method->isPublic()) {
             // Increment Non Private WMC value
-            $this->_nodeMetrics[$uuid]['wmcnp'] += $ccn2;
+            $this->_nodeMetrics[$uuid][self::M_WEIGHTED_METHODS_NON_PRIVATE] += $ccn;
             // Increment Class Interface Size(CIS) value
-            $this->_nodeMetrics[$uuid]['cis'] += $ccn2;
+            $this->_nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE] += $ccn;
         }
 
         $this->fireEndMethod($method);
@@ -276,16 +296,16 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         $uuid = $property->getDeclaringClass()->getUUID();
 
         // Increment VARS value
-        ++$this->_nodeMetrics[$uuid]['vars'];
+        ++$this->_nodeMetrics[$uuid][self::M_PROPERTIES];
         // Increment Class Size(CSZ) value
-        ++$this->_nodeMetrics[$uuid]['csz'];
+        ++$this->_nodeMetrics[$uuid][self::M_CLASS_SIZE];
 
         // Increment Non Private values
         if ($property->isPublic()) {
             // Increment Non Private VARS value
-            ++$this->_nodeMetrics[$uuid]['varsnp'];
+            ++$this->_nodeMetrics[$uuid][self::M_PROPERTIES_NON_PRIVATE];
             // Increment Class Interface Size(CIS) value
-            ++$this->_nodeMetrics[$uuid]['cis'];
+            ++$this->_nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE];
         }
 
         $this->fireEndProperty($property);

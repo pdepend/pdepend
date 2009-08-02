@@ -69,6 +69,17 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
                PHP_Depend_Metrics_NodeAwareI
 {
     /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_CODE_RANK         = 'cr',
+          M_REVERSE_CODE_RANK = 'rcr';
+
+    /**
      * The used damping factor.
      */
     const DAMPING_FACTOR = 0.85;
@@ -197,13 +208,16 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     protected function buildCodeRankMetrics()
     {
         foreach ($this->_nodes as $uuid => $info) {
-            $this->_nodeMetrics[$uuid] = array('cr'  =>  0, 'rcr'  =>  0);
+            $this->_nodeMetrics[$uuid] = array(
+                self::M_CODE_RANK          =>  0,
+                self::M_REVERSE_CODE_RANK  =>  0
+            );
         }
         foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
-            $this->_nodeMetrics[$uuid]['cr'] = $rank;
+            $this->_nodeMetrics[$uuid][self::M_CODE_RANK] = $rank;
         }
         foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
-            $this->_nodeMetrics[$uuid]['rcr'] = $rank;
+            $this->_nodeMetrics[$uuid][self::M_REVERSE_CODE_RANK] = $rank;
         }
     }
 

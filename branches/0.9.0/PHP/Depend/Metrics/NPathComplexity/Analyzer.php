@@ -73,6 +73,16 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
                PHP_Depend_Metrics_NodeAwareI
 {
     /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_NPATH_COMPLEXITY = 'npath';
+
+    /**
      * List of valid token types that are relevant for the npath complexity
      * calculation.
      *
@@ -191,7 +201,9 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $metric = array();
         if (isset($this->_metrics[$node->getUUID()])) {
-            $metric = array('npath' => $this->_metrics[$node->getUUID()]);
+            $metric = array(
+                self::M_NPATH_COMPLEXITY  =>  $this->_metrics[$node->getUUID()]
+            );
         }
         return $metric;
     }
