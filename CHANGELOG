@@ -19,6 +19,8 @@ PHP_Depend 0.9.6
   svn revision #943.
 - Fixed #91: Parser throws an exception when __CLASS__ as default value of an
   array property, fixed in svn revision #944.
+- Closes #92: Use class constants as analyzer identifiers, implemented in svn
+  revision #950.
 
 PHP_Depend 0.9.5
 ----------------
