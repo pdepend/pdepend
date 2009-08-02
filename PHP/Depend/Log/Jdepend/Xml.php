@@ -52,6 +52,7 @@ require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
+require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -162,7 +163,7 @@ class PHP_Depend_Log_Jdepend_Xml
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PHP_Depend_Metrics_Dependency_Analyzer');
+        return array(PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
     }
 
     /**
