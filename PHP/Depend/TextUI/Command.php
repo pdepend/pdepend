@@ -463,7 +463,7 @@ class PHP_Depend_TextUI_Command
             $options[$identifier] = (string) simplexml_load_file($path)->message;
 
             $length = strlen($identifier);
-            if ($identifier > $maxLength) {
+            if ($length > $maxLength) {
                 $maxLength = $length;
             }
         }
