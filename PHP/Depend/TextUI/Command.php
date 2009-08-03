@@ -503,7 +503,8 @@ class PHP_Depend_TextUI_Command
         $this->_logOptions = array();
 
         // Get all include paths
-        $paths = explode(PATH_SEPARATOR, get_include_path());
+        $paths   = explode(PATH_SEPARATOR, get_include_path());
+        $paths[] = dirname(__FILE__) . '/../../../';
 
         foreach ($paths as $path) {
 
@@ -585,12 +586,25 @@ class PHP_Depend_TextUI_Command
         $this->_analyzerOptions = array();
 
         // Get all include paths
-        $paths = explode(PATH_SEPARATOR, get_include_path());
-        foreach ($paths as $path) {
-            // Get all analyzer configurations
-            $files = glob("{$path}/PHP/Depend/Metrics/*/Analyzer.xml");
+        $paths   = explode(PATH_SEPARATOR, get_include_path());
+        $paths[] = dirname(__FILE__) . '/../../../';
 
-            foreach ($files as $file) {
+        foreach ($paths as $path) {
+
+            $path .= '/PHP/Depend/Metrics';
+
+            if (is_dir($path) === false) {
+                continue;
+            }
+
+            foreach (new DirectoryIterator($path) as $dir) {
+
+                // Create analyzer xml config filename
+                $file = $dir->getPathname() . '/Analyzer.xml';
+
+                if (is_file($file) === false) {
+                    continue;
+                }
 
                 // Create a simple xml instance
                 $sxml = simplexml_load_file($file);

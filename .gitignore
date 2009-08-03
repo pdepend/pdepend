@@ -1,5 +1,6 @@
 build
 build/*
+scripts/*.phar
 catalog.xml
 nbproject
 .project
