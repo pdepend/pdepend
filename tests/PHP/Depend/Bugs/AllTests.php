@@ -67,6 +67,7 @@ require_once dirname(__FILE__) . '/ParentKeywordAsParameterTypeHintBug087Test.ph
 require_once dirname(__FILE__) . '/WrongCouplingAnalyzerForCommentsBug089Test.php';
 require_once dirname(__FILE__) . '/NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test.php';
 require_once dirname(__FILE__) . '/ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test.php';
+require_once dirname(__FILE__) . '/NPathComplexityIsBrokenInVersion096Bug095Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -115,6 +116,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test');
         $suite->addTestSuite('PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test');
 
         return $suite;
     }
