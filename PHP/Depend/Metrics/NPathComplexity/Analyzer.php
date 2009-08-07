@@ -275,6 +275,12 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->_tokens = array();
         foreach ($tokens as $token) {
+            
+            if (count($this->_tokens) === 0
+                && $token->type !== PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN
+            ) {
+                continue;
+            }
             if (isset(self::$_validTokens[$token->type])) {
                 $this->_tokens[] = $token;
             }
@@ -284,6 +290,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $this->_length = count($this->_tokens);
 
         $this->_metrics[$uuid] = $this->_calculateScope();
+//var_dump($this->_metrics);
     }
 
     /**
