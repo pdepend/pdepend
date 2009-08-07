@@ -1,3 +1,8 @@
+PHP_Depend 0.9.7
+----------------
+
+- Fixed #95: NPath complexity bug fixed, fixed in svn revision #958.
+
 PHP_Depend 0.9.6
 ----------------
 

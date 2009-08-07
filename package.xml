@@ -13,9 +13,9 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2009-08-02</date>
+  <date>2009-08-07</date>
   <version>
-    <release>0.9.6</release>
+    <release>0.9.7</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,24 +24,7 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Closed #57: Display caption for abbreviations in overview pyramid, implemented
-  in svn revision #947.
-- Closed #80: Store default value for class properties.
-- Fixed #81: PHP_Depend does not support comma separated property declarations,
-  fixed in svn revision #916.
-- Fixed #82: PHP_Depend does not support comma separated constant definitions,
-  fixed in svn revision #931.
-- Closed #83: Make ClassOrInterfaceReference an ASTNode, implemented in svn
-  revision #917.
-- Fixed #87: The parent keyword is not accepted as parameter type hint, fixed in
-  svn revision #925.
-- Fixed #89: Coupling analyzer reports wrong results, fixed in svn revision #939
-- Fixed #90: Coupling analyzer does not handle PHP 5.3 function chains, fixed in
-  svn revision #943.
-- Fixed #91: Parser throws an exception when __CLASS__ as default value of an
-  array property, fixed in svn revision #944.
-- Closes #92: Use class constants as analyzer identifiers, implemented in svn
-  revision #950.
+- Fixed #95: NPath complexity bug fixed, fixed in svn revision #958.
   </notes>
   <contents>
     <dir name="/">
@@ -590,6 +573,9 @@ and the NDepend metric tool.
           <file name="SignedDefaultValueResultsInExceptionBug71Test.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
+          <file name="NPathComplexityIsBrokenInVersion096Bug095Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
           <file name="ClosureResultsInExceptionBug070Test.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
@@ -961,6 +947,17 @@ and the NDepend metric tool.
         </dir>
         <dir name="_code">
           <dir name="bugs">
+            <dir name="087">
+              <file name="testParserThrowsExpectedExceptionForParentTypeHintInFunction.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserSetsExpectedParentTypeHintReference.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserThrowsExpectedExceptionForParentTypeHintClassWithoutParent.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <dir name="062">
               <file name="testParserTreatsTypeInInstanceOfOperatorGenericWithClass.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -1002,28 +999,8 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="087">
-              <file name="testParserThrowsExpectedExceptionForParentTypeHintInFunction.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserSetsExpectedParentTypeHintReference.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserThrowsExpectedExceptionForParentTypeHintClassWithoutParent.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="068">
-              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithoutDefaultValue.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithScalarDefaultValueAndComments.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithCommentsInDeclaration.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithArrayDefaultValue.php" role="test">
+            <dir name="095">
+              <file name="testAnalyzerReturnsExpectedNPathValue.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1044,27 +1021,38 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <dir name="068">
+              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithoutDefaultValue.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithScalarDefaultValueAndComments.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithCommentsInDeclaration.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserSetsExpectedStartAndEndLineForPropertyWithArrayDefaultValue.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <dir name="091">
               <file name="testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <file name="065-004-class-declaration-without-body.fail" role="test">
+            <file name="069-4-static-expression.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-003-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-030-tokenizer-keyword-substitution.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="065-001-interface-declaration-without-body.fail" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="069-4-static-expression.php" role="test">
+            <file name="065-004-class-declaration-without-body.fail" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-004-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-019-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="073-004-inconsistent-object-graph.php" role="test">
@@ -1085,6 +1073,9 @@ and the NDepend metric tool.
             <file name="001.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="076-004-tokenizer-keyword-substitution.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="076-008-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -1094,10 +1085,10 @@ and the NDepend metric tool.
             <file name="076-024-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-019-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-030-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-010-tokenizer-keyword-substitution.php" role="test">
+            <file name="016-1.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-014-tokenizer-keyword-substitution.php" role="test">
@@ -1139,7 +1130,7 @@ and the NDepend metric tool.
             <file name="076-020-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="016-1.php" role="test">
+            <file name="076-018-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-026-tokenizer-keyword-substitution.php" role="test">
@@ -1157,10 +1148,10 @@ and the NDepend metric tool.
             <file name="059-005-property-source-file.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-018-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-010-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-013-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-028-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-007-tokenizer-keyword-substitution.php" role="test">
@@ -1247,7 +1238,7 @@ and the NDepend metric tool.
             <file name="054-namespace-separator.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-028-tokenizer-keyword-substitution.php" role="test">
+            <file name="070-004-closure-results-in-exception.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="069-2-static-expression.php" role="test">
@@ -1289,7 +1280,7 @@ and the NDepend metric tool.
             <file name="073-007-inconsistent-object-graph.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="070-004-closure-results-in-exception.php" role="test">
+            <file name="076-013-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -3090,6 +3081,38 @@ and the NDepend metric tool.
   exists, fixed in svn revision #776. (Fixed)
 - #76 + Tokenizer keyword detection is broken, fixed in svn revision #871. (Fixed)
         </notes>
+    </release>
+    <release>
+      <date>2009-08-02</date>
+      <version>
+        <release>0.9.6</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>beta</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Closed #57: Display caption for abbreviations in overview pyramid, implemented
+  in svn revision #947.
+- Closed #80: Store default value for class properties.
+- Fixed #81: PHP_Depend does not support comma separated property declarations,
+  fixed in svn revision #916.
+- Fixed #82: PHP_Depend does not support comma separated constant definitions,
+  fixed in svn revision #931.
+- Closed #83: Make ClassOrInterfaceReference an ASTNode, implemented in svn
+  revision #917.
+- Fixed #87: The parent keyword is not accepted as parameter type hint, fixed in
+  svn revision #925.
+- Fixed #89: Coupling analyzer reports wrong results, fixed in svn revision #939
+- Fixed #90: Coupling analyzer does not handle PHP 5.3 function chains, fixed in
+  svn revision #943.
+- Fixed #91: Parser throws an exception when __CLASS__ as default value of an
+  array property, fixed in svn revision #944.
+- Closes #92: Use class constants as analyzer identifiers, implemented in svn
+  revision #950.
+      </notes>
     </release>
   </changelog>
 </package>
