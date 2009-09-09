@@ -783,7 +783,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * return <b>false</b>.
      *
      * @return boolean
-     * @since 0.9.7
+     * @since 0.9.8
      */
     private function _parseOptionalReturnbyReference()
     {
@@ -797,7 +797,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Tests that the next available token is the returns by reference token.
      *
      * @return boolean
-     * @since 0.9.7
+     * @since 0.9.8
      */
     private function _isNextTokenReturnByReference()
     {
@@ -822,7 +822,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Tests that the next available token is a function or method identifier.
      *
      * @return boolean
-     * @since 0.9.7
+     * @since 0.9.8
      */
     private function _isNextTokenFunctionOrMethodIdentifier()
     {
