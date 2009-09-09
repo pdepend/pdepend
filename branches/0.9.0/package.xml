@@ -15,7 +15,7 @@ and the NDepend metric tool.
   </lead>
   <date>2009-08-07</date>
   <version>
-    <release>0.9.7</release>
+    <release>0.9.8</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,7 +24,8 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Fixed #95: NPath complexity bug fixed, fixed in svn revision #958.
+- Fixed #94: Parser throws exception for closures that return by reference,
+  fixed in svn revision #962.
   </notes>
   <contents>
     <dir name="/">
