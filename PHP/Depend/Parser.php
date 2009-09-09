@@ -1140,6 +1140,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $openToken,
         $closeToken
     ) {
+
+        $this->_tokenStack->push();
+
         // Strip comments and read open token
         $this->_consumeComments();
         $token = $this->_consumeToken($openToken);
@@ -1166,7 +1169,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
 
             if ($braceCount === 0) {
-                return $node;
+                return $this->_prepareAndReturnNode($node);
             }
 
             // Remove all comments

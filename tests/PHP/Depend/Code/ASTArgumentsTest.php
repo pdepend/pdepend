@@ -68,17 +68,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      * 
      * @return void
+     * @group ast
      */
     public function testArgumentsContainsStaticMethodPostfixExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -94,17 +88,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsContainsMethodPostfixExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -120,17 +108,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsContainsConstantsPostfixExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -146,17 +128,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsContainsPropertyPostfixExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -172,6 +148,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsContainsSelfPropertyPostfixExpression()
     {
@@ -200,6 +177,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsContainsParentMethodPostfixExpression()
     {
@@ -228,17 +206,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsContainsAllocationExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $allocation = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTAllocationExpression::CLAZZ, $allocation);
@@ -248,17 +220,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsWithSeveralParameters()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $postfix = $arguments->getFirstChildOfType(
             PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
@@ -270,17 +236,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsWithInlineComments()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $child = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $child);
@@ -290,17 +250,11 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
+     * @group ast
      */
     public function testArgumentsWithInlineConcatExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $arguments = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
 
         $postfixes = $arguments->findChildrenOfType(
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ
@@ -313,12 +267,61 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * exception.
      *
      * @return void
+     * @group ast
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException()
     {
         $this->setExpectedException('PHP_Depend_Parser_TokenStreamEndException');
 
         self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
+     * Tests the start line value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testArgumentsHasExpectedStartLine()
+    {
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $this->assertSame(5, $arguments->getStartLine());
+    }
+
+    /**
+     * Tests the start column value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testArgumentsHasExpectedStartColumn()
+    {
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $this->assertSame(8, $arguments->getStartColumn());
+    }
+
+    /**
+     * Tests the end line value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testArgumentsHasExpectedEndLine()
+    {
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $this->assertSame(7, $arguments->getEndLine());
+    }
+
+    /**
+     * Tests the end column value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testArgumentsHasExpectedEndColumn()
+    {
+        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $this->assertSame(21, $arguments->getEndColumn());
     }
 
     /**
@@ -329,5 +332,24 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTArguments();
+    }
+
+    /**
+     * Returns an arguments instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTArguments
+     */
+    private function _getArgumentsOfFunction($testCase)
+    {
+        $packages = self::parseTestCaseSource($testCase);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        return $function->getFirstChildOfType(
+            PHP_Depend_Code_ASTArguments::CLAZZ
+        );
     }
 }
