@@ -48,11 +48,17 @@
  */
 
 /**
- * This class represents a constant postfix expression..
+ * This class represents arguments as they are supplied to functions or
+ * constructors invocations.
  *
  * <code>
- * //   ---
- * Foo::BAR;
+ * //      ------------
+ * Foo::bar($x, $y, $z);
+ * //      ------------
+ *
+ * //       ------------
+ * $foo->bar($x, $y, $z);
+ * //       ------------
  * </code>
  *
  * @category   PHP
