@@ -72,7 +72,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsContainsStaticMethodPostfixExpression()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -92,7 +92,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsContainsMethodPostfixExpression()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -112,7 +112,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsContainsConstantsPostfixExpression()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -132,7 +132,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsContainsPropertyPostfixExpression()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $prefix = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
@@ -210,7 +210,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsContainsAllocationExpression()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $allocation = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTAllocationExpression::CLAZZ, $allocation);
@@ -224,7 +224,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsWithSeveralParameters()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $postfix = $arguments->getFirstChildOfType(
             PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
@@ -240,7 +240,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsWithInlineComments()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $child = $arguments->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $child);
@@ -254,7 +254,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsWithInlineConcatExpression()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $postfixes = $arguments->findChildrenOfType(
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ
@@ -284,7 +284,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedStartLine()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
         $this->assertSame(5, $arguments->getStartLine());
     }
 
@@ -296,7 +296,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedStartColumn()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
         $this->assertSame(8, $arguments->getStartColumn());
     }
 
@@ -308,7 +308,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedEndLine()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
         $this->assertSame(7, $arguments->getEndLine());
     }
 
@@ -320,18 +320,8 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedEndColumn()
     {
-        $arguments = $this->_getArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
         $this->assertSame(21, $arguments->getEndColumn());
-    }
-
-    /**
-     * Creates a arguments node.
-     *
-     * @return PHP_Depend_Code_ASTArguments
-     */
-    protected function createNodeInstance()
-    {
-        return new PHP_Depend_Code_ASTArguments();
     }
 
     /**
@@ -341,14 +331,10 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return PHP_Depend_Code_ASTArguments
      */
-    private function _getArgumentsOfFunction($testCase)
+    private function _getFirstArgumentsOfFunction($testCase)
     {
-        $packages = self::parseTestCaseSource($testCase);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        return $function->getFirstChildOfType(
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase,
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
     }
