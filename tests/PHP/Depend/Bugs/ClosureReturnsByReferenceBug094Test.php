@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,39 +46,33 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractCallable.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * This class represents a declared closure in the analyzed source code.
+ * Tests that the parser handles a closure that returns a reference correct.
+ * This test is related to bug #94.
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_Closure extends PHP_Depend_Code_AbstractCallable
+class PHP_Depend_Bugs_ClosureReturnsByReferenceBug094Test
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * Constructs a new closure instance.
-     */
-    public function  __construct()
-    {
-        parent::__construct('#closure');
-    }
-
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
-     *
      * @return void
+     * @group bugs
      */
-    public function accept(PHP_Depend_VisitorI $visitor)
+    public function testParserHandlesClosureThatReturnsReference()
     {
-        $visitor->visitClosure($this);
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
     }
 }
