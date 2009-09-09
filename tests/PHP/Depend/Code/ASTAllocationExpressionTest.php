@@ -290,6 +290,54 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
     }
 
     /**
+     * Tests the start line of an allocation expression.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testAllocationExpressionHasExpectedStartLine()
+    {
+        $expr = $this->_getAllocationExpression(__METHOD__);
+        $this->assertSame(4, $expr->getStartLine());
+    }
+
+    /**
+     * Tests the start column of an allocation expression.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testAllocationExpressionHasExpectedStartColumn()
+    {
+        $expr = $this->_getAllocationExpression(__METHOD__);
+        $this->assertSame(5, $expr->getStartColumn());
+    }
+
+    /**
+     * Tests the end line of an allocation expression.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testAllocationExpressionHasExpectedEndLine()
+    {
+        $expr = $this->_getAllocationExpression(__METHOD__);
+        $this->assertSame(4, $expr->getEndLine());
+    }
+
+    /**
+     * Tests the end column of an allocation expression.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testAllocationExpressionHasExpectedEndColumn()
+    {
+        $expr = $this->_getAllocationExpression(__METHOD__);
+        $this->assertSame(24, $expr->getEndColumn());
+    }
+
+    /**
      * Creates a arguments node.
      *
      * @return PHP_Depend_Code_ASTAllocationExpression
@@ -297,5 +345,24 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTAllocationExpression();
+    }
+
+    /**
+     * Returns a test allocation expression.
+     *
+     * @param string $testCase The calling test case.
+     *
+     * @return PHP_Depend_Code_ASTAllocationExpression
+     */
+    private function _getAllocationExpression($testCase)
+    {
+        $packages = self::parseTestCaseSource($testCase);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        return $function->getFirstChildOfType(
+            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+        );
     }
 }

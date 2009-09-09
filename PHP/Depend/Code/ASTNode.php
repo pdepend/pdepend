@@ -94,6 +94,34 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     protected $comment = null;
 
     /**
+     * The start line for this node.
+     *
+     * @var integer
+     */
+    private $_startLine = -1;
+
+    /**
+     * The end line for this node.
+     *
+     * @var integer
+     */
+    private $_endLine = -1;
+
+    /**
+     * The start column for this node.
+     *
+     * @var integer
+     */
+    private $_startColumn = -1;
+
+    /**
+     * The end column for this node.
+     *
+     * @var integer
+     */
+    private $_endColumn = -1;
+
+    /**
      * Constructs a new ast node instance.
      *
      * @param string $image The source image for this node.
@@ -120,6 +148,10 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartLine()
     {
+        if ($this->_startLine > 0) {
+            return $this->_startLine;
+        }
+        
         $tokens = $this->getTokens();
         $token  = reset($tokens);
 
@@ -127,6 +159,13 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         return $token->startLine;
     }
 
+    public function setStartLine($startLine)
+    {
+        if (is_int($startLine) === false || $startLine < 1) {
+            throw new InvalidArgumentException('$startLine must be an int>=1.');
+        }
+        $this->_startLine = $startLine;
+    }
     /**
      * Returns the start column for this ast node.
      *
@@ -134,11 +173,23 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartColumn()
     {
+        if ($this->_startColumn > 0) {
+            return $this->_startColumn;
+        }
+
         $tokens = $this->getTokens();
         $token  = reset($tokens);
 
         assert($token instanceof PHP_Depend_Token);
         return $token->startColumn;
+    }
+
+    public function setStartColumn($startColumn)
+    {
+        if (is_int($startColumn) === false || $startColumn < 1) {
+            throw new InvalidArgumentException('$startColumn must be an int>=1.');
+        }
+        $this->_startColumn = $startColumn;
     }
 
     /**
@@ -148,11 +199,23 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndLine()
     {
+        if ($this->_endLine > 0) {
+            return $this->_endLine;
+        }
+
         $tokens = $this->getTokens();
         $token  = end($tokens);
 
         assert($token instanceof PHP_Depend_Token);
         return $token->endLine;
+    }
+
+    public function setEndLine($endLine)
+    {
+        if (is_int($endLine) === false || $endLine < 1) {
+            throw new InvalidArgumentException('$endLine must be an int>=1.');
+        }
+        $this->_endLine = $endLine;
     }
 
     /**
@@ -162,11 +225,23 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndColumn()
     {
+        if ($this->_endColumn > 0) {
+            return $this->_endColumn;
+        }
+
         $tokens = $this->getTokens();
         $token  = end($tokens);
 
         assert($token instanceof PHP_Depend_Token);
         return $token->endColumn;
+    }
+
+    public function setEndColumn($endColumn)
+    {
+        if (is_int($endColumn) === false || $endColumn < 1) {
+            throw new InvalidArgumentException('$endColumn must be an int>=1.');
+        }
+        $this->_endColumn = $endColumn;
     }
 
     /**
