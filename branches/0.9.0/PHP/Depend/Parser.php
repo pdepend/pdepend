@@ -752,17 +752,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        // Read function keyword
         $this->_consumeToken(self::T_FUNCTION);
-
-        // Remove leading comments
         $this->_consumeComments();
+        
+        $returnReference = $this->_parseOptionalReturnbyReference();
 
-        // Check for closure or function
-        if ($this->_tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
-            $callable = $this->_parseClosureDeclaration();
-        } else {
+        if ($this->_isNextTokenFunctionOrMethodIdentifier()) {
             $callable = $this->_parseFunctionDeclaration();
+        } else {
+            $callable = $this->_parseClosureDeclaration();
         }
 
         $callable->setSourceFile($this->_sourceFile);
@@ -770,9 +768,65 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $callable->setTokens($this->_tokenStack->pop());
         $this->_prepareCallable($callable);
 
+        if ($returnReference) {
+            $callable->setReturnsReference();
+        }
+
         $this->reset();
 
         return $callable;
+    }
+
+    /**
+     * Parses an optional returns by reference token. The return value will be
+     * <b>true</b> when a reference token was found, otherwise this method will
+     * return <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.7
+     */
+    private function _parseOptionalReturnbyReference()
+    {
+        if ($this->_isNextTokenReturnByReference()) {
+            return $this->_parseReturnByReference();
+        }
+        return false;
+    }
+
+    /**
+     * Tests that the next available token is the returns by reference token.
+     *
+     * @return boolean
+     * @since 0.9.7
+     */
+    private function _isNextTokenReturnByReference()
+    {
+        return ($this->_tokenizer->peek() === self::T_BITWISE_AND);
+    }
+
+
+    /**
+     * This method parses a returns by reference token and returns <b>true</b>.
+     *
+     * @return boolean
+     */
+    private function _parseReturnByReference()
+    {
+        $this->_consumeToken(self::T_BITWISE_AND);
+        $this->_consumeComments();
+
+        return true;
+    }
+
+    /**
+     * Tests that the next available token is a function or method identifier.
+     *
+     * @return boolean
+     * @since 0.9.7
+     */
+    private function _isNextTokenFunctionOrMethodIdentifier()
+    {
+        return ($this->_tokenizer->peek() === self::T_STRING);
     }
 
     /**
@@ -783,28 +837,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFunctionDeclaration()
     {
-        // Remove leading comments
         $this->_consumeComments();
-
-        $returnsReference = false;
-        
-        // Check for returns reference token
-        if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
-            $this->_consumeToken(self::T_BITWISE_AND);
-            $this->_consumeComments();
-
-            $returnsReference = true;
-        }
 
         // Next token must be the function identifier
         $functionName = $this->_consumeToken(self::T_STRING)->image;
 
         $function = $this->_builder->buildFunction($functionName);
         $this->_parseCallableDeclaration($function);
-
-        if ($returnsReference === true) {
-            $function->setReturnsReference();
-        }
 
         // First check for an existing namespace
         if ($this->_namespaceName !== null) {
