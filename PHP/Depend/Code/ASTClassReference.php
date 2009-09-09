@@ -81,4 +81,3 @@ class PHP_Depend_Code_ASTClassReference
         return $this->typeInstance;
     }
 }
-?>

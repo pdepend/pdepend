@@ -1034,7 +1034,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parse a type identifier as it is used in expression nodes
+     * This method parses a type identifier as it is used in expression nodes
      * like {@link PHP_Depend_Code_ASTInstanceOfExpression} or an object
      * allocation node like {@link PHP_Depend_Code_ASTAllocationExpression}.
      *
@@ -1084,23 +1084,39 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
 
         default:
-            if ($classReference === true) {
-                $expression->addChild(
-                    $this->_builder->buildASTClassReference(
-                        $this->_parseQualifiedName()
-                    )
-                );
-            } else {
-                $expression->addChild(
-                    $this->_builder->buildASTClassOrInterfaceReference(
-                        $this->_parseQualifiedName()
-                    )
-                );
-            }
+            $expression->addChild(
+                $this->_parseClassOrInterfaceReference($classReference)
+            );
             break;
         }
 
         return $expression;
+    }
+
+    /**
+     * Parses a class or interface reference node.
+     *
+     * @param boolean $classReference Force a class reference.
+     *
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @since 0.9.8
+     */
+    private function _parseClassOrInterfaceReference($classReference)
+    {
+        $this->_tokenStack->push();
+
+        if ($classReference === true) {
+            return $this->_prepareAndReturnNode(
+                $this->_builder->buildASTClassReference(
+                    $this->_parseQualifiedName()
+                )
+            );
+        }
+        return $this->_prepareAndReturnNode(
+            $this->_builder->buildASTClassOrInterfaceReference(
+                $this->_parseQualifiedName()
+            )
+        );
     }
 
     /**
@@ -2086,10 +2102,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFormalParameterAndArrayTypeHint()
     {
-        $token = $this->_consumeToken(self::T_ARRAY);
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_ARRAY);
 
-        $array = $this->_builder->buildASTArrayType();
-        $array->setTokens(array($token));
+        $array = $this->_prepareAndReturnNode(
+            $this->_builder->buildASTArrayType()
+        );
 
         $parameter = $this->_parseFormalParameterOrByReference();
         $parameter->addChild($array);
@@ -2113,10 +2131,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        $classReference = $this->_builder->buildASTClassOrInterfaceReference(
-            $this->_parseQualifiedName()
+        $classReference = $this->_prepareAndReturnNode(
+            $this->_builder->buildASTClassOrInterfaceReference(
+                $this->_parseQualifiedName()
+            )
         );
-        $classReference->setTokens($this->_tokenStack->pop());
 
         $parameter = $this->_parseFormalParameterOrByReference();
         $parameter->addChild($classReference);

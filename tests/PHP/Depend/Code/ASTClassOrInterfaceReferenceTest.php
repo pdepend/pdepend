@@ -46,10 +46,11 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
 require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/Class.php';
 
 /**
  * description
@@ -63,11 +64,15 @@ require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
+    /**
+     * @return void
+     * @group ast
+     */
     public function testGetTypeInvokesBuildClassOrInterface()
     {
-        $class = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
+        $class = new PHP_Depend_Code_Class(null);
 
         $builder = $this->getMock('PHP_Depend_BuilderI');
         $builder->expects($this->once())
@@ -84,5 +89,79 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Abstra
             $classOrInterfaceReference->getType()
         );
     }
+
+    /**
+     * Tests the start line value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testReferenceHasExpectedStartLine()
+    {
+        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $this->assertSame(2, $reference->getStartLine());
+    }
+
+    /**
+     * Tests the start column value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testReferenceHasExpectedStartColumn()
+    {
+        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $this->assertSame(14, $reference->getStartColumn());
+    }
+
+    /**
+     * Tests the end line value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testReferenceHasExpectedEndLine()
+    {
+        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $this->assertSame(2, $reference->getEndLine());
+    }
+
+    /**
+     * Tests the end column value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testReferenceHasExpectedEndColumn()
+    {
+        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $this->assertSame(29, $reference->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
+     */
+    private function _getFirstReferenceInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+        );
+    }
+
+    /**
+     * Creates a concrete node implementation.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     */
+    protected function createNodeInstance()
+    {
+        return new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $this->getMock('PHP_Depend_BuilderI'),
+            __METHOD__
+        );
+    }
 }
-?>

@@ -44,14 +44,14 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.5
  */
 
-require_once 'PHP/Depend/Code/ASTTypeNode.php';
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
+
+require_once 'PHP/Depend/Code/ASTArrayType.php';
 
 /**
- * This class is used as a placeholder for unknown classes or interfaces. It
- * will resolve the concrete type instance on demand.
+ * Test case for the {@link PHP_Depend_Code_ASTArrayType} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,55 +61,68 @@ require_once 'PHP/Depend/Code/ASTTypeNode.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.5
  */
-class PHP_Depend_Code_ASTClassOrInterfaceReference
-    extends PHP_Depend_Code_ASTTypeNode
+class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
-     * The associated AST builder.
+     * Tests the start line value of an arguments instance.
      *
-     * @var PHP_Depend_BuilderI $builder
+     * @return void
+     * @group ast
      */
-    protected $builder = null;
-
-    /**
-     * An already loaded type instance.
-     *
-     * @var PHP_Depend_Code_AbstractClassOrInterface $typeInstance
-     */
-    protected $typeInstance = null;
-
-    /**
-     * Constructs a new type holder instance.
-     *
-     * @param PHP_Depend_BuilderI $builder       The associated AST builder instance.
-     * @param string              $qualifiedName The qualified type name.
-     */
-    public function __construct(PHP_Depend_BuilderI $builder, $qualifiedName)
+    public function testArrayTypeHasExpectedStartLine()
     {
-        parent::__construct($qualifiedName);
-
-        $this->builder = $builder;
+        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
+        $this->assertSame(2, $arrayType->getStartLine());
     }
 
     /**
-     * Returns the concrete type instance associated with with this placeholder.
+     * Tests the start column value of an arguments instance.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return void
+     * @group ast
      */
-    public function getType()
+    public function testArrayTypeHasExpectedStartColumn()
     {
-        if ($this->typeInstance === null) {
-            $this->typeInstance = $this->builder->getClassOrInterface(
-                $this->getImage()
-            );
-        }
-        return $this->typeInstance;
+        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
+        $this->assertSame(14, $arrayType->getStartColumn());
+    }
+
+    /**
+     * Tests the end line value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testArrayTypeHasExpectedEndLine()
+    {
+        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
+        $this->assertSame(2, $arrayType->getEndLine());
+    }
+
+    /**
+     * Tests the end column value of an arguments instance.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testArrayTypeHasExpectedEndColumn()
+    {
+        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
+        $this->assertSame(18, $arrayType->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTArrayType
+     */
+    private function _getFirstArrayTypeInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTArrayType::CLAZZ
+        );
     }
 }
