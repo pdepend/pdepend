@@ -233,7 +233,32 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      *
      * @return PHP_Depend_Code_ASTNode
      */
-    protected abstract function createNodeInstance();
+    protected function createNodeInstance()
+    {
+        $class = substr(get_class($this), 0, -4);
+
+        include_once strtr($class, '_', '/') . '.php';
+
+        return new $class(__METHOD__);
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     * @param string $nodeType The searched node class.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     */
+    protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
+    {
+        $packages = self::parseTestCaseSource($testCase);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        return $function->getFirstChildOfType($nodeType);
+    }
 
     /**
      * Parses the given source file or directory with the default tokenizer
@@ -258,4 +283,3 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         );
     }
 }
-?>
