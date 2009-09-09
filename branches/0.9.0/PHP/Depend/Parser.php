@@ -964,14 +964,32 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseAllocationExpression()
     {
-        // Consume the new keyword and strip comments
+        $this->_tokenStack->push();
+
         $token = $this->_consumeToken(self::T_NEW);
         $this->_consumeComments();
 
-        // Create a new allocation expression and parse identifier
-        return $this->_parseExpressionTypeReference(
-            $this->_builder->buildASTAllocationExpression($token->image), true
+        return $this->_prepareAndReturnNode(
+            $this->_parseExpressionTypeReference(
+                $this->_builder->buildASTAllocationExpression($token->image), true
+            )
         );
+
+    }
+
+    private function _prepareAndReturnNode(PHP_Depend_Code_ASTNode $node)
+    {
+        $tokens = $this->_tokenStack->pop();
+
+        $startToken = reset($tokens);
+        $node->setStartLine($startToken->startLine);
+        $node->setStartColumn($startToken->startColumn);
+
+        $endToken = end($tokens);
+        $node->setEndLine($endToken->endLine);
+        $node->setEndColumn($endToken->endColumn);
+
+        return $node;
     }
 
     /**
@@ -3122,9 +3140,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parsePackageAnnotation($comment)
     {
         $package = self::DEFAULT_PACKAGE;
-        if (preg_match('#\*\s*@package\s+(.*)#', $comment, $match)) {
+        if (preg_match('#\*\s*@package\s+(\S+)#', $comment, $match)) {
             $package = trim($match[1]);
-            if (preg_match('#\*\s*@subpackage\s+(.*)#', $comment, $match)) {
+            if (preg_match('#\*\s*@subpackage\s+(\S+)#', $comment, $match)) {
                 $package .= self::PACKAGE_SEPARATOR . trim($match[1]);
             }
         }
