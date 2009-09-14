@@ -65,136 +65,98 @@ require_once 'PHP/Depend/Code/ASTConstantDefinition.php';
 class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that the parser stores the expected constant tokens.
+     * Tests that the constant definition has the expected doc comment block.
      *
      * @return void
+     * @group ast
      */
-    public function testParserStoresConstantDefinitionTokensWithSignedDefaultValue()
+    public function testConstantDefinitionHasExpectedDocComment()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
-
-        $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CONST, 'const', 3, 3, 5, 9),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'FOO', 3, 3, 11, 13),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 3, 3, 15, 15),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_MINUS, '-', 3, 3, 17, 17),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PLUS, '+', 3, 3, 18, 18),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '42', 3, 3, 19, 20),
+        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
+        $this->assertSame(
+            "/**\n" .
+            "     * Foo bar baz foobar.\n" .
+            "     */",
+            $constant->getComment()
         );
-
-        $this->assertEquals($expected, $constant->getTokens());
     }
 
     /**
-     * Tests that the parser stores the expected constant tokens.
+     * Tests that the constant definition has the expected doc comment block.
      *
      * @return void
+     * @group ast
      */
-    public function testParserStoresConstantDefinitionTokensWithInlineComments()
+    public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
-
-        $expected = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CONST, 'const', 3, 3, 5, 9),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '/*const*/', 3, 3, 10, 18),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'FOO', 4, 4, 5, 7),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 5, 5, 5, 5),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMENT, '//', 6, 6, 5, 6),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 7, 7, 5, 8),
+        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
+        $this->assertSame(
+            "/**\n" .
+            "     * Foo bar baz foobar.\n" .
+            "     */",
+            $constant->getComment()
         );
-
-        $this->assertEquals($expected, $constant->getTokens());
     }
 
     /**
-     * Tests that the constant contains the start line of the first token.
+     * Tests the start line value.
      *
      * @return void
+     * @group ast
      */
-    public function testConstantDefinitionContainsStartLineOfFirstToken()
+    public function testConstantDefinitionHasExpectedStartLine()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
-
-        $this->assertSame(3, $constant->getStartLine());
+        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
+        $this->assertSame(4, $constant->getStartLine());
     }
 
     /**
-     * Tests that the constant contains the end line of the last token.
+     * Tests the start column value.
      *
      * @return void
+     * @group ast
      */
-    public function testConstantDefinitionContainsEndLineOfLastToken()
+    public function testConstantDefinitionHasExpectedStartColumn()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
+        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
+        $this->assertSame(5, $constant->getStartColumn());
+    }
 
+    /**
+     * Tests the end line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testConstantDefinitionHasExpectedEndLine()
+    {
+        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
         $this->assertSame(7, $constant->getEndLine());
     }
 
     /**
-     * Tests that the constant definition has the expected doc comment block.
+     * Tests the end column value.
      *
      * @return void
+     * @group ast
      */
-    public function testConstantDefinitionHasExpectedDocComment()
+    public function testConstantDefinitionHasExpectedEndColumn()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
-
-        $this->assertSame(
-            "/**\n" .
-            "     * Foo bar baz foobar.\n" .
-            "     */",
-            $constant->getComment()
-        );
+        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
+        $this->assertSame(12, $constant->getEndColumn());
     }
 
     /**
-     * Tests that the constant definition has the expected doc comment block.
+     * Returns a node instance for the currently executed test case.
      *
-     * @return void
-     */
-    public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
-    {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $constant = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTConstantDefinition::CLAZZ);
-
-        $this->assertSame(
-            "/**\n" .
-            "     * Foo bar baz foobar.\n" .
-            "     */",
-            $constant->getComment()
-        );
-    }
-
-    /**
-     * Creates a concrete node implementation.
+     * @param string $testCase Name of the calling test case.
      *
      * @return PHP_Depend_Code_ASTConstantDefinition
      */
-    protected function createNodeInstance()
+    private function _getFirstConstantDefinitionInClass($testCase)
     {
-        return new PHP_Depend_Code_ASTConstantDefinition('const');
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTConstantDefinition::CLAZZ
+        );
     }
 }
