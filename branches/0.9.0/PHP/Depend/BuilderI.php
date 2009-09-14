@@ -353,6 +353,66 @@ interface PHP_Depend_BuilderI
     function buildASTInstanceOfExpression($image);
 
     /**
+     * Builds a new catch-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTCatchStatement
+     * @since 0.9.8
+     */
+    function buildASTCatchStatement($image);
+
+    /**
+     * Builds a new if statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTIfStatement
+     * @since 0.9.8
+     */
+    function buildASTIfStatement($image);
+
+    /**
+     * Builds a new elseif-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTElseIfStatement
+     * @since 0.9.8
+     */
+    function buildASTElseIfStatement($image);
+
+    /**
+     * Builds a new for-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTForStatement
+     * @since 0.9.8
+     */
+    function buildASTForStatement($image);
+
+    /**
+     * Builds a new foreach-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTForeachStatement
+     * @since 0.9.8
+     */
+    function buildASTForeachStatement($image);
+
+    /**
+     * Builds a new while-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTWhileStatement
+     * @since 0.9.8
+     */
+    function buildASTWhileStatement($image);
+
+    /**
      * Builds a new member primary expression node.
      *
      * <code>
