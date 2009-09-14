@@ -290,6 +290,49 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
     }
 
     /**
+     * Tests the implementation with an allocation expression without arguments.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testAllocationExpressionWithoutArguments()
+    {
+        $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
+        $args = $expr->findChildrenOfType(PHP_Depend_Code_ASTArguments::CLAZZ);
+
+        $this->assertSame(0, count($args));
+    }
+
+    /**
+     * Tests the implementation with an allocation expression with arguments.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testAllocationExpressionWithArguments()
+    {
+        $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
+        $args = $expr->findChildrenOfType(PHP_Depend_Code_ASTArguments::CLAZZ);
+
+        $this->assertSame(1, count($args));
+    }
+
+    /**
+     * Tests the implementation with an allocation expression with nested
+     * expressions that have arguments.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testAllocationExpressionWithNestedArguments()
+    {
+        $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
+        $arg  = $expr->getFirstChildOfType(PHP_Depend_Code_ASTArguments::CLAZZ);
+
+        $this->assertSame($expr, $arg->getParent());
+    }
+
+    /**
      * Tests the start line of an allocation expression.
      *
      * @return void
@@ -322,7 +365,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
     public function testAllocationExpressionHasExpectedEndLine()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expr->getEndLine());
+        $this->assertSame(8, $expr->getEndLine());
     }
 
     /**
@@ -334,7 +377,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
     public function testAllocationExpressionHasExpectedEndColumn()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertSame(24, $expr->getEndColumn());
+        $this->assertSame(13, $expr->getEndColumn());
     }
 
     /**

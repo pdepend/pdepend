@@ -57,6 +57,7 @@ require_once dirname(__FILE__) . '/ASTArgumentsTest.php';
 require_once dirname(__FILE__) . '/ASTArrayTypeTest.php';
 require_once dirname(__FILE__) . '/ASTClassOrInterfaceReferenceTest.php';
 require_once dirname(__FILE__) . '/ASTClassReferenceTest.php';
+require_once dirname(__FILE__) . '/ASTCompoundExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTCompoundVariableTest.php';
 require_once dirname(__FILE__) . '/ASTConstantDefinitionTest.php';
 require_once dirname(__FILE__) . '/ASTConstantPostfixTest.php';
@@ -136,6 +137,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTArrayTypeTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTClassOrInterfaceReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTClassReferenceTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTCompoundExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTCompoundVariableTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantDefinitionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantPostfixTest');

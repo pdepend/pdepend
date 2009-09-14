@@ -967,17 +967,41 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
 
         $token = $this->_consumeToken(self::T_NEW);
-        $this->_consumeComments();
 
-        return $this->_prepareAndReturnNode(
-            $this->_parseExpressionTypeReference(
-                $this->_builder->buildASTAllocationExpression($token->image), true
-            )
+        $allocation = $this->_parseExpressionTypeReference(
+            $this->_builder->buildASTAllocationExpression($token->image), true
         );
+
+        if ($this->_isNextTokenArguments()) {
+            $allocation->addChild(
+                $this->_parseArguments()
+            );
+        }
+        return $this->_setNodePositionsAndReturn($allocation);
 
     }
 
-    private function _prepareAndReturnNode(PHP_Depend_Code_ASTNode $node)
+    /**
+     * This method checks if the next available token starts an arguments node.
+     *
+     * @return boolean
+     * @since 0.9.8
+     */
+    private function _isNextTokenArguments()
+    {
+        $this->_consumeComments();
+        return $this->_tokenizer->peek() === self::T_PARENTHESIS_OPEN;
+    }
+
+    /**
+     * This method configures the given node with its start and end positions.
+     *
+     * @param PHP_Depend_Code_ASTNode $node The node to prepare.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.8
+     */
+    private function _setNodePositionsAndReturn(PHP_Depend_Code_ASTNode $node)
     {
         $tokens = $this->_tokenStack->pop();
 
@@ -1106,13 +1130,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
 
         if ($classReference === true) {
-            return $this->_prepareAndReturnNode(
+            return $this->_setNodePositionsAndReturn(
                 $this->_builder->buildASTClassReference(
                     $this->_parseQualifiedName()
                 )
             );
         }
-        return $this->_prepareAndReturnNode(
+        return $this->_setNodePositionsAndReturn(
             $this->_builder->buildASTClassOrInterfaceReference(
                 $this->_parseQualifiedName()
             )
@@ -1185,7 +1209,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
 
             if ($braceCount === 0) {
-                return $this->_prepareAndReturnNode($node);
+                return $this->_setNodePositionsAndReturn($node);
             }
 
             // Remove all comments
@@ -1888,6 +1912,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseCompoundVariableOrVariableVariable()
     {
+        $this->_tokenStack->push();
+
         // Read the dollar token
         $token = $this->_consumeToken(self::T_DOLLAR);
         $this->_consumeComments();
@@ -1913,7 +1939,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
         }
 
-        return $variable;
+        return $this->_setNodePositionsAndReturn($variable);
     }
 
     /**
@@ -2105,7 +2131,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $this->_consumeToken(self::T_ARRAY);
 
-        $array = $this->_prepareAndReturnNode(
+        $array = $this->_setNodePositionsAndReturn(
             $this->_builder->buildASTArrayType()
         );
 
@@ -2131,7 +2157,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        $classReference = $this->_prepareAndReturnNode(
+        $classReference = $this->_setNodePositionsAndReturn(
             $this->_builder->buildASTClassOrInterfaceReference(
                 $this->_parseQualifiedName()
             )
