@@ -670,7 +670,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_VARIABLE:
                 $declaration = $this->_parseFieldDeclaration();
                 $declaration->setModifiers($modifiers);
-                $declaration->setTokens($this->_tokenStack->pop());
 
                 return $declaration;
                 
@@ -736,6 +735,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
         }
+
+        $this->_setNodePositionsAndReturn($declaration);
+
         $this->_consumeToken(self::T_SEMICOLON);
 
         return $declaration;
