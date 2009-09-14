@@ -159,6 +159,13 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         return $token->startLine;
     }
 
+    /**
+     * Sets the start line for this node.
+     *
+     * @param integer $startLine The start line for this node.
+     *
+     * @return void
+     */
     public function setStartLine($startLine)
     {
         if (is_int($startLine) === false || $startLine < 1) {
@@ -184,6 +191,13 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         return $token->startColumn;
     }
 
+    /**
+     * Sets the start column for this node.
+     *
+     * @param integer $startColumn The start column for this node.
+     *
+     * @return void
+     */
     public function setStartColumn($startColumn)
     {
         if (is_int($startColumn) === false || $startColumn < 1) {
@@ -210,6 +224,14 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         return $token->endLine;
     }
 
+
+    /**
+     * Sets the end line for this node.
+     *
+     * @param integer $endLine The end line for this node.
+     *
+     * @return void
+     */
     public function setEndLine($endLine)
     {
         if (is_int($endLine) === false || $endLine < 1) {
@@ -236,6 +258,13 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         return $token->endColumn;
     }
 
+    /**
+     * Sets the end column for this node.
+     *
+     * @param integer $endColumn The end column for this node.
+     *
+     * @return void
+     */
     public function setEndColumn($endColumn)
     {
         if (is_int($endColumn) === false || $endColumn < 1) {
