@@ -1,11 +1,9 @@
 <?php
-class Foo
+class testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween
 {
     /**
      * Foo bar baz foobar.
      */
-    // @codeCoverageIgnoreStart
-    const BAR = 42;
-    // @codeCoverageIgnoreEnd
+    /* Test Comment */
+    const FOO = 42;
 }
-?>
