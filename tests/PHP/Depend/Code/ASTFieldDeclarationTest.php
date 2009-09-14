@@ -69,6 +69,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a field declaration contains the expected class reference.
      * 
      * @return void
+     * @group ast
      */
     public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
     {
@@ -91,6 +92,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a field declaration does not contain a class reference.
      *
      * @return void
+     * @group ast
      */
     public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled()
     {
@@ -116,6 +118,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of valid modifiers.
      *
      * @return void
+     * @group ast
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
@@ -132,6 +135,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of invalid modifiers.
      *
      * @return void
+     * @group ast
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
@@ -148,13 +152,65 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     }
 
     /**
-     * Creates a field declaration node.
+     * Tests the start line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testFieldDeclarationHasExpectedStartLine()
+    {
+        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $this->assertSame(4, $declaration->getStartLine());
+    }
+
+    /**
+     * Tests the start column value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testFieldDeclarationHasExpectedStartColumn()
+    {
+        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $this->assertSame(5, $declaration->getStartColumn());
+    }
+
+    /**
+     * Tests the end line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testFieldDeclarationHasExpectedEndLine()
+    {
+        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $this->assertSame(5, $declaration->getEndLine());
+    }
+
+    /**
+     * Tests the end column value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testFieldDeclarationHasExpectedEndColumn()
+    {
+        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $this->assertSame(22, $declaration->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
      *
      * @return PHP_Depend_Code_ASTFieldDeclaration
      */
-    protected function createNodeInstance()
+    private function _getFirstFieldDeclarationInClass($testCase)
     {
-        return new PHP_Depend_Code_ASTFieldDeclaration();
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
+        );
     }
 
     /**
