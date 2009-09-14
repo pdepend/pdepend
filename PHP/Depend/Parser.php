@@ -1334,6 +1334,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseMemberPrefixOrFunctionPostfix()
     {
+        $this->_tokenStack->push();
+
         $qualifiedName = $this->_parseQualifiedName();
 
         // Remove comments
@@ -1345,16 +1347,23 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         switch ($tokenType) {
 
         case self::T_DOUBLE_COLON:
-            return $this->_parseStaticMemberPrimaryPrefix(
+            $node = $this->_parseStaticMemberPrimaryPrefix(
                 $this->_builder->buildASTClassOrInterfaceReference($qualifiedName)
             );
+            break;
 
         case self::T_PARENTHESIS_OPEN:
-            return $this->_parseFunctionPostfix(
+            $node = $this->_parseFunctionPostfix(
                 $this->_builder->buildASTIdentifier($qualifiedName)
             );
+            break;
+
+        default:
+            $node = $this->_builder->buildASTConstant($qualifiedName);
+            break;
         }
-        return $this->_builder->buildASTConstant($qualifiedName);
+        
+        return $this->_setNodePositionsAndReturn($node);
     }
 
     /**
