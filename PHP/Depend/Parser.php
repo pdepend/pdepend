@@ -1288,6 +1288,121 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a catch-statement.
+     *
+     * @return PHP_Depend_Code_ASTCatchStatement
+     * @since 0.9.8
+     */
+    private function _parseCatchStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_CATCH);
+
+        $catch = $this->_builder->buildASTCatchStatement($token->image);
+
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+
+        $catch->addChild(
+            $this->_builder->buildASTClassOrInterfaceReference(
+                $this->_parseQualifiedName()
+            )
+        );
+
+        $this->_consumeComments();
+        $token = $this->_consumeToken(self::T_VARIABLE);
+
+        $catch->addChild(
+            $this->_builder->buildASTVariable($token->image)
+        );
+        
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+
+        return $this->_setNodePositionsAndReturn($catch);
+    }
+
+    /**
+     * This method parses a single if-statement node.
+     *
+     * @return PHP_Depend_Code_ASTIfStatement
+     * @since 0.9.8
+     */
+    private function _parseIfStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_IF);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTIfStatement($token->image)
+        );
+    }
+
+    /**
+     * This method parses a single elseif-statement node.
+     *
+     * @return PHP_Depend_Code_ASTElseIfStatement
+     * @since 0.9.8
+     */
+    private function _parseElseIfStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_ELSEIF);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTElseIfStatement($token->image)
+        );
+    }
+
+    /**
+     * This method parses a single for-statement node.
+     *
+     * @return PHP_Depend_Code_ASTForStatement
+     * @since 0.9.8
+     */
+    private function _parseForStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_FOR);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTForStatement($token->image)
+        );
+    }
+
+    /**
+     * This method parses a single foreach-statement node.
+     *
+     * @return PHP_Depend_Code_ASTForeachStatement
+     * @since 0.9.8
+     */
+    private function _parseForeachStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_FOREACH);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTForeachStatement($token->image)
+        );
+    }
+
+    /**
+     * This method parses a single while-statement node.
+     *
+     * @return PHP_Depend_Code_ASTWhileStatement
+     * @since 0.9.8
+     */
+    private function _parseWhileStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_WHILE);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTWhileStatement($token->image)
+        );
+    }
+
+    /**
      * This method parses a member primary prefix expression or a function
      * postfix expression node.
      *
@@ -2361,16 +2476,27 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
         
             case self::T_CATCH:
-                // Consume catch keyword and the opening parenthesis
-                $this->_consumeToken(self::T_CATCH);
-                $this->_consumeComments();
-                $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+                $callable->addChild($this->_parseCatchStatement());
+                break;
 
-                $callable->addDependencyClassReference(
-                    $this->_builder->buildASTClassOrInterfaceReference(
-                        $this->_parseQualifiedName()
-                    )
-                );
+            case self::T_IF:
+                $callable->addChild($this->_parseIfStatement());
+                break;
+
+            case self::T_ELSEIF:
+                $callable->addChild($this->_parseElseIfStatement());
+                break;
+
+            case self::T_FOR:
+                $callable->addChild($this->_parseForStatement());
+                break;
+
+            case self::T_FOREACH:
+                $callable->addChild($this->_parseForeachStatement());
+                break;
+
+            case self::T_WHILE:
+                $callable->addChild($this->_parseWhileStatement());
                 break;
 
             case self::T_CURLY_BRACE_OPEN:

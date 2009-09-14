@@ -747,6 +747,116 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new catch-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTCatchStatement
+     * @since 0.9.8
+     */
+    public function buildASTCatchStatement($image)
+    {
+        include_once 'PHP/Depend/Code/ASTCatchStatement.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTCatchStatement()'
+        );
+
+        return new PHP_Depend_Code_ASTCatchStatement($image);
+    }
+
+    /**
+     * Builds a new if statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTIfStatement
+     * @since 0.9.8
+     */
+    public function buildASTIfStatement($image)
+    {
+        include_once 'PHP/Depend/Code/ASTIfStatement.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTIfStatement()'
+        );
+
+        return new PHP_Depend_Code_ASTIfStatement($image);
+    }
+
+    /**
+     * Builds a new elseif statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTElseIfStatement
+     * @since 0.9.8
+     */
+    public function buildASTElseIfStatement($image)
+    {
+        include_once 'PHP/Depend/Code/ASTElseIfStatement.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTElseIfStatement()'
+        );
+        return new PHP_Depend_Code_ASTElseIfStatement($image);
+    }
+
+    /**
+     * Builds a new for statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTForStatement
+     * @since 0.9.8
+     */
+    public function buildASTForStatement($image)
+    {
+        include_once 'PHP/Depend/Code/ASTForStatement.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTForStatement()'
+        );
+        return new PHP_Depend_Code_ASTForStatement($image);
+    }
+
+    /**
+     * Builds a new foreach-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTForeachStatement
+     * @since 0.9.8
+     */
+    public function buildASTForeachStatement($image)
+    {
+        include_once 'PHP/Depend/Code/ASTForeachStatement.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTForeachStatement()'
+        );
+        return new PHP_Depend_Code_ASTForeachStatement($image);
+    }
+
+    /**
+     * Builds a new while-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTWhileStatement
+     * @since 0.9.8
+     */
+    public function buildASTWhileStatement($image)
+    {
+        include_once 'PHP/Depend/Code/ASTWhileStatement.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTWhileStatement()'
+        );
+        return new PHP_Depend_Code_ASTWhileStatement($image);
+    }
+
+    /**
      * Builds a new member primary expression node.
      *
      * <code>
