@@ -1112,6 +1112,38 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a boolean and-expression.
+     *
+     * @return PHP_Depend_Code_ASTBooleanAndExpression
+     * @since 0.9.8
+     */
+    private function _parseBooleanAndExpression()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_BOOLEAN_AND);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTBooleanAndExpression()
+        );
+    }
+
+    /**
+     * This method parses a boolean or-expression.
+     *
+     * @return PHP_Depend_Code_ASTBooleanOrExpression
+     * @since 0.9.8
+     */
+    private function _parseBooleanOrExpression()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_BOOLEAN_OR);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTBooleanOrExpression()
+        );
+    }
+
+    /**
      * Parses a class or interface reference node.
      *
      * @param boolean $classReference Force a class reference.
@@ -1285,6 +1317,29 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
         }
         return $expr;
+    }
+
+    private function _parseSwitchLabel()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_CASE);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTSwitchLabel($token->image)
+        );
+    }
+
+    private function _parseSwitchLabelDefault()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_DEFAULT);
+
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_COLON);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTSwitchLabel($token->image)
+        );
     }
 
     /**
@@ -2473,6 +2528,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_NAMESPACE:
             case self::T_INSTANCEOF:
                 $callable->addChild($this->_parseExpression());
+                break;
+
+            case self::T_BOOLEAN_AND:
+                $callable->addChild($this->_parseBooleanAndExpression());
+                break;
+
+            case self::T_BOOLEAN_OR:
+                $callable->addChild($this->_parseBooleanOrExpression());
+                break;
+
+            case self::T_CASE:
+                $callable->addChild($this->_parseSwitchLabel());
+                break;
+
+            case self::T_DEFAULT:
+                $callable->addChild($this->_parseSwitchLabelDefault());
                 break;
         
             case self::T_CATCH:

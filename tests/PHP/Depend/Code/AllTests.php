@@ -55,6 +55,8 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once dirname(__FILE__) . '/ASTAllocationExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTArgumentsTest.php';
 require_once dirname(__FILE__) . '/ASTArrayTypeTest.php';
+require_once dirname(__FILE__) . '/ASTBooleanAndExpressionTest.php';
+require_once dirname(__FILE__) . '/ASTBooleanOrExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTCatchStatementTest.php';
 require_once dirname(__FILE__) . '/ASTClassOrInterfaceReferenceTest.php';
 require_once dirname(__FILE__) . '/ASTClassReferenceTest.php';
@@ -76,6 +78,7 @@ require_once dirname(__FILE__) . '/ASTInstanceOfExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTPropertyPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTStaticReferenceTest.php';
 require_once dirname(__FILE__) . '/ASTStaticVariableDeclarationTest.php';
+require_once dirname(__FILE__) . '/ASTSwitchLabelTest.php';
 require_once dirname(__FILE__) . '/ASTVariableDeclaratorTest.php';
 require_once dirname(__FILE__) . '/ASTWhileStatementTest.php';
 
@@ -142,6 +145,8 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTAllocationExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArgumentsTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArrayTypeTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTBooleanAndExpressionTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTBooleanOrExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTCatchStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTClassOrInterfaceReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTClassReferenceTest');
@@ -163,6 +168,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTPropertyPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTStaticReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTStaticVariableDeclarationTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTSwitchLabelTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTVariableDeclaratorTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTWhileStatementTest');
 
