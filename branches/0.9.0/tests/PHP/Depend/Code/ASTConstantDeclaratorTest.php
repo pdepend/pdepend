@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTConstantPostfix.php';
+require_once 'PHP/Depend/Code/ASTConstantDeclarator.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTConstantPostfix} class.
+ * Test case for the {@link PHP_Depend_Code_ASTConstantDeclarator} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,59 +62,18 @@ require_once 'PHP/Depend/Code/ASTConstantPostfix.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
-    /**
-     * Tests that a parsed constant postfix has the expected object structure.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testConstantPostfixStructureForSimpleStaticAccess()
-    {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $prefix  = $postfix->getParent();
-
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-        $this->assertSame('Bar', $reference->getImage());
-
-        $this->assertSame('BAZ', $postfix->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-        $this->assertSame('BAZ', $identifier->getImage());
-    }
-
-    /**
-     * Tests that a parsed method postfix has the expected object structure.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testConstantPostfixStructureForStaticAccessOnVariable()
-    {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $prefix  = $postfix->getParent();
-
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$foo', $variable->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-    }
-
     /**
      * Tests the start line value.
      *
      * @return void
      * @group ast
      */
-    public function testConstantPostfixHasExpectedStartLine()
+    public function testConstantDeclaratorHasExpectedStartLine()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(4, $postfix->getStartLine());
+        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        $this->assertSame(5, $declarator->getStartLine());
     }
 
     /**
@@ -123,10 +82,10 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testConstantPostfixHasExpectedStartColumn()
+    public function testConstantDeclaratorHasExpectedStartColumn()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(11, $postfix->getStartColumn());
+        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        $this->assertSame(7, $declarator->getStartColumn());
     }
 
     /**
@@ -135,10 +94,10 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testConstantPostfixHasExpectedEndLine()
+    public function testConstantDeclaratorHasExpectedEndLine()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(4, $postfix->getEndLine());
+        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        $this->assertSame(7, $declarator->getEndLine());
     }
 
     /**
@@ -147,10 +106,10 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testConstantPostfixHasExpectedEndColumn()
+    public function testConstantDeclaratorHasExpectedEndColumn()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(13, $postfix->getEndColumn());
+        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        $this->assertSame(14, $declarator->getEndColumn());
     }
 
     /**
@@ -158,12 +117,12 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTConstantPostfix
+     * @return PHP_Depend_Code_ASTConstantDeclarator
      */
-    private function _getFirstConstantPostfixInFunction($testCase)
+    private function _getFirstConstantDeclaratorInClass($testCase)
     {
-        return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTConstantPostfix::CLAZZ
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTConstantDeclarator::CLAZZ
         );
     }
 }

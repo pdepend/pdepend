@@ -1524,7 +1524,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseStaticMemberPrimaryPrefix(PHP_Depend_Code_ASTNode $node)
     {
-        // Consume double colon and optional comments
         $token = $this->_consumeToken(self::T_DOUBLE_COLON);
         $this->_consumeComments();
 
@@ -1537,41 +1536,37 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         switch ($tokenType) {
 
         case self::T_STRING:
-            $prefix->addChild(
-                $this->_parseMethodOrConstantPostfix(
-                    $this->_builder->buildASTIdentifier(
-                        $this->_consumeToken(self::T_STRING)->image
-                    )
-                )
-            );
+            $postfix = $this->_parseMethodOrConstantPostfix();
             break;
 
         default:
-            $prefix->addChild(
-                $this->_parseMethodOrPropertyPostfix(
-                    $this->_parseCompoundVariableOrVariableVariableOrVariable()
-                )
+            $postfix = $this->_parseMethodOrPropertyPostfix(
+                $this->_parseCompoundVariableOrVariableVariableOrVariable()
             );
             break;
         }
+        $prefix->addChild($postfix);
+
         return $prefix;
     }
 
     /**
      * This method parses a method- or constant-postfix expression. This expression
-     * will contain the given node as method or constant identifier.
-     *
-     * @param PHP_Depend_Code_ASTNode $node The identifier for the parsed postfix
-     *        expression node. This node will be the first child of the returned
-     *        postfix node instance.
+     * will contain an identifier node as nested child.
      *
      * @return PHP_Depend_Code_ASTNode
      * @throws PHP_Depend_Parser_Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
-    private function _parseMethodOrConstantPostfix(PHP_Depend_Code_ASTNode $node)
+    private function _parseMethodOrConstantPostfix()
     {
+        $this->_tokenStack->push();
+
+        $node = $this->_builder->buildASTIdentifier(
+            $this->_consumeToken(self::T_STRING)->image
+        );
+
         // Strip optional comments
         $this->_consumeComments();
 
@@ -1581,13 +1576,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $postfix->addChild($node);
             $postfix->addChild($this->_parseArguments());
 
-            return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+            return $this->_setNodePositionsAndReturn(
+                $this->_parseOptionalMemberPrimaryPrefix($postfix)
+            );
         }
 
         $postfix = $this->_builder->buildASTConstantPostfix($node->getImage());
         $postfix->addChild($node);
         
-        return $postfix;
+        return $this->_setNodePositionsAndReturn($postfix);
     }
 
     /**
@@ -2716,11 +2713,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseConstantDefinition()
     {
-        // Remove leading comments and create a new token stack
         $this->_consumeComments();
         $this->_tokenStack->push();
 
-        // Consume const keyword
         $token = $this->_consumeToken(self::T_CONST);
 
         $definition = $this->_builder->buildASTConstantDefinition($token->image);
@@ -2740,9 +2735,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_COMMA);
         } while ($tokenType !== self::T_EOF);
 
-        $definition->setTokens($this->_tokenStack->pop());
+
+        $definition = $this->_setNodePositionsAndReturn($definition);
+
         $this->_consumeToken(self::T_SEMICOLON);
-        
+
         return $definition;
     }
 
@@ -2793,9 +2790,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $declarator = $this->_builder->buildASTConstantDeclarator($token->image);
         $declarator->setValue($this->_parseStaticValue());
-        $declarator->setTokens($this->_tokenStack->pop());
         
-        return $declarator;
+        return $this->_setNodePositionsAndReturn($declarator);
     }
 
     /**
