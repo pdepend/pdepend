@@ -68,17 +68,11 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
+     * @group ast
      */
     public function testCompoundVariableGraphWithInlineLiteral()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $variable = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTCompoundVariable::CLAZZ
-        );
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $expression = $variable->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
@@ -92,17 +86,11 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
+     * @group ast
      */
     public function testCompoundVariableGraphWithInlineConstantEscapedLiteral()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $variable = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTCompoundVariable::CLAZZ
-        );
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $expression = $variable->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
@@ -116,17 +104,11 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
+     * @group ast
      */
     public function testCompoundVariableGraphWithInlineBacktickLiteral()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $variable = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTCompoundVariable::CLAZZ
-        );
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $expression = $variable->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
@@ -140,17 +122,11 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
+     * @group ast
      */
     public function testCompoundVariableGraphWithMemberPrimaryPrefix()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $variable = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTCompoundVariable::CLAZZ
-        );
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $expression = $variable->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
@@ -169,20 +145,73 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that an invalid compound variable results in the expected exception.
      *
      * @return void
+     * @group ast
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
     {
         $this->setExpectedException('PHP_Depend_Parser_TokenStreamEndException');
         self::parseTestCaseSource(__METHOD__);
     }
+    
+    /**
+     * Tests the start line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCompoundVariableHasExpectedStartLine()
+    {
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $this->assertSame(4, $variable->getStartLine());
+    }
 
     /**
-     * Creates a concrete node implementation.
+     * Tests the start column value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCompoundVariableHasExpectedStartColumn()
+    {
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $this->assertSame(5, $variable->getStartColumn());
+    }
+
+    /**
+     * Tests the end line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCompoundVariableHasExpectedEndLine()
+    {
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $this->assertSame(7, $variable->getEndLine());
+    }
+
+    /**
+     * Tests the end column value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCompoundVariableHasExpectedEndColumn()
+    {
+        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $this->assertSame(11, $variable->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
      *
      * @return PHP_Depend_Code_ASTCompoundVariable
      */
-    protected function createNodeInstance()
+    private function _getFirstVariableInFunction($testCase)
     {
-        return new PHP_Depend_Code_ASTCompoundVariable('$');
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTCompoundVariable::CLAZZ
+        );
     }
 }
