@@ -68,18 +68,11 @@ class PHP_Depend_Code_ASTConstantTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed constant has the expected object graph.
      *
      * @return void
+     * @group ast
      */
     public function testConstantGraphSimple()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages
-            ->current()
-            ->getFunctions()
-            ->current();
-
-        $constant = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTConstant::CLAZZ
-        );
+        $constant = $this->_getFirstConstantInFunction(__METHOD__);
         
         $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
         $this->assertSame('FOO', $constant->getImage());
@@ -89,18 +82,11 @@ class PHP_Depend_Code_ASTConstantTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed constant has the expected object graph.
      *
      * @return void
+     * @group ast
      */
     public function testConstantGraphKeywordSelf()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages
-            ->current()
-            ->getFunctions()
-            ->current();
-
-        $constant = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTConstant::CLAZZ
-        );
+        $constant = $this->_getFirstConstantInFunction(__METHOD__);
 
         $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
         $this->assertSame('self', $constant->getImage());
@@ -110,30 +96,75 @@ class PHP_Depend_Code_ASTConstantTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed constant has the expected object graph.
      *
      * @return void
+     * @group ast
      */
     public function testConstantGraphKeywordParent()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages
-            ->current()
-            ->getFunctions()
-            ->current();
-
-        $constant = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTConstant::CLAZZ
-        );
+        $constant = $this->_getFirstConstantInFunction(__METHOD__);
 
         $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
         $this->assertSame('parent', $constant->getImage());
     }
 
     /**
-     * Creates a constant postfix node.
+     * Tests the start line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testConstantHasExpectedStartLine()
+    {
+        $constant = $this->_getFirstConstantInFunction(__METHOD__);
+        $this->assertSame(4, $constant->getStartLine());
+    }
+
+    /**
+     * Tests the start column value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testConstantHasExpectedStartColumn()
+    {
+        $constant = $this->_getFirstConstantInFunction(__METHOD__);
+        $this->assertSame(12, $constant->getStartColumn());
+    }
+
+    /**
+     * Tests the end line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testConstantHasExpectedEndLine()
+    {
+        $constant = $this->_getFirstConstantInFunction(__METHOD__);
+        $this->assertSame(4, $constant->getEndLine());
+    }
+
+    /**
+     * Tests the end column value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testConstantHasExpectedEndColumn()
+    {
+        $constant = $this->_getFirstConstantInFunction(__METHOD__);
+        $this->assertSame(14, $constant->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
      *
      * @return PHP_Depend_Code_ASTConstant
      */
-    protected function createNodeInstance()
+    private function _getFirstConstantInFunction($testCase)
     {
-        return new PHP_Depend_Code_ASTConstant(__FUNCTION__);
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTConstant::CLAZZ
+        );
     }
 }
