@@ -353,6 +353,30 @@ interface PHP_Depend_BuilderI
     function buildASTInstanceOfExpression($image);
 
     /**
+     * Builds a new boolean and-expression.
+     *
+     * @return PHP_Depend_Code_ASTBooleanAndExpression
+     */
+    function buildASTBooleanAndExpression();
+
+    /**
+     * Builds a new boolean or-expression.
+     *
+     * @return PHP_Depend_Code_ASTBooleanOrExpression
+     */
+    function buildASTBooleanOrExpression();
+
+    /**
+     * Builds a new switch-label node.
+     *
+     * @param string $image The source image of this label.
+     *
+     * @return PHP_Depend_Code_ASTSwitchLabel
+     * @since 0.9.8
+     */
+    function buildASTSwitchLabel($image);
+
+    /**
      * Builds a new catch-statement node.
      *
      * @param string $image The source image of this statement.
