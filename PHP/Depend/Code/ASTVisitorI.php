@@ -44,6 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.8
  */
 
 /**
@@ -58,6 +59,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.8
  */
 interface PHP_Depend_Code_ASTVisitorI
 {
@@ -67,6 +69,7 @@ interface PHP_Depend_Code_ASTVisitorI
      * begins.
      *
      * @param PHP_Depend_Code_ASTNodeI $node The current node to visit.
+     * @param array(string=>integer)   $data Optional data, previously calculated.
      *
      * @return mixed
      */
@@ -78,6 +81,7 @@ interface PHP_Depend_Code_ASTVisitorI
      * finished.
      *
      * @param PHP_Depend_Code_ASTNodeI $node The current node to visit.
+     * @param array(string=>integer)   $data Optional data, previously calculated.
      *
      * @return mixed
      */

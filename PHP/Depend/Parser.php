@@ -1171,7 +1171,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTLogicalAndExpression
      * @since 0.9.8
      */
-    public function _parseLogicalAndExpression()
+    private function _parseLogicalAndExpression()
     {
         $this->_tokenStack->push();
         $this->_consumeToken(self::T_LOGICAL_AND);
@@ -1187,7 +1187,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTLogicalOrExpression
      * @since 0.9.8
      */
-    public function _parseLogicalOrExpression()
+    private function _parseLogicalOrExpression()
     {
         $this->_tokenStack->push();
         $this->_consumeToken(self::T_LOGICAL_OR);
@@ -1203,7 +1203,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTLogicalXorExpression
      * @since 0.9.8
      */
-    public function _parseLogicalXorExpression()
+    private function _parseLogicalXorExpression()
     {
         $this->_tokenStack->push();
         $this->_consumeToken(self::T_LOGICAL_XOR);
@@ -1407,6 +1407,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $expr;
     }
 
+    /**
+     * This method parses a case label of a switch statement.
+     *
+     * @return PHP_Depend_Code_ASTSwitchLabel
+     */
     private function _parseSwitchLabel()
     {
         $this->_tokenStack->push();
@@ -1417,6 +1422,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
     }
 
+    /**
+     * This method parses the default label of a switch statement.
+     *
+     * @return PHP_Depend_Code_ASTSwitchLabel
+     */
     private function _parseSwitchLabelDefault()
     {
         $this->_tokenStack->push();

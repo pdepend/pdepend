@@ -460,8 +460,10 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * by a visitor during tree traversal.
      *
      * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     * @param array(string=>integer)      $data    Optional previous calculated data.
      *
      * @return mixed
+     * @since 0.9.8
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
