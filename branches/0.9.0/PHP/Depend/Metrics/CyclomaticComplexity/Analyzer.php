@@ -46,6 +46,7 @@
  * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Code/ASTVisitorI.php';
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
@@ -70,7 +71,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_ProjectAwareI
+               PHP_Depend_Metrics_ProjectAwareI,
+               PHP_Depend_Code_ASTVisitorI
 {
     /**
      * Type of this analyzer class.
@@ -118,22 +120,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @var integer $_ccn2
      */
     private $_ccn2 = 0;
-
-    private $_ccn2Types = array(
-        PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ,
-        PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ,
-        PHP_Depend_Code_ASTSwitchLabel::CLAZZ,
-        PHP_Depend_Code_ASTCatchStatement::CLAZZ,
-        PHP_Depend_Code_ASTElseIfStatement::CLAZZ,
-        PHP_Depend_Code_ASTForStatement::CLAZZ,
-        PHP_Depend_Code_ASTForeachStatement::CLAZZ,
-        PHP_Depend_Code_ASTIfStatement::CLAZZ,
-        PHP_Depend_Code_ASTLogicalAndExpression::CLAZZ,
-        PHP_Depend_Code_ASTLogicalOrExpression::CLAZZ,
-        PHP_Depend_Code_ASTLogicalXorExpression::CLAZZ,
-        PHP_Depend_Code_ASTConditionalExpression::CLAZZ,
-        PHP_Depend_Code_ASTWhileStatement::CLAZZ
-    );
 
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -236,21 +222,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         $this->fireStartFunction($function);
 
-        // Get all method tokens
-        $tokens = $function->getTokens();
+        $complexity = $this->visitCallable($function);
 
-        $ccn  = $this->_calculateCCN($tokens);
-        $ccn2 = $this->_calculateCCN2($tokens);
-
-        // The method metrics
-        $this->_nodeMetrics[$function->getUUID()] = array(
-            self::M_CYCLOMATIC_COMPLEXITY_1  =>  $ccn,
-            self::M_CYCLOMATIC_COMPLEXITY_2  =>  $ccn2
-        );
+        $this->_nodeMetrics[$function->getUUID()] = $complexity;
 
         // Update project metrics
-        $this->_ccn  += $ccn;
-        $this->_ccn2 += $ccn2;
+        $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
+        $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->fireEndFunction($function);
     }
@@ -280,88 +258,130 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         $this->fireStartMethod($method);
 
-        // Get all method tokens
-        $tokens = $method->getTokens();
+        $complexity = $this->visitCallable($method);
 
-        $ccn  = $this->_calculateCCN($tokens);
-        $ccn2 = $this->_calculateCCN2($tokens);
-
-        // The method metrics
-        $this->_nodeMetrics[$method->getUUID()] = array(
-            self::M_CYCLOMATIC_COMPLEXITY_1  =>  $ccn,
-            self::M_CYCLOMATIC_COMPLEXITY_2  =>  $ccn2
-        );
+        $this->_nodeMetrics[$method->getUUID()] = $complexity;
 
         // Update project metrics
-        $this->_ccn  += $ccn;
-        $this->_ccn2 += $ccn2;
+        $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
+        $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->fireEndMethod($method);
     }
 
-    /**
-     * Calculates the Cyclomatic Complexity Number (CCN).
-     *
-     * @param array $tokens The input tokens.
-     *
-     * @return integer
-     */
-    private function _calculateCCN(array $tokens)
+    public function visitCallable(PHP_Depend_Code_AbstractCallable $callable)
     {
-        // List of tokens
-        $countingTokens = array(
-            PHP_Depend_TokenizerI::T_CASE           =>  true,
-            PHP_Depend_TokenizerI::T_CATCH          =>  true,
-            PHP_Depend_TokenizerI::T_ELSEIF         =>  true,
-            PHP_Depend_TokenizerI::T_FOR            =>  true,
-            PHP_Depend_TokenizerI::T_FOREACH        =>  true,
-            PHP_Depend_TokenizerI::T_IF             =>  true,
-            PHP_Depend_TokenizerI::T_QUESTION_MARK  =>  true,
-            PHP_Depend_TokenizerI::T_WHILE          =>  true
-        );
-
-        $ccn = 1;
-        foreach ($tokens as $token) {
-            if (isset($countingTokens[$token->type])) {
-                ++$ccn;
-            }
+        $data = array('ccn' => 1, 'ccn2' => 1);
+        foreach ($callable->getChildren() as $child) {
+            $data = $child->accept($this, $data);
         }
-        return $ccn;
+        return $data;
     }
 
-    /**
-     * Calculates the second version of the Cyclomatic Complexity Number (CCN2).
-     * This version includes boolean operators like <b>&&</b>, <b>and</b>,
-     * <b>or</b> and <b>||</b>.
-     *
-     * @param array $tokens The input tokens.
-     *
-     * @return integer
-     */
-    private function _calculateCCN2(array $tokens)
+    public function visitBefore(PHP_Depend_Code_ASTNodeI $node, $data = null)
     {
-        // List of tokens
-        $countingTokens = array(
-            PHP_Depend_TokenizerI::T_BOOLEAN_AND    =>  true,
-            PHP_Depend_TokenizerI::T_BOOLEAN_OR     =>  true,
-            PHP_Depend_TokenizerI::T_CASE           =>  true,
-            PHP_Depend_TokenizerI::T_CATCH          =>  true,
-            PHP_Depend_TokenizerI::T_ELSEIF         =>  true,
-            PHP_Depend_TokenizerI::T_FOR            =>  true,
-            PHP_Depend_TokenizerI::T_FOREACH        =>  true,
-            PHP_Depend_TokenizerI::T_IF             =>  true,
-            PHP_Depend_TokenizerI::T_LOGICAL_AND    =>  true,
-            PHP_Depend_TokenizerI::T_LOGICAL_OR     =>  true,
-            PHP_Depend_TokenizerI::T_QUESTION_MARK  =>  true,
-            PHP_Depend_TokenizerI::T_WHILE          =>  true
-        );
-
-        $ccn2 = 1;
-        foreach ($tokens as $token) {
-            if (isset($countingTokens[$token->type])) {
-                ++$ccn2;
-            }
+        $methodName = 'visitBefore' . substr(get_class($node), 16);
+        if (method_exists($this, $methodName)) {
+            return call_user_func(array($this, $methodName), $node, $data);
         }
-        return $ccn2;
+        return $data;
+    }
+
+    public function visitAfter(PHP_Depend_Code_ASTNodeI $node, $data = null)
+    {
+        $methodName = 'visitAfter' . substr(get_class($node), 16);
+        if (method_exists($this, $methodName)) {
+            return call_user_func(array($this, $methodName), $node, $data);
+        }
+        return $data;
+    }
+
+    public function visitBeforeASTBooleanAndExpression($node, $data)
+    {
+        ++$data['ccn2'];
+        return $data;
+    }
+
+    public function visitBeforeASTBooleanOrExpression($node, $data)
+    {
+        ++$data['ccn2'];
+        return $data;
+    }
+
+    public function visitBeforeASTSwitchLabel($node, $data)
+    {
+        if ($node->isDefault() === false) {
+            ++$data['ccn'];
+            ++$data['ccn2'];
+        }
+
+        return $data;
+    }
+
+    public function visitBeforeASTCatchStatement($node, $data)
+    {
+        ++$data['ccn'];
+        ++$data['ccn2'];
+
+        return $data;
+    }
+
+    public function visitBeforeASTElseIfStatement($node, $data)
+    {
+        ++$data['ccn'];
+        ++$data['ccn2'];
+
+        return $data;
+    }
+
+    public function visitBeforeASTForStatement($node, $data)
+    {
+        ++$data['ccn'];
+        ++$data['ccn2'];
+
+        return $data;
+    }
+
+    public function visitBeforeASTForeachStatement($node, $data)
+    {
+        ++$data['ccn'];
+        ++$data['ccn2'];
+
+        return $data;
+    }
+
+    public function visitBeforeASTIfStatement($node, $data)
+    {
+        ++$data['ccn'];
+        ++$data['ccn2'];
+
+        return $data;
+    }
+
+    public function visitBeforeASTLogicalAndExpression($node, $data)
+    {
+        ++$data['ccn2'];
+        return $data;
+    }
+
+    public function visitBeforeASTLogicalOrExpression($node, $data)
+    {
+        ++$data['ccn2'];
+        return $data;
+    }
+
+    public function visitBeforeASTConditionalExpression($node, $data)
+    {
+        ++$data['ccn'];
+        ++$data['ccn2'];
+        return $data;
+    }
+
+    public function visitBeforeASTWhileStatement($node, $data)
+    {
+        ++$data['ccn'];
+        ++$data['ccn2'];
+
+        return $data;
     }
 }
