@@ -68,4 +68,31 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      * The type of this class.
      */
     const CLAZZ = __CLASS__;
+
+    /**
+     * Is this switch label the default label?
+     *
+     * @var boolean
+     */
+    private $_default = false;
+
+    /**
+     * Returns <b>true</b> when this node is the default label.
+     *
+     * @return boolean
+     */
+    public function isDefault()
+    {
+        return $this->_default;
+    }
+
+    /**
+     * Flags this node instance as the default switch label.
+     *
+     * @return void
+     */
+    public function setDefault()
+    {
+        $this->_default = true;
+    }
 }

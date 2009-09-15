@@ -1112,6 +1112,28 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a conditional-expression.
+     *
+     * <code>
+     *         --------------
+     * $foo = ($bar ? 42 : 23);
+     *         --------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTConditionalExpression
+     * @since 0.9.8
+     */
+    private function _parseConditionalExpression()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_QUESTION_MARK);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTConditionalExpression()
+        );
+    }
+
+    /**
      * This method parses a boolean and-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanAndExpression
@@ -1140,6 +1162,54 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         return $this->_setNodePositionsAndReturn(
             $this->_builder->buildASTBooleanOrExpression()
+        );
+    }
+
+    /**
+     * This method parses a logical <b>and</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalAndExpression
+     * @since 0.9.8
+     */
+    public function _parseLogicalAndExpression()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_LOGICAL_AND);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTLogicalAndExpression()
+        );
+    }
+
+    /**
+     * This method parses a logical <b>or</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalOrExpression
+     * @since 0.9.8
+     */
+    public function _parseLogicalOrExpression()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_LOGICAL_OR);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTLogicalOrExpression()
+        );
+    }
+
+    /**
+     * This method parses a logical <b>xor</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalXorExpression
+     * @since 0.9.8
+     */
+    public function _parseLogicalXorExpression()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_LOGICAL_XOR);
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTLogicalXorExpression()
         );
     }
 
@@ -1337,9 +1407,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $this->_consumeToken(self::T_COLON);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTSwitchLabel($token->image)
-        );
+        $label = $this->_builder->buildASTSwitchLabel($token->image);
+        $label->setDefault();
+
+        return $this->_setNodePositionsAndReturn($label);
     }
 
     /**
@@ -2530,12 +2601,28 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $callable->addChild($this->_parseExpression());
                 break;
 
+            case self::T_QUESTION_MARK:
+                $callable->addChild($this->_parseConditionalExpression());
+                break;
+
             case self::T_BOOLEAN_AND:
                 $callable->addChild($this->_parseBooleanAndExpression());
                 break;
 
             case self::T_BOOLEAN_OR:
                 $callable->addChild($this->_parseBooleanOrExpression());
+                break;
+
+            case self::T_LOGICAL_AND:
+                $callable->addChild($this->_parseLogicalAndExpression());
+                break;
+
+            case self::T_LOGICAL_OR:
+                $callable->addChild($this->_parseLogicalOrExpression());
+                break;
+
+            case self::T_LOGICAL_XOR:
+                $callable->addChild($this->_parseLogicalXorExpression());
                 break;
 
             case self::T_CASE:

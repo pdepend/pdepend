@@ -44,14 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.8
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
-require_once 'PHP/Depend/Code/ASTBooleanAndExpression.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTBooleanAndExpression} class.
+ * This node class represents a logical <b>xor</b>-expression.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,68 +60,12 @@ require_once 'PHP/Depend/Code/ASTBooleanAndExpression.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.8
  */
-class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTLogicalXorExpression extends PHP_Depend_Code_ASTNode
 {
     /**
-     * Tests the start line value.
-     *
-     * @return void
-     * @group ast
+     * The type of this class.
      */
-    public function testBooleanAndExpressionHasExpectedStartLine()
-    {
-        $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getStartLine());
-    }
-
-    /**
-     * Tests the start column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testBooleanAndExpressionHasExpectedStartColumn()
-    {
-        $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(18, $expression->getStartColumn());
-    }
-
-    /**
-     * Tests the end line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testBooleanAndExpressionHasExpectedEndLine()
-    {
-        $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getEndLine());
-    }
-
-    /**
-     * Tests the end column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testBooleanAndExpressionHasExpectedEndColumn()
-    {
-        $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(19, $expression->getEndColumn());
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_ASTBooleanAndExpression
-     */
-    private function _getFirstBooleanAndExpressionInFunction($testCase)
-    {
-        return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ
-        );
-    }
+    const CLAZZ = __CLASS__;
 }
