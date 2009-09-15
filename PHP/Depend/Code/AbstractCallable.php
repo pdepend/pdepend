@@ -136,6 +136,17 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     }
 
     /**
+     * Returns all child nodes of this method.
+     *
+     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @since 0.9.8
+     */
+    public function getChildren()
+    {
+        return $this->_nodes;
+    }
+
+    /**
      * This method will search recursive for the first child node that is an
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
