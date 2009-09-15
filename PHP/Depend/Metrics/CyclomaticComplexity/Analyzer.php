@@ -119,6 +119,22 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     private $_ccn2 = 0;
 
+    private $_ccn2Types = array(
+        PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ,
+        PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ,
+        PHP_Depend_Code_ASTSwitchLabel::CLAZZ,
+        PHP_Depend_Code_ASTCatchStatement::CLAZZ,
+        PHP_Depend_Code_ASTElseIfStatement::CLAZZ,
+        PHP_Depend_Code_ASTForStatement::CLAZZ,
+        PHP_Depend_Code_ASTForeachStatement::CLAZZ,
+        PHP_Depend_Code_ASTIfStatement::CLAZZ,
+        PHP_Depend_Code_ASTLogicalAndExpression::CLAZZ,
+        PHP_Depend_Code_ASTLogicalOrExpression::CLAZZ,
+        PHP_Depend_Code_ASTLogicalXorExpression::CLAZZ,
+        PHP_Depend_Code_ASTConditionalExpression::CLAZZ,
+        PHP_Depend_Code_ASTWhileStatement::CLAZZ
+    );
+
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
