@@ -1365,6 +1365,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_STATIC:
             return $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+
+        case self::T_QUESTION_MARK:
+            return $this->_parseConditionalExpression();
+
+        case self::T_BOOLEAN_AND:
+            return $this->_parseBooleanAndExpression();
+
+        case self::T_BOOLEAN_OR:
+            return $this->_parseBooleanOrExpression();
+
+        case self::T_LOGICAL_AND:
+            return $this->_parseLogicalAndExpression();
+
+        case self::T_LOGICAL_OR:
+            return $this->_parseLogicalOrExpression();
+
+        case self::T_LOGICAL_XOR:
+            return $this->_parseLogicalXorExpression();
         }
         return null;
     }
