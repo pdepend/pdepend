@@ -222,11 +222,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         $this->fireStartFunction($function);
 
-        $complexity = $this->visitCallable($function);
+        $complexity = $this->calculateComplexity($function);
 
         $this->_nodeMetrics[$function->getUUID()] = $complexity;
 
-        // Update project metrics
         $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
         $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -258,18 +257,24 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         $this->fireStartMethod($method);
 
-        $complexity = $this->visitCallable($method);
+        $complexity = $this->calculateComplexity($method);
 
         $this->_nodeMetrics[$method->getUUID()] = $complexity;
 
-        // Update project metrics
         $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
         $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->fireEndMethod($method);
     }
 
-    public function visitCallable(PHP_Depend_Code_AbstractCallable $callable)
+    /**
+     * Visits methods, functions or closures and calculated their complexity.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $callable The visited callable.
+     *
+     * @return array(string=>integer)
+     */
+    public function calculateComplexity(PHP_Depend_Code_AbstractCallable $callable)
     {
         $data = array('ccn' => 1, 'ccn2' => 1);
         foreach ($callable->getChildren() as $child) {
@@ -278,6 +283,17 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         return $data;
     }
 
+    /**
+     * Generic visit method that is used as a dispatcher to concrete visit
+     * methods. This method will be called before the regular tree traversal
+     * begins.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The current node to visit.
+     * @param array(string=>integer)   $data Optional data, previously calculated.
+     *
+     * @return mixed
+     * @since 0.9.8
+     */
     public function visitBefore(PHP_Depend_Code_ASTNodeI $node, $data = null)
     {
         $methodName = 'visitBefore' . substr(get_class($node), 16);
@@ -287,6 +303,17 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         return $data;
     }
 
+    /**
+     * Generic visit method that is used as a dispatcher to concrete visit
+     * methods. This method will be called when the regular tree traversal was
+     * finished.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The current node to visit.
+     * @param array(string=>integer)   $data Optional data, previously calculated.
+     *
+     * @return mixed
+     * @since 0.9.8
+     */
     public function visitAfter(PHP_Depend_Code_ASTNodeI $node, $data = null)
     {
         $methodName = 'visitAfter' . substr(get_class($node), 16);
@@ -296,92 +323,199 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         return $data;
     }
 
+    /**
+     * Visits a boolean AND expression.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTBooleanAndExpression($node, $data)
     {
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $data;
     }
 
+    /**
+     * Visits a boolean OR expression.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTBooleanOrExpression($node, $data)
     {
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $data;
     }
 
+    /**
+     * Visits a switch label.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTSwitchLabel($node, $data)
     {
         if ($node->isDefault() === false) {
-            ++$data['ccn'];
-            ++$data['ccn2'];
+            ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+            ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
 
         return $data;
     }
 
+    /**
+     * Visits a catch statement.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTCatchStatement($node, $data)
     {
-        ++$data['ccn'];
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         return $data;
     }
 
+    /**
+     * Visits an elseif statement.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTElseIfStatement($node, $data)
     {
-        ++$data['ccn'];
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         return $data;
     }
 
+    /**
+     * Visits a for statement.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTForStatement($node, $data)
     {
-        ++$data['ccn'];
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         return $data;
     }
 
+    /**
+     * Visits a foreach statement.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTForeachStatement($node, $data)
     {
-        ++$data['ccn'];
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         return $data;
     }
 
+    /**
+     * Visits an if statement.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTIfStatement($node, $data)
     {
-        ++$data['ccn'];
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         return $data;
     }
 
+    /**
+     * Visits a logical AND expression.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTLogicalAndExpression($node, $data)
     {
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $data;
     }
 
+    /**
+     * Visits a logical OR expression.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTLogicalOrExpression($node, $data)
     {
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $data;
     }
 
+    /**
+     * Visits a ternary operator.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTConditionalExpression($node, $data)
     {
-        ++$data['ccn'];
-        ++$data['ccn2'];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $data;
     }
 
+    /**
+     * Visits a while statement.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.8
+     */
     public function visitBeforeASTWhileStatement($node, $data)
     {
-        ++$data['ccn'];
-        ++$data['ccn2'];
-
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $data;
     }
 }
