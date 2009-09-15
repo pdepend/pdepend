@@ -454,5 +454,23 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
         $storage->store($tokens, spl_object_hash($this), get_class($this));
     }
+
+    /**
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
+     *
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     *
+     * @return mixed
+     */
+    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
+    {
+        $data = $visitor->visitBefore($this, $data);
+
+        foreach ($this->nodes as $node) {
+            $data = $node->accept($visitor, $data);
+        }
+
+        return $visitor->visitAfter($this, $data);
+    }
 }
-?>

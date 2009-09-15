@@ -47,6 +47,8 @@
  * @since      0.9.6
  */
 
+require_once 'PHP/Depend/Code/ASTVisitorI.php';
+
 /**
  * Root interface for an ast node.
  *
@@ -171,4 +173,14 @@ interface PHP_Depend_Code_ASTNodeI
      * @return void
      */
     function setParent(PHP_Depend_Code_ASTNodeI $node);
+
+    /**
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
+     *
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     *
+     * @return void
+     */
+    function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null);
 }
