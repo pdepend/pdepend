@@ -747,9 +747,33 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new boolean conditional-expression.
+     *
+     * <code>
+     *         --------------
+     * $bar = ($foo ? 42 : 23);
+     *         --------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTConditionalExpression
+     * @since 0.9.8
+     */
+    public function buildASTConditionalExpression()
+    {
+        include_once 'PHP/Depend/Code/ASTConditionalExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTConditionalExpression'
+        );
+
+        return new PHP_Depend_Code_ASTConditionalExpression('?');
+    }
+
+    /**
      * Builds a new boolean and-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanAndExpression
+     * @since 0.9.8
      */
     public function buildASTBooleanAndExpression()
     {
@@ -766,6 +790,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Builds a new boolean or-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanOrExpression
+     * @since 0.9.8
      */
     public function buildASTBooleanOrExpression()
     {
@@ -776,6 +801,57 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
         
         return new PHP_Depend_Code_ASTBooleanOrExpression('||');
+    }
+
+    /**
+     * Builds a new logical <b>and</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalAndExpression
+     * @since 0.9.8
+     */
+    public function buildASTLogicalAndExpression()
+    {
+        include_once 'PHP/Depend/Code/ASTLogicalAndExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTLogicalAndExpression'
+        );
+
+        return new PHP_Depend_Code_ASTLogicalAndExpression('and');
+    }
+
+    /**
+     * Builds a new logical <b>or</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalOrExpression
+     * @since 0.9.8
+     */
+    public function buildASTLogicalOrExpression()
+    {
+        include_once 'PHP/Depend/Code/ASTLogicalOrExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTLogicalOrExpression'
+        );
+
+        return new PHP_Depend_Code_ASTLogicalOrExpression('or');
+    }
+
+    /**
+     * Builds a new logical <b>xor</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalXorExpression
+     * @since 0.9.8
+     */
+    public function buildASTLogicalXorExpression()
+    {
+        include_once 'PHP/Depend/Code/ASTLogicalXorExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTLogicalXorExpression'
+        );
+
+        return new PHP_Depend_Code_ASTLogicalXorExpression('xor');
     }
 
     /**

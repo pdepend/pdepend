@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTSwitchLabel.php';
+require_once 'PHP/Depend/Code/ASTLogicalXorExpression.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTSwitchLabel} class.
+ * Test case for the {@link PHP_Depend_Code_ASTLogicalXorExpression} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,44 +62,18 @@ require_once 'PHP/Depend/Code/ASTSwitchLabel.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTLogicalXorExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that the default flag is set to <b>true</b> on the default switch
-     * label.
-     * 
-     * @return void
-     * @group ast
-     */
-    public function testDefaultFlagIsSetOnDefaultLabel()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertTrue($label->isDefault());
-    }
-
-    /**
-     * Tests that the default flag is set to <b>false</b> on a regular case
-     * label.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testDefaultFlagIsNotSetOnCaseLabel()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertFalse($label->isDefault());
-    }
-    
-    /**
      * Tests the start line value.
      *
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedStartLine()
+    public function testLogicalXorExpressionHasExpectedStartLine()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getStartLine());
+        $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $this->assertSame(4, $expression->getStartLine());
     }
 
     /**
@@ -108,10 +82,10 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedStartColumn()
+    public function testLogicalXorExpressionHasExpectedStartColumn()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(9, $label->getStartColumn());
+        $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $this->assertSame(18, $expression->getStartColumn());
     }
 
     /**
@@ -120,10 +94,10 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedEndLine()
+    public function testLogicalXorExpressionHasExpectedEndLine()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getEndLine());
+        $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $this->assertSame(4, $expression->getEndLine());
     }
 
     /**
@@ -132,58 +106,10 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedEndColumn()
+    public function testLogicalXorExpressionHasExpectedEndColumn()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(12, $label->getEndColumn());
-    }
-
-    /**
-     * Tests the start line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedStartLine()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getStartLine());
-    }
-
-    /**
-     * Tests the start column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedStartColumn()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(9, $label->getStartColumn());
-    }
-
-    /**
-     * Tests the end line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedEndLine()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getEndLine());
-    }
-
-    /**
-     * Tests the end column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedEndColumn()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(30, $label->getEndColumn());
+        $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $this->assertSame(20, $expression->getEndColumn());
     }
 
     /**
@@ -191,12 +117,12 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTSwitchLabel
+     * @return PHP_Depend_Code_ASTLogicalXorExpression
      */
-    private function _getFirstSwitchLabelInFunction($testCase)
+    private function _getFirstLogicalXorExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTSwitchLabel::CLAZZ
+            $testCase, PHP_Depend_Code_ASTLogicalXorExpression::CLAZZ
         );
     }
 }
