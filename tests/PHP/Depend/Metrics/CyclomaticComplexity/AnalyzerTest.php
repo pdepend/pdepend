@@ -150,6 +150,40 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
             $analyzer->getProjectMetrics()
         );
     }
+
+    /**
+     * Tests that the analyzer ignores the default label in a switch statement.
+     *
+     * @return void
+     * @group metrics
+     */
+    public function testCalculateCCNIgnoresDefaultLabelInSwitchStatement()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $this->assertSame(
+            array('ccn' => 3, 'ccn2' => 3),
+            $analyzer->getProjectMetrics()
+        );
+    }
+
+    /**
+     * Tests that the analyzer counts all case labels in a switch statement.
+     *
+     * @return void
+     * @group metrics
+     */
+    public function testCalculateCCNCountsAllCaseLabelsInSwitchStatement()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $this->assertSame(
+            array('ccn' => 4, 'ccn2' => 4),
+            $analyzer->getProjectMetrics()
+        );
+    }
     
     /**
      * Tests that the analyzer aggregates the correct project metrics.
