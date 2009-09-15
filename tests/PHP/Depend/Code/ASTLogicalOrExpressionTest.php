@@ -44,14 +44,15 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.8
  */
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTSwitchLabel.php';
+require_once 'PHP/Depend/Code/ASTLogicalOrExpression.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTSwitchLabel} class.
+ * Test case for the {@link PHP_Depend_Code_ASTLogicalOrExpression} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,45 +62,20 @@ require_once 'PHP/Depend/Code/ASTSwitchLabel.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.8
  */
-class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTLogicalOrExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that the default flag is set to <b>true</b> on the default switch
-     * label.
-     * 
-     * @return void
-     * @group ast
-     */
-    public function testDefaultFlagIsSetOnDefaultLabel()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertTrue($label->isDefault());
-    }
-
-    /**
-     * Tests that the default flag is set to <b>false</b> on a regular case
-     * label.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testDefaultFlagIsNotSetOnCaseLabel()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertFalse($label->isDefault());
-    }
-    
-    /**
      * Tests the start line value.
      *
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedStartLine()
+    public function testLogicalOrExpressionHasExpectedStartLine()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getStartLine());
+        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertSame(4, $expression->getStartLine());
     }
 
     /**
@@ -108,10 +84,10 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedStartColumn()
+    public function testLogicalOrExpressionHasExpectedStartColumn()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(9, $label->getStartColumn());
+        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertSame(18, $expression->getStartColumn());
     }
 
     /**
@@ -120,10 +96,10 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedEndLine()
+    public function testLogicalOrExpressionHasExpectedEndLine()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getEndLine());
+        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertSame(4, $expression->getEndLine());
     }
 
     /**
@@ -132,58 +108,10 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testSwitchLabelHasExpectedEndColumn()
+    public function testLogicalOrExpressionHasExpectedEndColumn()
     {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(12, $label->getEndColumn());
-    }
-
-    /**
-     * Tests the start line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedStartLine()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getStartLine());
-    }
-
-    /**
-     * Tests the start column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedStartColumn()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(9, $label->getStartColumn());
-    }
-
-    /**
-     * Tests the end line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedEndLine()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getEndLine());
-    }
-
-    /**
-     * Tests the end column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testSwitchLabelDefaultHasExpectedEndColumn()
-    {
-        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(30, $label->getEndColumn());
+        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertSame(19, $expression->getEndColumn());
     }
 
     /**
@@ -191,12 +119,12 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTSwitchLabel
+     * @return PHP_Depend_Code_ASTLogicalOrExpression
      */
-    private function _getFirstSwitchLabelInFunction($testCase)
+    private function _getFirstLogicalOrExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTSwitchLabel::CLAZZ
+            $testCase, PHP_Depend_Code_ASTLogicalOrExpression::CLAZZ
         );
     }
 }

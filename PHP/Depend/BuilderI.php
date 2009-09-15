@@ -353,9 +353,24 @@ interface PHP_Depend_BuilderI
     function buildASTInstanceOfExpression($image);
 
     /**
+     * Builds a new boolean conditional-expression.
+     *
+     * <code>
+     *         --------------
+     * $bar = ($foo ? 42 : 23);
+     *         --------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTConditionalExpression
+     * @since 0.9.8
+     */
+    function buildASTConditionalExpression();
+
+    /**
      * Builds a new boolean and-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanAndExpression
+     * @since 0.9.8
      */
     function buildASTBooleanAndExpression();
 
@@ -363,8 +378,33 @@ interface PHP_Depend_BuilderI
      * Builds a new boolean or-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanOrExpression
+     * @since 0.9.8
      */
     function buildASTBooleanOrExpression();
+
+    /**
+     * Builds a new logical <b>and</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalAndExpression
+     * @since 0.9.8
+     */
+    function buildASTLogicalAndExpression();
+
+    /**
+     * Builds a new logical <b>or</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalOrExpression
+     * @since 0.9.8
+     */
+    function buildASTLogicalOrExpression();
+
+    /**
+     * Builds a new logical <b>xor</b>-expression.
+     *
+     * @return PHP_Depend_Code_ASTLogicalXorExpression
+     * @since 0.9.8
+     */
+    function buildASTLogicalXorExpression();
 
     /**
      * Builds a new switch-label node.

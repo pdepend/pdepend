@@ -72,8 +72,8 @@ class PHP_Depend_Code_ASTBooleanOrExpressionTest extends PHP_Depend_Code_ASTNode
      */
     public function testBooleanOrExpressionHasExpectedStartLine()
     {
-        $label = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $label->getStartLine());
+        $expression = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $this->assertSame(4, $expression->getStartLine());
     }
 
     /**
@@ -84,8 +84,8 @@ class PHP_Depend_Code_ASTBooleanOrExpressionTest extends PHP_Depend_Code_ASTNode
      */
     public function testBooleanOrExpressionHasExpectedStartColumn()
     {
-        $label = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
-        $this->assertSame(18, $label->getStartColumn());
+        $expression = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $this->assertSame(18, $expression->getStartColumn());
     }
 
     /**
@@ -96,8 +96,8 @@ class PHP_Depend_Code_ASTBooleanOrExpressionTest extends PHP_Depend_Code_ASTNode
      */
     public function testBooleanOrExpressionHasExpectedEndLine()
     {
-        $label = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $label->getEndLine());
+        $expression = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $this->assertSame(4, $expression->getEndLine());
     }
 
     /**
@@ -108,8 +108,8 @@ class PHP_Depend_Code_ASTBooleanOrExpressionTest extends PHP_Depend_Code_ASTNode
      */
     public function testBooleanOrExpressionHasExpectedEndColumn()
     {
-        $label = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
-        $this->assertSame(19, $label->getEndColumn());
+        $expression = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $this->assertSame(19, $expression->getEndColumn());
     }
     
     /**

@@ -69,6 +69,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer calculates the correct function cc numbers.
      *
      * @return void
+     * @group metrics
      */
     public function testCalculateFunctionCCNAndCNN2()
     {
@@ -78,15 +79,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
 
-        $functions = $package->getFunctions();
-        $this->assertEquals(2, $functions->count());
-        
         $expected = array(
             'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
             'pdepend2'  =>  array('ccn'  =>  7, 'ccn2'  =>  10)
         );
         
-        foreach ($functions as $function) {
+        foreach ($package->getFunctions() as $function) {
             $metrics = $analyzer->getNodeMetrics($function);
             
             $this->assertEquals(
@@ -107,6 +105,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer calculates the correct method cc numbers.
      *
      * @return void
+     * @group metrics
      */
     public function testCalculateMethodCCNAndCNN2()
     {
@@ -117,9 +116,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer->analyze($packages);
 
         $classes = $package->getClasses();
-        $this->assertEquals(1, $classes->count());
         $methods = $classes->current()->getMethods();
-        $this->assertEquals(2, $methods->count());
         
         $expected = array(
             'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
@@ -135,17 +132,35 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
             );
         }
     }
+
+    /**
+     * Tests that the analyzer also detects a conditional expression nested in a
+     * compound expression.
+     *
+     * @return void
+     * @group metrics
+     */
+    public function testCalculateCCNWithConditionalExprInCompoundExpr()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $this->assertSame(
+            array('ccn' => 2, 'ccn2' => 2),
+            $analyzer->getProjectMetrics()
+        );
+    }
     
     /**
      * Tests that the analyzer aggregates the correct project metrics.
      *
      * @return void
+     * @group metrics
      */
     public function testCalculateProjectMetrics()
     {
-        $packages = self::parseSource('metrics/cyclomaticcomplexity');
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
         
         $expected = array('ccn'  =>  24, 'ccn2'  =>  32);
         $this->assertEquals($expected, $analyzer->getProjectMetrics());
