@@ -65,6 +65,26 @@ require_once 'PHP/Depend/Code/ASTIfStatement.php';
 class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * Tests the generated object graph of an if statement.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testIfStatementGraphWithBooleanExpressions()
+    {
+        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
+
+        $children = $statement->getChildren();
+
+        $this->assertSame(5, count($children));
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[0]);
+        $this->assertType(PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ, $children[1]);
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[2]);
+        $this->assertType(PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ, $children[3]);
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[4]);
+    }
+
+    /**
      * Tests the start line value.
      *
      * @return void
@@ -109,7 +129,7 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testIfStatementHasExpectedEndColumn()
     {
         $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(6, $statement->getEndColumn());
+        $this->assertSame(13, $statement->getEndColumn());
     }
 
     /**
