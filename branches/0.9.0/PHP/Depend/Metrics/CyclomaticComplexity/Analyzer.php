@@ -221,14 +221,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
-
-        $complexity = $this->calculateComplexity($function);
-
-        $this->_nodeMetrics[$function->getUUID()] = $complexity;
-
-        $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
-        $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
-
+        $this->calculateComplexity($function);
         $this->fireEndFunction($function);
     }
 
@@ -256,14 +249,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-
-        $complexity = $this->calculateComplexity($method);
-
-        $this->_nodeMetrics[$method->getUUID()] = $complexity;
-
-        $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
-        $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
-
+        $this->calculateComplexity($method);
         $this->fireEndMethod($method);
     }
 
@@ -272,7 +258,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      *
      * @param PHP_Depend_Code_AbstractCallable $callable The visited callable.
      *
-     * @return array(string=>integer)
+     * @return void
      */
     public function calculateComplexity(PHP_Depend_Code_AbstractCallable $callable)
     {
@@ -284,7 +270,25 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
         foreach ($callable->getChildren() as $child) {
             $data = $child->accept($this, $data);
         }
-        return $data;
+
+        $this->_storeNodeComplexityAndUpdateProject($callable->getUUID(), $data);
+    }
+
+    /**
+     * Stores the complexity of a node and updates the corresponding project
+     * values.
+     *
+     * @param string                 $id         Identifier of the analyzed item.
+     * @param array(string=>integer) $complexity The node complexity values.
+     *
+     * @return void
+     */
+    private function _storeNodeComplexityAndUpdateProject($id, array $complexity)
+    {
+        $this->_nodeMetrics[$id] = $complexity;
+
+        $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
+        $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
     }
 
     /**
