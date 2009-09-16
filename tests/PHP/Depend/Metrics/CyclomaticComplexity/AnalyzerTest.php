@@ -184,6 +184,40 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
             $analyzer->getProjectMetrics()
         );
     }
+
+    /**
+     * Tests that the analyzer detects expressions in a for loop.
+     *
+     * @return void
+     * @group metrics
+     */
+    public function testCalculateCCNDetectsExpressionsInAForLoop()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $this->assertSame(
+            array('ccn' => 2, 'ccn2' => 4),
+            $analyzer->getProjectMetrics()
+        );
+    }
+
+    /**
+     * Tests that the analyzer detects expressions in a while loop.
+     *
+     * @return void
+     * @group metrics
+     */
+    public function testCalculateCCNDetectsExpressionsInAWhileLoop()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $this->assertSame(
+            array('ccn' => 2, 'ccn2' => 4),
+            $analyzer->getProjectMetrics()
+        );
+    }
     
     /**
      * Tests that the analyzer aggregates the correct project metrics.
