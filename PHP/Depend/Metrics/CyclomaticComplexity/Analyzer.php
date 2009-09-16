@@ -259,6 +259,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param PHP_Depend_Code_AbstractCallable $callable The visited callable.
      *
      * @return void
+     * @since 0.9.8
      */
     public function calculateComplexity(PHP_Depend_Code_AbstractCallable $callable)
     {
@@ -282,6 +283,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param array(string=>integer) $complexity The node complexity values.
      *
      * @return void
+     * @since 0.9.8
      */
     private function _storeNodeComplexityAndUpdateProject($id, array $complexity)
     {
