@@ -276,7 +276,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     public function calculateComplexity(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $data = array('ccn' => 1, 'ccn2' => 1);
+        $data = array(
+            self::M_CYCLOMATIC_COMPLEXITY_1 => 1,
+            self::M_CYCLOMATIC_COMPLEXITY_2 => 1
+        );
+        
         foreach ($callable->getChildren() as $child) {
             $data = $child->accept($this, $data);
         }
@@ -293,6 +297,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      *
      * @return mixed
      * @since 0.9.8
+     * @todo Move this method into an abstract PHP_Depend_Code_ASTVisitorAdapter
      */
     public function visitBefore(PHP_Depend_Code_ASTNodeI $node, $data = null)
     {
@@ -313,6 +318,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      *
      * @return mixed
      * @since 0.9.8
+     * @todo Move this method into an abstract PHP_Depend_Code_ASTVisitorAdapter
      */
     public function visitAfter(PHP_Depend_Code_ASTNodeI $node, $data = null)
     {
@@ -368,7 +374,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
-
         return $data;
     }
 
@@ -385,7 +390,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-
         return $data;
     }
 
@@ -402,7 +406,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-
         return $data;
     }
 
@@ -419,7 +422,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-
         return $data;
     }
 
@@ -436,7 +438,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-
         return $data;
     }
 
@@ -453,7 +454,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-
         return $data;
     }
 
