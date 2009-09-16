@@ -1488,7 +1488,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_IF);
 
         return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTIfStatement($token->image)
+            $this->_parseParenthesisExpression(
+                $this->_builder->buildASTIfStatement($token->image)
+            )
         );
     }
 
@@ -1504,7 +1506,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_ELSEIF);
 
         return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTElseIfStatement($token->image)
+            $this->_parseParenthesisExpression(
+                $this->_builder->buildASTElseIfStatement($token->image)
+            )
         );
     }
 
@@ -1552,8 +1556,31 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_WHILE);
 
         return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTWhileStatement($token->image)
+            $this->_parseParenthesisExpression(
+                $this->_builder->buildASTWhileStatement($token->image)
+            )
         );
+    }
+
+    /**
+     * Parses any expression that is surrounded by an opening and a closing
+     * parenthesis
+     *
+     * @param PHP_Depend_Code_ASTNode $node
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.8
+     */
+    private function _parseParenthesisExpression(PHP_Depend_Code_ASTNode $node)
+    {
+        $this->_consumeComments();
+        $this->_parseBraceExpression(
+            $node,
+            self::T_PARENTHESIS_OPEN,
+            self::T_PARENTHESIS_CLOSE
+        );
+
+        return $node;
     }
 
     /**

@@ -65,6 +65,26 @@ require_once 'PHP/Depend/Code/ASTWhileStatement.php';
 class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * Tests the generated object graph of a while statement.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testWhileStatementGraphWithBooleanExpressions()
+    {
+        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
+
+        $children = $statement->getChildren();
+
+        $this->assertSame(5, count($children));
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[0]);
+        $this->assertType(PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ, $children[1]);
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[2]);
+        $this->assertType(PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ, $children[3]);
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[4]);
+    }
+
+    /**
      * Tests the start line value.
      *
      * @return void
@@ -109,7 +129,7 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testWhileStatementHasExpectedEndColumn()
     {
         $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertSame(9, $statement->getEndColumn());
+        $this->assertSame(16, $statement->getEndColumn());
     }
 
     /**
