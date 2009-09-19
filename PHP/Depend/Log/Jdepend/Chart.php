@@ -176,6 +176,10 @@ class PHP_Depend_Log_Jdepend_Chart
         foreach ($this->_code as $package) {
             $metrics = $this->_analyzer->getStats($package);
 
+            if (count($metrics) === 0) {
+                continue;
+            }
+
             $size = $metrics['cc'] + $metrics['ac'];
             if ($size > $max) {
                 $max = $size;
