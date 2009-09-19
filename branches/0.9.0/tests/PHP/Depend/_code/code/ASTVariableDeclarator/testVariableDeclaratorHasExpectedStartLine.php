@@ -1,7 +1,6 @@
 <?php
-function foo()
+function testVariableDeclaratorHasExpectedEndColumn()
 {
     static $a = 1,
            $b = array();
 }
-?>
