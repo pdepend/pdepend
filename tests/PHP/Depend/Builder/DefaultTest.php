@@ -315,27 +315,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the node builder appends a default package to all new created
-     * functions.
-     *
-     * @return void
-     */
-    public function testBuildFunctionDefaultPackage()
-    {
-        $defaultPackage = PHP_Depend_BuilderI::DEFAULT_PACKAGE;
-
-        $builder   = new PHP_Depend_Builder_Default();
-        $function1 = $builder->buildFunction('func1', 0);
-        $function2 = $builder->buildFunction('func2', 0);
-
-        $this->assertNotNull($function1->getPackage());
-        $this->assertNotNull($function2->getPackage());
-
-        $this->assertSame($function1->getPackage(), $function2->getPackage());
-        $this->assertEquals($defaultPackage, $function1->getPackage()->getName());
-    }
-
-    /**
      * There was a missing check within an if statement, so that the builder
      * has alway overwritten previously created instances.
      *

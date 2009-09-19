@@ -456,9 +456,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         // Create new function
         $function = new PHP_Depend_Code_Function($name);
         $function->setSourceFile($this->defaultFile);
-
-        // Add to default package
-        $this->defaultPackage->addFunction($function);
  
         return $function;
     }
@@ -937,6 +934,27 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTForStatement()');
         
         return new PHP_Depend_Code_ASTForStatement($image);
+    }
+
+    /**
+     * Builds a new for-init node.
+     *
+     * <code>
+     *      ------------------------
+     * for ($x = 0, $y = 23, $z = 42; $x < $y; ++$x) {}
+     *      ------------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTForInit
+     * @since 0.9.8
+     */
+    public function buildASTForInit()
+    {
+        include_once 'PHP/Depend/Code/ASTForInit.php';
+
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTForInit()');
+
+        return new PHP_Depend_Code_ASTForInit();
     }
 
     /**
