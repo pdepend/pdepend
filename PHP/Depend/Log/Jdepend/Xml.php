@@ -278,6 +278,11 @@ class PHP_Depend_Log_Jdepend_Xml
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        $stats = $this->analyzer->getStats($package);
+        if (count($stats) === 0) {
+            return;
+        }
+
         $doc = $this->packages->ownerDocument;
 
         $this->concreteClasses = $doc->createElement('ConcreteClasses');
@@ -285,8 +290,6 @@ class PHP_Depend_Log_Jdepend_Xml
 
         $packageXml = $doc->createElement('Package');
         $packageXml->setAttribute('name', $package->getName());
-
-        $stats = $this->analyzer->getStats($package);
 
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
