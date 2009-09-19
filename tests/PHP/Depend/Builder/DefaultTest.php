@@ -71,34 +71,11 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     public function testBuildClassUnique()
     {
         $builder = new PHP_Depend_Builder_Default();
-        $class1  = $builder->buildClass('clazz1');
-        $class2  = $builder->getClass('clazz1');
 
-        $this->assertType('PHP_Depend_Code_Class', $class1);
-        $this->assertType('PHP_Depend_Code_Class', $class2);
-
-        $this->assertSame($class1, $class2);
-    }
-
-    /**
-     * Tests that the node builder appends a default package to all new created
-     * classes.
-     *
-     * @return void
-     */
-    public function testBuildClassDefaultPackage()
-    {
-        $defaultPackage = PHP_Depend_BuilderI::DEFAULT_PACKAGE;
-
-        $builder = new PHP_Depend_Builder_Default();
-        $class1  = $builder->buildClass('clazz1');
-        $class2  = $builder->buildClass('clazz2');
-
-        $this->assertNotNull($class1->getPackage());
-        $this->assertNotNull($class2->getPackage());
-
-        $this->assertSame($class1->getPackage(), $class2->getPackage());
-        $this->assertEquals($defaultPackage, $class1->getPackage()->getName());
+        $class = $builder->buildClass(__FUNCTION__);
+        $class->setPackage($builder->buildPackage(__FUNCTION__));
+        
+        $this->assertSame($class, $builder->getClass(__FUNCTION__));
     }
 
     /**
@@ -129,6 +106,8 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $builder = new PHP_Depend_Builder_Default();
 
         $class1 = $builder->buildClass('php\depend\Parser');
+        $class1->setPackage($builder->buildPackage(__FUNCTION__));
+
         $class2 = $builder->getClass('Parser');
 
         $this->assertSame($class1, $class2);
@@ -146,15 +125,12 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildInterfaceUnique()
     {
-        $builder    = new PHP_Depend_Builder_Default();
+        $builder = new PHP_Depend_Builder_Default();
         
-        $interface1 = $builder->buildInterface('interface1');
-        $interface2 = $builder->getInterface('interface1');
+        $interface = $builder->buildInterface(__FUNCTION__);
+        $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
-        $this->assertType('PHP_Depend_Code_Interface', $interface1);
-        $this->assertType('PHP_Depend_Code_Interface', $interface2);
-
-        $this->assertSame($interface1, $interface2);
+        $this->assertSame($interface, $builder->getInterface(__FUNCTION__));
     }
 
     /**
@@ -231,13 +207,12 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $builder = new PHP_Depend_Builder_Default();
 
         $pdependInterface = $builder->buildInterface('php\depend\ParserI');
-        $pdependPackage   = $pdependInterface->getPackage();
+        $pdependInterface->setPackage($builder->buildPackage(__FUNCTION__));
 
         $defaultInterface = $builder->getInterface('ParserI');
-        $defaultPackage   = $defaultInterface->getPackage();
 
         $this->assertSame($defaultInterface, $pdependInterface);
-        $this->assertSame($defaultPackage, $pdependPackage);
+        $this->assertSame($defaultInterface->getPackage(), $pdependInterface->getPackage());
     }
 
     /**
@@ -325,7 +300,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $builder = new PHP_Depend_Builder_Default();
 
         $class1 = $builder->buildClass('FooBar');
+        $class1->setPackage($builder->buildPackage(__FUNCTION__));
+
         $class2 = $builder->buildClass('FooBar');
+        $class2->setPackage($builder->buildPackage(__FUNCTION__));
 
         $this->assertNotSame($class1, $class2);
         $this->assertSame($class1, $builder->getClass('FooBar'));
@@ -341,11 +319,11 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $builder = new PHP_Depend_Builder_Default();
 
-        $interface1 = $builder->buildInterface('FooBar');
-        $interface2 = $builder->buildInterface('FooBar');
+        $interface = $builder->buildInterface('FooBar');
+        $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
-        $this->assertNotSame($interface1, $interface2);
-        $this->assertSame($interface1, $builder->getInterface('FooBar'));
+        $this->assertNotSame($interface, $builder->buildInterface('FooBar'));
+        $this->assertSame($interface, $builder->getInterface('FooBar'));
     }
 
     /**
@@ -357,10 +335,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $builder = new PHP_Depend_Builder_Default();
 
-        $classA = $builder->buildClass('PHP_Depend_Parser');
-        $classB = $builder->getClass('php_Depend_parser');
+        $class = $builder->buildClass('PHP_Depend_Parser');
+        $class->setPackage($builder->buildPackage(__FUNCTION__));
 
-        $this->assertSame($classA, $classB);
+        $this->assertSame($class, $builder->getClass('php_Depend_parser'));
     }
 
     /**
@@ -372,10 +350,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $builder = new PHP_Depend_Builder_Default();
 
-        $interfaceA = $builder->buildInterface('PHP_Depend_TokenizerI');
-        $interfaceB = $builder->getInterface('php_Depend_tokenizeri');
+        $interface = $builder->buildInterface('PHP_Depend_TokenizerI');
+        $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
-        $this->assertSame($interfaceA, $interfaceB);
+        $this->assertSame($interface, $builder->getInterface('php_Depend_tokenizeri'));
     }
 
     /**
@@ -387,10 +365,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $builder = new PHP_Depend_Builder_Default();
 
-        $interfaceA = $builder->buildInterface('PHP_Depend_TokenizerI');
-        $interfaceB = $builder->getClassOrInterface('php_Depend_tokenizeri');
+        $interface = $builder->buildInterface('PHP_Depend_TokenizerI');
+        $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
-        $this->assertSame($interfaceA, $interfaceB);
+        $this->assertSame($interface, $builder->getClassOrInterface('php_Depend_tokenizeri'));
     }
 
     /**
@@ -402,10 +380,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $builder = new PHP_Depend_Builder_Default();
 
-        $classA = $builder->buildClass('PHP_Depend_Parser');
-        $classB = $builder->getClassOrInterface('php_Depend_parser');
+        $class = $builder->buildClass('PHP_Depend_Parser');
+        $class->setPackage($builder->buildPackage(__FUNCTION__));
 
-        $this->assertSame($classA, $classB);
+        $this->assertSame($class, $builder->getClassOrInterface('php_Depend_parser'));
     }
 
     /**

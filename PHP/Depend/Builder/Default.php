@@ -236,9 +236,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $class = new PHP_Depend_Code_Class($className);
         $class->setSourceFile($this->defaultFile);
 
-        $package = $this->buildPackage($packageName);
-        $package->addType($class);
-
         $this->storeClass($className, $packageName, $class);
 
         return $class;
@@ -347,9 +344,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $interface = new PHP_Depend_Code_Interface($interfaceName);
         $interface->setSourceFile($this->defaultFile);
-
-        $package = $this->buildPackage($packageName);
-        $package->addType($interface);
 
         $this->storeInterface($interfaceName, $packageName, $interface);
 
@@ -1369,7 +1363,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function buildInterfaceInternal($qualifiedName)
     {
         $this->_internal = true;
-        return $this->buildInterface($qualifiedName);
+
+        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
+        return $package->addType(
+            $this->buildInterface($qualifiedName)
+        );
     }
 
     /**
@@ -1432,7 +1430,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function buildClassInternal($qualifiedName)
     {
         $this->_internal = true;
-        return $this->buildClass($qualifiedName);
+
+        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
+        return $package->addType(
+            $this->buildClass($qualifiedName)
+        );
     }
 
     /**
@@ -1510,11 +1512,37 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $this->_frozen = true;
 
-        $this->_frozenClasses    = $this->_classes;
-        $this->_frozenInterfaces = $this->_interfaces;
+        $this->_frozenClasses    = $this->_copyTypesWithPackage($this->_classes);
+        $this->_frozenInterfaces = $this->_copyTypesWithPackage($this->_interfaces);
+        //$this->_frozenClasses    = $this->_classes;
+        //$this->_frozenInterfaces = $this->_interfaces;
 
         $this->_classes    = array();
         $this->_interfaces = array();
+    }
+
+    /**
+     * Creates a copy of the given input array, but skips all types that do not
+     * contain a parent package.
+     *
+     * @param array $originalTypes The original types created during the parsing
+     *        process.
+     *
+     * @return array
+     */
+    private function _copyTypesWithPackage(array $originalTypes)
+    {
+        $copiedTypes = array();
+        foreach ($originalTypes as $typeName => $packages) {
+            foreach ($packages as $package => $types) {
+                foreach ($types as $index => $type) {
+                    if (is_object($type->getPackage())) {
+                        $copiedTypes[$typeName][$package][$index] = $type;
+                    }
+                }
+            }
+        }
+        return $copiedTypes;
     }
 
     /**
