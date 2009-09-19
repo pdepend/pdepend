@@ -46,12 +46,10 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
-require_once 'PHP/Depend/Code/ASTIfStatement.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTIfStatement} class.
+ * This node class represents a switch statement.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,83 +60,10 @@ require_once 'PHP/Depend/Code/ASTIfStatement.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTSwitchStatement extends PHP_Depend_Code_ASTNode
 {
     /**
-     * Tests the generated object graph of an if statement.
-     *
-     * @return void
-     * @group ast
+     * The type of this class.
      */
-    public function testIfStatementGraphWithBooleanExpressions()
-    {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-
-        $children = $statement->getChildren();
-
-        $this->assertSame(1, count($children));
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
-    }
-
-    /**
-     * Tests the start line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testIfStatementHasExpectedStartLine()
-    {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getStartLine());
-    }
-
-    /**
-     * Tests the start column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testIfStatementHasExpectedStartColumn()
-    {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(5, $statement->getStartColumn());
-    }
-
-    /**
-     * Tests the end line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testIfStatementHasExpectedEndLine()
-    {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getEndLine());
-    }
-
-    /**
-     * Tests the end column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testIfStatementHasExpectedEndColumn()
-    {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(13, $statement->getEndColumn());
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_ASTIfStatement
-     */
-    private function _getFirstIfStatementInFunction($testCase)
-    {
-        return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTIfStatement::CLAZZ
-        );
-    }
+    const CLAZZ = __CLASS__;
 }

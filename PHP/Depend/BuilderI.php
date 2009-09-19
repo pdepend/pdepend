@@ -333,6 +333,14 @@ interface PHP_Depend_BuilderI
     function buildASTFormalParameter();
 
     /**
+     * Builds a new expression node.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.9.8
+     */
+    function buildASTExpression();
+
+    /**
      * Builds a new allocation expression node.
      *
      * @param string $image The source image of this expression.
@@ -405,6 +413,14 @@ interface PHP_Depend_BuilderI
      * @since 0.9.8
      */
     function buildASTLogicalXorExpression();
+
+    /**
+     * Builds a new switch-statement-node.
+     *
+     * @return PHP_Depend_Code_ASTSwitchStatement
+     * @since 0.9.8
+     */
+    function buildASTSwitchStatement();
 
     /**
      * Builds a new switch-label node.
@@ -706,6 +722,16 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildASTConstantDeclarator($image);
+
+    /**
+     * Builds a new comment node instance.
+     *
+     * @param string $cdata The comment text.
+     *
+     * @return PHP_Depend_Code_ASTComment
+     * @since 0.9.8
+     */
+    function buildASTComment($cdata);
 
     /**
      * Builds a new code class constant instance.

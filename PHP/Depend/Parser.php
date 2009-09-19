@@ -1412,9 +1412,87 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a switch statement.
+     *
+     * @return PHP_Depend_Code_ASTSwitchStatement
+     * @since 0.9.8
+     */
+    private function _parseSwitchStatement()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_SWITCH);
+
+        $switch = $this->_builder->buildASTSwitchStatement();
+        $switch->addChild($this->_parseParenthesisExpression());
+        $this->_parseSwitchStatementBody($switch);
+
+        return $this->_setNodePositionsAndReturn($switch);
+    }
+
+    /**
+     * Parses the body of a switch statement.
+     *
+     * @param PHP_Depend_Code_ASTSwitchStatement $switch The parent switch stmt.
+     *
+     * @return PHP_Depend_Code_ASTSwitchStatement
+     * @since 0.9.8
+     */
+    private function _parseSwitchStatementBody(
+        PHP_Depend_Code_ASTSwitchStatement $switch
+    ) {
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+
+        $curlyBraceCount = 1;
+
+        $tokenType = $this->_tokenizer->peek();
+        while ($tokenType !== self::T_EOF) {
+
+            switch ($tokenType) {
+
+            case self::T_CURLY_BRACE_OPEN:
+                $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+                ++$curlyBraceCount;
+                break;
+
+            case self::T_CURLY_BRACE_CLOSE:
+                $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
+                --$curlyBraceCount;
+                break;
+
+            case self::T_CASE:
+                $switch->addChild($this->_parseSwitchLabel());
+                break;
+
+            case self::T_DEFAULT:
+                $switch->addChild($this->_parseSwitchLabelDefault());
+                break;
+
+            default:
+                $statement = $this->_parseOptionalStatement();
+                if ($statement === null) {
+                    $this->_consumeToken($tokenType);
+                } else if ($statement instanceof PHP_Depend_Code_ASTNodeI) {
+                    $switch->addChild($statement);
+                }
+                // TODO: Change the <else if> into and <else> when the ast
+                //       implementation is finished.
+                break;
+            }
+
+            if ($curlyBraceCount === 0) {
+                return $switch;
+            }
+            $tokenType = $this->_tokenizer->peek();
+        }
+        throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
+    }
+
+    /**
      * This method parses a case label of a switch statement.
      *
      * @return PHP_Depend_Code_ASTSwitchLabel
+     * @since 0.9.8
      */
     private function _parseSwitchLabel()
     {
@@ -1430,6 +1508,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses the default label of a switch statement.
      *
      * @return PHP_Depend_Code_ASTSwitchLabel
+     * @since 0.9.8
      */
     private function _parseSwitchLabelDefault()
     {
@@ -1489,11 +1568,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_IF);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_parseParenthesisExpression(
-                $this->_builder->buildASTIfStatement($token->image)
-            )
-        );
+        $if = $this->_builder->buildASTIfStatement($token->image);
+        $if->addChild($this->_parseParenthesisExpression());
+
+        return $this->_setNodePositionsAndReturn($if);
     }
 
     /**
@@ -1507,11 +1585,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_ELSEIF);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_parseParenthesisExpression(
-                $this->_builder->buildASTElseIfStatement($token->image)
-            )
-        );
+        $elseIf = $this->_builder->buildASTElseIfStatement($token->image);
+        $elseIf->addChild($this->_parseParenthesisExpression());
+
+        return $this->_setNodePositionsAndReturn($elseIf);
     }
 
     /**
@@ -1593,32 +1670,32 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_WHILE);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_parseParenthesisExpression(
-                $this->_builder->buildASTWhileStatement($token->image)
-            )
-        );
+        $while = $this->_builder->buildASTWhileStatement($token->image);
+        $while->addChild($this->_parseParenthesisExpression());
+
+        return $this->_setNodePositionsAndReturn($while);
     }
 
     /**
      * Parses any expression that is surrounded by an opening and a closing
      * parenthesis
      *
-     * @param PHP_Depend_Code_ASTNode $node
-     *
-     * @return PHP_Depend_Code_ASTNode
+     * @return PHP_Depend_Code_ASTExpression
      * @since 0.9.8
      */
-    private function _parseParenthesisExpression(PHP_Depend_Code_ASTNode $node)
+    private function _parseParenthesisExpression()
     {
+        $this->_tokenStack->push();
         $this->_consumeComments();
-        $this->_parseBraceExpression(
-            $node,
+
+        $expression = $this->_builder->buildASTExpression();
+        $expression = $this->_parseBraceExpression(
+            $expression,
             self::T_PARENTHESIS_OPEN,
             self::T_PARENTHESIS_CLOSE
         );
-
-        return $node;
+        
+        return $this->_setNodePositionsAndReturn($expression);
     }
 
     /**
@@ -2681,75 +2758,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             switch ($tokenType) {
 
-            case self::T_NEW:
-            case self::T_SELF:
-            case self::T_DOLLAR:
-            case self::T_PARENT:
-            case self::T_STATIC:
-            case self::T_STRING:
-            case self::T_VARIABLE:
-            case self::T_BACKSLASH:
-            case self::T_NAMESPACE:
-            case self::T_INSTANCEOF:
-                $callable->addChild($this->_parseExpression());
-                break;
-
-            case self::T_QUESTION_MARK:
-                $callable->addChild($this->_parseConditionalExpression());
-                break;
-
-            case self::T_BOOLEAN_AND:
-                $callable->addChild($this->_parseBooleanAndExpression());
-                break;
-
-            case self::T_BOOLEAN_OR:
-                $callable->addChild($this->_parseBooleanOrExpression());
-                break;
-
-            case self::T_LOGICAL_AND:
-                $callable->addChild($this->_parseLogicalAndExpression());
-                break;
-
-            case self::T_LOGICAL_OR:
-                $callable->addChild($this->_parseLogicalOrExpression());
-                break;
-
-            case self::T_LOGICAL_XOR:
-                $callable->addChild($this->_parseLogicalXorExpression());
-                break;
-
-            case self::T_CASE:
-                $callable->addChild($this->_parseSwitchLabel());
-                break;
-
-            case self::T_DEFAULT:
-                $callable->addChild($this->_parseSwitchLabelDefault());
-                break;
-        
-            case self::T_CATCH:
-                $callable->addChild($this->_parseCatchStatement());
-                break;
-
-            case self::T_IF:
-                $callable->addChild($this->_parseIfStatement());
-                break;
-
-            case self::T_ELSEIF:
-                $callable->addChild($this->_parseElseIfStatement());
-                break;
-
-            case self::T_FOR:
-                $callable->addChild($this->_parseForStatement());
-                break;
-
-            case self::T_FOREACH:
-                $callable->addChild($this->_parseForeachStatement());
-                break;
-
-            case self::T_WHILE:
-                $callable->addChild($this->_parseWhileStatement());
-                break;
-
             case self::T_CURLY_BRACE_OPEN:
                 $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
                 ++$curly;
@@ -2760,29 +2768,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 --$curly;
                 break;
 
-            case self::T_BACKTICK:
-            case self::T_DOUBLE_QUOTE:
-                $this->_consumeToken($tokenType);
-                $this->_skipEncapsultedBlock($tokenType);
-                break;
-
-            case self::T_FUNCTION:
-                $this->_parseFunctionOrClosureDeclaration();
-                break;
-
-            case self::T_COMMENT:
-                $token = $this->_consumeToken(self::T_COMMENT);
-
-                // Check for inline type definitions like: /* @var $o FooBar */
-                if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
-                    $callable->addDependencyClassReference(
-                        $this->_builder->buildASTClassOrInterfaceReference($match[1])
-                    );
-                }
-                break;
-
             default:
-                $this->_consumeToken($tokenType);
+                $statement = $this->_parseOptionalStatement();
+                if ($statement === null) {
+                    $this->_consumeToken($tokenType);
+                } else if ($statement instanceof PHP_Depend_Code_ASTNodeI) {
+                    $callable->addChild($statement);
+                }
+                // TODO: Change the <else if> into and <else> when the ast
+                //       implementation is finished.
                 break;
             }
 
@@ -2797,6 +2791,100 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
+    }
+
+    /**
+     * Parses an optional statement or returns <b>null</b>.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.8
+     */
+    private function _parseOptionalStatement()
+    {
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_NEW:
+        case self::T_SELF:
+        case self::T_DOLLAR:
+        case self::T_PARENT:
+        case self::T_STATIC:
+        case self::T_STRING:
+        case self::T_VARIABLE:
+        case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
+        case self::T_INSTANCEOF:
+        case self::T_BOOLEAN_OR:
+        case self::T_LOGICAL_OR:
+        case self::T_BOOLEAN_AND:
+        case self::T_LOGICAL_AND:
+        case self::T_LOGICAL_XOR:
+        case self::T_QUESTION_MARK:
+            return $this->_parseExpression();
+
+        case self::T_SWITCH:
+            return $this->_parseSwitchStatement();
+
+        case self::T_CATCH:
+            return $this->_parseCatchStatement();
+
+        case self::T_IF:
+            return $this->_parseIfStatement();
+
+        case self::T_ELSEIF:
+            return $this->_parseElseIfStatement();
+
+        case self::T_FOR:
+            return $this->_parseForStatement();
+
+        case self::T_FOREACH:
+            return $this->_parseForeachStatement();
+
+        case self::T_WHILE:
+            return $this->_parseWhileStatement();
+
+        case self::T_BACKTICK:
+        case self::T_DOUBLE_QUOTE:
+        case self::T_CONSTANT_ENCAPSED_STRING:
+            return $this->_parseLiteral();
+
+        case self::T_FUNCTION:
+            return $this->_parseFunctionOrClosureDeclaration();
+
+        case self::T_COMMENT:
+            return $this->_parseCommentWithOptionalInlineClassOrInterfaceReference();
+        }
+        return null;
+    }
+
+    /**
+     * Parses a comment and optionally an embedded class or interface type
+     * annotation.
+     *
+     * <code>
+     * / * @var $foo FooBar * /
+     *
+     * - ASTComment
+     *   - ASTClassOrInterfaceReference
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTComment
+     * @since 0.9.8
+     */
+    private function _parseCommentWithOptionalInlineClassOrInterfaceReference()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_COMMENT);
+
+        $comment = $this->_builder->buildASTComment($token->image);
+
+        if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
+            $comment->addChild(
+                $this->_builder->buildASTClassOrInterfaceReference($match[1])
+            );
+        }
+        return $this->_setNodePositionsAndReturn($comment);
     }
 
     /**
@@ -3301,7 +3389,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseVariableDeclarator()
     {
         $this->_consumeComments();
-
         $this->_tokenStack->push();
 
         $name = $this->_consumeToken(self::T_VARIABLE)->image;
@@ -3315,10 +3402,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $declarator->setValue($this->_parseStaticValueOrStaticArray());
         }
-
-        $declarator->setTokens($this->_tokenStack->pop());
-
-        return $declarator;
+        return $this->_setNodePositionsAndReturn($declarator);
     }
 
     /**
@@ -3546,6 +3630,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_getNamespaceOrPackageName() . '\\' . $localName;
     }
 
+    /**
+     * Returns the name of a declared names. When the parsed code is not namespaced
+     * this method will return the name from the @package annotation.
+     *
+     * @return string
+     * @since 0.9.8
+     */
     private function _getNamespaceOrPackageName()
     {
         if ($this->_namespaceName === null) {
@@ -3605,21 +3696,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         return !in_array($this->_tokenizer->peek(), $notExpectedTags, true);
-    }
-
-    /**
-     * Skips an encapsulted block like strings or backtick strings.
-     *
-     * @param integer $endToken The end token.
-     *
-     * @return void
-     */
-    private function _skipEncapsultedBlock($endToken)
-    {
-        while (($tokenType = $this->_tokenizer->peek()) !== $endToken) {
-            $this->_consumeToken($tokenType);
-        }
-        $this->_consumeToken($endToken);
     }
 
     /**
