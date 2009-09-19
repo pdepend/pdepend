@@ -69,6 +69,7 @@ require_once dirname(__FILE__) . '/NamespaceChainsNotHandledCorrectByCouplingAna
 require_once dirname(__FILE__) . '/ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test.php';
 require_once dirname(__FILE__) . '/ClosureReturnsByReferenceBug094Test.php';
 require_once dirname(__FILE__) . '/NPathComplexityIsBrokenInVersion096Bug095Test.php';
+require_once dirname(__FILE__) . '/DefaultPackageContainsBrokenAritfactsBug098Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -119,6 +120,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClosureReturnsByReferenceBug094Test');
         $suite->addTestSuite('PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test');
 
         return $suite;
     }
@@ -127,4 +129,3 @@ class PHP_Depend_Bugs_AllTests
 if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Bugs_AllTests::main') {
     PHP_Depend_Bugs_AllTests::main();
 }
-?>

@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Bugs
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,52 +46,84 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
+
+require_once 'PHP/Depend/Code/ASTForInit.php';
 
 /**
- * Abstract test case for the "Bugs" package.
+ * Test case for the {@link PHP_Depend_Code_ASTForInit} class.
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Bugs
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-abstract class PHP_Depend_Bugs_AbstractTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ASTForInitTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Parses the source of a test case file.
+     * Tests the start line value.
      *
-     * @param string  $testCase          Full test case name.
-     * @param boolean $ignoreAnnotations Ignore annotations?
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return void
+     * @group ast
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function testForInitHasExpectedStartLine()
     {
-        return self::parseSource(
-            self::getSourceFileForTestCase($testCase), $ignoreAnnotations
-        );
+        $init = $this->_getFirstForInitInFunction(__METHOD__);
+        $this->assertSame(4, $init->getStartLine());
     }
 
     /**
-     * Returns the source file for the given test case.
+     * Tests the start column value.
      *
-     * @param string $testCase The qualified test case name.
-     *
-     * @return string
+     * @return void
+     * @group ast
      */
-    protected static function getSourceFileForTestCase($testCase)
+    public function testForInitHasExpectedStartColumn()
     {
-        list($class, $method) = explode('::', $testCase);
+        $init = $this->_getFirstForInitInFunction(__METHOD__);
+        // I know that this is wrong...
+        $this->assertSame(9, $init->getStartColumn());
+    }
 
-        preg_match('(Bug(\d+)Test$)', $class, $match);
+    /**
+     * Tests the end line value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testForInitHasExpectedEndLine()
+    {
+        $init = $this->_getFirstForInitInFunction(__METHOD__);
+        $this->assertSame(4, $init->getEndLine());
+    }
 
-        return self::createCodeResourceURI(
-            sprintf('bugs/%s/%s.php', $match[1], $method)
+    /**
+     * Tests the end column value.
+     *
+     * @return void
+     * @group ast
+     */
+    public function testForInitHasExpectedEndColumn()
+    {
+        $init = $this->_getFirstForInitInFunction(__METHOD__);
+        $this->assertSame(24, $init->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTForInit
+     */
+    private function _getFirstForInitInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTForInit::CLAZZ
         );
     }
 }

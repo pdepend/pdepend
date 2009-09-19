@@ -109,7 +109,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testForStatementHasExpectedEndColumn()
     {
         $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertSame(7, $statement->getEndColumn());
+        $this->assertSame(16, $statement->getEndColumn());
     }
 
     /**
