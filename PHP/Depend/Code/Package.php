@@ -182,7 +182,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     {
         // Skip if this package already contains this type
         if (in_array($type, $this->types, true)) {
-            return;
+            return $type;
         }
 
         if ($type->getPackage() !== null) {

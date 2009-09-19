@@ -49,9 +49,7 @@
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Test case for bug #98. The default package contains software artifacts like
- * functions or classes that are broken. This can result in a fatal error during
- * the analysis phase.
+ * Test case for bug #4
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,66 +60,39 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
+class PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test
     extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * Tests that the result does not contain a function with a broken signature.
+     * Tests that the parser handles function with reference return values
+     * correct.
      *
      * @return void
      * @group bugs
      */
-    public function testDefaultPackageDoesNotContainFunctionWithBrokenSignature()
+    public function testParserCreatesInvalidFunctionWhenReturnsByReference()
     {
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->setSupportBadDocumentation();
-        $pdepend->analyze();
+        $package = self::parseTestCaseSource(__METHOD__)->current();
 
-        $functions = $pdepend->getPackages()
-            ->current()
-            ->getFunctions();
-
-        $this->assertSame(1, $functions->count());
+        $function = $package->getFunctions()->current();
+        $this->assertEquals('barBug08', $function->getName());
     }
 
     /**
-     * Tests that the result does not contain a class with a broken method.
+     * Tests that the parser handles function with reference return values
+     * correct.
      *
      * @return void
      * @group bugs
      */
-    public function testDefaultPackageDoesNotContainClassWithBrokenMethod()
+    public function testParserCreatesInvalidMethodWhenReturnsByReference()
     {
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->setSupportBadDocumentation();
-        $pdepend->analyze();
+        $package = self::parseTestCaseSource(__METHOD__)->current();
 
-        $classes = $pdepend->getPackages()
-            ->current()
-            ->getClasses();
-
-        $this->assertSame(1, $classes->count());
-    }
-
-    /**
-     * Tests that the result does not contain an interface with a broken body.
-     *
-     * @return void
-     * @group bugs
-     */
-    public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody()
-    {
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->setSupportBadDocumentation();
-        $pdepend->analyze();
-
-        $interfaces = $pdepend->getPackages()
-            ->current()
-            ->getInterfaces();
-
-        $this->assertSame(1, $interfaces->count());
+        $method = $package->getTypes()
+                          ->current()
+                          ->getMethods()
+                          ->current();
+        $this->assertEquals('fooBug08', $method->getName());
     }
 }

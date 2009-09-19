@@ -294,13 +294,19 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_INTERFACE:
-                $this->_parseInterfaceDeclaration();
+                $package = $this->_builder->buildPackage(
+                    $this->_getNamespaceOrPackageName()
+                );
+                $package->addType($this->_parseInterfaceDeclaration());
                 break;
 
             case self::T_CLASS:
             case self::T_FINAL:
             case self::T_ABSTRACT:
-                $this->_parseClassDeclaration();
+                $package = $this->_builder->buildPackage(
+                    $this->_getNamespaceOrPackageName()
+                );
+                $package->addType($this->_parseClassDeclaration());
                 break;
 
             case self::T_FUNCTION:
@@ -445,10 +451,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $class->setTokens($this->_tokenStack->pop());
 
-//        $package = $this->_builder->buildPackage($this->_getNamespaceOrPackageName());
-//        $package->addType($class);
-
-        // Reset parser settings
         $this->reset();
 
         return $class;
