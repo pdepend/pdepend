@@ -1,7 +1,6 @@
 <?php
-function foo()
+function testVariableDeclaratorHasExpectedEndLine()
 {
     static $a = 1,
-    $b = array();
+           $b = array();
 }
-?>

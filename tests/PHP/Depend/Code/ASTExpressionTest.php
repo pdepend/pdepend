@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTIfStatement.php';
+require_once 'PHP/Depend/Code/ASTExpression.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTIfStatement} class.
+ * Test case for the {@link PHP_Depend_Code_ASTExpression} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,22 +62,26 @@ require_once 'PHP/Depend/Code/ASTIfStatement.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the generated object graph of an if statement.
+     * Tests the generated object graph of an expression node.
      *
      * @return void
      * @group ast
      */
-    public function testIfStatementGraphWithBooleanExpressions()
+    public function testExpressionGraphWithBooleanExpressions()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
 
         $children = $statement->getChildren();
 
-        $this->assertSame(1, count($children));
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
+        $this->assertSame(5, count($children));
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[0]);
+        $this->assertType(PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ, $children[1]);
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[2]);
+        $this->assertType(PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ, $children[3]);
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[4]);
     }
 
     /**
@@ -86,9 +90,9 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testIfStatementHasExpectedStartLine()
+    public function testExpressionHasExpectedStartLine()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
         $this->assertSame(4, $statement->getStartLine());
     }
 
@@ -98,10 +102,10 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testIfStatementHasExpectedStartColumn()
+    public function testExpressionHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(5, $statement->getStartColumn());
+        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertSame(8, $statement->getStartColumn());
     }
 
     /**
@@ -110,10 +114,10 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testIfStatementHasExpectedEndLine()
+    public function testExpressionHasExpectedEndLine()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getEndLine());
+        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertSame(6, $statement->getEndLine());
     }
 
     /**
@@ -122,10 +126,10 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @group ast
      */
-    public function testIfStatementHasExpectedEndColumn()
+    public function testExpressionHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(13, $statement->getEndColumn());
+        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertSame(14, $statement->getEndColumn());
     }
 
     /**
@@ -133,12 +137,12 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTIfStatement
+     * @return PHP_Depend_Code_ASTExpression
      */
-    private function _getFirstIfStatementInFunction($testCase)
+    private function _getFirstExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTIfStatement::CLAZZ
+            $testCase, PHP_Depend_Code_ASTExpression::CLAZZ
         );
     }
 }

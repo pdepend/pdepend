@@ -76,12 +76,8 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
 
         $children = $statement->getChildren();
 
-        $this->assertSame(5, count($children));
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[0]);
-        $this->assertType(PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ, $children[1]);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[2]);
-        $this->assertType(PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ, $children[3]);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[4]);
+        $this->assertSame(1, count($children));
+        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
     }
 
     /**
