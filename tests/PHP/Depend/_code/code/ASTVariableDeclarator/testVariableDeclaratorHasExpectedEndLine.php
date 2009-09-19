@@ -1,10 +1,6 @@
 <?php
-function foo()
+function testVariableDeclaratorHasExpectedStartColumn()
 {
-    static $b 
-           =
-           array(
-           )
-           ;
+    static $a = 1,
+           $b = array();
 }
-?>

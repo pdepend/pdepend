@@ -68,88 +68,61 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * Tests that the declaration has the expected start line value.
      *
      * @return void
+     * @group ast
      */
     public function testVariableDeclaratorHasExpectedStartLine()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declarators = $function->findChildrenOfType(
-            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
-        );
-
-        $this->assertSame(4, $declarators[0]->getStartLine());
-        $this->assertSame(5, $declarators[1]->getStartLine());
+        $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
+        $this->assertSame(4, $declarator->getStartLine());
     }
 
     /**
      * Tests that the declaration has the expected start column value.
      *
      * @return void
+     * @group ast
      */
     public function testVariableDeclaratorHasExpectedStartColumn()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declarators = $function->findChildrenOfType(
-            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
-        );
-
-        $this->assertSame(12, $declarators[0]->getStartColumn());
-        $this->assertSame(5, $declarators[1]->getStartColumn());
+        $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
+        $this->assertSame(12, $declarator->getStartColumn());
     }
 
     /**
      * Tests that the declaration has the expected end line value.
      *
      * @return void
+     * @group ast
      */
     public function testVariableDeclaratorHasExpectedEndLine()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declarator = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
-        );
-
-        $this->assertSame(7, $declarator->getEndLine());
+        $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
+        $this->assertSame(4, $declarator->getEndLine());
     }
 
     /**
      * Tests that the declaration has the expected end column value.
      *
      * @return void
+     * @group ast
      */
     public function testVariableDeclaratorHasExpectedEndColumn()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declarator = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
-        );
-
+        $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
         $this->assertSame(17, $declarator->getEndColumn());
     }
 
     /**
-     * Creates a field declaration node.
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
      *
      * @return PHP_Depend_Code_ASTVariableDeclarator
      */
-    protected function createNodeInstance()
+    private function _getFirstVariableDeclaratorInFunction($testCase)
     {
-        return new PHP_Depend_Code_ASTVariableDeclarator('$foo');
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
+        );
     }
 }
-?>

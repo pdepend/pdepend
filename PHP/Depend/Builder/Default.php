@@ -700,6 +700,21 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new expression node.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.9.8
+     */
+    public function buildASTExpression()
+    {
+        include_once 'PHP/Depend/Code/ASTExpression.php';
+
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTExpression');
+
+        return new PHP_Depend_Code_ASTExpression();
+    }
+
+    /**
      * Builds a new allocation expression node.
      *
      * @param string $image The source image of this expression.
@@ -843,6 +858,23 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTLogicalXorExpression('xor');
+    }
+
+    /**
+     * Builds a new switch-statement-node.
+     *
+     * @return PHP_Depend_Code_ASTSwitchStatement
+     * @since 0.9.8
+     */
+    public function buildASTSwitchStatement()
+    {
+        include_once 'PHP/Depend/Code/ASTSwitchStatement.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTSwitchStatement'
+        );
+
+        return new PHP_Depend_Code_ASTSwitchStatement('switch');
     }
 
     /**
@@ -1292,6 +1324,23 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTConstantDeclarator($image);
+    }
+
+    /**
+     * Builds a new comment node instance.
+     *
+     * @param string $cdata The comment text.
+     *
+     * @return PHP_Depend_Code_ASTComment
+     * @since 0.9.8
+     */
+    public function buildASTComment($cdata)
+    {
+        include_once 'PHP/Depend/Code/ASTComment.php';
+
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTComment()');
+
+        return new PHP_Depend_Code_ASTComment($cdata);
     }
 
     /**
