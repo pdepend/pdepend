@@ -69,6 +69,7 @@ require_once dirname(__FILE__) . '/ASTConstantPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTConstantTest.php';
 require_once dirname(__FILE__) . '/ASTElseIfStatementTest.php';
 require_once dirname(__FILE__) . '/ASTFieldDeclarationTest.php';
+require_once dirname(__FILE__) . '/ASTForInitTest.php';
 require_once dirname(__FILE__) . '/ASTForStatementTest.php';
 require_once dirname(__FILE__) . '/ASTForeachStatementTest.php';
 require_once dirname(__FILE__) . '/ASTFunctionPostfixTest.php';
@@ -163,6 +164,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTElseIfStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFieldDeclarationTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTForInitTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTForStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTForeachStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFunctionPostfixTest');

@@ -457,6 +457,20 @@ interface PHP_Depend_BuilderI
     function buildASTForStatement($image);
 
     /**
+     * Builds a new for-init node.
+     *
+     * <code>
+     *      ------------------------
+     * for ($x = 0, $y = 23, $z = 42; $x < $y; ++$x) {}
+     *      ------------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTForInit
+     * @since 0.9.8
+     */
+    function buildASTForInit();
+
+    /**
      * Builds a new foreach-statement node.
      *
      * @param string $image The source image of this statement.

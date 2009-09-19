@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Bugs
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,52 +46,30 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once 'PHP/Depend/Code/ASTForInit.php';
 
 /**
- * Abstract test case for the "Bugs" package.
+ * This node class represent the init part of a for-statement.
+ *
+ * <code>
+ *      ------------------------
+ * for ($x = 0, $y = 23, $z = 42; $x < $y; ++$x) {}
+ *      ------------------------
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Bugs
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-abstract class PHP_Depend_Bugs_AbstractTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ASTForInit extends PHP_Depend_Code_ASTNode
 {
     /**
-     * Parses the source of a test case file.
-     *
-     * @param string  $testCase          Full test case name.
-     * @param boolean $ignoreAnnotations Ignore annotations?
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * The type of this class.
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
-    {
-        return self::parseSource(
-            self::getSourceFileForTestCase($testCase), $ignoreAnnotations
-        );
-    }
-
-    /**
-     * Returns the source file for the given test case.
-     *
-     * @param string $testCase The qualified test case name.
-     *
-     * @return string
-     */
-    protected static function getSourceFileForTestCase($testCase)
-    {
-        list($class, $method) = explode('::', $testCase);
-
-        preg_match('(Bug(\d+)Test$)', $class, $match);
-
-        return self::createCodeResourceURI(
-            sprintf('bugs/%s/%s.php', $match[1], $method)
-        );
-    }
+    const CLAZZ = __CLASS__;
 }
