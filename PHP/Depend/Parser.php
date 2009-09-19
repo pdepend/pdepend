@@ -441,10 +441,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_parseInterfaceList($class);
         }
         
-        // Handle class body
         $this->_parseClassOrInterfaceBody($class);
 
         $class->setTokens($this->_tokenStack->pop());
+
+//        $package = $this->_builder->buildPackage($this->_getNamespaceOrPackageName());
+//        $package->addType($class);
 
         // Reset parser settings
         $this->reset();
@@ -928,7 +930,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_parseFormalParameters()
         );
         $this->_consumeComments();
-        
+
         if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies
             $this->_parseCallableBody($callable);
@@ -1466,9 +1468,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $token = $this->_consumeToken(self::T_VARIABLE);
 
-        $catch->addChild(
-            $this->_builder->buildASTVariable($token->image)
-        );
+        $catch->addChild($this->_builder->buildASTVariable($token->image));
         
         $this->_consumeComments();
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
@@ -1523,9 +1523,45 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_FOR);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTForStatement($token->image)
-        );
+        $forStatement = $this->_builder->buildASTForStatement($token->image);
+        $forStatement->addChild($this->_parseForInit());
+
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_SEMICOLON);
+
+        return $this->_setNodePositionsAndReturn($forStatement);
+    }
+
+    /**
+     * Parses the init part of a for-statement.
+     *
+     * <code>
+     *      ------------------------
+     * for ($x = 0, $y = 23, $z = 42; $x < $y; ++$x) {}
+     *      ------------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTForInit
+     * @since 0.9.8
+     */
+    private function _parseForInit()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeComments();
+
+        $forInit = $this->_builder->buildASTForInit();
+
+        while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
+            if ($tokenType === self::T_SEMICOLON) {
+                break;
+            }
+            if (($expr = $this->_parseOptionalExpression()) === null) {
+                $this->_consumeToken($tokenType);
+            } else {
+                $forInit->addChild($expr);
+            }
+        }
+        return $this->_setNodePositionsAndReturn($forInit);
     }
 
     /**
@@ -3505,15 +3541,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _createQualifiedTypeName($localName)
     {
-        $separator = '\\';
-        $namespace = $this->_namespaceName;
+        return $this->_getNamespaceOrPackageName() . '\\' . $localName;
+    }
 
-        if ($namespace === null) {
-            $separator = self::PACKAGE_SEPARATOR;
-            $namespace = $this->_packageName;
+    private function _getNamespaceOrPackageName()
+    {
+        if ($this->_namespaceName === null) {
+            return $this->_packageName;
         }
-
-        return $namespace . $separator . $localName;
+        return $this->_namespaceName;
     }
 
     /**
