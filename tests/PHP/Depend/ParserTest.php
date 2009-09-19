@@ -188,43 +188,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the parser handles function with reference return values
-     * correct.
-     *
-     * @return void
-     * @group parser
-     */
-    public function testParserFunctionReturnsReferenceBug004()
-    {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/004.php');
-//        $packages->next();
-
-        $package  = $packages->current();
-
-        $function = $package->getFunctions()->current();
-        $this->assertEquals('barBug08', $function->getName());
-    }
-
-    /**
-     * Tests that the parser handles function with reference return values
-     * correct.
-     *
-     * @return void
-     * @group parser
-     */
-    public function testParserMethodReturnsByReferenceBug004()
-    {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/bugs/004.php');
-        $package  = $packages->current();
-
-        $method = $package->getTypes()
-                          ->current()
-                          ->getMethods()
-                          ->current();
-        $this->assertEquals('fooBug08', $method->getName());
-    }
-
-    /**
      * Tests that the parser sets the correct line number for a function.
      *
      * @return void

@@ -250,12 +250,6 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function getDependencies()
     {
         $classReferences = $this->_dependencyClassReferences;
-        foreach ($this->getParameters() as $parameter) {
-            if ($parameter->getClassReference() === null) {
-                continue;
-            }
-            $classReferences[] = $parameter->getClassReference();
-        }
 
         $references = $this->findChildrenOfType(
             PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
