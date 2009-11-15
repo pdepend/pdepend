@@ -68,16 +68,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * expected result.
      *
      * @return void
+     * @group reflection
      */
     public function testPropertyIsDefaultValueAvailableReturnsFalseWhenNoValueExists()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertFalse($property->isDefaultValueAvailable());
         $this->assertNull($property->getDefaultValue());
     }
@@ -87,16 +82,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * expected result.
      *
      * @return void
+     * @group reflection
      */
     public function testPropertyIsDefaultValueAvailableReturnsTrueWhenValueExists()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertTrue($property->isDefaultValueAvailable());
         $this->assertNull($property->getDefaultValue());
     }
@@ -105,16 +95,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
+     * @group reflection
      */
     public function testPropertyContainsExpectDefaultValueBooleanTrue()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertTrue($property->getDefaultValue());
     }
 
@@ -122,16 +107,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
+     * @group reflection
      */
     public function testPropertyContainsExpectDefaultValueBooleanFalse()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertFalse($property->getDefaultValue());
     }
 
@@ -139,16 +119,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
+     * @group reflection
      */
     public function testPropertyContainsExpectDefaultValueArray()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertType('array', $property->getDefaultValue());
     }
 
@@ -156,16 +131,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
+     * @group reflection
      */
     public function testPropertyContainsExpectedDefaultValueFloat()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertEquals(3.14, $property->getDefaultValue(), '', 0.001);
     }
 
@@ -174,16 +144,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * <b>true</b> for an as array annotated property.
      *
      * @return void
+     * @group reflection
      */
     public function testIsArrayReturnsExpectedValueTrueForVarAnnotationWithArray()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertTrue($property->isArray());
     }
 
@@ -192,16 +157,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * <b>false</b> for an as class/interface annotated property.
      *
      * @return void
+     * @group reflection
      */
     public function testIsArrayReturnsExpectedValueFalseForVarAnnotationWithClassType()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertFalse($property->isArray());
     }
 
@@ -210,16 +170,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * <b>false</b> for an property without var annotation.
      *
      * @return void
+     * @group reflection
      */
     public function testIsArrayReturnsExpectedValueFalseForPropertyWithoutVarAnnotation()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertFalse($property->isArray());
     }
 
@@ -228,16 +183,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * returns <b>true</b> for an as integer annotated property.
      *
      * @return void
+     * @group reflection
      */
     public function testIsPrimitiveReturnsExpectedValueTrueForVarAnnotationWithIntegerTypeHint()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertTrue($property->isPrimitive());
     }
 
@@ -246,16 +196,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * returns <b>false</b> for an as class/interface annotated property.
      *
      * @return void
+     * @group reflection
      */
     public function testIsPrimitiveReturnsExpectedValueFalseForVarAnnotationWithClassType()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current();
-
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
         $this->assertFalse($property->isPrimitive());
     }
 
@@ -264,16 +209,78 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * returns <b>false</b> for an property without var annotation.
      *
      * @return void
+     * @group reflection
      */
     public function testIsPrimitiveReturnsExpectedValueFalseForPropertyWithoutVarAnnotation()
     {
-        $packages = self::parseSource('code/property/' . __FUNCTION__ . '.php');
-        $property = $packages->current()
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertFalse($property->isPrimitive());
+    }
+
+    /**
+     * Tests that a property node has the expected start line.
+     *
+     * @return void
+     * @group reflection
+     */
+    public function testPropertyHasExpectedStartLine()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertSame(4, $property->getStartLine());
+    }
+
+    /**
+     * Tests that a property node has the expected start column.
+     *
+     * @return void
+     * @group reflection
+     */
+    public function testPropertyHasExpectedStartColumn()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertSame(13, $property->getStartColumn());
+    }
+
+    /**
+     * Tests that a property node has the expected end line.
+     *
+     * @return void
+     * @group reflection
+     */
+    public function testPropertyHasExpectedEndLine()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertSame(6, $property->getEndLine());
+    }
+
+    /**
+     * Tests that a property node has the expected end column.
+     *
+     * @return void
+     * @group reflection
+     */
+    public function testPropertyHasExpectedEndColumn()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertSame(13, $property->getEndColumn());
+    }
+
+    /**
+     * Returns the first property found in the corresponding test file.
+     *
+     * @param string $testCase Qualified name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Property
+     */
+    private function _getFirstPropertyInClass($testCase)
+    {
+        list($className, $methodName) = explode('::', $testCase);
+
+        $packages = self::parseSource('code/property/' . $methodName . '.php');
+        return $packages->current()
             ->getClasses()
             ->current()
             ->getProperties()
             ->current();
-
-        $this->assertFalse($property->isPrimitive());
     }
 }

@@ -715,6 +715,25 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new assignment expression node.
+     *
+     * @param string $image The assignment operator.
+     *
+     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @since 0.9.8
+     */
+    public function buildASTAssignmentExpression($image)
+    {
+        include_once 'PHP/Depend/Code/ASTAssignmentExpression.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTAssignmentExpression'
+        );
+
+        return new PHP_Depend_Code_ASTAssignmentExpression($image);
+    }
+
+    /**
      * Builds a new allocation expression node.
      *
      * @param string $image The source image of this expression.

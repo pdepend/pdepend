@@ -1333,62 +1333,110 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseOptionalExpression()
     {
-        // Strip optional comments.
-        $this->_consumeComments();
+        $expressions = array();
 
-        // Peek next token
+        $this->_tokenStack->push();
+
+        $this->_consumeComments();
+        
         $tokenType = $this->_tokenizer->peek();
 
         switch ($tokenType) {
 
+        case self::T_EQUAL:
+        case self::T_OR_EQUAL:
+        case self::T_AND_EQUAL:
+        case self::T_DIV_EQUAL:
+        case self::T_MOD_EQUAL:
+        case self::T_XOR_EQUAL:
+        case self::T_PLUS_EQUAL:
+        case self::T_MINUS_EQUAL:
+        case self::T_CONCAT_EQUAL:
+            break;
+
+        case self::T_LNUMBER:
+        case self::T_DNUMBER:
         case self::T_BACKTICK:
         case self::T_DOUBLE_QUOTE:
         case self::T_CONSTANT_ENCAPSED_STRING:
-            return $this->_parseLiteral();
+            $expr = $this->_parseLiteral();
+            break;
 
         case self::T_NEW:
-            return $this->_parseAllocationExpression();
+            $expr = $this->_parseAllocationExpression();
+            break;
 
         case self::T_INSTANCEOF:
-            return $this->_parseInstanceOfExpression();
+            $expr = $this->_parseInstanceOfExpression();
+            break;
 
         case self::T_STRING:
         case self::T_BACKSLASH:
         case self::T_NAMESPACE:
-            return $this->_parseMemberPrefixOrFunctionPostfix();
+            $this->_tokenStack->push();
+            $expr = $this->_parseMemberPrefixOrFunctionPostfix();
+            $expr = $this->_setNodePositionsAndReturn($expr);
+            $expr = $this->_parseOptionalAssignmentExpression($expr);
+            break;
 
         case self::T_SELF:
-            return $this->_parseConstantOrSelfMemberPrimaryPrefix();
+            $this->_tokenStack->push();
+            $expr = $this->_parseConstantOrSelfMemberPrimaryPrefix();
+            $expr = $this->_setNodePositionsAndReturn($expr);
+            $expr = $this->_parseOptionalAssignmentExpression($expr);
+            break;
 
         case self::T_PARENT:
-            return $this->_parseConstantOrParentMemberPrimaryPrefix();
+            $this->_tokenStack->push();
+            $expr = $this->_parseConstantOrParentMemberPrimaryPrefix();
+            $expr = $this->_setNodePositionsAndReturn($expr);
+            $expr = $this->_parseOptionalAssignmentExpression($expr);
+            break;
 
         case self::T_DOLLAR:
         case self::T_VARIABLE:
-            return $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+            $this->_tokenStack->push();
+            $expr = $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+            $expr = $this->_setNodePositionsAndReturn($expr);
+            $expr = $this->_parseOptionalAssignmentExpression($expr);
+            break;
 
         case self::T_STATIC:
-            return $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+            $this->_tokenStack->push();
+            $expr = $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+            $expr = $this->_setNodePositionsAndReturn($expr);
+            $expr = $this->_parseOptionalAssignmentExpression($expr);
+            break;
 
         case self::T_QUESTION_MARK:
-            return $this->_parseConditionalExpression();
+            $expr = $this->_parseConditionalExpression();
+            break;
 
         case self::T_BOOLEAN_AND:
-            return $this->_parseBooleanAndExpression();
+            $expr = $this->_parseBooleanAndExpression();
+            break;
 
         case self::T_BOOLEAN_OR:
-            return $this->_parseBooleanOrExpression();
+            $expr = $this->_parseBooleanOrExpression();
+            break;
 
         case self::T_LOGICAL_AND:
-            return $this->_parseLogicalAndExpression();
+            $expr = $this->_parseLogicalAndExpression();
+            break;
 
         case self::T_LOGICAL_OR:
-            return $this->_parseLogicalOrExpression();
+            $expr = $this->_parseLogicalOrExpression();
+            break;
 
         case self::T_LOGICAL_XOR:
-            return $this->_parseLogicalXorExpression();
+            $expr = $this->_parseLogicalXorExpression();
+            break;
+
+        default:
+            $this->_tokenStack->pop();
+            return null;
         }
-        return null;
+        return $this->_setNodePositionsAndReturn($expr);
     }
 
     /**
@@ -2005,9 +2053,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *         parsing process.
      * @since 0.9.6
      */
-    private function _parseMethodOrPropertyPostfix(
-        PHP_Depend_Code_ASTNode $node
-    ) {
+    private function _parseMethodOrPropertyPostfix(PHP_Depend_Code_ASTNode $node)
+    {
         // Strip optional comments
         $this->_consumeComments();
 
@@ -2021,15 +2068,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
             $postfix->addChild($node);
             $postfix->addChild($this->_parseArguments());
-            break;
+
+            return $this->_parseOptionalMemberPrimaryPrefix($postfix);
 
         default:
             $postfix = $this->_builder->buildASTPropertyPostfix($node->getImage());
             $postfix->addChild($node);
-            break;
-        }
 
-        return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+            return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+        }
     }
 
     /**
@@ -2067,6 +2114,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseVariableOrFunctionPostfixOrMemberPrimaryPrefix()
     {
+        $this->_tokenStack->push();
+
         $variable = $this->_parseCompoundVariableOrVariableVariableOrVariable();
         $this->_consumeComments();
 
@@ -2076,15 +2125,58 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         switch ($tokenType) {
 
         case self::T_DOUBLE_COLON:
-            return $this->_parseStaticMemberPrimaryPrefix($variable);
+            $result = $this->_parseStaticMemberPrimaryPrefix($variable);
+            break;
 
         case self::T_OBJECT_OPERATOR:
-            return $this->_parseMemberPrimaryPrefix($variable);
+            $result = $this->_parseMemberPrimaryPrefix($variable);
+            break;
 
         case self::T_PARENTHESIS_OPEN:
-            return $this->_parseFunctionPostfix($variable);
+            $result = $this->_parseFunctionPostfix($variable);
+            break;
+
+        default:
+            $result = $variable;
+            break;
         }
-        return $variable;
+        return $this->_setNodePositionsAndReturn($result);
+    }
+
+    private function _parseOptionalAssignmentExpression(
+        PHP_Depend_Code_ASTNode $left
+    ) {
+        $this->_consumeComments();
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_EQUAL:
+        case self::T_OR_EQUAL:
+        case self::T_AND_EQUAL:
+        case self::T_DIV_EQUAL:
+        case self::T_MOD_EQUAL:
+        case self::T_XOR_EQUAL:
+        case self::T_PLUS_EQUAL:
+        case self::T_MINUS_EQUAL:
+        case self::T_CONCAT_EQUAL:
+
+            $token = $this->_consumeToken($tokenType);
+
+            $node = $this->_builder->buildASTAssignmentExpression($token->image);
+            $node->addChild($left);
+
+            // TODO: Change this into a mandatory expression in later versions
+            if (is_object($expression = $this->_parseOptionalExpression())) {
+                $node->addChild($expression);
+            }
+            break;
+
+        default:
+            $node = $left;
+            break;
+        }
+        return $node;
     }
 
     /**
@@ -2389,12 +2481,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseLiteral()
     {
-        // Consume tokens
         $this->_consumeComments();
-
         $tokenType = $this->_tokenizer->peek();
 
         switch ($tokenType) {
+
+        case self::T_LNUMBER:
+        case self::T_DNUMBER:
+        case self::T_CONSTANT_ENCAPSED_STRING:
+            $token = $this->_consumeToken($tokenType);
+            return $this->_builder->buildASTLiteral($token->image);
 
         case self::T_BACKTICK:
         case self::T_DOUBLE_QUOTE:
@@ -2407,11 +2503,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $image .= $this->_consumeToken($endToken)->image;
             
             return $this->_builder->buildASTLiteral($image);
-
-        default:
-            return $this->_builder->buildASTLiteral(
-                $this->_consumeToken(self::T_CONSTANT_ENCAPSED_STRING)->image
-            );
         }
     }
 
@@ -2786,7 +2877,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // Stop processing
                 return;
             }
-
             $tokenType = $this->_tokenizer->peek();
         }
 
@@ -2804,24 +2894,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->_tokenizer->peek();
 
         switch ($tokenType) {
-
-        case self::T_NEW:
-        case self::T_SELF:
-        case self::T_DOLLAR:
-        case self::T_PARENT:
-        case self::T_STATIC:
-        case self::T_STRING:
-        case self::T_VARIABLE:
-        case self::T_BACKSLASH:
-        case self::T_NAMESPACE:
-        case self::T_INSTANCEOF:
-        case self::T_BOOLEAN_OR:
-        case self::T_LOGICAL_OR:
-        case self::T_BOOLEAN_AND:
-        case self::T_LOGICAL_AND:
-        case self::T_LOGICAL_XOR:
-        case self::T_QUESTION_MARK:
-            return $this->_parseExpression();
 
         case self::T_SWITCH:
             return $this->_parseSwitchStatement();
@@ -2844,18 +2916,19 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_WHILE:
             return $this->_parseWhileStatement();
 
-        case self::T_BACKTICK:
-        case self::T_DOUBLE_QUOTE:
-        case self::T_CONSTANT_ENCAPSED_STRING:
-            return $this->_parseLiteral();
-
         case self::T_FUNCTION:
             return $this->_parseFunctionOrClosureDeclaration();
 
         case self::T_COMMENT:
             return $this->_parseCommentWithOptionalInlineClassOrInterfaceReference();
+
+        case self::T_DOC_COMMENT:
+            // TODO: Move this
+            return $this->_builder->buildASTComment(
+                $this->_consumeToken(self::T_DOC_COMMENT)->image
+            );
         }
-        return null;
+        return $this->_parseOptionalExpression();
     }
 
     /**
