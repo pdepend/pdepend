@@ -1352,7 +1352,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_PLUS_EQUAL:
         case self::T_MINUS_EQUAL:
         case self::T_CONCAT_EQUAL:
-            break;
+            return null;
 
         case self::T_LNUMBER:
         case self::T_DNUMBER:
