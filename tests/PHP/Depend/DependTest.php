@@ -188,6 +188,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
         $pdepend->analyze();
         
         $this->assertEquals(10, $pdepend->countClasses());
