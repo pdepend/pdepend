@@ -310,6 +310,17 @@ class PHP_Depend_Code_Property
     }
 
     /**
+     * Returns the column number where the property declaration starts.
+     *
+     * @return integer
+     * @since 0.9.8
+     */
+    public function getStartColumn()
+    {
+        return $this->_variableDeclarator->getStartColumn();
+    }
+
+    /**
      * Returns the line number where the property declaration ends.
      *
      * @return integer
@@ -318,6 +329,17 @@ class PHP_Depend_Code_Property
     public function getEndLine()
     {
         return $this->_variableDeclarator->getEndLine();
+    }
+
+    /**
+     * Returns the column number where the property declaration ends.
+     *
+     * @return integer
+     * @since 0.9.8
+     */
+    public function getEndColumn()
+    {
+        return $this->_variableDeclarator->getEndColumn();
     }
 
     /**
