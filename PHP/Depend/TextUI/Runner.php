@@ -102,7 +102,7 @@ class PHP_Depend_TextUI_Runner
      *
      * @var array(string) $_excludeDirectories
      */
-    private $_excludeDirectories = array('.git', 'svn', 'CVS');
+    private $_excludeDirectories = array('.git', '.svn', 'CVS');
 
     /**
      * List of exclude packages.
