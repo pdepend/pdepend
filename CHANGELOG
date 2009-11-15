@@ -3,6 +3,8 @@ PHP_Depend 0.9.8
 
 - Fixed #94: Parser throws exception for closures that return by reference,
   fixed in svn revision #962.
+- Fixed #98: Functions with an invalid signature result in an inconsistent 
+  object graph, fixed in svn revision #986.
 
 PHP_Depend 0.9.7
 ----------------
