@@ -78,7 +78,7 @@ class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
     public function __construct(array $patterns)
     {
         $regexp = join('|', array_map('preg_quote', $patterns));
-        $regexp = str_replace('\*', '.*', $regexp);
+        $regexp = str_replace(array('\*', '\.'), array('.*', '.'), $regexp);
 
         $this->regexp = "({$regexp})i";
     }

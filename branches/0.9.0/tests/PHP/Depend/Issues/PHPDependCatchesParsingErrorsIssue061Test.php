@@ -49,6 +49,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend.php';
+require_once 'PHP/Depend/Input/ExtensionFilter.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/TextUI/Runner.php';
 
@@ -108,12 +109,13 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
 
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(self::createCodeResourceURI('issues/061'));
+        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
         $pdepend->addLogger($logger);
         
         $pdepend->analyze();
 
         $exceptions = $pdepend->getExceptions();
-        $this->assertSame(count($this->expectedExceptions), count($exceptions));
+        $this->assertEquals(count($this->expectedExceptions), count($exceptions));
 
         foreach ($exceptions as $exception) {
             $this->assertTrue(
