@@ -341,6 +341,16 @@ interface PHP_Depend_BuilderI
     function buildASTExpression();
 
     /**
+     * Builds a new assignment expression node.
+     *
+     * @param string $image The assignment operator.
+     *
+     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @since 0.9.8
+     */
+    function buildASTAssignmentExpression($image);
+
+    /**
      * Builds a new allocation expression node.
      *
      * @param string $image The source image of this expression.
