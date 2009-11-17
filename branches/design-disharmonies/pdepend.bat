@@ -3,7 +3,7 @@ REM This file is part of PHP_Depend.
 REM
 REM Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
 REM All rights reserved.
-REM
+REM 
 REM Redistribution and use in source and binary forms, with or without
 REM modification, are permitted provided that the following conditions
 REM are met:
