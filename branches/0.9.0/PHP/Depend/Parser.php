@@ -1352,6 +1352,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_PLUS_EQUAL:
         case self::T_MINUS_EQUAL:
         case self::T_CONCAT_EQUAL:
+            $this->_tokenStack->pop();
             return null;
 
         case self::T_LNUMBER:
