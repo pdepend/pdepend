@@ -49,6 +49,9 @@
 require_once 'PHP/Depend/ProcessListenerI.php';
 require_once 'PHP/Depend/Visitor/AbstractListener.php';
 
+// This is just fun and it is not really testable
+// @codeCoverageIgnoreStart
+
 /**
  * Fun result printer that uses dbus to show a notification window.
  *
@@ -219,3 +222,5 @@ class PHP_Depend_DbusUI_ResultPrinter
     {
     }
 }
+
+// @codeCoverageIgnoreEnd
