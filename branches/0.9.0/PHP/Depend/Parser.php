@@ -2144,6 +2144,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($result);
     }
 
+    /**
+     * This method parses an optional assignment expression node. When
+     * it detects an assignment it will add the given <b>$left</b> node
+     * as a child to a new assignment expression node, otherwise this 
+     * method simply returns <b>$left</b>.
+     *
+     * @param PHP_Depend_Code_ASTNode $left A previously parsed node.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.8
+     */
     private function _parseOptionalAssignmentExpression(
         PHP_Depend_Code_ASTNode $left
     ) {
