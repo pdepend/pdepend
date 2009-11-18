@@ -384,8 +384,6 @@ class PHP_Depend
 
         $this->_performAnalyzeProcess();
 
-
-
         // Set global filter for logging
         $collection->addFilter($this->_codeFilter);
 
