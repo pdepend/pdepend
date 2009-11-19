@@ -256,14 +256,35 @@ class PHP_Depend_Log_Summary_Xml
 
         array_push($this->_xmlStack, $classXml);
 
-        foreach ($class->getMethods() as $method) {
-            $method->accept($this);
-        }
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
+        foreach ($class->getMethods() as $method) {
+            $method->accept($this);
+        }
 
         array_pop($this->_xmlStack);
+    }
+
+    /**
+     * Visits a property node.
+     *
+     * @param PHP_Depend_Code_Property $property The current property node.
+     *
+     * @return void
+     * @see PHP_Depend_VisitorI::visitProperty()
+     */
+    public function visitProperty(PHP_Depend_Code_Property $property)
+    {
+        $xml = end($this->_xmlStack);
+        $doc = $xml->ownerDocument;
+
+        $propertyXml = $doc->createElement('property');
+        $propertyXml->setAttribute('name', str_replace('$', '', $property->getName()));
+
+        $this->writeNodeMetrics($propertyXml, $property);
+
+        $xml->appendChild($propertyXml);
     }
 
     /**
