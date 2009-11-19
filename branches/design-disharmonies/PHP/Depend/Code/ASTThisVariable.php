@@ -39,32 +39,38 @@
  * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
- * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Jan Schumann <jan_schumann@gmx.de>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @since      0.9.7
  */
 
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
+require_once 'PHP/Depend/Code/ASTSelfReference.php';
 
 /**
- * This is a special reference container that is used whenever the keyword
- * <b>self</b> is used to reference a class or interface.
+ * This class represents a this variable node.
+ *
+ * <code>
+ * //   ----
+ * $this->foo;
+ * $this->bar();
+ * //   ----
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
- * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Jan Schumann <jan_schumann@gmx.de>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @since      0.9.7
  */
-class PHP_Depend_Code_ASTSelfReference
-    extends PHP_Depend_Code_ASTClassOrInterfaceReference
+final class PHP_Depend_Code_ASTThisVariable
+    extends PHP_Depend_Code_ASTSelfReference
 {
     /**
      * The image type of this node.
@@ -74,19 +80,5 @@ class PHP_Depend_Code_ASTSelfReference
     /**
      * The source image of this node.
      */
-    const IMAGE = 'self';
-
-    /**
-     * Constructs a new type holder instance.
-     *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
-     *        that reference the concrete target of self.
-     */
-    public function __construct(
-        PHP_Depend_Code_AbstractClassOrInterface $type
-    ) {
-        $this->image        = self::IMAGE;
-        $this->typeInstance = $type;
-    }
+    const IMAGE = '$this';
 }
-?>

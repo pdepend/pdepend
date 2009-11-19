@@ -41,7 +41,7 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id: Parser.php 675 2009-03-05 07:40:28Z mapi $
+ * @version   SVN: $Id$
  * @link      http://pdepend.org/
  */
 
@@ -2349,9 +2349,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_VARIABLE);
         $this->_consumeComments();
 
-        // TODO: ASTThisVariable
+        if('$this' === $token->image) {
+            if ($this->_classOrInterface === null) {
+                throw new PHP_Depend_Parser_InvalidStateException(
+                    $token->startLine,
+                    (string) $this->_sourceFile,
+                    'The keyword "$this" was used outside of a class/method scope.'
+                );
+            }
 
-        return $this->_builder->buildASTVariable($token->image);
+            $variable = $this->_builder->buildASTThisVariable($this->_classOrInterface);
+        }
+        else {
+            $variable = $this->_builder->buildASTVariable($token->image);
+        }
+
+        return $variable;
     }
 
     /**

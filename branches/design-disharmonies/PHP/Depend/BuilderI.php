@@ -215,6 +215,17 @@ interface PHP_Depend_BuilderI
     function buildASTSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
 
     /**
+     * Builds a new this variable reference instance.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
+     *        that reference the concrete target of self.
+     *
+     * @return PHP_Depend_Code_ASTSelfReference
+     * @since 0.9.8
+     */	
+	function buildASTThisVariable(PHP_Depend_Code_AbstractClassOrInterface $type);
+    
+    /**
      * Builds a new parent reference instance.
      *
      * @param PHP_Depend_Code_ASTClassOrInterfaceReference $reference The type

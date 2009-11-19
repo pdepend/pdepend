@@ -42,7 +42,7 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id: Default.php 675 2009-03-05 07:40:28Z mapi $
+ * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
 
@@ -608,6 +608,25 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTVariable($image);
+    }
+
+    /**
+     * Builds a new thisvariable node.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type
+     * @return PHP_Depend_Code_ASTThisVariable
+     * @since 0.9.8
+     */
+    public function buildASTThisVariable(
+        PHP_Depend_Code_AbstractClassOrInterface $type
+    ) {
+        include_once 'PHP/Depend/Code/ASTThisVariable.php';
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTThisVariable(' . $type->getName() . ')'
+        );
+
+        return new PHP_Depend_Code_ASTThisVariable($type);
     }
 
     /**
