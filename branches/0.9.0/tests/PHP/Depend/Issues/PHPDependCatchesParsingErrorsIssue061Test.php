@@ -51,6 +51,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Input/ExtensionFilter.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
+require_once 'PHP/Depend/TextUI/Command.php';
 require_once 'PHP/Depend/TextUI/Runner.php';
 
 /**
