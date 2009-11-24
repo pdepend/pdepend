@@ -47,6 +47,8 @@
  * @since      0.9.6
  */
 
+require_once 'PHP/Depend/Code/ASTNode.php';
+
 /**
  * Primary prefix expression as it is used to access class or interface members
  * like methods, properties and constants.

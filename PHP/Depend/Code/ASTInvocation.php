@@ -47,7 +47,7 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNodeI.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
  * This is an abstract base class for invocation nodes.
