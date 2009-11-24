@@ -101,6 +101,10 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             PHP_Depend::PARSER_STORAGE,
             new PHP_Depend_Storage_MemoryEngine()
         );
+
+        if (defined('STDERR') === false) {
+            define('STDERR', fopen('php://stderr', true));
+        }
     }
 
     /**
@@ -189,7 +193,9 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $extension  = strtolower($reflection->getExtensionName());
         $extension  = ($extension === '' ? 'standard' : $extension);
 
-        define('CORE_PACKAGE', '+' . $extension);
+        if (defined('CORE_PACKAGE') === false ) {
+            define('CORE_PACKAGE', '+' . $extension);
+        }
     }
 
     /**

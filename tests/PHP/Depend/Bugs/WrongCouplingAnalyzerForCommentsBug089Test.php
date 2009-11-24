@@ -48,6 +48,8 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
+
 /**
  * Test case for bug 089 where the coupling analyzer calculates wrong results
  * when there are comments in method execution expressions.

@@ -48,6 +48,8 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
+
 /**
  * Test case for bug 090 where the coupling analyzer calculates wrong results
  * for functions calls and object allocations that use PHP 5.3's namespace
