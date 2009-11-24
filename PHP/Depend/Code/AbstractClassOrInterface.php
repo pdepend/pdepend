@@ -47,6 +47,9 @@
  */
 
 require_once 'PHP/Depend/Code/AbstractType.php';
+require_once 'PHP/Depend/Code/ASTClassReference.php';
+require_once 'PHP/Depend/Code/ASTInterfaceReference.php';
+require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Util/UUID.php';
 
 /**
