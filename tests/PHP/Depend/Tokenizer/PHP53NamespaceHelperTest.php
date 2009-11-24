@@ -46,6 +46,8 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
 require_once 'PHP/Depend/Tokenizer/PHP53NamespaceHelper.php';
 
 /**
