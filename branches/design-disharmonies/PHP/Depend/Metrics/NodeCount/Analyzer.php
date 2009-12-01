@@ -60,6 +60,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Jan Schumann <js@schumann-it.com>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
@@ -84,6 +85,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
           M_NUMBER_OF_CLASSES    = 'noc',
           M_NUMBER_OF_INTERFACES = 'noi',
           M_NUMBER_OF_METHODS    = 'nom',
+          M_AVG_NUMBER_OF_METHODS= 'avgNom',
           M_NUMBER_OF_FUNCTIONS  = 'nof';
 
     /**
@@ -176,7 +178,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
             self::M_NUMBER_OF_CLASSES     =>  $this->_noc,
             self::M_NUMBER_OF_INTERFACES  =>  $this->_noi,
             self::M_NUMBER_OF_METHODS     =>  $this->_nom,
-            self::M_NUMBER_OF_FUNCTIONS   =>  $this->_nof
+            self::M_NUMBER_OF_FUNCTIONS   =>  $this->_nof,
+            self::M_AVG_NUMBER_OF_METHODS =>  $this->_noc > 0 ? $this->_nom / $this->_noc : 0
         );
     }
 
@@ -204,6 +207,23 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
 
             $this->fireEndAnalyzer();
         }
+    }
+
+    /**
+     * Returns the number of methods for the given <b>$node</b>
+     * instance.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return integer
+     */
+    public function getMethodCount(PHP_Depend_Code_NodeI $node)
+    {
+        $metrics = $this->getNodeMetrics($node);
+        if (isset($metrics[self::M_NUMBER_OF_METHODS])) {
+            return $metrics[self::M_NUMBER_OF_METHODS];
+        }
+        return 0;
     }
 
     /**
@@ -335,9 +355,9 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
             self::M_NUMBER_OF_CLASSES     =>  0,
             self::M_NUMBER_OF_INTERFACES  =>  0,
             self::M_NUMBER_OF_METHODS     =>  0,
-            self::M_NUMBER_OF_FUNCTIONS   =>  0
+            self::M_NUMBER_OF_FUNCTIONS   =>  0,
+            self::M_AVG_NUMBER_OF_METHODS =>  0
         );
-
 
         foreach ($package->getClasses() as $class) {
             $class->accept($this);
@@ -348,6 +368,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
+
+        $this->_nodeMetrics[$package->getUUID()][self::M_AVG_NUMBER_OF_METHODS] = $this->_nodeMetrics[$package->getUUID()][self::M_NUMBER_OF_METHODS] > 0 ? $this->_nodeMetrics[$package->getUUID()][self::M_NUMBER_OF_CLASSES] / $this->_nodeMetrics[$package->getUUID()][self::M_NUMBER_OF_METHODS] : 0;
 
         $this->fireEndPackage($package);
     }

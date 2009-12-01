@@ -57,6 +57,7 @@ require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Jan Schumann <js@schumann-it.com>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@

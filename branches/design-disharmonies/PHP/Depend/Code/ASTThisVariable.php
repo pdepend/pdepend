@@ -39,12 +39,12 @@
  * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
- * @author     Jan Schumann <jan_schumann@gmx.de>
+ * @author     Jan Schumann <js@schumann-it.com>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.7
+ * @since      0.9.8
  */
 
 require_once 'PHP/Depend/Code/ASTSelfReference.php';
@@ -62,12 +62,12 @@ require_once 'PHP/Depend/Code/ASTSelfReference.php';
  * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
- * @author     Jan Schumann <jan_schumann@gmx.de>
+ * @author     Jan Schumann <js@schumann-it.com>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.7
+ * @since      0.9.8
  */
 final class PHP_Depend_Code_ASTThisVariable
     extends PHP_Depend_Code_ASTSelfReference

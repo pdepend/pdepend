@@ -75,6 +75,7 @@ require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Jan Schumann <js@schumann-it.com>
  * @copyright  2008-2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
@@ -144,6 +145,23 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $metrics = $this->_nodeMetrics[$node->getUUID()];
         }
         return $metrics;
+    }
+
+    /**
+     * Returns the number of properties the given <b>$node</b>
+     * instance.
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return integer
+     */
+    public function getLOC(PHP_Depend_Code_NodeI $node)
+    {
+        $metrics = $this->getNodeMetrics($node);
+        if (isset($metrics[self::M_LINES_OF_CODE])) {
+            return $metrics[self::M_LINES_OF_CODE];
+        }
+        return 0;
     }
 
     /**

@@ -53,6 +53,7 @@ require_once 'PHP/Depend/ConstantsI.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
+ * @author    Jan Schumann <js@schumann-it.com>
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
@@ -222,9 +223,9 @@ interface PHP_Depend_BuilderI
      *
      * @return PHP_Depend_Code_ASTSelfReference
      * @since 0.9.8
-     */	
-	function buildASTThisVariable(PHP_Depend_Code_AbstractClassOrInterface $type);
-    
+     */
+	  function buildASTThisVariable(PHP_Depend_Code_AbstractClassOrInterface $type);
+
     /**
      * Builds a new parent reference instance.
      *
