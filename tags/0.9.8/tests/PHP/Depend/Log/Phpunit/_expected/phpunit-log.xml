@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metrics ahh="0" andc="0" calls="30" ccn="21" classes="3" cloc="217" clsa="0" clsc="3" fanout="31" files="4" functions="2" interfs="2" leafs="3" loc="336" locExecutable="101" maxdit="0" ncloc="119" nom="6" nop="1" roots="0">
+  <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/class.php" classes="2" cloc="84" functions="0" loc="128" locExecutable="36" ncloc="44">
+    <class name="MyCouplingClass" cis="8" cloc="46" cr="0.15" csz="11" dit="0" impl="0" loc="82" locExecutable="30" ncloc="36" nom="2" rcr="0.15" vars="4" varsi="4" varsnp="1" wmc="7" wmci="7" wmcnp="7">
+      <method name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
+      <method name="removeItemAt" ccn="3" cloc="0" loc="10" locExecutable="9" ncloc="10"/>
+    </class>
+    <class name="MyCouplingInterface" cloc="13" cr="0.15" loc="17" locExecutable="3" ncloc="4" nom="1" rcr="0.15">
+      <method name="removeItemAt" cloc="0" loc="1" locExecutable="0" ncloc="1"/>
+    </class>
+  </file>
+  <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/method.php" classes="2" cloc="64" functions="0" loc="100" locExecutable="32" ncloc="36">
+    <class name="MyMethodCouplingClass" cis="7" cloc="26" cr="0.15" csz="7" dit="0" impl="0" loc="54" locExecutable="26" ncloc="28" nom="2" rcr="0.15" vars="0" varsi="0" varsnp="0" wmc="7" wmci="7" wmcnp="7">
+      <method name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
+      <method name="removeItemAt" ccn="3" cloc="0" loc="10" locExecutable="9" ncloc="10"/>
+    </class>
+    <class name="MyMethodCouplingInterface" cloc="13" cr="0.15" loc="17" locExecutable="3" ncloc="4" nom="1" rcr="0.15">
+      <method name="removeItemAt" cloc="0" loc="1" locExecutable="0" ncloc="1"/>
+    </class>
+  </file>
+  <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/property.php" classes="1" cloc="36" functions="0" loc="48" locExecutable="8" ncloc="12">
+    <class name="MyPropertyCouplingClass" cis="1" cloc="20" cr="0.15" csz="4" dit="0" impl="0" loc="30" locExecutable="6" ncloc="10" nom="0" rcr="0.15" vars="4" varsi="4" varsnp="1" wmc="0" wmci="0" wmcnp="0"/>
+  </file>
+  <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/function.php" classes="0" cloc="33" functions="2" loc="60" locExecutable="25" ncloc="27">
+    <function name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
+    <function name="removeItemAt" ccn="3" cloc="0" loc="10" locExecutable="9" ncloc="10"/>
+  </file>
+</metrics>
