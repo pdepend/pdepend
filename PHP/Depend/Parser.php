@@ -2604,6 +2604,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_STRING:
         case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
             $parameter = $this->_parseFormalParameterAndTypeHint();
             break;
 
