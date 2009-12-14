@@ -72,6 +72,7 @@ require_once dirname(__FILE__) . '/ClosureReturnsByReferenceBug094Test.php';
 require_once dirname(__FILE__) . '/NPathComplexityIsBrokenInVersion096Bug095Test.php';
 require_once dirname(__FILE__) . '/DefaultPackageContainsBrokenAritfactsBug098Test.php';
 require_once dirname(__FILE__) . '/ParserSetsIncorrectStartLineBug101Test.php';
+require_once dirname(__FILE__) . '/NamespaceKeywordInParameterTypeHintBug102Test.php';
 require_once dirname(__FILE__) . '/ParameterStringDefaultValueBug103Test.php';
 
 /**
@@ -126,6 +127,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test');
         $suite->addTestSuite('PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserSetsIncorrectStartLineBug101Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParameterStringDefaultValueBug103Test');
 
         return $suite;
