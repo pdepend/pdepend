@@ -1,10 +1,14 @@
 PHP_Depend 0.9.8
 ----------------
 
+- Implemented #93: Implement an assignment expression, Implemented in svn
+  revision #992.
 - Fixed #94: Parser throws exception for closures that return by reference,
   fixed in svn revision #962.
 - Fixed #98: Functions with an invalid signature result in an inconsistent 
   object graph, fixed in svn revision #986.
+- Fixed #103: The parser does not handle all strings as parameter default value
+  correct, fixed in svn revision #1009.
 
 PHP_Depend 0.9.7
 ----------------
