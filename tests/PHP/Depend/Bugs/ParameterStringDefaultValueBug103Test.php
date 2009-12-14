@@ -49,8 +49,11 @@
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Tests that the parser handles a closure that returns a reference correct.
- * This test is related to bug #94.
+ * Test case for bug 103. The current parser implementation does not handle
+ * string parameter default values as expected. For example the following source
+ * fragment:
+ *
+ * http://tracker.pdepend.org/pdepend/issue_tracker/issue/103
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,22 +64,25 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_ClosureReturnsByReferenceBug094Test
+class PHP_Depend_Bugs_ParameterStringDefaultValueBug103Test
     extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * testParserHandlesClosureThatReturnsReference
+     * testParserHandlesStringDefaultValueWithEmbeddedExpression
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @group parser
      * @group bugs
      */
-    public function testParserHandlesClosureThatReturnsReference()
+    public function testParserHandlesStringDefaultValueWithEmbeddedExpression()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
         $function = $packages->current()
             ->getFunctions()
-            ->current();
+            ->current()
+            ->getParameters()
+            ->current()
+            ->getDefaultValue();
     }
 }

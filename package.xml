@@ -2748,6 +2748,7 @@ and the NDepend metric tool.
       </package>
     </optional>
   </dependencies>
+
   <phprelease>
     <installconditions>
       <os>
@@ -2765,6 +2766,7 @@ and the NDepend metric tool.
       <ignore name="pdepend.bat"/>
     </filelist>
   </phprelease>
+
   <changelog>
     <release>
       <lead>
