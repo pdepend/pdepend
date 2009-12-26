@@ -704,31 +704,31 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <file name="PackageTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ASTClassReferenceTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
           <file name="ASTInstanceOfExpressionTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTVariableDeclaratorTest.php" role="test">
+          <file name="PackageTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ASTCatchStatementTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
+          <file name="ASTForInitTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
           <file name="ASTForeachStatementTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ASTClassReferenceTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ASTArrayTypeTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTSwitchStatementTest.php" role="test">
+          <file name="ASTPropertyPostfixTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTPropertyPostfixTest.php" role="test">
+          <file name="ASTSwitchStatementTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="FunctionTest.php" role="test">
@@ -737,16 +737,19 @@ and the NDepend metric tool.
           <file name="ASTNodeTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTForInitTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
           <file name="ParameterTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="AbstractItemTest.php" role="test">
+          <file name="ASTVariableDeclaratorTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTConstantDeclaratorTest.php" role="test">
+          <file name="ASTArgumentsTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ASTVariableTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AbstractItemTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ASTExpressionTest.php" role="test">
@@ -758,19 +761,16 @@ and the NDepend metric tool.
           <file name="InterfaceTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
+          <file name="ASTConstantDeclaratorTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
           <file name="ASTConditionalExpressionTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTAllocationExpressionTest.php" role="test">
+          <file name="ASTConstantPostfixTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ASTLogicalAndExpressionTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ASTArgumentsTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ASTConstantPostfixTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="FileTest.php" role="test">
@@ -779,10 +779,13 @@ and the NDepend metric tool.
           <file name="ReflectionPropertyTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
+          <file name="ASTAllocationExpressionTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
           <file name="ReflectionClassTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTSwitchLabelTest.php" role="test">
+          <file name="ASTStaticVariableDeclarationTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ASTCompoundVariableTest.php" role="test">
@@ -839,7 +842,7 @@ and the NDepend metric tool.
           <file name="ASTFieldDeclarationTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTFunctionPostfixTest.php" role="test">
+          <file name="ASTSwitchLabelTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="AllTests.php" role="test">
@@ -860,7 +863,7 @@ and the NDepend metric tool.
           <file name="ASTBooleanOrExpressionTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTStaticVariableDeclarationTest.php" role="test">
+          <file name="ASTFunctionPostfixTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -1831,13 +1834,25 @@ and the NDepend metric tool.
               <file name="testObjectMemberPrimaryPrefixHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
+              <file name="testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
               <file name="testObjectMemberPrimaryPrefixHasExpectedStartColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testObjectMemberPrimaryPrefixHasExpectedEndColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testObjectMemberPrimaryPrefixHasExpectedStartLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testObjectMemberPrimaryPrefixHasExpectedEndColumn.php" role="test">
+              <file name="testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1869,31 +1884,17 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="ASTCatchStatement">
-              <file name="testCatchStatementHasExpectedEndLine.php" role="test">
+            <dir name="ASTVariable">
+              <file name="testVariableHasExpectedStartColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCatchStatementHasExpectedStartColumn.php" role="test">
+              <file name="testVariableHasExpectedStartLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCatchStatementHasExpectedEndColumn.php" role="test">
+              <file name="testVariableHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCatchStatementHasExpectedStartLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="ASTLogicalAndExpression">
-              <file name="testLogicalAndExpressionHasExpectedEndLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testLogicalAndExpressionHasExpectedStartColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testLogicalAndExpressionHasExpectedEndColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testLogicalAndExpressionHasExpectedStartLine.php" role="test">
+              <file name="testVariableHasExpectedEndColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1946,6 +1947,32 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testPropertyPostfixSelfVariableInFunctionThrowsExpectedException.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="ASTCatchStatement">
+              <file name="testCatchStatementHasExpectedEndColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCatchStatementHasExpectedStartColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCatchStatementHasExpectedEndLine.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCatchStatementVariableHasExpectedStartLine.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCatchStatementVariableHasExpectedEndLine.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCatchStatementVariableHasExpectedEndColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCatchStatementHasExpectedStartLine.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCatchStatementVariableHasExpectedStartColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -2187,6 +2214,20 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <dir name="ASTLogicalAndExpression">
+              <file name="testLogicalAndExpressionHasExpectedEndLine.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testLogicalAndExpressionHasExpectedStartColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testLogicalAndExpressionHasExpectedEndColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testLogicalAndExpressionHasExpectedStartLine.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <dir name="ASTLogicalXorExpression">
               <file name="testLogicalXorExpressionHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -2198,20 +2239,6 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testLogicalXorExpressionHasExpectedEndColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="ASTBooleanAndExpression">
-              <file name="testBooleanAndExpressionHasExpectedStartColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testBooleanAndExpressionHasExpectedEndColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testBooleanAndExpressionHasExpectedStartLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testBooleanAndExpressionHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -2564,6 +2591,20 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testConstantDefinitionHasExpectedStartColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="ASTBooleanAndExpression">
+              <file name="testBooleanAndExpressionHasExpectedStartColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testBooleanAndExpressionHasExpectedEndColumn.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testBooleanAndExpressionHasExpectedStartLine.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testBooleanAndExpressionHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -3810,19 +3851,18 @@ and the NDepend metric tool.
   revision #950.
       </notes>
     </release>
-
     <release>
-        <date>2009-12-14</date>
-        <version>
-          <release>0.9.8</release>
-          <api>1.0.0</api>
-        </version>
-        <stability>
-          <release>beta</release>
-          <api>beta</api>
-        </stability>
-        <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
-        <notes>
+      <date>2009-12-14</date>
+      <version>
+        <release>0.9.8</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>beta</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
 - Implemented #93: Implement an assignment expression, Implemented in svn
   revision #992.
 - Fixed #94: Parser throws exception for closures that return by reference,
