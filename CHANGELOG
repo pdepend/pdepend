@@ -1,6 +1,8 @@
 PHP_Depend 0.9.9
 ----------------
 
+- Fixed #108: Parser doesn't set start/end line/column on variables, fixed in
+  svn revision #1015.
 - Implemented #104: Add isStatic() method on ASTMemberPrimaryPrefix node,
   implemented in svn revision #1013.
 
