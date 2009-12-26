@@ -113,6 +113,58 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testCatchStatementVariableHasExpectedStartLine
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCatchStatementVariableHasExpectedStartLine()
+    {
+        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
+        $this->assertEquals(8, $variable->getStartLine());
+    }
+
+    /**
+     * testCatchStatementVariableHasExpectedStartColumn
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCatchStatementVariableHasExpectedStartColumn()
+    {
+        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
+        $this->assertEquals(9, $variable->getStartColumn());
+    }
+
+    /**
+     * testCatchStatementVariableHasExpectedEndLine
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCatchStatementVariableHasExpectedEndLine()
+    {
+        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
+        $this->assertEquals(8, $variable->getStartLine());
+    }
+
+    /**
+     * testCatchStatementVariableHasExpectedEndColumn
+     *
+     * @return void
+     * @group ast
+     */
+    public function testCatchStatementVariableHasExpectedEndColumn()
+    {
+        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
+        $this->assertEquals(10, $variable->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
