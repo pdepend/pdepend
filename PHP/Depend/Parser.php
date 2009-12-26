@@ -1594,12 +1594,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_parseQualifiedName()
             )
         );
+        $catch->addChild($this->_parseVariable());
 
-        $this->_consumeComments();
-        $token = $this->_consumeToken(self::T_VARIABLE);
-
-        $catch->addChild($this->_builder->buildASTVariable($token->image));
-        
         $this->_consumeComments();
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
 
@@ -2357,13 +2353,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseVariable()
     {
+        $this->_tokenStack->push();
+
         // Read variable token
+        $this->_consumeComments();
         $token = $this->_consumeToken(self::T_VARIABLE);
         $this->_consumeComments();
 
         // TODO: ASTThisVariable
-
-        return $this->_builder->buildASTVariable($token->image);
+        
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTVariable($token->image)
+        );
     }
 
     /**
