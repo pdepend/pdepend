@@ -13,9 +13,9 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2009-12-14</date>
+  <date>2009-12-26</date>
   <version>
-    <release>0.9.8</release>
+    <release>0.9.9</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,16 +24,10 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Implemented #93: Implement an assignment expression, Implemented in svn
-  revision #992.
-- Fixed #94: Parser throws exception for closures that return by reference,
-  fixed in svn revision #962.
-- Fixed #98: Functions with an invalid signature result in an inconsistent
-  object graph, fixed in svn revision #986.
-- Fixed #102: Namespace keyword in type-hint is broken, fixed in svn revision
-  #1010.
-- Fixed #103: The parser does not handle all strings as parameter default value
-  correct, fixed in svn revision #1009.
+- Fixed #108: Parser doesn't set start/end line/column on variables, fixed in
+  svn revision #1015.
+- Implemented #104: Add isStatic() method on ASTMemberPrimaryPrefix node,
+  implemented in svn revision #1013.
   </notes>
   <contents>
     <dir name="/">
@@ -3815,6 +3809,31 @@ and the NDepend metric tool.
 - Closes #92: Use class constants as analyzer identifiers, implemented in svn
   revision #950.
       </notes>
+    </release>
+
+    <release>
+        <date>2009-12-14</date>
+        <version>
+          <release>0.9.8</release>
+          <api>1.0.0</api>
+        </version>
+        <stability>
+          <release>beta</release>
+          <api>beta</api>
+        </stability>
+        <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+        <notes>
+- Implemented #93: Implement an assignment expression, Implemented in svn
+  revision #992.
+- Fixed #94: Parser throws exception for closures that return by reference,
+  fixed in svn revision #962.
+- Fixed #98: Functions with an invalid signature result in an inconsistent
+  object graph, fixed in svn revision #986.
+- Fixed #102: Namespace keyword in type-hint is broken, fixed in svn revision
+  #1010.
+- Fixed #103: The parser does not handle all strings as parameter default value
+  correct, fixed in svn revision #1009.
+        </notes>
     </release>
   </changelog>
 </package>
