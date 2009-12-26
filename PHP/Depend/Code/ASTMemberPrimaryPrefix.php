@@ -87,4 +87,15 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefix extends PHP_Depend_Code_ASTNode
      * Type of this node class.
      */
     const CLAZZ = __CLASS__;
+
+    /**
+     * Returns <b>true</b> when this member primary prefix represents a static
+     * property or method access.
+     *
+     * @return boolean
+     */
+    public function isStatic()
+    {
+        return ($this->getImage() === '::');
+    }
 }
