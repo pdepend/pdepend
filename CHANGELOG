@@ -1,3 +1,9 @@
+PHP_Depend 0.9.9
+----------------
+
+- Implemented #104: Add isStatic() method on ASTMemberPrimaryPrefix node,
+  implemented in svn revision #1013.
+
 PHP_Depend 0.9.8
 ----------------
 
