@@ -121,6 +121,15 @@ final class PHP_Depend_Util_Type
     private static $_typeNameToExtension = null;
 
     /**
+     * Hash with all internal packages/extensions. Key and value are identical
+     * and contain the name of the extension.
+     *
+     * @var array(string=>string)
+     * @since 0.9.10
+     */
+    private static $_internalPackages = null;
+
+    /**
      * List of scalar php types.
      *
      * @var array(string) $_scalarTypes
@@ -225,9 +234,7 @@ final class PHP_Depend_Util_Type
      */
     public static function getInternalPackages()
     {
-        self::_initTypeToExtension();
-
-        return array_unique(array_values(self::$_typeNameToExtension));
+        return self::_initInternalPackages();
     }
 
     /**
@@ -312,17 +319,36 @@ final class PHP_Depend_Util_Type
     }
 
     /**
+     * Initializes an internal hash with the names of all available internal
+     * packages/extensions.
+     *
+     * @return array(string=>string)
+     * @since 0.9.10
+     */
+    private static function _initInternalPackages()
+    {
+        if (is_null(self::$_internalPackages)) {
+            self::$_internalPackages = array_unique(
+                array_values(
+                    self::_initTypeToExtension()
+                )
+            );
+        }
+        return self::$_internalPackages;
+    }
+
+    /**
      * This method reads all available classes and interfaces and checks whether
      * this type belongs to an extension or is internal. All internal and extension
      * classes are collected in an internal data structure.
      *
-     * @return void
+     * @return array(string=>string)
      */
     private static function _initTypeToExtension()
     {
         // Skip when already done.
         if (self::$_typeNameToExtension !== null) {
-            return;
+            return self::$_typeNameToExtension;
         }
 
         self::$_typeNameToExtension = array();
@@ -341,6 +367,8 @@ final class PHP_Depend_Util_Type
 
             self::$_typeNameToExtension[strtolower($typeName)] = $extensionName;
         }
+
+        return self::$_typeNameToExtension;
     }
 }
 ?>
