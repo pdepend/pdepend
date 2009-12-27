@@ -41,7 +41,7 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008-2009 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id: Parser.php 675 2009-03-05 07:40:28Z mapi $
+ * @version   SVN: $Id$
  * @link      http://pdepend.org/
  */
 
@@ -3936,11 +3936,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _consumeToken($tokenType)
     {
-        if ($this->_tokenizer->peek() === self::T_EOF) {
+        $peekType = $this->_tokenizer->peek();
+        if ($peekType === self::T_EOF) {
             throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
         }
 
-        if ($this->_tokenizer->peek() !== $tokenType) {
+        if ($peekType !== $tokenType) {
             throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
         }
         return $this->_tokenStack->add($this->_tokenizer->next());
@@ -3953,10 +3954,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _consumeComments()
     {
-        $comments = array(self::T_COMMENT, self::T_DOC_COMMENT);
-
         while (($type = $this->_tokenizer->peek()) !== self::T_EOF) {
-            if (in_array($type, $comments, true) === false) {
+            if ($type != self::T_COMMENT && $type != self::T_DOC_COMMENT) {
                 break;
             }
             $this->_tokenStack->add($this->_tokenizer->next());
