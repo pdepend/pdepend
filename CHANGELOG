@@ -1,3 +1,8 @@
+PHP_Depend 0.9.10
+-----------------
+
+- Performance intensive calculation result cached.
+
 PHP_Depend 0.9.9
 ----------------
 
