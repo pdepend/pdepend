@@ -247,8 +247,8 @@ final class PHP_Depend_Util_Type
      */
     public static function isInternalPackage($packageName)
     {
-        $packageName = strtolower($packageName);
-        return in_array($packageName, self::getInternalPackages());
+        $packageNames = self::getInternalPackages();
+        return isset($packageNames[strtolower($packageName)]);
     }
 
     /**
@@ -328,11 +328,10 @@ final class PHP_Depend_Util_Type
     private static function _initInternalPackages()
     {
         if (is_null(self::$_internalPackages)) {
-            self::$_internalPackages = array_unique(
-                array_values(
-                    self::_initTypeToExtension()
-                )
-            );
+            $extensions = array_values(self::_initTypeToExtension());
+            $extensions = array_unique($extensions);
+
+            self::$_internalPackages = array_combine($extensions, $extensions);
         }
         return self::$_internalPackages;
     }
@@ -371,4 +370,3 @@ final class PHP_Depend_Util_Type
         return self::$_typeNameToExtension;
     }
 }
-?>
