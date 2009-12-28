@@ -2497,16 +2497,31 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_BACKTICK:
         case self::T_DOUBLE_QUOTE:
-            $endToken = $tokenType;
-
-            $image = '';
-            do {
-                $image .= $this->_consumeToken($tokenType)->image;
-            } while (($tokenType = $this->_tokenizer->peek()) !== $endToken);
-            $image .= $this->_consumeToken($endToken)->image;
-            
-            return $this->_builder->buildASTLiteral($image);
+            return $this->_builder->buildASTLiteral(
+                $this->_parseStringSequence($tokenType)
+            );
         }
+    }
+
+    /**
+     * Parses a simple string sequence between two tokens of the same type.
+     *
+     * @param integer $tokenType The start/stop token type.
+     * 
+     * @return string
+     * @since 0.9.10
+     */
+    private function _parseStringSequence($tokenType)
+    {
+        $type   = $tokenType;
+        $string = '';
+
+        do {
+            $string .= $this->_consumeToken($type)->image;
+            $type    = $this->_tokenizer->peek();
+        } while ($type != $tokenType && $type != self::T_EOF);
+
+        return $string . $this->_consumeToken($tokenType)->image;
     }
 
     /**
@@ -3570,6 +3585,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $signed *= -1;
                 break;
 
+            case self::T_DOUBLE_QUOTE:
+                $defaultValue->setValue(
+                    $this->_parseStringSequence($tokenType)
+                );
+                break;
+
             case self::T_DIR:
             case self::T_FILE:
             case self::T_LINE:
@@ -3927,11 +3948,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _consumeToken($tokenType)
     {
         $peekType = $this->_tokenizer->peek();
-        if ($peekType === self::T_EOF) {
-            throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
-        }
         if ($peekType === $tokenType) {
             return $this->_tokenStack->add($this->_tokenizer->next());
+        }
+        if ($peekType === self::T_EOF) {
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
         }
         throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
     }
