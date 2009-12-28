@@ -168,9 +168,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartLine($startLine)
     {
-        if (is_int($startLine) === false || $startLine < 1) {
-            throw new InvalidArgumentException('$startLine must be an int>=1.');
-        }
         $this->_startLine = $startLine;
     }
     /**
@@ -200,9 +197,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartColumn($startColumn)
     {
-        if (is_int($startColumn) === false || $startColumn < 1) {
-            throw new InvalidArgumentException('$startColumn must be an int>=1.');
-        }
         $this->_startColumn = $startColumn;
     }
 
@@ -234,9 +228,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndLine($endLine)
     {
-        if (is_int($endLine) === false || $endLine < 1) {
-            throw new InvalidArgumentException('$endLine must be an int>=1.');
-        }
         $this->_endLine = $endLine;
     }
 
@@ -267,9 +258,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndColumn($endColumn)
     {
-        if (is_int($endColumn) === false || $endColumn < 1) {
-            throw new InvalidArgumentException('$endColumn must be an int>=1.');
-        }
         $this->_endColumn = $endColumn;
     }
 
