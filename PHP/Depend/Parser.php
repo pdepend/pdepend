@@ -1001,16 +1001,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _setNodePositionsAndReturn(PHP_Depend_Code_ASTNode $node)
     {
-        $tokens = $this->_tokenStack->pop();
-
-        $startToken = reset($tokens);
-        $node->setStartLine($startToken->startLine);
-        $node->setStartColumn($startToken->startColumn);
-
-        $endToken = end($tokens);
-        $node->setEndLine($endToken->endLine);
-        $node->setEndColumn($endToken->endColumn);
-
+        $node->configureLinesAndColumns($this->_tokenStack->pop());
         return $node;
     }
 
@@ -2358,7 +2349,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Read variable token
         $this->_consumeComments();
         $token = $this->_consumeToken(self::T_VARIABLE);
-        $this->_consumeComments();
 
         // TODO: ASTThisVariable
         
@@ -3940,11 +3930,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($peekType === self::T_EOF) {
             throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
         }
-
-        if ($peekType !== $tokenType) {
-            throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
+        if ($peekType === $tokenType) {
+            return $this->_tokenStack->add($this->_tokenizer->next());
         }
-        return $this->_tokenStack->add($this->_tokenizer->next());
+        throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
     }
 
     /**
@@ -3954,11 +3943,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _consumeComments()
     {
-        while (($type = $this->_tokenizer->peek()) !== self::T_EOF) {
-            if ($type != self::T_COMMENT && $type != self::T_DOC_COMMENT) {
-                break;
-            }
+        $type = $this->_tokenizer->peek();
+        while ($type == self::T_COMMENT || $type == self::T_DOC_COMMENT) {
             $this->_tokenStack->add($this->_tokenizer->next());
+            $type = $this->_tokenizer->peek();
         }
     }
 }
