@@ -519,12 +519,13 @@ class PHP_Depend_Tokenizer_Internal
             }
 
             if ($type) {
-                $lines = substr_count(rtrim($image), "\n");
+                $rtrim = rtrim($image);
+                $lines = substr_count($rtrim, "\n");
                 if ($lines === 0) {
-                    $endColumn = $startColumn + strlen(rtrim($image)) - 1;
+                    $endColumn = $startColumn + strlen($rtrim) - 1;
                 } else {
                     $endColumn = strlen(
-                        substr(rtrim($image), strrpos(rtrim($image), "\n") + 1)
+                        substr($rtrim, strrpos($rtrim, "\n") + 1)
                     );
                 }
 
@@ -532,7 +533,7 @@ class PHP_Depend_Tokenizer_Internal
 
                 $token = new PHP_Depend_Token(
                     $type,
-                    rtrim($image),
+                    $rtrim,
                     $startLine,
                     $endLine,
                     $startColumn, 

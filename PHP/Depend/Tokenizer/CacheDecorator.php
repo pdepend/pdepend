@@ -173,7 +173,7 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
      */
     public function peek()
     {
-        if (isset($this->_tokens[$this->_index])) {
+        if ($this->_index < $this->_count) {
             return $this->_tokens[$this->_index]->type;
         }
         return self::T_EOF;
