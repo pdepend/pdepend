@@ -126,4 +126,3 @@ class PHP_Depend_Parser_TokenStack
         return ($this->_tokens[] = $token);
     }
 }
-?>
