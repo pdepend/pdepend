@@ -234,7 +234,13 @@ final class PHP_Depend_Util_Type
      */
     public static function getInternalPackages()
     {
-        return self::_initInternalPackages();
+        if (self::$_internalPackages === null) {
+            $extensions = array_values(self::_initTypeToExtension());
+            $extensions = array_unique($extensions);
+
+            self::$_internalPackages = array_combine($extensions, $extensions);
+        }
+        return self::$_internalPackages;
     }
 
     /**
@@ -319,24 +325,6 @@ final class PHP_Depend_Util_Type
     }
 
     /**
-     * Initializes an internal hash with the names of all available internal
-     * packages/extensions.
-     *
-     * @return array(string=>string)
-     * @since 0.9.10
-     */
-    private static function _initInternalPackages()
-    {
-        if (is_null(self::$_internalPackages)) {
-            $extensions = array_values(self::_initTypeToExtension());
-            $extensions = array_unique($extensions);
-
-            self::$_internalPackages = array_combine($extensions, $extensions);
-        }
-        return self::$_internalPackages;
-    }
-
-    /**
      * This method reads all available classes and interfaces and checks whether
      * this type belongs to an extension or is internal. All internal and extension
      * classes are collected in an internal data structure.
@@ -350,21 +338,20 @@ final class PHP_Depend_Util_Type
             return self::$_typeNameToExtension;
         }
 
-        self::$_typeNameToExtension = array();
+        self::$_typeNameToExtension = array('iterator' => '+standard');
 
-        // Collect all available classes and interfaces
-        $typeNames = array_merge(get_declared_classes(), get_declared_interfaces());
+        $extensionNames = get_loaded_extensions();
+        $extensionNames = array_map('strtolower', $extensionNames);
 
-        foreach ($typeNames as $typeName) {
-            $reflection = new ReflectionClass($typeName);
-            if ($reflection->isInternal() === false) {
-                continue;
+        foreach ($extensionNames as $extensionName) {
+            $extension = new ReflectionExtension($extensionName);
+
+            $classNames = $extension->getClassNames();
+            $classNames = array_map('strtolower', $classNames);
+
+            foreach ($classNames as $className) {
+                self::$_typeNameToExtension[$className] = '+' . $extensionName;
             }
-            $extensionName = strtolower($reflection->getExtensionName());
-            $extensionName = ($extensionName === '' ? 'standard' : $extensionName);
-            $extensionName = '+' . $extensionName;
-
-            self::$_typeNameToExtension[strtolower($typeName)] = $extensionName;
         }
 
         return self::$_typeNameToExtension;
