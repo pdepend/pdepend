@@ -49,15 +49,8 @@
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
-require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
-require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Log/Jdepend/Xml.php';
 require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-require_once 'PHP/Depend/Input/Iterator.php';
 
 /**
  * Test case for the jdepend xml logger.
@@ -103,15 +96,17 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
+        // Configure the filter collection
+        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
+        $collection->addFilter(new PHP_Depend_Code_Filter_DefaultPackage());
+        $collection->addFilter(new PHP_Depend_Code_Filter_InternalPackage());
+        
         $this->packages = self::parseSource(dirname(__FILE__) . '/../../_code/code-5.2.x');
 
+        $collection->clear();
+        
         $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $this->analyzer->analyze($this->packages);
-
-        $filter = new PHP_Depend_Code_Filter_DefaultPackage();
-        $this->packages->addFilter($filter);
-        $filter = new PHP_Depend_Code_Filter_InternalPackage();
-        $this->packages->addFilter($filter);
 
         $this->resultFile = self::createRunResourceURI('pdepend-log.xml');
     }
@@ -123,6 +118,10 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      */
     protected function tearDown()
     {
+        // Clear filter collection
+        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
+        $collection->clear();
+
         @unlink($this->resultFile);
 
         parent::tearDown();
@@ -198,24 +197,13 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      */
     protected function getNormalizedPathXml($fileName)
     {
-        $expected                     = new DOMDocument('1.0', 'UTF-8');
-        $expected->preserveWhiteSpace = false;
-        $expected->load($fileName);
+        $path = realpath(dirname(__FILE__) . '/../../_code/code-5.2.x');
 
-        $xpath = new DOMXPath($expected);
-        $result = $xpath->query('//Class[@sourceFile]');
-
-        $path = realpath(dirname(__FILE__) . '/../../_code/code-5.2.x') . '/';
-
-        // Adjust file path
-        foreach ($result as $class) {
-            $sourceFile = $class->getAttribute('sourceFile');
-            $sourceFile = $path . basename($sourceFile);
-
-            $class->setAttribute('sourceFile', $sourceFile);
-        }
-
-        return $expected->saveXML();
+        return preg_replace(
+            '(sourceFile="[^"]+/([^/"]+)")',
+            'sourceFile="' . $path . '/\\1"',
+             file_get_contents($fileName)
+        );
     }
 
 }
