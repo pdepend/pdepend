@@ -50,7 +50,6 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
-require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Test case for the code metric analyzer class.
