@@ -82,34 +82,12 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function __construct(array $nodes)
     {
-        // Workaround for php 5.2.0 where array_multisort results in fatal error
-        // because it performs a to deep recursion > 100
-        $nodeObjects = array();
-        $nodeNames   = array();
-
-        // First check all input nodes
+        $filter = PHP_Depend_Code_Filter_Collection::getInstance();
         foreach ($nodes as $node) {
-            if (!($node instanceof PHP_Depend_Code_NodeI)) {
-                throw new RuntimeException('Invalid object given.');
-            }
-            
-            $id = $node->getUUID();
-            if (!isset($nodeNames[$id])) {
-                $nodeNames[$id]   = $node->getName();
-                $nodeObjects[$id] = $node;
+            if ($filter->accept($node)) {
+                $this->_nodes[$node->getUUID()] = $node;
             }
         }
-
-        // Sort node names and then apply to nodes
-        asort($nodeNames);
-
-        // Apply sorting to nodes, PHP 5.2.0 workaround for array_multisort
-        $this->_nodes = array();
-        foreach (array_keys($nodeNames) as $index) {
-            $this->_nodes[] = $nodeObjects[$index];
-        }
-
-        $this->_init(PHP_Depend_Code_Filter_Collection::getInstance());
     }
 
     /**
@@ -185,26 +163,5 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function valid()
     {
         return (current($this->_nodes) !== false);
-    }
-
-    /**
-     * This method initializes a filtered list of nodes. If no filter is
-     * registered, this method will simply use the input node list.
-     *
-     * @param PHP_Depend_Code_FilterI $filter A newly added node filter.
-     *
-     * @return void
-     */
-    private function _init(PHP_Depend_Code_FilterI $filter)
-    {
-        $nodes = array();
-        foreach ($this->_nodes as $name => $node) {
-            if ($filter->accept($node) === true) {
-                $nodes[$name] = $node;
-            }
-        }
-
-        $this->_nodes = $nodes;
-        reset($this->_nodes);
     }
 }
