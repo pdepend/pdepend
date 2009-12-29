@@ -89,19 +89,19 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         
         $expected = array(
             'pkgA',
-            'classA',
-            $codeUri,
-            'methodAA',
-            'methodAB',
             'classB',
             $codeUri,
             'methodBA',
             'methodBB',
+            'classA',
+            $codeUri,
+            'methodAB',
+            'methodAA',
             'pkgB',
             'interfsC',
             $codeUri,
-            'methodCA',
             'methodCB',
+            'methodCA',
             'funcD',
             $codeUri
         );

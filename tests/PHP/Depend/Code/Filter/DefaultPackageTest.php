@@ -67,24 +67,59 @@ require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
  */
 class PHP_Depend_Code_Filter_DefaultPackageTest extends PHP_Depend_AbstractTest
 {
-    public function testFilterDefaultPackage()
+    /**
+     * Tests that the filter accepts a none default package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_DefaultPackage
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterAcceptsNoneDefaultPackage()
     {
-        $in1 = new PHP_Depend_Code_Package('in1');
-        $in2 = new PHP_Depend_Code_Package('in2');
-        $out = new PHP_Depend_Code_Package(PHP_Depend_BuilderI::DEFAULT_PACKAGE);
-        
-        $packages = array($in1, $in2, $out);
-        $iterator = new PHP_Depend_Code_NodeIterator($packages);
-        
+        $accept = new PHP_Depend_Code_Package(__CLASS__);
+
         $filter = new PHP_Depend_Code_Filter_DefaultPackage();
-        $iterator->addFilter($filter);
-        
-        $expected = array('in1'  =>  true, 'in2'  =>  true);
-        
-        foreach ($iterator as $pkg) {
-            $this->assertArrayHasKey($pkg->getName(), $expected);
-            unset($expected[$pkg->getName()]);
-        }
-        $this->assertEquals(0, count($expected));
+        $this->assertTrue($filter->accept($accept));
+    }
+
+    /**
+     * Tests that the filter rejects default package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_DefaultPackage
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterNotAcceptsDefaultPackage()
+    {
+        $reject = new PHP_Depend_Code_Package(PHP_Depend_BuilderI::DEFAULT_PACKAGE);
+
+        $filter = new PHP_Depend_Code_Filter_DefaultPackage();
+        $this->assertFalse($filter->accept($reject));
+    }
+
+    /**
+     * Tests that the filter rejects default package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_DefaultPackage
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterAcceptsAndNotAcceptsExpectedPackage()
+    {
+        $accept = new PHP_Depend_Code_Package(__FUNCTION__);
+        $reject = new PHP_Depend_Code_Package(PHP_Depend_BuilderI::DEFAULT_PACKAGE);
+
+        $filter = new PHP_Depend_Code_Filter_DefaultPackage();
+        $this->assertFalse($filter->accept($reject));
+        $this->assertTrue($filter->accept($accept));
     }
 }

@@ -67,25 +67,6 @@ require_once 'PHP/Depend/Code/Package.php';
 class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the ctor with an invalid input array which must result in an exception.
-     *
-     * @return void
-     */
-    public function testCreateIteratorWithInvalidInputFail()
-    {
-        $this->setExpectedException('RuntimeException');
-        
-        $nodes = array(
-            new PHP_Depend_Code_Class('clazz1', 0, 'clazz1.php'),
-            new PHP_Depend_Code_Package('pkg'),
-            new stdClass(),
-            new PHP_Depend_Code_Class('clazz2', 0, 'clazz2.php'),
-        );
-        
-        new PHP_Depend_Code_NodeIterator($nodes);
-    }
-    
-    /**
      * Tests the ctor with an valid input array of {@link PHP_Depend_Code_NodeI}
      * objects.
      *

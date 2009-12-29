@@ -51,8 +51,6 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Filter/Package.php';
 
@@ -71,117 +69,222 @@ require_once 'PHP/Depend/Code/Filter/Package.php';
 class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that the package filter works a expected for packages.
+     * Tests that the package filter accepts valid packages.
      *
      * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
      */
-    public function testFilterPackageIterator()
+    public function testFilterAcceptsPackage()
     {
-        $pkgIn1  = new PHP_Depend_Code_Package('in1');
-        $pkgIn2  = new PHP_Depend_Code_Package('in2');
-        $pkgOut1 = new PHP_Depend_Code_Package('out1');
-        $pkgOut2 = new PHP_Depend_Code_Package('out2');
-
-        $packages = array($pkgIn1, $pkgIn2, $pkgOut1, $pkgOut2);
-        $iterator = new PHP_Depend_Code_NodeIterator($packages);
-
-        $filter = new PHP_Depend_Code_Filter_Package(array('out1', 'out2'));
-        $iterator->addFilter($filter);
-
-        $expected = array('in1'  =>  true, 'in2'  =>  true);
-
-        foreach ($iterator as $pkg) {
-            $this->assertArrayHasKey($pkg->getName(), $expected);
-            unset($expected[$pkg->getName()]);
-        }
-        $this->assertEquals(0, count($expected));
+        $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__, __METHOD__));
+        $this->assertTrue($filter->accept(new PHP_Depend_Code_Package(__CLASS__)));
     }
 
     /**
-     * Tests that the package filter works as expected on a class and interface
-     * iterator.
+     * Tests that the package filter not accepts invalid packages.
      *
      * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
      */
-    public function testFilterClassAndInterfaceIterator()
+    public function testFilterNotAcceptsPackage()
     {
-        $pkgIn  = new PHP_Depend_Code_Package('in');
-        $clsIn1 = $pkgIn->addType(new PHP_Depend_Code_Class('in1'));
-        $clsIn2 = $pkgIn->addType(new PHP_Depend_Code_Interface('in2'));
-
-        $pkgOut  = new PHP_Depend_Code_Package('out');
-        $clsOut1 = $pkgOut->addType(new PHP_Depend_Code_Class('out1'));
-        $clsOut2 = $pkgOut->addType(new PHP_Depend_Code_Interface('out2'));
-
-        $classes  = array($clsIn1, $clsIn2, $clsOut1, $clsOut2);
-        $iterator = new PHP_Depend_Code_NodeIterator($classes);
-
-        $filter = new PHP_Depend_Code_Filter_Package(array('out'));
-        $iterator->addFilter($filter);
-
-        $expected = array('in1'  =>  true, 'in2'  =>  true);
-
-        foreach ($iterator as $cls) {
-            $this->assertArrayHasKey($cls->getName(), $expected);
-            unset($expected[$cls->getName()]);
-        }
-        $this->assertEquals(0, count($expected));
+        $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__, __FUNCTION__));
+        $this->assertFalse($filter->accept(new PHP_Depend_Code_Package(__CLASS__)));
     }
 
     /**
-     * Tests the package filter for functions.
+     * Tests that the package filter accepts and rejects the expected package.
      *
      * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
      */
-    public function testFilterFunctionIterator()
+    public function testFilterAcceptsAndNotAcceptsExpectedPackage()
     {
-        $pkgIn  = new PHP_Depend_Code_Package('in');
-        $fcnIn1 = $pkgIn->addFunction(new PHP_Depend_Code_Function('in1'));
-        $fcnIn2 = $pkgIn->addFunction(new PHP_Depend_Code_Function('in2'));
+        $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
+        $this->assertFalse($filter->accept(new PHP_Depend_Code_Package(__CLASS__)));
+        $this->assertTrue($filter->accept(new PHP_Depend_Code_Package(__FUNCTION__)));
+    }
 
-        $pkgOut  = new PHP_Depend_Code_Package('out');
-        $fcnOut1 = $pkgOut->addFunction(new PHP_Depend_Code_Function('out1'));
-        $fcnOut2 = $pkgOut->addFunction(new PHP_Depend_Code_Function('out2'));
+    /**
+     * Tests that the filter accepts a class with a valid package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterAcceptsClass()
+    {
+        $package = new PHP_Depend_Code_Package(__FUNCTION__);
+        $class   = $package->addType(new PHP_Depend_Code_Class('Clazz'));
 
-        $functions = array($fcnIn1, $fcnIn2, $fcnOut1, $fcnOut2);
-        $iterator  = new PHP_Depend_Code_NodeIterator($functions);
+        $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
+        $this->assertTrue($filter->accept($class));
+    }
 
-        $filter = new PHP_Depend_Code_Filter_Package(array('out'));
-        $iterator->addFilter($filter);
+    /**
+     * Tests that the filter rejects a class with an invalid package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterNotAcceptsClass()
+    {
+        $package = new PHP_Depend_Code_Package(__FUNCTION__);
+        $class   = $package->addType(new PHP_Depend_Code_Class('Clazz'));
 
-        $expected = array('in1'  =>  true, 'in2'  =>  true);
+        $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__));
+        $this->assertFalse($filter->accept($class));
+    }
 
-        foreach ($iterator as $fcn) {
-            $this->assertArrayHasKey($fcn->getName(), $expected);
-            unset($expected[$fcn->getName()]);
-        }
-        $this->assertEquals(0, count($expected));
+    /**
+     * Tests that the filter accepts an interface with a valid package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterAcceptsInterface()
+    {
+        $package   = new PHP_Depend_Code_Package(__FUNCTION__);
+        $interface = $package->addType(new PHP_Depend_Code_Interface('Iface'));
+
+        $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
+        $this->assertTrue($filter->accept($interface));
+    }
+
+    /**
+     * Tests that the filter not accepts an interface with an invalid package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterNotAcceptsInterface()
+    {
+        $package   = new PHP_Depend_Code_Package(__FUNCTION__);
+        $interface = $package->addType(new PHP_Depend_Code_Interface('Iface'));
+
+        $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__));
+        $this->assertFalse($filter->accept($interface));
+    }
+
+    /**
+     * Tests that the filter accepts a function with a valid package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterAcceptsFunction()
+    {
+        $package  = new PHP_Depend_Code_Package(__FUNCTION__);
+        $function = $package->addFunction(new PHP_Depend_Code_Function('Func'));
+
+        $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
+        $this->assertTrue($filter->accept($function));
+    }
+
+    /**
+     * Tests that the filter not accepts a function with an invalid package.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterNotAcceptsFunction()
+    {
+        $package  = new PHP_Depend_Code_Package(__FUNCTION__);
+        $function = $package->addFunction(new PHP_Depend_Code_Function('Func'));
+
+        $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__));
+        $this->assertFalse($filter->accept($function));
     }
 
     /**
      * Tests that the package filter works with wild cards.
      *
      * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
      */
-    public function testFilterPackageWithWildcard()
+    public function testFilterAcceptsPackageWithWildcard()
     {
-        $pkgIn1  = new PHP_Depend_Code_Package('ezcGraph');
-        $pkgIn2  = new PHP_Depend_Code_Package('Zend_Controller');
-        $pkgOut1 = new PHP_Depend_Code_Package('PHP_Depend_Code');
-        $pkgOut2 = new PHP_Depend_Code_Package('PHP_Depend_Metrics');
-
-        $packages = array($pkgIn1, $pkgIn2, $pkgOut1, $pkgOut2);
-        $iterator = new PHP_Depend_Code_NodeIterator($packages);
+        $pdepend = new PHP_Depend_Code_Package('PHP_Depend_Code');
 
         $filter = new PHP_Depend_Code_Filter_Package(array('ezc*', 'Zend_*'));
-        $iterator->addFilter($filter);
+        $this->assertTrue($filter->accept($pdepend));
+    }
 
-        $expected = array('PHP_Depend_Code'  =>  true, 'PHP_Depend_Metrics'  =>  true);
+    /**
+     * Tests that the package filter rejects unmatching packages.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterNotAcceptsPackageWithWildcard()
+    {
+        $ezcGraph = new PHP_Depend_Code_Package('ezcGraph');
 
-        foreach ($iterator as $mtd) {
-            $this->assertArrayHasKey($mtd->getName(), $expected);
-            unset($expected[$mtd->getName()]);
-        }
-        $this->assertEquals(0, count($expected));
+        $filter = new PHP_Depend_Code_Filter_Package(array('ezc*', 'Zend_*'));
+        $this->assertFalse($filter->accept($ezcGraph));
+    }
+
+    /**
+     * Tests that the package filter selects the accepts and rejects the expected
+     * packages.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Filter_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group pdepend::code::filter
+     * @group unittest
+     */
+    public function testFilterAcceptsAndNotAcceptsPackageWithWildcard()
+    {
+        $zendFW  = new PHP_Depend_Code_Package('Zend_Controller');
+        $pdepend = new PHP_Depend_Code_Package('PHP_Depend_Code');
+
+        $filter = new PHP_Depend_Code_Filter_Package(array('ezc*', 'Zend_*'));
+        $this->assertFalse($filter->accept($zendFW));
+        $this->assertTrue($filter->accept($pdepend));
     }
 }

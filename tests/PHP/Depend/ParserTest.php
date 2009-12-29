@@ -480,9 +480,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->current();
 
         $dependencies = $function->getDependencies();
-        $this->assertEquals('php\depend2', $dependencies->current()->getPackage()->getName());
-        $dependencies->next();
         $this->assertEquals('php\depend1', $dependencies->current()->getPackage()->getName());
+        $dependencies->next();
+        $this->assertEquals('php\depend2', $dependencies->current()->getPackage()->getName());
     }
 
     /**
@@ -546,9 +546,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals('func2', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(2, $ex->count());
-        $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
-        $ex->next();
         $this->assertEquals('OutOfRangeException', $ex->current()->getName());
+        $ex->next();
+        $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
 
         $nodes->next();
 
@@ -656,9 +656,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals('method1', $nodes->current()->getName());
         $ex = $nodes->current()->getExceptionClasses();
         $this->assertEquals(2, $ex->count());
-        $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
-        $ex->next();
         $this->assertEquals('OutOfRangeException', $ex->current()->getName());
+        $ex->next();
+        $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
 
         $nodes->next();
 
@@ -729,13 +729,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                           ->current()
                           ->getProperties();
 
-        $this->assertTrue($nodes->current()->isProtected());
-        $nodes->next();
         $this->assertTrue($nodes->current()->isPrivate());
         $nodes->next();
+        $this->assertTrue($nodes->current()->isPublic());
+        $nodes->next();
         $this->assertTrue($nodes->current()->isProtected());
         $nodes->next();
-        $this->assertTrue($nodes->current()->isPublic());
+        $this->assertTrue($nodes->current()->isProtected());
     }
 
     /**
@@ -943,9 +943,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectClassOrInterfaceDocComment()
     {
         $expected = array(
-            null,
-            null,
             "/**\n * Sample comment.\n */",
+            null,
+            null,
             "/**\n * A second comment...\n */",
         );
 
@@ -1194,13 +1194,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $classes->next();
         $class2 = $classes->current();
 
-        $parameter = $class1->getMethods()
+        $parameter = $class2->getMethods()
             ->current()
             ->getParameters()
             ->current();
 
-        $this->assertNotSame($class1, $parameter->getClass());
-        $this->assertSame($class2, $parameter->getClass());
+        $this->assertSame($class1, $parameter->getClass());
+        $this->assertNotSame($class2, $parameter->getClass());
     }
 
     /**
@@ -1773,90 +1773,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the parser supports function parameters.
-     *
-     * @return void
-     */
-    public function testParserSetsCorrectFunctionParametersIssue32()
-    {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/32-1.php');
-        $this->assertEquals(1, $packages->count());
-
-        $function = $packages->current()->getFunctions()->current();
-        $this->assertNotNull($function);
-        $this->assertEquals('pdepend', $function->getName());
-
-        $parameters = $function->getParameters();
-        $this->assertEquals(3, $parameters->count());
-
-        // Note alphabetic order
-        $parameter = $parameters->current();
-        $this->assertEquals('$bar', $parameter->getName());
-        $this->assertEquals(1, $parameter->getPosition());
-        $this->assertNotNull($parameter->getClass());
-        $this->assertEquals('Bar', $parameter->getClass()->getName());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foo', $parameter->getName());
-        $this->assertEquals(0, $parameter->getPosition());
-        $this->assertNull($parameter->getClass());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foobar', $parameter->getName());
-        $this->assertEquals(2, $parameter->getPosition());
-        $this->assertNull($parameter->getClass());
-    }
-
-    /**
-     * Tests that the parser supports method parameters.
-     *
-     * @return void
-     */
-    public function testParserSetsCorrectMethodParametersIssue32()
-    {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/issues/32-2.php');
-        $this->assertEquals(1, $packages->count());
-
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
-        $this->assertNotNull($class);
-        $this->assertEquals('PHP_Depend_Parser', $class->getName());
-
-        $method = $class->getMethods()->current();
-        $this->assertNotNull($method);
-        $this->assertEquals('parse', $method->getName());
-
-        $parameters = $method->getParameters();
-        $this->assertEquals(3, $parameters->count());
-
-        // Note alphabetic order
-        $parameter = $parameters->current();
-        $this->assertEquals('$bar', $parameter->getName());
-        $this->assertEquals(1, $parameter->getPosition());
-        $this->assertNotNull($parameter->getClass());
-        $this->assertEquals('Bar', $parameter->getClass()->getName());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foo', $parameter->getName());
-        $this->assertEquals(0, $parameter->getPosition());
-        $this->assertNull($parameter->getClass());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foobar', $parameter->getName());
-        $this->assertEquals(2, $parameter->getPosition());
-        $this->assertNull($parameter->getClass());
-    }
-
-    /**
      * Tests that the parser recognizes a inline type definition within a comment.
      * Such a comment will look like:
      *
@@ -2030,16 +1946,17 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $ws = str_repeat(" ", 4 * $indent);
 
         $expected = array(
-            "/**\n{$ws} * This is a second comment.\n{$ws} */",
             "/**\n{$ws} * This is one comment.\n{$ws} */",
             null,
             null,
+            "/**\n{$ws} * This is a second comment.\n{$ws} */",
         );
 
+        $actual = array();
         foreach ($nodes as $callable) {
-            $comment = array_shift($expected);
-
-            $this->assertEquals($comment, $callable->getDocComment());
+            $actual[] = $callable->getDocComment();
         }
+
+        $this->assertEquals($expected, $actual);
     }
 }

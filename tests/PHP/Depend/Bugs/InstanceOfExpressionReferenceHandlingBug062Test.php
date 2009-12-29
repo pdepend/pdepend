@@ -112,13 +112,13 @@ class PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test extends PH
         $classes = $package->getClasses();
         $this->assertSame(2, $classes->count());
         $class1 = $classes->current();
-        $this->assertSame('Bar', $class1->getName());
+        $this->assertSame('Foo', $class1->getName());
         $classes->next();
         $class2 = $classes->current();
-        $this->assertSame('Foo', $class2->getName());
+        $this->assertSame('Bar', $class2->getName());
 
-        $this->assertSame(1, $class1->getMethods()->count());
-        $method = $class1->getMethods()->current();
-        $this->assertSame($class2, $method->getDependencies()->current());
+        $this->assertSame(1, $class2->getMethods()->count());
+        $method = $class2->getMethods()->current();
+        $this->assertSame($class1, $method->getDependencies()->current());
     }
 }
