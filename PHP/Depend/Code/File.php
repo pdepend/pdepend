@@ -47,7 +47,6 @@
  */
 
 require_once 'PHP/Depend/Code/NodeI.php';
-require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * This class provides an interface to a single source file.
@@ -66,7 +65,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * The unique identifier for this function.
      *
-     * @var PHP_Depend_Util_UUID $_uuid
+     * @var string $_uuid
      */
     private $_uuid = null;
 
@@ -116,7 +115,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
             $this->_fileName = realpath($fileName);
         }
 
-        $this->_uuid = new PHP_Depend_Util_UUID();
+        $this->_uuid = spl_object_hash($this);
     }
 
     /**
@@ -146,7 +145,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getUUID()
     {
-        return (string) $this->_uuid;
+        return $this->_uuid;
     }
 
     /**

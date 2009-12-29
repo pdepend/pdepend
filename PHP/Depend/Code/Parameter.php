@@ -84,7 +84,7 @@ class PHP_Depend_Code_Parameter
     /**
      * The unique identifier for this function.
      *
-     * @var PHP_Depend_Util_UUID $_uuid
+     * @var string $_uuid
      */
     private $_uuid = null;
 
@@ -102,6 +102,11 @@ class PHP_Depend_Code_Parameter
      */
     private $_position = 0;
 
+    /**
+     * Is this parameter optional or mandatory?
+     *
+     * @var boolean
+     */
     private $_optional = false;
 
     /**
@@ -131,7 +136,7 @@ class PHP_Depend_Code_Parameter
             PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
-        $this->_uuid = new PHP_Depend_Util_UUID();
+        $this->_uuid = spl_object_hash($this);
     }
 
     /**
@@ -145,24 +150,13 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
-     * Returns the source tokens used for this parameter declaration.
-     *
-     * @return array(PHP_Depend_Token)
-     * @since 0.9.5
-     */
-    public function getTokens()
-    {
-        return $this->_formalParameter->getTokens();
-    }
-
-    /**
      * Returns a uuid for this code node.
      *
      * @return string
      */
     public function getUUID()
     {
-        return (string) $this->_uuid;
+        return $this->_uuid;
     }
 
     /**

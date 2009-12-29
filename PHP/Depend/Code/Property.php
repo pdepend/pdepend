@@ -70,7 +70,7 @@ class PHP_Depend_Code_Property
     /**
      * The unique identifier for this function.
      *
-     * @var PHP_Depend_Util_UUID $_uuid
+     * @var string $_uuid
      */
     private $_uuid = null;
 
@@ -120,7 +120,7 @@ class PHP_Depend_Code_Property
         $this->_fieldDeclaration   = $fieldDeclaration;
         $this->_variableDeclarator = $variableDeclarator;
 
-        $this->_uuid = new PHP_Depend_Util_UUID();
+        $this->_uuid = spl_object_hash($this);
     }
 
     /**
@@ -140,7 +140,7 @@ class PHP_Depend_Code_Property
      */
     public function getUUID()
     {
-        return (string) $this->_uuid;
+        return $this->_uuid;
     }
 
     /**
