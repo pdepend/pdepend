@@ -216,7 +216,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             }
         }
         foreach ($method->getExceptionClasses() as $type) {
-            if (in_array($type, $fanouts, true) === true) {
+            if (in_array($type, $fanouts, true)) {
                 continue;
             }
             if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
@@ -225,7 +225,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             }
         }
         foreach ($method->getDependencies() as $type) {
-            if (in_array($type, $fanouts, true) === true) {
+            if (in_array($type, $fanouts, true)) {
                 continue;
             }
             if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {

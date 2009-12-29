@@ -109,7 +109,7 @@ class PHP_Depend_Code_Filter_Composite
     public function accept(PHP_Depend_Code_NodeI $node)
     {
         foreach ($this->_filters as $filter) {
-            if ($filter->accept($node) === false) {
+            if (!$filter->accept($node)) {
                 return false;
             }
         }

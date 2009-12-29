@@ -376,7 +376,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     public function visitBeforeASTSwitchLabel($node, $data)
     {
-        if ($node->isDefault() === false) {
+        if (!$node->isDefault()) {
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
