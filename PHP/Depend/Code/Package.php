@@ -48,7 +48,6 @@
 
 require_once 'PHP/Depend/Code/NodeI.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Represents a php package node.
@@ -74,7 +73,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     /**
      * The unique identifier for this function.
      *
-     * @var PHP_Depend_Util_UUID $uuid
+     * @var string $uuid
      */
     protected $uuid = null;
 
@@ -102,8 +101,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     public function __construct($name)
     {
         $this->name = $name;
-
-        $this->uuid = new PHP_Depend_Util_UUID();
+        $this->uuid = spl_object_hash($this);
     }
 
     /**
@@ -123,7 +121,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getUUID()
     {
-        return (string) $this->uuid;
+        return $this->uuid;
     }
 
     /**

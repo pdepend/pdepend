@@ -51,7 +51,6 @@ require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
-require_once 'PHP/Depend/Util/UUID.php';
 
 /**
  * Test case for the hierarchy analyzer.

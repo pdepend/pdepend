@@ -2546,9 +2546,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Check for function without parameters
         if ($tokenType === self::T_PARENTHESIS_CLOSE) {
             $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
-            $formalParameters->setTokens($this->_tokenStack->pop());
-
-            return $formalParameters;
+            return $this->_setNodePositionsAndReturn($formalParameters);
         }
 
         while ($tokenType !== self::T_EOF) {
@@ -2564,15 +2562,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if ($tokenType !== self::T_COMMA) {
                 break;
             }
-
-            // It must be a comma
             $this->_consumeToken(self::T_COMMA);
         }
-
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
-        $formalParameters->setTokens($this->_tokenStack->pop());
         
-        return $formalParameters;
+        return $this->_setNodePositionsAndReturn($formalParameters);
     }
 
     /**
@@ -2630,9 +2624,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $parameter = $this->_parseFormalParameter();
             break;
         }
-
-        $parameter->setTokens($this->_tokenStack->pop());
-        return $parameter;
+        return $this->_setNodePositionsAndReturn($parameter);
     }
 
     /**
@@ -3393,15 +3385,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             || $tokenType === self::T_DOUBLE_COLON
         ) {
             $static = $this->_parseStaticReference($token);
-            $prefix = $this->_parseStaticMemberPrimaryPrefix($static);
-            $prefix->setTokens($this->_tokenStack->pop());
 
-            return $prefix;
+            $prefix = $this->_parseStaticMemberPrimaryPrefix($static);
+            return $this->_setNodePositionsAndReturn($prefix);
         }
+
         $declaration = $this->_parseStaticVariableDeclaration($token);
-        $declaration->setTokens($this->_tokenStack->pop());
-        
-        return $declaration;
+        return $this->_setNodePositionsAndReturn($declaration);
 
     }
 
