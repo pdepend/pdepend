@@ -342,15 +342,17 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * Tests that {@link PHP_Depend_Code_Class::getInterfaces()}
      * returns the expected result.
      *
-     * @return void
+     * @return voidi
      */
     public function testGetInterfacesByInheritence()
     {
         $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
 
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
+        $classes = $packages->current()
+            ->getClasses();
+
+        $classes->next();
+        $class = $classes->current();
 
         $expected = array(
             'A' => 'A',
@@ -362,7 +364,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         );
 
         $interfaces = $class->getInterfaces();
-        $this->assertSame(count($expected), $interfaces->count());
+        $this->assertEquals(count($expected), $interfaces->count());
 
         foreach ($interfaces as $interface) {
             $this->assertArrayHasKey($interface->getName(), $expected);

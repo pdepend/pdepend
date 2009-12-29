@@ -263,17 +263,17 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('baz', $package->getName());
+        $this->assertSame('foo', $package->getName());
         $this->assertSame(1, $types->count());
-        $this->assertSame('FooBaz', $types->current()->getName());
+        $this->assertSame('FooBar', $types->current()->getName());
 
         $packages->next();
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('foo', $package->getName());
+        $this->assertSame('baz', $package->getName());
         $this->assertSame(1, $types->count());
-        $this->assertSame('FooBar', $types->current()->getName());
+        $this->assertSame('FooBaz', $types->current()->getName());
     }
 
     /**
@@ -297,17 +297,17 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('baz', $package->getName());
+        $this->assertSame('foo', $package->getName());
         $this->assertSame(1, $types->count());
-        $this->assertSame('FooBaz', $types->current()->getName());
+        $this->assertSame('FooBar', $types->current()->getName());
 
         $packages->next();
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('foo', $package->getName());
+        $this->assertSame('baz', $package->getName());
         $this->assertSame(1, $types->count());
-        $this->assertSame('FooBar', $types->current()->getName());
+        $this->assertSame('FooBaz', $types->current()->getName());
     }
 
     /**

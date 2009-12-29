@@ -745,11 +745,20 @@ class PHP_Depend
         // TODO: It's important to validate this behavior, imho there is something
         //       wrong in the iterator code used above.
         // Strange: why is the iterator not unique and why does this loop fix it?
+        $files = array();
         foreach ($fileIterator as $file) {
+            if (is_string($file)) {
+                $files[$file] = $file;
+            } else {
+                $pathname         = realpath($file->getPathname());
+                $files[$pathname] = $pathname;
+            }
         }
+
+        ksort($files);
         // END
 
-        return $fileIterator;
+        return new ArrayIterator(array_values($files));
     }
 
     /**
