@@ -256,9 +256,19 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $it = new ArrayIterator(array($fileOrDirectory));
         }
 
+        $files = array();
+        foreach ($it as $file) {
+            if (is_object($file)) {
+                $files[] = realpath($file->getPathname());
+            } else {
+                $files[] = $file;
+            }
+        }
+        sort($files);
+
         $builder = new PHP_Depend_Builder_Default();
 
-        foreach ($it as $file) {
+        foreach ($files as $file) {
             $tokenizer = new PHP_Depend_Tokenizer_Internal();
             $tokenizer->setSourceFile($file);
 
