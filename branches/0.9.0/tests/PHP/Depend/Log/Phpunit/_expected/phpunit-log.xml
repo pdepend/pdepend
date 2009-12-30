@@ -9,9 +9,6 @@
       <method name="removeItemAt" cloc="0" loc="1" locExecutable="0" ncloc="1"/>
     </class>
   </file>
-  <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/property.php" classes="1" cloc="36" functions="0" loc="48" locExecutable="8" ncloc="12">
-    <class name="MyPropertyCouplingClass" cis="1" cloc="20" cr="0.15" csz="4" dit="0" impl="0" loc="30" locExecutable="6" ncloc="10" nom="0" rcr="0.15" vars="4" varsi="4" varsnp="1" wmc="0" wmci="0" wmcnp="0"/>
-  </file>
   <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/method.php" classes="2" cloc="64" functions="0" loc="100" locExecutable="32" ncloc="36">
     <class name="MyMethodCouplingClass" cis="7" cloc="26" cr="0.15" csz="7" dit="0" impl="0" loc="54" locExecutable="26" ncloc="28" nom="2" rcr="0.15" vars="0" varsi="0" varsnp="0" wmc="7" wmci="7" wmcnp="7">
       <method name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
@@ -20,6 +17,9 @@
     <class name="MyMethodCouplingInterface" cloc="13" cr="0.15" loc="17" locExecutable="3" ncloc="4" nom="1" rcr="0.15">
       <method name="removeItemAt" cloc="0" loc="1" locExecutable="0" ncloc="1"/>
     </class>
+  </file>
+  <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/property.php" classes="1" cloc="36" functions="0" loc="48" locExecutable="8" ncloc="12">
+    <class name="MyPropertyCouplingClass" cis="1" cloc="20" cr="0.15" csz="4" dit="0" impl="0" loc="30" locExecutable="6" ncloc="10" nom="0" rcr="0.15" vars="4" varsi="4" varsnp="1" wmc="0" wmci="0" wmcnp="0"/>
   </file>
   <file name="/home/manu/Desktop/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend/_code/log/phpunit/function.php" classes="0" cloc="33" functions="2" loc="60" locExecutable="25" ncloc="27">
     <function name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
