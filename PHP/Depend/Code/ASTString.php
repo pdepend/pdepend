@@ -44,14 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.10
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
-require_once 'PHP/Depend/Code/ASTLiteral.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTLiteral} class.
+ * This class represents PHP strings that can embed various other expressions.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,27 +60,12 @@ require_once 'PHP/Depend/Code/ASTLiteral.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.10
  */
-class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTString extends PHP_Depend_Code_ASTNode
 {
     /**
-     * Tests that an invalid literal results in the expected exception.
-     * 
-     * @return void
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * Type of this node class.
      */
-    public function testUnclosedDoubleQuoteStringResultsInExpectedException()
-    {
-        self::parseTestCaseSource(__METHOD__);
-    }
-
-    /**
-     * Creates a literal node.
-     *
-     * @return PHP_Depend_Code_ASTLiteral
-     */
-    protected function createNodeInstance()
-    {
-        return new PHP_Depend_Code_ASTLiteral("'" . __METHOD__ . "'");
-    }
+    const CLAZZ = __CLASS__;
 }

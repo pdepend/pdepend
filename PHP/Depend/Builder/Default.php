@@ -1271,6 +1271,21 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new php string node.
+     *
+     * @return PHP_Depend_Code_ASTString
+     * @since 0.9.10
+     */
+    public function buildASTString()
+    {
+        include_once 'PHP/Depend/Code/ASTString.php';
+
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTString');
+
+        return new PHP_Depend_Code_ASTString();
+    }
+
+    /**
      * Builds a new constant definition node.
      *
      * <code>
