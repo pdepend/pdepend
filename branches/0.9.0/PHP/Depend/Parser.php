@@ -1351,7 +1351,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_BACKTICK:
         case self::T_DOUBLE_QUOTE:
         case self::T_CONSTANT_ENCAPSED_STRING:
-            $expr = $this->_parseLiteral();
+            $expr = $this->_parseLiteralOrString();
             break;
 
         case self::T_NEW:
@@ -2474,15 +2474,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parses a {@link PHP_Depend_Code_ASTLiteral} node. A literal
-     * can be a single/double quote string or a backtick literal string.
+     * This method parses a {@link PHP_Depend_Code_ASTLiteral} node or an
+     * instance of {@link PHP_Depend_Code_ASTString} that represents a string
+     * in double quotes or surrounded by backticks.
      *
-     * @return PHP_Depend_Code_ASTLiteral
+     * @return PHP_Depend_Code_ASTNode
      * @throws PHP_Depend_Parser_UnexpectedTokenException When this method
      *         reaches the end of the token stream without terminating the
      *         literal string.
      */
-    private function _parseLiteral()
+    private function _parseLiteralOrString()
     {
         $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
@@ -2495,11 +2496,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $token = $this->_consumeToken($tokenType);
             return $this->_builder->buildASTLiteral($token->image);
 
-        case self::T_BACKTICK:
-        case self::T_DOUBLE_QUOTE:
-            return $this->_builder->buildASTLiteral(
-                $this->_parseStringSequence($tokenType)
-            );
+        default:
+            return $this->_parseString($tokenType);
         }
     }
 
@@ -2522,6 +2520,41 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         } while ($type != $tokenType && $type != self::T_EOF);
 
         return $string . $this->_consumeToken($tokenType)->image;
+    }
+
+
+    private function _parseString($delimiterType)
+    {
+        $this->_tokenStack->push();
+
+        $string = $this->_builder->buildASTString();
+
+        $this->_consumeToken($delimiterType);
+        $this->_consumeComments();
+
+        $tokenType = $this->_tokenizer->peek();
+        while ($tokenType != self::T_EOF) {
+            switch ($tokenType) {
+
+            case $delimiterType:
+                break 2;
+
+            default:
+                $expr = $this->_parseOptionalExpression();
+                if ($expr == null) {
+                    $token = $this->_consumeToken($tokenType);
+                    $expr  = $this->_builder->buildASTLiteral($token->image);
+                }
+                $string->addChild($expr);
+            }
+
+            $this->_consumeComments();
+            $tokenType = $this->_tokenizer->peek();
+        }
+        
+        $this->_consumeToken($delimiterType);
+
+        return $this->_setNodePositionsAndReturn($string);
     }
 
     /**
