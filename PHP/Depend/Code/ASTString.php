@@ -52,6 +52,18 @@ require_once 'PHP/Depend/Code/ASTNode.php';
 /**
  * This class represents PHP strings that can embed various other expressions.
  *
+ * <code>
+ * $string = "Manuel $Pichler <{$email}>";
+ *
+ * // PHP_Depend_Code_ASTString
+ * // |-- ASTLiteral             -  "Manuel ")
+ * // |-- ASTVariable            -  $Pichler
+ * // |-- ASTLiteral             -  " <"
+ * // |-- ASTCompoundExpression  -  {...}
+ * // |   |-- ASTVariable        -  $email
+ * // |-- ASTLiteral             -  ">"
+ * </code>
+ *
  * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code

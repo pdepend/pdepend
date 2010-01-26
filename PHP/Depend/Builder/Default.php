@@ -1273,6 +1273,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new php string node.
      *
+     * <code>
+     * $string = "Manuel $Pichler <{$email}>";
+     *
+     * // PHP_Depend_Code_ASTString
+     * // |-- ASTLiteral             -  "Manuel ")
+     * // |-- ASTVariable            -  $Pichler
+     * // |-- ASTLiteral             -  " <"
+     * // |-- ASTCompoundExpression  -  {...}
+     * // |   |-- ASTVariable        -  $email
+     * // |-- ASTLiteral             -  ">"
+     * </code>
+     *
      * @return PHP_Depend_Code_ASTString
      * @since 0.9.10
      */
