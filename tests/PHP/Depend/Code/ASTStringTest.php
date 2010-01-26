@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTLiteral.php';
+require_once 'PHP/Depend/Code/ASTString.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTLiteral} class.
+ * Test case for the {@link PHP_Depend_Code_ASTString} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,12 +62,46 @@ require_once 'PHP/Depend/Code/ASTLiteral.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that an invalid literal results in the expected exception.
-     * 
+     * testDoubleQuoteStringContainsTwoChildNodes
+     *
      * @return void
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseLiteralOrString
+     * @group pdepend
+     * @group pdepend::ast
+     */
+    public function testDoubleQuoteStringContainsTwoChildNodes()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $this->assertEquals(2, count($string->getChildren()));
+    }
+
+    /**
+     * testDoubleQuoteStringContainsExpectedTextContent
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseLiteralOrString
+     * @group pdepend
+     * @group pdepend::ast
+     */
+    public function testDoubleQuoteStringContainsExpectedTextContent()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $this->assertEquals("Hello World", $string->getChild(0)->getImage());
+    }
+
+    /**
+     * Tests that an invalid literal results in the expected exception.
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseLiteralOrString
+     * @group pdepend
+     * @group pdepend::ast
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
@@ -76,12 +110,26 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * Creates a literal node.
+     * Creates a string node.
      *
-     * @return PHP_Depend_Code_ASTLiteral
+     * @return PHP_Depend_Code_ASTString
      */
     protected function createNodeInstance()
     {
-        return new PHP_Depend_Code_ASTLiteral("'" . __METHOD__ . "'");
+        return new PHP_Depend_Code_ASTString();
+    }
+
+    /**
+     * Returns a test member primary prefix.
+     *
+     * @param string $testCase The calling test case.
+     *
+     * @return PHP_Depend_Code_ASTString
+     */
+    private function _getFirstStringInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTString::CLAZZ
+        );
     }
 }
