@@ -2522,7 +2522,29 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $string . $this->_consumeToken($tokenType)->image;
     }
 
-
+    /**
+     * This method parses a php string with all possible embedded expressions.
+     *
+     * <code>
+     * $string = "Manuel $Pichler <{$email}>";
+     *
+     * // PHP_Depend_Code_ASTSTring
+     * // |-- ASTLiteral             -  "Manuel ")
+     * // |-- ASTVariable            -  $Pichler
+     * // |-- ASTLiteral             -  " <"
+     * // |-- ASTCompoundExpression  -  {...}
+     * // |   |-- ASTVariable        -  $email
+     * // |-- ASTLiteral             -  ">"
+     * </code>
+     *
+     * @param integer $delimiterType The start/stop token type.
+     *
+     * @return PHP_Depend_Code_ASTString
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When this method
+     *         reaches the end of the token stream without terminating the
+     *         literal string.
+     * @since 0.9.10
+     */
     private function _parseString($delimiterType)
     {
         $this->_tokenStack->push();
