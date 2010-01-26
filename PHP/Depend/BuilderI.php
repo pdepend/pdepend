@@ -677,6 +677,14 @@ interface PHP_Depend_BuilderI
     function buildASTLiteral($image);
 
     /**
+     * Builds a new php string node.
+     *
+     * @return PHP_Depend_Code_ASTString
+     * @since 0.9.10
+     */
+    function buildASTString();
+
+    /**
      * Builds a new constant definition node.
      *
      * <code>
