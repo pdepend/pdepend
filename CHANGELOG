@@ -3,6 +3,8 @@ PHP_Depend 0.9.10
 
 - Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
   revision #1032.
+- Fixed #111: Dynamic Strings are treated as literal strings. Fixed in svn
+  revision #1037.
 - Performance intensive calculation result cached.
 
 PHP_Depend 0.9.9
