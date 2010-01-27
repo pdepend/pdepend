@@ -69,7 +69,10 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * Tests the tokenizer with a source file that contains only classes.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testInternalWithClasses()
     {
@@ -77,7 +80,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
             PHP_Depend_TokenizerI::T_ABSTRACT,
@@ -114,13 +117,12 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE
         );
 
-        $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
-
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $this->assertEquals($token->type, array_shift($tokens));
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = $token->type;
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -128,7 +130,10 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * classes and functions.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testInternalWithMixedContent()
     {
@@ -136,7 +141,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
             array(PHP_Depend_TokenizerI::T_COMMENT, 2),
             array(PHP_Depend_TokenizerI::T_FUNCTION, 5),
@@ -165,15 +170,12 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_TokenizerI::T_CLOSE_TAG, 16)
         );
 
-        $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
-
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            list($tok, $line) = array_shift($tokens);
-            $this->assertEquals($tok, $token->type);
-            $this->assertEquals($line, $token->startLine);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array($token->type, $token->startLine);
         }
-
-        $this->assertEquals(0, count($tokens));
+        
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -181,7 +183,10 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * token.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testInternalReturnsBOFTokenForPrevCall()
     {
@@ -196,7 +201,10 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * Tests the tokenizer with a combination of procedural code and functions.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testInternalWithProceduralCodeAndFunction()
     {
@@ -204,7 +212,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_FUNCTION,
             PHP_Depend_TokenizerI::T_STRING,
@@ -240,21 +248,22 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CLOSE_TAG
         );
 
-        $this->assertEquals($sourceFile, (string) $tokenizer->getSourceFile());
-
-        while ($tokenizer->peek() !== PHP_Depend_TokenizerI::T_EOF) {
-            $token = $tokenizer->next();
-            $this->assertEquals(array_shift($tokens), $token->type);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = $token->type;
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * Test case for undetected static method call added.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testInternalStaticCallBug01()
     {
@@ -262,7 +271,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
             PHP_Depend_TokenizerI::T_CLASS,
@@ -284,11 +293,12 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
         );
 
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $this->assertEquals(array_shift($tokens), $token->type);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = $token->type;
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -305,7 +315,10 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * http://bugs.xplib.de/index.php?do=details&task_id=9&project=3
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testInternalDollarSyntaxBug09()
     {
@@ -313,7 +326,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
             PHP_Depend_TokenizerI::T_CLASS,
@@ -337,18 +350,22 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
         );
 
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $this->assertEquals(array_shift($tokens), $token->type);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = $token->type;
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * Test case for the inline html bug.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testTokenizerWithInlineHtmlBug24()
     {
@@ -356,7 +373,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
             array(PHP_Depend_TokenizerI::T_CLASS, 2),
             array(PHP_Depend_TokenizerI::T_STRING, 2),
@@ -394,14 +411,12 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 17),
         );
 
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $expected = array_shift($tokens);
-
-            $this->assertEquals($expected[0], $token->type);
-            $this->assertEquals($expected[1], $token->startLine);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array($token->type, $token->startLine);
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -409,7 +424,10 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * this bug only occures for PHP versions < 5.3.0alpha3.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testTokenizerHandlesBackslashInStringCorrectBug84()
     {
@@ -421,7 +439,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
             array(PHP_Depend_TokenizerI::T_VARIABLE, 2),
             array(PHP_Depend_TokenizerI::T_EQUAL, 2),
@@ -430,21 +448,22 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_TokenizerI::T_CLOSE_TAG, 3),
         );
 
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $expected = array_shift($tokens);
-
-            $this->assertEquals($expected[0], $token->type);
-            $this->assertEquals($expected[1], $token->startLine);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array($token->type, $token->startLine);
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests the tokenizers column calculation implementation.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
     {
@@ -452,7 +471,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             array(PHP_Depend_ConstantsI::T_NO_PHP, '<html>
     <head>
         <title>', 1, 3, 1, 15),
@@ -473,25 +492,29 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
 </html>', 7, 8, 1, 7),
         );
 
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $expected = array_shift($tokens);
-
-            $this->assertEquals($expected[0], $token->type);
-            $this->assertEquals($expected[1], $token->image);
-            $this->assertEquals($expected[2], $token->startLine);
-            $this->assertEquals($expected[3], $token->endLine);
-            $this->assertEquals($expected[4], $token->startColumn);
-            $this->assertEquals($expected[5], $token->endColumn);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array(
+                $token->type,
+                $token->image,
+                $token->startLine,
+                $token->endLine,
+                $token->startColumn,
+                $token->endColumn
+            );
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests the tokenizers column calculation implementation.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88()
     {
@@ -499,7 +522,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $tokens = array(
+        $expected = array(
             array(PHP_Depend_ConstantsI::T_NO_PHP, 'Hello', 1, 1, 1, 5),
             array(PHP_Depend_ConstantsI::T_OPEN_TAG, '<?php', 1, 1, 7, 11),
             array(PHP_Depend_ConstantsI::T_ECHO, 'echo', 1, 1, 13, 16),
@@ -518,17 +541,18 @@ this is a simple letter to users of', 2, 3, 1, 35),
 Manuel', 3, 5, 61, 6),
         );
 
-        while (($token = $tokenizer->next()) !== PHP_Depend_TokenizerI::T_EOF) {
-            $expected = array_shift($tokens);
-
-            $this->assertEquals($expected[0], $token->type);
-            $this->assertEquals($expected[1], $token->image);
-            $this->assertEquals($expected[2], $token->startLine);
-            $this->assertEquals($expected[3], $token->endLine);
-            $this->assertEquals($expected[4], $token->startColumn);
-            $this->assertEquals($expected[5], $token->endColumn);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array(
+                $token->type,
+                $token->image,
+                $token->startLine,
+                $token->endLine,
+                $token->startColumn,
+                $token->endColumn
+            );
         }
 
-        $this->assertEquals(0, count($tokens));
+        $this->assertSame($expected, $actual);
     }
 }

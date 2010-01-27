@@ -69,7 +69,10 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * namespace separators.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithBackslash()
     {
@@ -102,7 +105,10 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * namespace separators.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithNamespacedAllocation()
     {
@@ -134,7 +140,10 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * namespace separators.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithNamespacedQualifiedName()
     {
@@ -163,7 +172,10 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * Tests that the helper ignores backslashes used as escape character.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testHelperIgnoresBackslashAsDoubleQuoteEscapeCharacter()
     {
@@ -187,7 +199,10 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * Tests that the helper ignores backslashes used as escape character.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testHelperIgnoresBackslashAsSignleQuoteEscapeCharacter()
     {
@@ -211,7 +226,10 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * Tests that the helper ignores a class name in a string.
      *
      * @return void
-     * @group tokenizer
+     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
      */
     public function testHelperIgnoresQualifiedClassNameInDoubleQuotedString()
     {
