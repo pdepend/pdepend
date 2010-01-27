@@ -555,4 +555,39 @@ Manuel', 3, 5, 61, 6),
 
         $this->assertSame($expected, $actual);
     }
+
+    /**
+     * testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens
+     *
+     * @return void
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
+     */
+    public function testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens()
+    {
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(
+            self::createCodeResourceURI('tokenizer/' . __FUNCTION__ . '.php')
+        );
+
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array($token->type, $token->startColumn, $token->endColumn);
+        }
+
+        $expected = array(
+            array(PHP_Depend_ConstantsI::T_OPEN_TAG, 1, 5),
+            array(PHP_Depend_ConstantsI::T_DOLLAR, 1, 1),
+            array(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, 2, 2),
+            array(PHP_Depend_ConstantsI::T_VARIABLE, 3, 6),
+            array(PHP_Depend_ConstantsI::T_CONCAT, 8, 8),
+            array(PHP_Depend_ConstantsI::T_VARIABLE, 10, 13),
+            array(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, 14, 14),
+            array(PHP_Depend_ConstantsI::T_SEMICOLON, 15, 15),
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
 }

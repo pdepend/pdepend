@@ -68,10 +68,6 @@ require_once 'PHP/Depend/Tokenizer/PHP53NamespaceHelper.php';
 class PHP_Depend_Tokenizer_Internal
     implements PHP_Depend_TokenizerI
 {
-    protected static $substitutes = array(
-        T_DOLLAR_OPEN_CURLY_BRACES  =>  array('$', '{'),
-    );
-
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
@@ -241,6 +237,14 @@ class PHP_Depend_Tokenizer_Internal
         'namespace'      =>  self::T_NAMESPACE,
         '__dir__'        =>  self::T_DIR,
         '__namespace__'  =>  self::T_NS_C,
+    );
+
+    /**
+     *
+     * @var array(mixed=>array)
+     */
+    protected static $substituteTokens = array(
+        T_DOLLAR_OPEN_CURLY_BRACES  =>  array('$', '{'),
     );
 
     /**
@@ -421,6 +425,32 @@ class PHP_Depend_Tokenizer_Internal
     }
 
     /**
+     * This method takes an array of tokens returned by <b>token_get_all()</b>
+     * and substitutes some of the tokens with those required by PHP_Depend's
+     * parser implementation.
+     *
+     * @param array(array) $tokens Unprepared array of php tokens.
+     *
+     * @return array(array)
+     */
+    private function _substituteTokens(array $tokens)
+    {
+        $result = array();
+        foreach ($tokens as $token) {
+            $temp = (array) $token;
+            $temp = $temp[0];
+            if (isset(self::$substituteTokens[$temp])) {
+                foreach (self::$substituteTokens[$temp] as $token) {
+                    $result[] = $token;
+                }
+            } else {
+                $result[] = $token;
+            }
+        }
+        return $result;
+    }
+
+    /**
      * Tokenizes the content of the source file with {@link token_get_all()} and
      * filters this token stream.
      *
@@ -442,26 +472,12 @@ class PHP_Depend_Tokenizer_Internal
         );
 
         if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
-            $tempTokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize($source);
+            $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize($source);
         } else {
-            $tempTokens = token_get_all($source);
+            $tokens = token_get_all($source);
         }
 
-        $tokens = array();
-        foreach ($tempTokens as $tempToken) {
-            $temp = (array) $tempToken;
-            $temp = $temp[0];
-            if (isset(self::$substitutes[$temp])) {
-                foreach (self::$substitutes[$temp] as $token) {
-                    $tokens[] = $token;
-                }
-            } else {
-                $tokens[] = $tempToken;
-            }
-        }
-
-
-        reset($tokens);
+        $tokens = $this->_substituteTokens($tokens);
 
         // Is the current token between an opening and a closing php tag?
         $inTag = false;
