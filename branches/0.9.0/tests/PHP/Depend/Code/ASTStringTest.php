@@ -49,6 +49,7 @@
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
 require_once 'PHP/Depend/Code/ASTString.php';
+require_once 'PHP/Depend/Code/ASTCompoundVariable.php';
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTString} class.
@@ -69,6 +70,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseString
      * @covers PHP_Depend_Parser::_parseLiteralOrString
      * @group pdepend
      * @group pdepend::ast
@@ -84,6 +86,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseString
      * @covers PHP_Depend_Parser::_parseLiteralOrString
      * @group pdepend
      * @group pdepend::ast
@@ -92,6 +95,38 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
         $this->assertEquals("Hello World", $string->getChild(0)->getImage());
+    }
+
+    /**
+     * testBacktickExpressionContainsTwoChildNodes
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseString
+     * @covers PHP_Depend_Parser::_parseLiteralOrString
+     * @group pdepend
+     * @group pdepend::ast
+     */
+    public function testBacktickExpressionContainsTwoChildNodes()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $this->assertEquals(2, count($string->getChildren()));
+    }
+
+    /**
+     * testBacktickExpressionContainsExpectedCompoundVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseString
+     * @covers PHP_Depend_Parser::_parseLiteralOrString
+     * @group pdepend
+     * @group pdepend::ast
+     */
+    public function testBacktickExpressionContainsExpectedCompoundVariable()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
     }
 
     /**

@@ -68,6 +68,10 @@ require_once 'PHP/Depend/Tokenizer/PHP53NamespaceHelper.php';
 class PHP_Depend_Tokenizer_Internal
     implements PHP_Depend_TokenizerI
 {
+    protected static $substitutes = array(
+        T_DOLLAR_OPEN_CURLY_BRACES  =>  array('$', '{'),
+    );
+
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
@@ -188,7 +192,7 @@ class PHP_Depend_Tokenizer_Internal
         T_PAAMAYIM_NEKUDOTAYIM      =>  self::T_DOUBLE_COLON,
         T_ENCAPSED_AND_WHITESPACE   =>  self::T_ENCAPSED_AND_WHITESPACE,
         T_CONSTANT_ENCAPSED_STRING  =>  self::T_CONSTANT_ENCAPSED_STRING,
-        T_DOLLAR_OPEN_CURLY_BRACES  =>  self::T_CURLY_BRACE_OPEN,
+        //T_DOLLAR_OPEN_CURLY_BRACES  =>  self::T_CURLY_BRACE_OPEN,
     );
 
     /**
@@ -438,10 +442,24 @@ class PHP_Depend_Tokenizer_Internal
         );
 
         if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
-            $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize($source);
+            $tempTokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize($source);
         } else {
-            $tokens = token_get_all($source);
+            $tempTokens = token_get_all($source);
         }
+
+        $tokens = array();
+        foreach ($tempTokens as $tempToken) {
+            $temp = (array) $tempToken;
+            $temp = $temp[0];
+            if (isset(self::$substitutes[$temp])) {
+                foreach (self::$substitutes[$temp] as $token) {
+                    $tokens[] = $token;
+                }
+            } else {
+                $tokens[] = $tempToken;
+            }
+        }
+
 
         reset($tokens);
 
