@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Input/ExtensionFilter.php';
@@ -67,25 +67,20 @@ require_once 'PHP/Depend/TextUI/Runner.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Issues_AbstractTest
 {
     /**
      * testParserSetsExpectedNumberOfFunctionParameters
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsExpectedNumberOfFunctionParameters()
     {
-        $packages   = self::parseSource('issues/032/001-correct-function-parameters.php');
-        $parameters = $packages->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->_getParametersOfFirstFunction();
         $this->assertEquals(3, $parameters->count());
     }
 
@@ -93,114 +88,68 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedPositionOfFunctionParameters
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsExpectedPositionOfFunctionParameters()
     {
-        $packages   = self::parseSource('issues/032/001-correct-function-parameters.php');
-        $parameters = $packages->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-
-        $parameter = $parameters->current();
-        $this->assertEquals(0, $parameter->getPosition());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals(1, $parameter->getPosition());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals(2, $parameter->getPosition());
+        $actual = array();
+        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+            $actual[] = $parameter->getPosition();
+        }
+        $this->assertEquals(array(0, 1, 2), $actual);
     }
 
     /**
      * testParserSetsFunctionParametersInExpectedOrder
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsFunctionParametersInExpectedOrder()
     {
-        $packages   = self::parseSource('issues/032/001-correct-function-parameters.php');
-        $parameters = $packages->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foo', $parameter->getName());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$bar', $parameter->getName());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foobar', $parameter->getName());
+        $actual = array();
+        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+            $actual[] = $parameter->getName();
+        }
+        $this->assertEquals(array('$foo', '$bar', '$foobar'), $actual);
     }
 
     /**
      * testParserSetsExpectedTypeHintsForFunctionParameters
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsExpectedTypeHintsForFunctionParameters()
     {
-        $packages   = self::parseSource('issues/032/001-correct-function-parameters.php');
-        $parameters = $packages->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-
-        $parameter = $parameters->current();
-        $this->assertNull($parameter->getClass());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertNotNull($parameter->getClass());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertNull($parameter->getClass());
+        $actual = array();
+        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+            $actual[] = is_null($parameter->getClass());
+        }
+        $this->assertEquals(array(true, false, true), $actual);
     }
 
     /**
      * testParserSetsExpectedNumberOfMethodParameters
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsExpectedNumberOfMethodParameters()
     {
-        $packages   = self::parseSource('issues/032/002-correct-method-parameters.php');
-        $parameters = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->_getParametersOfFirstMethod();
         $this->assertEquals(3, $parameters->count());
     }
 
@@ -208,98 +157,83 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedPositionOfMethodParameters
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsExpectedPositionOfMethodParameters()
     {
-        $packages   = self::parseSource('issues/032/002-correct-method-parameters.php');
-        $parameters = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
-        $parameter = $parameters->current();
-        $this->assertEquals(0, $parameter->getPosition());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals(1, $parameter->getPosition());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals(2, $parameter->getPosition());
+        $actual = array();
+        foreach ($this->_getParametersOfFirstMethod() as $parameter) {
+            $actual[] = $parameter->getPosition();
+        }
+        $this->assertEquals(array(0, 1, 2), $actual);
     }
 
     /**
      * testParserSetsMethodParametersInExpectedOrder
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsMethodParametersInExpectedOrder()
     {
-        $packages   = self::parseSource('issues/032/002-correct-method-parameters.php');
-        $parameters = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foo', $parameter->getName());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$bar', $parameter->getName());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertEquals('$foobar', $parameter->getName());
+        $actual = array();
+        foreach ($this->_getParametersOfFirstMethod() as $parameter) {
+            $actual[] = $parameter->getName();
+        }
+        $this->assertEquals(array('$foo', '$bar', '$foobar'), $actual);
     }
 
     /**
      * testParserSetsExpectedTypeHintsForMethodParameters
      *
      * @return void
-     * @covers \stdClass
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
-     * @group issues
+     * @group unittest
      */
     public function testParserSetsExpectedTypeHintsForMethodParameters()
     {
-        $packages   = self::parseSource('issues/032/002-correct-method-parameters.php');
-        $parameters = $packages->current()
+        $actual = array();
+        foreach ($this->_getParametersOfFirstMethod() as $parameter) {
+            $actual[] = is_null($parameter->getClass());
+        }
+        $this->assertEquals(array(true, false, true), $actual);
+    }
+
+    /**
+     * Returns the parameters of the first function in the test case file.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    private function _getParametersOfFirstFunction()
+    {
+        $packages = self::parseTestCase();
+        return $packages->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters();
+    }
+
+    /**
+     * Returns the parameters of the first method in the test case file.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    private function _getParametersOfFirstMethod()
+    {
+        $packages = self::parseTestCase();
+        return $packages->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
             ->getParameters();
-
-        $parameter = $parameters->current();
-        $this->assertNull($parameter->getClass());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertNotNull($parameter->getClass());
-
-        $parameters->next();
-
-        $parameter = $parameters->current();
-        $this->assertNull($parameter->getClass());
     }
 }
