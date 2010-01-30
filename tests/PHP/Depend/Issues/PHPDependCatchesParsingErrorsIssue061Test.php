@@ -100,6 +100,10 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * the expected exceptions.
      *
      * @return void
+     * @covers PHP_Depend
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testPHPDependReturnsExpectedExceptionInstances()
     {
@@ -134,6 +138,11 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * return <b>false</b> when not parsing error occured.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
     {
@@ -154,6 +163,11 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * return <b>true</b> when a parsing error occured.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
     {
@@ -174,6 +188,11 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * process was successful.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess()
     {
@@ -194,6 +213,11 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * expected exception messages.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandPrintsExpectedOutputWhenAnErrorOccuredDuringTheParsingProcess()
     {
@@ -243,4 +267,3 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         return array($exitCode, $output);
     }
 }
-?>

@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for issue #84, where the object model should keep information about
@@ -62,7 +62,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Issues_AbstractTest
 {
     /**
      * Tests that the parser sets the expected primitive type information.
@@ -71,30 +71,39 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
      * @param string $expected The expected primitive type image.
      * 
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      * @dataProvider dataProviderParserSetsExpectedPrimitivePropertyType
      */
     public function testParserSetsExpectedPrimitivePropertyType($actual, $expected)
     {
-        $packages = self::parseSource('issues/084/' . __FUNCTION__ . '_' . $actual . '.php');
+        $packages = self::parseTestCase(__METHOD__ . '_' . $actual);
         
         $type = $packages->current()
             ->getClasses()
             ->current()
             ->getFirstChildOfType(PHP_Depend_Code_ASTFieldDeclaration::CLAZZ)
             ->getFirstChildOfType(PHP_Depend_Code_ASTTypeNode::CLAZZ);
-            
-        $this->assertTrue($type->isPrimitive());
-        $this->assertSame($expected, $type->getImage());
+
+        $this->assertEquals($expected, $type->getImage());
     }
 
     /**
      * Tests that the parser sets the expected array type information.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsExpectedArrayPropertyType()
     {
-        $packages = self::parseSource('issues/084/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCase();
 
         $type = $packages->current()
             ->getClasses()
@@ -103,17 +112,21 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
             ->getFirstChildOfType(PHP_Depend_Code_ASTTypeNode::CLAZZ);
 
         $this->assertTrue($type->isArray());
-        $this->assertSame('array', $type->getImage());
     }
 
     /**
      * Tests that the parser sets the expected array type information.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsExpectedArrayWithParenthesisPropertyType()
     {
-        $packages = self::parseSource('issues/084/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCase();
 
         $type = $packages->current()
             ->getClasses()
@@ -122,7 +135,6 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
             ->getFirstChildOfType(PHP_Depend_Code_ASTTypeNode::CLAZZ);
 
         $this->assertTrue($type->isArray());
-        $this->assertSame('array', $type->getImage());
     }
 
     /**
@@ -146,4 +158,3 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
         );
     }
 }
-?>
