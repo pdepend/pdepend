@@ -45,16 +45,12 @@
  * @link      http://pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Util_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/FileUtilTest.php';
 require_once dirname(__FILE__) . '/ImageConvertTest.php';
 require_once dirname(__FILE__) . '/MathUtilTest.php';
+require_once dirname(__FILE__) . '/TypeTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Util package.
@@ -70,16 +66,6 @@ require_once dirname(__FILE__) . '/MathUtilTest.php';
 class PHP_Depend_Util_AllTests
 {
     /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-
-    /**
      * Creates the phpunit test suite for this package.
      *
      * @return PHPUnit_Framework_TestSuite
@@ -92,11 +78,8 @@ class PHP_Depend_Util_AllTests
         $suite->addTest(new PHP_Depend_Util_MathUtilTest());
 
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
+        $suite->addTestSuite('PHP_Depend_Util_TypeTest');
 
         return $suite;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Util_AllTests::main') {
-    PHP_Depend_Util_AllTests::main();
 }
