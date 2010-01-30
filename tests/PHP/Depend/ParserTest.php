@@ -1226,6 +1226,65 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserStripsLeadingSlashFromNamespacedClassName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_getNamespaceOrPackageName
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserStripsLeadingSlashFromNamespacedClassName()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $package  = $packages->current();
+
+        $this->assertEquals('foo', $package->getName());
+    }
+
+    /**
+     * testParserStripsLeadingSlashFromNamespacedClassName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_getNamespaceOrPackageName
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserStripsLeadingSlashFromNamespaceAliasedClassName()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $package  = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getParentClass()
+            ->getPackage();
+
+        $this->assertEquals('foo\bar\baz', $package->getName());
+    }
+
+    /**
+     * testParserStripsLeadingSlashFromInheritNamespacedClassName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_parseQualifiedName
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserStripsLeadingSlashFromInheritNamespacedClassName()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $package  = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getParentClass()
+            ->getPackage();
+
+        $this->assertEquals('bar', $package->getName());
+    }
+
+    /**
      * Tests that the parser ignores variable class instantiation.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
@@ -1442,14 +1501,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             array(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, 34),
         );
 
+        $actual = array();
         foreach ($testClass->getTokens() as $token) {
-            $expectedToken = array_shift($expected);
-
-            $this->assertNotNull($expectedToken);
-            $this->assertEquals($expectedToken[0], $token->type, 'Expected on line: ' . $expectedToken[1]);
+            $actual[] = array($token->type, $token->startLine);
         }
-
-        $this->assertSame(0, count($expected));
+        $this->assertSame($expected, $actual);
     }
 
     /**
