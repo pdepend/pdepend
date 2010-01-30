@@ -205,7 +205,10 @@ final class PHP_Depend_Util_Type
     {
         self::_initTypeToExtension();
 
-        return isset(self::$_typeNameToExtension[strtolower($typeName)]);
+        $normalizedName = ltrim($typeName, '\\');
+        $normalizedName = strtolower($normalizedName);
+
+        return isset(self::$_typeNameToExtension[$normalizedName]);
     }
 
     /**
@@ -220,9 +223,10 @@ final class PHP_Depend_Util_Type
     {
         self::_initTypeToExtension();
 
-        $typeName = strtolower($typeName);
-        if (isset(self::$_typeNameToExtension[$typeName])) {
-            return self::$_typeNameToExtension[$typeName];
+        $normalizedName = ltrim($typeName, '\\');
+        $normalizedName = strtolower($normalizedName);
+        if (isset(self::$_typeNameToExtension[$normalizedName])) {
+            return self::$_typeNameToExtension[$normalizedName];
         }
         return null;
     }

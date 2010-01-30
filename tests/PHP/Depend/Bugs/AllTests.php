@@ -74,6 +74,7 @@ require_once dirname(__FILE__) . '/DefaultPackageContainsBrokenAritfactsBug098Te
 require_once dirname(__FILE__) . '/ParserSetsIncorrectStartLineBug101Test.php';
 require_once dirname(__FILE__) . '/NamespaceKeywordInParameterTypeHintBug102Test.php';
 require_once dirname(__FILE__) . '/ParameterStringDefaultValueBug103Test.php';
+require_once dirname(__FILE__) . '/DefaultNamespaceBug106Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -129,6 +130,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ParserSetsIncorrectStartLineBug101Test');
         $suite->addTestSuite('PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParameterStringDefaultValueBug103Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_DefaultNamespaceBug106Test');
 
         return $suite;
     }
