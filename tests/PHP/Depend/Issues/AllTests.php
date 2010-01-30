@@ -59,6 +59,7 @@ require_once dirname(__FILE__) . '/PHPDependCatchesParsingErrorsIssue061Test.php
 require_once dirname(__FILE__) . '/ParserSetsCorrectParametersIssue032Test.php';
 require_once dirname(__FILE__) . '/ReflectionCompatibilityIssue67Test.php';
 require_once dirname(__FILE__) . '/StoreTokensForAllNodeTypesIssue079Test.php';
+require_once dirname(__FILE__) . '/HandlingOfIdeStyleDependenciesInCommentsIssue087Test.php';
 
 /**
  * Test suite for issues meta package.
@@ -99,6 +100,7 @@ class PHP_Depend_Issues_AllTests
         $suite->addTestSuite('PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test');
         $suite->addTestSuite('PHP_Depend_Issues_ReflectionCompatibilityIssue67Test');
         $suite->addTestSuite('PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test');
+        $suite->addTestSuite('PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test');
 
         return $suite;
     }
