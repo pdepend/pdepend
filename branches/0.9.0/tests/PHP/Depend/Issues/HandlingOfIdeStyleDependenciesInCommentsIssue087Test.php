@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for issue #87. Handling of dependencies declared in inline comments.
@@ -61,7 +61,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Issues_AbstractTest
 {
     /**
      * Tests that the parser recognizes a inline type definition within a comment.
@@ -83,7 +83,7 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithWhitespace()
     {
-        $packages   = self::parseSource('issues/087/' . __FUNCTION__ . '.php');
+        $packages   = self::parseTestCase();
         $function   = $packages->current()->getFunctions()->current();
         $dependency = $function->getDependencies()->current();
 
@@ -110,7 +110,7 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithoutWhitespace()
     {
-        $packages   = self::parseSource('issues/087/' . __FUNCTION__ . '.php');
+        $packages   = self::parseTestCase();
         $function   = $packages->current()->getFunctions()->current();
         $dependency = $function->getDependencies()->current();
 
@@ -140,7 +140,7 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserIgnoresDependencyDefinedInMultilineComment()
     {
-        $packages = self::parseSource('issues/087/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCase();
         $function = $packages->current()->getFunctions()->current();
 
         $dependencies = $function->getDependencies();
@@ -168,7 +168,7 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserIgnoresDependencyDefinedWithinAnotherComment()
     {
-        $packages = self::parseSource('issues/087/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCase();
         $function = $packages->current()->getFunctions()->current();
 
         $dependencies = $function->getDependencies();
