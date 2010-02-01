@@ -87,4 +87,14 @@ interface PHP_Depend_Metrics_AnalyzerI
      * @return void
      */
     function analyze(PHP_Depend_Code_NodeIterator $packages);
+
+    /**
+     * An analyzer that is active must return <b>true</b> to recognized by
+     * pdepend framework, while an analyzer that does not perform any action
+     * for any reason should return <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    function isEnabled();
 }
