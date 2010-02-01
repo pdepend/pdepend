@@ -63,6 +63,20 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 abstract class PHP_Depend_Issues_AbstractTest extends PHP_Depend_AbstractTest
 {
     /**
+     * Returns the parameters of the first function in the test case file.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    protected function getParametersOfFirstFunction()
+    {
+        $packages = self::parseTestCase();
+        return $packages->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters();
+    }
+    
+    /**
      * Parses the sourse for the calling test case.
      *
      * @param string $testCase Optional test case name.
