@@ -80,7 +80,7 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      */
     public function testParserSetsExpectedNumberOfFunctionParameters()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertEquals(3, $parameters->count());
     }
 
@@ -96,7 +96,7 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     public function testParserSetsExpectedPositionOfFunctionParameters()
     {
         $actual = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->getPosition();
         }
         $this->assertEquals(array(0, 1, 2), $actual);
@@ -114,7 +114,7 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     public function testParserSetsFunctionParametersInExpectedOrder()
     {
         $actual = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->getName();
         }
         $this->assertEquals(array('$foo', '$bar', '$foobar'), $actual);
@@ -132,7 +132,7 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     public function testParserSetsExpectedTypeHintsForFunctionParameters()
     {
         $actual = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = is_null($parameter->getClass());
         }
         $this->assertEquals(array(true, false, true), $actual);
@@ -205,20 +205,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
             $actual[] = is_null($parameter->getClass());
         }
         $this->assertEquals(array(true, false, true), $actual);
-    }
-
-    /**
-     * Returns the parameters of the first function in the test case file.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    private function _getParametersOfFirstFunction()
-    {
-        $packages = self::parseTestCase();
-        return $packages->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
     }
 
     /**
