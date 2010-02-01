@@ -67,6 +67,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsFunctionParameterByReference()
     {
@@ -80,6 +85,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsMultipleFunctionParameterByReference()
     {
@@ -97,6 +107,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsFunctionParameterByReferenceWithTypeHint()
     {
@@ -110,6 +125,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsMultipleFunctionParameterByReferenceWithTypeHint()
     {
@@ -126,6 +146,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * the array type hint.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsParameterArrayFlag()
     {
@@ -138,6 +163,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * scalar without type hint.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserDoesNotSetParameterArrayFlagForScalar()
     {
@@ -150,6 +180,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * a class type hint.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserDoesNotSetParameterArrayFlagForType()
     {
@@ -619,6 +654,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the user-defined flag for an analyzed class.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsUserDefinedFlagForClass()
     {
@@ -631,6 +671,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * class.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserNotSetsUserDefinedFlagForUnknownClass()
     {
