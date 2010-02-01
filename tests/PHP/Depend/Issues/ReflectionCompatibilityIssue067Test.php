@@ -75,7 +75,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserSetsFunctionParameterByReference()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $parameter  = $parameters->current();
 
         $this->assertTrue($parameter->isPassedByReference());
@@ -93,7 +93,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserSetsMultipleFunctionParameterByReference()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
 
         $expected = array('$foo' => true, '$bar' => false, '$foobar' => true);
         $actual   = array();
@@ -115,7 +115,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserSetsFunctionParameterByReferenceWithTypeHint()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $parameter  = $parameters->current();
 
         $this->assertTrue($parameter->isPassedByReference());
@@ -135,7 +135,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     {
         $expected = array('$foo' => true, '$bar' => true);
         $actual   = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getName()] = $parameter->isPassedByReference();
         }
         $this->assertEquals($expected, $actual);
@@ -154,7 +154,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserSetsParameterArrayFlag()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isArray());
     }
 
@@ -171,7 +171,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserDoesNotSetParameterArrayFlagForScalar()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertFalse($parameters->current()->isArray());
     }
 
@@ -188,7 +188,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserDoesNotSetParameterArrayFlagForType()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertFalse($parameters->current()->isArray());
     }
 
@@ -199,7 +199,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterWithoutDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertFalse($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -216,7 +216,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueNull()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertNull($parameters->current()->getDefaultValue());
     }
 
@@ -232,7 +232,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForNullDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -249,7 +249,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueBooleanFalse()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertFalse($parameters->current()->getDefaultValue());
     }
 
@@ -265,7 +265,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForFalseDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -282,7 +282,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueBooleanTrue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->getDefaultValue());
     }
 
@@ -298,7 +298,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForTrueDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -315,7 +315,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueFloat()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertEquals(42.23, $parameters->current()->getDefaultValue(), null, 0.001);
     }
 
@@ -331,7 +331,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForFloatDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -348,7 +348,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueInteger()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertSame(42, $parameters->current()->getDefaultValue());
     }
 
@@ -364,7 +364,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForIntegerDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -381,7 +381,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueString()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertSame('foo bar 42', $parameters->current()->getDefaultValue());
     }
 
@@ -397,7 +397,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForStringDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -414,7 +414,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueArray()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertSame(array(), $parameters->current()->getDefaultValue());
     }
 
@@ -430,7 +430,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -447,7 +447,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesDefaultParameterValueNestedArray()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertSame(array(), $parameters->current()->getDefaultValue());
     }
 
@@ -463,7 +463,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForNestedArrayDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -480,7 +480,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueConstant()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertSame(null, $parameters->current()->getDefaultValue());
     }
 
@@ -496,7 +496,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForConstantDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -513,7 +513,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterDefaultValueClassConstant()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertSame(null, $parameters->current()->getDefaultValue());
     }
 
@@ -529,7 +529,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsTrueForClassConstantDefaultValue()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertTrue($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -546,7 +546,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testParserHandlesParameterWithoutDefaultValueReturnsNull()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertNull($parameters->current()->getDefaultValue());
     }
 
@@ -562,7 +562,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      */
     public function testIsDefaultValueAvailableReturnsFalseWhenNoDefaultValueExists()
     {
-        $parameters = $this->_getParametersOfFirstFunction();
+        $parameters = $this->getParametersOfFirstFunction();
         $this->assertFalse($parameters->current()->isDefaultValueAvailable());
     }
 
@@ -581,7 +581,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     {
         $expected = array(false, false, false);
         $actual   = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->isOptional();
         }
         $this->assertEquals($expected, $actual);
@@ -602,7 +602,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     {
         $expected = array(false, false, false);
         $actual   = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getPosition()] = $parameter->isOptional();
         }
         $this->assertEquals($expected, $actual);
@@ -623,7 +623,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     {
         $expected = array(false, false, true);
         $actual   = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getPosition()] = $parameter->isOptional();
         }
         $this->assertEquals($expected, $actual);
@@ -644,7 +644,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     {
         $expected = array(true, true);
         $actual   = array();
-        foreach ($this->_getParametersOfFirstFunction() as $parameter) {
+        foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getPosition()] = $parameter->isOptional();
         }
         $this->assertEquals($expected, $actual);
@@ -1001,16 +1001,5 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
         return $packages->current()
             ->getFunctions()
             ->current();
-    }
-
-    /**
-     * Returns the parameters of the first function in the test case file.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    private function _getParametersOfFirstFunction()
-    {
-        return $this->_getFirstFunction()
-            ->getParameters();
     }
 }
