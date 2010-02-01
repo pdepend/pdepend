@@ -53,7 +53,7 @@ require_once 'PHP/Depend/Code/Filter/Composite.php';
 require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
 require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
-require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
+require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
 require_once 'PHP/Depend/Tokenizer/CacheDecorator.php';
 require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Input/CompositeFilter.php';
@@ -783,8 +783,11 @@ class PHP_Depend
             }
         }
 
-        return $this->_initAnalyseListeners(
-            new PHP_Depend_Metrics_AnalyzerLoader($analyzerSet, $options)
+        $loader = new PHP_Depend_Metrics_AnalyzerLoader($analyzerSet, $options);
+        $loader->setClassLocator(
+            new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator()
         );
+
+        return $this->_initAnalyseListeners($loader);
     }
 }
