@@ -114,6 +114,18 @@ class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
     }
 
     /**
+     * By default all analyzers are enabled. Overwrite this method to provide
+     * state based disabling/enabling.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    public function isEnabled()
+    {
+        return true;
+    }
+
+    /**
      * Returns the project metrics.
      *
      * @return array(string=>mixed)

@@ -50,10 +50,9 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once dirname(__FILE__) . '/AnalyzerNodeAwareDummy.php';
 require_once dirname(__FILE__) . '/AnalyzerProjectAwareDummy.php';
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Log/Summary/Xml.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * Test case for the xml summary log.
@@ -153,6 +152,42 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::logs
+     * @group pdepend::logs::summary
+     * @group unittest
+     */
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware()
+    {
+        $logger = new PHP_Depend_Log_Summary_Xml();
+        $actual = $logger->log($this->getMock('PHP_Depend_Metrics_ProjectAwareI'));
+
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::logs
+     * @group pdepend::logs::summary
+     * @group unittest
+     */
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware()
+    {
+        $logger = new PHP_Depend_Log_Summary_Xml();
+        $actual = $logger->log($this->getMock('PHP_Depend_Metrics_NodeAwareI'));
+
+        $this->assertTrue($actual);
+    }
+
+    /**
      * Tests that {@link PHP_Depend_Log_Summary_Xml::write()} generates the
      * expected document structure for the source, but without any applied
      * metrics.
@@ -190,8 +225,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $log = new PHP_Depend_Log_Summary_Xml();
         $log->setLogFile($this->resultFile);
         $log->setCode(new PHP_Depend_Code_NodeIterator(array()));
-        $this->assertTrue($log->log($resultOne));
-        $this->assertTrue($log->log($resultTwo));
+        $log->log($resultOne);
+        $log->log($resultTwo);
 
         $log->close();
 
@@ -243,8 +278,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $log = new PHP_Depend_Log_Summary_Xml();
         $log->setLogFile($this->resultFile);
         $log->setCode($this->packages);
-        $this->assertTrue($log->log($resultOne));
-        $this->assertTrue($log->log($resultTwo));
+        $log->log($resultOne);
+        $log->log($resultTwo);
 
         $log->close();
 
