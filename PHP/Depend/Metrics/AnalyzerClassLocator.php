@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
@@ -46,12 +46,8 @@
  * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
-
 /**
- * Test case for the analyzer loader.
+ * Base interface for an analyzer source locator.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,37 +58,13 @@ require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
+interface PHP_Depend_Metrics_AnalyzerClassLocator
 {
     /**
-     * Tests that the analyzer loader loads the correct analyzer instances.
+     * Returns an associative array with analyzer source files and the corresponding
+     * analyzer class.
      *
-     * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
+     * @return array(string=>string)
      */
-    public function testLoadKnownAnalyzersByInstance()
-    {
-        $expected = array(
-            'PHP_Depend_Metrics_CodeRank_Analyzer',
-            'PHP_Depend_Metrics_Hierarchy_Analyzer',
-        );
-        
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader($expected);
-        $loader->setClassLocator(new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator());
-
-        $actual = array();
-        foreach ($loader->getIterator() as $analyzer) {
-            $actual[] = get_class($analyzer);
-        }
-        $this->assertEquals($expected, $actual);
-    }
-
-
-    public function testFoo()
-    {
-        
-    }
+    function find();
 }

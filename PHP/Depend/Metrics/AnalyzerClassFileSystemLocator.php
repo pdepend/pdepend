@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
@@ -44,14 +44,14 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
+ * @since      0.9.10
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
+require_once 'PHP/Depend/Metrics/AnalyzerClassLocator.php';
 
 /**
- * Test case for the analyzer loader.
+ * Locator that searches for PHP_Depend analyzers that follow the PHP_Depend
+ * convention and are present the PHP_Depend source tree.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,38 +61,81 @@ require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * @since      0.9.10
  */
-class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
+    implements PHP_Depend_Metrics_AnalyzerClassLocator
 {
     /**
-     * Tests that the analyzer loader loads the correct analyzer instances.
+     * The root search directory.
      *
-     * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
+     * @var string
      */
-    public function testLoadKnownAnalyzersByInstance()
-    {
-        $expected = array(
-            'PHP_Depend_Metrics_CodeRank_Analyzer',
-            'PHP_Depend_Metrics_Hierarchy_Analyzer',
-        );
-        
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader($expected);
-        $loader->setClassLocator(new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator());
+    private $_searchDirectory = null;
 
-        $actual = array();
-        foreach ($loader->getIterator() as $analyzer) {
-            $actual[] = get_class($analyzer);
+    /**
+     * Mapping of installed analyzer class files and classes.
+     *
+     * @var array(string=>string)
+     */
+    private $_analyzers = null;
+
+    /**
+     * Constructs a new locator instance.
+     *
+     * @param string $searchDirectory The root search directory.
+     */
+    public function __construct($searchDirectory = null)
+    {
+        if ($searchDirectory === null) {
+            $this->_searchDirectory = dirname(__FILE__);
+        } else {
+            $this->_searchDirectory = $searchDirectory;
         }
-        $this->assertEquals($expected, $actual);
     }
 
-
-    public function testFoo()
+    /**
+     * Returns an associative array with analyzer source files and the corresponding
+     * analyzer class.
+     *
+     * @return array(string=>string)
+     */
+    public function find()
     {
-        
+        if ($this->_analyzers === null) {
+            $this->_analyzers = $this->_find();
+        }
+        return $this->_analyzers;
+    }
+
+    /**
+     * Performs a recursive search for analyzers in the configured search
+     * directory.
+     *
+     * @return array(string=>string)
+     */
+    private function _find()
+    {
+        $result = array();
+
+        $dirs = new DirectoryIterator($this->_searchDirectory);
+        foreach ($dirs as $dir) {
+            if (!$dir->isDir() || $dir->isDot()) {
+                continue;
+            }
+            $files = new DirectoryIterator($dir->getPathname());
+            foreach ($files as $file) {
+                if ($file->getFilename() !== 'Analyzer.php') {
+                    continue;
+                }
+                include_once $file->getPathname();
+
+                $package   = $dir->getFilename();
+                $className = sprintf('PHP_Depend_Metrics_%s_Analyzer', $package);
+
+                $result[$file->getPathname()] = $className;
+            }
+        }
+        return $result;
     }
 }
