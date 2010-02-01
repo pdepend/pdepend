@@ -66,14 +66,14 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * Mapping of all installed analyzers.
      *
-     * @var array(string=>string) $_installedAnalyzers
+     * @var array(string=>string)
      */
     private $_installedAnalyzers = null;
 
     /**
      * All matching analyzer instances.
      *
-     * @var array(PHP_Depend_Metrics_AnalyzerI) $_analyzers
+     * @var array(string=>PHP_Depend_Metrics_AnalyzerI)
      */
     private $_analyzers = array();
 

@@ -147,5 +147,16 @@ class PHP_Depend_Log_DummyAnalyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
     }
-    
+
+    /**
+     * By default all analyzers are enabled. Overwrite this method to provide
+     * state based disabling/enabling.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    public function isEnabled()
+    {
+        return true;
+    }
 }

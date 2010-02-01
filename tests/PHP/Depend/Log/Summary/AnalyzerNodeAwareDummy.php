@@ -114,6 +114,18 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
     }
 
     /**
+     * By default all analyzers are enabled. Overwrite this method to provide
+     * state based disabling/enabling.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    public function isEnabled()
+    {
+        return true;
+    }
+
+    /**
      * Returns an array with metrics for the requested node.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.

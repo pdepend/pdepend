@@ -105,6 +105,22 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     }
 
     /**
+     * An analyzer that is active must return <b>true</b> to recognized by
+     * pdepend framework, while an analyzer that does not perform any action
+     * for any reason should return <b>false</b>.
+     *
+     * By default all analyzers are enabled. Overwrite this method to provide
+     * state based disabling/enabling.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    public function isEnabled()
+    {
+        return true;
+    }
+
+    /**
      * The analyzer implementation should call this method when it starts the
      * code processing. This method will send an analyzer start event to all
      * registered listeners.

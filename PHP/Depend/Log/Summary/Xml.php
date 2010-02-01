@@ -95,19 +95,20 @@ class PHP_Depend_Log_Summary_Xml
     protected $fileSet = array();
 
     /**
-     * List of all generated project metrics.
-     *
-     * @var array(string=>mixed) $projectMetrics
-     */
-    protected $projectMetrics = array();
-
-    /**
      * List of all analyzers that implement the node aware interface
      * {@link PHP_Depend_Metrics_NodeAwareI}.
      *
-     * @var array(PHP_Depend_Metrics_AnalyzerI) $_nodeAwareAnalyzers
+     * @var array(PHP_Depend_Metrics_AnalyzerI)
      */
     private $_nodeAwareAnalyzers = array();
+
+    /**
+     * List of all analyzers that implement the node aware interface
+     * {@link PHP_Depend_Metrics_ProjectAwareI}.
+     *
+     * @var array(PHP_Depend_Metrics_ProjectAwareI)
+     */
+    private $_projectAwareAnalyzers = array();
 
     /**
      * The internal used xml stack.
@@ -164,23 +165,15 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $accept = false;
-
         if ($analyzer instanceof PHP_Depend_Metrics_ProjectAwareI) {
-            // Get project metrics
-            $metrics = $analyzer->getProjectMetrics();
-            // Merge with existing metrics.
-            $this->projectMetrics = array_merge($this->projectMetrics, $metrics);
-
-            $accept = true;
+            $this->_projectAwareAnalyzers[] = $analyzer;
+            return true;
         }
         if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
             $this->_nodeAwareAnalyzers[] = $analyzer;
-
-            $accept = true;
+            return true;
         }
-
-        return $accept;
+        return false;
     }
 
     /**
@@ -199,13 +192,11 @@ class PHP_Depend_Log_Summary_Xml
 
         $dom->formatOutput = true;
 
-        ksort($this->projectMetrics);
-
         $metrics = $dom->createElement('metrics');
         $metrics->setAttribute('generated', date('Y-m-d\TH:i:s'));
         $metrics->setAttribute('pdepend', '@package_version@');
 
-        foreach ($this->projectMetrics as $name => $value) {
+        foreach ($this->_getProjectMetrics() as $name => $value) {
             $metrics->setAttribute($name, $value);
         }
 
@@ -231,6 +222,26 @@ class PHP_Depend_Log_Summary_Xml
         $dom->appendChild($metrics);
 
         $dom->save($this->_logFile);
+    }
+
+    /**
+     * Returns an array with all collected project metrics.
+     *
+     * @return array(string=>mixed)
+     * @since 0.9.10
+     */
+    private function _getProjectMetrics()
+    {
+        $projectMetrics = array();
+        foreach ($this->_projectAwareAnalyzers as $analyzer) {
+            $projectMetrics = array_merge(
+                $projectMetrics,
+                $analyzer->getProjectMetrics()
+            );
+        }
+        ksort($projectMetrics);
+
+        return $projectMetrics;
     }
 
     /**

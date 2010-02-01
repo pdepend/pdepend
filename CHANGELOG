@@ -1,11 +1,14 @@
 PHP_Depend 0.9.10
 -----------------
 
+- Fixed #106: Filter algorithm is broken for namespaced internal classes. Fixed
+  in svn revision #1039.
 - Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
   revision #1032.
 - Fixed #111: Dynamic Strings are treated as literal strings. Fixed in svn
   revision #1037.
 - Performance intensive calculation result cached.
+- Test code restructured and improved.
 
 PHP_Depend 0.9.9
 ----------------
