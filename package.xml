@@ -24,11 +24,14 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
+- Fixed #106: Filter algorithm is broken for namespaced internal classes. Fixed
+  in svn revision #1039.
 - Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
   revision #1032.
 - Fixed #111: Dynamic Strings are treated as literal strings. Fixed in svn
   revision #1037.
 - Performance intensive calculation result cached.
+- Test code restructured and improved.
   </notes>
   <contents>
     <dir name="/">
