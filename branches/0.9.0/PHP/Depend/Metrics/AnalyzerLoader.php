@@ -142,45 +142,67 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     private function _loadAcceptedAnalyzers(array $acceptedTypes)
     {
         $analyzers = array();
-        foreach ($this->_classLocator->find() as $fileName => $className) {
-
-            include_once $fileName;
-
-            $parents    = class_parents($className, false);
-            $implements = class_implements($className, false);
-
-            $providedTypes = array($className);
-            $providedTypes = array_merge($providedTypes, $parents);
-            $providedTypes = array_merge($providedTypes, $implements);
-
-            // Skip if this analyzer doesn't provide an accepted type
-            if (count(array_intersect($acceptedTypes, $providedTypes)) === 0) {
-                continue;
+        foreach ($this->_classLocator->find() as $className) {
+            if ($this->_implementsOneExpectedType($className, $acceptedTypes)) {
+                $analyzers[] = $this->_createOrReturnAnalyzer($className);
             }
-
-            // Fist check for already loaded instance
-            if (isset($this->_analyzers[$className])) {
-                // Store reference
-                $analyzers[] = $this->_analyzers[$className];
-
-                continue;
-            }
-            // Create a new instance
-            $analyzer = new $className($this->_options);
-            if (!$analyzer->isEnabled()) {
-                continue;
-            }
-
-            $analyzer = $this->_initAnalyzer($analyzer);
-
-            // Add analyzer to the return value array
-            $analyzers[] = $analyzer;
-
-            // Add analyzer to global array
-            $this->_analyzers[$className] = $analyzer;
         }
-
         return $analyzers;
+    }
+
+    /**
+     * This method checks if the given analyzer class implements one of the
+     * expected analyzer types.
+     *
+     * @param string        $className     Class name of an analyzer.
+     * @param array(string) $expectedTypes List of accepted analyzer types.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    private function _implementsOneExpectedType($className, array $expectedTypes)
+    {
+        $parents    = class_parents($className, false);
+        $implements = class_implements($className, false);
+
+        $providedTypes = array($className);
+        $providedTypes = array_merge($providedTypes, $parents);
+        $providedTypes = array_merge($providedTypes, $implements);
+
+        return (count(array_intersect($expectedTypes, $providedTypes)) > 0);
+    }
+
+    /**
+     * This method creates a new analyzer instance or returns a previously
+     * created instance of the given class type.
+     *
+     * @param string $className Class name of an analyzer.
+     *
+     * @return PHP_Depend_Metrics_AnalyzerI
+     * @since 0.9.10
+     */
+    private function _createOrReturnAnalyzer($className)
+    {
+        if (!isset($this->_analyzers[$className])) {
+            $this->_analyzers[$className] = $this->_createAndConfigure($className);
+        }
+        return $this->_analyzers[$className];
+    }
+
+    /**
+     * Creates an analyzer instance of the given class type.
+     *
+     * @param string $className Class name of an analyzer.
+     *
+     * @return PHP_Depend_Metrics_AnalyzerI
+     * @since 0.9.10
+     */
+    private function _createAndConfigure($className)
+    {
+        $analyzer = new $className($this->_options);
+        $analyzer = $this->_configure($analyzer);
+
+        return $analyzer;
     }
 
     /**
@@ -191,7 +213,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @return PHP_Depend_Metrics_AnalyzerI
      * @since 0.9.10
      */
-    private function _initAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    private function _configure(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         if (!($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI)) {
             return $analyzer;
