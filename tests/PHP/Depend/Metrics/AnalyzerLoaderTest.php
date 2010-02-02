@@ -49,6 +49,7 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
+require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
 
 /**
  * Test case for the analyzer loader.
@@ -87,12 +88,8 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
         foreach ($loader->getIterator() as $analyzer) {
             $actual[] = get_class($analyzer);
         }
+        sort($actual);
+
         $this->assertEquals($expected, $actual);
-    }
-
-
-    public function testFoo()
-    {
-        
     }
 }
