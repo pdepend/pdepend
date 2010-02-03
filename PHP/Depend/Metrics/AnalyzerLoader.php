@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
+require_once 'PHP/Depend/Metrics/AnalyzerIterator.php';
 
 /**
  * This class provides a simple way to load all required analyzers by class,
@@ -117,7 +117,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
         if ($this->_analyzers === null) {
             $this->_initAnalyzers();
         }
-        return new ArrayIterator($this->_analyzers);
+        return new PHP_Depend_Metrics_AnalyzerIterator($this->_analyzers);
     }
 
     /**
@@ -142,9 +142,9 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     private function _loadAcceptedAnalyzers(array $acceptedTypes)
     {
         $analyzers = array();
-        foreach ($this->_classLocator->find() as $className) {
-            if ($this->_implementsOneExpectedType($className, $acceptedTypes)) {
-                $analyzers[] = $this->_createOrReturnAnalyzer($className);
+        foreach ($this->_classLocator->find() as $reflection) {
+            if ($this->_isInstanceOf($reflection, $acceptedTypes)) {
+                $analyzers[] = $this->_createOrReturnAnalyzer($reflection);
             }
         }
         return $analyzers;
@@ -154,55 +154,62 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * This method checks if the given analyzer class implements one of the
      * expected analyzer types.
      *
-     * @param string        $className     Class name of an analyzer.
-     * @param array(string) $expectedTypes List of accepted analyzer types.
+     * @param ReflectionClass $reflection    Reflection class for an analyzer.
+     * @param array(string)   $expectedTypes List of accepted analyzer types.
      *
      * @return boolean
      * @since 0.9.10
      */
-    private function _implementsOneExpectedType($className, array $expectedTypes)
+    private function _isInstanceOf(ReflectionClass $reflection, array $expectedTypes)
     {
-        $parents    = class_parents($className, false);
-        $implements = class_implements($className, false);
-
-        $providedTypes = array($className);
-        $providedTypes = array_merge($providedTypes, $parents);
-        $providedTypes = array_merge($providedTypes, $implements);
-
-        return (count(array_intersect($expectedTypes, $providedTypes)) > 0);
+        foreach ($expectedTypes as $type) {
+            if (interface_exists($type) && $reflection->implementsInterface($type)) {
+                return true;
+            }
+            if (class_exists($type) && $reflection->isSubclassOf($type)) {
+                return true;
+            }
+            if (strcasecmp($reflection->getName(), $type) === 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * This method creates a new analyzer instance or returns a previously
-     * created instance of the given class type.
+     * created instance of the given reflection instance.
      *
-     * @param string $className Class name of an analyzer.
+     * @param ReflectionClass $reflection Reflection class for an analyzer.
      *
      * @return PHP_Depend_Metrics_AnalyzerI
      * @since 0.9.10
      */
-    private function _createOrReturnAnalyzer($className)
+    private function _createOrReturnAnalyzer(ReflectionClass $reflection)
     {
-        if (!isset($this->_analyzers[$className])) {
-            $this->_analyzers[$className] = $this->_createAndConfigure($className);
+        $name = $reflection->getName();
+        if (!isset($this->_analyzers[$name])) {
+            $this->_analyzers[$name] = $this->_createAndConfigure($reflection);
         }
-        return $this->_analyzers[$className];
+        return $this->_analyzers[$name];
     }
 
     /**
-     * Creates an analyzer instance of the given class type.
+     * Creates an analyzer instance of the given reflection class instance.
      *
-     * @param string $className Class name of an analyzer.
+     * @param ReflectionClass $reflection Reflection class for an analyzer.
      *
      * @return PHP_Depend_Metrics_AnalyzerI
      * @since 0.9.10
      */
-    private function _createAndConfigure($className)
+    private function _createAndConfigure(ReflectionClass $reflection)
     {
-        $analyzer = new $className($this->_options);
-        $analyzer = $this->_configure($analyzer);
-
-        return $analyzer;
+        if ($reflection->getConstructor()) {
+            $analyzer = $reflection->newInstance($this->_options);
+        } else {
+            $analyzer = $reflection->newInstance();
+        }
+        return $this->_configure($analyzer);
     }
 
     /**
