@@ -74,9 +74,9 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     private $_classPath = null;
 
     /**
-     * Mapping of installed analyzer class files and classes.
+     * Array containing reflection classes for all found analyzer implementations.
      *
-     * @var array(string=>string)
+     * @var array(ReflectionClass)
      */
     private $_analyzers = null;
 
@@ -102,9 +102,9 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     }
 
     /**
-     * Returns an array with all analyzer class names.
+     * Returns an array with reflection instances for all analyzer classes.
      *
-     * @return array(string)
+     * @return array(ReflectionClass)
      */
     public function find()
     {
@@ -115,10 +115,10 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     }
 
     /**
-     * Performs a recursive search for analyzers in the configured search
+     * Performs a recursive search for analyzers in the configured class path
      * directory.
      *
-     * @return array(string)
+     * @return array(ReflectionClass)
      */
     private function _find()
     {
@@ -134,7 +134,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
 
                 $className = $this->_createClassNameFromPath($file->getPathname());
                 if ($this->_isAnalyzerClass($className)) {
-                    $result[] = $className;
+                    $result[] = new ReflectionClass($className);
                 }
             }
         }
