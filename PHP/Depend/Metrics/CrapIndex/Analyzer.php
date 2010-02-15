@@ -245,7 +245,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
         $report = $this->_createOrReturnCoverageReport();
 
         $complexity = $this->_ccnAnalyzer->getCCN2($callable);
-        $coverage   = $coverageReport->getCoverage($callable);
+        $coverage   = $report->getCoverage($callable);
 
         if ($coverage == 0) {
             return pow($complexity, 2) + $complexity;
