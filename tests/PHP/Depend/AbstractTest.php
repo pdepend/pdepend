@@ -69,9 +69,12 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/_run')
-        );
+        $run = dirname(__FILE__) . '/_run';
+        if (file_exists($run) === false) {
+            mkdir($run, 0755);
+        }
+
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($run));
 
         foreach ($files as $file) {
             $pathName = realpath($file->getPathname());
