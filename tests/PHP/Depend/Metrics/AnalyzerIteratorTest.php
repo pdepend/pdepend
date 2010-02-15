@@ -87,7 +87,7 @@ class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * testIteratorReturnsEnabledAnalyzerInstances
+     * testIteratorDoesNotReturnDisabledAnalyzerInstances
      *
      * @return void
      * @covers PHP_Depend_Metrics_AnalyzerIterator
