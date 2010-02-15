@@ -1,4 +1,50 @@
 <?php
+/**
+ * This file is part of PHP_Depend.
+ *
+ * PHP Version 5
+ *
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   * Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *   * Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *   * Neither the name of Manuel Pichler nor the names of his
+ *     contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics_CrapIndex
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://pdepend.org/
+ */
 
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
@@ -6,13 +52,46 @@ require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
 require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 require_once 'PHP/Depend/Util/Coverage/Factory.php';
 
+/**
+ * This analyzer calculates the C.R.A.P. index for methods an functions when a
+ * clover coverage report was supplied. This report can be supplied by using the
+ * command line option <b>--coverage-report=</b>.
+ *
+ * @category   QualityAssurance
+ * @package    PHP_Depend
+ * @subpackage Metrics_CrapIndex
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://pdepend.org/
+ */
 class PHP_Depend_Metrics_CrapIndex_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AggregateAnalyzerI,
                PHP_Depend_Metrics_NodeAwareI
 {
+    /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
 
-    private $_metrics = array();
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_CRAP_INDEX = 'crap';
+
+    /**
+     * The report option name.
+     */
+    const REPORT_OPTION = 'coverage-report';
+
+    /**
+     * Calculated crap metrics.
+     *
+     * @var array(string=>array)
+     */
+    private $_metrics = null;
 
     /**
      * The coverage report instance representing the supplied coverage report
@@ -28,11 +107,24 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      */
     private $_ccnAnalyzer = array();
 
+    /**
+     * Returns <b>true</b> when this analyzer is enabled.
+     *
+     * @return boolean
+     */
     public function isEnabled()
     {
-        return isset($this->options['coverage-report']);
+        return isset($this->options[self::REPORT_OPTION]);
     }
 
+    /**
+     * Returns the calculated metrics for the given node or an empty <b>array</b>
+     * when no metrics exist for the given node.
+     *
+     * @param PHP_Depend_Code_NodeI $node
+     *
+     * @return array(string=>float)
+     */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
         if (isset($this->_metrics[$node->getUUID()])) {
@@ -53,13 +145,15 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
 
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        if ($this->isEnabled()) {
+        if ($this->isEnabled() && $this->_metrics === null) {
             $this->_analyze($packages);
         }
     }
 
     private function _analyze(PHP_Depend_Code_NodeIterator $packages)
     {
+        $this->_metrics = array();
+        
         $this->_ccnAnalyzer->analyze($packages);
 
         $this->fireStartAnalyzer();

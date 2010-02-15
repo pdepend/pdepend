@@ -900,7 +900,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * was defined.
      *
      * @return void
-     * @covers PHP_Depend_Parameter
+     * @covers PHP_Depend_Code_Parameter
      * @covers PHP_Depend_Parser_MissingValueException
      * @group pdepend
      * @group pdepend::issues
