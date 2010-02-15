@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
@@ -48,13 +48,12 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
-require_once 'PHP/Depend/Metrics/AnalyzerClassLocator.php';
-require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
+require_once 'PHP/Depend/Metrics/AnalyzerIterator.php';
 
 /**
- * Test case for the analyzer loader.
+ * Test case for the {@link PHP_Depend_Metrics_AnalyzerIterator} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -65,96 +64,48 @@ require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that the analyzer loader loads the correct analyzer instances.
+     * testIteratorReturnsEnabledAnalyzerInstances
      *
      * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
+     * @covers PHP_Depend_Metrics_AnalyzerIterator
      * @group pdepend
      * @group pdepend::metrics
      * @group unittest
      */
-    public function testLoadKnownAnalyzersByInstance()
-    {
-        $expected = array(
-            'PHP_Depend_Metrics_CodeRank_Analyzer',
-            'PHP_Depend_Metrics_Hierarchy_Analyzer',
-        );
-        
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader($expected);
-        $loader->setClassLocator(new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator());
-
-        $actual = array();
-        foreach ($loader->getIterator() as $analyzer) {
-            $actual[] = get_class($analyzer);
-        }
-        sort($actual);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * testLoaderOnlyReturnsEnabledAnalyzerInstances
-     *
-     * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
-     */
-    public function testLoaderOnlyReturnsEnabledAnalyzerInstances()
+    public function testIteratorReturnsEnabledAnalyzerInstances()
     {
         $analyzer = $this->getMock('PHP_Depend_Metrics_AnalyzerI');
-        $analyzer->expects($this->once())
+        $analyzer->expects($this->exactly(2))
             ->method('isEnabled')
             ->will($this->returnValue(true));
 
-        $reflection = $this->getMock('ReflectionObject', array('newInstance'), array($analyzer));
-        $reflection->expects($this->once())
-            ->method('newInstance')
-            ->will($this->returnValue($analyzer));
-
-        $locator = $this->getMock('PHP_Depend_Metrics_AnalyzerClassLocator');
-        $locator->expects($this->once())
-            ->method('findAll')
-            ->will($this->returnValue(array($reflection)));
-
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
-        $loader->setClassLocator($locator);
-        $this->assertEquals(1, iterator_count($loader->getIterator()));
+        $iterator = new PHP_Depend_Metrics_AnalyzerIterator(array($analyzer, $analyzer));
+        $this->assertEquals(2, iterator_count($iterator));
     }
 
-
     /**
-     * testLoaderNotReturnsDisabledAnalyzerInstances
+     * testIteratorReturnsEnabledAnalyzerInstances
      *
      * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
+     * @covers PHP_Depend_Metrics_AnalyzerIterator
      * @group pdepend
      * @group pdepend::metrics
      * @group unittest
      */
-    public function testLoaderNotReturnsDisabledAnalyzerInstances()
+    public function testIteratorDoesNotReturnDisabledAnalyzerInstances()
     {
         $analyzer = $this->getMock('PHP_Depend_Metrics_AnalyzerI');
-        $analyzer->expects($this->once())
+        $analyzer->expects($this->at(0))
+            ->method('isEnabled')
+            ->will($this->returnValue(true));
+        $analyzer->expects($this->at(1))
             ->method('isEnabled')
             ->will($this->returnValue(false));
 
-        $reflection = $this->getMock('ReflectionObject', array('newInstance'), array($analyzer));
-        $reflection->expects($this->once())
-            ->method('newInstance')
-            ->will($this->returnValue($analyzer));
-
-        $locator = $this->getMock('PHP_Depend_Metrics_AnalyzerClassLocator');
-        $locator->expects($this->once())
-            ->method('findAll')
-            ->will($this->returnValue(array($reflection)));
-
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
-        $loader->setClassLocator($locator);
-        $this->assertEquals(0, iterator_count($loader->getIterator()));
+        $iterator = new PHP_Depend_Metrics_AnalyzerIterator(array($analyzer, $analyzer));
+        $this->assertEquals(1, iterator_count($iterator));
     }
 }
