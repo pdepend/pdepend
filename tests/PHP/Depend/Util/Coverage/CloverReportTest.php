@@ -121,6 +121,60 @@ class PHP_Depend_Util_Coverage_CloverReportTest extends PHPUnit_Framework_TestCa
     }
 
     /**
+     * testNamespacedReportReturnsExpected0PercentCoverage
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Coverage_CloverReport
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::coverage
+     * @group unittest
+     */
+    public function testNamespacedReportReturnsExpected0PercentCoverage()
+    {
+        $report   = $this->_createNamespacedCloverReport();
+        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+
+        $this->assertEquals(0, $coverage);
+    }
+
+    /**
+     * testNamespacedReportReturnsExpected50PercentCoverage
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Coverage_CloverReport
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::coverage
+     * @group unittest
+     */
+    public function testNamespacedReportReturnsExpected50PercentCoverage()
+    {
+        $report   = $this->_createNamespacedCloverReport();
+        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+
+        $this->assertEquals(50, $coverage);
+    }
+
+    /**
+     * testNamespacedReportReturnsExpected100PercentCoverage
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Coverage_CloverReport
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::coverage
+     * @group unittest
+     */
+    public function testNamespacedReportReturnsExpected100PercentCoverage()
+    {
+        $report   = $this->_createNamespacedCloverReport();
+        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+
+        $this->assertEquals(100, $coverage);
+    }
+
+    /**
      * Creates a clover coverage report instance.
      *
      * @return PHP_Depend_Util_Coverage_CloverReport
@@ -128,6 +182,17 @@ class PHP_Depend_Util_Coverage_CloverReportTest extends PHPUnit_Framework_TestCa
     private function _createCloverReport()
     {
         $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover.xml');
+        return new PHP_Depend_Util_Coverage_CloverReport($sxml);
+    }
+
+    /**
+     * Creates a clover coverage report instance.
+     *
+     * @return PHP_Depend_Util_Coverage_CloverReport
+     */
+    private function _createNamespacedCloverReport()
+    {
+        $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover-namespaced.xml');
         return new PHP_Depend_Util_Coverage_CloverReport($sxml);
     }
 

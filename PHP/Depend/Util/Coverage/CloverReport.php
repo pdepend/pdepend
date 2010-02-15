@@ -82,14 +82,40 @@ class PHP_Depend_Util_Coverage_CloverReport
      */
     public function __construct(SimpleXMLElement $sxml)
     {
-        foreach ($sxml->project->package as $package) {
-            foreach ($package->file as $file) {
-                $lines = array();
-                foreach ($file->line as $line) {
-                    $lines[(int) $line['num']] = (0 < (int) $line['count']);
-                }
-                $this->_fileLineCoverage[(string) $file['name']] = $lines;
+        $this->_readProjectCoverage($sxml->project);
+    }
+
+    /**
+     * Reads the coverage information for a project.
+     *
+     * @param SimpleXMLElement $sxml Element representing the clover project tag.
+     *
+     * @return void
+     */
+    private function _readProjectCoverage(SimpleXMLElement $sxml)
+    {
+        $this->_readFileCoverage($sxml);
+        foreach ($sxml->package as $package) {
+            $this->_readFileCoverage($package);
+        }
+    }
+
+    /**
+     * Reads the coverage information for all file elements under the given
+     * parent.
+     *
+     * @param SimpleXMLElement $sxml Element representing a file parent element.
+     *
+     * @return void
+     */
+    private function _readFileCoverage(SimpleXMLElement $sxml)
+    {
+        foreach ($sxml->file as $file) {
+            $lines = array();
+            foreach ($file->line as $line) {
+                $lines[(int) $line['num']] = (0 < (int) $line['count']);
             }
+            $this->_fileLineCoverage[(string) $file['name']] = $lines;
         }
     }
 

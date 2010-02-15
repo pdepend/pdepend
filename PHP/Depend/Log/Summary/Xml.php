@@ -165,15 +165,18 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
+        $accepted = false;
         if ($analyzer instanceof PHP_Depend_Metrics_ProjectAwareI) {
             $this->_projectAwareAnalyzers[] = $analyzer;
-            return true;
+
+            $accepted = true;
         }
         if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
             $this->_nodeAwareAnalyzers[] = $analyzer;
-            return true;
+            
+            $accepted = true;
         }
-        return false;
+        return $accepted;
     }
 
     /**
