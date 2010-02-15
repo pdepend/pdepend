@@ -3476,6 +3476,12 @@ and the NDepend metric tool.
       <extension>
         <name>spl</name>
       </extension>
+      <extension>
+          <name>tokenizer</name>
+      </extension>
+      <extension>
+          <name>simplexml</name>
+      </extension>
     </required>
     <optional>
       <package>
