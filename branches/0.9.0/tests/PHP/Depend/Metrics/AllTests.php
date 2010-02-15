@@ -57,6 +57,7 @@ require_once dirname(__FILE__) . '/AnalyzerIteratorTest.php';
 require_once dirname(__FILE__) . '/ClassLevel/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/CodeRank/AllTests.php';
 require_once dirname(__FILE__) . '/Coupling/AnalyzerTest.php';
+require_once dirname(__FILE__) . '/CrapIndex/AllTests.php';
 require_once dirname(__FILE__) . '/CyclomaticComplexity/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/Dependency/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/Hierarchy/AnalyzerTest.php';
@@ -98,6 +99,7 @@ class PHP_Depend_Metrics_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics - AllTests');
 
         $suite->addTest(PHP_Depend_Metrics_CodeRank_AllTests::suite());
+        $suite->addTest(PHP_Depend_Metrics_CrapIndex_AllTests::suite());
 
         $suite->addTestSuite('PHP_Depend_Metrics_AnalyzerLoaderTest');
         $suite->addTestSuite('PHP_Depend_Metrics_AnalyzerIteratorTest');
