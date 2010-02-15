@@ -49,6 +49,7 @@
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once dirname(__FILE__) . '/AnalyzerNodeAwareDummy.php';
 require_once dirname(__FILE__) . '/AnalyzerProjectAwareDummy.php';
+require_once dirname(__FILE__) . '/AnalyzerNodeAndProjectAwareDummy.php';
 
 require_once 'PHP/Depend/Log/Summary/Xml.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
@@ -231,6 +232,37 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $log->close();
 
         $fileName = 'project-aware-result-set-without-code.xml';
+        $this->assertXmlStringEqualsXmlString(
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            file_get_contents($this->resultFile)
+        );
+    }
+
+    /**
+     * testAnalyzersThatImplementProjectAndNodeAwareAsExpected
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::summary
+     * @group unittest
+     */
+    public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected()
+    {
+        $analyzer = new PHP_Depend_Log_Summary_AnalyzerNodeAndProjectAwareDummy(
+            array('foo' => 42, 'bar' => 23),
+            array('baz' => 23, 'foobar' => 42)
+        );
+
+        $log = new PHP_Depend_Log_Summary_Xml();
+        $log->setLogFile($this->resultFile);
+        $log->setCode($this->packages);
+        $log->log($analyzer);
+
+        $log->close();
+
+        $fileName = 'node-and-project-aware-result-set.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
             file_get_contents($this->resultFile)
