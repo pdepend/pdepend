@@ -310,7 +310,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             '-d',
             'html_errors',
             '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
-            dirname(__FILE__)
+            __FILE__
         );
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
@@ -337,7 +337,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             '-d',
             'html_errors=off',
             '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
-            dirname(__FILE__)
+            __FILE__
         );
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
@@ -370,7 +370,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '--configuration=' . $configFile,
             '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
-            dirname(__FILE__)
+            __FILE__
         );
 
         // Result previous instance
@@ -378,14 +378,67 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        // Remove temp config file
-        unlink($configFile);
-
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
-        $this->assertNotNull(PHP_Depend_Util_ConfigurationInstance::get());
-
         $test = isset(PHP_Depend_Util_ConfigurationInstance::get()->test);
         $this->assertTrue($test);
+    }
+
+    /**
+     * testTextUiCommandOutputContainsExpectedCoverageReportOption
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testTextUiCommandOutputContainsExpectedCoverageReportOption()
+    {
+        list($exitCode, $actual) = $this->_executeCommand(array());
+        $this->assertContains('--coverage-report=<file>', $actual);
+    }
+
+    /**
+     * testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist()
+    {
+        $argv = array(
+            '--coverage-report=' . self::createRunResourceURI('foobar'),
+            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
+            __FILE__,
+        );
+
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+
+        $this->assertEquals(PHP_Depend_TextUI_Command::INPUT_ERROR, $exitCode);
+    }
+
+    /**
+     * testTextUiCommandAcceptsExistingFileForCoverageReportOption
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testTextUiCommandAcceptsExistingFileForCoverageReportOption()
+    {
+        $argv = array(
+            '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
+            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
+            __FILE__,
+        );
+
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+
+        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -400,10 +453,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             unlink($configFile);
         }
 
-        $argv = array(
-            '--configuration=' . $configFile,
-            dirname(__FILE__)
-        );
+        $argv = array('--configuration=' . $configFile, __FILE__);
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
