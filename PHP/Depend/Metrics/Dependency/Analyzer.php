@@ -241,27 +241,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     {
         $this->fireStartMethod($method);
 
-        // Get context package uuid
-        $pkgUUID = $method->getParent()->getPackage()->getUUID();
-
-        // Traverse all dependencies
+        $package = $method->getParent()->getPackage();
         foreach ($method->getDependencies() as $dep) {
-            // Get dependent package uuid
-            $depPkgUUID = $dep->getPackage()->getUUID();
-
-            // Skip if context and dependency are equal
-            if ($depPkgUUID === $pkgUUID) {
-                continue;
-            }
-
-            // Create a container for this dependency
-            $this->initPackageMetric($dep->getPackage());
-
-
-            if (!in_array($depPkgUUID, $this->_nodeMetrics[$pkgUUID][self::M_EFFERENT_COUPLING])) {
-                $this->_nodeMetrics[$pkgUUID][self::M_EFFERENT_COUPLING][]    = $depPkgUUID;
-                $this->_nodeMetrics[$depPkgUUID][self::M_AFFERENT_COUPLING][] = $pkgUUID;
-            }
+            $this->_collectDependencies($package, $dep->getPackage());
         }
 
         $this->fireEndMethod($method);
@@ -348,27 +330,41 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             ++$this->_nodeMetrics[$pkgUUID][self::M_NUMBER_OF_CONCRETE_CLASSES];
         }
 
-        // Traverse all dependencies
+        
         foreach ($type->getDependencies() as $dep) {
-            // Get dependent package uuid
-            $depPkgUUID = $dep->getPackage()->getUUID();
-
-            // Skip if context and dependency are equal
-            if ($depPkgUUID === $pkgUUID) {
-                continue;
-            }
-
-            // Create a container for this dependency
-            $this->initPackageMetric($dep->getPackage());
-
-            if (!in_array($depPkgUUID, $this->_nodeMetrics[$pkgUUID][self::M_EFFERENT_COUPLING])) {
-                $this->_nodeMetrics[$pkgUUID][self::M_EFFERENT_COUPLING][]    = $depPkgUUID;
-                $this->_nodeMetrics[$depPkgUUID][self::M_AFFERENT_COUPLING][] = $pkgUUID;
-            }
+            $this->_collectDependencies($type->getPackage(), $dep->getPackage());
         }
 
         foreach ($type->getMethods() as $method) {
             $method->accept($this);
+        }
+    }
+
+    /**
+     * Collects the dependencies between the two given packages.
+     *
+     * @param PHP_Depend_Code_Package $packageA Context/owning package.
+     * @param PHP_Depend_Code_Package $packageB Dependent package.
+     *
+     * @return void
+     */
+    private function _collectDependencies(
+        PHP_Depend_Code_Package $packageA,
+        PHP_Depend_Code_Package $packageB
+    ) {
+        $idA = $packageA->getUUID();
+        $idB = $packageB->getUUID();
+
+        if ($idB === $idA) {
+            return;
+        }
+
+        // Create a container for this dependency
+        $this->initPackageMetric($packageB);
+
+        if (!in_array($idB, $this->_nodeMetrics[$idA][self::M_EFFERENT_COUPLING])) {
+            $this->_nodeMetrics[$idA][self::M_EFFERENT_COUPLING][] = $idB;
+            $this->_nodeMetrics[$idB][self::M_AFFERENT_COUPLING][] = $idA;
         }
     }
 
