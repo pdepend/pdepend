@@ -121,7 +121,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      * Returns the calculated metrics for the given node or an empty <b>array</b>
      * when no metrics exist for the given node.
      *
-     * @param PHP_Depend_Code_NodeI $node
+     * @param PHP_Depend_Code_NodeI $node The context source node instance.
      *
      * @return array(string=>float)
      */
@@ -133,16 +133,37 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
         return array();
     }
 
+    /**
+     * Returns an array with analyzer class names that are required by the crap
+     * index analyzers.
+     *
+     * @return array(string)
+     */
     public function getRequiredAnalyzers()
     {
         return array(PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ);
     }
 
+    /**
+     * Adds an analyzer that this analyzer depends on.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer An analyzer this analyzer
+     *        depends on.
+     *
+     * @return void
+     */
     public function addAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $this->_ccnAnalyzer = $analyzer;
     }
 
+    /**
+     * Performs the crap index analysis.
+     *
+     * @param PHP_Depend_Code_NodeIterator $packages The context source tree.
+     *
+     * @return void
+     */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->isEnabled() && $this->_metrics === null) {
@@ -150,6 +171,13 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
         }
     }
 
+    /**
+     * Performs the crap index analysis.
+     *
+     * @param PHP_Depend_Code_NodeIterator $packages The context source tree.
+     *
+     * @return void
+     */
     private function _analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         $this->_metrics = array();
@@ -165,6 +193,13 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
         $this->fireEndAnalyzer();
     }
 
+    /**
+     * Visits the given method.
+     *
+     * @param PHP_Depend_Code_Method $method The context method.
+     *
+     * @return void
+     */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         if ($method->isAbstract() === false) {
@@ -172,32 +207,60 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
         }
     }
 
+    /**
+     * Visits the given function.
+     *
+     * @param PHP_Depend_Code_Function $function The context function.
+     *
+     * @return void
+     */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->_visitCallable($function);
     }
 
+    /**
+     * Visits the given callable instance.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
+     *
+     * @return void
+     */
     private function _visitCallable(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $this->_metrics[$callable->getUUID()] = array('crap' => $this->_calculateCrapIndex($callable));
+        $this->_metrics[$callable->getUUID()] = array(
+            self::M_CRAP_INDEX => $this->_calculateCrapIndex($callable)
+        );
     }
 
+    /**
+     * Calculates the crap index for the given callable.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
+     *
+     * @return float
+     */
     private function _calculateCrapIndex(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $ccn = $this->_ccnAnalyzer->getCCN2($callable);
-
         $report = $this->_createOrReturnCoverageReport();
-        
-        $coverage = $report->getCoverage($callable);
+
+        $complexity = $this->_ccnAnalyzer->getCCN2($callable);
+        $coverage   = $coverageReport->getCoverage($callable);
 
         if ($coverage == 0) {
-            return pow($ccn, 2) + $ccn;
+            return pow($complexity, 2) + $complexity;
         } else if ($coverage > 99.5) {
-            return $ccn;
+            return $complexity;
         }
-        return pow($ccn, 2) * pow(1 - $coverage / 100, 3) + $ccn;
+        return pow($complexity, 2) * pow(1 - $coverage / 100, 3) + $complexity;
     }
 
+    /**
+     * Returns a previously created report instance or creates a new report
+     * instance.
+     *
+     * @return PHP_Depend_Util_Coverage_Report
+     */
     private function _createOrReturnCoverageReport()
     {
         if ($this->_report === null) {
@@ -206,6 +269,11 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
         return $this->_report;
     }
 
+    /**
+     * Creates a new coverage report instance.
+     *
+     * @return PHP_Depend_Util_Coverage_Report
+     */
     private function _createCoverageReport()
     {
         $factory = new PHP_Depend_Util_Coverage_Factory();
