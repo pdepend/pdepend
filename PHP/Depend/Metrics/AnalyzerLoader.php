@@ -142,7 +142,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     private function _loadAcceptedAnalyzers(array $acceptedTypes)
     {
         $analyzers = array();
-        foreach ($this->_classLocator->find() as $reflection) {
+        foreach ($this->_classLocator->findAll() as $reflection) {
             if ($this->_isInstanceOf($reflection, $acceptedTypes)) {
                 $analyzers[] = $this->_createOrReturnAnalyzer($reflection);
             }

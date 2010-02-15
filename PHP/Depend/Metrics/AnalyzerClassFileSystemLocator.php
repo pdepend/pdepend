@@ -106,7 +106,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      *
      * @return array(ReflectionClass)
      */
-    public function find()
+    public function findAll()
     {
         if ($this->_analyzers === null) {
             $this->_analyzers = $this->_find();
