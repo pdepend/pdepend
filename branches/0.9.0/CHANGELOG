@@ -1,6 +1,7 @@
 PHP_Depend 0.9.10
 -----------------
 
+- Implemented #74: Make CRAP-index available. Implemented in svn revision #1063.
 - Fixed #106: Filter algorithm is broken for namespaced internal classes. Fixed
   in svn revision #1039.
 - Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
