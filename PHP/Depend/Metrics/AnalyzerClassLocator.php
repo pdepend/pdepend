@@ -61,10 +61,9 @@
 interface PHP_Depend_Metrics_AnalyzerClassLocator
 {
     /**
-     * Returns an associative array with analyzer source files and the corresponding
-     * analyzer class.
+     * Returns an array with reflection instances for all analyzer classes.
      *
-     * @return array(string=>string)
+     * @return array(ReflectionClass)
      */
-    function find();
+    function findAll();
 }

@@ -116,7 +116,7 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 
         $locator = $this->getMock('PHP_Depend_Metrics_AnalyzerClassLocator');
         $locator->expects($this->once())
-            ->method('find')
+            ->method('findAll')
             ->will($this->returnValue(array($reflection)));
 
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
@@ -148,7 +148,7 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 
         $locator = $this->getMock('PHP_Depend_Metrics_AnalyzerClassLocator');
         $locator->expects($this->once())
-            ->method('find')
+            ->method('findAll')
             ->will($this->returnValue(array($reflection)));
 
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
