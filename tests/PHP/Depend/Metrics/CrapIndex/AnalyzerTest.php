@@ -232,7 +232,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * @param string  $testCase Name of the calling test case.
      * @param integer $ccn      The entire cyclomatic complexity number.
      *
-     * @return array()
+     * @return array
      */
     private function _calculateCrapIndex($testCase, $ccn)
     {
