@@ -107,7 +107,12 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
     public function store($data, $key, $group, $version = '@package_version@')
     {
         $pathname = $this->_createPathname($key, $group, $version);
-        file_put_contents($pathname, serialize($data));
+
+        $fp = fopen($pathname, 'w');
+        flock($fp, LOCK_EX);
+        fwrite($fp, serialize($data));
+        flock($fp, LOCK_UN);
+        fclose($fp);
     }
 
     /**
@@ -126,7 +131,15 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
     {
         $pathname = $this->_createPathname($key, $group, $version);
         if (file_exists($pathname)) {
-            return unserialize(file_get_contents($pathname));
+            $fp = fopen($pathname, 'r');
+            flock($fp, LOCK_EX);
+
+            $data = unserialize(fread($fp, filesize($pathname)));
+
+            flock($fp, LOCK_UN);
+            fclose($fp);
+
+            return $data;
         }
         return null;
     }
@@ -147,12 +160,12 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
             }
         }
 
-        $lifetime = time() + $this->getMaxLifetime();
+        $lifetime = time() - $this->getMaxLifetime();
 
         foreach ($directories as $directory) {
             foreach (glob($directory . '/*.data') as $filename) {
-                if (filemtime($filename) <= $lifetime) {
-                    unlink($filename);
+                if (filemtime($filename) < $lifetime) {
+                    @unlink($filename);
                 }
             }
         }
