@@ -69,7 +69,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testAnalyzerReturnsExpectedDependencies
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CrapIndex_AnalyzerTest
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
      * @group pdepend
      * @group pdepend::metrics
      * @group pdepend::metrics::crapindex
@@ -88,7 +88,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testAnalyzerIsEnabledReturnsFalseWhenNoCoverageReportFileWasSupplied
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CrapIndex_AnalyzerTest
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
      * @group pdepend
      * @group pdepend::metrics
      * @group pdepend::metrics::crapindex
@@ -105,7 +105,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testAnalyzerIsEnabledReturnsTrueWhenCoverageReportFileWasSupplied
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CrapIndex_AnalyzerTest
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
      * @group pdepend
      * @group pdepend::metrics
      * @group pdepend::metrics::crapindex
@@ -120,10 +120,42 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     }
 
     /**
+     * testAnalyzerIgnoresAbstractMethods
+     * 
+     * @return void
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::crapindex
+     * @group unittest
+     */
+    public function testAnalyzerIgnoresAbstractMethods()
+    {
+        $metrics = $this->_calculateCrapIndex(__METHOD__, 42);
+        $this->assertSame(array(), $metrics);
+    }
+
+    /**
+     * testAnalyzerIgnoresInterfaceMethods
+     * 
+     * @return void
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::crapindex
+     * @group unittest
+     */
+    public function testAnalyzerIgnoresInterfaceMethods()
+    {
+        $metrics = $this->_calculateCrapIndex(__METHOD__, 42);
+        $this->assertSame(array(), $metrics);
+    }
+
+    /**
      * testAnalyzerReturnsExpectedResultForMethodWithoutCoverage
      * 
      * @return void
-     * @covers PHP_Depend_Metrics_CrapIndex_AnalyzerTest
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
      * @group pdepend
      * @group pdepend::metrics
      * @group pdepend::metrics::crapindex
@@ -138,7 +170,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CrapIndex_AnalyzerTest
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
      * @group pdepend
      * @group pdepend::metrics
      * @group pdepend::metrics::crapindex
@@ -153,7 +185,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CrapIndex_AnalyzerTest
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
      * @group pdepend
      * @group pdepend::metrics
      * @group pdepend::metrics::crapindex
@@ -162,6 +194,21 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage()
     {
         $this->_testCrapIndexCalculation(__METHOD__, 12, 30);
+    }
+
+    /**
+     * testAnalyterReturnsExpectedResultForMethodWithoutCoverageData
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::crapindex
+     * @group unittest
+     */
+    public function testAnalyterReturnsExpectedResultForMethodWithoutCoverageData()
+    {
+        $this->_testCrapIndexCalculation(__METHOD__, 12, 156);
     }
 
     /**
@@ -175,6 +222,20 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     private function _testCrapIndexCalculation($testCase, $ccn, $crapIndex)
     {
+        $metrics = $this->_calculateCrapIndex($testCase, $ccn);
+        $this->assertEquals($crapIndex, $metrics['crap'], '', 0.005);
+    }
+
+    /**
+     * Calculates the crap index.
+     *
+     * @param string  $testCase Name of the calling test case.
+     * @param integer $ccn      The entire cyclomatic complexity number.
+     *
+     * @return array()
+     */
+    private function _calculateCrapIndex($testCase, $ccn)
+    {
         $packages = self::parseTestCaseSource($testCase);
 
         $options  = array('coverage-report' => $this->_createCloverReportFile());
@@ -183,15 +244,13 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
 
         $packages->rewind();
-        $metrics = $analyzer->getNodeMetrics(
+        return $analyzer->getNodeMetrics(
             $packages->current()
-                ->getClasses()
+                ->getTypes()
                 ->current()
                 ->getMethods()
                 ->current()
         );
-
-        $this->assertEquals($crapIndex, $metrics['crap'], '', 0.005);
     }
 
     /**
