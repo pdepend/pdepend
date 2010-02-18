@@ -78,6 +78,4 @@ class PHP_Depend_Parser_TokenStreamEndException
             )
         );
     }
-
 }
-?>
