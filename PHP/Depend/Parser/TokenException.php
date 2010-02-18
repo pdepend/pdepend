@@ -44,6 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.10
  */
 
 require_once 'PHP/Depend/Parser/Exception.php';
@@ -59,6 +60,7 @@ require_once 'PHP/Depend/Parser/Exception.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.10
  */
 class PHP_Depend_Parser_TokenException extends PHP_Depend_Parser_Exception
 {
