@@ -33,6 +33,7 @@ and the NDepend metric tool.
   revision #1037.
 - Performance intensive calculation result cached.
 - Test code restructured and improved.
+- Concurrency issue for parallel running pdepend instances fixed.
   </notes>
   <contents>
     <dir name="/">
