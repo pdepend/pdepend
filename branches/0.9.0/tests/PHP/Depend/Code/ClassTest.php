@@ -54,6 +54,8 @@ require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Property.php';
 require_once 'PHP/Depend/Code/TypeConstant.php';
+require_once 'PHP/Depend/Code/ASTFormalParameter.php';
+require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 
 /**
  * Test case implementation for the PHP_Depend_Code_Class class.
@@ -180,6 +182,69 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
         $child = $class->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
         $this->assertNull($child);
+    }
+
+    /**
+     * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $parameter = $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        $this->assertType(PHP_Depend_Code_ASTFormalParameter::CLAZZ, $parameter);
+    }
+
+    /**
+     * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $parameters = $class->findChildrenOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        $this->assertEquals(4, count($parameters));
+    }
+
+    /**
+     * testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $parameters = $class->findChildrenOfType(PHP_Depend_Code_ASTVariableDeclarator::CLAZZ);
+        $this->assertEquals(2, count($parameters));
     }
 
     /**
