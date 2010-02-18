@@ -1285,6 +1285,35 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_MissingValueException
+     */
+    public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * testParserHandlesDoubleQuoteStringAsConstantDefaultValue
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesDoubleQuoteStringAsConstantDefaultValue()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
      * Tests that the parser ignores variable class instantiation.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3

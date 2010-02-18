@@ -1432,26 +1432,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parses a single expression node. It will throw an exception
-     * when it cannot detect an expression node at the actual token stream
-     * possition.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When there is no
-     *         expression that can be parsed.
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @since 0.9.6
-     */
-    private function _parseExpression()
-    {
-        if (($expr = $this->_parseOptionalExpression()) === null) {
-            throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
-        }
-        return $expr;
-    }
-
-    /**
      * This method parses a switch statement.
      *
      * @return PHP_Depend_Code_ASTSwitchStatement
@@ -3639,9 +3619,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_DOUBLE_QUOTE:
-                $defaultValue->setValue(
-                    $this->_parseStringSequence($tokenType)
-                );
+                $defaultValue->setValue($this->_parseStringSequence($tokenType));
                 break;
 
             case self::T_DIR:
