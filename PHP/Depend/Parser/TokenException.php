@@ -46,10 +46,10 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Parser/TokenException.php';
+require_once 'PHP/Depend/Parser/Exception.php';
 
 /**
- * This type of exception is thrown when the parser detects an unexpected token.
+ * Base class for token/token stream related exceptions.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -60,30 +60,7 @@ require_once 'PHP/Depend/Parser/TokenException.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Parser_UnexpectedTokenException
-    extends PHP_Depend_Parser_TokenException
+class PHP_Depend_Parser_TokenException extends PHP_Depend_Parser_Exception
 {
-    /**
-     * Constructs a new unexpected token exception.
-     *
-     * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer instance.
-     */
-    public function __construct(PHP_Depend_TokenizerI $tokenizer)
-    {
-        // Get wrong token
-        $token = $tokenizer->next();
-        // The parser must take care for this
-        assert($token instanceof PHP_Depend_Token);
 
-        $message = sprintf(
-            'Unexpected token: %s, line: %d, col: %d, file: %s.',
-            $token->image,
-            $token->startLine,
-            $token->startColumn,
-            $tokenizer->getSourceFile()
-        );
-
-        parent::__construct($message);
-    }
 }
-?>

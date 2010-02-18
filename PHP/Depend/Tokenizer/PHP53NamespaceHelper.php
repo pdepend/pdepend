@@ -74,7 +74,7 @@ final class PHP_Depend_Tokenizer_PHP53NamespaceHelper
         // Replace backslash with valid token
         $source = preg_replace('#\\\\([^"\'`\\\\])#i', ':::\\1', $source);
 
-        $tokens = @token_get_all($source);
+        $tokens = self::_tokenize($source);
 
         $result = array();
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
@@ -93,5 +93,25 @@ final class PHP_Depend_Tokenizer_PHP53NamespaceHelper
         }
 
         return $result;
+    }
+
+    /**
+     * Executes the internal tokenizer function and decorates it with some
+     * exception handling.
+     *
+     * @param string $source The raw php source code.
+     *
+     * @return array
+     * @todo Exception should be moved into a general package.
+     */
+    private static function _tokenize($source)
+    {
+        $error  = error_get_last();
+        $tokens = @token_get_all($source);
+        
+        if ($error == error_get_last()) {
+            return $tokens;
+        }
+        throw new PHP_Depend_Parser_TokenException($error['message']);
     }
 }
