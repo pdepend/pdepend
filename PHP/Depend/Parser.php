@@ -2561,6 +2561,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case $delimiterType:
                 break 2;
 
+            case self::T_BACKTICK:
+            case self::T_DOUBLE_QUOTE:
+                $token = $this->_consumeToken($tokenType);
+                $expr  = $this->_builder->buildASTLiteral($token->image);
+                $string->addChild($expr);
+                break;
+
             default:
                 $expr = $this->_parseOptionalExpression();
                 if ($expr == null) {
@@ -2568,12 +2575,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $expr  = $this->_builder->buildASTLiteral($token->image);
                 }
                 $string->addChild($expr);
+                break;
             }
 
             $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
         }
-        
+
         $this->_consumeToken($delimiterType);
 
         return $this->_setNodePositionsAndReturn($string);
