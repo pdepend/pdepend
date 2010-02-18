@@ -590,4 +590,72 @@ Manuel', 3, 5, 61, 6),
 
         $this->assertEquals($expected, $actual);
     }
+
+    /**
+     * testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
+     */
+    public function testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression()
+    {
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(
+            self::createCodeResourceURI('tokenizer/' . __FUNCTION__ . '.php')
+        );
+
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array($token->type);
+        }
+
+        $expected = array(
+            array(PHP_Depend_ConstantsI::T_OPEN_TAG),
+            array(PHP_Depend_ConstantsI::T_DOUBLE_QUOTE),
+            array(PHP_Depend_ConstantsI::T_ENCAPSED_AND_WHITESPACE),
+            array(PHP_Depend_ConstantsI::T_VARIABLE),
+            array(PHP_Depend_ConstantsI::T_BACKTICK),
+            array(PHP_Depend_ConstantsI::T_DOUBLE_QUOTE),
+            array(PHP_Depend_ConstantsI::T_SEMICOLON),
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString
+     *
+     * @return void
+     * @covers PHP_Depend_Tokenizer_Internal
+     * @group pdepend
+     * @group pdepend::tokenizer
+     * @group unittest
+     */
+    public function testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString()
+    {
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(
+            self::createCodeResourceURI('tokenizer/' . __FUNCTION__ . '.php')
+        );
+
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array($token->type);
+        }
+
+        $expected = array(
+            array(PHP_Depend_ConstantsI::T_OPEN_TAG),
+            array(PHP_Depend_ConstantsI::T_BACKTICK),
+            array(PHP_Depend_ConstantsI::T_ENCAPSED_AND_WHITESPACE),
+            array(PHP_Depend_ConstantsI::T_VARIABLE),
+            array(PHP_Depend_ConstantsI::T_DOUBLE_QUOTE),
+            array(PHP_Depend_ConstantsI::T_BACKTICK),
+            array(PHP_Depend_ConstantsI::T_SEMICOLON),
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
 }

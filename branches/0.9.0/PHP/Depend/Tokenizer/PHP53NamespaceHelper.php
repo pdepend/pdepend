@@ -74,7 +74,7 @@ final class PHP_Depend_Tokenizer_PHP53NamespaceHelper
         // Replace backslash with valid token
         $source = preg_replace('#\\\\([^"\'`\\\\])#i', ':::\\1', $source);
 
-        $tokens = token_get_all($source);
+        $tokens = @token_get_all($source);
 
         $result = array();
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {

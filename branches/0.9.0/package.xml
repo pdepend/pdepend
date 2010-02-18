@@ -24,13 +24,16 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Implemented #74: Make CRAP-index available. Implemented in svn revision #1063.
-- Fixed #106: Filter algorithm is broken for namespaced internal classes. Fixed
-  in svn revision #1039.
+- Implemented #74: Make CRAP-index available. Implemented in svn revision 
+  #1063.
+- Fixed #106: Filter algorithm is broken for namespaced internal classes.
+  Fixed in svn revision #1039.
 - Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
-  revision #1032.
+  revision #1032. 
 - Fixed #111: Dynamic Strings are treated as literal strings. Fixed in svn
-  revision #1037.
+  revision #1037. 
+- Fixed #114: Parsing error caused by complex string expressions fixed.
+  Fixed in svn revision #1068.
 - Performance intensive calculation result cached.
 - Test code restructured and improved.
 - Concurrency issue for parallel running pdepend instances fixed.
@@ -3658,7 +3661,7 @@ and the NDepend metric tool.
   <dependencies>
     <required>
       <php>
-        <min>5.2.2</min>
+        <min>5.2.3</min>
       </php>
       <pearinstaller>
         <min>1.6.0</min>
