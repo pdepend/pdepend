@@ -74,6 +74,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -109,6 +113,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -153,6 +161,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
@@ -248,15 +260,18 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * Tests the ctor with and the {@link PHP_Depend_Code_Class::getName()} and
-     * {@link PHP_Depend_Code_Class::getSourceFile()} methods.
+     * Tests the ctor and the {@link PHP_Depend_Code_Class::getName()}.
      * 
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testCreateNewClassInstance()
     {
         $class = new PHP_Depend_Code_Class('clazz', 0);
-        
         $this->assertEquals('clazz', $class->getName());
     }
     
@@ -265,6 +280,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * value is <b>false</b> but could be changed.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testMarkClassInstanceAsAbstract()
     {
@@ -281,6 +301,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * modifier.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testMarkClassInstanceAsFinal()
     {
@@ -296,6 +321,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * it is called with an invalid modifier.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifier()
     {
@@ -311,13 +341,17 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * {@link PHP_Depend_Code_NodeIterator} instance for methods.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetMethodNodeIterator()
     {
         $class   = new PHP_Depend_Code_Class('clazz', 0);
         $methods = $class->getMethods();
         
-        $this->assertType('PHP_Depend_Code_NodeIterator', $methods);
         $this->assertEquals(0, $methods->count());
     }
     
@@ -326,6 +360,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * method to the internal list and sets the context class as parent.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testAddNewMethod()
     {
@@ -343,6 +382,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * new method if it already has a parent class instance.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testAddNewMethodAndReparent()
     {
@@ -365,6 +409,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * default value <b>null</b> and that the package could be set and unset.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetSetPackage()
     {
@@ -383,10 +432,15 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * returns the expected result.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetInterfaces()
     {
-        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
 
         $class = $packages->current()
             ->getClasses()
@@ -407,11 +461,16 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * Tests that {@link PHP_Depend_Code_Class::getInterfaces()}
      * returns the expected result.
      *
-     * @return voidi
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetInterfacesByInheritence()
     {
-        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
 
         $classes = $packages->current()
             ->getClasses();
@@ -442,10 +501,15 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * returns the expected result.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetInterfacesByClassInheritence()
     {
-        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
 
         $class = $packages->current()
             ->getClasses()
@@ -469,14 +533,25 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeInInheritanceHierarchy()
     {
-        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
-        $package  = $packages->current();
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
 
-        $class = $package->getClasses()
+        $class = $packages->current()
+            ->getClasses()
             ->current();
+
+        $actual = array();
+        foreach ($packages->current()->getTypes() as $classOrInterface) {
+            $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
+        }
+        ksort($actual);
 
         $expected = array(
             'A' => true,
@@ -487,27 +562,32 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             'F' => false
         );
 
-        foreach ($package->getTypes() as $classOrInterface) {
-            $this->assertArrayHasKey($classOrInterface->getName(), $expected);
-            $this->assertSame(
-                $expected[$classOrInterface->getName()],
-                $class->isSubtypeOf($classOrInterface)
-            );
-        }
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeInClassInheritanceHierarchy()
     {
-        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
-        $package  = $packages->current();
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
 
-        $class = $package->getClasses()
+        $class = $packages->current()
+            ->getClasses()
             ->current();
+
+        $actual = array();
+        foreach ($packages->current()->getTypes() as $classOrInterface) {
+            $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
+        }
+        ksort($actual);
 
         $expected = array(
             'A' => true,
@@ -518,27 +598,32 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             'F' => false
         );
 
-        foreach ($package->getTypes() as $classOrInterface) {
-            $this->assertArrayHasKey($classOrInterface->getName(), $expected);
-            $this->assertSame(
-                $expected[$classOrInterface->getName()],
-                $class->isSubtypeOf($classOrInterface)
-            );
-        }
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeInClassAndInterfaceInheritanceHierarchy()
     {
-        $packages = self::parseSource('code/class/' . __FUNCTION__ . '.php');
-        $package  = $packages->current();
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
 
-        $class = $package->getClasses()
+        $class = $packages->current()
+            ->getClasses()
             ->current();
+
+        $actual = array();
+        foreach ($packages->current()->getTypes() as $classOrInterface) {
+            $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
+        }
+        ksort($actual);
 
         $expected = array(
             'A' => true,
@@ -549,30 +634,24 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             'F' => true
         );
 
-        foreach ($package->getTypes() as $classOrInterface) {
-            $this->assertArrayHasKey($classOrInterface->getName(), $expected);
-            $this->assertSame(
-                $expected[$classOrInterface->getName()],
-                $class->isSubtypeOf($classOrInterface)
-            );
-        }
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * Tests that it is not possible to overwrite previously set class modifiers.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     * @expectedException BadMethodCallException
      */
     public function testSetModifiersThrowsExpectedExceptionOnOverwrite()
     {
         $class = new PHP_Depend_Code_Class('FooBar');
         $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
-
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot overwrite previously set class modifiers.'
-        );
-
         $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
     }
     
@@ -580,13 +659,17 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the visitor accept method.
      *
      * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testVisitorAccept()
     {
         $class   = new PHP_Depend_Code_Class('clazz', 0);
         $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
-        
-        $this->assertNull($visitor->class);
+
         $class->accept($visitor);
         $this->assertSame($class, $visitor->class);
         
