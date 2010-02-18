@@ -188,7 +188,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @expectedException PHP_Depend_Parser_TokenException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
