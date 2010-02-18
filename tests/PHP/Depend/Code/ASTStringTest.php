@@ -74,6 +74,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * @covers PHP_Depend_Parser::_parseLiteralOrString
      * @group pdepend
      * @group pdepend::ast
+     * @group unittest
      */
     public function testDoubleQuoteStringContainsTwoChildNodes()
     {
@@ -90,11 +91,12 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * @covers PHP_Depend_Parser::_parseLiteralOrString
      * @group pdepend
      * @group pdepend::ast
+     * @group unittest
      */
     public function testDoubleQuoteStringContainsExpectedTextContent()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        $this->assertEquals("Hello World", $string->getChild(0)->getImage());
+        $this->assertContains("Hello", $string->getChild(0)->getImage());
     }
 
     /**
@@ -106,6 +108,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * @covers PHP_Depend_Parser::_parseLiteralOrString
      * @group pdepend
      * @group pdepend::ast
+     * @group unittest
      */
     public function testBacktickExpressionContainsTwoChildNodes()
     {
@@ -122,11 +125,58 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * @covers PHP_Depend_Parser::_parseLiteralOrString
      * @group pdepend
      * @group pdepend::ast
+     * @group unittest
      */
     public function testBacktickExpressionContainsExpectedCompoundVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
         $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
+    }
+
+    /**
+     * testDoubleQuoteStringWithEmbeddedComplexBacktickExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseString
+     * @covers PHP_Depend_Parser::_parseLiteralOrString
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringWithEmbeddedComplexBacktickExpression()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $actual = array();
+        foreach ($string->getChildren() as $child) {
+            $actual[] = $child->getImage();
+        }
+        $expected = array("Issue `", '$ticketNo', '`');
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testBacktickExpressionWithEmbeddedComplexDoubleQuoteString
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Parser::_parseString
+     * @covers PHP_Depend_Parser::_parseLiteralOrString
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testBacktickExpressionWithEmbeddedComplexDoubleQuoteString()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $actual = array();
+        foreach ($string->getChildren() as $child) {
+            $actual[] = $child->getImage();
+        }
+        $expected = array('Issue "', '$ticketNo', '"');
+        
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -137,6 +187,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * @covers PHP_Depend_Parser::_parseLiteralOrString
      * @group pdepend
      * @group pdepend::ast
+     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
