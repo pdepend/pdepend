@@ -185,7 +185,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesZeroInheritance()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -201,7 +201,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesOneLevelInheritance()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -217,7 +217,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesTwoLevelInheritance()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -233,7 +233,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesComplexInheritance()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -250,7 +250,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeOfReturnsFalseForNonParents()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $interfaces = $package->getInterfaces();
@@ -272,7 +272,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeOnInheritanceHierarchy()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
         
         $expected = array(
@@ -300,7 +300,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeOnInheritanceHierarchy1()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $expected = array(
@@ -328,7 +328,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeOnInheritanceHierarchy2()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $expected = array(
@@ -356,7 +356,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeOnInheritanceHierarchy3()
     {
-        $packages = self::parseSource('code/interface/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
         $expected = array(
@@ -375,6 +375,48 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
                 $current->isSubtypeOf($interface)
             );
         }
+    }
+
+    /**
+     * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $class = $packages->current()
+            ->getInterfaces()
+            ->current();
+
+        $parameter = $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        $this->assertType(PHP_Depend_Code_ASTFormalParameter::CLAZZ, $parameter);
+    }
+
+    /**
+     * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $class = $packages->current()
+            ->getInterfaces()
+            ->current();
+
+        $parameters = $class->findChildrenOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        $this->assertEquals(4, count($parameters));
     }
 
     /**
