@@ -60,7 +60,6 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  */
 abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
 {
-    
     /**
      * Tests that build interface updates the source file information for null
      * values.
@@ -92,6 +91,31 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
         $item->setSourceFile(new PHP_Depend_Code_File('HelloWorld.php'));
         
         $this->assertSame($file, $item->getSourceFile());
+    }
+
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string  $testCase          Qualified name of the test case.
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($class, $method) = explode('::', $testCase);
+
+        $fileName = substr($class, strrpos($class, '_') + 1, -4);
+        $fileName = 'code/' . $fileName . '/' . $method;
+
+        try {
+            $fileOrDirectory = self::createCodeResourceURI($fileName);
+        } catch (ErrorException $e) {
+            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
+        }
+
+        return self::parseSource($fileOrDirectory, $ignoreAnnotations);
     }
     
     /**
