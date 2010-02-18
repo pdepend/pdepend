@@ -10,6 +10,7 @@ PHP_Depend 0.9.10
   revision #1037.
 - Performance intensive calculation result cached.
 - Test code restructured and improved.
+- Concurrency issue for parallel running pdepend instances fixed.
 
 PHP_Depend 0.9.9
 ----------------
