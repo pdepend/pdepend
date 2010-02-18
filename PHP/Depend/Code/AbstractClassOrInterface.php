@@ -152,6 +152,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @return PHP_Depend_Code_ASTNodeI
      * @access private
      * @since 0.9.6
+     * @todo Refactor $_methods property to getAllMethods() when it exists.
      */
     public function getFirstChildOfType($targetType)
     {
@@ -160,6 +161,11 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
                 return $node;
             }
             if (($child = $node->getFirstChildOfType($targetType)) !== null) {
+                return $child;
+            }
+        }
+        foreach ($this->_methods as $method) {
+            if (($child = $method->getFirstChildOfType($targetType)) !== null) {
                 return $child;
             }
         }
@@ -175,6 +181,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @return array(PHP_Depend_Code_ASTNodeI)
      * @access private
      * @since 0.9.6
+     * @todo Refactor $_methods property to getAllMethods() when it exists.
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
@@ -183,6 +190,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
                 $results[] = $node;
             }
             $node->findChildrenOfType($targetType, $results);
+        }
+        foreach ($this->_methods as $method) {
+            $method->findChildrenOfType($targetType, $results);
         }
         return $results;
     }
