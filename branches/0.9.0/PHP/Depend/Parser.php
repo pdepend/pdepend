@@ -2541,18 +2541,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case $delimiterType:
                 break 2;
 
+            case self::T_BACKSLASH:
+                $string->addChild($this->_parseEscapedASTLiteralString());
+                break;
+
             case self::T_BACKTICK:
             case self::T_DOUBLE_QUOTE:
-                $token = $this->_consumeToken($tokenType);
-                $expr  = $this->_builder->buildASTLiteral($token->image);
+                $string->addChild($this->_parseLiteral());
+                break;
+
+            case self::T_DOLLAR:
+            case self::T_VARIABLE:
+                $expr = $this->_parseCompoundVariableOrVariableVariableOrVariable();
                 $string->addChild($expr);
                 break;
 
             default:
                 $expr = $this->_parseOptionalExpression();
                 if ($expr == null) {
-                    $token = $this->_consumeToken($tokenType);
-                    $expr  = $this->_builder->buildASTLiteral($token->image);
+                    $expr = $this->_parseLiteral();
                 }
                 $string->addChild($expr);
                 break;
@@ -2565,6 +2572,56 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken($delimiterType);
 
         return $this->_setNodePositionsAndReturn($string);
+    }
+
+    /**
+     * This method parses an escaped sequence of literal tokens.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @since 0.9.10
+     */
+    private function _parseEscapedASTLiteralString()
+    {
+        $this->_tokenStack->push();
+
+        $image  = $this->_consumeToken(self::T_BACKSLASH)->image;
+        $escape = true;
+
+        $tokenType = $this->_tokenizer->peek();
+        while ($tokenType != self::T_EOF) {
+            if ($tokenType === self::T_BACKSLASH) {
+                $escape != $escape;
+                $image  .= $this->_consumeToken(self::T_BACKSLASH)->image;
+
+                $tokenType = $this->_tokenizer->peek();
+                continue;
+            }
+
+            if ($escape) {
+                $image .= $this->_consumeToken($tokenType)->image;
+                break;
+            }
+        }
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTLiteral($image)
+        );
+    }
+
+    /**
+     * This method parses a simple literal and configures the position
+     * properties.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @since 0.9.10
+     */
+    private function _parseLiteral()
+    {
+        $this->_tokenStack->push();
+
+        $token = $this->_consumeToken($this->_tokenizer->peek());
+        $expr  = $this->_builder->buildASTLiteral($token->image);
+
+        return $this->_setNodePositionsAndReturn($expr);
     }
 
     /**
