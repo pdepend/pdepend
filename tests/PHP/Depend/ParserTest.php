@@ -41,7 +41,7 @@
  * @author    Manuel Pichler <mapi@pdepend.org>
  * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id: ParserTest.php 673 2009-03-04 21:39:16Z mapi $
+ * @version   SVN: $Id$
  * @link      http://pdepend.org/
  */
 
@@ -1311,6 +1311,94 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserHandlesDoubleQuoteStringAsConstantDefaultValue()
     {
         self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * testParserHandlesDoubleQuoteStringWithEscapedVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesDoubleQuoteStringWithEscapedVariable()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $string = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $image  = $string->getChild(0)->getImage();
+
+        $this->assertEquals('\$foobar', $image);
+    }
+
+    /**
+     * testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $string = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $image  = $string->getChild(0)->getImage();
+
+        $this->assertEquals('\\\\\"', $image);
+    }
+
+    /**
+     * testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $string   = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $variable = $string->getChild(0);
+
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+    }
+
+    /**
+     * testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $string   = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $variable = $string->getChild(0);
+
+        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
     }
 
     /**
