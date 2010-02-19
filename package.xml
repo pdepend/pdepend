@@ -26,6 +26,8 @@ and the NDepend metric tool.
   <notes>
 - Implemented #74: Make CRAP-index available. Implemented in svn revision 
   #1063.
+- Implemented #105: Support for deep search implement. Implemented in svn 
+  revision #1078.
 - Fixed #106: Filter algorithm is broken for namespaced internal classes.
   Fixed in svn revision #1039.
 - Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
