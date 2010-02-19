@@ -103,4 +103,60 @@ class PHP_Depend_Bugs_ComplexStringParsingBug114Test extends PHP_Depend_Bugs_Abs
     {
         self::parseTestCaseSource(__METHOD__);
     }
+
+    /**
+     * testParserHandlesStringWithEscapedVariable
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserHandlesStringWithEscapedVariable()
+    {
+        self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
+     * testParserHandlesBacktickExpressionWithEscapedVariable
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserHandlesBacktickExpressionWithEscapedVariable()
+    {
+        self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
+     * testParserHandlesStringWithVariableAndAssignment
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserHandlesStringWithVariableAndAssignment()
+    {
+        self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
+     * testParserHandlesStringWithVariableNotAsFunctionCall
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserHandlesStringWithVariableNotAsFunctionCall()
+    {
+        self::parseTestCaseSource(__METHOD__);
+    }
 }
