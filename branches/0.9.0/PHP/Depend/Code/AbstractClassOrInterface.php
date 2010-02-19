@@ -368,6 +368,35 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * Returns a list of all methods provided by this type or one of its parents.
+     *
+     * @return array(PHP_Depend_Code_Method)
+     * @since 0.9.10
+     */
+    public function getAllMethods()
+    {
+        $methods = array();
+        foreach ($this->getInterfaces() as $interface) {
+            foreach ($interface->getAllMethods() as $method) {
+                $method[$method->getName()] = $method;
+            }
+        }
+
+        $parentClass = $this->getParentClass();
+        if (is_object($parentClass)) {
+            foreach ($parentClass->getAllMethods() as $method) {
+                $methods[$method->getName()] = $method;
+            }
+        }
+
+        foreach ($this->_methods as $method) {
+            $methods[$method->getName()] = $method;
+        }
+
+        return $methods;
+    }
+
+    /**
      * Returns all {@link PHP_Depend_Code_Method} objects in this type.
      *
      * @return PHP_Depend_Code_NodeIterator
