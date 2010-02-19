@@ -68,6 +68,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -103,6 +108,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -147,6 +157,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
@@ -182,6 +197,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetInterfacesZeroInheritance()
     {
@@ -198,6 +218,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetInterfacesOneLevelInheritance()
     {
@@ -214,6 +239,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetInterfacesTwoLevelInheritance()
     {
@@ -230,6 +260,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetInterfacesComplexInheritance()
     {
@@ -247,6 +282,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * <b>false</b> for an input class.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeOfReturnsFalseForNonParents()
     {
@@ -257,124 +297,96 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $interface  = $interfaces->current();
 
         $interfaces->next();
-        while ($interfaces->valid()) {
-            $this->assertFalse(
-                $interface->isSubtypeOf($interfaces->current())
-            );
-            $interfaces->next();
-        }
+        $this->assertFalse($interface->isSubtypeOf($interfaces->current()));
     }
     
     /**
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-        
-        $expected = array(
-            'A' => true,
-            'B' => false,
-            'C' => false,
-            'D' => false,
-            'E' => false,
-            'F' => true,
+        $this->_testIsSubtypeOnInheritanceHierarchy(
+            __METHOD__,
+            array('A' => true, 'B' => false, 'C' => false, 'D' => false, 'E' => false, 'F' => true)
         );
-
-        $current = $package->getInterfaces()->current();
-        foreach ($package->getInterfaces() as $interface) {
-            $this->assertSame(
-                $expected[$interface->getName()],
-                $current->isSubtypeOf($interface)
-            );
-        }
     }
 
     /**
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy1()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $expected = array(
-            'A' => true,
-            'B' => true,
-            'C' => true,
-            'D' => true,
-            'E' => true,
-            'F' => true,
+        $this->_testIsSubtypeOnInheritanceHierarchy(
+            __METHOD__,
+            array('A' => true, 'B' => true, 'C' => true, 'D' => true, 'E' => true, 'F' => true)
         );
-
-        $current = $package->getInterfaces()->current();
-        foreach ($package->getInterfaces() as $interface) {
-            $this->assertSame(
-                $expected[$interface->getName()],
-                $current->isSubtypeOf($interface)
-            );
-        }
     }
 
     /**
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy2()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $expected = array(
-            'B' => false,
-            'C' => false,
-            'A' => true,
-            'D' => true,
-            'E' => true,
-            'F' => false,
+        $this->_testIsSubtypeOnInheritanceHierarchy(
+            __METHOD__,
+            array('B' => false, 'C' => false, 'A' => true, 'D' => true, 'E' => true, 'F' => false)
         );
-
-        $current = $package->getInterfaces()->current();
-        foreach ($package->getInterfaces() as $interface) {
-            $this->assertSame(
-                $expected[$interface->getName()],
-                $current->isSubtypeOf($interface)
-            );
-        }
     }
 
     /**
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy3()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $expected = array(
-            'B' => false,
-            'C' => false,
-            'D' => false,
-            'A' => true,
-            'E' => false,
-            'F' => false,
+        $this->_testIsSubtypeOnInheritanceHierarchy(
+            __METHOD__,
+            array('B' => false, 'C' => false, 'D' => false, 'A' => true, 'E' => false, 'F' => false)
         );
+    }
 
-        $current = $package->getInterfaces()->current();
+    private function _testIsSubtypeOnInheritanceHierarchy($testCase, array $expected)
+    {
+        $packages = self::parseTestCaseSource($testCase);
+        $package  = $packages->current();
+        $current  = $package->getInterfaces()->current();
+
+        $actual = array();
         foreach ($package->getInterfaces() as $interface) {
-            $this->assertSame(
-                $expected[$interface->getName()],
-                $current->isSubtypeOf($interface)
-            );
+            $actual[$interface->getName()] = $current->isSubtypeOf($interface);
         }
+
+        ksort($expected);
+        ksort($actual);
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -424,16 +436,16 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * setParentClassReference() method and throws an exception.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     * @expectedException BadMethodCallException
      */
     public function testInterfaceThrowsExpectedExceptionOnSetParentClassReference()
     {
         $interface = new PHP_Depend_Code_Interface('IFooBar');
-
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Unsupported method PHP_Depend_Code_Interface::setParentClassReference() called.'
-        );
-
         $interface->setParentClassReference(
             $this->getMock('PHP_Depend_Code_ASTClassReference', array(), array(), '', false)
         );
@@ -443,6 +455,11 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the returned modifiers of an interface.
      *
      * @return void
+     * @covers PHP_Depend_Code_Interface
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testInterfaceReturnsExpectedModifiers()
     {
