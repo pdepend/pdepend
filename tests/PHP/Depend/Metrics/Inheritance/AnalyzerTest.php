@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/File.php';
@@ -69,20 +69,25 @@ require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
      * Tests that the analyzer calculates the correct average number of derived
      * classes.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectANDCValue()
     {
         $filter = PHP_Depend_Code_Filter_Collection::getInstance();
         $filter->addFilter(new PHP_Depend_Code_Filter_Package(array('library')));
 
-        $packages = self::parseSource('metrics/inheritance/simple_andc_value.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($packages);
 
@@ -96,13 +101,18 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
      * Tests that the analyzer calculates the correct average hierarchy height.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectAHHValue()
     {
         $filter = PHP_Depend_Code_Filter_Collection::getInstance();
         $filter->addFilter(new PHP_Depend_Code_Filter_Package(array('library')));
 
-        $packages = self::parseSource('metrics/inheritance/simple_ahh_value.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($packages);
 
@@ -110,5 +120,115 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_AbstractTes
 
         $this->assertArrayHasKey('ahh', $project);
         $this->assertEquals(1, $project['ahh']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDITMetricNoInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(0, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDITMetricOneLevelInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(1, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDITMetricTwoLevelNoInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(2, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDITMetricThreeLevelNoInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(3, $metrics['dit']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct DIT values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDITMetricFourLevelNoInheritance()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $this->assertEquals(4, $metrics['dit']);
     }
 }
