@@ -159,4 +159,26 @@ class PHP_Depend_Bugs_ComplexStringParsingBug114Test extends PHP_Depend_Bugs_Abs
     {
         self::parseTestCaseSource(__METHOD__);
     }
+
+    /**
+     * testParserHandlesStringWithQuestionMarkNotAsTernaryOperator
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $method   = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+    }
 }
