@@ -2556,12 +2556,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $string->addChild($expr);
                 break;
 
+            case self::T_CURLY_BRACE_OPEN:
+                $string->addChild($this->_parseCompoundExpression());
+                break;
+
             default:
-                $expr = $this->_parseOptionalExpression();
-                if ($expr == null) {
-                    $expr = $this->_parseLiteral();
-                }
-                $string->addChild($expr);
+                $string->addChild($this->_parseLiteral());
                 break;
             }
 
