@@ -243,6 +243,96 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
     }
 
     /**
+     * testCalculatesExpectedNoamMetricForClassWithoutParent
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculatesExpectedNoamMetricForClassWithoutParent()
+    {
+        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+    }
+
+    /**
+     * testCalculatesExpectedNoamMetricForClassWithDirectParent
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculatesExpectedNoamMetricForClassWithDirectParent()
+    {
+        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+    }
+
+    /**
+     * testCalculatesExpectedNoamMetricForClassWithIndirectParent
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculatesExpectedNoamMetricForClassWithIndirectParent()
+    {
+        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+    }
+
+    /**
+     * testCalculatesExpectedNoomMetricForClassWithoutParent
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculatesExpectedNoomMetricForClassWithoutParent()
+    {
+        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+    }
+
+    /**
+     * testCalculatesExpectedNoomMetricForClassWithParent
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculatesExpectedNoomMetricForClassWithParent()
+    {
+        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+    }
+
+    /**
+     * testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods()
+    {
+        $this->assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+    }
+
+    /**
      * Analyzes the source associated with the calling test and returns the
      * calculated metric value.
      *
