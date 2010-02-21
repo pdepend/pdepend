@@ -378,7 +378,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         $methods = array();
         foreach ($this->getInterfaces() as $interface) {
             foreach ($interface->getAllMethods() as $method) {
-                $method[$method->getName()] = $method;
+                $methods[$method->getName()] = $method;
             }
         }
 
