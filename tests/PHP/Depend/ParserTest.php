@@ -1402,6 +1402,28 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserHandlesStringWithQuestionMarkNotAsTernaryOperator
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $method   = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+    }
+
+    /**
      * Tests that the parser ignores variable class instantiation.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
