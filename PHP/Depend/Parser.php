@@ -232,6 +232,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_tokenStack = null;
 
     /**
+     * Used function name parser.
+     *
+     * @var PHP_Depend_Parser_FunctionNameParser
+     */
+    private $_functionNameParser = null;
+
+    /**
      * Constructs a new source parser.
      *
      * @param PHP_Depend_TokenizerI $tokenizer The used code tokenizer.
@@ -257,6 +264,41 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     public function setIgnoreAnnotations()
     {
         $this->_ignoreAnnotations = true;
+    }
+
+    /**
+     * Sets the function name parser which will be used to extract function
+     * and/or method names from a token stream.
+     *
+     * @param PHP_Depend_Parser_FunctionNameParser $functionNameParser This
+     *        parser will be used to extract function and/or method names from
+     *        the token stream.
+     *
+     * @return void
+     */
+    public function setFunctionNameParser(
+        PHP_Depend_Parser_FunctionNameParser $functionNameParser
+    ) {
+        $this->_functionNameParser = $functionNameParser;
+        $this->_functionNameParser->setTokenizer($this->_tokenizer);
+        $this->_functionNameParser->setTokenStack($this->_tokenStack);
+    }
+
+    /**
+     * Returns the used function name parser instance.
+     * 
+     * @return PHP_Depend_Parser_FunctionNameParser
+     */
+    protected function getFunctionNameParser()
+    {
+        if ($this->_functionNameParser === null) {
+            include_once 'PHP/Depend/Parser/FunctionNameParserImpl.php';
+
+            $this->setFunctionNameParser(
+                new PHP_Depend_Parser_FunctionNameParserImpl()
+            );
+        }
+        return $this->_functionNameParser;
     }
 
     /**
@@ -846,7 +888,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
 
         // Next token must be the function identifier
-        $functionName = $this->_consumeToken(self::T_STRING)->image;
+        $functionName = $this->getFunctionNameParser()->parse($this->_tokenizer);
 
         $function = $this->_builder->buildFunction($functionName);
         $this->_parseCallableDeclaration($function);
@@ -878,8 +920,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $returnsReference = $this->_parseOptionalReturnbyReference();
 
-        // Next token must be the function identifier
-        $methodName = $this->_consumeToken(self::T_STRING)->image;
+        $methodName = $this->getFunctionNameParser()->parse($this->_tokenizer);
 
         $method = $this->_builder->buildMethod($methodName);
         $method->setDocComment($this->_docComment);
@@ -1258,7 +1299,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * </code>
      *
      * @param PHP_Depend_Code_ASTNode $node       The context node instance.
-     * @param integer                 $openToken  The brace open token type.
+     * @param PHP_Depend_Token        $token      The opening token.
      * @param integer                 $closeToken The brace close token type.
      *
      * @return PHP_Depend_Code_ASTNode
@@ -1268,16 +1309,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseBraceExpression(
         PHP_Depend_Code_ASTNode $node,
-        $openToken,
+        PHP_Depend_Token $token,
         $closeToken
     ) {
-
-        $this->_tokenStack->push();
-
-        // Strip comments and read open token
-        $this->_consumeComments();
-        $token = $this->_consumeToken($openToken);
-
         $braceCount = 1;
 
         // Remove all comments
@@ -1291,7 +1325,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if (($expr = $this->_parseOptionalExpression()) !== null) {
                 $node->addChild($expr);
             } else {
-                if ($tokenType === $openToken) {
+                if ($tokenType === $token->type) {
                     ++$braceCount;
                 } else if ($tokenType === $closeToken) {
                     --$braceCount;
@@ -1302,8 +1336,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if ($braceCount === 0) {
                 return $this->_setNodePositionsAndReturn($node);
             }
-
-            // Remove all comments
             $this->_consumeComments();
 
             // Get next token type
@@ -1702,12 +1734,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseParenthesisExpression()
     {
         $this->_tokenStack->push();
+        $this->_tokenStack->push();
         $this->_consumeComments();
 
         $expression = $this->_builder->buildASTExpression();
         $expression = $this->_parseBraceExpression(
             $expression,
-            self::T_PARENTHESIS_OPEN,
+            $this->_consumeToken(self::T_PARENTHESIS_OPEN),
             self::T_PARENTHESIS_CLOSE
         );
         
@@ -2057,9 +2090,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseArguments()
     {
+        $this->_tokenStack->push();
+        $this->_consumeComments();
+
         return $this->_parseBraceExpression(
             $this->_builder->buildASTArguments(),
-            self::T_PARENTHESIS_OPEN,
+            $this->_consumeToken(self::T_PARENTHESIS_OPEN),
             self::T_PARENTHESIS_CLOSE
         );
     }
@@ -2429,6 +2465,49 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a compound expression like:
+     *
+     * <code>
+     * //      ------  ------
+     * $foo = "{$bar}, {$baz}\n";
+     * //      ------  ------
+     * </code>
+     *
+     * or a simple literal token:
+     *
+     * <code>
+     * //      -
+     * $foo = "{{$bar}, {$baz}\n";
+     * //      -
+     * </code>
+     *
+     * @return PHP_Depend_Code_NodeI
+     * @since 0.9.10
+     */
+    private function _parseCompoundExpressionOrLiteral()
+    {
+        $this->_tokenStack->push();
+        
+        $token = $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+        $this->_consumeComments();
+
+        switch ($this->_tokenizer->peek()) {
+
+        case self::T_DOLLAR:
+        case self::T_VARIABLE:
+            return $this->_parseBraceExpression(
+                $this->_builder->buildASTCompoundExpression(),
+                $token,
+                self::T_CURLY_BRACE_CLOSE
+            );
+        }
+        
+        return $this->_setNodePositionsAndReturn(
+            $this->_builder->buildASTLiteral($token->image)
+        );
+    }
+
+    /**
      * This method parses a compound expression node.
      *
      * <code>
@@ -2446,9 +2525,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseCompoundExpression()
     {
+        $this->_tokenStack->push();
+        $this->_consumeComments();
+
         return $this->_parseBraceExpression(
             $this->_builder->buildASTCompoundExpression(),
-            self::T_CURLY_BRACE_OPEN,
+            $this->_consumeToken(self::T_CURLY_BRACE_OPEN),
             self::T_CURLY_BRACE_CLOSE
         );
     }
@@ -2557,7 +2639,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CURLY_BRACE_OPEN:
-                $string->addChild($this->_parseCompoundExpression());
+                $string->addChild($this->_parseCompoundExpressionOrLiteral());
                 break;
 
             default:
