@@ -24,6 +24,8 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
+- Implemented #72: Add NOAM, NOOM and NOCC metrics. Implemented in svn 
+  revision #1084.
 - Implemented #74: Make CRAP-index available. Implemented in svn revision 
   #1063.
 - Implemented #105: Support for deep search implement. Implemented in svn 
