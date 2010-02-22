@@ -1,6 +1,8 @@
 PHP_Depend 0.9.10
 -----------------
 
+- Implemented #72: Add NOAM, NOOM and NOCC metrics. Implemented in svn
+  revision #1084.
 - Implemented #74: Make CRAP-index available. Implemented in svn revision 
   #1063.
 - Implemented #105: Support for deep search implement. Implemented in svn
