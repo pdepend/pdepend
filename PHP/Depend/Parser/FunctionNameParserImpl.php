@@ -136,8 +136,8 @@ class PHP_Depend_Parser_FunctionNameParserImpl
             return $token->image;
 
         case PHP_Depend_TokenizerI::T_EOF:
-            throw new PHP_Depend_Parser_TokenStreamEndException($tokenizer);
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException($tokenizer);
+        throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
     }
 }
