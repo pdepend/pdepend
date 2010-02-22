@@ -80,11 +80,25 @@ class PHP_Depend_Parser_FunctionNameParserImpl
      */
     private $_tokenStack = null;
 
+    /**
+     * Setter method for the context tokenizer instance.
+     *
+     * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer.
+     *
+     * @return void
+     */
     public function setTokenizer(PHP_Depend_TokenizerI $tokenizer)
     {
         $this->_tokenizer = $tokenizer;
     }
 
+    /**
+     * Setter method for the context token stack instance.
+     *
+     * @param PHP_Depend_Parser_TokenStack $tokenStack The context token stack
+     *
+     * @return void
+     */
     public function setTokenStack(PHP_Depend_Parser_TokenStack $tokenStack)
     {
         $this->_tokenStack = $tokenStack;

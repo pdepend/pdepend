@@ -62,6 +62,24 @@
 interface PHP_Depend_Parser_FunctionNameParser
 {
     /**
+     * Setter method for the context tokenizer instance.
+     *
+     * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer.
+     *
+     * @return void
+     */
+    function setTokenizer(PHP_Depend_TokenizerI $tokenizer);
+
+    /**
+     * Setter method for the context token stack instance.
+     *
+     * @param PHP_Depend_Parser_TokenStack $tokenStack The context token stack
+     *
+     * @return void
+     */
+    function setTokenStack(PHP_Depend_Parser_TokenStack $tokenStack);
+
+    /**
      * Parses a function name from the given tokenizer and returns the string
      * literal representing the function name. If no valid token exists in the
      * token stream, this method will throw an exception.
