@@ -18,7 +18,6 @@
       <file name="???"/>
     </function>
   </package>
-  <package name="pkg2" baz="23" foobar="42"/>
   <package name="pkg3" baz="23" foobar="42">
     <class name="Bar" baz="23" foobar="42">
       <file name="???"/>
