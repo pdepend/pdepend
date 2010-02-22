@@ -205,7 +205,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $fileName = 'xml-log-without-metrics.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
-            file_get_contents($this->resultFile)
+            $this->getNormalizedPathXml($this->resultFile)
         );
     }
 
@@ -234,7 +234,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $fileName = 'project-aware-result-set-without-code.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
-            file_get_contents($this->resultFile)
+            $this->getNormalizedPathXml($this->resultFile)
         );
     }
 
@@ -265,7 +265,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $fileName = 'node-and-project-aware-result-set.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
-            file_get_contents($this->resultFile)
+            $this->getNormalizedPathXml($this->resultFile)
         );
     }
 
@@ -318,7 +318,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $fileName = 'node-aware-result-set.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
-            file_get_contents($this->resultFile)
+            $this->getNormalizedPathXml($this->resultFile)
         );
     }
 
@@ -332,8 +332,7 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         foreach ($dom->getElementsByTagName('file') as $file) {
             $file->setAttribute('name', $this->testFileName);
         }
-
-        $dom->documentElement->setAttribute('generated', date('Y-m-d\TH:i:s'));
+        $dom->documentElement->setAttribute('generated', '2010-02-22T08:26:51');
 
         return $dom->saveXML();
     }
