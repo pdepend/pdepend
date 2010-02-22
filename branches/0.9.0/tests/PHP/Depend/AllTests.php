@@ -63,6 +63,7 @@ require_once dirname(__FILE__) . '/Input/AllTests.php';
 require_once dirname(__FILE__) . '/Issues/AllTests.php';
 require_once dirname(__FILE__) . '/Log/AllTests.php';
 require_once dirname(__FILE__) . '/Metrics/AllTests.php';
+require_once dirname(__FILE__) . '/Parser/AllTests.php';
 require_once dirname(__FILE__) . '/TextUI/AllTests.php';
 require_once dirname(__FILE__) . '/Tokenizer/AllTests.php';
 require_once dirname(__FILE__) . '/Util/AllTests.php';
@@ -106,6 +107,7 @@ class PHP_Depend_AllTests
         $suite->addTest(PHP_Depend_Log_AllTests::suite());
         $suite->addTest(PHP_Depend_Input_AllTests::suite());
         $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
+        $suite->addTest(PHP_Depend_Parser_AllTests::suite());
         $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
         $suite->addTest(PHP_Depend_Tokenizer_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_AllTests::suite());
