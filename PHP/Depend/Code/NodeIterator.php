@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/NodeI.php';
-require_once 'PHP/Depend/Code/Filter/Composite.php';
 require_once 'PHP/Depend/Code/Filter/Collection.php';
 
 /**
@@ -72,6 +70,20 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     private $_nodes = array();
 
     /**
+     * Total number of available nodes.
+     *
+     * @var integer
+     */
+    private $_count = 0;
+
+    /**
+     * Current internal offset.
+     *
+     * @var integer
+     */
+    private $_offset = 0;
+
+    /**
      * Constructs a new node iterator from the given {@link PHP_Depend_Code_NodeI}
      * node array.
      *
@@ -83,9 +95,15 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function __construct(array $nodes)
     {
         $filter = PHP_Depend_Code_Filter_Collection::getInstance();
+
+        $nodeKeys = array();
         foreach ($nodes as $node) {
-            if ($filter->accept($node)) {
-                $this->_nodes[$node->getUUID()] = $node;
+            $uuid = $node->getUUID();
+            if (!isset($nodeKeys[$uuid]) && $filter->accept($node)) {
+                $nodeKeys[$uuid] = $uuid;
+                $this->_nodes[]  = $node;
+
+                ++$this->_count;
             }
         }
     }
@@ -111,7 +129,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function count()
     {
-        return count($this->_nodes);
+        return $this->_count;
     }
 
     /**
@@ -121,7 +139,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function current()
     {
-        return current($this->_nodes);
+        return $this->_nodes[$this->_offset];
     }
 
     /**
@@ -131,8 +149,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function key()
     {
-        $node = current($this->_nodes);
-        return (is_object($node) === true ? $node->getName() : null);
+        return $this->_nodes[$this->_offset]->getName();
     }
 
     /**
@@ -142,7 +159,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function next()
     {
-        next($this->_nodes);
+        ++$this->_offset;
     }
 
     /**
@@ -152,7 +169,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function rewind()
     {
-        reset($this->_nodes);
+        $this->_offset = 0;
     }
 
     /**
@@ -162,6 +179,6 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function valid()
     {
-        return (current($this->_nodes) !== false);
+        return ($this->_offset < $this->_count);
     }
 }
