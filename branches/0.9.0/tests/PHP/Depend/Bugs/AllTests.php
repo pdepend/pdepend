@@ -76,6 +76,7 @@ require_once dirname(__FILE__) . '/NamespaceKeywordInParameterTypeHintBug102Test
 require_once dirname(__FILE__) . '/ParameterStringDefaultValueBug103Test.php';
 require_once dirname(__FILE__) . '/DefaultNamespaceBug106Test.php';
 require_once dirname(__FILE__) . '/ComplexStringParsingBug114Test.php';
+require_once dirname(__FILE__) . '/KeywordFunctionNameResultsInExceptionBug116Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -133,6 +134,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ParameterStringDefaultValueBug103Test');
         $suite->addTestSuite('PHP_Depend_Bugs_DefaultNamespaceBug106Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ComplexStringParsingBug114Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_KeywordFunctionNameResultsInExceptionBug116Test');
 
         return $suite;
     }
