@@ -805,10 +805,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         
         $returnReference = $this->_parseOptionalReturnbyReference();
 
-        if ($this->_isNextTokenFunctionOrMethodIdentifier()) {
-            $callable = $this->_parseFunctionDeclaration();
-        } else {
+        if ($this->_isNextTokenFormalParameterList()) {
             $callable = $this->_parseClosureDeclaration();
+        } else {
+            $callable = $this->_parseFunctionDeclaration();
         }
 
         $callable->setSourceFile($this->_sourceFile);
@@ -852,7 +852,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return ($this->_tokenizer->peek() === self::T_BITWISE_AND);
     }
 
-
     /**
      * This method parses a returns by reference token and returns <b>true</b>.
      *
@@ -867,14 +866,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Tests that the next available token is a function or method identifier.
+     * Tests that the next available token is an opening parenthesis.
      *
      * @return boolean
-     * @since 0.9.8
+     * @since 0.9.10
      */
-    private function _isNextTokenFunctionOrMethodIdentifier()
+    private function _isNextTokenFormalParameterList()
     {
-        return ($this->_tokenizer->peek() === self::T_STRING);
+        $this->_consumeComments();
+        return ($this->_tokenizer->peek() === self::T_PARENTHESIS_OPEN);
     }
 
     /**
