@@ -78,15 +78,19 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      * method fails with an exception if no cc analyzer was set.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     * @expectedException RuntimeException
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
         $package  = new PHP_Depend_Code_Package('package1');
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        
-        $this->setExpectedException('RuntimeException', 'Missing required CC analyzer.');
-        
         $analyzer->analyze($packages);
     }
     
@@ -95,13 +99,16 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      * fails for an invalid child analyzer.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     * @expectedException InvalidArgumentException
      */
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
     {
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        
-        $this->setExpectedException('InvalidArgumentException', 'CC Analyzer required.');
-
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CodeRank_Analyzer());
     }
     
@@ -109,406 +116,359 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateIMPLMetric()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(4, $metrics['impl']);
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'impl'));
     }
 
     /**
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateIMPLMetric1()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(6, $metrics['impl']);
+        $this->assertEquals(6, $this->_calculateMetric(__METHOD__, 'impl'));
     }
 
     /**
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateIMPLMetric2()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(2, $metrics['impl']);
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'impl'));
     }
     
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateCISMetricZeroInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(2, $metrics['cis']);
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'cis'));
     }
 
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateCISMetricOneLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(2, $metrics['cis']);
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'cis'));
     }
 
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateCISMetricTwoLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(3, $metrics['cis']);
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'cis'));
     }
     
     /**
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateCSZMetricZeroInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(6, $metrics['csz']);
+        $this->assertEquals(6, $this->_calculateMetric(__METHOD__, 'csz'));
     }
 
     /**
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateCSZMetricOneLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(4, $metrics['csz']);
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'csz'));
     }
     
     /**
      * Tests that the analyzer calculates the correct VARS metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSMetricZeroInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(1, $metrics['vars']);
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'vars'));
     }
     
     /**
      * Tests that the analyzer calculates the correct VARS metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSMetricOneLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(3, $metrics['vars']);
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'vars'));
     }
     
     /**
      * Tests that the analyzer calculates the correct VARSi metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSiMetric()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(4, $metrics['varsi']);
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'varsi'));
     }
 
     /**
      * Tests that the analyzer calculates the correct VARSi metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSiMetricWithInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(5, $metrics['varsi']);
+        $this->assertEquals(5, $this->_calculateMetric(__METHOD__, 'varsi'));
     }
     
     /**
      * Tests that the analyzer calculates the correct VARSnp metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSnpMetric()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(2, $metrics['varsnp']);
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'varsnp'));
     }
 
     /**
      * Tests that the analyzer calculates the correct VARSnp metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSnpMetricWithInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(1, $metrics['varsnp']);
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'varsnp'));
     }
     
     /**
      * Tests that the analyzer calculates the correct WMC metric. 
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCMetric()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(3, $metrics['wmc']);      
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmc'));
     }
 
     /**
      * Tests that the analyzer calculates the correct WMC metric.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCMetricOneLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(3, $metrics['wmc']);
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmc'));
     }
 
     /**
      * Tests that the analyzer calculates the correct WMC metric.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCMetricTwoLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(3, $metrics['wmc']);
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmc'));
     }
     
     /**
      * Tests that the analyzer calculates the correct WMCi metric. 
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */    
     public function testCalculateWMCiMetric()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(3, $metrics['wmci']);
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmci'));
     }
 
     /**
      * Tests that the analyzer calculates the correct WMCi metric.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCiMetricOneLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(4, $metrics['wmci']);
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'wmci'));
     }
 
     /**
      * Tests that the analyzer calculates the correct WMCi metric.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCiMetricTwoLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(5, $metrics['wmci']);
+        $this->assertEquals(5, $this->_calculateMetric(__METHOD__, 'wmci'));
     }
     
     /**
      * Tests that the analyzer calculates the correct WMCnp metric. 
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCnpMetric()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(1, $metrics['wmcnp']);
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'wmcnp'));
     }
 
     /**
      * Tests that the analyzer calculates the correct WMCnp metric.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCnpMetricOneLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(2, $metrics['wmcnp']);
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'wmcnp'));
     }
 
     /**
      * Tests that the analyzer calculates the correct WMCnp metric.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCnpMetricTwoLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'wmcnp'));
+    }
+
+    /**
+     * Analyzes the source code associated with the given test case and returns
+     * a single measured metric.
+     *
+     * @param string $testCase Name of the calling test case.
+     * @param string $metric   Name of the searched metric.
+     *
+     * @return mixed
+     */
+    private function _calculateMetric($testCase, $metric)
+    {
+        $packages = self::parseTestCaseSource($testCase);
         $package  = $packages->current();
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
@@ -516,6 +476,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
-        $this->assertEquals(1, $metrics['wmcnp']);
+        return $metrics[$metric];
     }
 }
