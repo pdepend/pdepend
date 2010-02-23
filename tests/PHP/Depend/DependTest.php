@@ -144,6 +144,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
+        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array(__METHOD__)));
         
         $message = "The parser doesn't detect package informations within the "
                  . "analyzed project, please check the documentation blocks for "
@@ -224,7 +225,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
-        $this->assertEquals(3, $pdepend->countPackages());
+        $this->assertEquals(4, $pdepend->countPackages());
     }
     
     /**
