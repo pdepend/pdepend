@@ -52,7 +52,6 @@ if (defined('PHPUnit_MAIN_METHOD') === false) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/DefaultPackageTest.php';
 require_once dirname(__FILE__) . '/PackageTest.php';
 require_once dirname(__FILE__) . '/CollectionTest.php';
 
@@ -87,7 +86,6 @@ class PHP_Depend_Code_Filter_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code_Filter - AllTests');
-        $suite->addTestSuite('PHP_Depend_Code_Filter_DefaultPackageTest');
         $suite->addTestSuite('PHP_Depend_Code_Filter_PackageTest');
         $suite->addTestSuite('PHP_Depend_Code_Filter_CollectionTest');
 
