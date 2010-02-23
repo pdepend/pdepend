@@ -66,22 +66,14 @@ require_once 'PHP/Depend/Code/Package.php';
 class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the package ctor and the {@link PHP_Depend_Code_Package::getName()}
-     * method.
-     *
-     * @return void
-     */
-    public function testCreateNewPackageInstance()
-    {
-        $package = new PHP_Depend_Code_Package('package1');
-        $this->assertEquals('package1', $package->getName());
-    }
-    
-    /**
      * Tests that the {@link PHP_Depend_Code_Package::getTypes()} method returns
      * an empty {@link PHP_Depend_Code_NodeIterator}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetTypeNodeIterator()
     {
@@ -89,7 +81,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $types = $package->getTypes();
         
         $this->assertType('PHP_Depend_Code_NodeIterator', $types);
-        $this->assertEquals(0, $types->count());
     }
     
     /**
@@ -98,16 +89,36 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * iterator to contain the new class.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
-    public function testAddType()
+    public function testAddTypeAddsTypeToPackage()
     {
         $package = new PHP_Depend_Code_Package('package1');
         $class   = new PHP_Depend_Code_Class('Class', 0, 'class.php');
         
-        $this->assertNull($class->getPackage());
+        $package->addType($class);
+        $this->assertEquals(1, $package->getTypes()->count());
+    }
+
+    /**
+     * testAddTypeSetPackageOnAddedInstance
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testAddTypeSetPackageOnAddedInstance()
+    {
+        $package = new PHP_Depend_Code_Package('package1');
+        $class   = new PHP_Depend_Code_Class('Class', 0, 'class.php');
+
         $package->addType($class);
         $this->assertSame($package, $class->getPackage());
-        $this->assertEquals(1, $package->getTypes()->count());
     }
     
     /**
@@ -115,20 +126,39 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * class.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
-    public function testAddTypeReparent()
+    public function testAddTypeReparentTheGivenInstance()
     {
         $package1 = new PHP_Depend_Code_Package('package1');
         $package2 = new PHP_Depend_Code_Package('package2');
         $class    = new PHP_Depend_Code_Class('Class', 0, 'class.php');
         
         $package1->addType($class);
-        $this->assertSame($package1, $class->getPackage());
-        $this->assertSame($class, $package1->getTypes()->current());
-        
         $package2->addType($class);
         $this->assertSame($package2, $class->getPackage());
-        $this->assertSame($class, $package2->getTypes()->current());
+    }
+
+    /**
+     * testAddTypeRemovesGivenTypeFromPreviousParentPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testAddTypeRemovesGivenTypeFromPreviousParentPackage()
+    {
+        $package1 = new PHP_Depend_Code_Package('package1');
+        $package2 = new PHP_Depend_Code_Package('package2');
+        $class    = new PHP_Depend_Code_Class('Class', 0, 'class.php');
+
+        $package1->addType($class);
+        $package2->addType($class);
         $this->assertEquals(0, $package1->getTypes()->count());
     }
 
@@ -136,6 +166,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * Tests that you cannot add the same type multiple times to a package.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testPackageAcceptsTheSameTypeOnlyOneTime()
     {
@@ -154,6 +188,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * iterator to contain the new class.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testRemoveType()
     {
@@ -163,11 +201,30 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         
         $package->addType($class1);
         $package->addType($class2);
-        $this->assertSame($package, $class2->getPackage());
         
         $package->removeType($class2);
         $this->assertNull($class2->getPackage());
         $this->assertEquals(1, $package->getTypes()->count());
+    }
+
+    /**
+     * testRemoveTypeSetsParentPackageToNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testRemoveTypeSetsParentPackageToNull()
+    {
+        $package = new PHP_Depend_Code_Package('package1');
+        $class   = new PHP_Depend_Code_Class('Class', 0, 'class.php');
+
+        $package->addType($class);
+        $package->removeType($class);
+
+        $this->assertNull($class->getPackage());
     }
     
     /**
@@ -175,6 +232,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * returns an empty {@link PHP_Depend_Code_NodeIterator}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFunctionsNodeIterator()
     {
@@ -182,7 +243,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $functions = $package->getFunctions();
         
         $this->assertType('PHP_Depend_Code_NodeIterator', $functions);
-        $this->assertEquals(0, $functions->count());
     }
     
     /**
@@ -190,16 +250,36 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * the actual package as {@link PHP_Depend_Code_Function} owner.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testAddFunction()
     {
         $package  = new PHP_Depend_Code_Package('package1');
         $function = new PHP_Depend_Code_Function('function', 0);
         
-        $this->assertNull($function->getPackage());
+        $package->addFunction($function);
+        $this->assertEquals(1, $package->getFunctions()->count());
+    }
+
+    /**
+     * testAddFunctionSetsParentPackageOnGivenInstance
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testAddFunctionSetsParentPackageOnGivenInstance()
+    {
+        $package  = new PHP_Depend_Code_Package('package1');
+        $function = new PHP_Depend_Code_Function('function', 0);
+
         $package->addFunction($function);
         $this->assertSame($package, $function->getPackage());
-        $this->assertEquals(1, $package->getFunctions()->count());
     }
     
     /**
@@ -207,6 +287,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * function.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testAddFunctionReparent()
     {
@@ -215,12 +299,27 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         $function = new PHP_Depend_Code_Function('func', 0);
         
         $package1->addFunction($function);
-        $this->assertSame($package1, $function->getPackage());
-        $this->assertSame($function, $package1->getFunctions()->current());
-        
         $package2->addFunction($function);
         $this->assertSame($package2, $function->getPackage());
-        $this->assertSame($function, $package2->getFunctions()->current());
+    }
+
+    /**
+     * testAddFunctionRemovesFunctionFromPreviousParentPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testAddFunctionRemovesFunctionFromPreviousParentPackage()
+    {
+        $package1 = new PHP_Depend_Code_Package('package1');
+        $package2 = new PHP_Depend_Code_Package('package2');
+        $function = new PHP_Depend_Code_Function('func', 0);
+
+        $package1->addFunction($function);
+        $package2->addFunction($function);
         $this->assertEquals(0, $package1->getFunctions()->count());
     }
     
@@ -229,6 +328,10 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * unsets the actual package as {@link PHP_Depend_Code_Function} owner.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testRemoveFunction()
     {
@@ -238,25 +341,115 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
         
         $package->addFunction($function1);
         $package->addFunction($function2);
-        $this->assertSame($package, $function2->getPackage());
         
         $package->removeFunction($function2);
-        $this->assertNull($function2->getPackage());
         $this->assertEquals(1, $package->getFunctions()->count());
+    }
+
+    /**
+     * testRemoveFunctionSetsParentPackageToNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testRemoveFunctionSetsParentPackageToNull()
+    {
+        $package  = new PHP_Depend_Code_Package('package');
+        $function = new PHP_Depend_Code_Function('func', 0);
+
+        $package->addFunction($function);
+
+        $package->removeFunction($function);
+        $this->assertNull($function->getPackage());
     }
     
     /**
      * Tests the visitor accept method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testVisitorAccept()
     {
         $package = new PHP_Depend_Code_Package('package1');
         $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
         
-        $this->assertNull($visitor->package);
         $package->accept($visitor);
         $this->assertSame($package, $visitor->package);
+    }
+
+    /**
+     * testIsUserDefinedReturnsFalseWhenPackageIsEmpty
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsUserDefinedReturnsFalseWhenPackageIsEmpty()
+    {
+        $package = new PHP_Depend_Code_Package('package1');
+        $this->assertFalse($package->isUserDefined());
+    }
+
+    /**
+     * testIsUserDefinedReturnsFalseWhenAllChildElementsAreNotUserDefined
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsUserDefinedReturnsFalseWhenAllChildElementsAreNotUserDefined()
+    {
+        $package = new PHP_Depend_Code_Package('package1');
+        $package->addType(new PHP_Depend_Code_Class('class', 0));
+        
+        $this->assertFalse($package->isUserDefined());
+    }
+
+    /**
+     * testIsUserDefinedReturnsTrueWhenChildElementIsUserDefined
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsUserDefinedReturnsTrueWhenChildElementIsUserDefined()
+    {
+        $class = new PHP_Depend_Code_Class('class', 0);
+        $class->setUserDefined();
+
+        $package = new PHP_Depend_Code_Package('package1');
+        $package->addType($class);
+
+        $this->assertTrue($package->isUserDefined());
+    }
+
+    /**
+     * testIsUserDefinedReturnsTrueWhenAtLeastOneFunctionExists
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsUserDefinedReturnsTrueWhenAtLeastOneFunctionExists()
+    {
+        $package = new PHP_Depend_Code_Package('package1');
+        $package->addFunction(new PHP_Depend_Code_Function("foo", 0));
+
+        $this->assertTrue($package->isUserDefined());
     }
 }
