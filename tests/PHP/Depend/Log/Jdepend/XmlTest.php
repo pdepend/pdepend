@@ -96,14 +96,8 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
-        // Configure the filter collection
-        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-        $collection->addFilter(new PHP_Depend_Code_Filter_InternalPackage());
-        
         $this->packages = self::parseSource(dirname(__FILE__) . '/../../_code/code-5.2.x');
 
-        $collection->clear();
-        
         $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
         $this->analyzer->analyze($this->packages);
 
