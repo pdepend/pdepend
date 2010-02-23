@@ -93,7 +93,6 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('andc', $project);
         $this->assertEquals(0.7368, $project['andc'], null, 0.0001);
     }
 
@@ -118,7 +117,6 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('ahh', $project);
         $this->assertEquals(1, $project['ahh']);
     }
 
@@ -240,6 +238,36 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
     public function testCalculateDITMetricFourLevelNoInheritance()
     {
         $this->assertEquals(4, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+    }
+
+    /**
+     * testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo()
+    {
+        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+    }
+
+    /**
+     * testCalculateDITMetricForInternalParentIncrementsMetricWithTwo
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDITMetricForInternalParentIncrementsMetricWithTwo()
+    {
+        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
