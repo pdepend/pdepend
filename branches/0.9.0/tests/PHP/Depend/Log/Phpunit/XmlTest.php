@@ -145,10 +145,15 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * Tests the result of the phpunit logger with some real analyzers.
      *
      * @return void
+     * @covers PHP_Depend_Log_Phpunit_Xml
+     * @group pdepend
+     * @group pdepend::logs
+     * @group pdepend::logs::summary
+     * @group unittest
      */
     public function testPHPUnitLoggerResult()
     {
-        $packages = self::parseSource('log/phpunit');
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $logger = new PHP_Depend_Log_Phpunit_Xml();
         $logger->setLogFile($this->_tempFile);
@@ -190,12 +195,31 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
 
         $logger->close();
 
-        $this->assertFileExists($this->_tempFile);
-
         $actual   = file_get_contents($this->_tempFile);
         $expected = $this->_loadExpected('phpunit-log.xml');
 
         $this->assertXmlStringEqualsXmlString($expected, $actual);
+    }
+
+    /**
+     * testPHPUnitLogNotContainsNotUserDefinedClasses
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Phpunit_Xml
+     * @group pdepend
+     * @group pdepend::logs
+     * @group pdepend::logs::summary
+     * @group unittest
+     */
+    public function testPHPUnitLogNotContainsNotUserDefinedClasses()
+    {
+        $logger = new PHP_Depend_Log_Phpunit_Xml();
+        $logger->setLogFile($this->_tempFile);
+        $logger->setCode(self::parseTestCaseSource(__METHOD__));
+        $logger->close();
+
+        $sxml = simplexml_load_file($this->_tempFile);
+        $this->assertEquals(array(), $sxml->xpath('//class[@name="' . __FUNCTION__ . 'Parent"]'));
     }
 
     /**

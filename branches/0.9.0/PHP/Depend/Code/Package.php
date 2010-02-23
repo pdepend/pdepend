@@ -89,9 +89,16 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * List of all standalone {@link PHP_Depend_Code_Function} objects in this
      * package.
      *
-     * @var array(PHP_Depend_Code_Function) $functions
+     * @var array(PHP_Depend_Code_Function)
      */
     protected $functions = array();
+
+    /**
+     * Does this package contain user defined functions, classes or interfaces?
+     *
+     * @var boolean
+     */
+    private $_userDefined = null;
 
     /**
      * Constructs a new package for the given <b>$name</b>
@@ -133,6 +140,22 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * @since 0.9.10
      */
     public function isUserDefined()
+    {
+        if ($this->_userDefined === null) {
+            $this->_userDefined = $this->_isUserDefined();
+        }
+        return $this->_userDefined;
+    }
+
+    /**
+     * Returns <b>true</b> when at least one artifact <b>function</b> or a
+     * <b>class/method</b> is user defined. Otherwise this method will return
+     * <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    private function _isUserDefined()
     {
         foreach ($this->types as $type) {
             if ($type->isUserDefined()) {
