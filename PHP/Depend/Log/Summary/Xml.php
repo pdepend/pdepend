@@ -257,6 +257,10 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        if (!$class->isUserDefined()) {
+            return;
+        }
+
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
 
@@ -365,6 +369,10 @@ class PHP_Depend_Log_Summary_Xml
 
         array_pop($this->_xmlStack);
 
+        if ($packageXml->firstChild === null) {
+            return;
+        }
+
         $xml->appendChild($packageXml);
     }
 
@@ -408,10 +416,6 @@ class PHP_Depend_Log_Summary_Xml
         DOMElement $xml,
         PHP_Depend_Code_File $file = null
     ) {
-        if ($file === null || $file->getFileName() === null) {
-            return;
-        }
-
         if (in_array($file, $this->fileSet, true) === false) {
             $this->fileSet[] = $file;
         }
