@@ -50,7 +50,6 @@ require_once 'PHP/Depend/StorageRegistry.php';
 require_once 'PHP/Depend/VisitorI.php';
 require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Filter/Composite.php';
-require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
 require_once 'PHP/Depend/Tokenizer/CacheDecorator.php';
@@ -354,10 +353,6 @@ class PHP_Depend
         $this->_builder = new PHP_Depend_Builder_Default();
 
         $this->_performParseProcess();
-
-        $this->_codeFilter->addFilter(
-            new PHP_Depend_Code_Filter_InternalPackage()
-        );
 
         // Get global filter collection
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
