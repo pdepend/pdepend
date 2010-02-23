@@ -276,7 +276,10 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
         $uuid = $class->getUUID();
         $root = $class->getUUID();
 
-        while (($class = $class->getParentClass()) !== null && $class->isUserDefined()) {
+        while (($class = $class->getParentClass()) !== null) {
+            if (!$class->isUserDefined()) {
+                ++$dit;
+            }
             ++$dit;
             $root = $class->getUUID();
         }
