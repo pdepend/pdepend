@@ -174,6 +174,11 @@ class PHP_Depend_Log_Jdepend_Chart
 
         $items = array();
         foreach ($this->_code as $package) {
+
+            if (!$package->isUserDefined()) {
+                continue;
+            }
+
             $metrics = $this->_analyzer->getStats($package);
 
             if (count($metrics) === 0) {
