@@ -1,0 +1,8 @@
+<?php
+namespace pkg1;
+
+use pkg2::pkg2Bar as Bar;
+
+abstract class pkg1Bar {
+    abstract function xyz(Bar $x);
+}
