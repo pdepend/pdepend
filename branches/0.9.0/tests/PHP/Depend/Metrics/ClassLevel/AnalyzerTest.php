@@ -156,6 +156,51 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'impl'));
     }
+
+    /**
+     * testCalculateIMPLMetricContainsUnknownImplementedInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetricContainsUnknownImplementedInterface()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
+
+    /**
+     * testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
+
+    /**
+     * testCalculateIMPLMetricContainsInternalImplementedInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetricContainsInternalImplementedInterface()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
     
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
