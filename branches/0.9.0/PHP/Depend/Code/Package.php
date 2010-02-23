@@ -125,6 +125,24 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * Returns <b>true</b> when at least one artifact <b>function</b> or a
+     * <b>class/method</b> is user defined. Otherwise this method will return
+     * <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.9.10
+     */
+    public function isUserDefined()
+    {
+        foreach ($this->types as $type) {
+            if ($type->isUserDefined()) {
+                return true;
+            }
+        }
+        return (count($this->functions) > 0);
+    }
+
+    /**
      * Returns an iterator with all {@link PHP_Depend_Code_Class} instances
      * within this package.
      *
