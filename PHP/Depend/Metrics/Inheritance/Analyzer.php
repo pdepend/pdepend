@@ -223,6 +223,10 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        if (!$class->isUserDefined()) {
+            return;
+        }
+
         $this->fireStartClass($class);
 
         $this->_initNodeMetricsForClass($class);
@@ -250,7 +254,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
         }
 
         $parentClass = $class->getParentClass();
-        if ($parentClass !== null) {
+        if ($parentClass !== null && $parentClass->isUserDefined()) {
             $uuid = $parentClass->getUUID();
 
             ++$this->_numberOfDerivedClasses;
@@ -272,7 +276,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
         $uuid = $class->getUUID();
         $root = $class->getUUID();
 
-        while (($class = $class->getParentClass()) !== null) {
+        while (($class = $class->getParentClass()) !== null && $class->isUserDefined()) {
             ++$dit;
             $root = $class->getUUID();
         }
