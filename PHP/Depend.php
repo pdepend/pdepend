@@ -50,7 +50,6 @@ require_once 'PHP/Depend/StorageRegistry.php';
 require_once 'PHP/Depend/VisitorI.php';
 require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Filter/Composite.php';
-require_once 'PHP/Depend/Code/Filter/DefaultPackage.php';
 require_once 'PHP/Depend/Code/Filter/InternalPackage.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
@@ -356,13 +355,6 @@ class PHP_Depend
 
         $this->_performParseProcess();
 
-        // Initialize defaul filters
-        if ($this->_supportBadDocumentation === false) {
-            $this->_codeFilter->addFilter(
-                new PHP_Depend_Code_Filter_DefaultPackage()
-            );
-        }
-
         $this->_codeFilter->addFilter(
             new PHP_Depend_Code_Filter_InternalPackage()
         );
@@ -450,7 +442,14 @@ class PHP_Depend
             $msg = 'countPackages() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
-        return iterator_count($this->_packages);
+
+        $count = 0;
+        foreach ($this->_packages as $package) {
+            if ($package->isUserDefined()) {
+                ++$count;
+            }
+        }
+        return $count;
     }
 
     /**
