@@ -38,6 +38,8 @@ and the NDepend metric tool.
   revision #1037. 
 - Fixed #114: Parsing error caused by complex string expressions fixed.
   Fixed in svn revision #1068.
+- Fixed #115: Summary and PHPUnit Report lists unknown classes. Fixed in
+  svn revision #1101.
 - Fixed #116: Returns reference results in parsing error. Fixed in svn 
   revision #1090.
 - Performance intensive calculation result cached.
