@@ -185,7 +185,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
             $this->_nodeMetrics = array();
 
             $this->fireStartAnalyzer();
-            $this->_analyzer($packages);
+            $this->_analyze($packages);
             $this->fireEndAnalyzer();
         }
     }
@@ -197,8 +197,9 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * @param PHP_Depend_Code_NodeIterator $packages The source packages.
      *
      * @return void
+     * @since 0.9.10
      */
-    private function _analyzer(PHP_Depend_Code_NodeIterator $packages)
+    private function _analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         // Process all packages
         foreach ($packages as $package) {
