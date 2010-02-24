@@ -13,7 +13,7 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2009-12-26</date>
+  <date>2010-02-24</date>
   <version>
     <release>0.9.10</release>
     <api>1.0.0</api>
@@ -67,16 +67,10 @@ and the NDepend metric tool.
           </dir>
           <dir name="Code">
             <dir name="Filter">
-              <file name="InternalPackage.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
               <file name="Package.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="Collection.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="DefaultPackage.php" role="php">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="Composite.php" role="php">
@@ -349,19 +343,28 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="Parser">
+            <file name="TokenException.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="InvalidStateException.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="TokenStack.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="Exception.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="InvalidStateException.php" role="php">
+            <file name="FunctionNameParserImpl.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="MissingValueException.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="SymbolTable.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="FunctionNameParser.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="TokenStreamEndException.php" role="php">
@@ -631,98 +634,11 @@ and the NDepend metric tool.
         </file>
       </dir>
       <dir name="tests/PHP/Depend">
-        <dir name="_run"/>
-        <dir name="Input">
-          <file name="DummyFilter.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ExtensionFilterTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
+        <dir name="Parser">
           <file name="AllTests.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="IteratorTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="CompositeFilterTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ExcludePathFilterTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-        </dir>
-        <dir name="Bugs">
-          <file name="InconsistentObjectGraphBug73Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="AbstractTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="TokenizerKeywordSubstitutionBug76Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="NamespaceKeywordInParameterTypeHintBug102Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="AllTests.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ParserKeywordAsConstantNameBug76Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="DefaultPackageContainsBrokenAritfactsBug098Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="WrongCouplingAnalyzerForCommentsBug089Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ParameterStringDefaultValueBug103Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="InstanceOfExpressionReferenceHandlingBug062Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ParentKeywordAsParameterTypeHintBug087Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="SupportCommaSeparatedPropertyDeclarationsBug081Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ClosureResultsInExceptionBug070Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="DefaultNamespaceBug106Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="IncorrectPropertyEndlineBug068Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="InvalidResultWhenFunctionReturnsByReferenceBug004Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="NPathComplexityIsBrokenInVersion096Bug095Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ClosureReturnsByReferenceBug094Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ClassDeclarationWithoutBodyBug065Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="SupportCommaSeparatedConstantDefinitionsBug082Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="SignedDefaultValueResultsInExceptionBug71Test.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ParserSetsIncorrectStartLineBug101Test.php" role="test">
+          <file name="FunctionNameParserImplTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -737,6 +653,108 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
+        <dir name="Bugs">
+          <file name="ComplexStringParsingBug114Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AbstractTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="InconsistentObjectGraphBug73Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="TokenizerKeywordSubstitutionBug76Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="NamespaceKeywordInParameterTypeHintBug102Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ParserKeywordAsConstantNameBug76Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="DefaultPackageContainsBrokenAritfactsBug098Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="WrongCouplingAnalyzerForCommentsBug089Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="KeywordFunctionNameResultsInExceptionBug116Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ParameterStringDefaultValueBug103Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="InstanceOfExpressionReferenceHandlingBug062Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ParentKeywordAsParameterTypeHintBug087Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ClosureResultsInExceptionBug070Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="NPathComplexityIsBrokenInVersion096Bug095Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="DefaultNamespaceBug106Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="IncorrectPropertyEndlineBug068Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="InvalidResultWhenFunctionReturnsByReferenceBug004Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ClosureReturnsByReferenceBug094Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="SignedDefaultValueResultsInExceptionBug71Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ClassDeclarationWithoutBodyBug065Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="SupportCommaSeparatedPropertyDeclarationsBug081Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="SummaryReportContainsClassesWithoutSourceFileBug115Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="SupportCommaSeparatedConstantDefinitionsBug082Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ParserSetsIncorrectStartLineBug101Test.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="TextUI">
+          <dir name="_files">
+            <file name="clover.xml" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="RunnerTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ResultPrinterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="CommandTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
         <dir name="Code">
           <dir name="Filter">
             <file name="PackageTest.php" role="test">
@@ -746,9 +764,6 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="CollectionTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="DefaultPackageTest.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -918,8 +933,92 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
-        <dir name="Builder">
-          <file name="DefaultTest.php" role="test">
+        <dir name="Metrics">
+          <dir name="NodeCount">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="CyclomaticComplexity">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Hierarchy">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="CrapIndex">
+            <dir name="_files">
+              <file name="clover.xml" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AllTests.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="CodeRank">
+            <file name="MethodStrategyTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="PropertyStrategyTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AllTests.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="StrategyFactoryTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Coupling">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Inheritance">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Dependency">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="NodeLoc">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="NPathComplexity">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="ClassLevel">
+            <file name="AnalyzerTest.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="AnalyzerLoaderTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AnalyzerIteratorTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AbstractTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -943,6 +1042,32 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
+        <dir name="Builder">
+          <file name="DefaultTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="Input">
+          <file name="DummyFilter.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ExtensionFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="AllTests.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="IteratorTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="CompositeFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="ExcludePathFilterTest.php" role="test">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+        </dir>
+        <dir name="_run"/>
         <dir name="Log">
           <dir name="Summary">
             <dir name="_expected">
@@ -1071,95 +1196,6 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
-        <dir name="Metrics">
-          <dir name="NodeCount">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="CyclomaticComplexity">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Hierarchy">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="CrapIndex">
-            <dir name="_files">
-              <file name="clover.xml" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AllTests.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="CodeRank">
-            <file name="MethodStrategyTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="PropertyStrategyTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AllTests.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="StrategyFactoryTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Coupling">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Inheritance">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Dependency">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="NodeLoc">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="NPathComplexity">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="ClassLevel">
-            <file name="AnalyzerTest.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <file name="AnalyzerLoaderTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="AllTests.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="AnalyzerIteratorTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="AbstractTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-        </dir>
         <dir name="Util">
           <dir name="Coverage">
             <dir name="_files">
@@ -1217,16 +1253,21 @@ and the NDepend metric tool.
           </dir>
           <dir name="log">
             <dir name="phpunit">
-              <file name="method.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="function.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="property.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="class.php" role="test">
+              <dir name="testPHPUnitLoggerResult">
+                <file name="method.php" role="test">
+                  <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
+                <file name="function.php" role="test">
+                  <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
+                <file name="property.php" role="test">
+                  <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
+                <file name="class.php" role="test">
+                  <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
+              </dir>
+              <file name="testPHPUnitLogNotContainsNotUserDefinedClasses.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1250,6 +1291,15 @@ and the NDepend metric tool.
             </dir>
             <dir name="CrapIndex">
               <file name="testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testAnalyzerIgnoresAbstractMethods.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testAnalyterReturnsExpectedResultForMethodWithoutCoverageData.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testAnalyzerIgnoresInterfaceMethods.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testAnalyzerReturnsExpectedResultForMethodWithoutCoverage.php" role="test">
@@ -1371,37 +1421,31 @@ and the NDepend metric tool.
               </file>
             </dir>
             <dir name="classlevel">
-              <file name="testCalculateDITMetricNoInheritance.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testCalculateWMCiMetricOneLevelInheritance.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testCalculateWMCMetricOneLevelInheritance.php" role="test">
+              <file name="testCalculateCISMetricZeroInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateWMCnpMetricOneLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateDITMetricFourLevelNoInheritance.php" role="test">
+              <file name="testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateCISMetricZeroInheritance.php" role="test">
+              <file name="testCalculateVARSMetricOneLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateDITMetricOneLevelInheritance.php" role="test">
+              <file name="testCalculateIMPLMetricContainsUnknownImplementedInterface.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateWMCMetricTwoLevelInheritance.php" role="test">
+              <file name="testCalculateWMCMetricOneLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateDITMetricTwoLevelNoInheritance.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testCalculateWMCiMetricTwoLevelInheritance.php" role="test">
+              <file name="testCalculateWMCiMetricOneLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateWMCMetric.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateWMCiMetricTwoLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateVARSMetricZeroInheritance.php" role="test">
@@ -1410,25 +1454,28 @@ and the NDepend metric tool.
               <file name="testCalculateVARSiMetric.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateVARSMetricOneLevelInheritance.php" role="test">
+              <file name="testCalculateWMCMetricTwoLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateWMCiMetric.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateVARSnpMetric.php" role="test">
+              <file name="testCalculateWMCnpMetricTwoLevelInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateIMPLMetricContainsInternalImplementedInterface.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateVARSnpMetricWithInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateVARSnpMetric.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateCISMetricOneLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateVARSiMetricWithInheritance.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testCalculateWMCnpMetric.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testCalculateIMPLMetric1.php" role="test">
@@ -1440,9 +1487,6 @@ and the NDepend metric tool.
               <file name="testCalculateIMPLMetric2.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateWMCnpMetricTwoLevelInheritance.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
               <file name="testCalculateIMPLMetric.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
@@ -1452,15 +1496,63 @@ and the NDepend metric tool.
               <file name="testCalculateCSZMetricOneLevelInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testCalculateDITMetricThreeLevelNoInheritance.php" role="test">
+              <file name="testCalculateWMCnpMetric.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="inheritance">
-              <file name="simple_ahh_value.php" role="test">
+            <dir name="Inheritance">
+              <file name="testCalculatesExpectedNoamMetricForClassWithIndirectParent.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="simple_andc_value.php" role="test">
+              <file name="testCalculateDITMetricFourLevelNoInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoccMetricForClassWithDirectAndIndirectChildren.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateDITMetricNoInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateDITMetricOneLevelInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateDITMetricTwoLevelNoInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoccMetricForClassWithoutChildren.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoamMetricForClassWithDirectParent.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoccMetricForClassWithDirectChildren.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoomMetricForClassWithParent.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateDITMetricForInternalParentIncrementsMetricWithTwo.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoamMetricForClassWithoutParent.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculatesExpectedNoomMetricForClassWithoutParent.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testAnalyzerCalculatesCorrectANDCValue.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testAnalyzerCalculatesCorrectAHHValue.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testCalculateDITMetricThreeLevelNoInheritance.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1488,10 +1580,16 @@ and the NDepend metric tool.
             <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="testParserHandlesStringWithQuestionMarkNotAsTernaryOperator.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="parser-sets-expected-function-tokens.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserStripsLeadingSlashFromNamespaceAliasedClassName.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="final_class.php" role="test">
@@ -1503,10 +1601,13 @@ and the NDepend metric tool.
             <file name="testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="return_comment_chained_type_array.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="prop_comment_chained_type_array.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="return_comment_chained_type_array.php" role="test">
+            <file name="testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserHandlesParentKeywordInMethodParameterDefaultValue.php" role="test">
@@ -1515,40 +1616,52 @@ and the NDepend metric tool.
             <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="testParserHandlesParentKeywordInFunctionParameterDefaultValue.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="testParserHandlesSelfKeywordAsParameterTypeHint.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="abstract_class.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="testParserStripsLeadingSlashFromNamespacedClassName.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="testParserSetsTheReallySameParameterHintInstanceForKeywordSelf.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="testParserStripsLeadingSlashFromInheritNamespacedClassName.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="prop_comment_chained_type.php" role="test">
+            <file name="testParserHandlesSelfKeywordAsParameterTypeHint.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserHandlesDoubleQuoteStringWithEscapedVariable.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="abstract_class.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserHandlesNestedArraysAsParameterDefaultValue.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserStripsLeadingSlashFromNamespacedClassName.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="return_comment_chained_type.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserHandlesNestedArraysAsParameterDefaultValue.php" role="test">
+            <file name="prop_comment_chained_type.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserStripsLeadingSlashFromInheritNamespacedClassName.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserSetsTheReallySameParameterHintInstanceForKeywordSelf.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserHandlesDoubleQuoteStringAsConstantDefaultValue.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -1652,8 +1765,67 @@ and the NDepend metric tool.
             </dir>
           </dir>
           <dir name="bugs">
+            <dir name="004">
+              <file name="testParserCreatesInvalidMethodWhenReturnsByReference.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserCreatesInvalidFunctionWhenReturnsByReference.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="114">
+              <file name="testParserHandlesStringWithQuestionMarkNotAsTernaryOperator.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesStringWithEmbeddedExpression.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesStringWithVariableNotAsFunctionCall.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesStringWithVariableAndAssignment.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesBacktickExpressionWithEscapedVariable.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesStringWithEscapedVariable.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesStringWithEmbeddedBacktickExpression.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesBacktickExpressionWithEmbeddedStringExpression.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <dir name="101">
               <file name="testParserSetsExpectedLineNumber.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="116">
+              <file name="testParserNotThrowsAnExceptionForKeywordNamespace.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserNotThrowsAnExceptionForKeywordGoto.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserNotThrowsAnExceptionForMagicNamespaceConstant.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserNotThrowsAnExceptionForKeywordUse.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserNotThrowsAnExceptionForKeywordParent.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="102">
+              <file name="testParserHandlesNamespaceKeywordInMethodParameterTypeHint.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesNamespaceKeywordInFunctionParameterTypeHint.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1671,22 +1843,54 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="004">
-              <file name="testParserCreatesInvalidMethodWhenReturnsByReference.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserCreatesInvalidFunctionWhenReturnsByReference.php" role="test">
+            <dir name="095">
+              <file name="testAnalyzerReturnsExpectedNPathValue.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="098">
-              <file name="testDefaultPackageDoesNotContainsInterfaceWithBrokenBody.php" role="test">
+            <dir name="094">
+              <file name="testParserHandlesClosureThatReturnsReference.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testDefaultPackageDoesNotContainClassWithBrokenMethod.php" role="test">
+            </dir>
+            <dir name="081">
+              <file name="testParserSetsExpectedStaticModifierForAllPropertyDeclarations.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testDefaultPackageDoesNotContainFunctionWithBrokenSignature.php" role="test">
+              <file name="testParserSetsSameVisibilityForAllPropertyDeclarations.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesSimpleCommaSeparatedPropertyDeclaration.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="115">
+              <file name="testSummaryReportFiltersInternalClasses.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testSummaryReportFiltersClassesNotFlaggedUserDefined.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testSummaryReportDoesNotContainEmptyPackages.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="062">
+              <file name="testParserTreatsTypeInInstanceOfOperatorGenericWithClass.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserTreatsTypeInInstanceOfOperatorGenericWithInterface.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="082">
+              <file name="testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesSimpleCommaSeparatedConstantDefinition.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testParserHandlesMultipleCommaSeparatedConstantDefinitions.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1707,24 +1911,8 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="094">
-              <file name="testParserHandlesClosureThatReturnsReference.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="081">
-              <file name="testParserSetsExpectedStaticModifierForAllPropertyDeclarations.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserSetsSameVisibilityForAllPropertyDeclarations.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserHandlesSimpleCommaSeparatedPropertyDeclaration.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="095">
-              <file name="testAnalyzerReturnsExpectedNPathValue.php" role="test">
+            <dir name="103">
+              <file name="testParserHandlesStringDefaultValueWithEmbeddedExpression.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1733,6 +1921,11 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="091">
+              <file name="testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1747,32 +1940,14 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="103">
-              <file name="testParserHandlesStringDefaultValueWithEmbeddedExpression.php" role="test">
+            <dir name="098">
+              <file name="testDefaultPackageDoesNotContainsInterfaceWithBrokenBody.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-            </dir>
-            <dir name="082">
-              <file name="testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments.php" role="test">
+              <file name="testDefaultPackageDoesNotContainClassWithBrokenMethod.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testParserHandlesSimpleCommaSeparatedConstantDefinition.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserHandlesMultipleCommaSeparatedConstantDefinitions.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="091">
-              <file name="testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="102">
-              <file name="testParserHandlesNamespaceKeywordInMethodParameterTypeHint.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserHandlesNamespaceKeywordInFunctionParameterTypeHint.php" role="test">
+              <file name="testDefaultPackageDoesNotContainFunctionWithBrokenSignature.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -1787,24 +1962,13 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="062">
-              <file name="testParserTreatsTypeInInstanceOfOperatorGenericWithClass.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testParserTreatsTypeInInstanceOfOperatorGenericWithInterface.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <file name="076-003-tokenizer-keyword-substitution.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="065-001-interface-declaration-without-body.fail" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-030-tokenizer-keyword-substitution.php" role="test">
+            <file name="069-4-static-expression.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-024-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-019-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="001.php" role="test">
@@ -1816,7 +1980,16 @@ and the NDepend metric tool.
             <file name="073-004-inconsistent-object-graph.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="076-024-tokenizer-keyword-substitution.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="076-011-tokenizer-keyword-substitution.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="076-030-tokenizer-keyword-substitution.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="076-004-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-008-tokenizer-keyword-substitution.php" role="test">
@@ -1825,16 +1998,7 @@ and the NDepend metric tool.
             <file name="065-004-class-declaration-without-body.fail" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-019-tokenizer-keyword-substitution.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="076-004-tokenizer-keyword-substitution.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="069-4-static-expression.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="076-020-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-010-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-014-tokenizer-keyword-substitution.php" role="test">
@@ -1873,10 +2037,13 @@ and the NDepend metric tool.
             <file name="006.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-015-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-020-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="016-1.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="076-015-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-026-tokenizer-keyword-substitution.php" role="test">
@@ -1894,7 +2061,7 @@ and the NDepend metric tool.
             <file name="059-005-property-source-file.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="076-010-tokenizer-keyword-substitution.php" role="test">
+            <file name="076-003-tokenizer-keyword-substitution.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="076-013-tokenizer-keyword-substitution.php" role="test">
@@ -2605,11 +2772,46 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="tokenizer">
+            <file name="testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
           <dir name="code">
+            <dir name="Class">
+              <file name="testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testIsSubtypeInClassInheritanceHierarchy.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testFindChildrenOfTypeFindsASTNodeInMethodDeclarations.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testIsSubtypeInClassAndInterfaceInheritanceHierarchy.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testIsSubtypeInInheritanceHierarchy.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetInterfacesByInheritence.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetInterfaces.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetInterfacesByClassInheritence.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <dir name="ASTMethodPostfix">
               <file name="testMethodPostfixStructureForSimpleInvocation.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -2680,28 +2882,11 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="class">
-              <file name="testIsSubtypeInClassAndInterfaceInheritanceHierarchy.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testIsSubtypeInClassInheritanceHierarchy.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testGetInterfaces.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testGetInterfacesByInheritence.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testIsSubtypeInInheritanceHierarchy.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testGetInterfacesByClassInheritence.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
             <dir name="ASTString">
               <file name="testDoubleQuoteStringContainsTwoChildNodes.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testBacktickExpressionWithEmbeddedComplexDoubleQuoteString.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testBacktickExpressionContainsExpectedCompoundVariable.php" role="test">
@@ -2710,10 +2895,13 @@ and the NDepend metric tool.
               <file name="testBacktickExpressionContainsTwoChildNodes.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
+              <file name="testDoubleQuoteStringContainsExpectedTextContent.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
               <file name="testUnclosedDoubleQuoteStringResultsInExpectedException.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testDoubleQuoteStringContainsExpectedTextContent.php" role="test">
+              <file name="testDoubleQuoteStringWithEmbeddedComplexBacktickExpression.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -2724,13 +2912,16 @@ and the NDepend metric tool.
               <file name="testSwitchStatementGraphWithBooleanExpressions.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
+              <file name="testUnclosedSwitchStatementResultsInExpectedException.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
               <file name="testSwitchStatementHasExpectedStartLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testSwitchStatementHasExpectedEndColumn.php" role="test">
+              <file name="testSwitchStatementGraphWithLabels.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testSwitchStatementGraphWithLabels.php" role="test">
+              <file name="testSwitchStatementHasExpectedEndColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testSwitchStatementHasExpectedStartColumn.php" role="test">
@@ -3075,6 +3266,41 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <dir name="Interface">
+              <file name="testIsSubtypeOfReturnsFalseForNonParents.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testIsSubtypeOnInheritanceHierarchy3.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testIsSubtypeOnInheritanceHierarchy1.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testIsSubtypeOnInheritanceHierarchy2.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetInterfacesOneLevelInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetInterfacesTwoLevelInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetInterfacesComplexInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testFindChildrenOfTypeFindsASTNodeInMethodDeclarations.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testGetInterfacesZeroInheritance.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="testIsSubtypeOnInheritanceHierarchy.php" role="test">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <dir name="ASTLogicalAndExpression">
               <file name="testLogicalAndExpressionHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -3086,20 +3312,6 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
               <file name="testLogicalAndExpressionHasExpectedStartLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <dir name="ASTLogicalXorExpression">
-              <file name="testLogicalXorExpressionHasExpectedEndLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testLogicalXorExpressionHasExpectedStartLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testLogicalXorExpressionHasExpectedStartColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testLogicalXorExpressionHasExpectedEndColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -3401,20 +3613,6 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="ASTForeachStatement">
-              <file name="testForeachStatementHasExpectedEndLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testForeachStatementHasExpectedStartColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testForeachStatementHasExpectedEndColumn.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testForeachStatementHasExpectedStartLine.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
             <dir name="ASTConstantDeclarator">
               <file name="testConstantDeclaratorHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
@@ -3469,32 +3667,31 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="interface">
-              <file name="testIsSubtypeOfReturnsFalseForNonParents.php" role="test">
+            <dir name="ASTLogicalXorExpression">
+              <file name="testLogicalXorExpressionHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testIsSubtypeOnInheritanceHierarchy3.php" role="test">
+              <file name="testLogicalXorExpressionHasExpectedStartLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testIsSubtypeOnInheritanceHierarchy1.php" role="test">
+              <file name="testLogicalXorExpressionHasExpectedStartColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testIsSubtypeOnInheritanceHierarchy2.php" role="test">
+              <file name="testLogicalXorExpressionHasExpectedEndColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testGetInterfacesOneLevelInheritance.php" role="test">
+            </dir>
+            <dir name="ASTForeachStatement">
+              <file name="testForeachStatementHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testGetInterfacesTwoLevelInheritance.php" role="test">
+              <file name="testForeachStatementHasExpectedStartColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testGetInterfacesComplexInheritance.php" role="test">
+              <file name="testForeachStatementHasExpectedEndColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testGetInterfacesZeroInheritance.php" role="test">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="testIsSubtypeOnInheritanceHierarchy.php" role="test">
+              <file name="testForeachStatementHasExpectedStartLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
@@ -3629,26 +3826,10 @@ and the NDepend metric tool.
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
-        <dir name="TextUI">
-          <dir name="_files">
-            <file name="clover.xml" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <file name="RunnerTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="ResultPrinterTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="AllTests.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="CommandTest.php" role="test">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-        </dir>
-        <file name="AbstractTest.php" role="test">
+        <file name="ParserTest.php" role="test">
+          <tasks:replace from="@package_version@" to="version" type="package-info"/>
+        </file>
+        <file name="StorageRegistryTest.php" role="test">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="AllTests.php" role="test">
@@ -3657,10 +3838,7 @@ and the NDepend metric tool.
         <file name="DependTest.php" role="test">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
-        <file name="ParserTest.php" role="test">
-          <tasks:replace from="@package_version@" to="version" type="package-info"/>
-        </file>
-        <file name="StorageRegistryTest.php" role="test">
+        <file name="AbstractTest.php" role="test">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
       </dir>
