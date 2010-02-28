@@ -74,23 +74,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             mkdir($run, 0755);
         }
 
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($run));
-
-        foreach ($files as $file) {
-            $pathName = realpath($file->getPathname());
-            $fileName = $file->getFilename();
-            if ($fileName === '.'
-             || $fileName === '..'
-             || strpos($pathName, '.svn') !== false) {
-                continue;
-            }
-
-            if ($file->isDir() === true) {
-                rmdir($pathName);
-            } else {
-                unlink($pathName);
-            }
-        }
+        $this->_clearRunResources($run);
 
         include_once 'PHP/Depend.php';
         include_once 'PHP/Depend/StorageRegistry.php';
@@ -119,7 +103,36 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         PHP_Depend_Code_Filter_Collection::getInstance()->clear();
 
+        $this->_clearRunResources();
+
         parent::tearDown();
+    }
+
+    /**
+     * Clears all temporary resources.
+     *
+     * @param string $dir The root directory.
+     *
+     * @return void
+     */
+    private function _clearRunResources($dir = null)
+    {
+        if ($dir === null) {
+            $dir = dirname(__FILE__) . '/_run';
+        }
+
+        foreach (new DirectoryIterator($dir) as $file) {
+            if ($file == '.' || $file == '..' || $file == '.svn') {
+                continue;
+            }
+            $pathName = realpath($file->getPathname());
+            if ($file->isDir()) {
+                $this->_clearRunResources($pathName);
+                rmdir($pathName);
+            } else {
+                unlink($pathName);
+            }
+        }
     }
 
     /**
