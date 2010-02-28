@@ -1,3 +1,12 @@
+PHP_Depend 0.9.11
+-----------------
+
+- Critical issue in PHP_Depend's temporary data cache fixed. This bug
+  only occured when running several instances of PHP_Depend in 
+  parallel. In this setup the used cache key spl_object_hash() has
+  caused a corrupted cache, because different php process instances 
+  have written different data to the same cache file.
+
 PHP_Depend 0.9.10
 -----------------
 
