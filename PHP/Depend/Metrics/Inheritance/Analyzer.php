@@ -310,7 +310,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
 
         $parentMethodNames = array();
         foreach ($parentClass->getAllMethods() as $method) {
-            $parentMethodNames[$method->getName()] = true;
+            $parentMethodNames[$method->getName()] = $method->isAbstract();
         }
 
         $numberOfAddedMethods       = 0;
@@ -322,7 +322,9 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
             }
             
             if (isset($parentMethodNames[$method->getName()])) {
-                ++$numberOfOverwrittenMethods;
+                if (!$parentMethodNames[$method->getName()]) {
+                    ++$numberOfOverwrittenMethods;
+                }
             } else {
                 ++$numberOfAddedMethods;
             }
