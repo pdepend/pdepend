@@ -87,13 +87,18 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
     /**
      * Constructs a new file storage instance and calculates the root directory
      * for the file storage.
+     *
+     * @param string $cacheDir Optional cache directory.
      */
-    public function __construct()
+    public function __construct($cacheDir = null)
     {
         $this->_engineInstanceKey = strtr(microtime(), ' ', '_');
 
-        $this->_dirname = PHP_Depend_Util_FileUtil::getSysTempDir()
-                        . '/pdepend_storage';
+        if ($cacheDir === null) {
+            $cacheDir = PHP_Depend_Util_FileUtil::getSysTempDir();
+        }
+
+        $this->_dirname = $cacheDir . '/pdepend_storage';
 
         // Append the user identifier on *NIX systems
         if (function_exists('posix_getuid') === true) {
