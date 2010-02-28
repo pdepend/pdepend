@@ -78,6 +78,7 @@ require_once dirname(__FILE__) . '/DefaultNamespaceBug106Test.php';
 require_once dirname(__FILE__) . '/ComplexStringParsingBug114Test.php';
 require_once dirname(__FILE__) . '/SummaryReportContainsClassesWithoutSourceFileBug115Test.php';
 require_once dirname(__FILE__) . '/KeywordFunctionNameResultsInExceptionBug116Test.php';
+require_once dirname(__FILE__) . '/MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -137,6 +138,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ComplexStringParsingBug114Test');
         $suite->addTestSuite('PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test');
         $suite->addTestSuite('PHP_Depend_Bugs_KeywordFunctionNameResultsInExceptionBug116Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test');
 
         return $suite;
     }
