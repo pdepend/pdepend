@@ -337,7 +337,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     }
 
     /**
-     * Traverses up the node tree and finds all parent nodes that are  instances
+     * Traverses up the node tree and finds all parent nodes that are instances
      * of <b>$parentType</b>.
      *
      * @param string $parentType Class/interface type you are looking for,
@@ -349,8 +349,10 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         $parents = array();
 
         $parentNode = $this->parent;
-        while ($parentNode instanceof $parentType) {
-            array_unshift($parents, $parentNode);
+        while (is_object($parentNode)) {
+            if ($parentNode instanceof $parentType) {
+                array_unshift($parents, $parentNode);
+            }
             $parentNode = $parentNode->getParent();
         }
         return $parents;
