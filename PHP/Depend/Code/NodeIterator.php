@@ -139,6 +139,9 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function current()
     {
+        if ($this->_offset >= $this->_count) {
+            return false;
+        }
         return $this->_nodes[$this->_offset];
     }
 
