@@ -71,6 +71,13 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
     private $_dirname = '';
 
     /**
+     * Microtime when the engine instance was created.
+     *
+     * @var string
+     */
+    private $_engineInstanceKey = '';
+
+    /**
      * List of all storage groups that were used with this storage engine.
      *
      * @var array(string=>string) $_groups
@@ -83,6 +90,8 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
      */
     public function __construct()
     {
+        $this->_engineInstanceKey = strtr(microtime(), ' ', '_');
+
         $this->_dirname = PHP_Depend_Util_FileUtil::getSysTempDir()
                         . '/pdepend_storage';
 
@@ -196,7 +205,10 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
             mkdir($storageDirname, 0755, true);
         }
 
+        if ($this->hasPrune()) {
+            $key .= '.' . $this->_engineInstanceKey;
+        }
+
         return $storageDirname . '/' . $key . '.' . $version . '.data';
     }
 }
-?>
