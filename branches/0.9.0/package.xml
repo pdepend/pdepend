@@ -24,6 +24,8 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
+- Fixed #118: Calculation of the Number Of Overwritten Methods is
+  wrong. Fixed in svn revision #1112.
 - Critical issue in PHP_Depend's temporary data cache fixed. This bug
   only occured when running several instances of PHP_Depend in
   parallel. In this setup the used cache key spl_object_hash() has
