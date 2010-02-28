@@ -15,7 +15,7 @@ and the NDepend metric tool.
   </lead>
   <date>2010-02-24</date>
   <version>
-    <release>0.9.10</release>
+    <release>0.9.11</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,27 +24,11 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Implemented #72: Add NOAM, NOOM and NOCC metrics. Implemented in svn 
-  revision #1084.
-- Implemented #74: Make CRAP-index available. Implemented in svn revision 
-  #1063.
-- Implemented #105: Support for deep search implement. Implemented in svn 
-  revision #1078.
-- Fixed #106: Filter algorithm is broken for namespaced internal classes.
-  Fixed in svn revision #1039.
-- Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
-  revision #1032. 
-- Fixed #111: Dynamic Strings are treated as literal strings. Fixed in svn
-  revision #1037. 
-- Fixed #114: Parsing error caused by complex string expressions fixed.
-  Fixed in svn revision #1068.
-- Fixed #115: Summary and PHPUnit Report lists unknown classes. Fixed in
-  svn revision #1101.
-- Fixed #116: Returns reference results in parsing error. Fixed in svn 
-  revision #1090.
-- Performance intensive calculation result cached.
-- Test code restructured and improved.
-- Concurrency issue for parallel running pdepend instances fixed.
+- Critical issue in PHP_Depend's temporary data cache fixed. This bug
+  only occured when running several instances of PHP_Depend in
+  parallel. In this setup the used cache key spl_object_hash() has
+  caused a corrupted cache, because different php process instances
+  have written different data to the same cache file.
   </notes>
   <contents>
     <dir name="/">
@@ -4286,6 +4270,42 @@ and the NDepend metric tool.
   svn revision #1015.
 - Implemented #104: Add isStatic() method on ASTMemberPrimaryPrefix node,
   implemented in svn revision #1013.
+      </notes>
+    </release>
+
+    <release>
+      <date>2010-02-24</date>
+      <version>
+        <release>0.9.10</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Implemented #72: Add NOAM, NOOM and NOCC metrics. Implemented in svn
+  revision #1084.
+- Implemented #74: Make CRAP-index available. Implemented in svn revision
+  #1063.
+- Implemented #105: Support for deep search implement. Implemented in svn
+  revision #1078.
+- Fixed #106: Filter algorithm is broken for namespaced internal classes.
+  Fixed in svn revision #1039.
+- Fixed #110: Duplicate "coupling" directory in test code. Fixed in svn
+  revision #1032.
+- Fixed #111: Dynamic Strings are treated as literal strings. Fixed in svn
+  revision #1037.
+- Fixed #114: Parsing error caused by complex string expressions fixed.
+  Fixed in svn revision #1068.
+- Fixed #115: Summary and PHPUnit Report lists unknown classes. Fixed in
+  svn revision #1101.
+- Fixed #116: Returns reference results in parsing error. Fixed in svn
+  revision #1090.
+- Performance intensive calculation result cached.
+- Test code restructured and improved.
+- Concurrency issue for parallel running pdepend instances fixed.
       </notes>
     </release>
   </changelog>
