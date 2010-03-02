@@ -70,6 +70,10 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * directory.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
     {
@@ -89,6 +93,10 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * Tests that the runner stops processing if no logger is specified.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
@@ -104,12 +112,18 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $runner->run();
     }
 
+    /**
+     * testRunnerUsesCorrectFileFilter
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
     public function testRunnerUsesCorrectFileFilter()
     {
         $fileName = self::createRunResourceURI('pdepend.dummy');
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
 
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceArguments(array(dirname(__FILE__). '/../_code'));
@@ -125,28 +139,19 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $code = $data['code'];
         $this->assertEquals(3, $code->count());
 
-        $code->rewind();
+        foreach ($code as $package) {
+            if ($package->getName() === 'pdepend.test') {
+                $this->assertEquals(1, $package->getFunctions()->count());
+                $this->assertEquals(1, $package->getClasses()->count());
 
-        $package = $code->current();
-        $this->assertEquals('pdepend.test', $package->getName());
-
-        $this->assertEquals(1, $package->getFunctions()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
-
-        $function = $package->getFunctions()->current();
-        $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(1, $function->getExceptionClasses()->count());
-        $this->assertEquals('MyException', $function->getExceptionClasses()->current()->getName());
-
-        $code->next();
-
-        $package = $code->current();
-        $this->assertEquals('pdepend.test2', $package->getName());
-
-        $sourceFile = realpath(dirname(__FILE__). '/../_code/function.inc');
-        $this->assertEquals($sourceFile, $function->getSourceFile()->getName());
-
-        unlink($fileName);
+                $function = $package->getFunctions()->current();
+                $this->assertEquals('foo', $function->getName());
+                $this->assertEquals(1, $function->getExceptionClasses()->count());
+                $this->assertEquals('MyException', $function->getExceptionClasses()->current()->getName());
+            } else if ($package->getName() === 'pdepend.test') {
+                $this->assertEquals('pdepend.test2', $package->getName());
+            }
+        }
     }
 
     /**
@@ -154,13 +159,14 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * correct.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
     {
         $fileName = self::createRunResourceURI('pdepend.dummy');
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
 
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceArguments(array(dirname(__FILE__). '/../_code'));
@@ -177,32 +183,30 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         $code = $data['code'];
         $this->assertEquals(3, $code->count());
 
-        $code->rewind();
+        foreach ($code as $package) {
+            if ($package->getName() === 'pdepend.test') {
+                $this->assertEquals(1, $package->getFunctions()->count());
+                $this->assertEquals(1, $package->getClasses()->count());
 
-        $package = $code->current();
-        $this->assertEquals('pdepend.test', $package->getName());
-
-        $this->assertEquals(1, $package->getFunctions()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
-
-        $function = $package->getFunctions()->current();
-        $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(0, $function->getExceptionClasses()->count());
-
-        $code->next();
-
-        $package = $code->current();
-        $this->assertEquals('pdepend.test2', $package->getName());
-
-        unlink($fileName);
+                $function = $package->getFunctions()->current();
+                $this->assertEquals('foo', $function->getName());
+                $this->assertEquals(0, $function->getExceptionClasses()->count());
+            }
+        }
     }
 
+    /**
+     * testSupportBadDocumentation
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
     public function testSupportBadDocumentation()
     {
         $fileName = self::createRunResourceURI('pdepend.dummy');
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
 
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->setSourceArguments(array(dirname(__FILE__). '/../_code/code-without-comments'));
@@ -225,7 +229,5 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(7, $package->getClasses()->count());
         $this->assertEquals(3, $package->getInterfaces()->count());
-
-        unlink($fileName);
     }
 }

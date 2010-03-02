@@ -83,6 +83,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests the result of the print version option.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testPrintVersion()
     {
@@ -96,6 +100,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests the result of the print usage option.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testPrintUsage()
     {
@@ -111,6 +119,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests the output of the print help option.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testPrintHelp()
     {
@@ -125,6 +137,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests that the command exits with an cli error if no $argv array exists.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandExitsWithCliErrorIfNotArgvArrayExists()
     {
@@ -140,6 +156,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests that the command exits with a cli error for an empty option list.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandExitsWithCliErrorForEmptyOptionList()
     {
@@ -154,6 +174,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests that the command starts the text ui runner.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandStartsProcessWithDummyLogger()
     {
@@ -170,22 +194,20 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             $source
         );
 
-        if (file_exists($logFile)) {
-            unlink($logFile);
-        }
-
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
         $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
         $this->assertFileExists($logFile);
-
-        unlink($logFile);
     }
 
     /**
      * Tests that the command exits with a cli error for an unknown option.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandExitsWithCliErrorForUnknownOption()
     {
@@ -199,6 +221,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * correct.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandHandlesWithoutAnnotationsOptionCorrect()
     {
@@ -226,25 +252,18 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $code = $data['code'];
         $this->assertEquals(3, $code->count());
 
-        $code->rewind();
+        foreach ($code as $package) {
+            if ($package->getName() === 'pdepend.test') {
+                $this->assertEquals(1, $package->getFunctions()->count());
+                $this->assertEquals(1, $package->getClasses()->count());
 
-        $package = $code->current();
-
-        $this->assertEquals('pdepend.test', $package->getName());
-
-        $this->assertEquals(1, $package->getFunctions()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
-
-        $function = $package->getFunctions()->current();
-        $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(0, $function->getExceptionClasses()->count());
-
-        $code->next();
-
-        $package = $code->current();
-        $this->assertEquals('pdepend.test2', $package->getName());
-
-        unlink($logFile);
+                $function = $package->getFunctions()->current();
+                $this->assertEquals('foo', $function->getName());
+                $this->assertEquals(0, $function->getExceptionClasses()->count());
+            } else if ($package->getName() === 'pdepend.test2') {
+                $this->assertEquals('pdepend.test2', $package->getName());
+            }
+        }
     }
 
     /**
@@ -252,6 +271,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * correct.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandHandlesBadDocumentationOptionCorrect()
     {
@@ -284,14 +307,16 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         $this->assertEquals(7, $package->getClasses()->count());
         $this->assertEquals(3, $package->getInterfaces()->count());
-
-        unlink($logFile);
     }
 
     /**
      * Tests that the command interpretes a "-d key" as "on".
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandHandlesIniOptionWithoutValueToON()
     {
@@ -319,6 +344,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests that the text ui command handles an ini option "-d key=value" correct.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandHandlesIniOptionWithValue()
     {
@@ -347,6 +376,10 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * config file.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandHandlesConfigurationFileCorrect()
     {
@@ -439,13 +472,14 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * Tests that the command fails for an invalid config file.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
     {
         $configFile = self::createRunResourceURI('config.xml');
-        if (file_exists($configFile) === true) {
-            unlink($configFile);
-        }
 
         $argv = array('--configuration=' . $configFile, __FILE__);
 
