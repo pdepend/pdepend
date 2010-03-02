@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * This file is part of PHP_Depend.
@@ -37,22 +36,48 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://pdepend.org/
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.pdepend.org/
+ * @since      0.9.11
  */
 
-// PEAR/svn workaround
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__));
+/**
+ * This class represents an unary expression node.
+ *
+ * <code>
+ * //   -
+ *      -$foo
+ * //   -
+ *
+ * //   -
+ *      +$foo
+ * //   -
+ *
+ * //   -
+ *      &$foo
+ * //   -
+ * </code>
+ *
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.pdepend.org/
+ * @since      0.9.11
+ */
+class PHP_Depend_Code_ASTUnaryExpression extends PHP_Depend_Code_ASTNode
+{
+    /**
+     * Type of this node class.
+     */
+    const CLAZZ = __CLASS__;
 }
-
-require_once 'PHP/Depend/TextUI/Command.php';
-
-ini_set('memory_limit', -1);
-
-exit(PHP_Depend_TextUI_Command::main());

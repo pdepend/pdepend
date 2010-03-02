@@ -1701,10 +1701,31 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_FOREACH);
+        
+        $foreach = $this->_builder->buildASTForeachStatement($token->image);
+        
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+        
+        $foreach->addChild($this->_parseExpressionUntil(self::T_AS));
+        
+        $this->_consumeToken(self::T_AS);
+        $this->_consumeComments();
+        
+        if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
+            $foreach->addChild($this->_parseVariableByReference());
+        } else {
+            $foreach->addChild($this->_parseVariable());
+            
+            if ($this->_tokenizer->peek() === self::T_DOUBLE_ARROW) {
+                $this->_consumeToken(self::T_DOUBLE_ARROW);
+                $foreach->addChild($this->_parseVariableOptionalByReference());
+            }
+        }
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTForeachStatement($token->image)
-        );
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+        
+        return $this->_setNodePositionsAndReturn($foreach);
     }
 
     /**
@@ -1722,6 +1743,42 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $while->addChild($this->_parseParenthesisExpression());
 
         return $this->_setNodePositionsAndReturn($while);
+    }
+    
+    /**
+     * Parses an expression until the first token of <b>$stopTokenType</b> 
+     * occures. 
+     *
+     * This method is temporary solution until the parser supports the complete
+     * PHP syntax, so that this method will/must be removed in future versions
+     * of PHP_Depend.
+     *
+     * @param integer $stopTokenType The stop token which will not be part of
+     *        the parsed and returns ASTExpression node.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.9.11
+     * @todo Remove this method when PHP_Depend supports the complete PHP syntax
+     */
+    private function _parseExpressionUntil($stopTokenType)
+    {
+        $this->_tokenStack->push();
+        
+        $expression = $this->_builder->buildASTExpression();
+        
+        $tokenType = $this->_tokenizer->peek();
+        while ($tokenType !== self::T_EOF) {
+            if ($stopTokenType === $tokenType) {
+                return $this->_setNodePositionsAndReturn($expression);
+            }
+            if (is_object($expr = $this->_parseOptionalExpression())) {
+                $expression->addChild($expr);
+            } else {
+                $this->_consumeToken($tokenType);
+            }
+            $tokenType = $this->_tokenizer->peek();
+        }
+        throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
     }
 
     /**
@@ -2284,7 +2341,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @param PHP_Depend_Token $token The "self" keyword token.
      *
-     * @return PHP_Depend_Code_AST_Node
+     * @return PHP_Depend_Code_ASTNode
      * @throws PHP_Depend_Parser_Exception When an error occured during the
      *         parsing process.
      * @throws PHP_Depend_Parser_InvalidStateException When the keyword parent
@@ -2324,7 +2381,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * reference as its first child when the self token is followed by a
      * double colon token.
      *
-     * @return PHP_Depend_Code_AST_Node
+     * @return PHP_Depend_Code_ASTNode
      * @throws PHP_Depend_Parser_Exception When an error occured during the
      *         parsing process.
      * @throws PHP_Depend_Parser_InvalidStateException When the keyword parent
@@ -2349,6 +2406,43 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
         return $this->_builder->buildASTConstant($token->image);
     }
+    
+    /**
+     * Parses a variable node, optionally prefixed by an unary expression that
+     * represents php's by reference operator.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.11
+     */
+    private function _parseVariableOptionalByReference()
+    {
+        $this->_consumeComments();
+        if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
+            return $this->_parseVariableByReference();
+        }
+        return $this->_parseVariable();
+    }
+    
+    /**
+     * Parses a unary expression which represents php's by reference operator,
+     * that is followed by a variable node.
+     *
+     * @return PHP_Depend_Code_ASTUnaryExpression
+     * @since 0.9.11
+     */
+    private function _parseVariableByReference()
+    {
+        $this->_consumeComments();
+        
+        $this->_tokenStack->push();
+        
+        $token = $this->_consumeToken(self::T_BITWISE_AND);
+
+        $expression = $this->_builder->buildASTUnaryExpression($token->image);
+        $expression->addChild($this->_parseVariable());
+        
+        return $this->_setNodePositionsAndReturn($expression);
+    }
 
     /**
      * This method parses a simple PHP variable.
@@ -2360,14 +2454,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseVariable()
     {
+        $this->_consumeComments();
+        
         $this->_tokenStack->push();
 
-        // Read variable token
-        $this->_consumeComments();
         $token = $this->_consumeToken(self::T_VARIABLE);
 
         // TODO: ASTThisVariable
-        
         return $this->_setNodePositionsAndReturn(
             $this->_builder->buildASTVariable($token->image)
         );
