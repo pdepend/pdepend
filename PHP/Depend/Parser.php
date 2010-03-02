@@ -1765,17 +1765,21 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         
         $expression = $this->_builder->buildASTExpression();
-        
+
+        $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
         while ($tokenType !== self::T_EOF) {
             if ($stopTokenType === $tokenType) {
                 return $this->_setNodePositionsAndReturn($expression);
             }
+
             if (is_object($expr = $this->_parseOptionalExpression())) {
                 $expression->addChild($expr);
             } else {
                 $this->_consumeToken($tokenType);
             }
+            
+            $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
         }
         throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);

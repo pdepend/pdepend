@@ -1048,6 +1048,28 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserStripsCommentsInParseExpressionUntilCorrect
+     * 
+     * @return void
+     * @covers PHP_Depened_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserStripsCommentsInParseExpressionUntilCorrect()
+    {
+        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $method   = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $foreach = $method->getFirstChildOfType(PHP_Depend_Code_ASTForeachStatement::CLAZZ);
+        $this->assertNotNull($foreach);
+    }
+
+    /**
      * Tests that the parser throws an exception for an unclosed array
      * declaration within the default value of a parameter.
      *
