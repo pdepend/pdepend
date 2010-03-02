@@ -1581,28 +1581,28 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="parser">
-            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="testParserHandlesStringWithQuestionMarkNotAsTernaryOperator.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="parser-sets-expected-function-tokens.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserStripsLeadingSlashFromNamespaceAliasedClassName.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="final_class.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserSetsCorrectFileComment.php" role="test">
+            <file name="testParserHandlesParentKeywordInFunctionParameterDefaultValue.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue.php" role="test">
+            <file name="testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserHandlesStringWithQuestionMarkNotAsTernaryOperator.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserSetsCorrectFileComment.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="return_comment_chained_type_array.php" role="test">
@@ -1617,19 +1617,22 @@ and the NDepend metric tool.
             <file name="testParserHandlesParentKeywordInMethodParameterDefaultValue.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration.php" role="test">
+            <file name="testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserHandlesParentKeywordInFunctionParameterDefaultValue.php" role="test">
+            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="prop_comment_chained_type.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="testParserHandlesSelfKeywordAsParameterTypeHint.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue.php" role="test">
+            <file name="testParserStripsCommentsInParseExpressionUntilCorrect.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserHandlesDoubleQuoteStringWithEscapedVariable.php" role="test">
@@ -1644,25 +1647,25 @@ and the NDepend metric tool.
             <file name="testParserStripsLeadingSlashFromNamespacedClassName.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists.php" role="test">
+            <file name="testParserStripsLeadingSlashFromInheritNamespacedClassName.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="return_comment_chained_type.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="prop_comment_chained_type.php" role="test">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="testParserStripsLeadingSlashFromInheritNamespacedClassName.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserSetsTheReallySameParameterHintInstanceForKeywordSelf.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment.php" role="test">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists.php" role="test">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="testParserHandlesDoubleQuoteStringAsConstantDefaultValue.php" role="test">
