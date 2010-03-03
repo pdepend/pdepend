@@ -1407,6 +1407,23 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new return statement node instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTReturnStatement
+     * @since 0.9.12
+     */
+    public function buildASTReturnStatement($image)
+    {
+        include_once 'PHP/Depend/Code/ASTReturnStatement.php';
+
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTReturnStatement()');
+
+        return new PHP_Depend_Code_ASTReturnStatement($image);
+    }
+
+    /**
      * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
      * objects.
      *
