@@ -68,7 +68,17 @@ class PHP_Depend_Util_Cache_FileEngineTest extends PHP_Depend_AbstractTest
      * Cache group fixture.
      */
     const GROUP_FIXTURE = 'test_group_fixture';
-    
+
+    /**
+     * testEngineCreatesRequiredCacheRootDirectory
+     *
+     * @return void
+     * @covers PHP_Depend_Storage_FileEngine
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
     public function testEngineCreatesRequiredCacheRootDirectory()
     {
         $dir = self::createRunResourceURI('cache');
@@ -78,8 +88,6 @@ class PHP_Depend_Util_Cache_FileEngineTest extends PHP_Depend_AbstractTest
         $engine->store(array(), 42, self::GROUP_FIXTURE, 23);
 
         $this->assertFileExists($this->_getCacheDirname($dir));
-
-        unset($engine);
     }
 
     /**
@@ -88,7 +96,8 @@ class PHP_Depend_Util_Cache_FileEngineTest extends PHP_Depend_AbstractTest
      * @return void
      * @covers PHP_Depend_Storage_FileEngine
      * @group pdepend
-     * @group pdepend::storage
+     * @group pdepend::util
+     * @group pdepend::util::cache
      * @group unittest
      */
     public function testEngineAddsInstanceTokenToCacheKeyWhenFlaggedAsPrune()
@@ -101,8 +110,6 @@ class PHP_Depend_Util_Cache_FileEngineTest extends PHP_Depend_AbstractTest
 
         $files = glob($this->_getCacheDirname($dir) . '/42.*_*.23.data');
         $this->assertEquals(1, count($files));
-
-        unset($engine);
     }
 
     /**
@@ -111,7 +118,8 @@ class PHP_Depend_Util_Cache_FileEngineTest extends PHP_Depend_AbstractTest
      * @return void
      * @covers PHP_Depend_Storage_FileEngine
      * @group pdepend
-     * @group pdepend::storage
+     * @group pdepend::util
+     * @group pdepend::util::cache
      * @group unittest
      */
     public function testEngineNotAddsInstanceTokenToCacheKeyWhenNotFlaggedAsPrune()
@@ -123,8 +131,99 @@ class PHP_Depend_Util_Cache_FileEngineTest extends PHP_Depend_AbstractTest
 
         $files = glob($this->_getCacheDirname($dir) . '/42.23.data');
         $this->assertEquals(1, count($files));
+    }
+
+    /**
+     * testEngineRestoreReturnsPreviousSavedRecord
+     *
+     * @return void
+     * @covers PHP_Depend_Storage_FileEngine
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testEngineRestoreReturnsPreviousSavedRecord()
+    {
+        $dir = self::createRunResourceURI('cache');
+
+        $data = array(__CLASS__, __FUNCTION__, __METHOD__);
+
+        $engine = new PHP_Depend_Storage_FileEngine($dir);
+        $engine->store($data, 42, self::GROUP_FIXTURE, 23);
+        $this->assertEquals($data, $engine->restore(42, self::GROUP_FIXTURE, 23));
+    }
+
+    /**
+     * testEngineRestoreReturnsNullWhenNoMatchingRecordExists
+     *
+     * @return void
+     * @covers PHP_Depend_Storage_FileEngine
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testEngineRestoreReturnsNullWhenNoMatchingRecordExists()
+    {
+        $engine = new PHP_Depend_Storage_FileEngine();
+        $engine->setMaxLifetime(0);
+        $engine->setProbability(100);
+        $this->assertNull($engine->restore(42, self::GROUP_FIXTURE, 23));
+    }
+
+    /**
+     * testEngineGarbageCollectorRemovesTemporaryCacheData
+     *
+     * @return void
+     * @covers PHP_Depend_Storage_FileEngine
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testEngineGarbageCollectorRemovesTemporaryCacheData()
+    {
+        $dir = self::createRunResourceURI('cache');
+
+        $engine = new PHP_Depend_Storage_FileEngine($dir);
+        $engine->setMaxLifetime(10);
+        $engine->setProbability(100);
+        $engine->store(array(), 42, self::GROUP_FIXTURE, 23);
+
+        $file = $this->_getCacheDirname($dir) . '/42.23.data';
+        touch($file, time() - 86400);
 
         unset($engine);
+
+        $this->assertFileNotExists($file);
+    }
+
+    /**
+     * testEngineOnlyDeletesCacheDataFromSelfCreatedGroups
+     *
+     * @return void
+     * @covers PHP_Depend_Storage_FileEngine
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testEngineOnlyDeletesCacheDataFromSelfCreatedGroups()
+    {
+        $dir = self::createRunResourceURI('cache');
+
+        $engine = new PHP_Depend_Storage_FileEngine($dir);
+        $engine->setMaxLifetime(10);
+        $engine->setProbability(100);
+        $engine->store(array(), 42, self::GROUP_FIXTURE, 23);
+
+        $file = $this->_getCacheDirname($dir) . '/foo.data';
+        touch($file, time());
+
+        unset($engine);
+
+        $this->assertFileExists($file);
     }
 
     /**
