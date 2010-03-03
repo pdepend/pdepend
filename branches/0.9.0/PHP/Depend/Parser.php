@@ -1708,8 +1708,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_PARENTHESIS_OPEN);
         
         $foreach->addChild($this->_parseExpressionUntil(self::T_AS));
-        
-        $this->_consumeToken(self::T_AS);
         $this->_consumeComments();
         
         if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
@@ -1744,6 +1742,23 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         return $this->_setNodePositionsAndReturn($while);
     }
+
+    /**
+     * This method parses a single return-statement node.
+     *
+     * @return PHP_Depend_Code_ASTReturnStatement
+     * @since 0.9.12
+     */
+    private function _parseReturnStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_RETURN);
+
+        $return = $this->_builder->buildASTReturnStatement($token->image);
+        $return->addChild($this->_parseExpressionUntil(self::T_SEMICOLON));
+
+        return $this->_setNodePositionsAndReturn($return);
+    }
     
     /**
      * Parses an expression until the first token of <b>$stopTokenType</b> 
@@ -1770,6 +1785,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->_tokenizer->peek();
         while ($tokenType !== self::T_EOF) {
             if ($stopTokenType === $tokenType) {
+                $this->_consumeToken($tokenType);
                 return $this->_setNodePositionsAndReturn($expression);
             }
 
@@ -3205,6 +3221,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_WHILE:
             return $this->_parseWhileStatement();
+            
+        case self::T_RETURN:
+            return $this->_parseReturnStatement();
 
         case self::T_FUNCTION:
             return $this->_parseFunctionOrClosureDeclaration();

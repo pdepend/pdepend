@@ -1051,7 +1051,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * testParserStripsCommentsInParseExpressionUntilCorrect
      * 
      * @return void
-     * @covers PHP_Depened_Parser
+     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::parser
      * @group unittest
