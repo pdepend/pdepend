@@ -764,6 +764,26 @@ interface PHP_Depend_BuilderI
     function buildASTComment($cdata);
 
     /**
+     * Builds a new unary expression node instance.
+     *
+     * @param string $image The unary expression image/character.
+     *
+     * @return PHP_Depend_Code_ASTUnaryExpression
+     * @since 0.9.11
+     */
+    function buildASTUnaryExpression($image);
+
+    /**
+     * Builds a new return statement node instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTReturnStatement
+     * @since 0.9.12
+     */
+    function buildASTReturnStatement($image);
+
+    /**
      * Builds a new code class constant instance.
      *
      * @param string $name The constant name.
