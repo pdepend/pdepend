@@ -143,7 +143,7 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     public function testSwitchLabelHasExpectedEndLine()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertEquals(6, $label->getEndLine());
+        $this->assertEquals(7, $label->getEndLine());
     }
 
     /**
@@ -159,7 +159,7 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     public function testSwitchLabelHasExpectedEndColumn()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertEquals(16, $label->getEndColumn());
+        $this->assertEquals(18, $label->getEndColumn());
     }
 
     /**
@@ -207,7 +207,7 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     public function testSwitchLabelDefaultHasExpectedEndLine()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertEquals(6, $label->getEndLine());
+        $this->assertEquals(7, $label->getEndLine());
     }
 
     /**
@@ -223,7 +223,34 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     public function testSwitchLabelDefaultHasExpectedEndColumn()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertEquals(30, $label->getEndColumn());
+        $this->assertEquals(18, $label->getEndColumn());
+    }
+
+    /**
+     * testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren()
+    {
+        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
+        
+        $actual = array();
+        foreach ($label->getChildren() as $child) {
+            $actual[] = get_class($child);
+        }
+
+        $expected = array(
+            PHP_Depend_Code_ASTSwitchStatement::CLAZZ,
+            PHP_Depend_Code_ASTBreakStatement::CLAZZ
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**

@@ -1399,11 +1399,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTUnaryExpression($image)
     {
-        include_once 'PHP/Depend/Code/ASTUnaryExpression.php';
-
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTUnaryExpression()');
-
-        return new PHP_Depend_Code_ASTUnaryExpression($image);
+        return $this->_buildASTNodeInstance('ASTUnaryExpression', $image);
     }
 
     /**
@@ -1416,11 +1412,33 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTReturnStatement($image)
     {
-        include_once 'PHP/Depend/Code/ASTReturnStatement.php';
+        return $this->_buildASTNodeInstance('ASTReturnStatement', $image);
+    }
 
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTReturnStatement()');
+    /**
+     * Builds a new break-statement node instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTBreakStatement
+     * @since 0.9.12
+     */
+    public function buildASTBreakStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTBreakStatement', $image);
+    }
 
-        return new PHP_Depend_Code_ASTReturnStatement($image);
+    /**
+     * Builds a new continue-statement node instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTContinueStatement
+     * @since 0.9.12
+     */
+    public function buildASTContinueStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTContinueStatement', $image);
     }
 
     /**
@@ -1803,6 +1821,27 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             return PHP_Depend_Util_Type::getTypePackage($qualifiedName);
         }
         return self::DEFAULT_PACKAGE;
+    }
+
+    /**
+     * Creates a {@link PHP_Depend_Code_ASTNode} instance.
+     *
+     * @param string $className Local name of the ast node class.
+     * @param string $image     Optional image for the created ast node.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.12
+     */
+    private function _buildASTNodeInstance($className, $image = null)
+    {
+        $fileName  = "PHP/Depend/Code/{$className}.php";
+        $className = "PHP_Depend_Code_{$className}";
+
+        include_once $fileName;
+
+        PHP_Depend_Util_Log::debug("Creating: {$className}({$image})");
+
+        return new $className($image);
     }
 
     // DEPRECATED METHODS AND PROPERTIES
