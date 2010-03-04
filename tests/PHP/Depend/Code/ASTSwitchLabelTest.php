@@ -163,6 +163,34 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testSwitchLabelWithNestedSwitchStatementHasExpectedChildren
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchLabelWithNestedSwitchStatementHasExpectedChildren()
+    {
+        $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
+
+        $actual = array();
+        foreach ($label->getChildren() as $child) {
+            $actual[] = get_class($child);
+        }
+
+        $expected = array(
+            PHP_Depend_Code_ASTExpression::CLAZZ,
+            PHP_Depend_Code_ASTSwitchStatement::CLAZZ,
+            PHP_Depend_Code_ASTBreakStatement::CLAZZ
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
      * Tests the start line value.
      *
      * @return void
