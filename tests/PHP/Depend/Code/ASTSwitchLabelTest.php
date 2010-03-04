@@ -282,6 +282,21 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testParserThrowsExceptionForUnclosedSwitchLabelBody
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     */
+    public function testParserThrowsExceptionForUnclosedSwitchLabelBody()
+    {
+        $this->_getFirstSwitchLabelInFunction(__METHOD__);
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
