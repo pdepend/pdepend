@@ -1581,6 +1581,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($label);
     }
 
+    /**
+     * Parses the body of an switch label node.
+     *
+     * @param PHP_Depend_Code_ASTSwitchLabel $label The context switch label.
+     *
+     * @return PHP_Depend_Code_ASTSwitchLabel
+     */
     private function _parseSwitchLabelBody(PHP_Depend_Code_ASTSwitchLabel $label)
     {
         $curlyBraceCount = 0;
