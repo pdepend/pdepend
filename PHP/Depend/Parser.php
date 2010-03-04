@@ -1554,6 +1554,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $label = $this->_builder->buildASTSwitchLabel($token->image);
         $label->addChild($this->_parseExpressionUntil(self::T_COLON));
 
+        $this->_parseSwitchLabelBody($label);
+
         return $this->_setNodePositionsAndReturn($label);
     }
 
@@ -1574,7 +1576,51 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $label = $this->_builder->buildASTSwitchLabel($token->image);
         $label->setDefault();
 
+        $this->_parseSwitchLabelBody($label);
+
         return $this->_setNodePositionsAndReturn($label);
+    }
+
+    private function _parseSwitchLabelBody(PHP_Depend_Code_ASTSwitchLabel $label)
+    {
+        $curlyBraceCount = 0;
+
+        $tokenType = $this->_tokenizer->peek();
+        while ($tokenType !== self::T_EOF) {
+
+            switch ($tokenType) {
+
+            case self::T_CURLY_BRACE_OPEN:
+                $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+                ++$curlyBraceCount;
+                break;
+
+            case self::T_CURLY_BRACE_CLOSE:
+                if ($curlyBraceCount === 0) {
+                    return $label;
+                }
+                $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
+                --$curlyBraceCount;
+                break;
+
+            case self::T_CASE:
+            case self::T_DEFAULT:
+                return $label;
+
+            default:
+                $statement = $this->_parseOptionalStatement();
+                if ($statement === null) {
+                    $this->_consumeToken($tokenType);
+                } else if ($statement instanceof PHP_Depend_Code_ASTNodeI) {
+                    $label->addChild($statement);
+                }
+                // TODO: Change the <else if> into and <else> when the ast
+                //       implementation is finished.
+                break;
+            }
+            $tokenType = $this->_tokenizer->peek();
+        }
+        throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
     }
 
     /**
@@ -1759,6 +1805,40 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $return->addChild($this->_parseExpressionUntil(self::T_SEMICOLON));
 
         return $this->_setNodePositionsAndReturn($return);
+    }
+
+    /**
+     * This method parses a break-statement node.
+     *
+     * @return PHP_Depend_Code_ASTBreakStatement
+     * @since 0.9.12
+     */
+    private function _parseBreakStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_BREAK);
+
+        $break = $this->_builder->buildASTBreakStatement($token->image);
+        $break->addChild($this->_parseExpressionUntil(self::T_SEMICOLON));
+
+        return $this->_setNodePositionsAndReturn($break);
+    }
+
+    /**
+     * This method parses a continue-statement node.
+     *
+     * @return PHP_Depend_Code_ASTContinueStatement
+     * @since 0.9.12
+     */
+    private function _parseContinueStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_CONTINUE);
+
+        $continue = $this->_builder->buildASTContinueStatement($token->image);
+        $continue->addChild($this->_parseExpressionUntil(self::T_SEMICOLON));
+
+        return $this->_setNodePositionsAndReturn($continue);
     }
     
     /**
@@ -3225,6 +3305,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             
         case self::T_RETURN:
             return $this->_parseReturnStatement();
+
+        case self::T_BREAK:
+            return $this->_parseBreakStatement();
+
+        case self::T_CONTINUE:
+            return $this->_parseContinueStatement();
 
         case self::T_FUNCTION:
             return $this->_parseFunctionOrClosureDeclaration();
