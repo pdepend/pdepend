@@ -69,7 +69,11 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * label.
      * 
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testDefaultFlagIsSetOnDefaultLabel()
     {
@@ -82,7 +86,11 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * label.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testDefaultFlagIsNotSetOnCaseLabel()
     {
@@ -94,96 +102,128 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelHasExpectedStartLine()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getStartLine());
+        $this->assertEquals(6, $label->getStartLine());
     }
 
     /**
      * Tests the start column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelHasExpectedStartColumn()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(9, $label->getStartColumn());
+        $this->assertEquals(9, $label->getStartColumn());
     }
 
     /**
      * Tests the end line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelHasExpectedEndLine()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getEndLine());
+        $this->assertEquals(6, $label->getEndLine());
     }
 
     /**
      * Tests the end column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelHasExpectedEndColumn()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(12, $label->getEndColumn());
+        $this->assertEquals(16, $label->getEndColumn());
     }
 
     /**
      * Tests the start line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedStartLine()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getStartLine());
+        $this->assertEquals(6, $label->getStartLine());
     }
 
     /**
      * Tests the start column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedStartColumn()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(9, $label->getStartColumn());
+        $this->assertEquals(9, $label->getStartColumn());
     }
 
     /**
      * Tests the end line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedEndLine()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(6, $label->getEndLine());
+        $this->assertEquals(6, $label->getEndLine());
     }
 
     /**
      * Tests the end column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedEndColumn()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        $this->assertSame(30, $label->getEndColumn());
+        $this->assertEquals(30, $label->getEndColumn());
     }
 
     /**

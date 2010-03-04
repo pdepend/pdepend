@@ -1551,9 +1551,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_CASE);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTSwitchLabel($token->image)
-        );
+        $label = $this->_builder->buildASTSwitchLabel($token->image);
+        $label->addChild($this->_parseExpressionUntil(self::T_COLON));
+
+        return $this->_setNodePositionsAndReturn($label);
     }
 
     /**
