@@ -774,7 +774,7 @@ interface PHP_Depend_BuilderI
     function buildASTUnaryExpression($image);
 
     /**
-     * Builds a new return statement node instance.
+     * Builds a new return-statement node instance.
      *
      * @param string $image The source code image for this node.
      *
@@ -782,6 +782,26 @@ interface PHP_Depend_BuilderI
      * @since 0.9.12
      */
     function buildASTReturnStatement($image);
+
+    /**
+     * Builds a new break-statement node instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTBreakStatement
+     * @since 0.9.12
+     */
+    function buildASTBreakStatement($image);
+
+    /**
+     * Builds a new continue-statement node instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTContinueStatement
+     * @since 0.9.12
+     */
+    function buildASTContinueStatement($image);
 
     /**
      * Builds a new code class constant instance.
