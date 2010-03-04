@@ -1495,22 +1495,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
 
-        $curlyBraceCount = 1;
-
         $tokenType = $this->_tokenizer->peek();
         while ($tokenType !== self::T_EOF) {
 
             switch ($tokenType) {
 
-            case self::T_CURLY_BRACE_OPEN:
-                $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
-                ++$curlyBraceCount;
-                break;
-
             case self::T_CURLY_BRACE_CLOSE:
-                $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
-                --$curlyBraceCount;
-                break;
+                break 2;
 
             case self::T_CASE:
                 $switch->addChild($this->_parseSwitchLabel());
@@ -1521,23 +1512,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
-                $statement = $this->_parseOptionalStatement();
-                if ($statement === null) {
-                    $this->_consumeToken($tokenType);
-                } else if ($statement instanceof PHP_Depend_Code_ASTNodeI) {
-                    $switch->addChild($statement);
-                }
-                // TODO: Change the <else if> into and <else> when the ast
-                //       implementation is finished.
-                break;
-            }
-
-            if ($curlyBraceCount === 0) {
-                return $switch;
+                throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
             }
             $tokenType = $this->_tokenizer->peek();
         }
-        throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
+
+        $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
+        return $switch;
     }
 
     /**

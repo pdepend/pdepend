@@ -142,6 +142,21 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testInvalidStatementInSwitchStatementResultsInExpectedException
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     */
+    public function testInvalidStatementInSwitchStatementResultsInExpectedException()
+    {
+        $this->_getFirstSwitchStatementInFunction(__METHOD__);
+    }
+
+    /**
      * testUnclosedSwitchStatementResultsInExpectedException
      *
      * @return void
