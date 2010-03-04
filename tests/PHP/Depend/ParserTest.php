@@ -1446,6 +1446,21 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParseExpressionUntilThrowsExceptionForUnclosedStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     */
+    public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
      * Tests that the parser ignores variable class instantiation.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
