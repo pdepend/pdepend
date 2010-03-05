@@ -1495,7 +1495,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
 
+        $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
+        
         while ($tokenType !== self::T_EOF) {
 
             switch ($tokenType) {
@@ -1514,6 +1516,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             default:
                 throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
             }
+
+            $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
         }
 

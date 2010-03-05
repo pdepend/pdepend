@@ -271,6 +271,63 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
     }
 
     /**
+     * Tests that {@link PHP_Depend_Metrics_Inheritance_Analyzer::analyze()}
+     * calculates the expected DIT values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculateDepthOfInheritanceForSeveralClasses()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->analyze($packages);
+
+        $actual = array();
+        foreach ($package->getClasses() as $class) {
+            $metrics = $analyzer->getNodeMetrics($class);
+            
+            $actual[$class->getName()] = $metrics['dit'];
+        }
+        ksort($actual);
+
+        $expected = array(
+            'A' => 0,
+            'B' => 1,
+            'C' => 1,
+            'D' => 2,
+            'E' => 3,
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testCalculatesExpectedMaxDepthOfInheritanceTreeMetric
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::inheritance
+     * @group unittest
+     */
+    public function testCalculatesExpectedMaxDepthOfInheritanceTreeMetric()
+    {
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertEquals(3, $metrics['maxDIT']);
+    }
+
+    /**
      * testCalculatesExpectedNoamMetricForClassWithoutParent
      *
      * @return void
