@@ -47,24 +47,10 @@
  * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTStatement.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * This node class represents a break-statement.
- *
- * <code>
- * ------
- * break;
- * ------
- *
- * ---------
- * break 42;
- * ---------
- *
- * ----------------------
- * break $this->foobar();
- * ----------------------
- * </code>
+ * This is node represents a single statement.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -76,7 +62,7 @@ require_once 'PHP/Depend/Code/ASTStatement.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.12
  */
-class PHP_Depend_Code_ASTBreakStatement extends PHP_Depend_Code_ASTStatement
+class PHP_Depend_Code_ASTStatement extends PHP_Depend_Code_ASTNode
 {
     /**
      * The type of this class.
