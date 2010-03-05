@@ -68,6 +68,7 @@ require_once dirname(__FILE__) . '/ASTConstantDeclaratorTest.php';
 require_once dirname(__FILE__) . '/ASTConstantDefinitionTest.php';
 require_once dirname(__FILE__) . '/ASTConstantPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTConstantTest.php';
+require_once dirname(__FILE__) . '/ASTContinueStatementTest.php';
 require_once dirname(__FILE__) . '/ASTElseIfStatementTest.php';
 require_once dirname(__FILE__) . '/ASTExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTFieldDeclarationTest.php';
@@ -170,6 +171,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantDefinitionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTContinueStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTElseIfStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFieldDeclarationTest');
