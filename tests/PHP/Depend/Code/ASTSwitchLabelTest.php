@@ -163,6 +163,21 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testSwitchLabelCanBeTerminatedWithSemicolon
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchLabelCanBeTerminatedWithSemicolon()
+    {
+        $this->_getFirstSwitchLabelInFunction(__METHOD__);
+    }
+
+    /**
      * testSwitchLabelWithNestedSwitchStatementHasExpectedChildren
      *
      * @return void
@@ -252,6 +267,21 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
         $this->assertEquals(18, $label->getEndColumn());
+    }
+
+    /**
+     * testSwitchDefaultLabelCanBeTerminatedWithSemicolon
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchDefaultLabelCanBeTerminatedWithSemicolon()
+    {
+        $this->_getFirstSwitchLabelInFunction(__METHOD__);
     }
 
     /**
