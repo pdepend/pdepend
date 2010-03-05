@@ -65,11 +65,29 @@ require_once 'PHP/Depend/Code/ASTForeachStatement.php';
 class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testThirdChildOfForeachStatementIsASTScopeStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testThirdChildOfForeachStatementIsASTScopeStatement()
+    {
+        $statement = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $statement->getChild(2));
+    }
+
+    /**
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -84,8 +102,9 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -100,8 +119,9 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -109,15 +129,16 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementHasExpectedEndLine()
     {
         $statement = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getEndLine());
+        $this->assertEquals(6, $statement->getEndLine());
     }
 
     /**
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -125,15 +146,16 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementHasExpectedEndColumn()
     {
         $statement = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertEquals(26, $statement->getEndColumn());
+        $this->assertEquals(5, $statement->getEndColumn());
     }
 
     /**
      * testForeachStatementContainsListExpressionAsFirstChild
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -148,8 +170,9 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementWithoutKeyAndWithValue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -164,8 +187,9 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementWithoutKeyAndWithValueByReference
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -180,8 +204,9 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementWithKeyAndValue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -196,8 +221,9 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementWithKeyAndValueByReference
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -212,8 +238,9 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementThrowsExpectedExceptionForKeyByReference
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTForeachStatement
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
