@@ -148,15 +148,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartLine()
     {
-        if ($this->_startLine > 0) {
-            return $this->_startLine;
-        }
-        
-        $tokens = $this->getTokens();
-        $token  = reset($tokens);
-
-        assert($token instanceof PHP_Depend_Token);
-        return $token->startLine;
+        return $this->_startLine;
     }
 
     /**
@@ -166,15 +158,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartColumn()
     {
-        if ($this->_startColumn > 0) {
-            return $this->_startColumn;
-        }
-
-        $tokens = $this->getTokens();
-        $token  = reset($tokens);
-
-        assert($token instanceof PHP_Depend_Token);
-        return $token->startColumn;
+        return $this->_startColumn;
     }
 
     /**
@@ -184,15 +168,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndLine()
     {
-        if ($this->_endLine > 0) {
-            return $this->_endLine;
-        }
-
-        $tokens = $this->getTokens();
-        $token  = end($tokens);
-
-        assert($token instanceof PHP_Depend_Token);
-        return $token->endLine;
+        return $this->_endLine;
     }
 
     /**
@@ -202,15 +178,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndColumn()
     {
-        if ($this->_endColumn > 0) {
-            return $this->_endColumn;
-        }
-
-        $tokens = $this->getTokens();
-        $token  = end($tokens);
-
-        assert($token instanceof PHP_Depend_Token);
-        return $token->endColumn;
+        return $this->_endColumn;
     }
 
     /**
@@ -391,30 +359,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     public function setComment($comment)
     {
         $this->comment = $comment;
-    }
-
-    /**
-     * This method will return the source tokens parsed for this node.
-     *
-     * @return array(PHP_Depend_Token)
-     */
-    public function getTokens()
-    {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore(spl_object_hash($this), get_class($this));
-    }
-
-    /**
-     * Sets the source tokens parsed for this node.
-     *
-     * @param array(PHP_Depend_Token) $tokens The source tokens of this node.
-     *
-     * @return void
-     */
-    public function setTokens(array $tokens)
-    {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, spl_object_hash($this), get_class($this));
     }
 
     /**
