@@ -46,12 +46,12 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
+require_once 'PHP/Depend/Code/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTWhileStatement.php';
+require_once 'PHP/Depend/Code/ASTScopeStatement.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTWhileStatement} class.
+ * Test case for the {@link PHP_Depend_Code_ASTScopeStatement} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,120 +62,70 @@ require_once 'PHP/Depend/Code/ASTWhileStatement.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the generated object graph of a while statement.
+     * Tests that the return statement has the expected start line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testWhileStatementGraphWithBooleanExpressions()
+    public function testScopeStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($statement->getChildren()));
+        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertSame(4, $statement->getStartLine());
     }
 
     /**
-     * testFirstChildOfWhileStatementIsASTExpression
+     * Tests that the return statement has the expected start column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testFirstChildOfWhileStatementIsASTExpression()
+    public function testScopeStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $statement->getChild(0));
+        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertSame(34, $statement->getStartColumn());
     }
 
     /**
-     * testSecondChildOfWhileStatementIsASTScopeStatement
+     * Tests that the return statement has the expected end line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testSecondChildOfWhileStatementIsASTScopeStatement()
+    public function testScopeStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $statement->getChild(1));
+        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertSame(6, $statement->getEndLine());
     }
 
     /**
-     * Tests the start line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testWhileStatementHasExpectedStartLine()
-    {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
-    }
-
-    /**
-     * Tests the start column value.
+     * Tests that the return statement has the expected end column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testWhileStatementHasExpectedStartColumn()
+    public function testScopeStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartColumn());
-    }
-
-    /**
-     * Tests the end line value.
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testWhileStatementHasExpectedEndLine()
-    {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getEndLine());
-    }
-
-    /**
-     * Tests the end column value.
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testWhileStatementHasExpectedEndColumn()
-    {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getEndColumn());
+        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertSame(5, $statement->getEndColumn());
     }
 
     /**
@@ -183,12 +133,12 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTWhileStatement
+     * @return PHP_Depend_Code_ASTScopeStatement
      */
-    private function _getFirstWhileStatementInFunction($testCase)
+    private function _getFirstScopeStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTWhileStatement::CLAZZ
+            $testCase, PHP_Depend_Code_ASTScopeStatement::CLAZZ
         );
     }
 }

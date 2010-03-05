@@ -1403,6 +1403,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new statement instance.
+     *
+     * @return PHP_Depend_Code_ASTStatement
+     * @since 0.9.12
+     */
+    public function buildASTStatement()
+    {
+        return $this->_buildASTNodeInstance('ASTStatement');
+    }
+
+    /**
      * Builds a new return statement node instance.
      *
      * @param string $image The source code image for this node.
@@ -1439,6 +1450,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTContinueStatement($image)
     {
         return $this->_buildASTNodeInstance('ASTContinueStatement', $image);
+    }
+
+    /**
+     * Builds a new scope-statement instance.
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 0.9.12
+     */
+    public function buildASTScopeStatement()
+    {
+        return $this->_buildASTNodeInstance('ASTScopeStatement');
     }
 
     /**
