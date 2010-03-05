@@ -87,6 +87,7 @@ require_once dirname(__FILE__) . '/ASTLogicalOrExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTLogicalXorExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTPropertyPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTReturnStatementTest.php';
+require_once dirname(__FILE__) . '/ASTScopeStatementTest.php';
 require_once dirname(__FILE__) . '/ASTStaticReferenceTest.php';
 require_once dirname(__FILE__) . '/ASTStaticVariableDeclarationTest.php';
 require_once dirname(__FILE__) . '/ASTStringTest.php';
@@ -191,6 +192,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTMethodPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTPropertyPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTReturnStatementTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTScopeStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTStaticReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTStaticVariableDeclarationTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTStringTest');
