@@ -402,6 +402,44 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testSetStorageSetsPruneFlagOnTokenCache
+     *
+     * @return void
+     * @covers PHP_Depend
+     * @group pdepend
+     * @group unittest
+     */
+    public function testSetStorageSetsPruneFlagOnTokenCache()
+    {
+        $cache = $this->getMock('PHP_Depend_Storage_EngineI');
+        $cache->expects($this->once())
+            ->method('setPrune');
+
+        $pdepend = new PHP_Depend();
+        $pdepend->setStorage(PHP_Depend::TOKEN_STORAGE, $cache);
+    }
+
+    /**
+     * testSetStorageSetsMaxLifetimeAndProbabilityOnParserCache
+     *
+     * @return void
+     * @covers PHP_Depend
+     * @group pdepend
+     * @group unittest
+     */
+    public function testSetStorageSetsMaxLifetimeAndProbabilityOnParserCache()
+    {
+        $cache = $this->getMock('PHP_Depend_Storage_EngineI');
+        $cache->expects($this->once())
+            ->method('setProbability');
+        $cache->expects($this->once())
+            ->method('setMaxLifetime');
+
+        $pdepend = new PHP_Depend();
+        $pdepend->setStorage(PHP_Depend::PARSER_STORAGE, $cache);
+    }
+
+    /**
      * Tests that the setStorage() method throws an exception when an invalid
      * storage type was given.
      *
