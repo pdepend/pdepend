@@ -1536,8 +1536,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_CASE);
 
+        $expr = $this->_parseExpressionUntil(self::T_COLON, self::T_SEMICOLON);
+
         $label = $this->_builder->buildASTSwitchLabel($token->image);
-        $label->addChild($this->_parseExpressionUntil(self::T_COLON));
+        $label->addChild($expr);
 
         $this->_parseSwitchLabelBody($label);
 
@@ -1556,7 +1558,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_DEFAULT);
 
         $this->_consumeComments();
-        $this->_consumeToken(self::T_COLON);
+        if ($this->_tokenizer->peek() === self::T_COLON) {
+            $this->_consumeToken(self::T_COLON);
+        } else {
+            $this->_consumeToken(self::T_SEMICOLON);
+        }
 
         $label = $this->_builder->buildASTSwitchLabel($token->image);
         $label->setDefault();
@@ -1840,6 +1846,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method is temporary solution until the parser supports the complete
      * PHP syntax, so that this method will/must be removed in future versions
      * of PHP_Depend.
+     * 
+     * This method can be invoked with one or more token types as argument.
+     *
+     * <code>
+     * _parseExpressionUntil($type1, $type2, $type3);
+     * </code>
      *
      * @param integer $stopTokenType The stop token which will not be part of
      *        the parsed and returns ASTExpression node.
@@ -1850,6 +1862,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseExpressionUntil($stopTokenType)
     {
+        $stopTokens = func_get_args();
+        $stopTokens = array_flip($stopTokens);
+
         $this->_tokenStack->push();
         
         $expression = $this->_builder->buildASTExpression();
@@ -1857,7 +1872,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
         while ($tokenType !== self::T_EOF) {
-            if ($stopTokenType === $tokenType) {
+            if (isset($stopTokens[$tokenType])) {
                 $this->_consumeToken($tokenType);
                 return $this->_setNodePositionsAndReturn($expression);
             }
