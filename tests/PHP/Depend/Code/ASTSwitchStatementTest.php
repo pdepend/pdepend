@@ -68,7 +68,11 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the generated object graph of a switch statement.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchStatementGraphWithBooleanExpressions()
     {
@@ -82,7 +86,11 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the generated object graph of a switch statement.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchStatementGraphWithLabels()
     {
@@ -97,7 +105,11 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchStatementHasExpectedStartLine()
     {
@@ -109,7 +121,11 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchStatementHasExpectedStartColumn()
     {
@@ -121,7 +137,11 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchStatementHasExpectedEndLine()
     {
@@ -133,12 +153,46 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testSwitchStatementHasExpectedEndColumn()
     {
         $statement = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(5, $statement->getEndColumn());
+    }
+
+    /**
+     * testParserIgnoresDocCommentInSwitchStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserIgnoresDocCommentInSwitchStatement()
+    {
+        $this->_getFirstSwitchStatementInFunction(__METHOD__);
+    }
+
+    /**
+     * testParserIgnoresCommentInSwitchStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserIgnoresCommentInSwitchStatement()
+    {
+        $this->_getFirstSwitchStatementInFunction(__METHOD__);
     }
 
     /**
