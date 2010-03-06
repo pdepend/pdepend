@@ -68,7 +68,12 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testForStatementHasExpectedStartLine()
     {
@@ -80,7 +85,12 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testForStatementHasExpectedStartColumn()
     {
@@ -92,7 +102,12 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testForStatementHasExpectedEndLine()
     {
@@ -104,7 +119,12 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testForStatementHasExpectedEndColumn()
     {
