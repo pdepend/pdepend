@@ -820,6 +820,16 @@ interface PHP_Depend_BuilderI
     function buildASTScopeStatement();
 
     /**
+     * Builds a new try-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTTryStatement
+     * @since 0.9.12
+     */
+    function buildASTTryStatement($image);
+
+    /**
      * Builds a new code class constant instance.
      *
      * @param string $name The constant name.

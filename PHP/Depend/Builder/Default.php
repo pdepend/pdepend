@@ -1464,6 +1464,19 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new try-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTTryStatement
+     * @since 0.9.12
+     */
+    public function buildASTTryStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTTryStatement', $image);
+    }
+
+    /**
      * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
      * objects.
      *
