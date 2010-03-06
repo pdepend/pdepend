@@ -1702,6 +1702,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
     }
 
+    private function _parseTryStatement()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeComments();
+
+        $token = $this->_consumeToken(self::T_TRY);
+
+        $stmt = $this->_builder->buildASTTryStatement($token->image);
+        $stmt->addChild($this->_parseScopeStatement());
+        $this->_setNodePositionsAndReturn($stmt);
+
+        do {
+            $stmt->addChild($this->_parseCatchStatement());
+            $this->_consumeComments();
+        } while ($this->_tokenizer->peek() === self::T_CATCH);
+
+        return $stmt;
+    }
+
     /**
      * This method parses a catch-statement.
      *
@@ -1711,6 +1730,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseCatchStatement()
     {
         $this->_tokenStack->push();
+        $this->_consumeComments();
+        
         $token = $this->_consumeToken(self::T_CATCH);
 
         $catch = $this->_builder->buildASTCatchStatement($token->image);
@@ -1727,6 +1748,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->_consumeComments();
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+
+        $catch->addChild($this->_parseScopeStatement());
 
         return $this->_setNodePositionsAndReturn($catch);
     }
@@ -3434,8 +3457,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_SWITCH:
             return $this->_parseSwitchStatement();
 
-        case self::T_CATCH:
-            return $this->_parseCatchStatement();
+        case self::T_TRY:
+            return $this->_parseTryStatement();
 
         case self::T_IF:
             return $this->_parseIfStatement();
@@ -3479,7 +3502,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_CURLY_BRACE_CLOSE:
             return null;
         }
-        //return $this->_parseStatementUntil(self::T_SEMICOLON);
+//        return $this->_parseStatementUntil(self::T_SEMICOLON);
         return $this->_parseOptionalExpression();
     }
 

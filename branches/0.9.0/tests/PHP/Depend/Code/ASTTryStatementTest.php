@@ -46,12 +46,12 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
+require_once 'PHP/Depend/Code/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTCatchStatement.php';
+require_once 'PHP/Depend/Code/ASTTryStatement.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTCatchStatement} class.
+ * Test case for the {@link PHP_Depend_Code_ASTTryStatement} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,163 +62,152 @@ require_once 'PHP/Depend/Code/ASTCatchStatement.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * Tests that the try-statement has the expected start line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
+     * @covers PHP_Depend_Code_ASTTryStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testCatchStatementHasExpectedStartLine()
+    public function testTryStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstCatchStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getStartLine());
+        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $statement->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * Tests that the try-statement has the expected start column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
+     * @covers PHP_Depend_Code_ASTTryStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testCatchStatementHasExpectedStartColumn()
+    public function testTryStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstCatchStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $statement->getStartColumn());
+        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $statement->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * Tests that the try-statement has the expected end line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
+     * @covers PHP_Depend_Code_ASTTryStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testCatchStatementHasExpectedEndLine()
+    public function testTryStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstCatchStatementInFunction(__METHOD__);
+        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
         $this->assertEquals(6, $statement->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * Tests that the try-statement has the expected end column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
+     * @covers PHP_Depend_Code_ASTTryStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testCatchStatementHasExpectedEndColumn()
+    public function testTryStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstCatchStatementInFunction(__METHOD__);
-        $this->assertEquals(29, $statement->getEndColumn());
+        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $statement->getEndColumn());
     }
 
     /**
-     * testCatchStatementVariableHasExpectedStartLine
+     * testFirstChildOfTryStatementIsInstanceOfScopeStatement
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
+     * @covers PHP_Depend_Code_ASTTryStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testCatchStatementVariableHasExpectedStartLine()
+    public function testFirstChildOfTryStatementIsInstanceOfScopeStatement()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
-        $this->assertEquals(8, $variable->getStartLine());
+        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
     }
 
     /**
-     * testCatchStatementVariableHasExpectedStartColumn
+     * testSecondChildOfTryStatementIsInstanceOfCatchStatement
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
+     * @covers PHP_Depend_Code_ASTTryStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testCatchStatementVariableHasExpectedStartColumn()
+    public function testSecondChildOfTryStatementIsInstanceOfCatchStatement()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
-        $this->assertEquals(9, $variable->getStartColumn());
+        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTCatchStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
-     * testCatchStatementVariableHasExpectedEndLine
+     * testTryStatementContainsMultipleChildInstancesOfCatchStatement
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
+     * @covers PHP_Depend_Code_ASTTryStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testCatchStatementVariableHasExpectedEndLine()
+    public function testTryStatementContainsMultipleChildInstancesOfCatchStatement()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
-        $this->assertEquals(8, $variable->getStartLine());
+        $actual = array();
+        foreach ($this->_getFirstTryStatementInFunction(__METHOD__)->getChildren() as $child) {
+            $actual[] = get_class($child);
+        }
+
+        $expected = array(
+            PHP_Depend_Code_ASTScopeStatement::CLAZZ,
+            PHP_Depend_Code_ASTCatchStatement::CLAZZ,
+            PHP_Depend_Code_ASTCatchStatement::CLAZZ,
+            PHP_Depend_Code_ASTCatchStatement::CLAZZ,
+            PHP_Depend_Code_ASTCatchStatement::CLAZZ,
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
-     * testCatchStatementVariableHasExpectedEndColumn
+     * testParserThrowsExceptionWhenNoCatchStatementFollows
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
-    public function testCatchStatementVariableHasExpectedEndColumn()
+    public function testParserThrowsExceptionWhenNoCatchStatementFollows()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
-        $this->assertEquals(10, $variable->getEndColumn());
-    }
-
-    /**
-     * testThirdChildOfCatchStatementIsScopeStatement
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testThirdChildOfCatchStatementIsScopeStatement()
-    {
-        $stmt = $this->_getFirstCatchStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->_getFirstTryStatementInFunction(__METHOD__);
     }
 
     /**
@@ -226,12 +215,12 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTCatchStatement
+     * @return PHP_Depend_Code_ASTTryStatement
      */
-    private function _getFirstCatchStatementInFunction($testCase)
+    private function _getFirstTryStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTCatchStatement::CLAZZ
+            $testCase, PHP_Depend_Code_ASTTryStatement::CLAZZ
         );
     }
 }
