@@ -1776,13 +1776,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_FOR);
 
-        $forStatement = $this->_builder->buildASTForStatement($token->image);
-        $forStatement->addChild($this->_parseForInit());
+        $stmt = $this->_builder->buildASTForStatement($token->image);
+        $stmt->addChild($this->_parseForInit());
 
         $this->_consumeComments();
         $this->_consumeToken(self::T_SEMICOLON);
 
-        return $this->_setNodePositionsAndReturn($forStatement);
+        $stmt->addChild($this->_parseExpressionUntil(self::T_SEMICOLON));
+        $stmt->addChild($this->_parseExpressionUntil(self::T_PARENTHESIS_CLOSE));
+
+        return $this->_setNodePositionsAndReturn($this->_parseStatementBody($stmt));
     }
 
     /**
@@ -3470,9 +3473,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_DOC_COMMENT)->image
             );
 
+        case self::T_CURLY_BRACE_OPEN:
+            return $this->_parseScopeStatement();
+
         case self::T_CURLY_BRACE_CLOSE:
             return null;
         }
+        //return $this->_parseStatementUntil(self::T_SEMICOLON);
         return $this->_parseOptionalExpression();
     }
 
