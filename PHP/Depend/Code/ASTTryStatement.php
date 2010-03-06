@@ -44,12 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
 
 require_once 'PHP/Depend/Code/ASTStatement.php';
 
 /**
- * This node class represents a catch-statement.
+ * This node class represents a try-statement.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,8 +60,9 @@ require_once 'PHP/Depend/Code/ASTStatement.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
-class PHP_Depend_Code_ASTCatchStatement extends PHP_Depend_Code_ASTStatement
+class PHP_Depend_Code_ASTTryStatement extends PHP_Depend_Code_ASTStatement
 {
     /**
      * The type of this class.
