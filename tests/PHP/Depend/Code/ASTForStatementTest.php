@@ -73,7 +73,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testForStatementHasExpectedStartLine()
     {
         $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getStartLine());
+        $this->assertEquals(4, $statement->getStartLine());
     }
 
     /**
@@ -85,7 +85,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testForStatementHasExpectedStartColumn()
     {
         $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertSame(5, $statement->getStartColumn());
+        $this->assertEquals(5, $statement->getStartColumn());
     }
 
     /**
@@ -97,7 +97,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testForStatementHasExpectedEndLine()
     {
         $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getEndLine());
+        $this->assertEquals(6, $statement->getEndLine());
     }
 
     /**
@@ -109,7 +109,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testForStatementHasExpectedEndColumn()
     {
         $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertSame(16, $statement->getEndColumn());
+        $this->assertEquals(5, $statement->getEndColumn());
     }
 
     /**
