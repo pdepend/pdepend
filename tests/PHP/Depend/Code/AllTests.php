@@ -93,6 +93,7 @@ require_once dirname(__FILE__) . '/ASTStaticVariableDeclarationTest.php';
 require_once dirname(__FILE__) . '/ASTStringTest.php';
 require_once dirname(__FILE__) . '/ASTSwitchStatementTest.php';
 require_once dirname(__FILE__) . '/ASTSwitchLabelTest.php';
+require_once dirname(__FILE__) . '/ASTTryStatementTest.php';
 require_once dirname(__FILE__) . '/ASTVariableTest.php';
 require_once dirname(__FILE__) . '/ASTVariableDeclaratorTest.php';
 require_once dirname(__FILE__) . '/ASTWhileStatementTest.php';
@@ -198,6 +199,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTStringTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTSwitchStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTSwitchLabelTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTTryStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTVariableTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTVariableDeclaratorTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTWhileStatementTest');
