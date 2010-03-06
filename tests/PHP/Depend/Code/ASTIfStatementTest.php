@@ -68,64 +68,119 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the generated object graph of an if statement.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testIfStatementGraphWithBooleanExpressions()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(2, count($stmt->getChildren()));
+    }
 
-        $children = $statement->getChildren();
+    /**
+     * testFirstChildOfIfStatementIsInstanceOfExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testFirstChildOfIfStatementIsInstanceOfExpression()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+    }
 
-        $this->assertSame(1, count($children));
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
+    /**
+     * testSecondChildOfIfStatementIsInstanceOfScopeStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSecondChildOfIfStatementIsInstanceOfScopeStatement()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * Tests the start line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testIfStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getStartLine());
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * Tests the start column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testIfStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * Tests the end line value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testIfStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getEndLine());
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
      * Tests the end column value.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testIfStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertSame(13, $statement->getEndColumn());
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
