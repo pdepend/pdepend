@@ -1765,10 +1765,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_IF);
 
-        $if = $this->_builder->buildASTIfStatement($token->image);
-        $if->addChild($this->_parseParenthesisExpression());
+        $stmt = $this->_builder->buildASTIfStatement($token->image);
+        $stmt->addChild($this->_parseParenthesisExpression());
 
-        return $this->_setNodePositionsAndReturn($if);
+        return $this->_setNodePositionsAndReturn($this->_parseStatementBody($stmt));
     }
 
     /**
