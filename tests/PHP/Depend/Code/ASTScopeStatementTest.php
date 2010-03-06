@@ -65,7 +65,7 @@ require_once 'PHP/Depend/Code/ASTScopeStatement.php';
 class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that the return statement has the expected start line value.
+     * Tests that the scope-statement has the expected start line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -81,7 +81,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * Tests that the return statement has the expected start column value.
+     * Tests that the scope-statement has the expected start column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -97,7 +97,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * Tests that the return statement has the expected end line value.
+     * Tests that the scope-statement has the expected end line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -113,7 +113,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * Tests that the return statement has the expected end column value.
+     * Tests that the scope-statement has the expected end column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
