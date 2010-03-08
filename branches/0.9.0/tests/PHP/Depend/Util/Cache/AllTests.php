@@ -48,6 +48,7 @@
 
 require_once 'PHPUnit/Framework.php';
 
+require_once dirname(__FILE__) . '/EngineTest.php';
 require_once dirname(__FILE__) . '/FileEngineTest.php';
 
 /**
@@ -73,6 +74,7 @@ class PHP_Depend_Util_Cache_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util_Cache - AllTests');
 
+        $suite->addTestSuite('PHP_Depend_Util_Cache_EngineTest');
         $suite->addTestSuite('PHP_Depend_Util_Cache_FileEngineTest');
 
         return $suite;

@@ -152,6 +152,52 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     }
 
     /**
+     * testCalculateExpectedCCNForDoWhileStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
+     */
+    public function testCalculateExpectedCCNForDoWhileStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze($packages);
+
+        $this->assertEquals(3, $analyzer->getCCN($function));
+    }
+
+    /**
+     * testCalculateExpectedCCNForDoWhileStatement
+     *
+     * @return void
+     * @covers testCalculateExpectedCCN2ForDoWhileStatement
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
+     */
+    public function testCalculateExpectedCCN2ForDoWhileStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze($packages);
+
+        $this->assertEquals(3, $analyzer->getCCN2($function));
+    }
+
+    /**
      * Tests that the analyzer ignores the default label in a switch statement.
      *
      * @return void

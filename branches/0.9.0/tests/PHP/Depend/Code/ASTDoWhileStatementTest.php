@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTElseIfStatement.php';
+require_once 'PHP/Depend/Code/ASTDoWhileStatement.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTElseIfStatement} class.
+ * Test case for the {@link PHP_Depend_Code_ASTDoWhileStatement} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,57 +62,57 @@ require_once 'PHP/Depend/Code/ASTElseIfStatement.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the generated object graph of an elseif statement.
+     * testDoWhileStatementHasExpectedNumberOfChildNodes
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testElseIfStatementGraphWithBooleanExpressions()
+    public function testDoWhileStatementHasExpectedNumberOfChildNodes()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertEquals(2, count($stmt->getChildren()));
     }
     
     /**
-     * testFirstChildOfElseIfStatementIsInstanceOfExpression
+     * testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testFirstChildOfElseIfStatementIsInstanceOfExpression()
+    public function testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
     }
     
     /**
-     * testSecondChildOfElseIfStatementIsInstanceOfScopeStatement
+     * testSecondChildOfDoWhileStatementIsInstanceOfExpression
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testSecondChildOfElseIfStatementIsInstanceOfScopeStatement()
+    public function testSecondChildOfDoWhileStatementIsInstanceOfExpression()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -121,15 +121,15 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testElseIfStatementHasExpectedStartLine()
+    public function testDoWhileStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getStartLine());
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -138,15 +138,15 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testElseIfStatementHasExpectedStartColumn()
+    public function testDoWhileStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $stmt->getStartColumn());
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -155,15 +155,15 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testElseIfStatementHasExpectedEndLine()
+    public function testDoWhileStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(8, $stmt->getEndLine());
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(7, $stmt->getEndLine());
     }
 
     /**
@@ -172,32 +172,32 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testElseIfStatementHasExpectedEndColumn()
+    public function testDoWhileStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndColumn());
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(31, $stmt->getEndColumn());
     }
     
     /**
-     * testElseIfStatementWithoutScopeStatementBody
+     * testDoWhileStatementWithoutScopeStatementChild
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @covers PHP_Depend_Code_ASTDoWhileStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testElseIfStatementWithoutScopeStatementBody()
+    public function testDoWhileStatementWithoutScopeStatementChild()
     {
-        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForeachStatement::CLAZZ, $stmt->getChild(1));
+        $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTIfStatement::CLAZZ, $stmt->getChild(0));
     }
 
     /**
@@ -205,12 +205,12 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTElseIfStatement
+     * @return PHP_Depend_Code_ASTDoWhileStatement
      */
-    private function _getFirstElseIfStatementInFunction($testCase)
+    private function _getFirstDoWhileStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTElseIfStatement::CLAZZ
+            $testCase, PHP_Depend_Code_ASTDoWhileStatement::CLAZZ
         );
     }
 }

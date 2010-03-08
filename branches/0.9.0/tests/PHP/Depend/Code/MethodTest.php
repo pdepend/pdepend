@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/ASTNodeI.php';
@@ -62,8 +62,122 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 {
+    /**
+     * testReturnsReferenceReturnsExpectedTrue
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testReturnsReferenceReturnsExpectedTrue()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $method   = $packages->current()
+                        ->getClasses()
+                        ->current()
+                        ->getMethods()
+                        ->current();
+                        
+        $this->assertTrue($method->returnsReference());
+    }
+    
+    /**
+     * testReturnsReferenceReturnsExpectedFalse
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testReturnsReferenceReturnsExpectedFalse()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $method   = $packages->current()
+                        ->getClasses()
+                        ->current()
+                        ->getMethods()
+                        ->current();
+                        
+        $this->assertFalse($method->returnsReference());
+    }
+    
+    /**
+     * testGetStaticVariablesReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStaticVariablesReturnsEmptyArrayByDefault()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertEquals(array(), $method->getStaticVariables());
+    }
+    
+    /**
+     * testGetStaticVariablesReturnsFirstSetOfStaticVariables
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $method   = $packages->current()
+                        ->getClasses()
+                        ->current()
+                        ->getMethods()
+                        ->current();
+                        
+        $this->assertEquals(array('a' => 42, 'b' => 23), $method->getStaticVariables());
+    }
+    
+    /**
+     * testGetStaticVariablesReturnsMergeOfAllStaticVariables
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $method   = $packages->current()
+                        ->getClasses()
+                        ->current()
+                        ->getMethods()
+                        ->current();
+                        
+        $this->assertEquals(array('a' => 42, 'b' => 23, 'c' => 17), $method->getStaticVariables());
+    }
+
+    /**
+     * testByDefaultGetSourceFileReturnsNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testByDefaultGetSourceFileReturnsNull()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertNull($method->getSourceFile());
+    }
+
     /**
      * Tests that build interface updates the source file information for null
      * values.
@@ -72,12 +186,45 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
      */
     public function testSetSourceFileInformationForNullValue()
     {
-        $item = new PHP_Depend_Code_Method('method');
-        $file = new PHP_Depend_Code_File(__FILE__);
+        $method = new PHP_Depend_Code_Method('method');
+        $file   = new PHP_Depend_Code_File(__FILE__);
+        
+        $method->setSourceFile($file);
+        $this->assertSame($file, $method->getSourceFile());
+    }
+    
+    /**
+     * testByDefaultGetParentReturnsNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testByDefaultGetParentReturnsNull()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertNull($method->getParent());
+    }
+        
+    /**
+     * testSetParentWithNullResetsPreviousParentToNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testSetParentWithNullResetsPreviousParentToNull()
+    {
+        $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
+        $method = new PHP_Depend_Code_Method('method');
 
-        $this->assertNull($item->getSourceFile());
-        $item->setSourceFile($file);
-        $this->assertSame($file, $item->getSourceFile());
+        $method->setParent($class);
+        $method->setParent(null);
+        $this->assertNull($method->getParent());
     }
     
     /**
@@ -89,13 +236,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     public function testGetSetParent()
     {
         $class  = new PHP_Depend_Code_Class('clazz', 0, 'clazz.php');
-        $method = new PHP_Depend_Code_Method('method', 0);
-        
-        $this->assertNull($method->getParent());
+        $method = new PHP_Depend_Code_Method('method');
+
         $method->setParent($class);
         $this->assertSame($class, $method->getParent());
-        $method->setParent(null);
-        $this->assertNull($method->getParent());
     }
     
     /**
@@ -108,7 +252,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
         $method  = new PHP_Depend_Code_Method('method', 0);
         $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
         
-        $this->assertNull($visitor->method);
         $method->accept($visitor);
         $this->assertSame($method, $visitor->method);
     }
@@ -137,9 +280,24 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     {
         $method = new PHP_Depend_Code_Method('method');
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $this->assertTrue($method->isPublic());
-        $this->assertFalse($method->isProtected());
-        $this->assertFalse($method->isPrivate());
+        $this->assertTrue($method->isPublic() 
+                      && !$method->isProtected() 
+                      && !$method->isPrivate());
+    }
+    
+    /**
+     * testIsStaticDefaultByReturnsFalse
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsStaticDefaultByReturnsFalse()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertFalse($method->isStatic());
     }
     
     /**
@@ -151,11 +309,25 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     public function testSetModifiersMarksMethodAsStatic()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $this->assertFalse($method->isStatic());
 
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED
                             | PHP_Depend_ConstantsI::IS_STATIC);
         $this->assertTrue($method->isStatic());
+    }
+    
+    /**
+     * testIsFinalByDefaultReturnsFalse
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsFinalByDefaultReturnsFalse()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertFalse($method->isFinal());
     }
 
     /**
@@ -167,7 +339,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     public function testSetModifiersMarksMethodAsFinal()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $this->assertFalse($method->isFinal());
 
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED
                             | PHP_Depend_ConstantsI::IS_FINAL);
@@ -183,8 +354,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     public function testSetModifiersMarksMethodAsStaticFinal()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $this->assertFalse($method->isFinal() || $method->isStatic());
-
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED
                             | PHP_Depend_ConstantsI::IS_STATIC
                             | PHP_Depend_ConstantsI::IS_FINAL);
@@ -201,9 +370,9 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     {
         $method = new PHP_Depend_Code_Method('method');
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-        $this->assertTrue($method->isProtected());
-        $this->assertFalse($method->isPublic());
-        $this->assertFalse($method->isPrivate());
+        $this->assertTrue($method->isProtected() 
+                      && !$method->isPublic()
+                      && !$method->isPrivate());
     }
     
     /**
@@ -216,9 +385,24 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     {
         $method = new PHP_Depend_Code_Method('method');
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
-        $this->assertTrue($method->isPrivate());
-        $this->assertFalse($method->isPublic());
-        $this->assertFalse($method->isProtected());
+        $this->assertTrue($method->isPrivate()
+                      && !$method->isPublic()
+                      && !$method->isProtected());
+    }
+    
+    /**
+     * testIsPublicByDefaultReturnsFalse
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsPublicByDefaultReturnsFalse()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertFalse($method->isPublic());    
     }
     
     /**
@@ -230,9 +414,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
     public function testSetModifiersOnlyAcceptsTheFirstValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $this->assertFalse($method->isPublic());
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $this->assertTrue($method->isPublic());
         $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
         $this->assertTrue($method->isPublic());
     }
@@ -384,5 +566,15 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_AbstractTest
 
         $children = $method->findChildrenOfType(get_class($node2));
         $this->assertSame(array($node2), $children);
+    }
+    
+    /**
+     * Creates an abstract item instance.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    protected function createItem()
+    {
+        return new PHP_Depend_Code_Method('method');
     }
 }
