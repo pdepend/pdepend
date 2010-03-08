@@ -811,8 +811,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeComments();
             if ($this->_tokenizer->peek() === self::T_SEMICOLON) {
                 $this->_consumeToken(self::T_SEMICOLON);
-            } else if ($this->_tokenizer->peek() !== self::T_EOF) {
-                $this->_consumeToken(self::T_CLOSE_TAG);
             }
         } else {
             $callable = $this->_parseFunctionDeclaration();
@@ -1321,10 +1319,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     ) {
         $braceCount = 1;
 
-        // Remove all comments
         $this->_consumeComments();
-
-        // Get next token type
         $tokenType = $this->_tokenizer->peek();
 
         while ($tokenType !== self::T_EOF) {
@@ -1343,9 +1338,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if ($braceCount === 0) {
                 return $this->_setNodePositionsAndReturn($node);
             }
+            
             $this->_consumeComments();
-
-            // Get next token type
             $tokenType = $this->_tokenizer->peek();
         }
 
@@ -1356,24 +1350,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses the body of the given statement instance and adds all parsed nodes
      * to that statement.
      *
-     * @param PHP_Depend_Code_ASTStatement $statement The owning statement.
+     * @param PHP_Depend_Code_ASTStatement $stmt The owning statement.
      *
      * @return PHP_Depend_Code_ASTStatement
      * @since 0.9.12
      */
-    private function _parseStatementBody(PHP_Depend_Code_ASTStatement $statement)
+    private function _parseStatementBody(PHP_Depend_Code_ASTStatement $stmt)
     {
         $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
 
         if ($tokenType === self::T_CURLY_BRACE_OPEN) {
-            $statement->addChild($this->_parseScopeStatement());
+            $stmt->addChild($this->_parseScopeStatement());
         } else if ($tokenType === self::T_COLON) {
             // TODO: Alternative syntax
         } else {
-            // TODO: Parse single statement
+            $stmt->addChild($this->_parseOptionalStatement());
         }
-        return $statement;
+        return $stmt;
     }
 
     /**
@@ -1545,6 +1539,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $expr = $this->_parseLogicalXorExpression();
             break;
 
+        case self::T_FUNCTION:
+            // TODO: Refactor this temporary closure solution.
+            $this->_parseFunctionOrClosureDeclaration();
+            $expr = $this->_builder->buildASTClosure();
+            break;
+
         default:
             $this->_tokenStack->pop();
             return null;
@@ -1709,6 +1709,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
     }
 
+    /**
+     * This method parses a try-statement + associated catch-statements.
+     *
+     * @return PHP_Depend_Code_ASTTryStatement
+     * @since 0.9.12
+     */
     private function _parseTryStatement()
     {
         $this->_tokenStack->push();
@@ -1718,14 +1724,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $stmt = $this->_builder->buildASTTryStatement($token->image);
         $stmt->addChild($this->_parseScopeStatement());
-        $this->_setNodePositionsAndReturn($stmt);
-
+        
         do {
             $stmt->addChild($this->_parseCatchStatement());
             $this->_consumeComments();
         } while ($this->_tokenizer->peek() === self::T_CATCH);
 
-        return $stmt;
+        return $this->_setNodePositionsAndReturn($stmt);
     }
 
     /**
@@ -1801,8 +1806,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($stmt);
     }
 
-    private function _parseOptionalElseOrElseIfStatement(PHP_Depend_Code_ASTStatement $stmt)
-    {
+    /**
+     * This method parses an optional else-, else+if- or elseif-statement.
+     *
+     * @param PHP_Depend_Code_ASTStatement $stmt The owning if/elseif statement.
+     *
+     * @return PHP_Depend_Code_ASTStatement
+     * @since 0.9.12
+     */
+    private function _parseOptionalElseOrElseIfStatement(
+        PHP_Depend_Code_ASTStatement $stmt
+    ) {
         $this->_consumeComments();
         switch ($this->_tokenizer->peek()) {
 
@@ -1933,6 +1947,33 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn(
             $this->_parseStatementBody($while)
         );
+    }
+
+    /**
+     * This method parses a do/while-statement.
+     *
+     * @return PHP_Depend_Code_ASTDoWhileStatement
+     * @sibce 0.9.12
+     */
+    private function _parseDoWhileStatement()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_DO);
+
+        $stmt = $this->_builder->buildASTDoWhileStatement($token->image);
+        $stmt = $this->_parseStatementBody($stmt);
+
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_WHILE);
+
+        $stmt->addChild($this->_parseParenthesisExpression());
+
+        $this->_consumeComments();
+        if ($this->_tokenizer->peek() === self::T_SEMICOLON) {
+            $this->_consumeToken(self::T_SEMICOLON);
+        }
+
+        return $this->_setNodePositionsAndReturn($stmt);
     }
 
     /**
@@ -2545,6 +2586,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // TODO: Change this into a mandatory expression in later versions
             if (is_object($expression = $this->_parseOptionalExpression())) {
                 $node->addChild($expression);
+
             }
             break;
 
@@ -3499,14 +3541,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_IF:
             return $this->_parseIfStatement();
 
-        case self::T_ELSEIF:
-            return $this->_parseElseIfStatement();
-
         case self::T_FOR:
             return $this->_parseForStatement();
 
         case self::T_FOREACH:
             return $this->_parseForeachStatement();
+
+        case self::T_DO:
+            return $this->_parseDoWhileStatement();
 
         case self::T_WHILE:
             return $this->_parseWhileStatement();
@@ -3539,7 +3581,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return null;
         }
         return $this->_parseStatementUntil(self::T_SEMICOLON);
-//        return $this->_parseOptionalExpression();
     }
 
     /**

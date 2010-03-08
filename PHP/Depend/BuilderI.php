@@ -317,6 +317,14 @@ interface PHP_Depend_BuilderI
     function buildASTStaticVariableDeclaration($image);
 
     /**
+     * Builds a new closure node.
+     *
+     * @return PHP_Depend_Code_ASTClosure
+     * @since 0.9.12
+     */
+    function buildASTClosure();
+
+    /**
      * Builds a new formal parameters node.
      *
      * @return PHP_Depend_Code_ASTFormalParameters
@@ -515,6 +523,16 @@ interface PHP_Depend_BuilderI
      * @since 0.9.8
      */
     function buildASTWhileStatement($image);
+
+    /**
+     * Builds a new do/while-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTDoWhileStatement
+     * @since 0.9.12
+     */
+    function buildASTDoWhileStatement($image);
 
     /**
      * Builds a new member primary expression node.

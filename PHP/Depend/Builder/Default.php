@@ -666,6 +666,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new closure node.
+     *
+     * @return PHP_Depend_Code_ASTClosure
+     * @since 0.9.12
+     */
+    public function buildASTClosure()
+    {
+        return $this->_buildASTNodeInstance('ASTClosure');
+    }
+
+    /**
      * Builds a new formal parameters node.
      *
      * @return PHP_Depend_Code_ASTFormalParameters
@@ -1036,6 +1047,19 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTWhileStatement()');
         
         return new PHP_Depend_Code_ASTWhileStatement($image);
+    }
+
+    /**
+     * Builds a new do/while-statement node.
+     *
+     * @param string $image The source image of this statement.
+     *
+     * @return PHP_Depend_Code_ASTDoWhileStatement
+     * @since 0.9.12
+     */
+    public function buildASTDoWhileStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTDoWhileStatement', $image);
     }
 
     /**

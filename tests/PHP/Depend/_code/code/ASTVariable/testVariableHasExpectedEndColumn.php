@@ -1,5 +1,5 @@
 <?php
-function testVariableHasExpectedEndColumn()
+class testVariableHasExpectedEndColumn
 {
     private function foo()
     {
