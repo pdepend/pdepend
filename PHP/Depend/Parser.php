@@ -807,6 +807,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         if ($this->_isNextTokenFormalParameterList()) {
             $callable = $this->_parseClosureDeclaration();
+
+            $this->_consumeComments();
+            if ($this->_tokenizer->peek() === self::T_SEMICOLON) {
+                $this->_consumeToken(self::T_SEMICOLON);
+            } else if ($this->_tokenizer->peek() !== self::T_EOF) {
+                $this->_consumeToken(self::T_CLOSE_TAG);
+            }
         } else {
             $callable = $this->_parseFunctionDeclaration();
         }
@@ -1768,7 +1775,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $stmt = $this->_builder->buildASTIfStatement($token->image);
         $stmt->addChild($this->_parseParenthesisExpression());
 
-        return $this->_setNodePositionsAndReturn($this->_parseStatementBody($stmt));
+        $this->_parseStatementBody($stmt);
+        $this->_parseOptionalElseOrElseIfStatement($stmt);
+
+        return $this->_setNodePositionsAndReturn($stmt);
     }
 
     /**
@@ -1782,10 +1792,36 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_ELSEIF);
 
-        $elseIf = $this->_builder->buildASTElseIfStatement($token->image);
-        $elseIf->addChild($this->_parseParenthesisExpression());
+        $stmt = $this->_builder->buildASTElseIfStatement($token->image);
+        $stmt->addChild($this->_parseParenthesisExpression());
 
-        return $this->_setNodePositionsAndReturn($elseIf);
+        $this->_parseStatementBody($stmt);
+        $this->_parseOptionalElseOrElseIfStatement($stmt);
+
+        return $this->_setNodePositionsAndReturn($stmt);
+    }
+
+    private function _parseOptionalElseOrElseIfStatement(PHP_Depend_Code_ASTStatement $stmt)
+    {
+        $this->_consumeComments();
+        switch ($this->_tokenizer->peek()) {
+
+        case self::T_ELSE:
+            $this->_consumeToken(self::T_ELSE);
+            $this->_consumeComments();
+            if ($this->_tokenizer->peek() === self::T_IF) {
+                $stmt->addChild($this->_parseIfStatement());
+            } else {
+                $this->_parseStatementBody($stmt);
+            }
+            break;
+
+        case self::T_ELSEIF:
+            $stmt->addChild($this->_parseElseIfStatement());
+            break;
+        }
+        
+        return $stmt;
     }
 
     /**
@@ -3502,8 +3538,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_CURLY_BRACE_CLOSE:
             return null;
         }
-//        return $this->_parseStatementUntil(self::T_SEMICOLON);
-        return $this->_parseOptionalExpression();
+        return $this->_parseStatementUntil(self::T_SEMICOLON);
+//        return $this->_parseOptionalExpression();
     }
 
     /**

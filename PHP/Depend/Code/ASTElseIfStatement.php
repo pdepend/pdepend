@@ -47,10 +47,10 @@
  * @since      0.9.8
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
+require_once 'PHP/Depend/Code/ASTStatement.php';
 
 /**
- * This node class represents an else-if statement.
+ * This node class represents an elseif-statement.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.8
  */
-class PHP_Depend_Code_ASTElseIfStatement extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Code_ASTElseIfStatement extends PHP_Depend_Code_ASTStatement
 {
     /**
      * The type of this class.
