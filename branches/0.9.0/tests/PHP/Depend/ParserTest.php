@@ -1446,6 +1446,48 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParseClosureAsFunctionArgument
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParseClosureAsFunctionArgument()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * testParseNowdocInMethodBody
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParseNowdocInMethodBody()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * testParseDoWhileStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParseDoWhileStatement()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
      * testParseExpressionUntilThrowsExceptionForUnclosedStatement
      *
      * @return void

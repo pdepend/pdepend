@@ -1,5 +1,5 @@
 <?php
-function testVariableHasExpectedStartLine()
+class testVariableHasExpectedStartLine
 {
     private function foo()
     {

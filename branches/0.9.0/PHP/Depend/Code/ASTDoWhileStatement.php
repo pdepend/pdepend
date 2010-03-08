@@ -44,14 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTNodeTest.php';
-
-require_once 'PHP/Depend/Code/ASTVariable.php';
+require_once 'PHP/Depend/Code/ASTStatement.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTVariable} class.
+ * This node class represents a do/while-statement.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -61,68 +60,12 @@ require_once 'PHP/Depend/Code/ASTVariable.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
-class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTDoWhileStatement extends PHP_Depend_Code_ASTStatement
 {
     /**
-     * Tests that the variable has the expected start line value.
-     *
-     * @return void
-     * @group ast
+     * The type of this class.
      */
-    public function testVariableHasExpectedStartLine()
-    {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(6, $declarator->getStartLine());
-    }
-
-    /**
-     * Tests that the variable has the expected start column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testVariableHasExpectedStartColumn()
-    {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(9, $declarator->getStartColumn());
-    }
-
-    /**
-     * Tests that the variable has the expected end line value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testVariableHasExpectedEndLine()
-    {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(6, $declarator->getEndLine());
-    }
-
-    /**
-     * Tests that the variable has the expected end column value.
-     *
-     * @return void
-     * @group ast
-     */
-    public function testVariableHasExpectedEndColumn()
-    {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(10, $declarator->getEndColumn());
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_ASTVariable
-     */
-    private function _getFirstVariableInClass($testCase)
-    {
-        return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTVariable::CLAZZ
-        );
-    }
+    const CLAZZ = __CLASS__;
 }
