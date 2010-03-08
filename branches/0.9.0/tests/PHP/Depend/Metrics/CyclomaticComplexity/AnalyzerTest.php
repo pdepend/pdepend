@@ -79,26 +79,37 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
 
+        $actual   = array();
         $expected = array(
             'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
             'pdepend2'  =>  array('ccn'  =>  7, 'ccn2'  =>  10)
         );
         
         foreach ($package->getFunctions() as $function) {
-            $metrics = $analyzer->getNodeMetrics($function);
-            
-            $this->assertEquals(
-                $expected[$function->getName()]['ccn'], 
-                $analyzer->getCCN($function)
-            );
-            $this->assertEquals(
-                $expected[$function->getName()]['ccn2'], 
-                $analyzer->getCCN2($function)
-            );
+            $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
         }
-        
+
+        ksort($expected);
+        ksort($actual);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testCalculateFunctionCCNAndCNN2ProjectMetrics
+     *
+     * @return void
+     * @group metrics
+     */
+    public function testCalculateFunctionCCNAndCNN2ProjectMetrics()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
         $expected = array('ccn'  =>  12, 'ccn2'  =>  16);
-        $this->assertEquals($expected, $analyzer->getProjectMetrics());
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
     }
     
     /**
@@ -117,20 +128,21 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
 
         $classes = $package->getClasses();
         $methods = $classes->current()->getMethods();
-        
+
+        $actual   = array();
         $expected = array(
             'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
             'pdepend2'  =>  array('ccn'  =>  7, 'ccn2'  =>  10)
         );
         
         foreach ($methods as $method) {
-            $metrics = $analyzer->getNodeMetrics($method);
-            
-            $this->assertEquals(
-                $expected[$method->getName()], 
-                $analyzer->getNodeMetrics($method)
-            );
+            $actual[$method->getName()] = $analyzer->getNodeMetrics($method);
         }
+
+        ksort($expected);
+        ksort($actual);
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -145,10 +157,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
-        $this->assertSame(
-            array('ccn' => 2, 'ccn2' => 2),
-            $analyzer->getProjectMetrics()
-        );
+        $expected = array('ccn' => 2, 'ccn2' => 2);
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -208,10 +220,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
-        $this->assertSame(
-            array('ccn' => 3, 'ccn2' => 3),
-            $analyzer->getProjectMetrics()
-        );
+        $expected = array('ccn' => 3, 'ccn2' => 3);
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -225,10 +237,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
-        $this->assertSame(
-            array('ccn' => 4, 'ccn2' => 4),
-            $analyzer->getProjectMetrics()
-        );
+        $expected = array('ccn' => 4, 'ccn2' => 4);
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -242,10 +254,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
-        $this->assertSame(
-            array('ccn' => 2, 'ccn2' => 4),
-            $analyzer->getProjectMetrics()
-        );
+        $expected = array('ccn' => 2, 'ccn2' => 4);
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -259,10 +271,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
-        $this->assertSame(
-            array('ccn' => 2, 'ccn2' => 4),
-            $analyzer->getProjectMetrics()
-        );
+        $expected = array('ccn' => 2, 'ccn2' => 4);
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
     }
     
     /**
@@ -276,7 +288,9 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
         
-        $expected = array('ccn'  =>  24, 'ccn2'  =>  32);
-        $this->assertEquals($expected, $analyzer->getProjectMetrics());
+        $expected = array('ccn' => 24, 'ccn2' => 32);
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
     }
 }
