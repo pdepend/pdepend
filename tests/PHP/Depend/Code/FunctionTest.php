@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
 require_once 'PHP/Depend/Code/Function.php';
@@ -62,8 +62,99 @@ require_once 'PHP/Depend/Code/Package.php';
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
 {
+    /**
+     * testReturnsReferenceReturnsExpectedTrue
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testReturnsReferenceReturnsExpectedTrue()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+                        ->getFunctions()
+                        ->current();
+                        
+        $this->assertTrue($function->returnsReference());
+    }
+    
+    /**
+     * testReturnsReferenceReturnsExpectedFalse
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testReturnsReferenceReturnsExpectedFalse()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+                        ->getFunctions()
+                        ->current();
+                        
+        $this->assertFalse($function->returnsReference());
+    }
+    
+    /**
+     * testGetStaticVariablesReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStaticVariablesReturnsEmptyArrayByDefault()
+    {
+        $function = new PHP_Depend_Code_Function('func');
+        $this->assertEquals(array(), $function->getStaticVariables());
+    }
+    
+    /**
+     * testGetStaticVariablesReturnsFirstSetOfStaticVariables
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+                        ->getFunctions()
+                        ->current();
+                        
+        $this->assertEquals(array('a' => 42, 'b' => 23), $function->getStaticVariables());
+    }
+    
+    /**
+     * testGetStaticVariablesReturnsMergeOfAllStaticVariables
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+                        ->getFunctions()
+                        ->current();
+                        
+        $this->assertEquals(array('a' => 42, 'b' => 23, 'c' => 17), $function->getStaticVariables());
+    }
+    
     /**
      * Tests that build interface updates the source file information for null
      * values.
@@ -92,6 +183,40 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * testGetStaticVariablesReturnsMergeOfAllStaticVariables
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetPackageReturnsNullByDefault()
+    {
+        $function = new PHP_Depend_Code_Function('func');
+        $this->assertNull($function->getPackage());
+    }
+    
+    /**
+     * testGetStaticVariablesReturnsMergeOfAllStaticVariables
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testSetPackageWithNullWillResetPreviousPackage()
+    {
+        $package  = new PHP_Depend_Code_Package('package');
+        $function = new PHP_Depend_Code_Function('func');
+        
+        $function->setPackage($package);
+        $function->setPackage(null);
+        $this->assertNull($function->getPackage());
+    }
+    
+    /**
      * Tests that the {@link PHP_Depend_Code_Function::getPackage()} returns as
      * default value <b>null</b> and that the package could be set and unset.
      *
@@ -102,11 +227,8 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
         $package  = new PHP_Depend_Code_Package('package');
         $function = new PHP_Depend_Code_Function('func');
         
-        $this->assertNull($function->getPackage());
         $function->setPackage($package);
         $this->assertSame($package, $function->getPackage());
-        $function->setPackage(null);
-        $this->assertNull($function->getPackage());
     }
     
     /**
@@ -288,8 +410,17 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_AbstractTest
         $function = new PHP_Depend_Code_Function('func');
         $visitor  = new PHP_Depend_Visitor_TestNodeVisitor();
         
-        $this->assertNull($visitor->function);
         $function->accept($visitor);
         $this->assertSame($function, $visitor->function);
+    }
+    
+    /**
+     * Creates an abstract item instance.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    protected function createItem()
+    {
+        return new PHP_Depend_Code_Function('func');
     }
 }

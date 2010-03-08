@@ -807,11 +807,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         if ($this->_isNextTokenFormalParameterList()) {
             $callable = $this->_parseClosureDeclaration();
-
-            $this->_consumeComments();
-            if ($this->_tokenizer->peek() === self::T_SEMICOLON) {
-                $this->_consumeToken(self::T_SEMICOLON);
-            }
         } else {
             $callable = $this->_parseFunctionDeclaration();
         }
