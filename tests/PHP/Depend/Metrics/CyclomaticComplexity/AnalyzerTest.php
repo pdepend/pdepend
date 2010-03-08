@@ -175,10 +175,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     }
 
     /**
-     * testCalculateExpectedCCNForDoWhileStatement
+     * testCalculateExpectedCCN2ForDoWhileStatement
      *
      * @return void
-     * @covers testCalculateExpectedCCN2ForDoWhileStatement
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @group pdepend
      * @group pdepend::metrics
      * @group pdepend::metrics::cyclomaticcomplexity
