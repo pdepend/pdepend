@@ -466,8 +466,8 @@ class PHP_Depend_Tokenizer_Internal
         // in all environments with disabled short open tags.
         $source = $this->sourceFile->getSource();
         $source = preg_replace(
-            array('(<\?=)', '(<\?(\s))'),
-            array('<?php echo ', '<?php\1'),
+            array('(<\?=)', '(<\?(\s))', '(<<<(\s*)["\']([^"\']+)["\'])'),
+            array('<?php echo ', '<?php\1', '<<<\1\2'),
             $source
         );
 

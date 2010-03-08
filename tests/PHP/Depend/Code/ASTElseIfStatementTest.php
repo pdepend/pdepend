@@ -72,12 +72,32 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testElseIfStatementGraphWithBooleanExpressions()
     {
-        $statement = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-
-        $children = $statement->getChildren();
-
-        $this->assertSame(1, count($children));
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(2, count($stmt->getChildren()));
+    }
+    
+    /**
+     * testFirstChildOfElseIfStatementIsInstanceOfExpression
+     *
+     * @return void
+     * @group ast
+     */
+    public function testFirstChildOfElseIfStatementIsInstanceOfExpression()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+    }
+    
+    /**
+     * testSecondChildOfElseIfStatementIsInstanceOfScopeStatement
+     *
+     * @return void
+     * @group ast
+     */
+    public function testSecondChildOfElseIfStatementIsInstanceOfScopeStatement()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -88,8 +108,8 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testElseIfStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertSame(6, $statement->getStartLine());
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getStartLine());
     }
 
     /**
@@ -100,8 +120,8 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testElseIfStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertSame(7, $statement->getStartColumn());
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(7, $stmt->getStartColumn());
     }
 
     /**
@@ -112,8 +132,8 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testElseIfStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertSame(6, $statement->getEndLine());
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -124,8 +144,8 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testElseIfStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertSame(20, $statement->getEndColumn());
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**

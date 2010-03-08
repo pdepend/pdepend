@@ -112,7 +112,7 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testTryStatementHasExpectedEndLine()
     {
         $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getEndLine());
+        $this->assertEquals(8, $statement->getEndLine());
     }
 
     /**
