@@ -310,6 +310,21 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
 
         $this->assertEquals($expected, $actual);
     }
+    
+    /**
+     * testParserHandlesSwitchLabelWithNestedScopeStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTSwitchLabel
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserHandlesSwitchLabelWithNestedScopeStatement()
+    {
+        $this->_getFirstSwitchLabelInFunction(__METHOD__);
+    }
 
     /**
      * testParserThrowsExceptionForUnclosedSwitchLabelBody

@@ -510,7 +510,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     }
 
     /**
-     * Visits a while statement.
+     * Visits a while-statement.
      *
      * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
@@ -519,6 +519,22 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @since 0.9.8
      */
     public function visitBeforeASTWhileStatement($node, $data)
+    {
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
+        return $data;
+    }
+
+    /**
+     * Visits a do/while-statement.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param array(string=>integer)   $data The previously calculated ccn values.
+     *
+     * @return array(string=>integer)
+     * @since 0.9.12
+     */
+    public function visitBeforeASTDoWhileStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
