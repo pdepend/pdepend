@@ -1536,8 +1536,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         
         case self::T_FUNCTION:
             // TODO: Refactor this temporary closure solution.
-            $this->_parseFunctionOrClosureDeclaration();
             $expr = $this->_builder->buildASTClosure();
+            $temp = $this->_parseFunctionOrClosureDeclaration();
+            foreach ($temp->getChildren() as $child) {
+                $expr->addChild($child);
+            }
             break;
 
         case self::T_PARENTHESIS_OPEN:

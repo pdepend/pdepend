@@ -69,6 +69,7 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTClosure
      * @group pdepend
      * @group pdepend::ast
@@ -85,6 +86,7 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTClosure
      * @group pdepend
      * @group pdepend::ast
@@ -101,6 +103,7 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTClosure
      * @group pdepend
      * @group pdepend::ast
@@ -117,6 +120,7 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTClosure
      * @group pdepend
      * @group pdepend::ast
@@ -126,6 +130,23 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
     {
         $label = $this->_getFirstClosureInFunction(__METHOD__);
         $this->assertEquals(5, $label->getEndColumn());
+    }
+
+    /**
+     * testClosureContainsExpectedNumberChildNodes
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTClosure
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testClosureContainsExpectedNumberChildNodes()
+    {
+        $closure = $this->_getFirstClosureInFunction(__METHOD__);
+        $this->assertEquals(2, count($closure->getChildren()));
     }
 
     /**
