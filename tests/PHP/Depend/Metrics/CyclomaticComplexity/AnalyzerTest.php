@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest 
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Metrics_AbstractTest
 {
     /**
      * Tests that the analyzer calculates the correct function cc numbers.
@@ -81,8 +81,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
 
         $actual   = array();
         $expected = array(
-            'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
-            'pdepend2'  =>  array('ccn'  =>  7, 'ccn2'  =>  10)
+            'pdepend1' => array('ccn' => 5, 'ccn2' => 6),
+            'pdepend2' => array('ccn' => 7, 'ccn2' => 10)
         );
         
         foreach ($package->getFunctions() as $function) {
@@ -106,7 +106,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
-        $expected = array('ccn'  =>  12, 'ccn2'  =>  16);
+        $expected = array('ccn' => 12, 'ccn2' => 16);
         $actual   = $analyzer->getProjectMetrics();
 
         $this->assertEquals($expected, $actual);
@@ -131,8 +131,8 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
 
         $actual   = array();
         $expected = array(
-            'pdepend1'  =>  array('ccn'  =>  5, 'ccn2'  =>  6),
-            'pdepend2'  =>  array('ccn'  =>  7, 'ccn2'  =>  10)
+            'pdepend1' => array('ccn' => 5, 'ccn2' => 6),
+            'pdepend2' => array('ccn' => 7, 'ccn2' => 10)
         );
         
         foreach ($methods as $method) {
