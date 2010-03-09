@@ -69,7 +69,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer calculates the correct function cc numbers.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateFunctionCCNAndCNN2()
     {
@@ -99,7 +103,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * testCalculateFunctionCCNAndCNN2ProjectMetrics
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateFunctionCCNAndCNN2ProjectMetrics()
     {
@@ -116,7 +124,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer calculates the correct method cc numbers.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateMethodCCNAndCNN2()
     {
@@ -150,7 +162,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * compound expression.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateCCNWithConditionalExprInCompoundExpr()
     {
@@ -213,7 +229,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer ignores the default label in a switch statement.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateCCNIgnoresDefaultLabelInSwitchStatement()
     {
@@ -230,7 +250,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer counts all case labels in a switch statement.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateCCNCountsAllCaseLabelsInSwitchStatement()
     {
@@ -247,7 +271,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer detects expressions in a for loop.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateCCNDetectsExpressionsInAForLoop()
     {
@@ -264,7 +292,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer detects expressions in a while loop.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateCCNDetectsExpressionsInAWhileLoop()
     {
@@ -281,7 +313,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * Tests that the analyzer aggregates the correct project metrics.
      *
      * @return void
-     * @group metrics
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
      */
     public function testCalculateProjectMetrics()
     {

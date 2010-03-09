@@ -184,6 +184,57 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testIfStatementWithElseContainsExpectedNumberOfChildNodes
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementWithElseContainsExpectedNumberOfChildNodes()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(3, count($stmt->getChildren()));
+    }
+
+    /**
+     * testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+    }
+
+    /**
+     * testThirdChildOfIfStatementIsInstanceOfExpressionForElseIf
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testThirdChildOfIfStatementIsInstanceOfIfStatementForElseIf()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTIfStatement::CLAZZ, $stmt->getChild(2));
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
