@@ -5,7 +5,7 @@ function pdepend1($x)
     case 'a':
         if ($a === true) {
              
-        } else if ($a === false && $a !== 17) {
+        } elseif ($a === false && $a !== 17) {
             
         } else {
             
