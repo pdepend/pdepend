@@ -792,6 +792,14 @@ interface PHP_Depend_BuilderI
     function buildASTUnaryExpression($image);
 
     /**
+     * Builds a new function/method scope instance.
+     *
+     * @return PHP_Depend_Code_ASTScope
+     * @since 0.9.12
+     */
+    function buildASTScope();
+
+    /**
      * Builds a new statement instance.
      *
      * @return PHP_Depend_Code_ASTStatement
@@ -848,12 +856,12 @@ interface PHP_Depend_BuilderI
     function buildASTTryStatement($image);
 
     /**
-     * Builds a new code class constant instance.
+     * Builds a new exit-statement instance.
      *
-     * @param string $name The constant name.
+     * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_TypeConstant The created constant object.
-     * @deprecated Since version 0.9.6
+     * @return PHP_Depend_Code_ASTExitStatement
+     * @since 0.9.12
      */
-    function buildTypeConstant($name);
+    function buildASTExitStatement($image);
 }
