@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTForInit.php';
+require_once 'PHP/Depend/Code/ASTForUpdate.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTForInit} class.
+ * Test case for the {@link PHP_Depend_Code_ASTForUpdate} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,74 +62,74 @@ require_once 'PHP/Depend/Code/ASTForInit.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTForInitTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTForUpdateTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testForInitHasExpectedStartLine
+     * testForUpdateHasExpectedStartLine
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTForUpdate
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedStartLine()
+    public function testForUpdateHasExpectedStartLine()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
+        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(4, $init->getStartLine());
     }
 
     /**
-     * testForInitHasExpectedStartColumn
+     * testForUpdateHasExpectedStartColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTForUpdate
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedStartColumn()
+    public function testForUpdateHasExpectedStartColumn()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(10, $init->getStartColumn());
+        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
+        $this->assertEquals(36, $init->getStartColumn());
     }
 
     /**
-     * testForInitHasExpectedEndLine
+     * testForUpdateHasExpectedEndLine
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTForUpdate
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedEndLine()
+    public function testForUpdateHasExpectedEndLine()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
+        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(4, $init->getEndLine());
     }
 
     /**
-     * testForInitHasExpectedEndColumn
+     * testForUpdateHasExpectedEndColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTForUpdate
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedEndColumn()
+    public function testForUpdateHasExpectedEndColumn()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(24, $init->getEndColumn());
+        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
+        $this->assertEquals(45, $init->getEndColumn());
     }
 
     /**
@@ -137,12 +137,12 @@ class PHP_Depend_Code_ASTForInitTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTForInit
+     * @return PHP_Depend_Code_ASTForUpdate
      */
-    private function _getFirstForInitInFunction($testCase)
+    private function _getFirstForUpdateInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTForInit::CLAZZ
+            $testCase, PHP_Depend_Code_ASTForUpdate::CLAZZ
         );
     }
 }
