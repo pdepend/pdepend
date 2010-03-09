@@ -48,6 +48,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/Depend/Code/NodeI.php';
 require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 
 /**
@@ -65,6 +66,38 @@ require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest 
     extends PHP_Depend_Metrics_AbstractTest
 {
+    /**
+     * testGetCCNReturnsZeroForUnknownNode
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
+     */
+    public function testGetCCNReturnsZeroForUnknownNode()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $this->assertEquals(0, $analyzer->getCCN($this->getMock('PHP_Depend_Code_NodeI')));
+    }
+
+    /**
+     * testGetCCN2ReturnsZeroForUnknownNode
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
+     */
+    public function testGetCCN2ReturnsZeroForUnknownNode()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $this->assertEquals(0, $analyzer->getCCN2($this->getMock('PHP_Depend_Code_NodeI')));
+    }
+
     /**
      * Tests that the analyzer calculates the correct function cc numbers.
      *
