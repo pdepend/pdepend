@@ -1533,11 +1533,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_LOGICAL_XOR:
             $expr = $this->_parseLogicalXorExpression();
             break;
-
+        
         case self::T_FUNCTION:
             // TODO: Refactor this temporary closure solution.
             $this->_parseFunctionOrClosureDeclaration();
             $expr = $this->_builder->buildASTClosure();
+            break;
+
+        case self::T_PARENTHESIS_OPEN:
+            $expr = $this->_parseParenthesisExpression();
             break;
 
         default:
@@ -1705,6 +1709,48 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses an exit-statement.
+     *
+     * @return PHP_Depend_Code_ASTExitStatement
+     * @since 0.9.12
+     */
+    private function _parseExitStatement()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeComments();
+
+        $token = $this->_consumeToken(self::T_EXIT);
+
+        $stmt = $this->_builder->buildASTExitStatement($token->image);
+
+        $this->_consumeComments();
+        if ($this->_tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
+            $stmt->addChild($this->_parseParenthesisExpression());
+            
+        }
+        $this->_parseStatementTermination();
+
+        return $this->_setNodePositionsAndReturn($stmt);
+    }
+
+    /**
+     * Parses the termination token for a statement. This termination token can
+     * be a semicolon or a closing php tag.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _parseStatementTermination()
+    {
+        $this->_consumeComments();
+        if ($this->_tokenizer->peek() === self::T_SEMICOLON) {
+            $this->_consumeToken(self::T_SEMICOLON);
+        } else {
+            $this->_consumeToken(self::T_CLOSE_TAG);
+        }
+    }
+
+    /**
      * This method parses a try-statement + associated catch-statements.
      *
      * @return PHP_Depend_Code_ASTTryStatement
@@ -1844,14 +1890,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_FOR);
 
-        $stmt = $this->_builder->buildASTForStatement($token->image);
-        $stmt->addChild($this->_parseForInit());
-
         $this->_consumeComments();
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+
+        $stmt = $this->_builder->buildASTForStatement($token->image);
+
+        if (($init = $this->_parseForInit()) !== null) {
+            $stmt->addChild($init);
+        }
         $this->_consumeToken(self::T_SEMICOLON);
 
-        $stmt->addChild($this->_parseExpressionUntil(self::T_SEMICOLON));
-        $stmt->addChild($this->_parseExpressionUntil(self::T_PARENTHESIS_CLOSE));
+        if (($expr = $this->_parseForExpression()) !== null) {
+            $stmt->addChild($expr);
+        }
+        $this->_consumeToken(self::T_SEMICOLON);
+
+        if (($update = $this->_parseForUpdate()) !== null) {
+            $stmt->addChild($update);
+        }
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
 
         return $this->_setNodePositionsAndReturn($this->_parseStatementBody($stmt));
     }
@@ -1873,19 +1930,80 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $this->_consumeComments();
 
-        $forInit = $this->_builder->buildASTForInit();
-
+        $init = null;
         while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
             if ($tokenType === self::T_SEMICOLON) {
                 break;
             }
             if (($expr = $this->_parseOptionalExpression()) === null) {
                 $this->_consumeToken($tokenType);
-            } else {
-                $forInit->addChild($expr);
+                continue;
             }
+
+            if ($init === null) {
+                $init = $this->_builder->buildASTForInit();
+            }
+            $init->addChild($expr);
         }
-        return $this->_setNodePositionsAndReturn($forInit);
+
+        if ($init === null) {
+            return null;
+        }
+        return $this->_setNodePositionsAndReturn($init);
+    }
+
+    private function _parseForExpression()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeComments();
+
+        $expression = null;
+        while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
+            if ($tokenType === self::T_SEMICOLON) {
+                break;
+            }
+            if (($expr = $this->_parseOptionalExpression()) === null) {
+                $this->_consumeToken($tokenType);
+                continue;
+            }
+
+            if ($expression === null) {
+                $expression = $this->_builder->buildASTExpression();
+            }
+            $expression->addChild($expr);
+        }
+
+        if ($expression === null) {
+            return null;
+        }
+        return $this->_setNodePositionsAndReturn($expression);
+    }
+
+    private function _parseForUpdate()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeComments();
+
+        $update = null;
+        while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
+            if ($tokenType === self::T_PARENTHESIS_CLOSE) {
+                break;
+            }
+            if (($expr = $this->_parseOptionalExpression()) === null) {
+                $this->_consumeToken($tokenType);
+                continue;
+            }
+
+            if ($update === null) {
+                $update = $this->_builder->buildASTForUpdate();
+            }
+            $update->addChild($expr);
+        }
+
+        if ($update === null) {
+            return null;
+        }
+        return $this->_setNodePositionsAndReturn($update);
     }
 
     /**
@@ -3562,6 +3680,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_COMMENT:
             return $this->_parseCommentWithOptionalInlineClassOrInterfaceReference();
+
+        case self::T_EXIT:
+            return $this->_parseExitStatement();
 
         case self::T_DOC_COMMENT:
             // TODO: Move this

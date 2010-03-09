@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTForInit.php';
+require_once 'PHP/Depend/Code/ASTExitStatement.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTForInit} class.
+ * Test case for the {@link PHP_Depend_Code_ASTExitStatement} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,74 +62,74 @@ require_once 'PHP/Depend/Code/ASTForInit.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTForInitTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTExitStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testForInitHasExpectedStartLine
+     * testExitStatementHasExpectedStartLine
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTExitStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedStartLine()
+    public function testExitStatementHasExpectedStartLine()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(4, $init->getStartLine());
+        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
-     * testForInitHasExpectedStartColumn
+     * testExitStatementHasExpectedStartColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTExitStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedStartColumn()
+    public function testExitStatementHasExpectedStartColumn()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(10, $init->getStartColumn());
+        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
-     * testForInitHasExpectedEndLine
+     * testExitStatementHasExpectedEndLine
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTExitStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedEndLine()
+    public function testExitStatementHasExpectedEndLine()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(4, $init->getEndLine());
+        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
-     * testForInitHasExpectedEndColumn
+     * testExitStatementHasExpectedEndColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
+     * @covers PHP_Depend_Code_ASTExitStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedEndColumn()
+    public function testExitStatementHasExpectedEndColumn()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(24, $init->getEndColumn());
+        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndColumn());
     }
 
     /**
@@ -137,12 +137,12 @@ class PHP_Depend_Code_ASTForInitTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTForInit
+     * @return PHP_Depend_Code_ASTExitStatement
      */
-    private function _getFirstForInitInFunction($testCase)
+    private function _getFirstExitStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTForInit::CLAZZ
+            $testCase, PHP_Depend_Code_ASTExitStatement::CLAZZ
         );
     }
 }
