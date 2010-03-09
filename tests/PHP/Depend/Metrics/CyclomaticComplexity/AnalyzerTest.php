@@ -362,4 +362,25 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
 
         $this->assertEquals($expected, $actual);
     }
+    
+    /**
+     * testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::cyclomaticcomplexity
+     * @group unittest
+     */
+    public function testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $expected = array('ccn' => 3, 'ccn2' => 3);
+        $actual   = $analyzer->getProjectMetrics();
+
+        $this->assertEquals($expected, $actual);
+    }
 }
