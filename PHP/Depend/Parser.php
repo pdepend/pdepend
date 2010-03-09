@@ -1952,6 +1952,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($init);
     }
 
+    /**
+     * Parses the expression part of a for-statement.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.9.12
+     */
     private function _parseForExpression()
     {
         $this->_tokenStack->push();
@@ -1979,6 +1985,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($expression);
     }
 
+    /**
+     * Parses the update part of a for-statement.
+     *
+     * <code>
+     *                                        -------------------------------
+     * for ($x = 0, $y = 23, $z = 42; $x < $y; ++$x, $y = $x + 1, $z = $x + 2) {}
+     *                                        -------------------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTForUpdate
+     * @since 0.9.12
+     */
     private function _parseForUpdate()
     {
         $this->_tokenStack->push();
