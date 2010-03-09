@@ -1006,11 +1006,24 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTForInit()
     {
-        include_once 'PHP/Depend/Code/ASTForInit.php';
+        return $this->_buildASTNodeInstance('ASTForInit');
+    }
 
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTForInit()');
-
-        return new PHP_Depend_Code_ASTForInit();
+    /**
+     * Builds a new for-update node.
+     *
+     * <code>
+     *                                        -------------------------------
+     * for ($x = 0, $y = 23, $z = 42; $x < $y; ++$x, $y = $x + 1, $z = $x + 2) {}
+     *                                        -------------------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTForUpdate
+     * @since 0.9.12
+     */
+    public function buildASTForUpdate()
+    {
+        return $this->_buildASTNodeInstance('ASTForUpdate');
     }
 
     /**
