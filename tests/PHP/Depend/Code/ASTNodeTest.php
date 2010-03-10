@@ -48,6 +48,9 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/Depend/Code/ASTNode.php';
+require_once 'PHP/Depend/Code/ASTVisitorI.php';
+
 /**
  * Abstract test case for classes derived {@link PHP_Depend_Code_ASTNode}ö
  *
@@ -62,6 +65,66 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  */
 abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * testAcceptInvokesVisitBeforeOnGivenVisitor
+     * 
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitBeforeOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('visitBefore');
+
+        $node = $this->getMockForAbstractClass('PHP_Depend_Code_ASTNode');
+        $node->accept($visitor);
+    }
+
+    /**
+     * testAcceptInvokesVisitAfterOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitAfterOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('visitAfter');
+
+        $node = $this->getMockForAbstractClass('PHP_Depend_Code_ASTNode');
+        $node->accept($visitor);
+    }
+
+    /**
+     * testAcceptInvokesAcceptOnChildNode
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesAcceptOnChildNode()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+
+        $child = $this->getMock('PHP_Depend_Code_ASTNodeI');
+        $child->expects($this->once())
+            ->method('accept');
+
+        $node = $this->getMockForAbstractClass('PHP_Depend_Code_ASTNode');
+        $node->addChild($child);
+        $node->accept($visitor);
+    }
+
     /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
