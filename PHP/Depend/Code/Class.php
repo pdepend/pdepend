@@ -228,32 +228,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     // @codeCoverageIgnoreStart
 
     /**
-     * Marks this as an abstract class or interface.
-     *
-     * @param boolean $abstract Set this to <b>true</b> for an abstract class.
-     *
-     * @return void
-     * @deprecated Since version 0.9.4, use setModifiers() instead.
-     */
-    public function setAbstract($abstract)
-    {
-        fwrite(STDERR, 'Since 0.9.4 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        $this->_modifiers |= PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT;
-    }
-
-    /**
-     * Returns a node iterator with all implemented interfaces.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     * @deprecated Since version 0.9.5, use getInterfaces() instead.
-     */
-    public function getImplementedInterfaces()
-    {
-        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        return $this->getInterfaces();
-    }
-
-    /**
      * Adds a new property to this class instance.
      *
      * @param PHP_Depend_Code_Property $property The new class property.
