@@ -124,17 +124,32 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     {
         $result = array();
 
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($this->_classPath)
-        );
+        $paths = explode(PATH_SEPARATOR, get_include_path());
 
-        foreach ($iterator as $file) {
-            if ($file->getFilename() === 'Analyzer.php') {
-                include_once $file->getPathname();
+        foreach ($paths as $path)
+        {
+            $dir = $path.'/PHP/Depend/Metrics/';
 
-                $className = $this->_createClassNameFromPath($file->getPathname());
-                if ($this->_isAnalyzerClass($className)) {
-                    $result[] = new ReflectionClass($className);
+            if (!is_dir($dir))
+            {
+                continue;
+            }
+
+            $this->_classPath = $dir;
+
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($dir)
+            );
+
+            foreach ($iterator as $file) {
+                if ($file->getFilename() === 'Analyzer.php') {
+                    include_once $file->getPathname();
+
+                    $className = $this->_createClassNameFromPath($dir, $file->getPathname());
+
+                    if ($this->_isAnalyzerClass($className)) {
+                        $result[] = new ReflectionClass($className);
+                    }
                 }
             }
         }
@@ -149,9 +164,9 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      *
      * @return string
      */
-    private function _createClassNameFromPath($path)
+    private function _createClassNameFromPath($classPath, $path)
     {
-        $localPath = substr($path, strlen($this->_classPath), -4);
+        $localPath = substr($path, strlen($classPath), -4);
         return $this->_classPrefix . strtr($localPath, DIRECTORY_SEPARATOR, '_');
     }
 
