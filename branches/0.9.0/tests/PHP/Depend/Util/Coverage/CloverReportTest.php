@@ -175,6 +175,24 @@ class PHP_Depend_Util_Coverage_CloverReportTest extends PHPUnit_Framework_TestCa
     }
 
     /**
+     * testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Coverage_CloverReport
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::coverage
+     * @group unittest
+     */
+    public function testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists()
+    {
+        $report   = $this->_createCloverReport();
+        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+
+        $this->assertEquals(0, $coverage);
+    }
+
+    /**
      * Creates a clover coverage report instance.
      *
      * @return PHP_Depend_Util_Coverage_CloverReport
