@@ -50,6 +50,8 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 require_once dirname(__FILE__) . '/TestListener.php';
 
+require_once 'PHP/Depend/Code/Parameter.php';
+
 /**
  * Test case for the default visit listener implementation.
  *
@@ -271,5 +273,43 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 
         $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
         $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+    }
+
+    /**
+     * testListenerCallsStartVisitNodeForPassedParameterInstance
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testListenerCallsStartVisitNodeForPassedParameterInstance()
+    {
+        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('startVisitNode'));
+        $listener->expects($this->once())
+            ->method('startVisitNode');
+
+        $parameter = $this->getMock('PHP_Depend_Code_Parameter', array(), array(null), '', false);
+        $listener->startVisitParameter($parameter);
+    }
+
+    /**
+     * testListenerCallsEndVisitNodeForPassedParameterInstance
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testListenerCallsEndVisitNodeForPassedParameterInstance()
+    {
+        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('endVisitNode'));
+        $listener->expects($this->once())
+            ->method('endVisitNode');
+
+        $parameter = $this->getMock('PHP_Depend_Code_Parameter', array(), array(null), '', false);
+        $listener->endVisitParameter($parameter);
     }
 }
