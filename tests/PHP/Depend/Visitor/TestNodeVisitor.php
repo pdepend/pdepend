@@ -110,13 +110,6 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
     public $function = null;
 
     /**
-     * The last visited type constant instance.
-     *
-     * @var PHP_Depend_Code_TypeConstant $typeConstant
-     */
-    public $typeConstant = null;
-
-    /**
      * Adds a new listener to this node visitor.
      *
      * @param PHP_Depend_Visitor_ListenerI $listener
@@ -236,17 +229,5 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
     public function visitFile(PHP_Depend_Code_File $file)
     {
 
-    }
-
-    /**
-     * Visits a class constant node.
-     *
-     * @param PHP_Depend_Code_TypeConstant $constant The current constant node.
-     *
-     * @return void
-     */
-    public function visitTypeConstant(PHP_Depend_Code_TypeConstant $constant)
-    {
-        $this->typeConstant = $constant;
     }
 }
