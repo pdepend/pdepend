@@ -62,30 +62,6 @@ interface PHP_Depend_BuilderI
     extends PHP_Depend_ConstantsI, IteratorAggregate
 {
     /**
-     * Generic build class for classes and interfaces. This method should be used
-     * in cases when it is not clear what type is used in the current situation.
-     * This could happen if the parser analyzes a method signature. The default
-     * return type is {@link PHP_Depend_Code_Class}, but if there is already an
-     * interface for this name, the method will return this instance.
-     *
-     * <code>
-     *   $builder->buildInterface('PHP_DependI');
-     *
-     *   // Returns an instance of PHP_Depend_Code_Interface
-     *   $builder->buildClassOrInterface('PHP_DependI');
-     *
-     *   // Returns an instance of PHP_Depend_Code_Class
-     *   $builder->buildClassOrInterface('PHP_Depend');
-     * </code>
-     *
-     * @param string $name The class name.
-     *
-     * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface
-     *         The created class or interface instance.
-     */
-    function buildClassOrInterface($name);
-
-    /**
      * This method will try to find an already existing instance for the given
      * qualified name. It will create a new {@link PHP_Depend_Code_Class}
      * instance when no matching type exists.

@@ -898,13 +898,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTSwitchStatement()
     {
-        include_once 'PHP/Depend/Code/ASTSwitchStatement.php';
-
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTSwitchStatement'
-        );
-
-        return new PHP_Depend_Code_ASTSwitchStatement('switch');
+        return $this->_buildASTNodeInstance('ASTSwitchStatement');
     }
 
     /**
@@ -917,11 +911,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTSwitchLabel($image)
     {
-        include_once 'PHP/Depend/Code/ASTSwitchLabel.php';
-
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTSwitchLabel');
-
-        return new PHP_Depend_Code_ASTSwitchLabel($image);
+        return $this->_buildASTNodeInstance('ASTSwitchLabel', $image);
     }
 
     /**
@@ -1939,55 +1929,4 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         return new $className($image);
     }
-
-    // DEPRECATED METHODS AND PROPERTIES
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Generic build class for classes and interfaces. This method should be used
-     * in cases when it is not clear what type is used in the current situation.
-     * This could happen if the parser analyzes a method signature. The default
-     * return type is {@link PHP_Depend_Code_Class}, but if there is already an
-     * interface for this name, the method will return this instance.
-     *
-     * <code>
-     *   $builder->buildInterface('PHP_DependI');
-     *
-     *   // Returns an instance of PHP_Depend_Code_Interface
-     *   $builder->buildClassOrInterface('PHP_DependI');
-     *
-     *   // Returns an instance of PHP_Depend_Code_Class
-     *   $builder->buildClassOrInterface('PHP_Depend');
-     * </code>
-     *
-     * @param string $name The class name.
-     *
-     * @return PHP_Depend_Code_Class|PHP_Depend_Code_Interface
-     *         The created class or interface instance.
-     * @deprecated Since version 0.9.5, use getClassOrInterface() instead.
-     */
-    public function buildClassOrInterface($name)
-    {
-        fwrite(STDERR, 'Since 0.9.5 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        
-        $cls = $this->extractTypeName($name);
-        $pkg = $this->extractPackageName($name);
-
-        $typeID = strtolower($cls);
-
-        if (isset($this->_classes[$typeID][$pkg])) {
-            $instance = $this->_classes[$typeID][$pkg];
-        } else if (isset($this->_interfaces[$typeID][$pkg])) {
-            $instance = $this->_interfaces[$typeID][$pkg];
-        } else if (isset($this->_classes[$typeID])) {
-            $instance = reset($this->_classes[$typeID]);
-        } else if (isset($this->_interfaces[$typeID])) {
-            $instance = reset($this->_interfaces[$typeID]);
-        } else {
-            $instance = $this->buildClass($name);
-        }
-        return $instance;
-    }
-
-    // @codeCoverageIgnoreEnd
 }

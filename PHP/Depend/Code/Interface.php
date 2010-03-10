@@ -141,21 +141,4 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
     {
         $visitor->visitInterface($this);
     }
-
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Returns an iterator with all parent, parent parent etc. interfaces.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     * @deprecated Since version 0.9.5, use getInterfaces() instead.
-     */
-    public function getParentInterfaces()
-    {
-        fwrite(STDERR, 'Since 0.9.5 getParentInterfaces() is deprecated.' . PHP_EOL);
-        return $this->getInterfaces();
-    }
-
-    // @codeCoverageIgnoreEnd
 }
