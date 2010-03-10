@@ -953,8 +953,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->_tokenizer->peek() === self::T_USE) {
             $this->_parseBoundVariables($closure);
         }
-        
-        $this->_parseCallableBody($closure);
+        $closure->addChild($this->_parseScope());
 
         return $closure;
     }
@@ -969,14 +968,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseCallableDeclaration(
         PHP_Depend_Code_AbstractCallable $callable
     ) {
-        $callable->addChild(
-            $this->_parseFormalParameters()
-        );
-        $this->_consumeComments();
+        $callable->addChild($this->_parseFormalParameters());
 
+        $this->_consumeComments();
         if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
-            // Get function body dependencies
-            $this->_parseCallableBody($callable);
+            $callable->addChild($this->_parseScope());
         } else {
             $this->_consumeToken(self::T_SEMICOLON);
         }
@@ -3594,9 +3590,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseFormalParameter()
     {
         $parameter = $this->_builder->buildASTFormalParameter();
-        $parameter->addChild(
-            $this->_parseVariableDeclarator()
-        );
+        $parameter->addChild($this->_parseVariableDeclarator());
 
         return $parameter;
     }
@@ -3604,54 +3598,33 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Extracts all dependencies from a callable body.
      *
-     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
-     *
-     * @return void
+     * @return PHP_Depend_Code_ASTScope
+     * @since 0.9.12
      */
-    private function _parseCallableBody(PHP_Depend_Code_AbstractCallable $callable)
+    private function _parseScope()
     {
+        $scope = $this->_builder->buildASTScope();
+
+        $this->_tokenStack->push();
         $this->_useSymbolTable->createScope();
-        
-        $curly = 0;
 
-        $tokenType = $this->_tokenizer->peek();
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
 
-        while ($tokenType !== self::T_EOF) {
-
-            switch ($tokenType) {
-
-            case self::T_CURLY_BRACE_OPEN:
-                $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
-                ++$curly;
-                break;
-
-            case self::T_CURLY_BRACE_CLOSE:
-                $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
-                --$curly;
-                break;
-
-            default:
-                $statement = $this->_parseOptionalStatement();
-                if ($statement === null) {
-                    $this->_consumeToken($tokenType);
-                } else if ($statement instanceof PHP_Depend_Code_ASTNodeI) {
-                    $callable->addChild($statement);
-                }
-                // TODO: Change the <else if> into and <else> when the ast
-                //       implementation is finished.
-                break;
+        while (($stmt = $this->_parseOptionalStatement()) !== null) {
+            // TODO: Remove if-statement once, we have translated functions and
+            //       closures into ast-nodes
+            if ($stmt instanceof PHP_Depend_Code_ASTNodeI) {
+                $scope->addChild($stmt);
             }
-
-            if ($curly === 0) {
-                $this->_useSymbolTable->destroyScope();
-
-                // Stop processing
-                return;
-            }
-            $tokenType = $this->_tokenizer->peek();
         }
 
-        throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
+
+        $this->_useSymbolTable->destroyScope();
+
+        return $this->_setNodePositionsAndReturn($scope);
     }
 
     /**
