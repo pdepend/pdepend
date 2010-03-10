@@ -66,37 +66,53 @@ require_once 'PHP/Depend/Code/Parameter.php';
  */
 class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * testDefaultImplementationCallsListeners
+     * 
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
     public function testDefaultImplementationCallsListeners()
     {
         $codeUri  = self::createCodeResourceURI('visitor/' . __FUNCTION__ . '.php');
         $packages = self::parseSource($codeUri);
-        $package  = $packages->current();
-        
+
         $listener = new PHP_Depend_Visitor_TestListener();
         $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
-        $visitor->visitPackage($package);
-        
-        $this->assertArrayHasKey($codeUri . '#start', $listener->nodes);
-        $this->assertArrayHasKey($codeUri . '#end', $listener->nodes);
-        $this->assertArrayHasKey('package#start', $listener->nodes);
-        $this->assertArrayHasKey('package#end', $listener->nodes);
-        $this->assertArrayHasKey('clazz#start', $listener->nodes);
-        $this->assertArrayHasKey('clazz#end', $listener->nodes);
-        $this->assertArrayHasKey('func#start', $listener->nodes);
-        $this->assertArrayHasKey('func#end', $listener->nodes);
-        $this->assertArrayHasKey('interfs#start', $listener->nodes);
-        $this->assertArrayHasKey('interfs#end', $listener->nodes);
-        $this->assertArrayHasKey('m1#start', $listener->nodes);
-        $this->assertArrayHasKey('m1#end', $listener->nodes);
-        $this->assertArrayHasKey('m2#start', $listener->nodes);
-        $this->assertArrayHasKey('m2#end', $listener->nodes);
-        $this->assertArrayHasKey('m3#start', $listener->nodes);
-        $this->assertArrayHasKey('m3#end', $listener->nodes);
-        $this->assertArrayHasKey('m4#start', $listener->nodes);
-        $this->assertArrayHasKey('m4#end', $listener->nodes);
-        $this->assertArrayHasKey('$_p1#start', $listener->nodes);
-        $this->assertArrayHasKey('$_p1#end', $listener->nodes);
+        $visitor->visitPackage($packages->current());
+
+        $actual   = $listener->nodes;
+        $expected = array(
+            $codeUri . '#start'  =>  true,
+            $codeUri . '#end'  =>  true,
+            'package#start'  =>  true,
+            'package#end'  =>  true,
+            'clazz#start'  =>  true,
+            'clazz#end'  =>  true,
+            'func#start'  =>  true,
+            'func#end'  =>  true,
+            'interfs#start'  =>  true,
+            'interfs#end'  =>  true,
+            'm1#start'  =>  true,
+            'm1#end'  =>  true,
+            'm2#start'  =>  true,
+            'm2#end'  =>  true,
+            'm3#start'  =>  true,
+            'm3#end'  =>  true,
+            'm4#start'  =>  true,
+            'm4#end'  =>  true,
+            '$_p1#start'  =>  true,
+            '$_p1#end'  =>  true,
+        );
+
+        ksort($actual);
+        ksort($expected);
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -104,6 +120,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * to the startVisitNode() and endVisitNode() methods.
      *
      * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForClass()
     {
@@ -133,8 +153,13 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 
         $class->accept($visitor);
 
-        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
-        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+        $actual   = $listener->nodes;
+        $expected = array(
+            __FUNCTION__ . '#start' => true,
+            __FUNCTION__ . '#end' => true,
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -142,6 +167,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * call to the startVisitNode() and endVisitNode() methods.
      *
      * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForInterface()
     {
@@ -171,8 +200,13 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 
         $interface->accept($visitor);
 
-        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
-        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+        $actual   = $listener->nodes;
+        $expected = array(
+            __FUNCTION__ . '#start' => true,
+            __FUNCTION__ . '#end' => true,
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -180,6 +214,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * call to the startVisitNode() and endVisitNode() methods.
      *
      * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForFunction()
     {
@@ -212,8 +250,13 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 
         $function->accept($visitor);
 
-        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
-        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+        $actual   = $listener->nodes;
+        $expected = array(
+            __FUNCTION__ . '#start' => true,
+            __FUNCTION__ . '#end' => true,
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -221,6 +264,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * the startVisitNode() and endVisitNode() methods.
      *
      * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForMethod()
     {
@@ -246,8 +293,13 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 
         $method->accept($visitor);
 
-        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
-        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+        $actual   = $listener->nodes;
+        $expected = array(
+            __FUNCTION__ . '#start' => true,
+            __FUNCTION__ . '#end' => true,
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -255,6 +307,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * to the startVisitNode() and endVisitNode() methods.
      *
      * @return void
+     * @covers PHP_Depend_Visitor_AbstractListener
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForClosure()
     {
@@ -271,8 +327,13 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 
         $closure->accept($visitor);
 
-        $this->assertArrayHasKey(__FUNCTION__ . '#start', $listener->nodes);
-        $this->assertArrayHasKey(__FUNCTION__ . '#end', $listener->nodes);
+        $actual   = $listener->nodes;
+        $expected = array(
+            __FUNCTION__ . '#start' => true,
+            __FUNCTION__ . '#end' => true,
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
