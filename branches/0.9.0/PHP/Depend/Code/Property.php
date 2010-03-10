@@ -288,17 +288,6 @@ class PHP_Depend_Code_Property
     }
 
     /**
-     * Returns the source tokens used for this property declaration.
-     *
-     * @return array(PHP_Depend_Token)
-     * @since 0.9.6
-     */
-    public function getTokens()
-    {
-        return $this->_variableDeclarator->getTokens();
-    }
-
-    /**
      * Returns the line number where the property declaration can be found.
      *
      * @return integer
@@ -507,50 +496,6 @@ class PHP_Depend_Code_Property
     // @codeCoverageIgnoreStart
 
     /**
-     * Sets the visibility for this node.
-     *
-     * The given <b>$visibility</b> value must equal to one of the defined
-     * constants, otherwith this method will fail with an exception.
-     *
-     * @param integer $visibility The node visibility.
-     *
-     * @return void
-     * @throws InvalidArgumentException If the given visibility is not equal to
-     *                                  one of the defined visibility constants.
-     * @deprecated Since version 0.9.4, use setModifiers() instead.
-     */
-    public function setVisibility($visibility)
-    {
-        fwrite(STDERR, 'Since 0.9.4 setVisibility() is deprecated.' . PHP_EOL);
-    }
-
-    /**
-     * Returns the type of this property. This method will return <b>null</b>
-     * for all scalar type, only class properties will have a type.
-     *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
-     * @deprecated Since version 0.9.5, use getClass() instead.
-     */
-    public function getType()
-    {
-        fwrite(STDERR, 'Since 0.9.5 getType() is deprecated.' . PHP_EOL);
-        return $this->getClass();
-    }
-
-    /**
-     * Sets the type of this property.
-     *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The property type.
-     *
-     * @return void
-     * @deprecated Since version 0.9.5, use setASTClassReference() instead.
-     */
-    public function setType(PHP_Depend_Code_AbstractClassOrInterface $type)
-    {
-        fwrite(STDERR, 'Since 0.9.5 setType() is deprecated.' . PHP_EOL);
-    }
-
-    /**
      * Returns the parent class object or <b>null</b>
      *
      * @return PHP_Depend_Code_Class
@@ -574,6 +519,19 @@ class PHP_Depend_Code_Property
     {
         fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
         $this->setDeclaringClass($parent);
+    }
+
+    /**
+     * Returns the source tokens used for this property declaration.
+     *
+     * @return array(PHP_Depend_Token)
+     * @since 0.9.6
+     * @deprecated Since version 0.9.12, use setDeclaringClass() instead.
+     */
+    public function getTokens()
+    {
+        fwrite(STDERR, 'Since 0.9.12 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
+        return $this->_variableDeclarator->getTokens();
     }
 
     // @codeCoverageIgnoreEnd
