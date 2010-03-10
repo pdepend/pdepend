@@ -53,6 +53,12 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
 
 require_once 'PHP/Depend/TextUI/Command.php';
 
+// Allow as much memory as possible by default
 ini_set('memory_limit', -1);
+
+// Disable E_STRICT for all PHP versions < 5.3.x
+if (version_compare(phpversion(), '5.3.0')) {
+    error_reporting(error_reporting() & ~E_STRICT);
+}
 
 exit(PHP_Depend_TextUI_Command::main());
