@@ -53,7 +53,6 @@ require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Property.php';
-require_once 'PHP/Depend/Code/TypeConstant.php';
 require_once 'PHP/Depend/Code/ASTFormalParameter.php';
 require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 
