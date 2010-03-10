@@ -95,7 +95,7 @@ class PHP_Depend_Visitor_DefaultVisitorDummy
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
-        $this->visits[] = $file->getName();
+        $this->visits[] = get_class($file);
 
         parent::visitFile($file);
     }
