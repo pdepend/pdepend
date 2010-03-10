@@ -90,9 +90,11 @@ final class PHP_Depend_Util_Type
      * Constants with the metaphone representation of multiple php data types.
      */
     const IMAGE_METAPHONE_ARRAY        = 'AR',
+          IMAGE_METAPHONE_BOOL         = 'BL',
           IMAGE_METAPHONE_BOOLEAN      = 'BLN',
           IMAGE_METAPHONE_DOUBLE       = 'TBL',
           IMAGE_METAPHONE_FLOAT        = 'FLT',
+          IMAGE_METAPHONE_INT          = 'INT',
           IMAGE_METAPHONE_INTEGER      = 'INTJR',
           IMAGE_METAPHONE_MIXED        = 'MKST',
           IMAGE_METAPHONE_REAL         = 'RL',
@@ -102,6 +104,24 @@ final class PHP_Depend_Util_Type
           IMAGE_METAPHONE_STDCLASS     = 'STTKLS',
           IMAGE_METAPHONE_UNKNOWN      = 'UNKNN',
           IMAGE_METAPHONE_UNKNOWN_TYPE = 'UNKNNTP';
+
+    /**
+     * Constants with the soundex representation of multiple php data types.
+     */
+    const IMAGE_SOUNDEX_ARRAY        = 'A600',
+          IMAGE_SOUNDEX_BOOL         = 'B450',
+          IMAGE_SOUNDEX_BOOLEAN      = 'B400',
+          IMAGE_SOUNDEX_DOUBLE       = 'D140',
+          IMAGE_SOUNDEX_FLOAT        = 'F430',
+          IMAGE_SOUNDEX_INT          = 'I530',
+          IMAGE_SOUNDEX_INTEGER      = 'I532',
+          IMAGE_SOUNDEX_MIXED        = 'M230',
+          IMAGE_SOUNDEX_REAL         = 'R400',
+          IMAGE_SOUNDEX_RESOURCE     = 'R262',
+          IMAGE_SOUNDEX_OBJECT       = 'O122',
+          IMAGE_SOUNDEX_STRING       = 'S365',
+          IMAGE_SOUNDEX_STDCLASS     = 'S324',
+          IMAGE_SOUNDEX_UNKNOWN      = 'U525';
  
     /**
      * Constants for other types/keywords frequently used.
@@ -155,9 +175,11 @@ final class PHP_Depend_Util_Type
         self::IMAGE_OTHER_UNKNOWN           =>  true,
         self::IMAGE_OTHER_UNKNOWN_TYPE      =>  true,
         self::IMAGE_METAPHONE_ARRAY         =>  true,
+        self::IMAGE_METAPHONE_BOOL          =>  true,
         self::IMAGE_METAPHONE_BOOLEAN       =>  true,
         self::IMAGE_METAPHONE_DOUBLE        =>  true,
         self::IMAGE_METAPHONE_FLOAT         =>  true,
+        self::IMAGE_METAPHONE_INT           =>  true,
         self::IMAGE_METAPHONE_INTEGER       =>  true,
         self::IMAGE_METAPHONE_MIXED         =>  true,
         self::IMAGE_METAPHONE_OBJECT        =>  true,
@@ -167,6 +189,20 @@ final class PHP_Depend_Util_Type
         self::IMAGE_METAPHONE_STDCLASS      =>  true,
         self::IMAGE_METAPHONE_UNKNOWN       =>  true,
         self::IMAGE_METAPHONE_UNKNOWN_TYPE  =>  true,
+        self::IMAGE_SOUNDEX_ARRAY           =>  true,
+        self::IMAGE_SOUNDEX_BOOL            =>  true,
+        self::IMAGE_SOUNDEX_BOOLEAN         =>  true,
+        self::IMAGE_SOUNDEX_DOUBLE          =>  true,
+        self::IMAGE_SOUNDEX_FLOAT           =>  true,
+        self::IMAGE_SOUNDEX_INT             =>  true,
+        self::IMAGE_SOUNDEX_INTEGER         =>  true,
+        self::IMAGE_SOUNDEX_MIXED           =>  true,
+        self::IMAGE_SOUNDEX_REAL            =>  true,
+        self::IMAGE_SOUNDEX_RESOURCE        =>  true,
+        self::IMAGE_SOUNDEX_OBJECT          =>  true,
+        self::IMAGE_SOUNDEX_STRING          =>  true,
+        self::IMAGE_SOUNDEX_STDCLASS        =>  true,
+        self::IMAGE_SOUNDEX_UNKNOWN         =>  true,
     );
 
     /**
@@ -177,8 +213,11 @@ final class PHP_Depend_Util_Type
     private static $_primitiveTypes = array(
         self::IMAGE_BOOL               =>  self::PHP_TYPE_BOOLEAN,
         self::IMAGE_BOOLEAN            =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_SOUNDEX_BOOL       =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_SOUNDEX_BOOLEAN    =>  self::PHP_TYPE_BOOLEAN,
         self::IMAGE_OTHER_FALSE        =>  self::PHP_TYPE_BOOLEAN,
         self::IMAGE_OTHER_TRUE         =>  self::PHP_TYPE_BOOLEAN,
+        self::IMAGE_METAPHONE_BOOL     =>  self::PHP_TYPE_BOOLEAN,
         self::IMAGE_METAPHONE_BOOLEAN  =>  self::PHP_TYPE_BOOLEAN,
         self::IMAGE_REAL               =>  self::PHP_TYPE_FLOAT,
         self::IMAGE_FLOAT              =>  self::PHP_TYPE_FLOAT,
@@ -186,11 +225,18 @@ final class PHP_Depend_Util_Type
         self::IMAGE_METAPHONE_REAL     =>  self::PHP_TYPE_FLOAT,
         self::IMAGE_METAPHONE_FLOAT    =>  self::PHP_TYPE_FLOAT,
         self::IMAGE_METAPHONE_DOUBLE   =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_SOUNDEX_DOUBLE     =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_SOUNDEX_FLOAT      =>  self::PHP_TYPE_FLOAT,
+        self::IMAGE_SOUNDEX_REAL       =>  self::PHP_TYPE_FLOAT,
         self::IMAGE_INT                =>  self::PHP_TYPE_INTEGER,
         self::IMAGE_INTEGER            =>  self::PHP_TYPE_INTEGER,
+        self::IMAGE_METAPHONE_INT      =>  self::PHP_TYPE_INTEGER,
         self::IMAGE_METAPHONE_INTEGER  =>  self::PHP_TYPE_INTEGER,
+        self::IMAGE_SOUNDEX_INT        =>  self::PHP_TYPE_INTEGER,
+        self::IMAGE_SOUNDEX_INTEGER    =>  self::PHP_TYPE_INTEGER,
         self::IMAGE_STRING             =>  self::PHP_TYPE_STRING,
         self::IMAGE_METAPHONE_STRING   =>  self::PHP_TYPE_STRING,
+        self::IMAGE_SOUNDEX_STRING     =>  self::PHP_TYPE_STRING,
     );
 
     /**
@@ -265,17 +311,21 @@ final class PHP_Depend_Util_Type
      * This method will return <b>true</b> when the given type identifier is in
      * the list of scalar/none-object types.
      *
-     * @param string $scalarType The type identifier.
+     * @param string $image The type identifier.
      *
      * @return boolean
      */
-    public static function isScalarType($scalarType)
+    public static function isScalarType($image)
     {
-        $image = strtolower($scalarType);
-        if (isset(self::$_scalarTypes[$image]) === false) {
-            return isset(self::$_scalarTypes[metaphone($image)]);
+        $image = strtolower($image);
+        if (isset(self::$_scalarTypes[$image]) === true) {
+            return true;
         }
-        return true;
+        $image = metaphone($image);
+        if (isset(self::$_scalarTypes[$image]) === true) {
+            return true;
+        }
+        return isset(self::$_scalarTypes[soundex($image)]);
     }
 
     /**
@@ -308,6 +358,10 @@ final class PHP_Depend_Util_Type
             return self::$_primitiveTypes[$image];
         }
         $image = metaphone($image);
+        if (isset(self::$_primitiveTypes[$image]) === true) {
+            return self::$_primitiveTypes[$image];
+        }
+        $image = soundex($image);
         if (isset(self::$_primitiveTypes[$image]) === true) {
             return self::$_primitiveTypes[$image];
         }
