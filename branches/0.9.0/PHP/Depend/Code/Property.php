@@ -423,7 +423,7 @@ class PHP_Depend_Code_Property
      * @return void
      * @since 0.9.6
      */
-    public function setValue($object, $value)
+    public function setValue($object, $value = null)
     {
         throw new ReflectionException(__METHOD__ . '() is not supported.');
     }
