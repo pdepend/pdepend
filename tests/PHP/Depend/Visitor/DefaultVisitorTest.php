@@ -57,6 +57,7 @@ require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 require_once 'PHP/Depend/Code/Package.php';
 require_once 'PHP/Depend/Code/Property.php';
+require_once 'PHP/Depend/Visitor/ListenerI.php';
 
 /**
  * Test case for the default visitor implementation.
@@ -79,8 +80,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testDefaultVisitOrder()
     {
-        $codeUri  = self::createCodeResourceURI('visitor/' . __FUNCTION__ . '.php');
-        $packages = self::parseSource($codeUri);
+        $packages = self::parseTestCaseSource(__METHOD__);
         
         $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();        
         foreach ($packages as $package) {
@@ -90,20 +90,20 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $expected = array(
             'pkgA',
             'classB',
-            $codeUri,
+            'PHP_Depend_Code_File',
             'methodBA',
             'methodBB',
             'classA',
-            $codeUri,
+            'PHP_Depend_Code_File',
             'methodAB',
             'methodAA',
             'pkgB',
             'interfsC',
-            $codeUri,
+            'PHP_Depend_Code_File',
             'methodCB',
             'methodCA',
             'funcD',
-            $codeUri
+            'PHP_Depend_Code_File'
         );
         
         $this->assertEquals($expected, $visitor->visits);
@@ -118,7 +118,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     public function testClosureHandlerEmitExpectedListenerSignal()
     {
         include_once 'PHP/Depend/Code/Closure.php';
-        include_once 'PHP/Depend/Visitor/ListenerI.php';
 
         $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
         $listener->expects($this->at(0))
@@ -133,4 +132,181 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $visitor->visitClosure($closure);
     }
 
+    /**
+     * testVisitorVisitsFunctionParameter
+     * 
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorVisitsFunctionParameter()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('visitParameter'));
+        $visitor->expects($this->exactly(2))
+            ->method('visitParameter');
+
+        $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testVisitorVisitsMethodParameter
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorVisitsMethodParameter()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('visitParameter'));
+        $visitor->expects($this->exactly(3))
+            ->method('visitParameter');
+
+        $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testVisitorInvokesStartVisitParameterOnListener
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorInvokesStartVisitParameterOnListener()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->exactly(2))
+                 ->method('startVisitParameter');
+
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor->addVisitListener($listener);
+
+        $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testVisitorInvokesEndVisitParameterOnListener
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorInvokesEndVisitParameterOnListener()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->exactly(3))
+                 ->method('endVisitParameter');
+
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor->addVisitListener($listener);
+
+        $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testVisitorInvokesStartVisitInterfaceOnListener
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorInvokesStartVisitInterfaceOnListener()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->once())
+                 ->method('startVisitInterface');
+
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor->addVisitListener($listener);
+
+        $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testVisitorInvokesEndVisitInterfaceOnListener
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorInvokesEndVisitInterfaceOnListener()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->once())
+                 ->method('endVisitInterface');
+
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor->addVisitListener($listener);
+
+        $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testVisitorInvokesStartVisitPropertyOnListener
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorInvokesStartVisitPropertyOnListener()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->once())
+                 ->method('startVisitProperty');
+
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor->addVisitListener($listener);
+
+        $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testVisitorInvokesEndVisitPropertyOnListener
+     *
+     * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testVisitorInvokesEndVisitPropertyOnListener()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener->expects($this->once())
+                 ->method('endVisitProperty');
+
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor->addVisitListener($listener);
+
+        $visitor->visitPackage($packages->current());
+    }
 }

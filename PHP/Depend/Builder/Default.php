@@ -1006,11 +1006,24 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTForInit()
     {
-        include_once 'PHP/Depend/Code/ASTForInit.php';
+        return $this->_buildASTNodeInstance('ASTForInit');
+    }
 
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTForInit()');
-
-        return new PHP_Depend_Code_ASTForInit();
+    /**
+     * Builds a new for-update node.
+     *
+     * <code>
+     *                                        -------------------------------
+     * for ($x = 0, $y = 23, $z = 42; $x < $y; ++$x, $y = $x + 1, $z = $x + 2) {}
+     *                                        -------------------------------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTForUpdate
+     * @since 0.9.12
+     */
+    public function buildASTForUpdate()
+    {
+        return $this->_buildASTNodeInstance('ASTForUpdate');
     }
 
     /**
@@ -1427,6 +1440,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new function/method scope instance.
+     *
+     * @return PHP_Depend_Code_ASTScope
+     * @since 0.9.12
+     */
+    public function buildASTScope()
+    {
+        return $this->_buildASTNodeInstance('ASTScope');
+    }
+
+    /**
      * Builds a new statement instance.
      *
      * @return PHP_Depend_Code_ASTStatement
@@ -1498,6 +1522,19 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTTryStatement($image)
     {
         return $this->_buildASTNodeInstance('ASTTryStatement', $image);
+    }
+
+    /**
+     * Builds a new exit-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTExitStatement
+     * @since 0.9.12
+     */
+    public function buildASTExitStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTExitStatement', $image);
     }
 
     /**
@@ -1950,25 +1987,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $instance = $this->buildClass($name);
         }
         return $instance;
-    }
-
-    /**
-     * Builds a new code class constant instance.
-     *
-     * @param string $name The constant name.
-     *
-     * @return PHP_Depend_Code_TypeConstant The created constant object.
-     * @deprecated Since version 0.9.6
-     */
-    public function buildTypeConstant($name)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-
-        // Include class definition
-        include_once 'PHP/Depend/Code/TypeConstant.php';
-
-        // Create new constant instance.
-        return new PHP_Depend_Code_TypeConstant($name);
     }
 
     // @codeCoverageIgnoreEnd

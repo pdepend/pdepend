@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
@@ -36,43 +36,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://pdepend.org/
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Visitor/AbstractListener.php';
+require_once 'PHP/Depend/Code/ASTStatement.php';
 
 /**
- * Simple test node visitor implementation.
+ * This node class represents an exit-statement.
  *
- * @category  QualityAssurance
- * @package   PHP_Depend
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2010 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://pdepend.org/
+ * @category   PHP
+ * @package    PHP_Depend
+ * @subpackage Code
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
-class PHP_Depend_Visitor_TestListener extends PHP_Depend_Visitor_AbstractListener
+class PHP_Depend_Code_ASTExitStatement extends PHP_Depend_Code_ASTStatement
 {
-    public $nodes = array();
-    
-    public function startVisitNode(PHP_Depend_Code_NodeI $node)
-    {
-        $this->nodes[$node->getName() . '#start'] = true;
-        
-        parent::startVisitNode($node);
-    }
-
-    public function endVisitNode(PHP_Depend_Code_NodeI $node)
-    {
-        $this->nodes[$node->getName() . '#end'] = true;
-        
-        parent::endVisitNode($node);
-    }
+    /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
 }

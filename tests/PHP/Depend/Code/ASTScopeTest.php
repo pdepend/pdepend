@@ -46,12 +46,12 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
+require_once 'PHP/Depend/Code/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTForInit.php';
+require_once 'PHP/Depend/Code/ASTScope.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTForInit} class.
+ * Test case for the {@link PHP_Depend_Code_ASTScope} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,74 +62,74 @@ require_once 'PHP/Depend/Code/ASTForInit.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTForInitTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testForInitHasExpectedStartLine
+     * Tests that the scope-statement has the expected start line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTScope
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedStartLine()
+    public function testScopeHasExpectedStartLine()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(4, $init->getStartLine());
+        $stmt = $this->_getFunctionScope(__METHOD__);
+        $this->assertEquals(3, $stmt->getStartLine());
     }
 
     /**
-     * testForInitHasExpectedStartColumn
+     * Tests that the scope-statement has the expected start column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTScope
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedStartColumn()
+    public function testScopeHasExpectedStartColumn()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(10, $init->getStartColumn());
+        $stmt = $this->_getFunctionScope(__METHOD__);
+        $this->assertEquals(1, $stmt->getStartColumn());
     }
 
     /**
-     * testForInitHasExpectedEndLine
+     * Tests that the scope-statement has the expected end line value.
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTScope
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedEndLine()
+    public function testScopeHasExpectedEndLine()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(4, $init->getEndLine());
+        $stmt = $this->_getFunctionScope(__METHOD__);
+        $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
-     * testForInitHasExpectedEndColumn
+     * Tests that the scope-statement has the expected end column value.
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTScope
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForInit
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testForInitHasExpectedEndColumn()
+    public function testScopeHasExpectedEndColumn()
     {
-        $init = $this->_getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(24, $init->getEndColumn());
+        $stmt = $this->_getFunctionScope(__METHOD__);
+        $this->assertEquals(1, $stmt->getEndColumn());
     }
 
     /**
@@ -137,12 +137,12 @@ class PHP_Depend_Code_ASTForInitTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTForInit
+     * @return PHP_Depend_Code_ASTScope
      */
-    private function _getFirstForInitInFunction($testCase)
+    private function _getFunctionScope($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTForInit::CLAZZ
+            $testCase, PHP_Depend_Code_ASTScope::CLAZZ
         );
     }
 }
