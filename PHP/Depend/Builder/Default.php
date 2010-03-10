@@ -898,13 +898,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTSwitchStatement()
     {
-        include_once 'PHP/Depend/Code/ASTSwitchStatement.php';
-
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTSwitchStatement'
-        );
-
-        return new PHP_Depend_Code_ASTSwitchStatement('switch');
+        return $this->_buildASTNodeInstance('ASTSwitchStatement');
     }
 
     /**
@@ -917,11 +911,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTSwitchLabel($image)
     {
-        include_once 'PHP/Depend/Code/ASTSwitchLabel.php';
-
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTSwitchLabel');
-
-        return new PHP_Depend_Code_ASTSwitchLabel($image);
+        return $this->_buildASTNodeInstance('ASTSwitchLabel', $image);
     }
 
     /**
