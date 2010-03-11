@@ -102,7 +102,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
 
     /**
      * Returns an array with reflection instances for all analyzer classes.
-     * 
+     *
      * @return array(ReflectionClass)
      */
     public function findAll()
