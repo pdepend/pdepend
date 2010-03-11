@@ -92,13 +92,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
           M_NUMBER_OF_LEAF_CLASSES     = 'leafs';
 
     /**
-     * Number of all analyzed packages.
-     *
-     * @var integer $_pkgs
-     */
-    private $_pkgs = 0;
-
-    /**
      * Number of all analyzed functions.
      *
      * @var integer $_fcs
@@ -330,9 +323,11 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        $this->fireStartPackage($package);
+        if (!$package->isUserDefined()) {
+            //return;
+        }
 
-        ++$this->_pkgs;
+        $this->fireStartPackage($package);
 
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
