@@ -271,12 +271,24 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      */
     protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
     {
-        $packages = self::parseTestCaseSource($testCase);
-        $function = $packages->current()
+        return $this->getFirstFunctionForTestCase($testCase)
+            ->getFirstChildOfType($nodeType);
+    }
+
+    /**
+     * Returns the first function found in a test file associated with the
+     * given test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Function
+     */
+    protected function getFirstFunctionForTestCase($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
             ->getFunctions()
             ->current();
-
-        return $function->getFirstChildOfType($nodeType);
     }
 
     /**
@@ -289,12 +301,24 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      */
     protected function getFirstNodeOfTypeInClass($testCase, $nodeType)
     {
-        $packages = self::parseTestCaseSource($testCase);
-        $class    = $packages->current()
+        return $this->getFirstClassForTestCase($testCase)
+            ->getFirstChildOfType($nodeType);
+    }
+
+    /**
+     * Returns the first class found in a test file associated with the given
+     * test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Class
+     */
+    protected function getFirstClassForTestCase($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
             ->getClasses()
             ->current();
-
-        return $class->getFirstChildOfType($nodeType);
     }
 
     /**
