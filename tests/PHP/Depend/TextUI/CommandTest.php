@@ -228,42 +228,31 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandHandlesWithoutAnnotationsOptionCorrect()
     {
-        $logFile = self::createRunResourceURI('pdepend.dummy');
-        $source  = realpath(dirname(__FILE__) . '/../_code');
-
-        $argv = array(
-            '--suffix=inc',
-            '--without-annotations',
-            '--coderank-mode=property',
-            '--dummy-logger=' . $logFile,
-            $source
+        $expected = array(
+            'pdepend.test'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            ),
+            'pdepend.test2'  =>  array(
+                'functions'   =>  0,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            )
         );
 
-        if (file_exists($logFile)) {
-            unlink($logFile);
-        }
+        $actual = $this->_runCommandAndReturnStatistics(
+            array(
+                '--suffix=inc',
+                '--without-annotations',
+                '--coderank-mode=property'
+            ),
+            self::createCodeResourceURI('')
+        );
 
-        list($exitCode, $actual) = $this->_executeCommand($argv);
-
-        $this->assertFileExists($logFile);
-
-        $data = unserialize(file_get_contents($logFile));
-
-        $code = $data['code'];
-        $this->assertEquals(3, $code->count());
-
-        foreach ($code as $package) {
-            if ($package->getName() === 'pdepend.test') {
-                $this->assertEquals(1, $package->getFunctions()->count());
-                $this->assertEquals(1, $package->getClasses()->count());
-
-                $function = $package->getFunctions()->current();
-                $this->assertEquals('foo', $function->getName());
-                $this->assertEquals(0, $function->getExceptionClasses()->count());
-            } else if ($package->getName() === 'pdepend.test2') {
-                $this->assertEquals('pdepend.test2', $package->getName());
-            }
-        }
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -278,35 +267,64 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandHandlesBadDocumentationOptionCorrect()
     {
-        $logFile = self::createRunResourceURI('pdepend.dummy');
-        $source  = realpath(dirname(__FILE__) . '/../_code/code-without-comments');
-
-        $argv = array(
-            '--bad-documentation',
-            '--dummy-logger=' . $logFile,
-            $source
+        $expected = array(
+            '+global'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  7,
+                'interfaces'  =>  3,
+                'exceptions'  =>  0
+            )
         );
+
+        $actual = $this->_runCommandAndReturnStatistics(
+            array('--bad-documentation'),
+            self::createCodeResourceURI('code-without-comments')
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Executes the command class and returns an array with package statistics.
+     *
+     * @param array  $argv     The cli arguments.
+     * @param string $pathName The source path.
+     *
+     * @return array
+     */
+    private function _runCommandAndReturnStatistics(array $argv, $pathName)
+    {
+        $logFile = self::createRunResourceURI('pdepend.dummy');
+
+        $argv[] = '--dummy-logger=' . $logFile;
+        $argv[] = $pathName;
 
         if (file_exists($logFile)) {
             unlink($logFile);
         }
 
-        list($exitCode, $actual) = $this->_executeCommand($argv);
-
-        $this->assertFileExists($logFile);
-
+        $this->_executeCommand($argv);
+        
         $data = unserialize(file_get_contents($logFile));
-
         $code = $data['code'];
-        $this->assertEquals(2, $code->count());
 
-        $code->rewind();
+        $actual = array();
+        foreach ($code as $package) {
+            $exceptions = 0;
+            foreach ($package->getFunctions() as $function) {
+                $exceptions += $function->getExceptionClasses()->count();
+            }
 
-        $package = $code->current();
-        $this->assertEquals(PHP_Depend_BuilderI::DEFAULT_PACKAGE, $package->getName());
+            $actual[$package->getName()] = array(
+                'functions'   =>  $package->getFunctions()->count(),
+                'classes'     =>  $package->getClasses()->count(),
+                'interfaces'  =>  $package->getInterfaces()->count(),
+                'exceptions'  =>  $exceptions
+            );
+        }
+        ksort($actual);
 
-        $this->assertEquals(7, $package->getClasses()->count());
-        $this->assertEquals(3, $package->getInterfaces()->count());
+        return $actual;
     }
 
     /**
