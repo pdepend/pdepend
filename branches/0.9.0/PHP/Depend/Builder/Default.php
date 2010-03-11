@@ -73,6 +73,14 @@ require_once 'PHP/Depend/Util/Type.php';
 class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 {
     /**
+     * This property holds all packages found during the parsing phase.
+     *
+     * @param array(PHP_Depend_Code_Package)
+     * @since 0.9.12
+     */
+    private $_preparedPackages = null;
+
+    /**
      * Default package which contains all functions and classes with an unknown
      * scope.
      *
@@ -1546,6 +1554,21 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function getPackages()
     {
+        if ($this->_preparedPackages === null) {
+            $this->_preparedPackages = $this->_getPreparedPackages();
+        }
+        return new PHP_Depend_Code_NodeIterator($this->_preparedPackages);
+    }
+
+    /**
+     * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
+     * objects.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     * @since 0.9.12
+     */
+    private function _getPreparedPackages()
+    {
         // Create a package array copy
         $packages = $this->_packages;
 
@@ -1555,7 +1578,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         ) {
             unset($packages[self::DEFAULT_PACKAGE]);
         }
-        return new PHP_Depend_Code_NodeIterator($packages);
+        return $packages;
     }
 
     /**
@@ -1896,13 +1919,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function extractPackageName($qualifiedName)
     {
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
-            // Extract namespace part from qualified name
-            $namespaceName = substr($qualifiedName, 0, $pos);
-            // Check for leading backslash
-            if (strpos($namespaceName, '\\') === 0) {
-                return substr($namespaceName, 1);
-            }
-            return $namespaceName;
+            return ltrim(substr($qualifiedName, 0, $pos), '\\');
         } else if (PHP_Depend_Util_Type::isInternalType($qualifiedName)) {
             return PHP_Depend_Util_Type::getTypePackage($qualifiedName);
         }
