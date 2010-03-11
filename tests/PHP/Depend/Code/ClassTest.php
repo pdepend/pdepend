@@ -70,6 +70,131 @@ require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
+     * testGetAllMethodsContainsMethodsOfImplementedInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetAllMethodsContainsMethodsOfImplementedInterface()
+    {
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getClasses()
+            ->current();
+
+        $actual   = array_keys($class->getAllMethods());
+        $expected = array('foo', 'bar', 'baz');
+
+        sort($actual);
+        sort($expected);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testGetAllMethodsContainsMethodsOfImplementedInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetAllMethodsContainsMethodsOfImplementedInterfaces()
+    {
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getClasses()
+            ->current();
+
+        $actual   = array_keys($class->getAllMethods());
+        $expected = array('foo', 'bar', 'baz');
+
+        sort($actual);
+        sort($expected);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testGetAllMethodsContainsMethodsOfIndirectImplementedInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetAllMethodsContainsMethodsOfIndirectImplementedInterfaces()
+    {
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getClasses()
+            ->current();
+
+        $actual   = array_keys($class->getAllMethods());
+        $expected = array('foo', 'bar', 'baz');
+
+        sort($actual);
+        sort($expected);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testGetAllMethodsContainsMethodsOfParentClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetAllMethodsContainsMethodsOfParentClass()
+    {
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getClasses()
+            ->current();
+
+        $actual   = array_keys($class->getAllMethods());
+        $expected = array('foo', 'bar', 'baz');
+
+        sort($actual);
+        sort($expected);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testGetAllMethodsContainsMethodsOfParentClasses
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetAllMethodsContainsMethodsOfParentClasses()
+    {
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getClasses()
+            ->current();
+
+        $actual   = array_keys($class->getAllMethods());
+        $expected = array('foo', 'bar', 'baz');
+
+        sort($actual);
+        sort($expected);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
