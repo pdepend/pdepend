@@ -1946,6 +1946,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         if ($init === null) {
+            $this->_tokenStack->pop();
             return null;
         }
         return $this->_setNodePositionsAndReturn($init);
@@ -1979,6 +1980,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         if ($expression === null) {
+            $this->_tokenStack->pop();
             return null;
         }
         return $this->_setNodePositionsAndReturn($expression);
@@ -2018,6 +2020,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         if ($update === null) {
+            $this->_tokenStack->pop();
             return null;
         }
         return $this->_setNodePositionsAndReturn($update);
