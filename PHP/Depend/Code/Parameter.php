@@ -42,7 +42,7 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id: Parameter.php 675 2009-03-05 07:40:28Z mapi $
+ * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
 
@@ -260,20 +260,6 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
-     * Returns a value holder for the class or interface type declared for this
-     * parameter or <b>null</b> when no parameter type hint was declared.
-     *
-     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
-     * @since 0.9.5
-     */
-    public function getClassReference()
-    {
-        return $this->_formalParameter->getFirstChildOfType(
-            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-        );
-    }
-
-    /**
      * This method will return <b>true</b> when the parameter is passed by
      * reference.
      *
@@ -465,6 +451,22 @@ class PHP_Depend_Code_Parameter
 
     // Deprecated methods
     // @codeCoverageIgnoreStart
+
+    /**
+     * Returns a value holder for the class or interface type declared for this
+     * parameter or <b>null</b> when no parameter type hint was declared.
+     *
+     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @since 0.9.5
+     * @deprecated since 0.9.12
+     */
+    public function getClassReference()
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.12.' . PHP_EOL);
+        return $this->_formalParameter->getFirstChildOfType(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+        );
+    }
 
     /**
      * Returns the type of this property. This method will return <b>null</b>

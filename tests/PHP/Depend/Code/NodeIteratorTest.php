@@ -71,6 +71,10 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * objects.
      *
      * @return void
+     * @covers PHP_Depend_Code_NodeIterator
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testCreateIteratorWidthValidInput()
     {
@@ -87,25 +91,105 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the iterator returns the node name as key.
+     * testNodeIteratorReturnsObjectsInUnmodifiedOrder
      *
      * @return void
+     * @covers PHP_Depend_Code_NodeIterator
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
-    public function testNodeIteratorLoopWithKey()
+    public function testNodeIteratorReturnsObjectsInUnmodifiedOrder()
     {
-        $names = array('clazz', 'func', 'method', 'pkg');
-        $nodes = array(
+        $expected = array(
             new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
             new PHP_Depend_Code_Function('func', 0),
             new PHP_Depend_Code_Method('method', 0),
             new PHP_Depend_Code_Package('pkg'),
         );
         
-        $it = new PHP_Depend_Code_NodeIterator($nodes);
-        
-        for ($i = 0, $it->rewind(); $it->valid(); ++$i, $it->next()) {
-            $this->assertSame($nodes[$i], $it->current());
-            $this->assertEquals($names[$i], $it->key());
+        $iterator = new PHP_Depend_Code_NodeIterator($expected);
+
+        $actual = array();
+        foreach ($iterator as $codeNode) {
+            $actual[] = $codeNode;
         }
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testNodeIteratorReturnsObjectsUnique
+     *
+     * @return void
+     * @covers PHP_Depend_Code_NodeIterator
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testNodeIteratorReturnsObjectsUnique()
+    {
+        $iterator = new PHP_Depend_Code_NodeIterator(
+            array(
+                $object2 = new PHP_Depend_Code_Class('o2', 0, 'o2.php'),
+                $object1 = new PHP_Depend_Code_Class('o1', 0, 'o1.php'),
+                $object3 = new PHP_Depend_Code_Class('o3', 0, 'o3.php'),
+                $object1,
+                $object2,
+                $object3
+            )
+        );
+
+        $expected = array($object2, $object1, $object3);
+        $actual   = array();
+        foreach ($iterator as $codeNode) {
+            $actual[] = $codeNode;
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testIteratorUsesNodeNameAsItsIterationKey
+     *
+     * @return void
+     * @covers PHP_Depend_Code_NodeIterator
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIteratorUsesNodeNameAsItsIterationKey()
+    {
+        $nodes = array(
+            new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
+            new PHP_Depend_Code_Function('func', 0),
+            new PHP_Depend_Code_Method('method', 0),
+            new PHP_Depend_Code_Package('pkg'),
+        );
+
+        $iterator = new PHP_Depend_Code_NodeIterator($nodes);
+
+        $expected = array('clazz', 'func', 'method', 'pkg');
+        $actual   = array();
+        foreach ($iterator as $codeNode) {
+            $actual[] = $iterator->key();
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testCurrentReturnsFalseWhenNoMoreElementExists
+     *
+     * @return void
+     * @covers PHP_Depend_Code_NodeIterator
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testCurrentReturnsFalseWhenNoMoreElementExists()
+    {
+        $iterator = new PHP_Depend_Code_NodeIterator(array());
+        $this->assertFalse($iterator->current());
     }
 }
