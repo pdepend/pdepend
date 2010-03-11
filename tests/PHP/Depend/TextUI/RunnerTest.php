@@ -123,35 +123,31 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     public function testRunnerUsesCorrectFileFilter()
     {
-        $fileName = self::createRunResourceURI('pdepend.dummy');
+        $expected = array(
+            'pdepend.test'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            ),
+            'pdepend.test2'  =>  array(
+                'functions'   =>  0,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            )
+        );
 
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code'));
+        $runner->setWithoutAnnotations();
         $runner->setFileExtensions(array('inc'));
-        $runner->addLogger('dummy-logger', $fileName);
 
-        ob_start();
-        $runner->run();
-        ob_end_clean();
+        $actual = $this->_runRunnerAndReturnStatistics(
+            $runner,
+            self::createCodeResourceURI('')
+        );
 
-        $data = unserialize(file_get_contents($fileName));
-
-        $code = $data['code'];
-        $this->assertEquals(3, $code->count());
-
-        foreach ($code as $package) {
-            if ($package->getName() === 'pdepend.test') {
-                $this->assertEquals(1, $package->getFunctions()->count());
-                $this->assertEquals(1, $package->getClasses()->count());
-
-                $function = $package->getFunctions()->current();
-                $this->assertEquals('foo', $function->getName());
-                $this->assertEquals(1, $function->getExceptionClasses()->count());
-                $this->assertEquals('MyException', $function->getExceptionClasses()->current()->getName());
-            } else if ($package->getName() === 'pdepend.test') {
-                $this->assertEquals('pdepend.test2', $package->getName());
-            }
-        }
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -166,33 +162,30 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
     {
-        $fileName = self::createRunResourceURI('pdepend.dummy');
+        $expected = array(
+            'pdepend.test'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            ),
+            'pdepend.test2'  =>  array(
+                'functions'   =>  0,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            )
+        );
 
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code'));
-        $runner->setFileExtensions(array('inc'));
-        $runner->addLogger('dummy-logger', $fileName);
         $runner->setWithoutAnnotations();
 
-        ob_start();
-        $runner->run();
-        ob_end_clean();
+        $actual = $this->_runRunnerAndReturnStatistics(
+            $runner,
+            self::createCodeResourceURI('function.inc')
+        );
 
-        $data = unserialize(file_get_contents($fileName));
-
-        $code = $data['code'];
-        $this->assertEquals(3, $code->count());
-
-        foreach ($code as $package) {
-            if ($package->getName() === 'pdepend.test') {
-                $this->assertEquals(1, $package->getFunctions()->count());
-                $this->assertEquals(1, $package->getClasses()->count());
-
-                $function = $package->getFunctions()->current();
-                $this->assertEquals('foo', $function->getName());
-                $this->assertEquals(0, $function->getExceptionClasses()->count());
-            }
-        }
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -206,28 +199,168 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     public function testSupportBadDocumentation()
     {
-        $fileName = self::createRunResourceURI('pdepend.dummy');
-
+        $expected = array(
+            '+global'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  7,
+                'interfaces'  =>  3,
+                'exceptions'  =>  0
+            )
+        );
+        
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code/code-without-comments'));
         $runner->setSupportBadDocumentation();
-        $runner->addLogger('dummy-logger', $fileName);
+
+        $actual = $this->_runRunnerAndReturnStatistics(
+            $runner,
+            self::createCodeResourceURI('code-without-comments')
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testRunnerHasParseErrorsReturnsFalseForValidSource
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testRunnerHasParseErrorsReturnsFalseForValidSource()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setSupportBadDocumentation();
+        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+        $runner->run();
+
+        $this->assertFalse($runner->hasParseErrors());
+    }
+
+    /**
+     * testRunnerHasParseErrorsReturnsTrueForInvalidSource
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setSupportBadDocumentation();
+        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+
+        try {
+            $runner->run();
+        } catch (Exception $e) {}
+
+        $this->assertTrue($runner->hasParseErrors());
+    }
+
+    /**
+     * testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setSupportBadDocumentation();
+        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+
+        try {
+            $runner->run();
+        } catch (Exception $e) {}
+
+        $errors = $runner->getParseErrors();
+        $this->assertContains('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
+
+        $this->assertTrue($runner->hasParseErrors());
+    }
+
+    /**
+     * testRunnerThrowsExceptionForUndefinedLoggerClass
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     * @expectedException RuntimeException
+     */
+    public function testRunnerThrowsExceptionForUndefinedLoggerClass()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->addLogger('FooBarLogger', self::createRunResourceURI('log.xml'));
+        $runner->run();
+    }
+
+    /**
+     * testRunnerThrowsExceptionForInvalidSource
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     * @expectedException RuntimeException
+     */
+    public function testRunnerThrowsExceptionForInvalidSource()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+        $runner->run();
+    }
+
+    /**
+     * Executes the runner class and returns an array with package statistics.
+     *
+     * @param array  PHP_Depend_TextUI_Runner $runner   The runner instance.
+     * @param string                          $pathName The source path.
+     *
+     * @return array
+     */
+    private function _runRunnerAndReturnStatistics(PHP_Depend_TextUI_Runner $runner, $pathName)
+    {
+        $logFile = self::createRunResourceURI('pdepend.dummy');
+
+        $runner->setSourceArguments(array($pathName));
+        $runner->addLogger('dummy-logger', $logFile);
 
         ob_start();
         $runner->run();
         ob_end_clean();
 
-        $data = unserialize(file_get_contents($fileName));
-
+        $data = unserialize(file_get_contents($logFile));
         $code = $data['code'];
-        $this->assertEquals(2, $code->count());
 
-        $code->rewind();
+        $actual = array();
+        foreach ($code as $package) {
+            $exceptions = 0;
+            foreach ($package->getFunctions() as $function) {
+                $exceptions += $function->getExceptionClasses()->count();
+            }
 
-        $package = $code->current();
-        $this->assertEquals(PHP_Depend_BuilderI::DEFAULT_PACKAGE, $package->getName());
+            $actual[$package->getName()] = array(
+                'functions'   =>  $package->getFunctions()->count(),
+                'classes'     =>  $package->getClasses()->count(),
+                'interfaces'  =>  $package->getInterfaces()->count(),
+                'exceptions'  =>  $exceptions
+            );
+        }
+        ksort($actual);
 
-        $this->assertEquals(7, $package->getClasses()->count());
-        $this->assertEquals(3, $package->getInterfaces()->count());
+        return $actual;
     }
 }

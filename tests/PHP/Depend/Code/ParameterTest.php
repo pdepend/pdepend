@@ -57,7 +57,7 @@ require_once 'PHP/Depend/Code/Parameter.php';
 require_once 'PHP/Depend/Code/Value.php';
 
 /**
- * Test case for the code property class.
+ * Test case for the code parameter class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -74,6 +74,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that the allows null method returns <b>true</b> for a simple parameter.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterAllowsNullForSimpleVariableIssue67()
     {
@@ -94,6 +98,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter passed by reference.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67()
     {
@@ -114,6 +122,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter without explicit <b>null</b> default value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67()
     {
@@ -134,6 +146,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter with explicit <b>null</b> default value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67()
     {
@@ -154,6 +170,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter without explicit <b>null</b> default value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
@@ -174,6 +194,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter with explicit <b>null</b> default value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterAllowsNullForTypeHintVariableIssue67()
     {
@@ -194,6 +218,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterDeclaringClassReturnsNullForFunctionIssue67()
     {
@@ -212,6 +240,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * of a parent function/method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67()
     {
@@ -233,6 +265,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that the parameter class handles a type holder as expected.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterReturnsExpectedTypeFromASTClassOrInterfaceReference()
     {
@@ -254,6 +290,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that a parameter returns <b>null</b> when no type holder was set.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet()
     {
@@ -273,6 +313,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that a parameter returns the expected function instance.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterReturnsExpectedDeclaringFunction()
     {
@@ -292,6 +336,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that a parameter returns the expected method instance.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterReturnsExpectedDeclaringMethod()
     {
@@ -310,10 +358,34 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testAcceptInvokesVisitParameterOnSuppliedVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitParameterOnSuppliedVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_VisitorI');
+        $visitor->expects($this->once())
+            ->method('visitParameter')
+            ->with($this->isInstanceOf('PHP_Depend_Code_Parameter'));
+
+        $parameter = new PHP_Depend_Code_Parameter($this->getMock('PHP_Depend_Code_ASTFormalParameter'));
+        $parameter->accept($visitor);
+    }
+
+    /**
      * Tests that the export function throws the expected exception for an unknown
      * function.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterExportThrowsReflectionExceptionForUnknownFunction()
     {
@@ -332,6 +404,10 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function parameter.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::source
+     * @group unittest
      */
     public function testParameterExportsExistingFunction()
     {

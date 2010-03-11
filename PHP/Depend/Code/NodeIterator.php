@@ -109,20 +109,6 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     }
 
     /**
-     * Appends a filter to this iterator.
-     *
-     * A call to this method will reset the internal pointer.
-     *
-     * @param PHP_Depend_Code_FilterI $filter The filter instance.
-     *
-     * @return void
-     */
-    public function addFilter(PHP_Depend_Code_FilterI $filter)
-    {
-        $this->_init($filter);
-    }
-
-    /**
      * Returns the number of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
      * @return integer

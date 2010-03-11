@@ -2324,8 +2324,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseMemberPrefixOrFunctionPostfix()
     {
         $this->_tokenStack->push();
+        $this->_tokenStack->push();
 
-        $qualifiedName = $this->_parseQualifiedName();
+        $qName = $this->_parseQualifiedName();
 
         // Remove comments
         $this->_consumeComments();
@@ -2336,19 +2337,20 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         switch ($tokenType) {
 
         case self::T_DOUBLE_COLON:
-            $node = $this->_parseStaticMemberPrimaryPrefix(
-                $this->_builder->buildASTClassOrInterfaceReference($qualifiedName)
-            );
+            $node = $this->_builder->buildASTClassOrInterfaceReference($qName);
+            $node = $this->_setNodePositionsAndReturn($node);
+            $node = $this->_parseStaticMemberPrimaryPrefix($node);
             break;
 
         case self::T_PARENTHESIS_OPEN:
-            $node = $this->_parseFunctionPostfix(
-                $this->_builder->buildASTIdentifier($qualifiedName)
-            );
+            $node = $this->_builder->buildASTIdentifier($qName);
+            $node = $this->_setNodePositionsAndReturn($node);
+            $node = $this->_parseFunctionPostfix($node);
             break;
 
         default:
-            $node = $this->_builder->buildASTConstant($qualifiedName);
+            $node = $this->_builder->buildASTConstant($qName);
+            $node = $this->_setNodePositionsAndReturn($node);
             break;
         }
         
@@ -2454,9 +2456,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_STRING:
             $prefix->addChild(
                 $this->_parseMethodOrPropertyPostfix(
-                    $this->_builder->buildASTIdentifier(
-                        $this->_consumeToken(self::T_STRING)->image
-                    )
+                    $this->_parseIdentifier()
                 )
             );
             break;
@@ -2552,14 +2552,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        $node = $this->_builder->buildASTIdentifier(
-            $this->_consumeToken(self::T_STRING)->image
-        );
+        $node = $this->_parseIdentifier();
 
-        // Strip optional comments
         $this->_consumeComments();
-
-        // Get next token type
         if ($this->_tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
             $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
             $postfix->addChild($node);
@@ -3105,6 +3100,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_CURLY_BRACE_OPEN),
             self::T_CURLY_BRACE_CLOSE
         );
+    }
+    
+    /**
+     * Parses a static identifier expression, as it is used for method and
+     * function names.
+     *
+     * @return PHP_Depend_Code_ASTIdentifier
+     * @since 0.9.12
+     */
+    private function _parseIdentifier()
+    {
+        $this->_tokenStack->push();
+        $token = $this->_consumeToken(self::T_STRING);
+        
+        $node = $this->_builder->buildASTIdentifier($token->image);
+        return $this->_setNodePositionsAndReturn($node);
     }
 
     /**
