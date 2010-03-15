@@ -315,18 +315,6 @@ class PHP_Depend
     }
 
     /**
-     * Should PHP_Depend support projects with a bad documentation. If this
-     * option is set to <b>true</b>, PHP_Depend will treat the default package
-     * <b>+global</b> as a regular project package.
-     *
-     * @return void
-     */
-    public function setSupportBadDocumentation()
-    {
-        $this->_supportBadDocumentation = true;
-    }
-
-    /**
      * Adds a process listener.
      *
      * @param PHP_Depend_ProcessListenerI $listener The listener instance.
@@ -359,12 +347,7 @@ class PHP_Depend
         $collection->addFilter($this->_codeFilter);
 
         if ($this->_builder->getPackages()->count() === 0) {
-            $message = "The parser doesn't detect package informations "
-                     . "within the analyzed project, please check the "
-                     . "documentation blocks for @package-annotations or use "
-                     . "the --bad-documentation option.";
-
-            throw new RuntimeException($message);
+            return ($this->_packages = $this->_builder->getPackages());
         }
 
         $collection->removeFilter($this->_codeFilter);
@@ -784,4 +767,23 @@ class PHP_Depend
 
         return $this->_initAnalyseListeners($loader);
     }
+
+    // Deprecated Stuff
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Should PHP_Depend support projects with a bad documentation. If this
+     * option is set to <b>true</b>, PHP_Depend will treat the default package
+     * <b>+global</b> as a regular project package.
+     *
+     * @return void
+     * @deprecated since 0.9.12
+     */
+    public function setSupportBadDocumentation()
+    {
+        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.12.' . PHP_EOL);
+        $this->_supportBadDocumentation = true;
+    }
+
+    // @codeCoverageIgnoreEnd
 }

@@ -256,8 +256,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the command handles the <b>--bad-documentation</b> option
-     * correct.
+     * testCommandHandlesBadDocumentedSourceCode
      *
      * @return void
      * @covers PHP_Depend_TextUI_Command
@@ -265,7 +264,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * @group pdepend::textui
      * @group unittest
      */
-    public function testCommandHandlesBadDocumentationOptionCorrect()
+    public function testCommandHandlesBadDocumentedSourceCode()
     {
         $expected = array(
             '+global'  =>  array(
@@ -277,7 +276,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         );
 
         $actual = $this->_runCommandAndReturnStatistics(
-            array('--bad-documentation'),
+            array(),
             self::createCodeResourceURI('code-without-comments')
         );
 
@@ -529,7 +528,6 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $this->assertRegExp('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
         $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+packages\.)', $actual);
         $this->assertRegExp('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
-        $this->assertRegExp('(  --bad-documentation[ ]+Fallback\s+for\s+projects\s+with\s+bad\s+doc\s+comments\.)', $actual);
         $this->assertRegExp('(  --optimization=<mode>[ ]+Runtime\s+switch\s+to\s+influence\s+the\s+internal\s+processing\.)', $actual);
         $this->assertRegExp('(  [ ]+"best"[ ]+Provides\s+lowest\s+memory\s+usage\s+with\s+best\s+possible\s+performance\.)', $actual);
         $this->assertRegExp('(  [ ]+"none"[ ]+Highest\s+memory\s+usage\s+without\s+any\s+caching\.)', $actual);
