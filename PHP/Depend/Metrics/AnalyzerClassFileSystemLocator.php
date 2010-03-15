@@ -124,6 +124,8 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
         $result = array();
 
         $paths = explode(PATH_SEPARATOR, get_include_path());
+        $paths = array_filter($paths);
+
         array_unshift($paths, $this->_classPath);
 
         foreach ($paths as $path) {
