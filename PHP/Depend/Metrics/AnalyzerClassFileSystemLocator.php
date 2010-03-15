@@ -127,6 +127,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
         array_unshift($paths, $this->_classPath);
 
         foreach ($paths as $path) {
+            $path = rtrim($path, "/\\");
 
             $iterator = new RegexIterator(
                 new RecursiveIteratorIterator(
