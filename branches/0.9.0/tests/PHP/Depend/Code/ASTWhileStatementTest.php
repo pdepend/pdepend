@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testWhileStatementGraphWithBooleanExpressions()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($statement->getChildren()));
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(2, count($stmt->getChildren()));
     }
 
     /**
@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFirstChildOfWhileStatementIsASTExpression()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $statement->getChild(0));
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
     /**
@@ -111,24 +111,29 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSecondChildOfWhileStatementIsASTScopeStatement()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $statement->getChild(1));
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
-     * Tests the start line value.
+     * testWhileStatementHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testWhileStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testWhileStatementHasExpectedStartColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -140,12 +145,12 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testWhileStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testWhileStatementHasExpectedEndLine
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -157,12 +162,12 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testWhileStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getEndLine());
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testWhileStatementHasExpectedEndColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -174,8 +179,8 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testWhileStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getEndColumn());
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**

@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTBooleanAndExpression.php';
 class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * testBooleanAndExpressionHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTBooleanAndExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedStartLine()
     {
         $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getStartLine());
+        $this->assertEquals(4, $expression->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testBooleanAndExpressionHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTBooleanAndExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedStartColumn()
     {
         $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(18, $expression->getStartColumn());
+        $this->assertEquals(13, $expression->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testBooleanAndExpressionHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTBooleanAndExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedEndLine()
     {
         $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getEndLine());
+        $this->assertEquals(4, $expression->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testBooleanAndExpressionHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTBooleanAndExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedEndColumn()
     {
         $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertSame(19, $expression->getEndColumn());
+        $this->assertEquals(25, $expression->getEndColumn());
     }
 
     /**

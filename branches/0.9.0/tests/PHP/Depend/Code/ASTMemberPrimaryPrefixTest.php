@@ -65,63 +65,83 @@ require_once 'PHP/Depend/Code/ASTMemberPrimaryPrefix.php';
 class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line of a member primary prefix.
+     * testObjectMemberPrimaryPrefixHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode::getStartLine
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedStartLine()
     {
         $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $this->assertSame(4, $prefix->getStartLine());
+        $this->assertEquals(4, $prefix->getStartLine());
     }
 
     /**
-     * Tests the start column of a member primary prefix.
+     * testObjectMemberPrimaryPrefixHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode::getStartColumn
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedStartColumn()
     {
         $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $this->assertSame(5, $prefix->getStartColumn());
+        $this->assertEquals(5, $prefix->getStartColumn());
     }
 
     /**
-     * Tests the end line of a member primary prefix.
+     * testObjectMemberPrimaryPrefixHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode::getEndLine
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedEndLine()
     {
         $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $this->assertSame(6, $prefix->getEndLine());
+        $this->assertEquals(6, $prefix->getEndLine());
     }
 
     /**
-     * Tests the end column of a member primary prefix.
+     * testObjectMemberPrimaryPrefixHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode::getEndColumn
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedEndColumn()
     {
         $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $this->assertSame(10, $prefix->getEndColumn());
+        $this->assertEquals(10, $prefix->getEndColumn());
     }
 
     /**
      * testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix::isStatic
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse()
     {
@@ -133,8 +153,12 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix::isStatic
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse()
     {
@@ -146,8 +170,12 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix::isStatic
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue()
     {
@@ -159,8 +187,12 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix::isStatic
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue()
     {

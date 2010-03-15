@@ -68,12 +68,17 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      * Tests that the constant definition has the expected doc comment block.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDefinition
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDefinitionHasExpectedDocComment()
     {
         $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
-        $this->assertSame(
+        $this->assertEquals(
             "/**\n" .
             "     * Foo bar baz foobar.\n" .
             "     */",
@@ -85,12 +90,17 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      * Tests that the constant definition has the expected doc comment block.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDefinition
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
     {
         $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
-        $this->assertSame(
+        $this->assertEquals(
             "/**\n" .
             "     * Foo bar baz foobar.\n" .
             "     */",
@@ -99,51 +109,71 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
-     * Tests the start line value.
+     * testConstantDefinitionHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDefinition
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDefinitionHasExpectedStartLine()
     {
         $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
-        $this->assertSame(4, $constant->getStartLine());
+        $this->assertEquals(4, $constant->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testConstantDefinitionHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDefinition
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDefinitionHasExpectedStartColumn()
     {
         $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
-        $this->assertSame(5, $constant->getStartColumn());
+        $this->assertEquals(5, $constant->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testConstantDefinitionHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDefinition
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDefinitionHasExpectedEndLine()
     {
         $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
-        $this->assertSame(7, $constant->getEndLine());
+        $this->assertEquals(7, $constant->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testConstantDefinitionHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDefinition
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDefinitionHasExpectedEndColumn()
     {
         $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
-        $this->assertSame(12, $constant->getEndColumn());
+        $this->assertEquals(12, $constant->getEndColumn());
     }
 
     /**

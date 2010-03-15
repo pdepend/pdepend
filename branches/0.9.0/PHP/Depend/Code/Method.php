@@ -216,41 +216,4 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     {
         $visitor->visitMethod($this);
     }
-    
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Marks this as an abstract method.
-     *
-     * @param boolean $abstract Set this to <b>true</b> for an abstract method.
-     *
-     * @return void
-     * @deprecated Since version 0.9.4, use setModifiers() instead.
-     */
-    public function setAbstract($abstract)
-    {
-        fwrite(STDERR, 'Since 0.9.4 setAbstract() is deprecated.' . PHP_EOL);
-        $this->_modifiers |= PHP_Depend_ConstantsI::IS_ABSTRACT;
-    }
-
-    /**
-     * Sets the visibility for this node.
-     *
-     * The given <b>$visibility</b> value must equal to one of the defined
-     * constants, otherwith this method will fail with an exception.
-     *
-     * @param integer $visibility The node visibility.
-     *
-     * @return void
-     * @throws InvalidArgumentException If the given visibility is not equal to
-     *                                  one of the defined visibility constants.
-     * @deprecated Since version 0.9.4, use setModifiers() instead.
-     */
-    public function setVisibility($visibility)
-    {
-        fwrite(STDERR, 'Since 0.9.4 setVisibility() is deprecated.' . PHP_EOL);
-    }
-
-    // @codeCoverageIgnoreEnd
 }

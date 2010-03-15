@@ -345,6 +345,44 @@ interface PHP_Depend_BuilderI
     function buildASTAllocationExpression($image);
 
     /**
+     * Builds a new eval-expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTEvalExpression
+     * @since 0.9.12
+     */
+    function buildASTEvalExpression($image);
+
+    /**
+     * Builds a new exit-expression instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTExitExpression
+     * @since 0.9.12
+     */
+    function buildASTExitExpression($image);
+
+    /**
+     * Builds a new clone-expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTCloneExpression
+     * @since 0.9.12
+     */
+    function buildASTCloneExpression($image);
+
+    /**
+     * Builds a new array-expression node.
+     *
+     * @return PHP_Depend_Code_ASTArrayExpression
+     * @since 0.9.12
+     */
+    function buildASTArrayExpression();
+
+    /**
      * Builds a new instanceof expression node.
      *
      * @param string $image The source image of this expression.
@@ -846,12 +884,58 @@ interface PHP_Depend_BuilderI
     function buildASTTryStatement($image);
 
     /**
+     * Builds a new throw-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTThrowStatement
+     * @since 0.9.12
+     */
+    function buildASTThrowStatement($image);
+
+    /**
+     * Builds a new goto-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTGotoStatement
+     * @since 0.9.12
+     */
+    function buildASTGotoStatement($image);
+
+    /**
+     * Builds a new label-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTLabelStatement
+     * @since 0.9.12
+     */
+    function buildASTLabelStatement($image);
+
+    /**
+     * Builds a new global-statement instance.
+     *
+     * @return PHP_Depend_Code_ASTGlobalStatement
+     * @since 0.9.12
+     */
+    function buildASTGlobalStatement();
+
+    /**
+     * Builds a new unset-statement instance.
+     *
+     * @return PHP_Depend_Code_ASTUnsetStatement
+     * @since 0.9.12
+     */
+    function buildASTUnsetStatement();
+
+    /**
      * Builds a new exit-statement instance.
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTExitStatement
+     * @return PHP_Depend_Code_ASTEchoStatement
      * @since 0.9.12
      */
-    function buildASTExitStatement($image);
+    function buildASTEchoStatement($image);
 }

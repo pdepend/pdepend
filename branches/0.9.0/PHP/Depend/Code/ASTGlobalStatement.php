@@ -36,36 +36,36 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://pdepend.org/
- * @deprecated Since version 0.9.5, use PHP_Depend_Code_AbstractClassOrInterface
+ * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
 
-// @codeCoverageIgnoreStart
-
-require_once 'PHP/Depend/Code/AbstractItem.php';
+require_once 'PHP/Depend/Code/ASTStatement.php';
 
 /**
- * Represents an interface or a class type.
+ * This node class represents a global-statement.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
- * @deprecated Since version 0.9.5, use PHP_Depend_Code_AbstractClassOrInterface
+ * @link       http://www.pdepend.org/
+ * @since      0.9.12
  */
-abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
+class PHP_Depend_Code_ASTGlobalStatement extends PHP_Depend_Code_ASTStatement
 {
+    /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
 }
-
-// @codeCoverageIgnoreEnd

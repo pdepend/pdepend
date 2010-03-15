@@ -309,7 +309,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $interface->getSourceFile()->accept($this);
 
-        list($cloc, $eloc) = $this->_linesOfCode($interface->getTokens(), true);
+        list($cloc) = $this->_linesOfCode($interface->getTokens(), true);
 
         $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
         $ncloc = $loc - $cloc;
@@ -317,7 +317,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $this->_nodeMetrics[$interface->getUUID()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
             self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
@@ -339,9 +339,13 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-
-        list($cloc, $eloc) = $this->_linesOfCode($method->getTokens(), true);
-
+        
+        if ($method->isAbstract()) {
+            $cloc = 0;
+            $eloc = 0;
+        } else {
+            list($cloc, $eloc) = $this->_linesOfCode($method->getTokens(), true);
+        }
         $loc   = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 

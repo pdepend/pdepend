@@ -232,7 +232,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $expected = array(
             'loc'    =>  17,
             'cloc'   =>  7,
-            'eloc'   =>  7,
+            'eloc'   =>  0,
             'ncloc'  =>  10
         );
 
@@ -382,7 +382,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_AbstractTest
         $expected = array(
             'loc'    =>  17,
             'cloc'   =>  7,
-            'eloc'   =>  6,
+            'eloc'   =>  0,
             'ncloc'  =>  10
         );
         $this->assertEquals($expected, $actual);

@@ -67,51 +67,71 @@ require_once 'PHP/Depend/Code/ASTLogicalOrExpression.php';
 class PHP_Depend_Code_ASTLogicalOrExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * testLogicalOrExpressionHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalOrExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalOrExpressionHasExpectedStartLine()
     {
-        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getStartLine());
+        $expr = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testLogicalOrExpressionHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalOrExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalOrExpressionHasExpectedStartColumn()
     {
-        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
-        $this->assertSame(18, $expression->getStartColumn());
+        $expr = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertEquals(13, $expr->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testLogicalOrExpressionHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalOrExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalOrExpressionHasExpectedEndLine()
     {
-        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getEndLine());
+        $expr = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testLogicalOrExpressionHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalOrExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalOrExpressionHasExpectedEndColumn()
     {
-        $expression = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
-        $this->assertSame(19, $expression->getEndColumn());
+        $expr = $this->_getFirstLogicalOrExpressionInFunction(__METHOD__);
+        $this->assertEquals(25, $expr->getEndColumn());
     }
 
     /**
