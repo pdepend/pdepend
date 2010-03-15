@@ -762,13 +762,57 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTAllocationExpression($image)
     {
-        include_once 'PHP/Depend/Code/ASTAllocationExpression.php';
+        return $this->_buildASTNodeInstance('ASTAllocationExpression', $image);
+    }
 
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTAllocationExpression()'
-        );
+    /**
+     * Builds a new eval-expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTEvalExpression
+     * @since 0.9.12
+     */
+    public function buildASTEvalExpression($image)
+    {
+        return $this->_buildASTNodeInstance('ASTEvalExpression', $image);
+    }
 
-        return new PHP_Depend_Code_ASTAllocationExpression($image);
+    /**
+     * Builds a new exit-expression instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTExitExpression
+     * @since 0.9.12
+     */
+    public function buildASTExitExpression($image)
+    {
+        return $this->_buildASTNodeInstance('ASTExitExpression', $image);
+    }
+
+    /**
+     * Builds a new clone-expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTCloneExpression
+     * @since 0.9.12
+     */
+    public function buildASTCloneExpression($image)
+    {
+        return $this->_buildASTNodeInstance('ASTCloneExpression', $image);
+    }
+
+    /**
+     * Builds a new array-expression node.
+     *
+     * @return PHP_Depend_Code_ASTArrayExpression
+     * @since 0.9.12
+     */
+    public function buildASTArrayExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTArrayExpression');
     }
 
     /**
@@ -920,6 +964,28 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTSwitchLabel($image)
     {
         return $this->_buildASTNodeInstance('ASTSwitchLabel', $image);
+    }
+
+    /**
+     * Builds a new global-statement instance.
+     *
+     * @return PHP_Depend_Code_ASTGlobalStatement
+     * @since 0.9.12
+     */
+    function buildASTGlobalStatement()
+    {
+        return $this->_buildASTNodeInstance('ASTGlobalStatement');
+    }
+
+    /**
+     * Builds a new unset-statement instance.
+     *
+     * @return PHP_Depend_Code_ASTUnsetStatement
+     * @since 0.9.12
+     */
+    public function buildASTUnsetStatement()
+    {
+        return $this->_buildASTNodeInstance('ASTUnsetStatement');
     }
 
     /**
@@ -1523,16 +1589,55 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new throw-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTThrowStatement
+     * @since 0.9.12
+     */
+    public function buildASTThrowStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTThrowStatement', $image);
+    }
+
+    /**
+     * Builds a new goto-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTGotoStatement
+     * @since 0.9.12
+     */
+    public function buildASTGotoStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTGotoStatement', $image);
+    }
+
+    /**
+     * Builds a new label-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return PHP_Depend_Code_ASTLabelStatement
+     * @since 0.9.12
+     */
+    public function buildASTLabelStatement($image)
+    {
+        return $this->_buildASTNodeInstance('ASTLabelStatement', $image);
+    }
+
+    /**
      * Builds a new exit-statement instance.
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTExitStatement
+     * @return PHP_Depend_Code_ASTEchoStatement
      * @since 0.9.12
      */
-    public function buildASTExitStatement($image)
+    public function buildASTEchoStatement($image)
     {
-        return $this->_buildASTNodeInstance('ASTExitStatement', $image);
+        return $this->_buildASTNodeInstance('ASTEchoStatement', $image);
     }
 
     /**

@@ -68,7 +68,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      * 
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsContainsStaticMethodPostfixExpression()
     {
@@ -88,7 +93,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsContainsMethodPostfixExpression()
     {
@@ -108,7 +118,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsContainsConstantsPostfixExpression()
     {
@@ -128,7 +143,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsContainsPropertyPostfixExpression()
     {
@@ -148,7 +168,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsContainsSelfPropertyPostfixExpression()
     {
@@ -177,7 +202,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsContainsParentMethodPostfixExpression()
     {
@@ -206,7 +236,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsContainsAllocationExpression()
     {
@@ -220,7 +255,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsWithSeveralParameters()
     {
@@ -236,7 +276,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsWithInlineComments()
     {
@@ -250,7 +295,12 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the parser adds the expected childs to an argument instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsWithInlineConcatExpression()
     {
@@ -259,7 +309,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
         $postfixes = $arguments->findChildrenOfType(
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ
         );
-        $this->assertSame(1, count($postfixes));
+        $this->assertEquals(1, count($postfixes));
     }
 
     /**
@@ -267,12 +317,16 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * exception.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException()
     {
-        $this->setExpectedException('PHP_Depend_Parser_TokenStreamEndException');
-
         self::parseTestCaseSource(__METHOD__);
     }
 
@@ -280,48 +334,68 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value of an arguments instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsHasExpectedStartLine()
     {
         $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-        $this->assertSame(5, $arguments->getStartLine());
+        $this->assertEquals(5, $arguments->getStartLine());
     }
 
     /**
      * Tests the start column value of an arguments instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsHasExpectedStartColumn()
     {
         $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-        $this->assertSame(8, $arguments->getStartColumn());
+        $this->assertEquals(8, $arguments->getStartColumn());
     }
 
     /**
      * Tests the end line value of an arguments instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsHasExpectedEndLine()
     {
         $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-        $this->assertSame(7, $arguments->getEndLine());
+        $this->assertEquals(7, $arguments->getEndLine());
     }
 
     /**
      * Tests the end column value of an arguments instance.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArguments
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArgumentsHasExpectedEndColumn()
     {
         $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-        $this->assertSame(21, $arguments->getEndColumn());
+        $this->assertEquals(21, $arguments->getEndColumn());
     }
 
     /**

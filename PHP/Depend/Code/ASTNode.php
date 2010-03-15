@@ -142,6 +142,18 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     }
 
     /**
+     * Sets the start line for this ast node.
+     *
+     * @param integer $startLine The node start line.
+     *
+     * @return void
+     */
+    public function setStartLine($startLine)
+    {
+        $this->_startLine = $startLine;
+    }
+
+    /**
      * Returns the start line for this ast node.
      *
      * @return integer
@@ -149,6 +161,18 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     public function getStartLine()
     {
         return $this->_startLine;
+    }
+
+    /**
+     * Sets the start column for this ast node.
+     *
+     * @param integer $startColumn The node start column.
+     *
+     * @return void
+     */
+    public function setStartColumn($startColumn)
+    {
+        $this->_startColumn = $startColumn;
     }
 
     /**

@@ -67,8 +67,15 @@ require_once 'PHP/Depend/Code/Class.php';
 class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetTypeInvokesBuildClassOrInterface
+     * 
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testGetTypeInvokesBuildClassOrInterface()
     {
@@ -91,51 +98,71 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
     }
 
     /**
-     * Tests the start line value of an arguments instance.
+     * testReferenceHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testReferenceHasExpectedStartLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(2, $reference->getStartLine());
+        $this->assertEquals(2, $reference->getStartLine());
     }
 
     /**
-     * Tests the start column value of an arguments instance.
+     * testReferenceHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testReferenceHasExpectedStartColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(14, $reference->getStartColumn());
+        $this->assertEquals(14, $reference->getStartColumn());
     }
 
     /**
-     * Tests the end line value of an arguments instance.
+     * testReferenceHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testReferenceHasExpectedEndLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(2, $reference->getEndLine());
+        $this->assertEquals(2, $reference->getEndLine());
     }
 
     /**
-     * Tests the end column value of an arguments instance.
+     * testReferenceHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testReferenceHasExpectedEndColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(29, $reference->getEndColumn());
+        $this->assertEquals(29, $reference->getEndColumn());
     }
 
     /**

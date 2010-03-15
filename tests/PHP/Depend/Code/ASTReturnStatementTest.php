@@ -65,7 +65,7 @@ require_once 'PHP/Depend/Code/ASTReturnStatement.php';
 class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that the return statement has the expected start line value.
+     * testReturnStatementHasExpectedStartLine
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -76,12 +76,12 @@ class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testReturnStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstReturnStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getStartLine());
+        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
-     * Tests that the return statement has the expected start column value.
+     * testReturnStatementHasExpectedStartColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -92,12 +92,12 @@ class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testReturnStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstReturnStatementInFunction(__METHOD__);
-        $this->assertSame(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
-     * Tests that the return statement has the expected end line value.
+     * testReturnStatementHasExpectedEndLine
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -108,12 +108,12 @@ class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testReturnStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstReturnStatementInFunction(__METHOD__);
-        $this->assertSame(7, $statement->getEndLine());
+        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $this->assertEquals(7, $stmt->getEndLine());
     }
 
     /**
-     * Tests that the return statement has the expected end column value.
+     * testReturnStatementHasExpectedEndColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -124,8 +124,40 @@ class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testReturnStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstReturnStatementInFunction(__METHOD__);
-        $this->assertSame(6, $statement->getEndColumn());
+        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndColumn());
+    }
+
+    /**
+     * testParserHandlesEmptyReturnStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTReturnStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserHandlesEmptyReturnStatement()
+    {
+        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $this->assertEquals(12, $stmt->getEndColumn());
+    }
+
+    /**
+     * testParserHandlesReturnStatementWithSimpleBoolean
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTReturnStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserHandlesReturnStatementWithSimpleBoolean()
+    {
+        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $this->assertEquals(17, $stmt->getEndColumn());
     }
 
     /**

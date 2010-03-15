@@ -70,7 +70,12 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForSimpleIdentifier()
     {
@@ -85,14 +90,19 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $reference = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
-        $this->assertSame('Foo', $reference->getType()->getName());
+        $this->assertEquals('Foo', $reference->getType()->getName());
     }
 
     /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForSelfKeyword()
     {
@@ -109,7 +119,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $self = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTSelfReference::CLAZZ, $self);
-        $this->assertSame(__FUNCTION__, $self->getType()->getName());
+        $this->assertEquals(__FUNCTION__, $self->getType()->getName());
     }
 
 
@@ -117,7 +127,12 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForParentKeyword()
     {
@@ -134,14 +149,19 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $parent = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTParentReference::CLAZZ, $parent);
-        $this->assertSame(__FUNCTION__ . 'Parent', $parent->getType()->getName());
+        $this->assertEquals(__FUNCTION__ . 'Parent', $parent->getType()->getName());
     }
 
     /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForLocalNamespaceIdentifier()
     {
@@ -156,14 +176,19 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $reference = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
-        $this->assertSame('Bar', $reference->getType()->getName());
+        $this->assertEquals('Bar', $reference->getType()->getName());
     }
 
     /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForAbsoluteNamespaceIdentifier()
     {
@@ -178,14 +203,19 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $reference = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
-        $this->assertSame('Bar', $reference->getType()->getName());
+        $this->assertEquals('Bar', $reference->getType()->getName());
     }
 
     /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForAbsoluteNamespacedNamespaceIdentifier()
     {
@@ -200,14 +230,19 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $reference = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
-        $this->assertSame('Foo', $reference->getType()->getName());
+        $this->assertEquals('Foo', $reference->getType()->getName());
     }
 
     /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForVariableIdentifier()
     {
@@ -222,14 +257,19 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $variable = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$foo', $variable->getImage());
+        $this->assertEquals('$foo', $variable->getImage());
     }
 
     /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForVariableVariableIdentifier()
     {
@@ -244,18 +284,23 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $vvariable = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $vvariable);
-        $this->assertSame('$', $vvariable->getImage());
+        $this->assertEquals('$', $vvariable->getImage());
 
         $variable = $vvariable->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$foo', $variable->getImage());
+        $this->assertEquals('$foo', $variable->getImage());
     }
 
     /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionGraphForStaticReference()
     {
@@ -272,7 +317,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
 
         $reference = $allocation->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTStaticReference::CLAZZ, $reference);
-        $this->assertSame(__FUNCTION__, $reference->getType()->getName());
+        $this->assertEquals(__FUNCTION__, $reference->getType()->getName());
     }
 
     /**
@@ -280,7 +325,12 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      * exception.
      * 
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInvalidAllocationExpressionResultsInExpectedException()
     {
@@ -295,28 +345,38 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the implementation with an allocation expression without arguments.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionWithoutArguments()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
         $args = $expr->findChildrenOfType(PHP_Depend_Code_ASTArguments::CLAZZ);
 
-        $this->assertSame(0, count($args));
+        $this->assertEquals(0, count($args));
     }
 
     /**
      * Tests the implementation with an allocation expression with arguments.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionWithArguments()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
         $args = $expr->findChildrenOfType(PHP_Depend_Code_ASTArguments::CLAZZ);
 
-        $this->assertSame(1, count($args));
+        $this->assertEquals(1, count($args));
     }
 
     /**
@@ -324,62 +384,87 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      * expressions that have arguments.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionWithNestedArguments()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
         $arg  = $expr->getFirstChildOfType(PHP_Depend_Code_ASTArguments::CLAZZ);
 
-        $this->assertSame($expr, $arg->getParent());
+        $this->assertEquals($expr, $arg->getParent());
     }
 
     /**
      * Tests the start line of an allocation expression.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionHasExpectedStartLine()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expr->getStartLine());
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * Tests the start column of an allocation expression.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionHasExpectedStartColumn()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertSame(5, $expr->getStartColumn());
+        $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * Tests the end line of an allocation expression.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionHasExpectedEndLine()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertSame(8, $expr->getEndLine());
+        $this->assertEquals(8, $expr->getEndLine());
     }
 
     /**
      * Tests the end column of an allocation expression.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testAllocationExpressionHasExpectedEndColumn()
     {
         $expr = $this->_getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertSame(13, $expr->getEndColumn());
+        $this->assertEquals(13, $expr->getEndColumn());
     }
 
     /**

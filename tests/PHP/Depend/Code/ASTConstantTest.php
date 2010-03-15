@@ -68,90 +68,119 @@ class PHP_Depend_Code_ASTConstantTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed constant has the expected object graph.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantGraphSimple()
     {
         $constant = $this->_getFirstConstantInFunction(__METHOD__);
-        
-        $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
-        $this->assertSame('FOO', $constant->getImage());
+        $this->assertEquals('FOO', $constant->getImage());
     }
 
     /**
      * Tests that a parsed constant has the expected object graph.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantGraphKeywordSelf()
     {
         $constant = $this->_getFirstConstantInFunction(__METHOD__);
-
-        $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
-        $this->assertSame('self', $constant->getImage());
+        $this->assertEquals('self', $constant->getImage());
     }
 
     /**
      * Tests that a parsed constant has the expected object graph.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantGraphKeywordParent()
     {
         $constant = $this->_getFirstConstantInFunction(__METHOD__);
-
-        $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
-        $this->assertSame('parent', $constant->getImage());
+        $this->assertEquals('parent', $constant->getImage());
     }
 
     /**
-     * Tests the start line value.
+     * testConstantHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantHasExpectedStartLine()
     {
         $constant = $this->_getFirstConstantInFunction(__METHOD__);
-        $this->assertSame(4, $constant->getStartLine());
+        $this->assertEquals(4, $constant->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testConstantHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantHasExpectedStartColumn()
     {
         $constant = $this->_getFirstConstantInFunction(__METHOD__);
-        $this->assertSame(12, $constant->getStartColumn());
+        $this->assertEquals(12, $constant->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testConstantHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantHasExpectedEndLine()
     {
         $constant = $this->_getFirstConstantInFunction(__METHOD__);
-        $this->assertSame(4, $constant->getEndLine());
+        $this->assertEquals(4, $constant->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testConstantHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantHasExpectedEndColumn()
     {
         $constant = $this->_getFirstConstantInFunction(__METHOD__);
-        $this->assertSame(14, $constant->getEndColumn());
+        $this->assertEquals(14, $constant->getEndColumn());
     }
 
     /**

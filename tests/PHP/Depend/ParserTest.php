@@ -1488,6 +1488,62 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserHandlesCompoundExpressionInArrayBrackets
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesCompoundExpressionInArrayBrackets()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * testParserHandlesEmptyNonePhpCodeInMethodBody
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesEmptyNonePhpCodeInMethodBody()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * testParserHandlesPhpCloseTagInMethodBody
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesPhpCloseTagInMethodBody()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
+     * testParserHandlesMultiplePhpCloseTagsInMethodBody
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesMultiplePhpCloseTagsInMethodBody()
+    {
+        self::parseSource('parser/' . __FUNCTION__ . '.php');
+    }
+
+    /**
      * testParseExpressionUntilThrowsExceptionForUnclosedStatement
      *
      * @return void
@@ -1495,7 +1551,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * @group pdepend
      * @group pdepend::parser
      * @group unittest
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {

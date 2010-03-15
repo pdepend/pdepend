@@ -68,7 +68,12 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed constant postfix has the expected object structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantPostfixStructureForSimpleStaticAccess()
     {
@@ -77,20 +82,25 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
 
         $reference = $prefix->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-        $this->assertSame('Bar', $reference->getImage());
+        $this->assertEquals('Bar', $reference->getImage());
 
-        $this->assertSame('BAZ', $postfix->getImage());
+        $this->assertEquals('BAZ', $postfix->getImage());
 
         $identifier = $postfix->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-        $this->assertSame('BAZ', $identifier->getImage());
+        $this->assertEquals('BAZ', $identifier->getImage());
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantPostfixStructureForStaticAccessOnVariable()
     {
@@ -99,58 +109,78 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
 
         $variable = $prefix->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$foo', $variable->getImage());
+        $this->assertEquals('$foo', $variable->getImage());
 
         $identifier = $postfix->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
     }
 
     /**
-     * Tests the start line value.
+     * testConstantPostfixHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantPostfixHasExpectedStartLine()
     {
         $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(4, $postfix->getStartLine());
+        $this->assertEquals(4, $postfix->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testConstantPostfixHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantPostfixHasExpectedStartColumn()
     {
         $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(11, $postfix->getStartColumn());
+        $this->assertEquals(11, $postfix->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testConstantPostfixHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantPostfixHasExpectedEndLine()
     {
         $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(4, $postfix->getEndLine());
+        $this->assertEquals(4, $postfix->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testConstantPostfixHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantPostfixHasExpectedEndColumn()
     {
         $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertSame(13, $postfix->getEndColumn());
+        $this->assertEquals(13, $postfix->getEndColumn());
     }
 
     /**

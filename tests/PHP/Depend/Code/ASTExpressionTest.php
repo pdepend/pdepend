@@ -65,71 +65,119 @@ require_once 'PHP/Depend/Code/ASTExpression.php';
 class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testExpressionHasExpectedNumberOfChildNodes
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testExpressionHasExpectedNumberOfChildNodes()
+    {
+        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertEquals(5, count($expr->getChild(0)->getChildren()));
+    }
+
+    /**
      * Tests the generated object graph of an expression node.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionGraphWithBooleanExpressions()
     {
-        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
 
-        $children = $statement->getChildren();
+        $actual = array();
+        foreach ($expr->getChild(0)->getChildren() as $child) {
+            $actual[] = get_class($child);
+        }
 
-        $this->assertSame(5, count($children));
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[0]);
-        $this->assertType(PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ, $children[1]);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[2]);
-        $this->assertType(PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ, $children[3]);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[4]);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+        );
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
-     * Tests the start line value.
+     * testExpressionHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedStartLine()
     {
-        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getStartLine());
+        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testExpressionHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(8, $statement->getStartColumn());
+        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertEquals(8, $expr->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testExpressionHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedEndLine()
     {
-        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(6, $statement->getEndLine());
+        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertEquals(6, $expr->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testExpressionHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(14, $statement->getEndColumn());
+        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $this->assertEquals(14, $expr->getEndColumn());
     }
 
     /**

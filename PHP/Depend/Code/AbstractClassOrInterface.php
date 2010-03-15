@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractType.php';
+require_once 'PHP/Depend/Code/AbstractItem.php';
 require_once 'PHP/Depend/Code/ASTClassReference.php';
 require_once 'PHP/Depend/Code/ASTInterfaceReference.php';
 require_once 'PHP/Depend/Code/Method.php';
@@ -64,16 +64,8 @@ require_once 'PHP/Depend/Code/Method.php';
  * @link       http://pdepend.org/
  */
 abstract class PHP_Depend_Code_AbstractClassOrInterface
-    extends PHP_Depend_Code_AbstractType
+    extends PHP_Depend_Code_AbstractItem
 {
-    /**
-     * List of {@link PHP_Depend_Code_AbstractClassOrInterface} objects this
-     * type depends on.
-     *
-     * @var array(PHP_Depend_Code_AbstractClassOrInterface) $_dependencies
-     */
-    private $_dependencies = array();
-
     /**
      * The parent for this class node.
      *

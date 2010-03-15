@@ -65,10 +65,15 @@ require_once 'PHP/Depend/Code/ASTCompoundExpression.php';
 class PHP_Depend_Code_ASTCompoundExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * testExpressionHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTCompoundExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedStartLine()
     {
@@ -77,10 +82,15 @@ class PHP_Depend_Code_ASTCompoundExpressionTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
-     * Tests the start column value.
+     * testExpressionHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTCompoundExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedStartColumn()
     {
@@ -89,10 +99,15 @@ class PHP_Depend_Code_ASTCompoundExpressionTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
-     * Tests the end line value.
+     * testExpressionHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTCompoundExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedEndLine()
     {
@@ -101,10 +116,15 @@ class PHP_Depend_Code_ASTCompoundExpressionTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
-     * Tests the end column value.
+     * testExpressionHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTCompoundExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testExpressionHasExpectedEndColumn()
     {

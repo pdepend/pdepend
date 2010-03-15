@@ -469,59 +469,6 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
-     * Returns the type of this property. This method will return <b>null</b>
-     * for all scalar type, only class properties will have a type.
-     *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
-     * @deprecated since 0.9.5
-     */
-    public function getType()
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
-        return $this->getClass();
-    }
-
-    /**
-     * Sets the type of this property.
-     *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The property type.
-     *
-     * @return void
-     * @deprecated since 0.9.5
-     */
-    public function setType(PHP_Depend_Code_AbstractClassOrInterface $type)
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
-        $this->setClass($type);
-    }
-
-    /**
-     * Returns the parent function or method instance or <b>null</b>
-     *
-     * @return PHP_Depend_Code_AbstractCallable|null
-     * @deprecated since 0.9.5
-     */
-    public function getParent()
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
-        return $this->getDeclaringFunction();
-    }
-
-    /**
-     * Sets the parent function or method object.
-     *
-     * @param PHP_Depend_Code_AbstractCallable $parent The parent callable.
-     *
-     * @return void
-     * @deprecated since 0.9.5
-     */
-    public function setParent(PHP_Depend_Code_AbstractCallable $parent = null)
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.5.' . PHP_EOL);
-        $this->setDeclaringFunction($parent);
-    }
-
-    /**
      * The line number where the item declaration starts.
      *
      * @var integer $_startLine

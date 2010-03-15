@@ -128,6 +128,15 @@ interface PHP_Depend_TokenizerI extends PHP_Depend_ConstantsI
      * @return integer
      */
     function peek();
+    
+    /**
+     * Returns the type of next token, after the current token. This method
+     * ignores all comments between the current and the next token.
+     *
+     * @return integer
+     * @since 0.9.12
+     */
+    function peekNext();
 
     /**
      * Returns the previous token type or {@link PHP_Depend_TokenizerI::T_BOF}
