@@ -299,7 +299,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
         $pdepend = new PHP_Depend();
         $pdepend->addFile($fileName);
         $pdepend->addLogger($log);
-        $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
     }
 
@@ -319,7 +318,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
         $pdepend = new PHP_Depend();
         $pdepend->addFile($fileName);
         $pdepend->addLogger($log);
-        $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
     }
 
@@ -339,7 +337,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
         $pdepend = new PHP_Depend();
         $pdepend->addFile($fileName);
         $pdepend->addLogger($log);
-        $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
     }
 
@@ -359,8 +356,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
         $pdepend = new PHP_Depend();
         $pdepend->addFile($fileName);
         $pdepend->addLogger($log);
-        $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
     }
 }
-?>

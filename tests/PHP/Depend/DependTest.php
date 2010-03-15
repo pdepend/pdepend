@@ -135,24 +135,20 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that {@PHP_Depend::analyze()} throws an exception if no custom
-     * packages exist.
+     * testAnalyzerReturnsEmptyIteratorWhenNoPackageExists
      *
      * @return void
+     * @covers PHP_Depend
+     * @group pdepend
+     * @group unittest
      */
-    public function testAnalyzerThrowsAnExceptionIfTheParserDoesntDetectCustomPackages()
+    public function testAnalyzerReturnsEmptyIteratorWhenNoPackageExists()
     {
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array(__METHOD__)));
-        
-        $message = "The parser doesn't detect package informations within the "
-                 . "analyzed project, please check the documentation blocks for "
-                 . "@package-annotations or use the --bad-documentation option.";
-        
-        $this->setExpectedException('RuntimeException', $message);
-        
-        $pdepend->analyze();        
+       
+        $this->assertEquals(0, $pdepend->analyze()->count()); 
     }
     
     /**
@@ -345,20 +341,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackages();
-    }
-    
-    /**
-     * Tests the <b>--bad-documentation</b> option support.
-     *
-     * @return void
-     */
-    public function testSupportBadDocumentation()
-    {
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
-        $pdepend->setSupportBadDocumentation();
-        $pdepend->analyze();
-        $this->assertEquals(1, $pdepend->getPackages()->count());
     }
 
     /**

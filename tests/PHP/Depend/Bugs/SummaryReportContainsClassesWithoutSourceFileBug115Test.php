@@ -83,7 +83,6 @@ class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
         $logger->setLogFile($resultFile);
 
         $pdepend = new PHP_Depend();
-        $pdepend->setSupportBadDocumentation();
         $pdepend->addLogger($logger);
         $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
         $pdepend->analyze();
@@ -109,7 +108,6 @@ class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
         $logger->setLogFile($resultFile);
 
         $pdepend = new PHP_Depend();
-        $pdepend->setSupportBadDocumentation();
         $pdepend->addLogger($logger);
         $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
         $pdepend->analyze();
@@ -135,7 +133,6 @@ class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
         $logger->setLogFile($resultFile);
 
         $pdepend = new PHP_Depend();
-        $pdepend->setSupportBadDocumentation();
         $pdepend->addLogger($logger);
         $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
         $pdepend->analyze();
