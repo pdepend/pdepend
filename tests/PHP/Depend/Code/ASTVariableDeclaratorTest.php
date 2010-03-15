@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that the declaration has the expected start line value.
+     * testVariableDeclaratorHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariableDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedStartLine()
     {
         $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
-        $this->assertSame(4, $declarator->getStartLine());
+        $this->assertEquals(4, $declarator->getStartLine());
     }
 
     /**
-     * Tests that the declaration has the expected start column value.
+     * testVariableDeclaratorHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariableDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedStartColumn()
     {
         $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
-        $this->assertSame(12, $declarator->getStartColumn());
+        $this->assertEquals(12, $declarator->getStartColumn());
     }
 
     /**
-     * Tests that the declaration has the expected end line value.
+     * testVariableDeclaratorHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariableDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedEndLine()
     {
         $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
-        $this->assertSame(4, $declarator->getEndLine());
+        $this->assertEquals(4, $declarator->getEndLine());
     }
 
     /**
-     * Tests that the declaration has the expected end column value.
+     * testVariableDeclaratorHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariableDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedEndColumn()
     {
         $declarator = $this->_getFirstVariableDeclaratorInFunction(__METHOD__);
-        $this->assertSame(17, $declarator->getEndColumn());
+        $this->assertEquals(17, $declarator->getEndColumn());
     }
 
     /**

@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTClassReference.php';
 class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * testClassReferenceHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTClassReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
-    public function testReferenceHasExpectedStartLine()
+    public function testClassReferenceHasExpectedStartLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(4, $reference->getStartLine());
+        $this->assertEquals(4, $reference->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testClassReferenceHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTClassReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
-    public function testReferenceHasExpectedStartColumn()
+    public function testClassReferenceHasExpectedStartColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(16, $reference->getStartColumn());
+        $this->assertEquals(16, $reference->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testClassReferenceHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTClassReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
-    public function testReferenceHasExpectedEndLine()
+    public function testClassReferenceHasExpectedEndLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(4, $reference->getEndLine());
+        $this->assertEquals(4, $reference->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testClassReferenceHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTClassReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
-    public function testReferenceHasExpectedEndColumn()
+    public function testClassReferenceHasExpectedEndColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertSame(18, $reference->getEndColumn());
+        $this->assertEquals(18, $reference->getEndColumn());
     }
 
     /**

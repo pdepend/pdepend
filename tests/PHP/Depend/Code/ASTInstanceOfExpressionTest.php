@@ -68,7 +68,12 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      * 
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithStringIdentifier()
     {
@@ -85,7 +90,12 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithLocalNamespaceIdentifier()
     {
@@ -102,7 +112,12 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithAbsoluteNamespaceIdentifier()
     {
@@ -119,7 +134,12 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithAliasedNamespaceIdentifier()
     {
@@ -136,7 +156,12 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithStdClass()
     {
@@ -153,7 +178,12 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithPHPIncompleteClass()
     {
@@ -170,7 +200,12 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithStaticProperty()
     {
@@ -234,7 +269,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
 
         $reference = $instanceOf->getChild(0);
         $this->assertType($type, $reference);
-        $this->assertSame($image, $reference->getImage());
+        $this->assertEquals($image, $reference->getImage());
     }
 
     /**

@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTArrayType.php';
 class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value of an arguments instance.
+     * testArrayTypeHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArrayTypeHasExpectedStartLine()
     {
         $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertSame(2, $arrayType->getStartLine());
+        $this->assertEquals(2, $arrayType->getStartLine());
     }
 
     /**
-     * Tests the start column value of an arguments instance.
+     * testArrayTypeHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArrayTypeHasExpectedStartColumn()
     {
         $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertSame(14, $arrayType->getStartColumn());
+        $this->assertEquals(14, $arrayType->getStartColumn());
     }
 
     /**
-     * Tests the end line value of an arguments instance.
+     * testArrayTypeHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArrayTypeHasExpectedEndLine()
     {
         $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertSame(2, $arrayType->getEndLine());
+        $this->assertEquals(2, $arrayType->getEndLine());
     }
 
     /**
-     * Tests the end column value of an arguments instance.
+     * testArrayTypeHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testArrayTypeHasExpectedEndColumn()
     {
         $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertSame(18, $arrayType->getEndColumn());
+        $this->assertEquals(18, $arrayType->getEndColumn());
     }
 
     /**

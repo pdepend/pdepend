@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -111,8 +111,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getEndLine());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -128,8 +128,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getEndColumn());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -145,8 +145,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForExpressionHasExpectedStartLine()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getChild(1)->getStartLine());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getChild(1)->getStartLine());
     }
 
     /**
@@ -162,8 +162,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForExpressionHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(27, $statement->getChild(1)->getStartColumn());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(27, $stmt->getChild(1)->getStartColumn());
     }
 
     /**
@@ -179,8 +179,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForExpressionHasExpectedEndLine()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getChild(1)->getEndLine());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getChild(1)->getEndLine());
     }
 
     /**
@@ -196,8 +196,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testForExpressionHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(33, $statement->getChild(1)->getEndColumn());
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(33, $stmt->getChild(1)->getEndColumn());
     }
 
     /**
@@ -213,8 +213,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFirstChildOfForStatementIsInstanceOfForInit()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForInit::CLAZZ, $statement->getChild(0));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTForInit::CLAZZ, $stmt->getChild(0));
     }
 
     /**
@@ -230,8 +230,23 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFirstChildOfForStatementCanBeLeftBlank()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $statement->getChild(0));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+    }
+
+
+    /**
+     * testParserHandlesBooleanLiteralInForInit
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserHandlesBooleanLiteralInForInit()
+    {
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
@@ -247,8 +262,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSecondChildOfForStatementIsInstanceOfExpression()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $statement->getChild(1));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -264,8 +279,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSecondChildOfForStatementCanBeLeftBlank()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $statement->getChild(1));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -281,8 +296,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testThirdChildOfForStatementIsInstanceOfForUpdate()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $statement->getChild(2));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -298,8 +313,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testThirdChildOfForStatementCanBeLeftBlank()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $statement->getChild(2));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -315,8 +330,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $statement->getChild(3));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(3));
     }
 
     /**
@@ -332,8 +347,8 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFourthChildOfForStatementIsInstanceOfStatement()
     {
-        $statement = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTStatement::CLAZZ, $statement->getChild(3));
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTStatement::CLAZZ, $stmt->getChild(3));
     }
 
     /**
@@ -375,6 +390,20 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testParserHandlesBooleanLiteralInForExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserHandlesBooleanLiteralInForExpression()
+    {
+        self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
      * testParserResetsScopeTreeForEmptyForUpdate
      *
      * @return void
@@ -406,7 +435,23 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserHandlesParenthesisExpressionInForUpdate()
     {
-        $this->_getFirstForStatementInClass(__METHOD__);
+        self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
+     * testParserHandlesBooleanLiteralInForUpdate
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserHandlesBooleanLiteralInForUpdate()
+    {
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**

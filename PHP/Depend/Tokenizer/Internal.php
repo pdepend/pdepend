@@ -411,6 +411,22 @@ class PHP_Depend_Tokenizer_Internal
     }
 
     /**
+     * Returns the type of next token, after the current token. This method
+     * ignores all comments between the current and the next token.
+     *
+     * @return integer
+     * @since 0.9.12
+     */
+    public function peekNext()
+    {
+        $offset = 0;
+        do {
+            $type = $this->tokens[$this->index + ++$offset]->type;
+        } while ($type == self::T_COMMENT || $type == self::T_DOC_COMMENT);
+        return $type;
+    }
+
+    /**
      * Returns the previous token type or {@link PHP_Depend_TokenizerI::T_BOF}
      * if there is no previous token.
      *

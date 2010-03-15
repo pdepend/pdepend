@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTConditionalExpression.php';
 class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * testConditionalExpressionHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConditionalExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConditionalExpressionHasExpectedStartLine()
     {
         $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getStartLine());
+        $this->assertEquals(4, $expression->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testConditionalExpressionHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConditionalExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConditionalExpressionHasExpectedStartColumn()
     {
         $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertSame(18, $expression->getStartColumn());
+        $this->assertEquals(18, $expression->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testConditionalExpressionHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConditionalExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConditionalExpressionHasExpectedEndLine()
     {
         $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getEndLine());
+        $this->assertEquals(4, $expression->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testConditionalExpressionHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConditionalExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConditionalExpressionHasExpectedEndColumn()
     {
         $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertSame(18, $expression->getEndColumn());
+        $this->assertEquals(26, $expression->getEndColumn());
     }
 
     /**

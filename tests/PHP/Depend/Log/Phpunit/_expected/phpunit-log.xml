@@ -5,7 +5,7 @@
       <method name="removeItemAt" ccn="3" cloc="0" loc="10" locExecutable="9" ncloc="10"/>
       <method name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
     </class>
-    <class name="MyCouplingInterface" cloc="13" cr="0.15" loc="17" locExecutable="3" ncloc="4" nom="1" rcr="0.15">
+    <class name="MyCouplingInterface" cloc="13" cr="0.15" loc="17" locExecutable="0" ncloc="4" nom="1" rcr="0.15">
       <method name="removeItemAt" cloc="0" loc="1" locExecutable="0" ncloc="1"/>
     </class>
   </file>
@@ -14,7 +14,7 @@
       <method name="getItemAt" ccn="4" cloc="0" loc="14" locExecutable="13" ncloc="14"/>
       <method name="removeItemAt" ccn="3" cloc="0" loc="10" locExecutable="9" ncloc="10"/>
     </class>
-    <class name="MyMethodCouplingInterface" cloc="13" cr="0.15" loc="17" locExecutable="3" ncloc="4" nom="1" rcr="0.15">
+    <class name="MyMethodCouplingInterface" cloc="13" cr="0.15" loc="17" locExecutable="0" ncloc="4" nom="1" rcr="0.15">
       <method name="removeItemAt" cloc="0" loc="1" locExecutable="0" ncloc="1"/>
     </class>
   </file>
