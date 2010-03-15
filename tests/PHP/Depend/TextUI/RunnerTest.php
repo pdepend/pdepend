@@ -209,8 +209,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
         );
         
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSupportBadDocumentation();
-
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner,
             self::createCodeResourceURI('code-without-comments')
@@ -231,7 +229,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     public function testRunnerHasParseErrorsReturnsFalseForValidSource()
     {
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSupportBadDocumentation();
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
         $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
         $runner->run();
@@ -251,7 +248,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
     {
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSupportBadDocumentation();
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
         $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
 
@@ -274,7 +270,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
     {
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSupportBadDocumentation();
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
         $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
 
@@ -302,24 +297,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->addLogger('FooBarLogger', self::createRunResourceURI('log.xml'));
-        $runner->run();
-    }
-
-    /**
-     * testRunnerThrowsExceptionForInvalidSource
-     *
-     * @return void
-     * @covers PHP_Depend_TextUI_Runner
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
-     * @expectedException RuntimeException
-     */
-    public function testRunnerThrowsExceptionForInvalidSource()
-    {
-        $runner = new PHP_Depend_TextUI_Runner();
-        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
-        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
         $runner->run();
     }
 

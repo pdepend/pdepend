@@ -75,7 +75,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
     {
         $pdepend = new PHP_Depend();
         $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
 
         $functions = $pdepend->getPackages()
@@ -95,7 +94,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
     {
         $pdepend = new PHP_Depend();
         $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
 
         $classes = $pdepend->getPackages()
@@ -115,7 +113,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
     {
         $pdepend = new PHP_Depend();
         $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->setSupportBadDocumentation();
         $pdepend->analyze();
 
         $interfaces = $pdepend->getPackages()
