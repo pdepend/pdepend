@@ -68,315 +68,290 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForSimpleIdentifierAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->getFirstNodeOfTypeInFunction(
+            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-        $this->assertSame('bar', $postfix->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-        $this->assertSame('bar', $identifier->getImage());
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ
+            )
+        );
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForVariableAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->getFirstNodeOfTypeInFunction(
+            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-        $this->assertSame('$bar', $postfix->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $identifier);
-        $this->assertSame('$bar', $identifier->getImage());
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForVariableVariableAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->getFirstNodeOfTypeInFunction(
+            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-        $this->assertSame('$', $postfix->getImage());
-
-        $varVariable = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $varVariable);
-        $this->assertSame('$', $varVariable->getImage());
-
-        $identifier = $varVariable->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $identifier);
-        $this->assertSame('$bar', $identifier->getImage());
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariableVariable::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForCompoundVariableAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->getFirstNodeOfTypeInFunction(
+            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-        $this->assertSame('$', $postfix->getImage());
-
-        $compound = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $compound);
-        $this->assertSame('$', $compound->getImage());
-
-        $expression = $compound->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
-
-        $constant = $expression->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
-        $this->assertSame('BAR', $constant->getImage());
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+                PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+                PHP_Depend_Code_ASTExpression::CLAZZ,
+                PHP_Depend_Code_ASTConstant::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForCompoundExpressionAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->getFirstNodeOfTypeInFunction(
+            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-
-        $expression = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
-
-        $varexpr = $expression->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $varexpr);
-        $this->assertSame('$bar', $varexpr->getImage());
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForStaticVariableAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->getFirstNodeOfTypeInFunction(
+            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
 
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-        $this->assertSame('Foo', $reference->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-        $this->assertSame('$bar', $postfix->getImage());
-
-        $variable = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$bar', $variable->getImage());
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForStaticAccessOnVariable()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->getFirstNodeOfTypeInFunction(
+            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('::', $prefix->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-
-        $property = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $property);
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForSelfVariableAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $method   = $packages->current()
-            ->getClasses()
-            ->current()
+        $prefix = $this->getFirstClassForTestCase(__METHOD__)
             ->getMethods()
-            ->current();
+            ->current()
+            ->getFirstChildOfType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ);
 
-        $prefix = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTSelfReference::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
         );
-
-        $self = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTSelfReference::CLAZZ, $self);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-
-        $variable = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_InvalidStateException
      */
     public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
     {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
-            'The keyword "self" was used outside of a class/method scope.'
-        );
-
-        $packages = self::parseTestCaseSource(__METHOD__);
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testPropertyPostfixStructureForParentVariableAccess()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $method   = $packages->current()
-            ->getClasses()
-            ->current()
+        $prefix = $this->getFirstClassForTestCase(__METHOD__)
             ->getMethods()
-            ->current();
+            ->current()
+            ->getFirstChildOfType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ);
 
-        $prefix = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTParentReference::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
         );
-
-        $parent = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTParentReference::CLAZZ, $parent);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
-
-        $variable = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_InvalidStateException
      */
     public function testPropertyPostfixParentVariableInFunctionThrowsExpectedException()
     {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
-            'The keyword "parent" was used outside of a class/method scope.'
-        );
-
-        $packages = self::parseTestCaseSource(__METHOD__);
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_InvalidStateException
      */
     public function testPropertyPostfixParentVariableInClassWithoutParentThrowsExpectedException()
     {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
-            'The keyword "parent" was used but the class "' . __FUNCTION__ . '" does not declare a parent.'
-        );
-
-        $packages = self::parseTestCaseSource(__METHOD__);
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**

@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTVariable.php';
 class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests that the variable has the expected start line value.
+     * testVariableHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableHasExpectedStartLine()
     {
         $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(6, $declarator->getStartLine());
+        $this->assertEquals(6, $declarator->getStartLine());
     }
 
     /**
-     * Tests that the variable has the expected start column value.
+     * testVariableHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableHasExpectedStartColumn()
     {
         $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(9, $declarator->getStartColumn());
+        $this->assertEquals(9, $declarator->getStartColumn());
     }
 
     /**
-     * Tests that the variable has the expected end line value.
+     * testVariableHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableHasExpectedEndLine()
     {
         $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(6, $declarator->getEndLine());
+        $this->assertEquals(6, $declarator->getEndLine());
     }
 
     /**
-     * Tests that the variable has the expected end column value.
+     * testVariableHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTVariable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testVariableHasExpectedEndColumn()
     {
         $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertSame(10, $declarator->getEndColumn());
+        $this->assertEquals(10, $declarator->getEndColumn());
     }
 
     /**

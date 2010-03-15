@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTLogicalXorExpression.php';
 class PHP_Depend_Code_ASTLogicalXorExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * testLogicalXorExpressionHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalXorExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalXorExpressionHasExpectedStartLine()
     {
         $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getStartLine());
+        $this->assertEquals(4, $expression->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testLogicalXorExpressionHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalXorExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalXorExpressionHasExpectedStartColumn()
     {
         $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertSame(18, $expression->getStartColumn());
+        $this->assertEquals(13, $expression->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testLogicalXorExpressionHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalXorExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalXorExpressionHasExpectedEndLine()
     {
         $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expression->getEndLine());
+        $this->assertEquals(4, $expression->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testLogicalXorExpressionHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTLogicalXorExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testLogicalXorExpressionHasExpectedEndColumn()
     {
         $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertSame(20, $expression->getEndColumn());
+        $this->assertEquals(26, $expression->getEndColumn());
     }
 
     /**

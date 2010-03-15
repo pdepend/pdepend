@@ -65,51 +65,71 @@ require_once 'PHP/Depend/Code/ASTConstantDeclarator.php';
 class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Tests the start line value.
+     * testConstantDeclaratorHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedStartLine()
     {
         $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
-        $this->assertSame(5, $declarator->getStartLine());
+        $this->assertEquals(5, $declarator->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testConstantDeclaratorHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedStartColumn()
     {
         $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
-        $this->assertSame(7, $declarator->getStartColumn());
+        $this->assertEquals(7, $declarator->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testConstantDeclaratorHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedEndLine()
     {
         $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
-        $this->assertSame(7, $declarator->getEndLine());
+        $this->assertEquals(7, $declarator->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testConstantDeclaratorHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTConstantDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedEndColumn()
     {
         $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
-        $this->assertSame(14, $declarator->getEndColumn());
+        $this->assertEquals(14, $declarator->getEndColumn());
     }
 
     /**

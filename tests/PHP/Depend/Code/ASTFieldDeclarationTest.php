@@ -69,7 +69,12 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a field declaration contains the expected class reference.
      * 
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
     {
@@ -85,14 +90,19 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
 
         $reference = $declaration->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-        $this->assertSame(__FUNCTION__, $reference->getType()->getName());
+        $this->assertEquals(__FUNCTION__, $reference->getType()->getName());
     }
 
     /**
      * Tests that a field declaration does not contain a class reference.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled()
     {
@@ -118,14 +128,19 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of valid modifiers.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
     {
         $declaration = new PHP_Depend_Code_ASTFieldDeclaration();
         $declaration->setModifiers($modifiers);
-        $this->assertSame($modifiers, $declaration->getModifiers());
+        $this->assertEquals($modifiers, $declaration->getModifiers());
     }
 
     /**
@@ -135,7 +150,12 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of invalid modifiers.
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
@@ -152,51 +172,71 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     }
 
     /**
-     * Tests the start line value.
+     * testFieldDeclarationHasExpectedStartLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFieldDeclarationHasExpectedStartLine()
     {
         $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
-        $this->assertSame(4, $declaration->getStartLine());
+        $this->assertEquals(4, $declaration->getStartLine());
     }
 
     /**
-     * Tests the start column value.
+     * testFieldDeclarationHasExpectedStartColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFieldDeclarationHasExpectedStartColumn()
     {
         $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
-        $this->assertSame(5, $declaration->getStartColumn());
+        $this->assertEquals(5, $declaration->getStartColumn());
     }
 
     /**
-     * Tests the end line value.
+     * testFieldDeclarationHasExpectedEndLine
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFieldDeclarationHasExpectedEndLine()
     {
         $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
-        $this->assertSame(5, $declaration->getEndLine());
+        $this->assertEquals(5, $declaration->getEndLine());
     }
 
     /**
-     * Tests the end column value.
+     * testFieldDeclarationHasExpectedEndColumn
      *
      * @return void
-     * @group ast
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFieldDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFieldDeclarationHasExpectedEndColumn()
     {
         $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
-        $this->assertSame(22, $declaration->getEndColumn());
+        $this->assertEquals(22, $declaration->getEndColumn());
     }
 
     /**
