@@ -185,4 +185,6 @@ interface PHP_Depend_Code_ASTNodeI
      * @since 0.9.8
      */
     function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null);
+
+    function free();
 }

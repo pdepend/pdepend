@@ -216,4 +216,11 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     {
         $visitor->visitMethod($this);
     }
+
+    public function free()
+    {
+        $this->parent = null;
+
+        parent::free();
+    }
 }

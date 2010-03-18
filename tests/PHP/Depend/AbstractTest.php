@@ -101,7 +101,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        PHP_Depend_Code_Filter_Collection::getInstance()->clear();
+        PHP_Depend_Code_Filter_Collection::getInstance()->setFilter();
 
         $this->_clearRunResources();
 

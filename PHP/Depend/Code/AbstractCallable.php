@@ -42,7 +42,7 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id: AbstractCallable.php 602 2009-01-04 15:10:10Z mapi $
+ * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
 
@@ -450,6 +450,20 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         }
 
         $this->_parameters = new PHP_Depend_Code_NodeIterator($parameters);
+    }
+
+    public function free()
+    {
+        foreach ($this->getParameters() as $parameter) {
+            $parameter->free();
+            unset($parameter);
+        }
+        unset($this->_parameters);
+
+        foreach ($this->_nodes as $i => $node) {
+            $node->free();
+            unset($this->_nodes[$i]);
+        }
     }
 
     // DEPRECATED METHODS AND PROPERTIES
