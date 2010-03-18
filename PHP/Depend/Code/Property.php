@@ -480,7 +480,7 @@ class PHP_Depend_Code_Property
      * @return void
      * @since 0.9.12
      */
-    public function _removeReferenceToDeclaringClass()
+    private function _removeReferenceToDeclaringClass()
     {
         $this->_declaringFunction = null;
     }
