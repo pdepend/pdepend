@@ -762,6 +762,85 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testFreeResetsAllAssociatedProperties
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllAssociatedProperties()
+    {
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()->getClasses()->current();
+        $class->free();
+
+        $this->assertEquals(0, $class->getProperties()->count());
+    }
+
+    /**
+     * testFreeResetsAllAssociatedParentInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllAssociatedParentInterfaces()
+    {
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()->getClasses()->current();
+        $class->free();
+
+        $this->assertEquals(0, $class->getInterfaces()->count());
+    }
+
+    /**
+     * testFreeResetsAllAssociatedClassMethods
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllAssociatedClassMethods()
+    {
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()->getClasses()->current();
+        $class->free();
+
+        $this->assertEquals(0, $class->getMethods()->count());
+    }
+
+    /**
+     * testFreeResetsAllAssociatedASTNodes
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllAssociatedASTNodes()
+    {
+        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
+
+        $class = $packages->current()->getClasses()->current();
+        $class->free();
+
+        $this->assertEquals(array(), $class->getChildren());
+    }
+
+    /**
      * Tests that it is not possible to overwrite previously set class modifiers.
      *
      * @return void

@@ -65,9 +65,9 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     /**
      * The parent package for this function.
      *
-     * @var PHP_Depend_Code_Package $package
+     * @var PHP_Depend_Code_Package
      */
-    protected $package = null;
+    private $_package = null;
 
     /**
      * Returns the parent package for this function.
@@ -76,7 +76,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      */
     public function getPackage()
     {
-        return $this->package;
+        return $this->_package;
     }
 
     /**
@@ -88,7 +88,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
-        $this->package = $package;
+        $this->_package = $package;
     }
 
     /**

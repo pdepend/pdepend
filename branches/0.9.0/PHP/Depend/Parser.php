@@ -640,12 +640,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 return;
 
             case self::T_COMMENT:
-                $this->_consumeToken(self::T_COMMENT);
+                $token = $this->_consumeToken(self::T_COMMENT);
+
+                $comment = $this->_builder->buildASTComment($token->image);
+                $comment->configureLinesAndColumns(array($token));
+
+                $type->addChild($comment);
+
                 break;
 
             case self::T_DOC_COMMENT:
-                // Read comment token
                 $token = $this->_consumeToken(self::T_DOC_COMMENT);
+
+                $comment = $this->_builder->buildASTComment($token->image);
+                $comment->configureLinesAndColumns(array($token));
+
+                $type->addChild($comment);
 
                 $this->_docComment = $token->image;
                 break;
