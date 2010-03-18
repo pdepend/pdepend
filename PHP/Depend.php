@@ -371,12 +371,7 @@ class PHP_Depend
 
         $this->fireEndLogProcess();
 
-        // Remove global filter
-        // $collection->removeFilter($this->_codeFilter);
-
-        $this->_packages = $packages;
-
-        return $packages;
+        return ($this->_packages = $packages);
     }
 
     /**

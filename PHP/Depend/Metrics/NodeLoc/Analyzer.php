@@ -103,14 +103,14 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Collected node metrics
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
     private $_nodeMetrics = null;
 
     /**
      * Collected project metrics.
      *
-     * @var array(string=>integer) $_projectMetrics
+     * @var array(string=>integer)
      */
     private $_projectMetrics = array(
         self::M_LINES_OF_CODE              =>  0,
@@ -118,6 +118,15 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
         self::M_NON_COMMENT_LINES_OF_CODE  =>  0
     );
+
+    /**
+     * Executable lines of code in a class. The method calculation increases
+     * this property with each method's ELOC value.
+     *
+     * @var integer
+     * @since 0.9.12
+     */
+    private $_classExecutableLines = 0;
 
     /**
      * This method will return an <b>array</b> with all generated metric values
@@ -204,6 +213,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $class->getSourceFile()->accept($this);
 
+        $this->_classExecutableLines = 0;
+
+        foreach ($class->getMethods() as $method) {
+            $method->accept($this);
+        }
+
         list($cloc, $eloc) = $this->_linesOfCode($class->getTokens(), true);
 
         $loc   = $class->getEndLine() - $class->getStartLine() + 1;
@@ -212,13 +227,9 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $this->_nodeMetrics[$class->getUUID()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  $this->_classExecutableLines,
             self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
         );
-
-        foreach ($class->getMethods() as $method) {
-            $method->accept($this);
-        }
 
         $this->fireEndClass($class);
     }
@@ -355,6 +366,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
             self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
+
+        $this->_classExecutableLines += $eloc;
 
         $this->fireEndMethod($method);
     }
