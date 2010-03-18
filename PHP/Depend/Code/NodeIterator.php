@@ -171,11 +171,20 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         return ($this->_offset < $this->_count);
     }
 
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
         foreach ($this->_nodes as $i => $node) {
             $node->free();
-            unset($this->_nodes[$i]);
         }
+        $this->_nodes = array();
     }
 }

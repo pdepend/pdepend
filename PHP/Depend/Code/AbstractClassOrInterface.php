@@ -603,22 +603,75 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
     }
 
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
+        $this->_removeReferenceToPackage();
+        $this->_removeReferencesToMethods();
+        $this->_removeReferencesToNodes();
+        $this->_removeReferencesToReferences();
+    }
 
+    /**
+     * Free memory consumed by the methods associated with this class/interface
+     * instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToMethods()
+    {
         $this->getMethods()->free();
-        
+        $this->_methods = array();
+    }
+
+    /**
+     * Free memory consumed by the ast nodes associated with this class/interface
+     * instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToNodes()
+    {
         foreach ($this->_nodes as $i => $node) {
             $node->free();
-            unset($this->_nodes[$i]);
         }
-        
-        unset(
-            $this->_package,
-            $this->_methods,
-            $this->_interfaceReferences,
-            $this->_parentClassReference
-        );
+        $this->_nodes = array();
+    }
+
+    /**
+     * Free memory consumed by the parent package of this class/interface
+     * instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferenceToPackage()
+    {
+        $this->_package = null;
+    }
+
+    /**
+     * Free memory consumed by references to/from this class/interface instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToReferences()
+    {
+        $this->getDependencies()->free();
+
+        $this->_interfaceReferences  = array();
+        $this->_parentClassReference = null;
     }
 
     // DEPRECATED METHODS AND PROPERTIES
