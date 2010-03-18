@@ -452,18 +452,46 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
         $this->_parameters = new PHP_Depend_Code_NodeIterator($parameters);
     }
 
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
-        foreach ($this->getParameters() as $parameter) {
-            $parameter->free();
-            unset($parameter);
-        }
-        unset($this->_parameters);
+        $this->_removeReferencesToParameters();
+        $this->_removeReferencesToNodes();
+    }
 
+    /**
+     * Free memory consumed by parameters associated with this callable instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToParameters()
+    {
+        $this->getParameters()->free();
+        $this->_parameters = array();
+    }
+
+    /**
+     * Free memory consumed by the ast nodes associated with this callable
+     * instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToNodes()
+    {
         foreach ($this->_nodes as $i => $node) {
             $node->free();
-            unset($this->_nodes[$i]);
         }
+        $this->_nodes = array();
     }
 
     // DEPRECATED METHODS AND PROPERTIES

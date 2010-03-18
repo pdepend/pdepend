@@ -406,11 +406,43 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         return $visitor->visitAfter($this, $data);
     }
 
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
+        $this->_removeReferenceToParentNode();
+        $this->_removeReferencesToChildNodes();
+    }
+
+    /**
+     * Removes the reference to the parent node instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferenceToParentNode()
+    {
         $this->parent = null;
+    }
+
+    /**
+     * Removes the reference between this node and its child nodes.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToChildNodes()
+    {
         foreach ($this->nodes as $node) {
             $node->free();
         }
+        $this->nodes = array();
     }
 }

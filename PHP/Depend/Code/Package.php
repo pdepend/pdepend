@@ -315,15 +315,46 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         $visitor->visitPackage($this);
     }
 
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
-        foreach ($this->functions as $i => $function) {
+        $this->_removeReferenceToTypes();
+        $this->_removeReferenceToFunctions();
+    }
+
+    /**
+     * Removes the reference to all functions that belong to this package.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferenceToFunctions()
+    {
+        foreach ($this->functions as $function) {
             $function->free();
-            unset($this->functions[$i]);
         }
-        foreach ($this->types as $i => $type) {
+        $this->functions = array();
+    }
+
+    /**
+     * Removes the reference to all types that belong to this package.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferenceToTypes()
+    {
+        foreach ($this->types as $type) {
             $type->free();
-            unset($this->types[$i]);
         }
+        $this->types = array();
     }
 }

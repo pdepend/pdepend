@@ -459,13 +459,42 @@ class PHP_Depend_Code_Property
         $visitor->visitProperty($this);
     }
 
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
-        unset(
-            $this->_declaringClass,
-            $this->_fieldDeclaration,
-            $this->_variableDeclarator
-        );
+        $this->_removeReferenceToDeclaringClass();
+        $this->_removeReferencesToNodes();
+    }
+
+    /**
+     * Removes the reference to the declaring class of this property instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    public function _removeReferenceToDeclaringClass()
+    {
+        $this->_declaringFunction = null;
+    }
+
+    /**
+     * Removes all references to ast nodes associated with property instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToNodes()
+    {
+        $this->_formalParameter    = null;
+        $this->_variableDeclarator = null;
     }
 
     /**
