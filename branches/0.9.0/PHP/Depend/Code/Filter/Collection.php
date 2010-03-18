@@ -97,6 +97,14 @@ final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
      */
     private $_filter = null;
 
+    /**
+     * Sets the used filter instance.
+     *
+     * @param PHP_Depend_Code_FilterI $filter The new filter instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function setFilter(PHP_Depend_Code_FilterI $filter = null)
     {
         $this->_filter = $filter;
