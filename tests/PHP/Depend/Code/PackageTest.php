@@ -452,4 +452,42 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
 
         $this->assertTrue($package->isUserDefined());
     }
+
+    /**
+     * testFreeResetsAllTypesAssociatedWithThePackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllTypesAssociatedWithThePackage()
+    {
+        $packages = self::parseSource('code/Package/' . __FUNCTION__ . '.php');
+
+        $package = $packages->current();
+        $package->free();
+
+        $this->assertEquals(0, $package->getTypes()->count());
+    }
+
+    /**
+     * testFreeResetsAllFunctionsAssociatedWithThePackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Package
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllFunctionsAssociatedWithThePackage()
+    {
+        $packages = self::parseSource('code/Package/' . __FUNCTION__ . '.php');
+
+        $package = $packages->current();
+        $package->free();
+
+        $this->assertEquals(0, $package->getFunctions()->count());
+    }
 }

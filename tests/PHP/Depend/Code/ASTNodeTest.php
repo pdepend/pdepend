@@ -80,7 +80,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $visitor->expects($this->once())
             ->method('visitBefore');
 
-        $node = $this->getMockForAbstractClass('PHP_Depend_Code_ASTNode');
+        $node = $this->createNodeInstance();
         $node->accept($visitor);
     }
 
@@ -99,7 +99,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $visitor->expects($this->once())
             ->method('visitAfter');
 
-        $node = $this->getMockForAbstractClass('PHP_Depend_Code_ASTNode');
+        $node = $this->createNodeInstance();;
         $node->accept($visitor);
     }
 
@@ -120,15 +120,56 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $child->expects($this->once())
             ->method('accept');
 
-        $node = $this->getMockForAbstractClass('PHP_Depend_Code_ASTNode');
+        $node = $this->createNodeInstance();
         $node->addChild($child);
         $node->accept($visitor);
+    }
+
+    /**
+     * testFreeSetsParentReferenceToNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testFreeSetsParentReferenceToNull()
+    {
+        $node = $this->createNodeInstance();
+        $node->setParent(clone $node);
+        $node->free();
+
+        $this->assertNull($node->getParent());
+    }
+
+    /**
+     * testFreeSetsChildReferencesToNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testFreeSetsChildReferencesToNull()
+    {
+        $node = $this->createNodeInstance();
+        $node->addChild(clone $node);
+        $node->addChild(clone $node);
+        $node->free();
+
+        $this->assertEquals(array(), $node->getChildren());
     }
 
     /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -153,6 +194,10 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -186,6 +231,10 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
@@ -210,6 +259,10 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::findChildrenOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
@@ -235,15 +288,15 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * an exception for an undefined node offset.
      *
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     * @expectedException OutOfBoundsException
      */
     public function testGetChildThrowsExpectedExceptionForUndefinedOffset()
     {
         $node = $this->createNodeInstance();
-
-        $this->setExpectedException(
-            'OutOfBoundsException',
-            'No node found at index 42 in node of type: ' . get_class($node)
-        );
         $node->getChild(42);
     }
 
