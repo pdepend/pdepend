@@ -103,4 +103,11 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     {
         $visitor->visitFunction($this);
     }
+
+    public function free()
+    {
+        $this->package = null;
+
+        parent::free();
+    }
 }

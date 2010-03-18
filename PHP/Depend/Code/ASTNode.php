@@ -405,4 +405,12 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 
         return $visitor->visitAfter($this, $data);
     }
+
+    public function free()
+    {
+        $this->parent = null;
+        foreach ($this->nodes as $node) {
+            $node->free();
+        }
+    }
 }

@@ -49,7 +49,7 @@ require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/StorageRegistry.php';
 require_once 'PHP/Depend/VisitorI.php';
 require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Code/Filter/Composite.php';
+require_once 'PHP/Depend/Code/Filter/Null.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
 require_once 'PHP/Depend/Tokenizer/CacheDecorator.php';
@@ -126,9 +126,9 @@ class PHP_Depend
     private $_fileFilter = null;
 
     /**
-     * A composite filter for source packages.
+     * A filter for source packages.
      *
-     * @var PHP_Depend_Code_Filter_Composite $_codeFilter
+     * @var PHP_Depend_Code_FilterI $_codeFilter
      */
     private $_codeFilter = null;
 
@@ -183,7 +183,7 @@ class PHP_Depend
      */
     public function __construct()
     {
-        $this->_codeFilter = new PHP_Depend_Code_Filter_Composite();
+        $this->_codeFilter = new PHP_Depend_Code_Filter_Null();
         $this->_fileFilter = new PHP_Depend_Input_CompositeFilter();
     }
 
@@ -280,16 +280,16 @@ class PHP_Depend
     }
 
     /**
-     * Adds an additional code filter. These filters could be used to hide
+     * Sets an additional code filter. These filters could be used to hide
      * external libraries and global stuff from the PDepend output.
      *
      * @param PHP_Depend_Code_FilterI $filter The code filter.
      *
      * @return void
      */
-    public function addCodeFilter(PHP_Depend_Code_FilterI $filter)
+    public function setCodeFilter(PHP_Depend_Code_FilterI $filter)
     {
-        $this->_codeFilter->addFilter($filter);
+        $this->_codeFilter = $filter;
     }
 
     /**
@@ -344,18 +344,18 @@ class PHP_Depend
 
         // Get global filter collection
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-        $collection->addFilter($this->_codeFilter);
+        $collection->setFilter($this->_codeFilter);
 
         if ($this->_builder->getPackages()->count() === 0) {
             return ($this->_packages = $this->_builder->getPackages());
         }
 
-        $collection->removeFilter($this->_codeFilter);
+        $collection->setFilter();
 
         $this->_performAnalyzeProcess();
 
         // Set global filter for logging
-        $collection->addFilter($this->_codeFilter);
+        $collection->setFilter($this->_codeFilter);
 
         $packages = $this->_builder->getPackages();
 
@@ -372,6 +372,14 @@ class PHP_Depend
         $this->fireEndLogProcess();
 
         return ($this->_packages = $packages);
+    }
+
+    public function free()
+    {
+        if (is_object($this->_packages)) {
+            $this->_packages->free();
+        }
+        unset($this->_builder, $this->_packages);
     }
 
     /**
@@ -623,15 +631,13 @@ class PHP_Depend
         foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware
             if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
-                $collection->addFilter($this->_codeFilter);
+                $collection->setFilter($this->_codeFilter);
             }
 
             $analyzer->analyze($this->_builder->getPackages());
 
             // Remove filters if this analyzer is filter aware
-            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
-                $collection->removeFilter($this->_codeFilter);
-            }
+            $collection->setFilter();
 
             foreach ($this->_loggers as $logger) {
                 $logger->log($analyzer);

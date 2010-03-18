@@ -83,4 +83,6 @@ interface PHP_Depend_Code_NodeI
      * @return void
      */
     function accept(PHP_Depend_VisitorI $visitor);
+
+    function free();
 }

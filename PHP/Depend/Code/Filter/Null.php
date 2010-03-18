@@ -42,15 +42,14 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
+ * @version    SVN: $Id: Package.php 1030 2010-01-01 12:06:13Z mapi $
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/Filter/Composite.php';
+require_once 'PHP/Depend/Code/FilterI.php';
 
 /**
- * Static composite filter for code nodes. This class is used for an overall
- * filtering.
+ * This is a simple NULL-implementation of the code filter interface.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,45 +60,18 @@ require_once 'PHP/Depend/Code/Filter/Composite.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-final class PHP_Depend_Code_Filter_Collection
-    extends PHP_Depend_Code_Filter_Composite
+class PHP_Depend_Code_Filter_Null implements PHP_Depend_Code_FilterI
 {
     /**
-     * Singleton instance of this filter.
+     * Returns <b>true</b> if the given node should be part of the node iterator,
+     * otherwise this method will return <b>false</b>.
      *
-     * @var PHP_Depend_Code_Filter_Collection $_instance
-     */
-    private static $_instance = null;
-
-    /**
-     * Singleton method for this filter class.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
-     * @return PHP_Depend_Code_Filter_Collection
+     * @return boolean
      */
-    public static function getInstance()
+    public function accept(PHP_Depend_Code_NodeI $node)
     {
-        if (self::$_instance === null) {
-            self::$_instance = new PHP_Depend_Code_Filter_Collection();
-        }
-        return self::$_instance;
-    }
-
-    /**
-     * Clears all registered filters.
-     *
-     * @return void
-     */
-    public function clear()
-    {
-        foreach ($this->getIterator() as $filter) {
-            $this->removeFilter($filter);
-        }
-    }
-
-    /**
-     * Constructs a new static filter.
-     */
-    private function __construct()
-    {
+        return true;
     }
 }

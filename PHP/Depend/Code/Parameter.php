@@ -373,14 +373,22 @@ class PHP_Depend_Code_Parameter
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
+     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
      *
      * @return void
      */
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitParameter($this);
+    }
+
+    public function free()
+    {
+        unset(
+            $this->_formalParameter,
+            $this->_declaringFunction,
+            $this->_ASTVariableDeclarator
+        );
     }
 
     /**
