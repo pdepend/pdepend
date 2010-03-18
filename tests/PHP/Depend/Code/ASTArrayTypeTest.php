@@ -133,6 +133,36 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testIsArrayReturnsTrue
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsArrayReturnsTrue()
+    {
+        $type = new PHP_Depend_Code_ASTArrayType();
+        $this->assertTrue($type->isArray());
+    }
+
+    /**
+     * testIsPrimitiveReturnsFalse
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTArrayType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsPrimitiveReturnsFalse()
+    {
+        $type = new PHP_Depend_Code_ASTArrayType();
+        $this->assertFalse($type->isPrimitive());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.

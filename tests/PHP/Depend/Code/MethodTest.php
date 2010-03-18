@@ -183,6 +183,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * values.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetSourceFileInformationForNullValue()
     {
@@ -232,6 +236,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * default value <b>null</b> and that the package could be set and unset.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetSetParent()
     {
@@ -246,6 +254,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the visitor accept method.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testVisitorAccept()
     {
@@ -261,6 +273,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * fails with an exception for an invalid modifier value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetInvalidModifierFail()
     {
@@ -275,6 +291,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * accepts the defined visibility value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersAcceptsPublicValue()
     {
@@ -305,6 +325,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * a method as static.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersMarksMethodAsStatic()
     {
@@ -335,6 +359,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * a method as final.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersMarksMethodAsFinal()
     {
@@ -350,6 +378,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * a method as static+final.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersMarksMethodAsStaticFinal()
     {
@@ -365,6 +397,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * accepts the defined visibility value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersAcceptsProtectedValue()
     {
@@ -380,6 +416,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * accepts the defined visibility value.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersAcceptsPrivateValue()
     {
@@ -410,6 +450,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * ignores repeated calls if the internal value is set.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testSetModifiersOnlyAcceptsTheFirstValue()
     {
@@ -420,9 +464,57 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testtestFreeResetsParentClassToNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsParentClassToNull()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $method   = $packages->current()
+                        ->getClasses()
+                        ->current()
+                        ->getMethods()
+                        ->current();
+        $method->free();
+
+        $this->assertNull($method->getParent());
+    }
+
+    /**
+     * testFreeResetsAllAssociatedASTNodes
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllAssociatedASTNodes()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $method   = $packages->current()
+                        ->getClasses()
+                        ->current()
+                        ->getMethods()
+                        ->current();
+        $method->free();
+
+        $this->assertEquals(array(), $method->getChildren());
+    }
+
+    /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -458,6 +550,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -502,6 +598,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
@@ -537,6 +637,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::findChildrenOfType()}.
      *
      * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {

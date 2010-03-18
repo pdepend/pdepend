@@ -65,6 +65,46 @@ require_once 'PHP/Depend/Code/Package.php';
 class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
+     * testFreeResetsParentPackageToNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsParentPackageToNull()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+                        ->getFunctions()
+                        ->current();
+        $function->free();
+
+        $this->assertNull($function->getPackage());
+    }
+
+    /**
+     * testFreeResetsAllAssociatedASTNodes
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testFreeResetsAllAssociatedASTNodes()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+                        ->getFunctions()
+                        ->current();
+        $function->free();
+
+        $this->assertEquals(array(), $function->getChildren());
+    }
+
+    /**
      * testReturnsReferenceReturnsExpectedTrue
      *
      * @return void
@@ -82,7 +122,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
                         
         $this->assertTrue($function->returnsReference());
     }
-    
+
     /**
      * testReturnsReferenceReturnsExpectedFalse
      *
