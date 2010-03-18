@@ -403,7 +403,7 @@ class PHP_Depend_Code_Parameter
      * @return void
      * @since 0.9.12
      */
-    public function _removeReferenceToDeclaringFunction()
+    private function _removeReferenceToDeclaringFunction()
     {
         $this->_declaringFunction = null;
     }
