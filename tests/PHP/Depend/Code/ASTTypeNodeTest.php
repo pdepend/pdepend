@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTExitStatement.php';
+require_once 'PHP/Depend/Code/ASTTypeNode.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTExitStatement} class.
+ * Test case for the {@link PHP_Depend_Code_ASTTypeNode} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,87 +62,35 @@ require_once 'PHP/Depend/Code/ASTExitStatement.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTExitStatementTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTTypeNodeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testExitStatementHasExpectedStartLine
+     * testIsArrayReturnsFalse
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExitStatement
+     * @covers PHP_Depend_Code_ASTTypeNode
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testExitStatementHasExpectedStartLine()
+    public function testIsArrayReturnsFalse()
     {
-        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        $type = new PHP_Depend_Code_ASTTypeNode();
+        $this->assertFalse($type->isArray());
     }
 
     /**
-     * testExitStatementHasExpectedStartColumn
+     * testIsPrimitiveReturnsFalse
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExitStatement
+     * @covers PHP_Depend_Code_ASTTypeNode
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testExitStatementHasExpectedStartColumn()
+    public function testIsPrimitiveReturnsFalse()
     {
-        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
-    }
-
-    /**
-     * testExitStatementHasExpectedEndLine
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExitStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testExitStatementHasExpectedEndLine()
-    {
-        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getEndLine());
-    }
-
-    /**
-     * testExitStatementHasExpectedEndColumn
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExitStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testExitStatementHasExpectedEndColumn()
-    {
-        $stmt = $this->_getFirstExitStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getEndColumn());
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_ASTExitStatement
-     */
-    private function _getFirstExitStatementInFunction($testCase)
-    {
-        return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTExitStatement::CLAZZ
-        );
+        $type = new PHP_Depend_Code_ASTTypeNode();
+        $this->assertFalse($type->isPrimitive());
     }
 }

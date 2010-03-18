@@ -115,7 +115,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function count()
     {
-        return $this->_count;
+        return count($this->_nodes);
     }
 
     /**

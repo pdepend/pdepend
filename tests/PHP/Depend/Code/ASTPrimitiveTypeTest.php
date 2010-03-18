@@ -44,13 +44,14 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTStatement.php';
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
+
+require_once 'PHP/Depend/Code/ASTPrimitiveType.php';
 
 /**
- * This node class represents an exit-statement.
+ * Test case for the {@link PHP_Depend_Code_ASTPrimitiveType} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -60,12 +61,50 @@ require_once 'PHP/Depend/Code/ASTStatement.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.12
  */
-class PHP_Depend_Code_ASTExitStatement extends PHP_Depend_Code_ASTStatement
+class PHP_Depend_Code_ASTPrimitiveTypeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * The type of this class.
+     * testIsArrayReturnsFalse
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTPrimitiveType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
-    const CLAZZ = __CLASS__;
+    public function testIsArrayReturnsFalse()
+    {
+        $type = new PHP_Depend_Code_ASTPrimitiveType();
+        $this->assertFalse($type->isArray());
+    }
+
+    /**
+     * testIsPrimitiveReturnsTrue
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTPrimitiveType
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsPrimitiveReturnsTrue()
+    {
+        $type = new PHP_Depend_Code_ASTPrimitiveType();
+        $this->assertTrue($type->isPrimitive());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTPrimitiveType
+     */
+    private function _getFirstPrimitiveTypeInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTPrimitiveType::CLAZZ
+        );
+    }
 }
