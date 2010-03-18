@@ -101,4 +101,3 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIterator
         return $classesAndInterfaces;
     }
 }
-?>

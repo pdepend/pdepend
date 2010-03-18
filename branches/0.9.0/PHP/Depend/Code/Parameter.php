@@ -84,21 +84,21 @@ class PHP_Depend_Code_Parameter
     /**
      * The unique identifier for this function.
      *
-     * @var string $_uuid
+     * @var string
      */
     private $_uuid = null;
 
     /**
      * The parent function or method instance.
      *
-     * @var PHP_Depend_Code_AbstractCallable $_declaringFunction
+     * @var PHP_Depend_Code_AbstractCallable
      */
     private $_declaringFunction = null;
 
     /**
      * The parameter position.
      *
-     * @var integer $_position
+     * @var integer
      */
     private $_position = 0;
 
@@ -112,16 +112,16 @@ class PHP_Depend_Code_Parameter
     /**
      * The wrapped formal parameter instance.
      *
-     * @var PHP_Depend_Code_ASTFormalParameter $_formalParameter
+     * @var PHP_Depend_Code_ASTFormalParameter
      */
     private $_formalParameter = null;
 
     /**
      * The wrapped variable declarator instance.
      *
-     * @var PHP_Depend_Code_ASTVariableDeclarator $_ASTVariableDeclarator
+     * @var PHP_Depend_Code_ASTVariableDeclarator
      */
-    private $_ASTVariableDeclarator = null;
+    private $_variableDeclarator = null;
 
     /**
      * Constructs a new parameter instance for the given AST node.
@@ -132,7 +132,7 @@ class PHP_Depend_Code_Parameter
     public function __construct(PHP_Depend_Code_ASTFormalParameter $formalParameter)
     {
         $this->_formalParameter    = $formalParameter;
-        $this->_ASTVariableDeclarator = $formalParameter->getFirstChildOfType(
+        $this->_variableDeclarator = $formalParameter->getFirstChildOfType(
             PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
@@ -146,7 +146,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getName()
     {
-        return $this->_ASTVariableDeclarator->getImage();
+        return $this->_variableDeclarator->getImage();
     }
 
     /**
@@ -344,7 +344,7 @@ class PHP_Depend_Code_Parameter
      */
     public function isDefaultValueAvailable()
     {
-        $value = $this->_ASTVariableDeclarator->getValue();
+        $value = $this->_variableDeclarator->getValue();
         if ($value === null) {
             return false;
         }
@@ -363,7 +363,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getDefaultValue()
     {
-        $value = $this->_ASTVariableDeclarator->getValue();
+        $value = $this->_variableDeclarator->getValue();
         if ($value === null) {
             return null;
         }
@@ -382,13 +382,42 @@ class PHP_Depend_Code_Parameter
         $visitor->visitParameter($this);
     }
 
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
-        unset(
-            $this->_formalParameter,
-            $this->_declaringFunction,
-            $this->_ASTVariableDeclarator
-        );
+        $this->_removeReferenceToDeclaringFunction();
+        $this->_removeReferencesToNodes();
+    }
+
+    /**
+     * Removes the reference to the declaring function of this parameter instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    public function _removeReferenceToDeclaringFunction()
+    {
+        $this->_declaringFunction = null;
+    }
+
+    /**
+     * Removes all references to ast nodes associated with parameter instance.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    private function _removeReferencesToNodes()
+    {
+        $this->_formalParameter    = null;
+        $this->_variableDeclarator = null;
     }
 
     /**
