@@ -224,6 +224,15 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $visitor->visitClass($this);
     }
 
+    public function free()
+    {
+        $this->getProperties()->free();
+        unset($this->_properties);
+
+        parent::free();
+
+    }
+
     // DEPRECATED METHODS
     // @codeCoverageIgnoreStart
 

@@ -314,4 +314,16 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     {
         $visitor->visitPackage($this);
     }
+
+    public function free()
+    {
+        foreach ($this->functions as $i => $function) {
+            $function->free();
+            unset($this->functions[$i]);
+        }
+        foreach ($this->types as $i => $type) {
+            $type->free();
+            unset($this->types[$i]);
+        }
+    }
 }

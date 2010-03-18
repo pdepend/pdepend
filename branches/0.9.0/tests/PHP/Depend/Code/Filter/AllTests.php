@@ -53,7 +53,6 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/PackageTest.php';
-require_once dirname(__FILE__) . '/CollectionTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Code package.
@@ -87,7 +86,6 @@ class PHP_Depend_Code_Filter_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code_Filter - AllTests');
         $suite->addTestSuite('PHP_Depend_Code_Filter_PackageTest');
-        $suite->addTestSuite('PHP_Depend_Code_Filter_CollectionTest');
 
         return $suite;
     }
