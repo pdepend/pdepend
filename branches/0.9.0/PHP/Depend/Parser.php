@@ -1880,8 +1880,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseTryStatement()
     {
         $this->_tokenStack->push();
-        $this->_consumeComments();
-
         $token = $this->_consumeToken(self::T_TRY);
 
         $stmt = $this->_builder->buildASTTryStatement($token->image);
