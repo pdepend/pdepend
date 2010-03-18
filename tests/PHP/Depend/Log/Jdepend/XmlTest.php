@@ -111,10 +111,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      */
     protected function tearDown()
     {
-        // Clear filter collection
-        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-        $collection->clear();
-
         @unlink($this->resultFile);
 
         parent::tearDown();

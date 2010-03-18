@@ -229,6 +229,11 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         $visitor->visitFile($this);
     }
 
+    public function free()
+    {
+        
+    }
+
     /**
      * Returns the string representation of this class.
      *

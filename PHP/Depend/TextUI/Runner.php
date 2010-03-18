@@ -326,7 +326,7 @@ class PHP_Depend_TextUI_Runner
         if (count($this->_excludePackages) > 0) {
             $exclude = $this->_excludePackages;
             $filter  = new PHP_Depend_Code_Filter_Package($exclude);
-            $pdepend->addCodeFilter($filter);
+            $pdepend->setCodeFilter($filter);
         }
 
         if ($this->_withoutAnnotations === true) {
@@ -377,6 +377,8 @@ class PHP_Depend_TextUI_Runner
         } catch (Exception $e) {
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
+
+        $pdepend->free();
 
         return self::SUCCESS_EXIT;
     }

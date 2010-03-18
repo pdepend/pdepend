@@ -603,6 +603,24 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
     }
 
+    public function free()
+    {
+
+        $this->getMethods()->free();
+        
+        foreach ($this->_nodes as $i => $node) {
+            $node->free();
+            unset($this->_nodes[$i]);
+        }
+        
+        unset(
+            $this->_package,
+            $this->_methods,
+            $this->_interfaceReferences,
+            $this->_parentClassReference
+        );
+    }
+
     // DEPRECATED METHODS AND PROPERTIES
     // @codeCoverageIgnoreStart
 

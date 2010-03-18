@@ -459,6 +459,15 @@ class PHP_Depend_Code_Property
         $visitor->visitProperty($this);
     }
 
+    public function free()
+    {
+        unset(
+            $this->_declaringClass,
+            $this->_fieldDeclaration,
+            $this->_variableDeclarator
+        );
+    }
+
     /**
      * This method returns a string representation of this parameter.
      *

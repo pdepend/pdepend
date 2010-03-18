@@ -170,4 +170,12 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     {
         return ($this->_offset < $this->_count);
     }
+
+    public function free()
+    {
+        foreach ($this->_nodes as $i => $node) {
+            $node->free();
+            unset($this->_nodes[$i]);
+        }
+    }
 }
