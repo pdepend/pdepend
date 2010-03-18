@@ -374,6 +374,16 @@ class PHP_Depend
         return ($this->_packages = $packages);
     }
 
+    /**
+     * Helper method for PHP version < 5.3, this method can be used to
+     * unwire the complex object graph created by PHP_Depend, so that the
+     * garbage collector can free memory consumed by PHP_Depend. Please
+     * remember that this method will destroy all the data calculated by
+     * PHP_Depend, so it is unusable after a call to <b>free()</b>.
+     *
+     * @return void
+     * @since 0.9.12
+     */
     public function free()
     {
         if (is_object($this->_packages)) {
