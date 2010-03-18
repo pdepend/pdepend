@@ -122,6 +122,22 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     private $_nodes = array();
 
     /**
+     * The start line number of the method or function declaration.
+     *
+     * @var integer
+     * @since 0.9.12
+     */
+    private $_startLine = 0;
+
+    /**
+     * The end line number of the method or function declaration.
+     *
+     * @var integer
+     * @since 0.9.12
+     */
+    private $_endLine = 0;
+
+    /**
      * Adds a parsed child node to this node.
      *
      * @param PHP_Depend_Code_ASTNodeI $node A parsed child node instance.
@@ -211,6 +227,9 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function setTokens(array $tokens)
     {
+        $this->_startLine = reset($tokens)->startLine;
+        $this->_endLine   = end($tokens)->endLine;
+        
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
         $storage->store($tokens, $this->getUUID(), get_class($this));
     }
@@ -223,9 +242,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getStartLine()
     {
-        $tokens = $this->getTokens();
-        assert(($token = reset($tokens)) instanceof PHP_Depend_Token);
-        return $token->startLine;
+        return $this->_startLine;
     }
 
     /**
@@ -236,9 +253,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getEndLine()
     {
-        $tokens = $this->getTokens();
-        assert(($token = end($tokens)) instanceof PHP_Depend_Token);
-        return $token->endLine;
+        return $this->_endLine;
     }
 
     /**

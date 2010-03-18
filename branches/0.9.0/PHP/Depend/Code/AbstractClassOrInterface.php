@@ -121,6 +121,22 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     private $_nodes = array();
 
     /**
+     * The start line number of the class or interface declaration.
+     *
+     * @var integer
+     * @since 0.9.12
+     */
+    private $_startLine = 0;
+
+    /**
+     * The end line number of the class or interface declaration.
+     *
+     * @var integer
+     * @since 0.9.12
+     */
+    private $_endLine = 0;
+
+    /**
      * Adds a parsed child node to this node.
      *
      * @param PHP_Depend_Code_ASTNodeI $node A parsed child node instance.
@@ -471,6 +487,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function setTokens(array $tokens)
     {
+        $this->_startLine = reset($tokens)->startLine;
+        $this->_endLine   = end($tokens)->endLine;
+        
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
         $storage->store($tokens, $this->getUUID(), get_class($this));
     }
@@ -483,11 +502,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getStartLine()
     {
-        $tokens = $this->getTokens();
-        if (isset($tokens[0]) === false) {
-            return 0;
-        }
-        return reset($tokens)->startLine;
+        return $this->_startLine;
     }
 
     /**
@@ -498,11 +513,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getEndLine()
     {
-        $tokens = $this->getTokens();
-        if (isset($tokens[0]) === false) {
-            return 0;
-        }
-        return end($tokens)->endLine;
+        return $this->_endLine;
     }
 
     /**
@@ -590,7 +601,6 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
                 $this->_constants[$image] = $value;
             }
         }
-        //$this->_constants = new PHP_Depend_Code_NodeIterator($constants);
     }
 
     // DEPRECATED METHODS AND PROPERTIES
@@ -625,5 +635,4 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
     
     // @codeCoverageIgnoreEnd
-    
 }
