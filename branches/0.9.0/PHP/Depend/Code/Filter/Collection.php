@@ -61,8 +61,7 @@ require_once 'PHP/Depend/Code/FilterI.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-final class PHP_Depend_Code_Filter_Collection
-    extends PHP_Depend_Code_FilterI
+final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
 {
     /**
      * Singleton instance of this filter.
