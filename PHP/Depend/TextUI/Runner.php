@@ -378,8 +378,6 @@ class PHP_Depend_TextUI_Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
-        $pdepend->free();
-
         return self::SUCCESS_EXIT;
     }
 
