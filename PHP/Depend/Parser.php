@@ -1011,9 +1011,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         if ($this->_isNextTokenArguments()) {
-            $allocation->addChild(
-                $this->_parseArguments()
-            );
+            $allocation->addChild($this->_parseArguments());
         }
         return $this->_setNodePositionsAndReturn($allocation);
     }
