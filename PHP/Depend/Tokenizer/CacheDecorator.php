@@ -100,6 +100,13 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
     private $_count = 0;
 
     /**
+     * Type of the next token.
+     *
+     * @var integer
+     */
+    private $_peek = 0;
+
+    /**
      * Constructs a new tokenizer decorator instance.
      *
      * @param PHP_Depend_TokenizerI $tokenizer The decorated tokenizer instance.
@@ -146,6 +153,7 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
             $storage->store($tokens, $key, $group, $id);
         }
 
+        $this->_peek   = $tokens[0]->type;
         $this->_tokens = $tokens;
         $this->_index  = 0;
         $this->_count  = count($tokens);
@@ -155,12 +163,17 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
      * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
      * there is no next token.
      *
-     * @return array|integer
+     * @return PHP_Depend_Token|integer
      */
     public function next()
     {
+        $this->_peek = self::T_EOF;
         if ($this->_index < $this->_count) {
-            return $this->_tokens[$this->_index++];
+            $token = $this->_tokens[$this->_index++];
+            if ($this->_index < $this->_count) {
+                $this->_peek = $this->_tokens[$this->_index]->type;
+            }
+            return $token;
         }
         return self::T_EOF;
     }
@@ -173,10 +186,7 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
      */
     public function peek()
     {
-        if ($this->_index < $this->_count) {
-            return $this->_tokens[$this->_index]->type;
-        }
-        return self::T_EOF;
+        return $this->_peek;
     }
 
     /**
