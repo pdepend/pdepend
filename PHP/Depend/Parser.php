@@ -472,7 +472,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         
         if ($tokenType === self::T_EXTENDS) {
             $this->_consumeToken(self::T_EXTENDS);
-            $this->_consumeComments();
 
             $class->setParentClassReference(
                 $this->_builder->buildASTClassReference(
@@ -547,7 +546,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         PHP_Depend_Code_AbstractClassOrInterface $abstractType
     ) {
         while (true) {
-            $this->_consumeComments();
 
             $abstractType->addInterfaceReference(
                 $this->_builder->buildInterfaceReference(
@@ -556,16 +554,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             );
 
             $this->_consumeComments();
-
             $tokenType = $this->_tokenizer->peek();
 
-            // Check for opening interface body
             if ($tokenType === self::T_CURLY_BRACE_OPEN) {
                 break;
             }
-
             $this->_consumeToken(self::T_COMMA);
-            $this->_consumeComments();
         }
     }
 
