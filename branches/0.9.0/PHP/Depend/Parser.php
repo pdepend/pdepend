@@ -622,9 +622,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_CONST:
-                $type->addChild(
-                    $this->_parseConstantDefinition()
-                );
+                $type->addChild($this->_parseConstantDefinition());
                 $this->reset();
                 break;
 
@@ -662,7 +660,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             default:
                 throw new PHP_Depend_Parser_UnexpectedTokenException(
-                    $this->_tokenizer
+                    $this->_tokenizer->next(),
+                    $this->_tokenizer->getSourceFile()
                 );
             }
 
@@ -738,7 +737,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             
             $tokenType = $this->_tokenizer->peek();
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
+        throw new PHP_Depend_Parser_UnexpectedTokenException(
+            $this->_tokenizer->next(),
+            $this->_tokenizer->getSourceFile()
+        );
     }
 
     /**
@@ -775,10 +777,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->_tokenizer->peek();
         
         while ($tokenType !== self::T_EOF) {
-
-            $declaration->addChild(
-                $this->_parseVariableDeclarator()
-            );
+            $declaration->addChild($this->_parseVariableDeclarator());
 
             $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
@@ -1640,6 +1639,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken($tokenType);
                 break;
 
+            case self::T_COMMENT:
+            case self::T_DOC_COMMENT:
+                $this->_consumeToken($tokenType);
+                break;
+
             // TODO: Add these tokens
             //case self::T_COMMA:
             case self::T_AS:
@@ -1672,7 +1676,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $expr;
             }
 
-            $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
         }
 
@@ -1748,7 +1751,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
+        throw new PHP_Depend_Parser_UnexpectedTokenException(
+            $this->_tokenizer->next(),
+            $this->_tokenizer->getSourceFile()
+        );
     }
 
     /**
@@ -3699,6 +3705,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseFormalParameterAndByReference()
     {
         $this->_consumeToken(self::T_BITWISE_AND);
+        $this->_consumeComments();
 
         $parameter = $this->_parseFormalParameter();
         $parameter->setPassedByReference();
@@ -3723,7 +3730,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $parameter = $this->_builder->buildASTFormalParameter();
         $parameter->addChild($this->_parseVariableDeclarator());
-
+        
         return $parameter;
     }
 
@@ -4195,7 +4202,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseConstantDefinition()
     {
-        $this->_consumeComments();
         $this->_tokenStack->push();
 
         $token = $this->_consumeToken(self::T_CONST);
@@ -4204,9 +4210,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $definition->setComment($this->_docComment);
 
         do {
-            $definition->addChild(
-                $this->_parseConstantDeclarator()
-            );
+            $definition->addChild($this->_parseConstantDeclarator());
 
             $this->_consumeComments();
             $tokenType = $this->_tokenizer->peek();
@@ -4369,9 +4373,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->_tokenizer->peek();
 
         while ($tokenType !== self::T_EOF) {
-            $staticDeclaration->addChild(
-                $this->_parseVariableDeclarator()
-            );
+            $staticDeclaration->addChild($this->_parseVariableDeclarator());
 
             $this->_consumeComments();
 
@@ -4409,7 +4411,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseVariableDeclarator()
     {
-        $this->_consumeComments();
         $this->_tokenStack->push();
 
         $name = $this->_consumeToken(self::T_VARIABLE)->image;
@@ -4419,8 +4420,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         if ($this->_tokenizer->peek() === self::T_EQUAL) {
             $this->_consumeToken(self::T_EQUAL);
-            $this->_consumeComments();
-
             $declarator->setValue($this->_parseStaticValueOrStaticArray());
         }
         return $this->_setNodePositionsAndReturn($declarator);
@@ -4538,7 +4537,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             default:
                 throw new PHP_Depend_Parser_UnexpectedTokenException(
-                    $this->_tokenizer
+                    $this->_tokenizer->next(),
+                    $this->_tokenizer->getSourceFile()
                 );
             }
             
@@ -4874,14 +4874,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _consumeToken($tokenType)
     {
-        $peekType = $this->_tokenizer->peek();
-        if ($peekType === $tokenType) {
-            return $this->_tokenStack->add($this->_tokenizer->next());
-        }
-        if ($peekType === self::T_EOF) {
+        $token = $this->_tokenizer->next();
+        if ($token === self::T_EOF) {
             throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
+        } else if ($token->type == $tokenType) {
+            return $this->_tokenStack->add($token);
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException($this->_tokenizer);
+        throw new PHP_Depend_Parser_UnexpectedTokenException(
+            $token,
+            $this->_tokenizer->getSourceFile()
+        );
     }
 
     /**
