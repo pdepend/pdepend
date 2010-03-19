@@ -423,63 +423,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testParserResetsScopeTreeForEmptyForInit
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testParserResetsScopeTreeForEmptyForInit()
-    {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
-
-        $actual   = array($class->getStartLine(), $class->getEndLine());
-        $expected = array(5, 14);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * testParserResetsScopeTreeForEmptyForExpression
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testParserResetsScopeTreeForEmptyForExpression()
-    {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
-
-        $actual   = array($class->getStartLine(), $class->getEndLine());
-        $expected = array(5, 14);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * testParserResetsScopeTreeForEmptyForUpdate
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testParserResetsScopeTreeForEmptyForUpdate()
-    {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
-
-        $actual   = array($class->getStartLine(), $class->getEndLine());
-        $expected = array(5, 14);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
      * testParserHandlesParenthesisExpressionInForUpdate
      *
      * @return void
