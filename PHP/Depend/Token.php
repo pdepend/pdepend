@@ -126,4 +126,3 @@ class PHP_Depend_Token
         $this->endColumn   = $endColumn;
     }
 }
-?>
