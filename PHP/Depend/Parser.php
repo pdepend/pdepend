@@ -1011,9 +1011,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         if ($this->_isNextTokenArguments()) {
-            $allocation->addChild(
-                $this->_parseArguments()
-            );
+            $allocation->addChild($this->_parseArguments());
         }
         return $this->_setNodePositionsAndReturn($allocation);
     }
@@ -3195,11 +3193,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseIdentifier()
     {
-        $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_STRING);
         
         $node = $this->_builder->buildASTIdentifier($token->image);
-        return $this->_setNodePositionsAndReturn($node);
+        $node->configureLinesAndColumns(array($token));
+
+        return $node;
     }
 
     /**
@@ -3214,7 +3213,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseLiteralOrString()
     {
-        $this->_consumeComments();
         $tokenType = $this->_tokenizer->peek();
 
         switch ($tokenType) {
