@@ -4863,7 +4863,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * <b>$tokenType</b>.
      *
      * @param integer $tokenType The next expected token type.
-     *
+     *  
      * @return PHP_Depend_Token
      */
     private function _consumeToken($tokenType)
