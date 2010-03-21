@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,18 +39,16 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 
+require_once 'PHP/Depend/BuilderI.php';
+require_once 'PHP/Depend/TokenizerI.php';
+require_once 'PHP/Depend/Visitor/ListenerI.php';
 require_once 'PHP/Depend/Metrics/ListenerI.php';
-
-// TODO: Refactor this reflection depedency
-require_once 'PHP/Reflection/BuilderI.php';
-require_once 'PHP/Reflection/TokenizerI.php';
-require_once 'PHP/Reflection/Visitor/ListenerI.php';
 
 /**
  * This listener can be used to get informations about the current pdepend process.
@@ -58,50 +56,50 @@ require_once 'PHP/Reflection/Visitor/ListenerI.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 interface PHP_Depend_ProcessListenerI
-    extends PHP_Reflection_Visitor_ListenerI,
+    extends PHP_Depend_Visitor_ListenerI,
             PHP_Depend_Metrics_ListenerI
 {
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    function startParseProcess(PHP_Reflection_BuilderI $builder);
+    function startParseProcess(PHP_Depend_BuilderI $builder);
     
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
      * 
      * @return void
      */
-    function endParseProcess(PHP_Reflection_BuilderI $builder);
+    function endParseProcess(PHP_Depend_BuilderI $builder);
     
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    function startFileParsing(PHP_Reflection_TokenizerI $tokenizer);
+    function startFileParsing(PHP_Depend_TokenizerI $tokenizer);
     
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      * 
      * @return void
      */
-    function endFileParsing(PHP_Reflection_TokenizerI $tokenizer);
+    function endFileParsing(PHP_Depend_TokenizerI $tokenizer);
     
     /**
      * Is called when PDepend starts the analyzing process.

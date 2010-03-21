@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * This abstract class provides a base implementation of an analyzer.
@@ -56,13 +56,13 @@ require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 abstract class PHP_Depend_Metrics_AbstractAnalyzer
-       extends PHP_Reflection_Visitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Metrics_AnalyzerI
 {
     /**
@@ -71,14 +71,14 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
      * @var array(string=>mixed) $options
      */
     protected $options = array();
-    
+
     /**
      * List or registered listeners.
      *
      * @var array(PHP_Depend_Metrics_ListenerI) $_listeners
      */
     private $_listeners = array();
-    
+
     /**
      * Constructs a new analyzer instance.
      *
@@ -89,12 +89,12 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     {
         $this->options = $options;
     }
-    
+
     /**
      * Adds a listener to this analyzer.
      *
      * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
+     *
      * @return void
      */
     public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
@@ -103,23 +103,25 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
             $this->_listeners[] = $listener;
         }
     }
-    
+
     /**
-     * Removes the listener from this analyzer.
+     * An analyzer that is active must return <b>true</b> to recognized by
+     * pdepend framework, while an analyzer that does not perform any action
+     * for any reason should return <b>false</b>.
      *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     * 
-     * @return void
+     * By default all analyzers are enabled. Overwrite this method to provide
+     * state based disabling/enabling.
+     *
+     * @return boolean
+     * @since 0.9.10
      */
-    public function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
+    public function isEnabled()
     {
-        if (($i = array_search($listener, $this->_listeners, true)) !== false) {
-            unset($this->_listeners[$i]);
-        }
+        return true;
     }
-    
+
     /**
-     * The analyzer implementation should call this method when it starts the 
+     * The analyzer implementation should call this method when it starts the
      * code processing. This method will send an analyzer start event to all
      * registered listeners.
      *
@@ -131,7 +133,7 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
             $listener->startAnalyzer($this);
         }
     }
-    
+
     /**
      * The analyzer implementation should call this method when it has finished
      * the code processing. This method will send an analyzer end event to all

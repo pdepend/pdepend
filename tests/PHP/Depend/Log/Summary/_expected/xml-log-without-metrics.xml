@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metrics>
+<metrics generated="2009-07-27T18:00:36" pdepend="@package_version@">
   <files>
-    <file name="packages.php"/>
+    <file name="???"/>
   </files>
-  <package name="+unknown">
+  <package name="+global">
     <function name="bar">
-      <file name="packages.php"/>
+      <file name="???"/>
     </function>
   </package>
   <package name="pkg1">
     <class name="FooBar">
-      <file name="packages.php"/>
+      <file name="???"/>
       <method name="x"/>
       <method name="y"/>
     </class>
     <function name="foo">
-      <file name="packages.php"/>
+      <file name="???"/>
     </function>
   </package>
-  <package name="pkg2"/>
   <package name="pkg3">
     <class name="Bar">
-      <file name="packages.php"/>
+      <file name="???"/>
       <method name="y"/>
     </class>
   </package>

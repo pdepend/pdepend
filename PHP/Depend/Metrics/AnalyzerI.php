@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,10 +40,10 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/Metrics/ListenerI.php';
@@ -55,10 +55,10 @@ require_once 'PHP/Depend/Metrics/ListenerI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 interface PHP_Depend_Metrics_AnalyzerI
 {
@@ -80,20 +80,21 @@ interface PHP_Depend_Metrics_AnalyzerI
     function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener);
     
     /**
-     * Removes the listener from this analyzer.
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * 
      * @return void
      */
-    function removeAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener);
-    
+    function analyze(PHP_Depend_Code_NodeIterator $packages);
+
     /**
-     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
+     * An analyzer that is active must return <b>true</b> to recognized by
+     * pdepend framework, while an analyzer that does not perform any action
+     * for any reason should return <b>false</b>.
      *
-     * @param PHP_Reflection_AST_Iterator $packages All code packages.
-     * 
-     * @return void
+     * @return boolean
+     * @since 0.9.10
      */
-    function analyze(PHP_Reflection_AST_Iterator $packages);
+    function isEnabled();
 }

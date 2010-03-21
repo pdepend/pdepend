@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,10 +40,10 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/Log/LoggerI.php';
@@ -57,12 +57,12 @@ require_once 'PHP/Depend/Log/FileAwareI.php';
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
-class PHP_Depend_Log_Dummy_Logger 
+class PHP_Depend_Log_Dummy_Logger
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
@@ -70,44 +70,42 @@ class PHP_Depend_Log_Dummy_Logger
     /**
      * The output file name.
      *
-     * @type string
      * @var string $_logFile
      */
     private $_logFile = null;
-    
+
     /**
      * The logger input data.
-     * 
-     * @type array<mixed>
+     *
      * @var array(string=>mixed) $_input
      */
     private $_input = array(
         'code'       =>  null,
         'analyzers'  =>  array()
     );
-    
+
     /**
      * Constructs a new logger for the given output file.
      */
     public function __construct()
     {
     }
-    
+
     /**
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     * 
+     *
      * @return void
      */
     public function setLogFile($logFile)
     {
         $this->_logFile = $logFile;
     }
-    
+
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
-     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
      * @return array(string)
      */
@@ -115,25 +113,25 @@ class PHP_Depend_Log_Dummy_Logger
     {
         return array('PHP_Depend_Metrics_NodeAwareI');
     }
-    
+
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Reflection_AST_Iterator $code The code nodes.
-     * 
+     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     *
      * @return void
      */
-    public function setCode(PHP_Reflection_AST_Iterator $code)
+    public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
         $this->_input['code'] = $code;
     }
-    
+
     /**
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
-     * 
+     *
      * @return boolean
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
@@ -141,7 +139,7 @@ class PHP_Depend_Log_Dummy_Logger
         $this->_input['analyzers'][] = $analyzer;
         return true;
     }
-    
+
     /**
      * Closes the logger process and writes the output file.
      *

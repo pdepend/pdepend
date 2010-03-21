@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,10 +39,10 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -53,26 +53,47 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Removes test contents of a previous crached test run.
+     * Removes temporary test contents.
      *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-        
-        // Remove old test contents
-        self::_clearRun();
+
+        $run = dirname(__FILE__) . '/_run';
+        if (file_exists($run) === false) {
+            mkdir($run, 0755);
+        }
+
+        $this->_clearRunResources($run);
+
+        include_once 'PHP/Depend.php';
+        include_once 'PHP/Depend/StorageRegistry.php';
+        include_once 'PHP/Depend/Storage/MemoryEngine.php';
+
+        PHP_Depend_StorageRegistry::set(
+            PHP_Depend::TOKEN_STORAGE,
+            new PHP_Depend_Storage_MemoryEngine()
+        );
+        PHP_Depend_StorageRegistry::set(
+            PHP_Depend::PARSER_STORAGE,
+            new PHP_Depend_Storage_MemoryEngine()
+        );
+
+        if (defined('STDERR') === false) {
+            define('STDERR', fopen('php://stderr', true));
+        }
     }
-    
+
     /**
      * Resets the global iterator filter.
      *
@@ -80,65 +101,45 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        // Reset code filter
-        // TODO: PHP_Reflection code should not be needed here
-        PHP_Reflection_AST_Iterator_StaticFilter::getInstance()->clear();
-        
-        // Remove test contents
-        self::_clearRun();
-        
-        // Call parent tear down
+        PHP_Depend_Code_Filter_Collection::getInstance()->setFilter();
+
+        $this->_clearRunResources();
+
         parent::tearDown();
     }
-    
+
     /**
-     * Initializes the test environment.
+     * Clears all temporary resources.
+     *
+     * @param string $dir The root directory.
      *
      * @return void
      */
-    public static function init()
+    private function _clearRunResources($dir = null)
     {
-        // Is it not installed?
-        if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
-            
-            $path  = realpath(dirname(__FILE__) . '/../../..');
-            $path .= PATH_SEPARATOR . get_include_path();
-            set_include_path($path);
-            
-            $whitelist = realpath(dirname(__FILE__) . '/../../../PHP') . '/';
-            PHPUnit_Util_Filter::addDirectoryToWhitelist($whitelist);
+        if ($dir === null) {
+            $dir = dirname(__FILE__) . '/_run';
         }
-        
-        // Set test path
-        $path  = realpath(dirname(__FILE__) . '/../..') ;
-        $path .= PATH_SEPARATOR . get_include_path();
-        set_include_path($path);
-        
-        include_once 'PHP/Reflection/AST/Iterator/StaticFilter.php';
-    }
-    
-    /**
-     * Creates a resource uri for a file or directory within the test code
-     * directory.
-     *
-     * @param string $fileOrDirectory A file or directory name.
-     * 
-     * @return string
-     */
-    protected static function createResourceURI($fileOrDirectory)
-    {
-        $uri = dirname(__FILE__) . '/_code/' . $fileOrDirectory;
-        if (file_exists($uri) === false) {
-            throw new ErrorException("Unknown file or directory '{$fileOrDirectory}'.");
+
+        foreach (new DirectoryIterator($dir) as $file) {
+            if ($file == '.' || $file == '..' || $file == '.svn') {
+                continue;
+            }
+            $pathName = realpath($file->getPathname());
+            if ($file->isDir()) {
+                $this->_clearRunResources($pathName);
+                rmdir($pathName);
+            } else {
+                unlink($pathName);
+            }
         }
-        return realpath($uri);
     }
-    
+
     /**
      * Creates a temporary resource for the given file name.
      *
      * @param string $fileName The temporary file name.
-     * 
+     *
      * @return string
      */
     protected static function createRunResourceURI($fileName)
@@ -149,61 +150,152 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
         return $uri;
     }
-    
+
+    /**
+     * Creates a code uri for the given file name.
+     *
+     * @param string $fileName The code file name.
+     *
+     * @return string
+     */
+    protected static function createCodeResourceURI($fileName)
+    {
+        $uri = dirname(__FILE__) . '/_code/' . $fileName;
+        if (file_exists($uri) === false) {
+            throw new ErrorException("File '{$fileName}' does not exists.");
+        }
+        return $uri;
+    }
+
+    /**
+     * Initializes the test environment.
+     *
+     * @return void
+     */
+    public static function init()
+    {
+
+        // Is it not installed?
+        if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
+
+            $path  = realpath(dirname(__FILE__) . '/../../..');
+            $path .= PATH_SEPARATOR . get_include_path();
+            set_include_path($path);
+
+            $whitelist = realpath(dirname(__FILE__) . '/../../../PHP') . '/';
+            PHPUnit_Util_Filter::addDirectoryToWhitelist($whitelist);
+        }
+
+        // Set test path
+        $path  = realpath(dirname(__FILE__) . '/../..') ;
+        $path .= PATH_SEPARATOR . get_include_path();
+        set_include_path($path);
+
+        include_once 'PHP/Depend/Code/Filter/Collection.php';
+
+        self::initVersionCompatibility();
+    }
+
+    /**
+     * There was an api change between PHP 5.3.0alpha3 and 5.3.0beta1, the new
+     * extension name "Core" was introduced and interfaces like "Iterator" are
+     * now part of "Core" instead of "Standard".
+     *
+     * @return void
+     */
+    private static function initVersionCompatibility()
+    {
+        $reflection = new ReflectionClass('Iterator');
+        $extension  = strtolower($reflection->getExtensionName());
+        $extension  = ($extension === '' ? 'standard' : $extension);
+
+        if (defined('CORE_PACKAGE') === false ) {
+            define('CORE_PACKAGE', '+' . $extension);
+        }
+    }
+
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string  $testCase          Qualified name of the test case.
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($class, $method) = explode('::', $testCase);
+
+        $fileName = substr(strtolower($class), 11, strrpos($class, '_') - 11);
+        $fileName = str_replace('_', '/', $fileName) . '/' . $method;
+
+        try {
+            $fileOrDirectory = self::createCodeResourceURI($fileName);
+        } catch (ErrorException $e) {
+            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
+        }
+
+        return self::parseSource($fileOrDirectory, $ignoreAnnotations);
+    }
+
     /**
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
      * @param string  $fileOrDirectory   A source file or a source directory.
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     * 
-     * @return PHP_Reflection_AST_Iterator
-     */
-    protected static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
-    {
-        // Include the reflection facade
-        include_once 'PHP/Reflection.php';
-        
-        // Create a new clean reflection facade instance
-        $reflection = new PHP_Reflection();
-        
-        // Should we ignore annotations?
-        if ($ignoreAnnotations === true) {
-            $reflection->setWithoutAnnotations();
-        }
-        // Parse source and return result
-        return $reflection->parse(self::createResourceURI($fileOrDirectory));
-    }
-    
-    /**
-     * Removes all contents from the test temp run directory.
      *
-     * @return void
+     * @return PHP_Depend_Code_NodeIterator
      */
-    private static function _clearRun()
+    public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
-        $it = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/_run/')
-        );
-        // Remove all files, links etc.
+        include_once 'PHP/Depend/Parser.php';
+        include_once 'PHP/Depend/Builder/Default.php';
+        include_once 'PHP/Depend/Code/Filter/Collection.php';
+        include_once 'PHP/Depend/Tokenizer/Internal.php';
+        include_once 'PHP/Depend/Input/ExcludePathFilter.php';
+        include_once 'PHP/Depend/Input/Iterator.php';
+
+        if (file_exists($fileOrDirectory) === false) {
+            $fileOrDirectory = self::createCodeResourceURI($fileOrDirectory);
+        }
+
+        if (is_dir($fileOrDirectory)) {
+            $it = new PHP_Depend_Input_Iterator(
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($fileOrDirectory)
+                ),
+                new PHP_Depend_Input_ExcludePathFilter(array('.svn'))
+            );
+        } else {
+            $it = new ArrayIterator(array($fileOrDirectory));
+        }
+
+        $files = array();
         foreach ($it as $file) {
-            $path = $file->getPathname();
-            if ($file->isDir() === false && strpos($path, '.svn') === false) {
-                unlink($file->getPathname());
+            if (is_object($file)) {
+                $files[] = realpath($file->getPathname());
+            } else {
+                $files[] = $file;
             }
         }
-        // Remove all directories
-        foreach ($it as $file) {
-            if ($file->isDir() === false) {
-                continue;
+        sort($files);
+
+        $builder = new PHP_Depend_Builder_Default();
+
+        foreach ($files as $file) {
+            $tokenizer = new PHP_Depend_Tokenizer_Internal();
+            $tokenizer->setSourceFile($file);
+
+            $parser = new PHP_Depend_Parser($tokenizer, $builder);
+            if ($ignoreAnnotations === true) {
+                $parser->setIgnoreAnnotations();
             }
-            $name = $file->getFilename();
-            $path = $file->getPathname();
-            if ($name === '.' || $name === '..' || strpos($path, '.svn') !== false) {
-                continue;
-            }
-            rmdir($name);
+
+            $parser->parse();
         }
+        return $builder->getPackages();
     }
 }
 
