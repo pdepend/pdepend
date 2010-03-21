@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,10 +40,10 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 /**
@@ -53,20 +53,20 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Util_ConfigurationInstance
 {
     /**
      * The unique configuration instance.
      *
-     * @var PHP_Depend_Util_Configuration 
+     * @var PHP_Depend_Util_Configuration
      */
     private static $_configuration = null;
-    
+
     /**
      * Returns a configured config instance or <b>null</b>.
      *
@@ -76,12 +76,12 @@ class PHP_Depend_Util_ConfigurationInstance
     {
         return self::$_configuration;
     }
-    
+
     /**
      * Sets the configuration instance.
      *
      * @param PHP_Depend_Util_Configuration $configuration The config instance.
-     * 
+     *
      * @return void
      */
     public static function set(PHP_Depend_Util_Configuration $configuration = null)

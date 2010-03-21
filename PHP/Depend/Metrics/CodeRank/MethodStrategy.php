@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,30 +40,29 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
-// TODO: Refactory this reflection dependency
-require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * Collects class and package metrics based on class and interface methods.
- * 
+ *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_CodeRank_MethodStrategy
-       extends PHP_Reflection_Visitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
 {
     /**
@@ -72,7 +71,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      * @var array(string=>array) $_nodes
      */
     private $_nodes = array();
-    
+
     /**
      * Returns the collected nodes.
      *
@@ -82,81 +81,83 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     {
         return $this->_nodes;
     }
-    
+
     /**
-     * Visits a method node. 
+     * Visits a method node.
      *
-     * @param PHP_Reflection_AST_MethodI $method The method class node.
-     * 
+     * @param PHP_Depend_Code_Class $method The method class node.
+     *
      * @return void
-     * @see PHP_Reflection_Visitor_AbstractVisitor::visitMethod()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_AST_MethodI $method)
+    public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-        
+
         // Get owner type
         $type = $method->getParent();
-        
-        if (($depType = $method->getReturnType()) !== null) {
+
+        if (($depType = $method->getReturnClass()) !== null) {
             $this->_processType($type, $depType);
         }
-        foreach ($method->getExceptionTypes() as $depType) {
+        foreach ($method->getExceptionClasses() as $depType) {
             $this->_processType($type, $depType);
         }
         foreach ($method->getDependencies() as $depType) {
             $this->_processType($type, $depType);
         }
-        
+
         $this->fireEndMethod($method);
     }
-    
+
     /**
      * Extracts the coupling information between the two given types and their
      * parent packages.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceI $type    The context type instance.
-     * @param PHP_Reflection_AST_ClassOrInterfaceI $depType The referenced type.
-     * 
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type    The type instance.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $depType The referenced type.
+     *
      * @return void
      */
-    private function _processType(PHP_Reflection_AST_ClassOrInterfaceI $type,
-                                  PHP_Reflection_AST_ClassOrInterfaceI $depType)
-    {
-        if (!$type->equals($depType)) {
+    private function _processType(
+        PHP_Depend_Code_AbstractClassOrInterface $type,
+        PHP_Depend_Code_AbstractClassOrInterface $depType
+    ) {
+        if ($type !== $depType) {
             $this->_initNode($type);
             $this->_initNode($depType);
 
             $this->_nodes[$type->getUUID()]['in'][]     = $depType->getUUID();
-            $this->_nodes[$depType->getUUID()]['out'][] = $type->getUUID();  
+            $this->_nodes[$depType->getUUID()]['out'][] = $type->getUUID();
         }
-        
+
         $package    = $type->getPackage();
         $depPackage = $depType->getPackage();
-        
-        if (!$package->equals($depPackage)) {
+
+        if ($package !== $depPackage) {
             $this->_initNode($package);
             $this->_initNode($depPackage);
 
             $this->_nodes[$package->getUUID()]['in'][]     = $depPackage->getUUID();
-            $this->_nodes[$depPackage->getUUID()]['out'][] = $package->getUUID();                
+            $this->_nodes[$depPackage->getUUID()]['out'][] = $package->getUUID();
         }
     }
-    
+
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
-     * 
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
      * @return void
      */
-    private function _initNode(PHP_Reflection_AST_NodeI $node)
+    private function _initNode(PHP_Depend_Code_NodeI $node)
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),
+                'type'  =>  get_class($node)
             );
         }
     }

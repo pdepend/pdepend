@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,10 +39,10 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
@@ -55,24 +55,23 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
-     * List of source packages.
+     * The used node builder.
      *
-     * @var PHP_Reflection_AST_Iterator $_packages
+     * @var PHP_Depend_Builder_Default $builder
      */
-    private $_packages = null;
-    
+    protected $builder = null;
+
     /**
      * Input test data.
      *
-     * @type array<array>
      * @var array(string=>array) $_input
      */
     private $_input = array(
@@ -95,15 +94,14 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             'afferent'      =>  1
         ),
     );
-    
+
     /**
      * Expected test data.
      *
-     * @type array<array>
      * @var array(string=>array) $_expected
      */
     private $_expected = array();
-    
+
     /**
      * Sets up the code builder.
      *
@@ -112,15 +110,15 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     protected function setUp()
     {
         parent::setUp();
-        
-        $this->_packages = self::parseSource('/metrics/dependency/functions_classes_and_interfaces.php');
-        foreach ($this->_packages as $package) {
-            if (isset($this->_input[$package->getUUID()])) {
-                $this->_expected[$package->getUUID()] = $this->_input[$package->getName()];
+
+        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php');
+        foreach ($packages as $pkg) {
+            if (isset($this->_input[$pkg->getUUID()])) {
+                $this->_expected[$pkg->getUUID()] = $this->_input[$pkg->getName()];
             }
         }
     }
-    
+
     /**
      * Tests the generated package metrics.
      *
@@ -129,14 +127,16 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     public function testGenerateMetrics()
     {
         $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
-        foreach ($this->_packages as $package) {
+
+        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php');
+        foreach ($packages as $package) {
             $package->accept($visitor);
         }
-         
-        foreach ($this->_packages as $package) {
-            
+
+        foreach ($packages as $package) {
+
             $uuid = $package->getUUID();
-            
+
             if (!isset($this->_expected[$uuid])) {
                 continue;
             }
@@ -148,10 +148,10 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             $this->assertEquals($expected['instability'], $actual['i']);
             $this->assertEquals($expected['efferent'], $actual['ce']);
             $this->assertEquals($expected['afferent'], $actual['ca']);
-            
+
             unset($this->_expected[$uuid]);
         }
-        
+
         $this->assertEquals(0, count($this->_expected));
     }
 }

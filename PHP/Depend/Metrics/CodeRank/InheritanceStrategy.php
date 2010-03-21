@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,15 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
-// TODO: Refactory this reflection dependency
-require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * Collects class and package metrics based on inheritance.
@@ -57,13 +56,13 @@ require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
-       extends PHP_Reflection_Visitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
 {
     /**
@@ -72,7 +71,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * @var array(string=>array) $_nodes
      */
     private $_nodes = array();
-    
+
     /**
      * Returns the collected nodes.
      *
@@ -82,86 +81,90 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     {
         return $this->_nodes;
     }
-    
+
     /**
      * Visits a code class object.
      *
-     * @param PHP_Reflection_AST_ClassI $class The context code class.
-     * 
+     * @param PHP_Depend_Code_Class $class The context code class.
+     *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitClass()
+     * @see PHP_Depend_VisitorI::visitClass()
+     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
-    public function visitClass(PHP_Reflection_AST_ClassI $class)
+    public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
         $this->fireEndClass($class);
     }
-    
+
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
-     * 
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitInterface()
+     * @see PHP_Depend_VisitorI::visitInterface()
+     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
-    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->fireStartInterface($interface);
-        $this->visitType($interface);        
+        $this->visitType($interface);
         $this->fireEndInterface($interface);
     }
-    
+
     /**
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceI $type The context type instance.
-     * 
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The context type
+     *        instance.
+     *
      * @return void
      */
-    protected function visitType(PHP_Reflection_AST_ClassOrInterfaceI $type)
+    protected function visitType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         $pkg = $type->getPackage();
 
         $this->initNode($pkg);
         $this->initNode($type);
-        
+
         foreach ($type->getDependencies() as $dep) {
-            
+
             $depPkg = $dep->getPackage();
-            
+
             $this->initNode($dep);
             $this->initNode($depPkg);
-            
+
             $this->_nodes[$type->getUUID()]['in'][] = $dep->getUUID();
             $this->_nodes[$dep->getUUID()]['out'][] = $type->getUUID();
-            
+
             // No self references
-            if (!$pkg->equals($depPkg)) {
+            if ($pkg !== $depPkg) {
                 $this->_nodes[$pkg->getUUID()]['in'][]     = $depPkg->getUUID();
                 $this->_nodes[$depPkg->getUUID()]['out'][] = $pkg->getUUID();
             }
         }
     }
-    
+
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
-     * 
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
      * @return void
      */
-    protected function initNode(PHP_Reflection_AST_NodeI $node)
+    protected function initNode(PHP_Depend_Code_NodeI $node)
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(
-                'in'   =>  array(),
-                'out'  =>  array(),
-                'name'  =>  $node->getName()
+                'in'    =>  array(),
+                'out'   =>  array(),
+                'name'  =>  $node->getName(),
+                'type'  =>  get_class($node)
             );
         }
     }
-    
+
 }

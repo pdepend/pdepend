@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,10 +40,10 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
@@ -58,10 +58,10 @@ require_once 'PHP/Depend/TextUI/Runner.php';
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 {
@@ -70,171 +70,274 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * directory.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
     {
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array('foo/bar'));
-        
+        $runner->setSourceArguments(array('foo/bar'));
+
         $this->setExpectedException(
             'RuntimeException',
             "Invalid directory 'foo/bar' added.",
             PHP_Depend_TextUI_Runner::EXCEPTION_EXIT
         );
-        
+
         $runner->run();
     }
-    
+
     /**
      * Tests that the runner stops processing if no logger is specified.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
-        $sources = self::createResourceURI('/textui/bad-documentation');
-        $runner  = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array($sources));
-        
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setSourceArguments(array(dirname(__FILE__). '/../_code/code-without-comments'));
+
         $this->setExpectedException(
-            'RuntimeException', 
-            'No output specified', 
+            'RuntimeException',
+            'No output specified',
             PHP_Depend_TextUI_Runner::EXCEPTION_EXIT
         );
-        
+
         $runner->run();
     }
-    
+
+    /**
+     * testRunnerUsesCorrectFileFilter
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
     public function testRunnerUsesCorrectFileFilter()
     {
-        $logFile = self::createRunResourceURI('/pdepend.dummy');
-        $sources = self::createResourceURI('/textui/extension-filter/');
+        $expected = array(
+            'pdepend.test'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            ),
+            'pdepend.test2'  =>  array(
+                'functions'   =>  0,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            )
+        );
 
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array($sources));
+        $runner->setWithoutAnnotations();
         $runner->setFileExtensions(array('inc'));
-        $runner->addLogger('dummy-logger', $logFile);
-  
-        $this->assertFileNotExists($logFile);
-        ob_start();
-        $runner->run();
-        ob_end_clean();
-        $this->assertFileExists($logFile);
 
-        $data = unserialize(file_get_contents($logFile));
-        
-        $code = $data['code'];
-        $this->assertType('PHP_Reflection_AST_Iterator', $code);
-        $this->assertEquals(2, $code->count());
-        
-        $code->rewind();
-        
-        $package = $code->current();
-        $this->assertType('PHP_Reflection_AST_Package', $package);
-        $this->assertEquals('pdepend.test', $package->getName());
-        
-        $this->assertEquals(1, $package->getFunctions()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
-        
-        $function = $package->getFunctions()->current();
-        $this->assertType('PHP_Reflection_AST_Function', $function);
-        $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(1, $function->getExceptionTypes()->count());
-        $this->assertEquals('MyException', $function->getExceptionTypes()->current()->getName());
-        
-        $code->next();
-        
-        $package = $code->current();
-        $this->assertType('PHP_Reflection_AST_Package', $package);
-        $this->assertEquals('pdepend.test2', $package->getName());
-        
-        $sourceFile = $sources . '/extension-filter.inc';
-        $this->assertEquals($sourceFile, $function->getSourceFile()->getFileName());
+        $actual = $this->_runRunnerAndReturnStatistics(
+            $runner,
+            self::createCodeResourceURI('')
+        );
+
+        $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * Tests that the runner handles the <b>--without-annotations</b> option
      * correct.
      *
      * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
      */
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
     {
-        $fileName = sys_get_temp_dir() . '/pdepend.dummy';
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
-        
+        $expected = array(
+            'pdepend.test'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            ),
+            'pdepend.test2'  =>  array(
+                'functions'   =>  0,
+                'classes'     =>  1,
+                'interfaces'  =>  0,
+                'exceptions'  =>  0
+            )
+        );
+
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array(dirname(__FILE__). '/../_code'));
-        $runner->setFileExtensions(array('inc'));
-        $runner->addLogger('dummy-logger', $fileName);
         $runner->setWithoutAnnotations();
-        
-        ob_start();
-        $runner->run();
-        ob_end_clean();
-        
-        $this->assertFileExists($fileName);
-        
-        $data = unserialize(file_get_contents($fileName));
-        
-        $code = $data['code'];
-        $this->assertType('PHP_Reflection_AST_Iterator', $code);
-        $this->assertEquals(2, $code->count());
-        
-        $code->rewind();
-        
-        $package = $code->current();
-        $this->assertType('PHP_Reflection_AST_Package', $package);
-        $this->assertEquals('pdepend.test', $package->getName());
-        
-        $this->assertEquals(1, $package->getFunctions()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
-        
-        $function = $package->getFunctions()->current();
-        $this->assertType('PHP_Reflection_AST_Function', $function);
-        $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(0, $function->getExceptionTypes()->count());
-        
-        $code->next();
-        
-        $package = $code->current();
-        $this->assertType('PHP_Reflection_AST_Package', $package);
-        $this->assertEquals('pdepend.test2', $package->getName());
-        
-        unlink($fileName);
+
+        $actual = $this->_runRunnerAndReturnStatistics(
+            $runner,
+            self::createCodeResourceURI('function.inc')
+        );
+
+        $this->assertEquals($expected, $actual);
     }
-    
+
+    /**
+     * testSupportBadDocumentation
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
     public function testSupportBadDocumentation()
     {
-        $logFile = self::createRunResourceURI('/pdepend.dummy');
-        $sources = self::createResourceURI('/textui/bad-documentation/');
+        $expected = array(
+            '+global'  =>  array(
+                'functions'   =>  1,
+                'classes'     =>  7,
+                'interfaces'  =>  3,
+                'exceptions'  =>  0
+            )
+        );
         
         $runner = new PHP_Depend_TextUI_Runner();
-        $runner->setSourceDirectories(array($sources));
-        $runner->setSupportBadDocumentation();
+        $actual = $this->_runRunnerAndReturnStatistics(
+            $runner,
+            self::createCodeResourceURI('code-without-comments')
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testRunnerHasParseErrorsReturnsFalseForValidSource
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testRunnerHasParseErrorsReturnsFalseForValidSource()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+        $runner->run();
+
+        $this->assertFalse($runner->hasParseErrors());
+    }
+
+    /**
+     * testRunnerHasParseErrorsReturnsTrueForInvalidSource
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+
+        try {
+            $runner->run();
+        } catch (Exception $e) {}
+
+        $this->assertTrue($runner->hasParseErrors());
+    }
+
+    /**
+     * testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+
+        try {
+            $runner->run();
+        } catch (Exception $e) {}
+
+        $errors = $runner->getParseErrors();
+        $this->assertContains('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
+
+        $this->assertTrue($runner->hasParseErrors());
+    }
+
+    /**
+     * testRunnerThrowsExceptionForUndefinedLoggerClass
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Runner
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     * @expectedException RuntimeException
+     */
+    public function testRunnerThrowsExceptionForUndefinedLoggerClass()
+    {
+        $runner = new PHP_Depend_TextUI_Runner();
+        $runner->addLogger('FooBarLogger', self::createRunResourceURI('log.xml'));
+        $runner->run();
+    }
+
+    /**
+     * Executes the runner class and returns an array with package statistics.
+     *
+     * @param array  PHP_Depend_TextUI_Runner $runner   The runner instance.
+     * @param string                          $pathName The source path.
+     *
+     * @return array
+     */
+    private function _runRunnerAndReturnStatistics(PHP_Depend_TextUI_Runner $runner, $pathName)
+    {
+        $logFile = self::createRunResourceURI('pdepend.dummy');
+
+        $runner->setSourceArguments(array($pathName));
         $runner->addLogger('dummy-logger', $logFile);
 
-        $this->assertFileNotExists($logFile);
         ob_start();
         $runner->run();
         ob_end_clean();
-        $this->assertFileExists($logFile);
-        
-        $data = unserialize(file_get_contents($logFile));
-        
-        $code = $data['code'];
-        $this->assertType('PHP_Reflection_AST_Iterator', $code);
-        $this->assertEquals(1, $code->count());
-        
-        $code->rewind();
-        
-        $package = $code->current();
-        $this->assertType('PHP_Reflection_AST_Package', $package);
-        $this->assertEquals(PHP_Reflection_BuilderI::PKG_UNKNOWN, $package->getName());
 
-        $this->assertEquals(7, $package->getClasses()->count());
-        $this->assertEquals(3, $package->getInterfaces()->count());
+        $data = unserialize(file_get_contents($logFile));
+        $code = $data['code'];
+
+        $actual = array();
+        foreach ($code as $package) {
+            $exceptions = 0;
+            foreach ($package->getFunctions() as $function) {
+                $exceptions += $function->getExceptionClasses()->count();
+            }
+
+            $actual[$package->getName()] = array(
+                'functions'   =>  $package->getFunctions()->count(),
+                'classes'     =>  $package->getClasses()->count(),
+                'interfaces'  =>  $package->getInterfaces()->count(),
+                'exceptions'  =>  $exceptions
+            );
+        }
+        ksort($actual);
+
+        return $actual;
     }
 }

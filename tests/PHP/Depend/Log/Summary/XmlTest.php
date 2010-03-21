@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,17 +40,20 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
-require_once dirname(__FILE__) . '/_dummy/TestImplAnalyzerNodeAware.php';
-require_once dirname(__FILE__) . '/_dummy/TestImplAnalyzerProjectAware.php';
+require_once dirname(__FILE__) . '/AnalyzerNodeAwareDummy.php';
+require_once dirname(__FILE__) . '/AnalyzerProjectAwareDummy.php';
+require_once dirname(__FILE__) . '/AnalyzerNodeAndProjectAwareDummy.php';
 
 require_once 'PHP/Depend/Log/Summary/Xml.php';
+require_once 'PHP/Depend/Metrics/NodeAwareI.php';
+require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
 
 /**
  * Test case for the xml summary log.
@@ -59,31 +62,61 @@ require_once 'PHP/Depend/Log/Summary/Xml.php';
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test data for lines of code.
+     * Test code structure.
      *
-     * @var array(array) $_locData
+     * @var PHP_Depend_Code_NodeIterator $packages
      */
-    private static $_locData = array(
-        array('loc'  =>  42),  array('ncloc'  =>  23),
-        array('loc'  =>  9),   array('ncloc'  =>  7),
-        array('loc'  =>  101), array('ncloc'  =>  99),
-        array('loc'  =>  90),  array('ncloc'  =>  80),
-        array('loc'  =>  50),  array('ncloc'  =>  45),
-        array('loc'  =>  30),  array('ncloc'  =>  22),
-        array('loc'  =>  9),   array('ncloc'  =>  9),
-        array('loc'  =>  3),   array('ncloc'  =>  3),
-        array('loc'  =>  42),  array('ncloc'  =>  23),
-        array('loc'  =>  33),  array('ncloc'  =>  20),
-        array('loc'  =>  9),   array('ncloc'  =>  7),
-    );
+    protected $packages = null;
+
+    /**
+     * The test file name.
+     *
+     * @var string $testFile
+     */
+    protected $testFileName = null;
+
+    /**
+     * The temporary file name for the logger result.
+     *
+     * @var string $resultFile
+     */
+    protected $resultFile = null;
+
+    /**
+     * Creates the package structure from a test source file.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->testFileName = dirname(__FILE__) . '/../../_code/mixed_code.php';
+        $this->testFileName = realpath($this->testFileName);
+
+        $this->packages   = self::parseSource($this->testFileName);
+        $this->resultFile = self::createRunResourceURI('log-summary.xml');
+    }
+
+    /**
+     * Removes the temporary log files.
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+        @unlink($this->resultFile);
+
+        parent::tearDown();
+    }
 
     /**
      * Tests that the logger returns the expected set of analyzers.
@@ -98,12 +131,12 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Metrics_NodeAwareI',
             'PHP_Depend_Metrics_ProjectAwareI'
         );
-        
+
         $this->assertEquals($exptected, $actual);
     }
-    
+
     /**
-     * Tests that the logger throws an exception if the log target wasn't 
+     * Tests that the logger throws an exception if the log target wasn't
      * configured.
      *
      * @return void
@@ -114,38 +147,70 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Log_NoLogOutputException',
             "The log target is not configured for 'PHP_Depend_Log_Summary_Xml'."
         );
-        
+
         $logger = new PHP_Depend_Log_Summary_Xml();
         $logger->close();
     }
-    
+
     /**
-     * Tests that {@link PHP_Depend_Log_Summary_Xml::write()} generates the 
-     * expected document structure for the source, but without any applied 
+     * testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::logs
+     * @group pdepend::logs::summary
+     * @group unittest
+     */
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware()
+    {
+        $logger = new PHP_Depend_Log_Summary_Xml();
+        $actual = $logger->log($this->getMock('PHP_Depend_Metrics_ProjectAwareI'));
+
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::logs
+     * @group pdepend::logs::summary
+     * @group unittest
+     */
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware()
+    {
+        $logger = new PHP_Depend_Log_Summary_Xml();
+        $actual = $logger->log($this->getMock('PHP_Depend_Metrics_NodeAwareI'));
+
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * Tests that {@link PHP_Depend_Log_Summary_Xml::write()} generates the
+     * expected document structure for the source, but without any applied
      * metrics.
      *
      * @return void
      */
     public function testXmlLogWithoutMetrics()
     {
-        $expectedFile = self::getNormalizedPathXml('/xml-log-without-metrics.xml');
-        $actualFile   = self::createRunResourceURI('/summary.xml');
-        
-        $packages = self::parseSource('/log/summary/');
-        
         $log = new PHP_Depend_Log_Summary_Xml();
-        $log->setLogFile($actualFile);
-        $log->setCode($packages);
-        
-        $this->assertFileNotExists($actualFile);
+        $log->setLogFile($this->resultFile);
+        $log->setCode($this->packages);
         $log->close();
-        $this->assertFileExists($actualFile);
 
-        $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
+        $fileName = 'xml-log-without-metrics.xml';
+        $this->assertXmlStringEqualsXmlString(
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml($this->resultFile)
+        );
     }
-    
+
     /**
-     * Tests that the xml logger generates the expected xml document for an 
+     * Tests that the xml logger generates the expected xml document for an
      * empty source code structure.
      *
      * @return void
@@ -153,127 +218,122 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     public function testProjectAwareAnalyzerWithoutCode()
     {
         $metricsOne = array('interfs'  =>  42, 'cls'  =>  23);
-        $resultOne  = new PHP_Depend_Log_Summary_TestImplAnalyzerProjectAware($metricsOne);
-        
+        $resultOne  = new PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy($metricsOne);
+
         $metricsTwo = array('ncloc'  =>  1742, 'loc'  =>  4217);
-        $resultTwo  = new PHP_Depend_Log_Summary_TestImplAnalyzerProjectAware($metricsTwo);
-        
-        $expectedFile = self::getNormalizedPathXml('/project-aware-result-set-without-code.xml');
-        $actualFile   = self::createRunResourceURI('/summary.xml');
-        
+        $resultTwo  = new PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy($metricsTwo);
+
         $log = new PHP_Depend_Log_Summary_Xml();
-        $log->setLogFile($actualFile);
-        $log->setCode(self::parseSource('/log/summary/empty/'));
-        $this->assertTrue($log->log($resultOne));
-        $this->assertTrue($log->log($resultTwo));
-        
-        $this->assertFileNotExists($actualFile);
+        $log->setLogFile($this->resultFile);
+        $log->setCode(new PHP_Depend_Code_NodeIterator(array()));
+        $log->log($resultOne);
+        $log->log($resultTwo);
+
         $log->close();
-        $this->assertFileExists($actualFile);
-        
-        $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
+
+        $fileName = 'project-aware-result-set-without-code.xml';
+        $this->assertXmlStringEqualsXmlString(
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml($this->resultFile)
+        );
     }
-    
+
     /**
-     * Tests that the logger handles multiple node aware analyzers correct.
+     * testAnalyzersThatImplementProjectAndNodeAwareAsExpected
      *
      * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::summary
+     * @group unittest
      */
+    public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected()
+    {
+        $analyzer = new PHP_Depend_Log_Summary_AnalyzerNodeAndProjectAwareDummy(
+            array('foo' => 42, 'bar' => 23),
+            array('baz' => 23, 'foobar' => 42)
+        );
+
+        $log = new PHP_Depend_Log_Summary_Xml();
+        $log->setLogFile($this->resultFile);
+        $log->setCode($this->packages);
+        $log->log($analyzer);
+
+        $log->close();
+
+        $fileName = 'node-and-project-aware-result-set.xml';
+        $this->assertXmlStringEqualsXmlString(
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml($this->resultFile)
+        );
+    }
+
     public function testNodeAwareAnalyzer()
     {
-        $expectedFile = self::getNormalizedPathXml('/node-aware-result-set.xml');
-        $actualFile   = self::createRunResourceURI('/summary.xml');
-        
-        // Create example source
-        $packages = self::parseSource('/log/summary/');
-        // Create dummy analyzers
-        list($analyzer1, $analyzer2) = self::_createNodeAnalyzers($packages);
-        
-        $log = new PHP_Depend_Log_Summary_Xml();
-        $log->setLogFile($actualFile);
-        $log->setCode($packages);
-        $this->assertTrue($log->log($analyzer1));
-        $this->assertTrue($log->log($analyzer2));
+        $input = array(
+            array('loc'  =>  42),  array('ncloc'  =>  23),
+            array('loc'  =>  9),   array('ncloc'  =>  7),
+            array('loc'  =>  101), array('ncloc'  =>  99),
+            array('loc'  =>  90),  array('ncloc'  =>  80),
+            array('loc'  =>  50),  array('ncloc'  =>  45),
+            array('loc'  =>  30),  array('ncloc'  =>  22),
+            array('loc'  =>  9),   array('ncloc'  =>  9),
+            array('loc'  =>  3),   array('ncloc'  =>  3),
+            array('loc'  =>  42),  array('ncloc'  =>  23),
+            array('loc'  =>  33),  array('ncloc'  =>  20),
+            array('loc'  =>  9),   array('ncloc'  =>  7),
+        );
 
-        $this->assertFileNotExists($actualFile);
-        $log->close();
-        $this->assertFileExists($actualFile);
-copy($actualFile, '/tmp/summary.xml');        
-        $this->assertXmlFileEqualsXmlFile($expectedFile, $actualFile);
-    }
-    
-    /**
-     * Normalizes the file references within the expected result document.
-     *
-     * @param string $fileName File name of the expected result document.
-     * 
-     * @return string The uri of the result document.
-     */
-    protected static function getNormalizedPathXml($fileName)
-    {
-        $fileName = dirname(__FILE__) . "/_expected/{$fileName}";
-        if (file_exists($fileName) === false) {
-            throw new ErrorException("Invalid expected file '{$fileName}'."); 
-        }
-        
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        
-        $dom->formatOutput       = true;
-        $dom->preserveWhiteSpace = false;
-        
-        if ($dom->load($fileName) === false) {
-            throw new ErrorException("Invalid xml in file '{$fileName}'.");
-        }
-        
-        $path = self::createResourceURI('/log/summary/') . '/';
-        
-        // Adjust path
-        foreach ($dom->getElementsByTagName('file') as $fileXml) {
-            $sourceFile = $fileXml->getAttribute('name');
-            $sourceFile = $path . basename($sourceFile);
-
-            $fileXml->setAttribute('name', $sourceFile);
-        }
-        
-        $expected = self::createRunResourceURI('/phpunit.expected.xml');
-        $dom->save($expected);
-        
-        return $expected;
-    }
-    
-    /**
-     * Creates an array with dummy node analyzers
-     *
-     * @param PHP_Reflection_AST_Iterator $packages The package iterator
-     * 
-     * @return array(PHP_Depend_Metrics_NodeAwareI)
-     */
-    private static function _createNodeAnalyzers($packages)
-    {
-        // Create a copy of the loc data
-        $data = self::$_locData;
-        
-        $m1 = $m2 = array();
-        foreach ($packages as $pkg) {
-            $m1[$pkg->getUUID()] = array_shift($data);
-            $m2[$pkg->getUUID()] = array_shift($data);
-            foreach ($pkg->getClasses() as $class) {
-                $m1[$class->getUUID()] = array_shift($data);
-                $m2[$class->getUUID()] = array_shift($data);
+        $metricsOne = array();
+        $metricsTwo = array();
+        foreach ($this->packages as $package) {
+            $metricsOne[$package->getUUID()] = array_shift($input);
+            $metricsTwo[$package->getUUID()] = array_shift($input);
+            foreach ($package->getClasses() as $class) {
+                $metricsOne[$class->getUUID()] = array_shift($input);
+                $metricsTwo[$class->getUUID()] = array_shift($input);
                 foreach ($class->getMethods() as $method) {
-                    $m1[$method->getUUID()] = array_shift($data);
-                    $m2[$method->getUUID()] = array_shift($data);
+                    $metricsOne[$method->getUUID()] = array_shift($input);
+                    $metricsTwo[$method->getUUID()] = array_shift($input);
                 }
             }
-            foreach ($pkg->getFunctions() as $function) {
-                $m1[$function->getUUID()] = array_shift($data);
-                $m2[$function->getUUID()] = array_shift($data);
+            foreach ($package->getFunctions() as $function) {
+                $metricsOne[$function->getUUID()] = array_shift($input);
+                $metricsTwo[$function->getUUID()] = array_shift($input);
             }
         }
-        
-        return array(
-            new PHP_Depend_Log_Summary_TestImplAnalyzerNodeAware($m1),
-            new PHP_Depend_Log_Summary_TestImplAnalyzerNodeAware($m2)
-        );         
+
+        $resultOne = new PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy($metricsOne);
+        $resultTwo = new PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy($metricsTwo);
+
+        $log = new PHP_Depend_Log_Summary_Xml();
+        $log->setLogFile($this->resultFile);
+        $log->setCode($this->packages);
+        $log->log($resultOne);
+        $log->log($resultTwo);
+
+        $log->close();
+
+        $fileName = 'node-aware-result-set.xml';
+        $this->assertXmlStringEqualsXmlString(
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml($this->resultFile)
+        );
+    }
+
+    protected function getNormalizedPathXml($fileName)
+    {
+        $dom                     = new DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->load($fileName);
+
+        // Adjust file path
+        foreach ($dom->getElementsByTagName('file') as $file) {
+            $file->setAttribute('name', $this->testFileName);
+        }
+        $dom->documentElement->setAttribute('generated', '2010-02-22T08:26:51');
+
+        return $dom->saveXML();
     }
 }

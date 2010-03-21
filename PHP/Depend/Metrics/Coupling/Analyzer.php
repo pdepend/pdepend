@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,17 +40,18 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
+
+require_once 'PHP/Depend/Code/ASTInvocation.php';
+require_once 'PHP/Depend/Code/ASTMemberPrimaryPrefix.php';
 
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
-
-require_once 'PHP/Depend/Util/NodeSet.php';
 
 /**
  * This analyzer collects coupling values for the hole project. It calculates
@@ -77,16 +78,27 @@ require_once 'PHP/Depend/Util/NodeSet.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_Coupling_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_ProjectAwareI
 {
+    /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_CALLS  = 'calls',
+          M_FANOUT = 'fanout';
+
     /**
      * The number of method or function calls.
      *
@@ -116,19 +128,19 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     public function getProjectMetrics()
     {
         return array(
-            'calls'   =>  $this->_calls,
-            'fanout'  =>  $this->_fanout
+            self::M_CALLS   =>  $this->_calls,
+            self::M_FANOUT  =>  $this->_fanout
         );
     }
 
     /**
-     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
-     * @param PHP_Reflection_AST_Iterator $packages All code packages.
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      *
      * @return void
      */
-    public function analyze(PHP_Reflection_AST_Iterator $packages)
+    public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         // Check for previous run
         if ($this->_calls === -1) {
@@ -151,28 +163,32 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a function node.
      *
-     * @param PHP_Reflection_AST_Function $function The current function node.
+     * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitFunction()
+     * @see PHP_Depend_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_AST_FunctionI $function)
+    public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
 
-        $fanoutSet = new PHP_Depend_Util_NodeSet();
+        $fanouts = array();
+        if (($type = $function->getReturnClass()) !== null) {
+            $fanouts[] = $type;
+            ++$this->_fanout;
+        }
+        foreach ($function->getExceptionClasses() as $type) {
+            if (in_array($type, $fanouts, true) === false) {
+                $fanouts[] = $type;
+                ++$this->_fanout;
+            }
+        }
+        foreach ($function->getDependencies() as $type) {
+            if (in_array($type, $fanouts, true) === false) {
+                ++$this->_fanout;
+            }
+        }
 
-        if (($returnType = $function->getReturnType()) !== null) {
-            $fanoutSet->add($returnType);
-        }
-        foreach ($function->getExceptionTypes() as $exceptionType) {
-            $fanoutSet->add($exceptionType);
-        }
-        foreach ($function->getDependencies() as $dependency) {
-            $fanoutSet->add($dependency);
-        }
-
-        $this->_fanout += $fanoutSet->size();
         $this->_countCalls($function);
 
         $this->fireEndFunction($function);
@@ -181,41 +197,43 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Reflection_AST_MethodI $method The method class node.
+     * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitMethod()
+     * @see PHP_Depend_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_AST_MethodI $method)
+    public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
 
-        $parentNode = $method->getParent();
-        $fanoutSet  = new PHP_Depend_Util_NodeSet();
+        $parent = $method->getParent();
 
-        if (($type = $method->getReturnType()) !== null) {
-            if (!$type->isSubtypeOf($parentNode) &&
-                !$parentNode->isSubtypeOf($type)) {
-
-                $fanoutSet->add($type);
+        $fanouts = array();
+        if (($type = $method->getReturnClass()) !== null) {
+            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
+                $fanouts[] = $type;
+                ++$this->_fanout;
             }
         }
-        foreach ($method->getExceptionTypes() as $type) {
-            if (!$type->isSubtypeOf($parentNode) &&
-                !$parentNode->isSubtypeOf($type)) {
-
-                $fanoutSet->add($type);
+        foreach ($method->getExceptionClasses() as $type) {
+            if (in_array($type, $fanouts, true)) {
+                continue;
+            }
+            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
+                $fanouts[] = $type;
+                ++$this->_fanout;
             }
         }
         foreach ($method->getDependencies() as $type) {
-            if (!$type->isSubtypeOf($parentNode) &&
-                !$parentNode->isSubtypeOf($type)) {
-
-                $fanoutSet->add($type);
+            if (in_array($type, $fanouts, true)) {
+                continue;
+            }
+            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
+                $fanouts[] = $type;
+                ++$this->_fanout;
             }
         }
 
-        $this->_fanout += $fanoutSet->size();
         $this->_countCalls($method);
 
         $this->fireEndMethod($method);
@@ -224,21 +242,23 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a property node.
      *
-     * @param PHP_Reflection_AST_PropertyI $property The property class node.
+     * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitProperty()
+     * @see PHP_Depend_VisitorI::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_AST_PropertyI $property)
+    public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->fireStartProperty($property);
 
         // Check for not null
-        if (($type = $property->getType()) !== null) {
-            $parent = $property->getParent();
+        if (($type = $property->getClass()) !== null) {
+            $declaringClass = $property->getDeclaringClass();
 
             // Only increment if these types are not part of the same hierarchy
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
+            if (!$type->isSubtypeOf($declaringClass)
+                && !$declaringClass->isSubtypeOf($type)
+            ) {
                 ++$this->_fanout;
             }
         }
@@ -249,57 +269,35 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Counts all calls within the given <b>$callable</b>
      *
-     * @param PHP_Reflection_AST_CallableI $callable Context callable.
+     * @param PHP_Depend_Code_AbstractCallable $callable Context callable.
      *
      * @return void
      */
-    private function _countCalls(PHP_Reflection_AST_CallableI $callable)
+    private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $callT  = array(
-            PHP_Reflection_TokenizerI::T_STRING,
-            PHP_Reflection_TokenizerI::T_VARIABLE
-        );
-        $chainT = array(
-            PHP_Reflection_TokenizerI::T_DOUBLE_COLON,
-            PHP_Reflection_TokenizerI::T_OBJECT_OPERATOR,
+        $invocations = $callable->findChildrenOfType(
+            PHP_Depend_Code_ASTInvocation::CLAZZ
         );
 
-        $called = array();
+        $invoked = array();
 
-        $tokens = $callable->getTokens();
-        for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
-            // Skip non parenthesis tokens
-            if ($tokens[$i][0] !== PHP_Reflection_TokenizerI::T_PARENTHESIS_OPEN) {
-                continue;
-            }
-            // Skip first token
-            if (!isset($tokens[$i - 1]) || !in_array($tokens[$i - 1][0], $callT)) {
-                continue;
-            }
-            // Count if no other token exists
-            if (!isset($tokens[$i - 2]) && !isset($called[$tokens[$i - 1][1]])) {
-                $called[$tokens[$i - 1][1]] = true;
-                ++$this->_calls;
-                continue;
-            } else if (in_array($tokens[$i - 2][0], $chainT)) {
-                $identifier = $tokens[$i - 2][1] . $tokens[$i - 1][1];
-                for ($j = $i - 3; $j >= 0; --$j) {
-                    if (!in_array($tokens[$j][0], $callT)
-                     && !in_array($tokens[$j][0], $chainT)) {
+        foreach ($invocations as $invocation) {
+            $parents = $invocation->getParentsOfType(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+            );
 
-                        break;
-                    }
-                    $identifier = $tokens[$j][1] . $identifier;
+            $image = '';
+            foreach ($parents as $parent) {
+                $child = $parent->getChild(0);
+                if ($child !== $invocation) {
+                    $image .= $child->getImage() . '.';
                 }
-
-                if (!isset($called[$identifier])) {
-                    $called[$identifier] = true;
-                    ++$this->_calls;
-                }
-            } else if ($tokens[$i - 2][0] !== PHP_Reflection_TokenizerI::T_NEW) {
-                $called[$tokens[$i - 1][1]] = true;
-                ++$this->_calls;
             }
+            $image .= $invocation->getImage() . '()';
+
+            $invoked[$image] = $image;
         }
+
+        $this->_calls += count($invoked);
     }
 }

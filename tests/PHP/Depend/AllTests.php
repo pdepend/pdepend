@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,10 +39,10 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 
 if (defined('PHPUnit_MAIN_METHOD') === false) {
@@ -54,10 +54,21 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 require_once dirname(__FILE__) . '/DependTest.php';
+require_once dirname(__FILE__) . '/ParserTest.php';
+require_once dirname(__FILE__) . '/ParserRegressionTest.php';
+require_once dirname(__FILE__) . '/StorageRegistryTest.php';
+require_once dirname(__FILE__) . '/Builder/DefaultTest.php';
+require_once dirname(__FILE__) . '/Bugs/AllTests.php';
+require_once dirname(__FILE__) . '/Code/AllTests.php';
+require_once dirname(__FILE__) . '/Input/AllTests.php';
+require_once dirname(__FILE__) . '/Issues/AllTests.php';
 require_once dirname(__FILE__) . '/Log/AllTests.php';
 require_once dirname(__FILE__) . '/Metrics/AllTests.php';
+require_once dirname(__FILE__) . '/Parser/AllTests.php';
 require_once dirname(__FILE__) . '/TextUI/AllTests.php';
+require_once dirname(__FILE__) . '/Tokenizer/AllTests.php';
 require_once dirname(__FILE__) . '/Util/AllTests.php';
+require_once dirname(__FILE__) . '/Visitor/AllTests.php';
 
 /**
  * Main test suite for the PHP_Depend package.
@@ -65,10 +76,10 @@ require_once dirname(__FILE__) . '/Util/AllTests.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://www.manuel-pichler.de/
+ * @link      http://pdepend.org/
  */
 class PHP_Depend_AllTests
 {
@@ -81,7 +92,7 @@ class PHP_Depend_AllTests
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
-    
+
     /**
      * Creates the phpunit test suite for this package.
      *
@@ -90,11 +101,24 @@ class PHP_Depend_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
+
+        $suite->addTest(PHP_Depend_Bugs_AllTests::suite());
+        $suite->addTest(PHP_Depend_Code_AllTests::suite());
+        $suite->addTest(PHP_Depend_Issues_AllTests::suite());
         $suite->addTest(PHP_Depend_Log_AllTests::suite());
+        $suite->addTest(PHP_Depend_Input_AllTests::suite());
         $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
+        $suite->addTest(PHP_Depend_Parser_AllTests::suite());
         $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
+        $suite->addTest(PHP_Depend_Tokenizer_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_AllTests::suite());
+        $suite->addTest(PHP_Depend_Visitor_AllTests::suite());
+
+        $suite->addTestSuite('PHP_Depend_Builder_DefaultTest');
+        $suite->addTestSuite('PHP_Depend_ParserTest');
+        $suite->addTestSuite('PHP_Depend_ParserRegressionTest');
         $suite->addTestSuite('PHP_Depend_DependTest');
+        $suite->addTestSuite('PHP_Depend_StorageRegistryTest');
 
         return $suite;
     }

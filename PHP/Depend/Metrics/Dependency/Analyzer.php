@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,10 +40,10 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
@@ -56,15 +56,31 @@ require_once 'PHP/Depend/Metrics/AnalyzerI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_Dependency_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI
 {
+    /**
+     * Type of this analyzer class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Metrics provided by the analyzer implementation.
+     */
+    const M_NUMBER_OF_CLASSES          = 'tc',
+          M_NUMBER_OF_CONCRETE_CLASSES = 'cc',
+          M_NUMBER_OF_ABSTRACT_CLASSES = 'ac',
+          M_AFFERENT_COUPLING          = 'ca',
+          M_EFFERENT_COUPLING          = 'ce',
+          M_ABSTRACTION                = 'a',
+          M_INSTABILITY                = 'i',
+          M_DISTANCE                   = 'd';
     /**
      * Hash with all calculated node metrics.
      *
@@ -107,12 +123,12 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * <code>
      * array(
      *     <package-uuid> => array(
-     *         PHP_Reflection_AST_Package {},
-     *         PHP_Reflection_AST_Package {},
+     *         PHP_Depend_Code_Package {},
+     *         PHP_Depend_Code_Package {},
      *     ),
      *     <package-uuid> => array(
-     *         PHP_Reflection_AST_Package {},
-     *         PHP_Reflection_AST_Package {},
+     *         PHP_Depend_Code_Package {},
+     *         PHP_Depend_Code_Package {},
      *     ),
      * )
      * </code>
@@ -122,13 +138,13 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     private $_collectedCycles = array();
 
     /**
-     * Processes all {@link PHP_Reflection_AST_Package} code nodes.
+     * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
-     * @param PHP_Reflection_AST_Iterator $packages All code packages.
+     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      *
      * @return void
      */
-    public function analyze(PHP_Reflection_AST_Iterator $packages)
+    public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
 
@@ -153,11 +169,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Returns the statistics for the requested node.
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
      * @return array
      */
-    public function getStats(PHP_Reflection_AST_NodeI $node)
+    public function getStats(PHP_Depend_Code_NodeI $node)
     {
         $stats = array();
         if (isset($this->_nodeMetrics[$node->getUUID()])) {
@@ -169,11 +185,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
-     * @return array(PHP_Reflection_AST_NodeI)
+     * @return array(PHP_Depend_Code_NodeI)
      */
-    public function getAfferents(PHP_Reflection_AST_NodeI $node)
+    public function getAfferents(PHP_Depend_Code_NodeI $node)
     {
         $afferents = array();
         if (isset($this->_afferentNodes[$node->getUUID()])) {
@@ -185,11 +201,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
-     * @return array(PHP_Reflection_AST_NodeI)
+     * @return array(PHP_Depend_Code_NodeI)
      */
-    public function getEfferents(PHP_Reflection_AST_NodeI $node)
+    public function getEfferents(PHP_Depend_Code_NodeI $node)
     {
         $efferents = array();
         if (isset($this->_efferentNodes[$node->getUUID()])) {
@@ -202,11 +218,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Returns an array of nodes that build a cycle for the requested node or it
      * returns <b>null</b> if no cycle exists .
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
-     * @return array(PHP_Reflection_AST_NodeI)
+     * @return array(PHP_Depend_Code_NodeI)
      */
-    public function getCycle(PHP_Reflection_AST_NodeI $node)
+    public function getCycle(PHP_Depend_Code_NodeI $node)
     {
         if (isset($this->_collectedCycles[$node->getUUID()])) {
             return $this->_collectedCycles[$node->getUUID()];
@@ -217,34 +233,17 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Reflection_AST_MethodI $method The method class node.
+     * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
      */
-    public function visitMethod(PHP_Reflection_AST_MethodI $method)
+    public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
 
-        // Get context package uuid
-        $pkgUUID = $method->getParent()->getPackage()->getUUID();
-
-        // Traverse all dependencies
+        $package = $method->getParent()->getPackage();
         foreach ($method->getDependencies() as $dep) {
-            // Get dependent package uuid
-            $depPkgUUID = $dep->getPackage()->getUUID();
-
-            // Skip if context and dependency are equal
-            if ($depPkgUUID === $pkgUUID) {
-                continue;
-            }
-
-            // Create a container for this dependency
-            $this->initPackageMetric($dep->getPackage());
-
-            if (!in_array($depPkgUUID, $this->_nodeMetrics[$pkgUUID]['ce'])) {
-                $this->_nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
-                $this->_nodeMetrics[$depPkgUUID]['ca'][] = $pkgUUID;
-            }
+            $this->_collectDependencies($package, $dep->getPackage());
         }
 
         $this->fireEndMethod($method);
@@ -253,11 +252,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a package node.
      *
-     * @param PHP_Reflection_AST_PackageI $package The package class node.
+     * @param PHP_Depend_Code_Class $package The package class node.
      *
      * @return void
      */
-    public function visitPackage(PHP_Reflection_AST_PackageI $package)
+    public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $this->fireStartPackage($package);
 
@@ -283,11 +282,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a class node.
      *
-     * @param PHP_Reflection_AST_ClassI $class The current class node.
+     * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
      */
-    public function visitClass(PHP_Reflection_AST_ClassI $class)
+    public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
@@ -297,11 +296,11 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits an interface node.
      *
-     * @param PHP_Reflection_AST_InterfaceI $interface The current interface node.
+     * @param PHP_Depend_Code_Interface $interface The current interface node.
      *
      * @return void
      */
-    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
@@ -312,42 +311,28 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Generic visit method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param PHP_Reflection_AST_ClassOrInterfaceI $type The context type instance.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance.
      *
      * @return void
      */
-    protected function visitType(PHP_Reflection_AST_ClassOrInterfaceI $type)
+    protected function visitType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         // Get context package uuid
         $pkgUUID = $type->getPackage()->getUUID();
 
         // Increment total classes count
-        ++$this->_nodeMetrics[$pkgUUID]['tc'];
+        ++$this->_nodeMetrics[$pkgUUID][self::M_NUMBER_OF_CLASSES];
 
         // Check for abstract or concrete class
         if ($type->isAbstract()) {
-            ++$this->_nodeMetrics[$pkgUUID]['ac'];
+            ++$this->_nodeMetrics[$pkgUUID][self::M_NUMBER_OF_ABSTRACT_CLASSES];
         } else {
-            ++$this->_nodeMetrics[$pkgUUID]['cc'];
+            ++$this->_nodeMetrics[$pkgUUID][self::M_NUMBER_OF_CONCRETE_CLASSES];
         }
 
-        // Traverse all dependencies
+        
         foreach ($type->getDependencies() as $dep) {
-            // Get dependent package uuid
-            $depPkgUUID = $dep->getPackage()->getUUID();
-
-            // Skip if context and dependency are equal
-            if ($depPkgUUID === $pkgUUID) {
-                continue;
-            }
-
-            // Create a container for this dependency
-            $this->initPackageMetric($dep->getPackage());
-
-            if (!in_array($depPkgUUID, $this->_nodeMetrics[$pkgUUID]['ce'])) {
-                $this->_nodeMetrics[$pkgUUID]['ce'][]    = $depPkgUUID;
-                $this->_nodeMetrics[$depPkgUUID]['ca'][] = $pkgUUID;
-            }
+            $this->_collectDependencies($type->getPackage(), $dep->getPackage());
         }
 
         foreach ($type->getMethods() as $method) {
@@ -356,13 +341,41 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     }
 
     /**
-     * Initializes the node metric record for the given <b>$package</b>.
+     * Collects the dependencies between the two given packages.
      *
-     * @param PHP_Reflection_AST_Package $package The context package.
+     * @param PHP_Depend_Code_Package $packageA Context/owning package.
+     * @param PHP_Depend_Code_Package $packageB Dependent package.
      *
      * @return void
      */
-    protected function initPackageMetric(PHP_Reflection_AST_Package $package)
+    private function _collectDependencies(
+        PHP_Depend_Code_Package $packageA,
+        PHP_Depend_Code_Package $packageB
+    ) {
+        $idA = $packageA->getUUID();
+        $idB = $packageB->getUUID();
+
+        if ($idB === $idA) {
+            return;
+        }
+
+        // Create a container for this dependency
+        $this->initPackageMetric($packageB);
+
+        if (!in_array($idB, $this->_nodeMetrics[$idA][self::M_EFFERENT_COUPLING])) {
+            $this->_nodeMetrics[$idA][self::M_EFFERENT_COUPLING][] = $idB;
+            $this->_nodeMetrics[$idB][self::M_AFFERENT_COUPLING][] = $idA;
+        }
+    }
+
+    /**
+     * Initializes the node metric record for the given <b>$package</b>.
+     *
+     * @param PHP_Depend_Code_Package $package The context package.
+     *
+     * @return void
+     */
+    protected function initPackageMetric(PHP_Depend_Code_Package $package)
     {
         $uuid = $package->getUUID();
 
@@ -372,14 +385,14 @@ class PHP_Depend_Metrics_Dependency_Analyzer
 
             // Create empty metrics for this package
             $this->_nodeMetrics[$uuid] = array(
-                'tc'  =>  0,
-                'cc'  =>  0,
-                'ac'  =>  0,
-                'ca'  =>  array(),
-                'ce'  =>  array(),
-                'a'   =>  0,
-                'i'   =>  0,
-                'd'   =>  0
+                self::M_NUMBER_OF_CLASSES           =>  0,
+                self::M_NUMBER_OF_CONCRETE_CLASSES  =>  0,
+                self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  0,
+                self::M_AFFERENT_COUPLING           =>  array(),
+                self::M_EFFERENT_COUPLING           =>  array(),
+                self::M_ABSTRACTION                 =>  0,
+                self::M_INSTABILITY                 =>  0,
+                self::M_DISTANCE                    =>  0
             );
         }
     }
@@ -395,20 +408,23 @@ class PHP_Depend_Metrics_Dependency_Analyzer
 
             // Store afferent nodes for uuid
             $this->_afferentNodes[$uuid] = array();
-            foreach ($metrics['ca'] as $caUUID) {
+            foreach ($metrics[self::M_AFFERENT_COUPLING] as $caUUID) {
                 $this->_afferentNodes[$uuid][] = $this->nodeSet[$caUUID];
             }
-            ksort($this->_afferentNodes[$uuid]);
+            sort($this->_afferentNodes[$uuid]);
 
             // Store efferent nodes for uuid
             $this->_efferentNodes[$uuid] = array();
-            foreach ($metrics['ce'] as $ceUUID) {
+            foreach ($metrics[self::M_EFFERENT_COUPLING] as $ceUUID) {
                 $this->_efferentNodes[$uuid][] = $this->nodeSet[$ceUUID];
             }
-            ksort($this->_efferentNodes[$uuid]);
+            sort($this->_efferentNodes[$uuid]);
 
-            $this->_nodeMetrics[$uuid]['ca'] = count($metrics['ca']);
-            $this->_nodeMetrics[$uuid]['ce'] = count($metrics['ce']);
+            $afferent = count($metrics[self::M_AFFERENT_COUPLING]);
+            $efferent = count($metrics[self::M_EFFERENT_COUPLING]);
+
+            $this->_nodeMetrics[$uuid][self::M_AFFERENT_COUPLING] = $afferent;
+            $this->_nodeMetrics[$uuid][self::M_EFFERENT_COUPLING] = $efferent;
         }
     }
 
@@ -420,9 +436,13 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     protected function calculateAbstractness()
     {
         foreach ($this->_nodeMetrics as $uuid => $metrics) {
-            if ($metrics['tc'] !== 0) {
-                $this->_nodeMetrics[$uuid]['a'] = ($metrics['ac'] / $metrics['tc']);
+            if ($metrics[self::M_NUMBER_OF_CLASSES] !== 0) {
+                $this->_nodeMetrics[$uuid][self::M_ABSTRACTION] = (
+                    $metrics[self::M_NUMBER_OF_ABSTRACT_CLASSES] /
+                    $metrics[self::M_NUMBER_OF_CLASSES]
+                );
             }
+
         }
     }
 
@@ -435,10 +455,15 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     {
         foreach ($this->_nodeMetrics as $uuid => $metrics) {
             // Count total incoming and outgoing dependencies
-            $total = ($metrics['ca'] + $metrics['ce']);
+            $total = (
+                $metrics[self::M_AFFERENT_COUPLING] +
+                $metrics[self::M_EFFERENT_COUPLING]
+            );
 
             if ($total !== 0) {
-                $this->_nodeMetrics[$uuid]['i'] = ($metrics['ce'] / $total);
+                $this->_nodeMetrics[$uuid][self::M_INSTABILITY] = (
+                    $metrics[self::M_EFFERENT_COUPLING] / $total
+                );
             }
         }
     }
@@ -450,8 +475,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      */
     protected function calculateDistance()
     {
-        foreach ($this->_nodeMetrics as $uuid => $m) {
-            $this->_nodeMetrics[$uuid]['d'] = abs(($m['a'] + $m['i']) - 1);
+        foreach ($this->_nodeMetrics as $uuid => $metrics) {
+            $this->_nodeMetrics[$uuid][self::M_DISTANCE] = abs(
+                ($metrics[self::M_ABSTRACTION] + $metrics[self::M_INSTABILITY]) - 1
+            );
         }
     }
 
@@ -461,14 +488,15 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * instance.
      *
      * @param SplObjectStorage        $storage The cycle package object store.
-     * @param PHP_Reflection_AST_Package $package The context code package.
+     * @param PHP_Depend_Code_Package $package The context code package.
      *
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */
-    protected function collectCycle(SplObjectStorage $storage,
-                                    PHP_Reflection_AST_Package $package)
-    {
+    protected function collectCycle(
+        SplObjectStorage $storage,
+        PHP_Depend_Code_Package $package
+    ) {
         if ($storage->contains($package)) {
             $storage->rewind();
             while (($tmp = $storage->current()) !== $package) {
@@ -492,7 +520,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             // Traverse all direct class dependencies
             foreach ($class->getDependencies() as $dependency) {
                 $pkg = $dependency->getPackage();
-                if (!$pkg->equals($package) && $this->collectCycle($storage, $pkg)) {
+                if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
                     return true;
                 }
             }
@@ -500,7 +528,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
             foreach ($class->getMethods() as $method) {
                 foreach ($method->getDependencies() as $dependency) {
                     $pkg = $dependency->getPackage();
-                    if (!$pkg->equals($package) && $this->collectCycle($storage, $pkg)) {
+                    if ($pkg !== $package && $this->collectCycle($storage, $pkg)) {
                         return true;
                     }
                 }
