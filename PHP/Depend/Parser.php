@@ -635,7 +635,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = $this->_consumeToken(self::T_COMMENT);
 
                 $comment = $this->_builder->buildASTComment($token->image);
-                $comment->configureLinesAndColumns(array($token));
+                $comment->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
 
                 $type->addChild($comment);
 
@@ -645,7 +650,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token = $this->_consumeToken(self::T_DOC_COMMENT);
 
                 $comment = $this->_builder->buildASTComment($token->image);
-                $comment->configureLinesAndColumns(array($token));
+                $comment->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
 
                 $type->addChild($comment);
 
@@ -962,6 +972,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses an ast closure node.
+     *
+     * @return PHP_Depend_Code_ASTClosure
+     * @since 0.9.12
+     */
+    private function _parseClosure()
+    {
+        $this->_tokenStack->push();
+        // TODO: Refactor this temporary closure solution.
+        $temp = $this->_parseFunctionOrClosureDeclaration();
+        $expr = $this->_builder->buildASTClosure();
+        foreach ($temp->getChildren() as $child) {
+            $expr->addChild($child);
+        }
+        return $this->_setNodePositionsAndReturn($expr);
+    }
+
+    /**
      * Parses a function or a method and adds it to the parent context node.
      *
      * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
@@ -974,7 +1002,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $callable->addChild($this->_parseFormalParameters());
 
         $this->_consumeComments();
-        if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
+        if ($this->_tokenizer->peek() == self::T_CURLY_BRACE_OPEN) {
             $callable->addChild($this->_parseScope());
         } else {
             $this->_consumeToken(self::T_SEMICOLON);
@@ -1006,9 +1034,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $token = $this->_consumeToken(self::T_NEW);
 
-        $allocation = $this->_parseExpressionTypeReference(
-            $this->_builder->buildASTAllocationExpression($token->image), true
-        );
+        $allocation = $this->_builder->buildASTAllocationExpression($token->image);
+        $allocation = $this->_parseExpressionTypeReference($allocation, true);
 
         if ($this->_isNextTokenArguments()) {
             $allocation->addChild($this->_parseArguments());
@@ -1065,7 +1092,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_CLONE);
 
         $expr = $this->_builder->buildASTCloneExpression($token->image);
-        if (is_object($child = $this->_parseOptionalExpression())) {
+        // TODO: $expr->addChild($this->_parseExpression());
+        if (($child = $this->_parseOptionalExpression()) != null) {
             $expr->addChild($child);
         }
         return $this->_setNodePositionsAndReturn($expr);
@@ -1086,23 +1114,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return $node;
         }
 
-        $this->_tokenStack->push();
-
         $expr = $this->_builder->buildASTArrayExpression();
         $expr->addChild($node);
 
         $this->_consumeToken(self::T_SQUARED_BRACKET_OPEN);
 
         // TODO: $expr->addChild($this->_parseExpression());
-        if (is_object($child = $this->_parseOptionalExpression())) {
+        if (($child = $this->_parseOptionalExpression()) != null) {
             $expr->addChild($child);
         }
 
-        $this->_consumeToken(self::T_SQUARED_BRACKET_CLOSE);
+        $token = $this->_consumeToken(self::T_SQUARED_BRACKET_CLOSE);
 
-        $expr = $this->_setNodePositionsAndReturn($expr);
-        $expr->setStartColumn($node->getStartColumn());
-        $expr->setStartLine($node->getStartLine());
+        $expr->configureLinesAndColumns(
+            $node->getStartColumn(),
+            $node->getStartLine(),
+            $token->endLine,
+            $token->endColumn
+        );
 
         return $this->_parseOptionalArrayExpression($expr);
     }
@@ -1129,7 +1158,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _setNodePositionsAndReturn(PHP_Depend_Code_ASTNode $node)
     {
-        $node->configureLinesAndColumns($this->_tokenStack->pop());
+        $tokens = $this->_tokenStack->pop();
+
+        $end   = $tokens[count($tokens) - 1];
+        $start = $tokens[0];
+
+        $node->configureLinesAndColumns(
+            $start->startLine,
+            $end->endLine,
+            $start->startColumn,
+            $end->endColumn
+        );
+        
         return $node;
     }
 
@@ -1252,14 +1292,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_QUESTION_MARK);
 
         $expr = $this->_builder->buildASTConditionalExpression();
-        if (is_object($child = $this->_parseOptionalExpression())) {
+        if (($child = $this->_parseOptionalExpression()) != null) {
             $expr->addChild($child);
         }
 
         $this->_consumeToken(self::T_COLON);
 
         // TODO: $expr->addChild($this->_parseExpression());
-        if (is_object($child = $this->_parseOptionalExpression())) {
+        if (($child = $this->_parseOptionalExpression()) != null) {
             $expr->addChild($child);
         }
 
@@ -1274,12 +1314,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseBooleanAndExpression()
     {
-        $this->_tokenStack->push();
-        $this->_consumeToken(self::T_BOOLEAN_AND);
+        $token = $this->_consumeToken(self::T_BOOLEAN_AND);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTBooleanAndExpression()
+        $expr = $this->_builder->buildASTBooleanAndExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+        return $expr;
     }
 
     /**
@@ -1290,12 +1334,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseBooleanOrExpression()
     {
-        $this->_tokenStack->push();
-        $this->_consumeToken(self::T_BOOLEAN_OR);
+        $token = $this->_consumeToken(self::T_BOOLEAN_OR);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTBooleanOrExpression()
+        $expr = $this->_builder->buildASTBooleanOrExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+        return $expr;
     }
 
     /**
@@ -1306,12 +1354,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseLogicalAndExpression()
     {
-        $this->_tokenStack->push();
-        $this->_consumeToken(self::T_LOGICAL_AND);
+        $token = $this->_consumeToken(self::T_LOGICAL_AND);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTLogicalAndExpression()
+        $expr = $this->_builder->buildASTLogicalAndExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+        return $expr;
     }
 
     /**
@@ -1322,12 +1374,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseLogicalOrExpression()
     {
-        $this->_tokenStack->push();
-        $this->_consumeToken(self::T_LOGICAL_OR);
+        $token = $this->_consumeToken(self::T_LOGICAL_OR);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTLogicalOrExpression()
+        $expr = $this->_builder->buildASTLogicalOrExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+        return $expr;
     }
 
     /**
@@ -1338,12 +1394,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseLogicalXorExpression()
     {
-        $this->_tokenStack->push();
-        $this->_consumeToken(self::T_LOGICAL_XOR);
+        $token = $this->_consumeToken(self::T_LOGICAL_XOR);
 
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTLogicalXorExpression()
+        $expr = $this->_builder->buildASTLogicalXorExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+        return $expr;
     }
 
     /**
@@ -1396,7 +1456,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * </code>
      *
      * @param PHP_Depend_Code_ASTNode $node       The context node instance.
-     * @param PHP_Depend_Token        $token      The opening token.
+     * @param PHP_Depend_Token        $start      The opening token.
      * @param integer                 $closeToken The brace close token type.
      *
      * @return PHP_Depend_Code_ASTNode
@@ -1406,16 +1466,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseBraceExpression(
         PHP_Depend_Code_ASTNode $node,
-        PHP_Depend_Token $token,
+        PHP_Depend_Token $start,
         $closeToken
     ) {
         // TODO: $node->addChild($this->_parseExpression());
         if (is_object($expr = $this->_parseOptionalExpression())) {
             $node->addChild($expr);
         }
-        $this->_consumeToken($closeToken);
+        $end = $this->_consumeToken($closeToken);
 
-        return $this->_setNodePositionsAndReturn($node);
+        $node->configureLinesAndColumns(
+            $start->startLine,
+            $end->endLine,
+            $start->startColumn,
+            $end->endColumn
+        );
+        return $node;
     }
 
     /**
@@ -1456,7 +1522,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
 
         $scope = $this->_builder->buildASTScopeStatement();
-        while (is_object($stmt = $this->_parseOptionalStatement())) {
+        while (($stmt = $this->_parseOptionalStatement()) != null) {
             if ($stmt instanceof PHP_Depend_Code_ASTNode) {
                 $scope->addChild($stmt);
             }
@@ -1480,155 +1546,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $expressions = array();
 
-        $this->_tokenStack->push();
-
-        $tokenType = $this->_tokenizer->peek();
-
-        while ($tokenType !== self::T_EOF) {
+        while (($tokenType = $this->_tokenizer->peek()) != self::T_EOF) {
 
             $expr = null;
 
             switch ($tokenType) {
-
-            case self::T_LNUMBER:
-            case self::T_DNUMBER:
-            case self::T_BACKTICK:
-            case self::T_DOUBLE_QUOTE:
-            case self::T_CONSTANT_ENCAPSED_STRING:
-                $expr = $this->_parseLiteralOrString();
-                break;
-
-            case self::T_NEW:
-                $expr = $this->_parseAllocationExpression();
-                break;
-
-            case self::T_EVAL:
-                $expr = $this->_parseEvalExpression();
-                break;
-
-            case self::T_CLONE:
-                $expr = $this->_parseCloneExpression();
-                break;
-
-            case self::T_INSTANCEOF:
-                $expr = $this->_parseInstanceOfExpression();
-                break;
-
-            case self::T_STRING:
-            case self::T_BACKSLASH:
-            case self::T_NAMESPACE:
-                $this->_tokenStack->push();
-                $expr = $this->_parseMemberPrefixOrFunctionPostfix();
-                $expr = $this->_setNodePositionsAndReturn($expr);
-                $expr = $this->_parseOptionalAssignmentExpression($expr);
-                break;
-
-            case self::T_SELF:
-                $this->_tokenStack->push();
-                $expr = $this->_parseConstantOrSelfMemberPrimaryPrefix();
-                $expr = $this->_setNodePositionsAndReturn($expr);
-                $expr = $this->_parseOptionalAssignmentExpression($expr);
-                break;
-
-            case self::T_PARENT:
-                $this->_tokenStack->push();
-                $expr = $this->_parseConstantOrParentMemberPrimaryPrefix();
-                $expr = $this->_setNodePositionsAndReturn($expr);
-                $expr = $this->_parseOptionalAssignmentExpression($expr);
-                break;
-
-            case self::T_DOLLAR:
-            case self::T_VARIABLE:
-                $this->_tokenStack->push();
-                $expr = $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
-                $expr = $this->_setNodePositionsAndReturn($expr);
-                $expr = $this->_parseOptionalAssignmentExpression($expr);
-                break;
-
-            case self::T_STATIC:
-                $this->_tokenStack->push();
-                $expr = $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
-                $expr = $this->_setNodePositionsAndReturn($expr);
-                $expr = $this->_parseOptionalAssignmentExpression($expr);
-                break;
-
-            case self::T_QUESTION_MARK:
-                $expr = $this->_parseConditionalExpression();
-                break;
-
-            case self::T_BOOLEAN_AND:
-                $expr = $this->_parseBooleanAndExpression();
-                break;
-
-            case self::T_BOOLEAN_OR:
-                $expr = $this->_parseBooleanOrExpression();
-                break;
-
-            case self::T_LOGICAL_AND:
-                $expr = $this->_parseLogicalAndExpression();
-                break;
-
-            case self::T_LOGICAL_OR:
-                $expr = $this->_parseLogicalOrExpression();
-                break;
-
-            case self::T_LOGICAL_XOR:
-                $expr = $this->_parseLogicalXorExpression();
-                break;
-
-            case self::T_FUNCTION:
-                // TODO: Refactor this temporary closure solution.
-                $expr = $this->_builder->buildASTClosure();
-                $temp = $this->_parseFunctionOrClosureDeclaration();
-                foreach ($temp->getChildren() as $child) {
-                    $expr->addChild($child);
-                }
-                break;
-
-            case self::T_PARENTHESIS_OPEN:
-                $expr = $this->_parseParenthesisExpression();
-                break;
-
-
-            case self::T_EXIT:
-                $expr = $this->_parseExitExpression();
-                break;
-
-            case self::T_CURLY_BRACE_OPEN:
-                $this->_tokenStack->push();
-                $expr = $this->_parseBraceExpression(
-                    $this->_builder->buildASTExpression(),
-                    $this->_consumeToken(self::T_CURLY_BRACE_OPEN),
-                    self::T_CURLY_BRACE_CLOSE
-                );
-                break;
-
-            case self::T_SQUARED_BRACKET_OPEN:
-                $this->_tokenStack->push();
-                $expr = $this->_parseBraceExpression(
-                    $this->_builder->buildASTExpression(),
-                    $this->_consumeToken(self::T_SQUARED_BRACKET_OPEN),
-                    self::T_SQUARED_BRACKET_CLOSE
-                );
-                break;
-
-            case self::T_EQUAL:
-            case self::T_OR_EQUAL:
-            case self::T_AND_EQUAL:
-            case self::T_DIV_EQUAL:
-            case self::T_MOD_EQUAL:
-            case self::T_XOR_EQUAL:
-            case self::T_PLUS_EQUAL:
-            case self::T_MINUS_EQUAL:
-            case self::T_CONCAT_EQUAL:
-            default:
-                $this->_consumeToken($tokenType);
-                break;
-
-            case self::T_COMMENT:
-            case self::T_DOC_COMMENT:
-                $this->_consumeToken($tokenType);
-                break;
 
             // TODO: Add these tokens
             //case self::T_COMMA:
@@ -1656,27 +1578,145 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_UNSET:
             case self::T_WHILE:
                 break 2;
-            }
 
-            if (is_object($expr)) {
-                $expressions[] = $expr;
-            }
+            case self::T_TRUE:
+            case self::T_FALSE:
+            case self::T_LNUMBER:
+            case self::T_DNUMBER:
+            case self::T_BACKTICK:
+            case self::T_DOUBLE_QUOTE:
+            case self::T_CONSTANT_ENCAPSED_STRING:
+                $expressions[] = $this->_parseLiteralOrString();
+                break;
 
-            $tokenType = $this->_tokenizer->peek();
+            case self::T_NEW:
+                $expressions[] = $this->_parseAllocationExpression();
+                break;
+
+            case self::T_EVAL:
+                $expressions[] = $this->_parseEvalExpression();
+                break;
+
+            case self::T_CLONE:
+                $expressions[] = $this->_parseCloneExpression();
+                break;
+
+            case self::T_INSTANCEOF:
+                $expressions[] = $this->_parseInstanceOfExpression();
+                break;
+
+            case self::T_STRING:
+            case self::T_BACKSLASH:
+            case self::T_NAMESPACE:
+                $expressions[] = $this->_parseMemberPrefixOrFunctionPostfix();
+                break;
+
+            case self::T_SELF:
+                $expressions[] = $this->_parseConstantOrSelfMemberPrimaryPrefix();
+                break;
+
+            case self::T_PARENT:
+                $expressions[] = $this->_parseConstantOrParentMemberPrimaryPrefix();
+                break;
+
+            case self::T_DOLLAR:
+            case self::T_VARIABLE:
+                $expressions[] = $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+                break;
+
+            case self::T_STATIC:
+                $expressions[] = $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+                break;
+
+            case self::T_QUESTION_MARK:
+                $expressions[] = $this->_parseConditionalExpression();
+                break;
+
+            case self::T_BOOLEAN_AND:
+                $expressions[] = $this->_parseBooleanAndExpression();
+                break;
+
+            case self::T_BOOLEAN_OR:
+                $expressions[] = $this->_parseBooleanOrExpression();
+                break;
+
+            case self::T_LOGICAL_AND:
+                $expressions[] = $this->_parseLogicalAndExpression();
+                break;
+
+            case self::T_LOGICAL_OR:
+                $expressions[] = $this->_parseLogicalOrExpression();
+                break;
+
+            case self::T_LOGICAL_XOR:
+                $expressions[] = $this->_parseLogicalXorExpression();
+                break;
+
+            case self::T_FUNCTION:
+                $expressions[] = $this->_parseClosure();
+                break;
+
+            case self::T_PARENTHESIS_OPEN:
+                $expressions[] = $this->_parseParenthesisExpression();
+                break;
+
+
+            case self::T_EXIT:
+                $expressions[] = $this->_parseExitExpression();
+                break;
+
+            case self::T_CURLY_BRACE_OPEN:
+                $expressions[] = $this->_parseBraceExpression(
+                    $this->_builder->buildASTExpression(),
+                    $this->_consumeToken(self::T_CURLY_BRACE_OPEN),
+                    self::T_CURLY_BRACE_CLOSE
+                );
+                break;
+
+            case self::T_SQUARED_BRACKET_OPEN:
+                $expressions[] = $this->_parseBraceExpression(
+                    $this->_builder->buildASTExpression(),
+                    $this->_consumeToken(self::T_SQUARED_BRACKET_OPEN),
+                    self::T_SQUARED_BRACKET_CLOSE
+                );
+                break;
+
+            case self::T_EQUAL:
+            case self::T_OR_EQUAL:
+            case self::T_AND_EQUAL:
+            case self::T_DIV_EQUAL:
+            case self::T_MOD_EQUAL:
+            case self::T_XOR_EQUAL:
+            case self::T_PLUS_EQUAL:
+            case self::T_MINUS_EQUAL:
+            case self::T_CONCAT_EQUAL:
+                $expressions[] = $this->_parseAssignmentExpression(array_pop($expressions));
+                break;
+
+            default:
+                $this->_consumeToken($tokenType);
+                break;
+            }
         }
 
-        if (count($expressions) === 0) {
-            $this->_tokenStack->pop();
+        $count = count($expressions);
+        if ($count == 0) {
             return null;
-        } else if (count($expressions) === 1) {
-            $expr = $expressions[0];
-        } else {
-            $expr = $this->_builder->buildASTExpression();
-            foreach ($expressions as $node) {
-                $expr->addChild($node);
-            }
+        } else if ($count == 1) {
+            return $expressions[0];
         }
-        return $this->_setNodePositionsAndReturn($expr);
+        $expr = $this->_builder->buildASTExpression();
+        foreach ($expressions as $node) {
+            $expr->addChild($node);
+        }
+        $expr->configureLinesAndColumns(
+            $expressions[0]->getStartLine(),
+            $expressions[$count - 1]->getEndLine(),
+            $expressions[0]->getStartColumn(),
+            $expressions[$count - 1]->getEndColumn()
+        );
+
+        return $expr;
     }
 
     /**
@@ -1711,10 +1751,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
 
-        $this->_consumeComments();
-        $tokenType = $this->_tokenizer->peek();
-        
-        while ($tokenType !== self::T_EOF) {
+        while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
 
             switch ($tokenType) {
 
@@ -1730,12 +1767,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $switch->addChild($this->_parseSwitchLabelDefault());
                 break;
 
+            case self::T_COMMENT:
+            case self::T_DOC_COMMENT:
+                $this->_consumeToken($tokenType);
+                break;
+
             default:
                 break 2;
             }
-
-            $this->_consumeComments();
-            $tokenType = $this->_tokenizer->peek();
         }
         throw new PHP_Depend_Parser_UnexpectedTokenException(
             $this->_tokenizer->next(),
@@ -1756,7 +1795,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $label = $this->_builder->buildASTSwitchLabel($token->image);
         // TODO: $label->addChild($this->_parseExpression());
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $label->addChild($expr);
         }
 
@@ -1898,7 +1937,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $stmt = $this->_builder->buildASTThrowStatement($token->image);
         // TODO: $stmt->addChild($this->_parseExpression());
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
         $this->_parseStatementTermination();
@@ -1958,7 +1997,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_GLOBAL);
 
         $stmt = $this->_builder->buildASTGlobalStatement();
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
         $this->_parseStatementTermination();
@@ -2008,6 +2047,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_parseQualifiedName()
             )
         );
+
+        $this->_consumeComments();
         $catch->addChild($this->_parseVariable());
 
         $this->_consumeComments();
@@ -2138,17 +2179,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseForInit()
     {
-        $this->_tokenStack->push();
-        $this->_consumeComments();
-
-        $init = null;
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression())) {
             $init = $this->_builder->buildASTForInit();
             $init->addChild($expr);
+            $init->configureLinesAndColumns(
+                $expr->getStartLine(),
+                $expr->getEndLine(),
+                $expr->getStartColumn(),
+                $expr->getEndColumn()
+            );
 
-            return $this->_setNodePositionsAndReturn($init);
+            return $init;
         }
-        $this->_tokenStack->pop();
         return null;
     }
 
@@ -2160,14 +2202,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseForExpression()
     {
-        $this->_tokenStack->push();
-        $this->_consumeComments();
-
-        if (is_object($expr = $this->_parseOptionalExpression())) {
-            return $this->_setNodePositionsAndReturn($expr);
-        }
-        $this->_tokenStack->pop();
-        return null;
+        return $this->_parseOptionalExpression();
     }
 
     /**
@@ -2188,7 +2223,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
 
         $update = null;
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $update = $this->_builder->buildASTForUpdate();
             $update->addChild($expr);
 
@@ -2215,7 +2250,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_PARENTHESIS_OPEN);
 
         // TODO: $foreach->addChild($this->_parseExpression());
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $foreach->addChild($expr);
         }
         
@@ -2295,7 +2330,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_RETURN);
 
         $stmt = $this->_builder->buildASTReturnStatement($token->image);
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
         $this->_parseStatementTermination();
@@ -2315,7 +2350,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_BREAK);
 
         $stmt = $this->_builder->buildASTBreakStatement($token->image);
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
         $this->_parseStatementTermination();
@@ -2335,7 +2370,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_CONTINUE);
 
         $stmt = $this->_builder->buildASTContinueStatement($token->image);
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
         $this->_parseStatementTermination();
@@ -2356,7 +2391,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $stmt = $this->_builder->buildASTEchoStatement($token->image);
         // TODO: $stmt->addChild($this->_parseExpression())
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
         $this->_parseStatementTermination();
@@ -2373,7 +2408,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseParenthesisExpression()
     {
-        $this->_tokenStack->push();
         $this->_tokenStack->push();
         $this->_consumeComments();
 
@@ -2688,7 +2722,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Get next token type
         $tokenType = $this->_tokenizer->peek();
 
-        // T_PARENTHESIS_OPEN === method, everything else property
         switch ($tokenType) {
 
         case self::T_PARENTHESIS_OPEN:
@@ -2716,7 +2749,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseArguments()
     {
-        $this->_tokenStack->push();
         $this->_consumeComments();
 
         return $this->_parseBraceExpression(
@@ -2772,49 +2804,31 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parses an optional assignment expression node. When
-     * it detects an assignment it will add the given <b>$left</b> node
-     * as a child to a new assignment expression node, otherwise this 
-     * method simply returns <b>$left</b>.
+     * Parses an assingment expression node.
      *
-     * @param PHP_Depend_Code_ASTNode $left A previously parsed node.
+     * @param PHP_Depend_Code_ASTNode $left The left part of the assignment
+     *        expression that will be parsed by this method.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @since 0.9.8
+     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @since 0.9.12
      */
-    private function _parseOptionalAssignmentExpression(
-        PHP_Depend_Code_ASTNode $left
-    ) {
-        $this->_consumeComments();
-        $tokenType = $this->_tokenizer->peek();
+    private function _parseAssignmentExpression(PHP_Depend_Code_ASTNode $left)
+    {
+        $token = $this->_consumeToken($this->_tokenizer->peek());
 
-        switch ($tokenType) {
+        $node = $this->_builder->buildASTAssignmentExpression($token->image);
+        $node->addChild($left);
+        $node->setStartLine($left->getStartLine());
+        $node->setStartColumn($left->getStartColumn());
 
-        case self::T_EQUAL:
-        case self::T_OR_EQUAL:
-        case self::T_AND_EQUAL:
-        case self::T_DIV_EQUAL:
-        case self::T_MOD_EQUAL:
-        case self::T_XOR_EQUAL:
-        case self::T_PLUS_EQUAL:
-        case self::T_MINUS_EQUAL:
-        case self::T_CONCAT_EQUAL:
-
-            $token = $this->_consumeToken($tokenType);
-
-            $node = $this->_builder->buildASTAssignmentExpression($token->image);
-            $node->addChild($left);
-
-            // TODO: Change this into a mandatory expression in later versions
-            if (is_object($expression = $this->_parseOptionalExpression())) {
-                $node->addChild($expression);
-
-            }
-            break;
-
-        default:
-            $node = $left;
-            break;
+        // TODO: Change this into a mandatory expression in later versions
+        if (($expression = $this->_parseOptionalExpression()) != null) {
+            $node->addChild($expression);
+            $node->setEndLine($expression->getEndLine());
+            $node->setEndColumn($expression->getEndColumn());
+        } else {
+            $node->setEndLine($left->getEndLine());
+            $node->setEndColumn($left->getEndColumn());
         }
         return $node;
     }
@@ -2993,6 +3007,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         
         $token = $this->_consumeToken(self::T_BITWISE_AND);
+        $this->_consumeComments();
 
         $expression = $this->_builder->buildASTUnaryExpression($token->image);
         $expression->addChild($this->_parseVariable());
@@ -3010,16 +3025,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseVariable()
     {
-        $this->_consumeComments();
-        
-        $this->_tokenStack->push();
-
         $token = $this->_consumeToken(self::T_VARIABLE);
 
-        // TODO: ASTThisVariable
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTVariable($token->image)
+        $variable = $this->_builder->buildASTVariable($token->image);
+        $variable->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+
+        return $variable;
     }
 
     /**
@@ -3051,19 +3067,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseCompoundVariableOrVariableVariableOrVariable()
     {
-        $this->_consumeComments();
-
-        // Get next token type
-        $tokenType = $this->_tokenizer->peek();
-
-        switch ($tokenType) {
-
-        case self::T_DOLLAR:
+        if ($this->_tokenizer->peek() == self::T_DOLLAR) {
             return $this->_parseCompoundVariableOrVariableVariable();
-
-        default:
-            return $this->_parseVariable();
         }
+        return $this->_parseVariable();
     }
 
     /**
@@ -3135,8 +3142,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseCompoundExpressionOrLiteral()
     {
-        $this->_tokenStack->push();
-        
         $token = $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
         $this->_consumeComments();
 
@@ -3150,10 +3155,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 self::T_CURLY_BRACE_CLOSE
             );
         }
-        
-        return $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTLiteral($token->image)
+
+        $literal = $this->_builder->buildASTLiteral($token->image);
+        $literal->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+        
+        return $literal;
     }
 
     /**
@@ -3174,7 +3185,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseCompoundExpression()
     {
-        $this->_tokenStack->push();
         $this->_consumeComments();
 
         return $this->_parseBraceExpression(
@@ -3196,7 +3206,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_STRING);
         
         $node = $this->_builder->buildASTIdentifier($token->image);
-        $node->configureLinesAndColumns(array($token));
+        $node->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
 
         return $node;
     }
@@ -3217,11 +3232,21 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         switch ($tokenType) {
 
+        case self::T_TRUE:
+        case self::T_FALSE:
         case self::T_LNUMBER:
         case self::T_DNUMBER:
         case self::T_CONSTANT_ENCAPSED_STRING:
             $token = $this->_consumeToken($tokenType);
-            return $this->_builder->buildASTLiteral($token->image);
+
+            $literal = $this->_builder->buildASTLiteral($token->image);
+            $literal->configureLinesAndColumns(
+                $token->startLine,
+                $token->endLine,
+                $token->startColumn,
+                $token->endColumn
+            );
+            return $literal;
 
         default:
             return $this->_parseString($tokenType);
@@ -3274,15 +3299,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseString($delimiterType)
     {
-        $this->_tokenStack->push();
+        $token = $this->_consumeToken($delimiterType);
 
         $string = $this->_builder->buildASTString();
+        $string->setStartLine($token->startLine);
+        $string->setStartColumn($token->startColumn);
 
-        $this->_consumeToken($delimiterType);
-        $this->_consumeComments();
-
-        $tokenType = $this->_tokenizer->peek();
-        while ($tokenType != self::T_EOF) {
+        while (($tokenType = $this->_tokenizer->peek()) != self::T_EOF) {
             switch ($tokenType) {
 
             case $delimiterType:
@@ -3290,11 +3313,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_BACKSLASH:
                 $string->addChild($this->_parseEscapedASTLiteralString());
-                break;
-
-            case self::T_BACKTICK:
-            case self::T_DOUBLE_QUOTE:
-                $string->addChild($this->_parseLiteral());
                 break;
 
             case self::T_DOLLAR:
@@ -3311,14 +3329,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $string->addChild($this->_parseLiteral());
                 break;
             }
-
-            $this->_consumeComments();
-            $tokenType = $this->_tokenizer->peek();
         }
 
-        $this->_consumeToken($delimiterType);
+        $token = $this->_consumeToken($delimiterType);
+        $string->setEndLine($token->endLine);
+        $string->setEndColumn($token->endColumn);
 
-        return $this->_setNodePositionsAndReturn($string);
+        return $string;
     }
 
     /**
@@ -3363,12 +3380,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseLiteral()
     {
-        $this->_tokenStack->push();
-
         $token = $this->_consumeToken($this->_tokenizer->peek());
-        $expr  = $this->_builder->buildASTLiteral($token->image);
 
-        return $this->_setNodePositionsAndReturn($expr);
+        $node = $this->_builder->buildASTLiteral($token->image);
+        $node->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $node;
     }
 
     /**
@@ -3488,15 +3510,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFormalParameterAndArrayTypeHint()
     {
-        $this->_tokenStack->push();
-        $this->_consumeToken(self::T_ARRAY);
+        $token = $this->_consumeToken(self::T_ARRAY);
 
-        $array = $this->_setNodePositionsAndReturn(
-            $this->_builder->buildASTArrayType()
+        $node = $this->_builder->buildASTArrayType();
+        $node->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->addChild($array);
+        $parameter->addChild($node);
 
         return $parameter;
     }
@@ -3550,8 +3575,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFormalParameterAndParentTypeHint()
     {
-        $this->_tokenStack->push();
-
         $token = $this->_consumeToken(self::T_PARENT);
 
         if ($this->_classOrInterface === null) {
@@ -3577,7 +3600,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $classReference = clone $classReference;
-        $classReference = $this->_setNodePositionsAndReturn($classReference);
+        $classReference->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
 
         $parameter = $this->_parseFormalParameterOrByReference();
         $parameter->addChild($classReference);
@@ -3603,16 +3631,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFormalParameterAndSelfTypeHint()
     {
-        $this->_tokenStack->push();
-        $this->_consumeToken(self::T_SELF);
+        $token = $this->_consumeToken(self::T_SELF);
 
-        $selfReference = $this->_builder->buildASTSelfReference(
-            $this->_classOrInterface
+        $self = $this->_builder->buildASTSelfReference($this->_classOrInterface);
+        $self->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
-        $selfReference = $this->_setNodePositionsAndReturn($selfReference);
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->addChild($selfReference);
+        $parameter->addChild($self);
 
         return $parameter;
     }
@@ -3804,7 +3834,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         
         $this->_tokenStack->push();
         $stmt = $this->_builder->buildASTStatement();
-        if (is_object($expr = $this->_parseOptionalExpression())) {
+        if (($expr = $this->_parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
         $this->_parseStatementTermination();
@@ -3853,17 +3883,22 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseCommentWithOptionalInlineClassOrInterfaceReference()
     {
-        $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_COMMENT);
 
         $comment = $this->_builder->buildASTComment($token->image);
-
         if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
             $comment->addChild(
                 $this->_builder->buildASTClassOrInterfaceReference($match[1])
             );
         }
-        return $this->_setNodePositionsAndReturn($comment);
+
+        $comment->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+        return $comment;
     }
 
     /**

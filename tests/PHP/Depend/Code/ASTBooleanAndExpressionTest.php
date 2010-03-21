@@ -95,7 +95,7 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
     public function testBooleanAndExpressionHasExpectedStartColumn()
     {
         $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(13, $expression->getStartColumn());
+        $this->assertEquals(18, $expression->getStartColumn());
     }
 
     /**
@@ -129,7 +129,7 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
     public function testBooleanAndExpressionHasExpectedEndColumn()
     {
         $expression = $this->_getFirstBooleanAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(25, $expression->getEndColumn());
+        $this->assertEquals(19, $expression->getEndColumn());
     }
 
     /**

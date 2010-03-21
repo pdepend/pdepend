@@ -147,6 +147,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * @param integer $startLine The node start line.
      *
      * @return void
+     * @since 0.9.12
      */
     public function setStartLine($startLine)
     {
@@ -169,6 +170,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * @param integer $startColumn The node start column.
      *
      * @return void
+     * @since 0.9.12
      */
     public function setStartColumn($startColumn)
     {
@@ -186,6 +188,19 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     }
 
     /**
+     * Sets the node's end line.
+     *
+     * @param integer $endLine The node's end line.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    public function setEndLine($endLine)
+    {
+        $this->_endLine = $endLine;
+    }
+
+    /**
      * Returns the end line for this ast node.
      *
      * @return integer
@@ -193,6 +208,19 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     public function getEndLine()
     {
         return $this->_endLine;
+    }
+
+    /**
+     * Sets the node's end column.
+     *
+     * @param integer $endColumn The node's end column.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    public function setEndColumn($endColumn)
+    {
+        $this->_endColumn = $endColumn;
     }
 
     /**
@@ -209,20 +237,24 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * For better performance we have moved the single setter methods for the
      * node columns and lines into this configure method.
      *
-     * @param array(PHP_Depend_Token) $tokens The tokens of this node.
+     * @param integer $startLine   The node's start line.
+     * @param integer $endLine     The node's end line.
+     * @param integer $startColumn The node's start column.
+     * @param integer $endColumn   The node's end column.
      *
      * @return void
      * @since 0.9.10
      */
-    public function configureLinesAndColumns(array $tokens)
-    {
-        $startToken = $tokens[0];
-        $this->_startLine   = $startToken->startLine;
-        $this->_startColumn = $startToken->startColumn;
-
-        $endToken = end($tokens);
-        $this->_endLine   = $endToken->endLine;
-        $this->_endColumn = $endToken->endColumn;
+    public function configureLinesAndColumns(
+        $startLine,
+        $endLine,
+        $startColumn,
+        $endColumn
+    ) {
+        $this->_startLine   = $startLine;
+        $this->_startColumn = $startColumn;
+        $this->_endLine     = $endLine;
+        $this->_endColumn   = $endColumn;
     }
 
     /**

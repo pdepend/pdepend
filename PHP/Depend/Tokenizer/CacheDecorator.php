@@ -153,10 +153,10 @@ class PHP_Depend_Tokenizer_CacheDecorator implements PHP_Depend_TokenizerI
             $storage->store($tokens, $key, $group, $id);
         }
 
-        $this->_peek   = $tokens[0]->type;
         $this->_tokens = $tokens;
         $this->_index  = 0;
         $this->_count  = count($tokens);
+        $this->_peek   = ($this->_count === 0 ? self::T_EOF : $tokens[0]->type);
     }
 
     /**
