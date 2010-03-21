@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,15 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
+require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Metrics/CodeRank/PropertyStrategy.php';
 
 /**
@@ -57,17 +58,18 @@ require_once 'PHP/Depend/Metrics/CodeRank/PropertyStrategy.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
     extends PHP_Depend_AbstractTest
 {
     public function testStrategyCountsCorrectTypes()
     {
-        $packages = self::parseSource('/metrics/coderank/property.php');
+        $source   = dirname(__FILE__) . '/../../_code/coderank/property.php';
+        $packages = self::parseSource($source);
         
         $uuidMap = array(
             'PDepend::CodeRankA'       =>  null,
@@ -97,7 +99,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassC']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassA',
-                //'type'  =>  'PHP_Reflection_AST_Class'
+                'type'  =>  'PHP_Depend_Code_Class'
             ),
             $uuidMap['PDepend_CodeRank_ClassB']  =>  array(
                 'in'  =>  array(
@@ -108,7 +110,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassA']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassB',
-                //'type'  =>  'PHP_Reflection_AST_Class'
+                'type'  =>  'PHP_Depend_Code_Class'
             ),
             $uuidMap['PDepend_CodeRank_ClassC']  =>  array(
                 'in'  =>  array(
@@ -120,7 +122,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassB']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassC',
-                //'type'  =>  'PHP_Reflection_AST_Class'
+                'type'  =>  'PHP_Depend_Code_Class'
             ),
             $uuidMap['PDepend::CodeRankA']  =>  array(
                 'in'  =>  array(
@@ -132,7 +134,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend::CodeRankB'],
                 ),
                 'name'  =>  'PDepend::CodeRankA',
-                //'type'  =>  'PHP_Reflection_AST_Package'
+                'type'  =>  'PHP_Depend_Code_Package'
             ),
             $uuidMap['PDepend::CodeRankB']  =>  array(
                 'in'  =>  array(
@@ -144,7 +146,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend::CodeRankA']
                 ),
                 'name'  =>  'PDepend::CodeRankB',
-                //'type'  =>  'PHP_Reflection_AST_Package'
+                'type'  =>  'PHP_Depend_Code_Package'
             ),
         );
     

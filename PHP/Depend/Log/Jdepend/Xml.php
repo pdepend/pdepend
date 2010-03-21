@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,17 +40,19 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/VisitorI.php';
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
-require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
+require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -60,13 +62,13 @@ require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Log_Jdepend_Xml
-       extends PHP_Reflection_Visitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
@@ -79,16 +81,16 @@ class PHP_Depend_Log_Jdepend_Xml
     private $_logFile = null;
 
     /**
-     * The raw {@link PHP_Reflection_AST_Package} instances.
+     * The raw {@link PHP_Depend_Code_Package} instances.
      *
-     * @var PHP_Reflection_AST_Iterator $code
+     * @var PHP_Depend_Code_NodeIterator $code
      */
     protected $code = null;
 
     /**
      * Set of all analyzed files.
      *
-     * @var array(string=>PHP_Reflection_AST_File) $fileSet
+     * @var array(string=>PHP_Depend_Code_File) $fileSet
      */
     protected $fileSet = array();
 
@@ -161,17 +163,17 @@ class PHP_Depend_Log_Jdepend_Xml
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PHP_Depend_Metrics_Dependency_Analyzer');
+        return array(PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
     }
 
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Reflection_AST_Iterator $code The code nodes.
+     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
      *
      * @return void
      */
-    public function setCode(PHP_Reflection_AST_Iterator $code)
+    public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
         $this->code = $code;
     }
@@ -227,13 +229,17 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a class node.
      *
-     * @param PHP_Reflection_AST_ClassI $class The current class node.
+     * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitClass()
+     * @see PHP_Depend_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_AST_ClassI $class)
+    public function visitClass(PHP_Depend_Code_Class $class)
     {
+        if (!$class->isUserDefined()) {
+            return;
+        }
+
         $doc = $this->packages->ownerDocument;
 
         $classXml = $doc->createElement('Class');
@@ -250,13 +256,17 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitInterface()
+     * @see PHP_Depend_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        if (!$interface->isUserDefined()) {
+            return;
+        }
+
         $doc = $this->abstractClasses->ownerDocument;
 
         $classXml = $doc->createElement('Class');
@@ -269,13 +279,22 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * Visits a package node.
      *
-     * @param PHP_Reflection_AST_PackageI $package The package class node.
+     * @param PHP_Depend_Code_Class $package The package class node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitPackage()
+     * @see PHP_Depend_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_AST_PackageI $package)
+    public function visitPackage(PHP_Depend_Code_Package $package)
     {
+        if (!$package->isUserDefined()) {
+            return;
+        }
+
+        $stats = $this->analyzer->getStats($package);
+        if (count($stats) === 0) {
+            return;
+        }
+
         $doc = $this->packages->ownerDocument;
 
         $this->concreteClasses = $doc->createElement('ConcreteClasses');
@@ -284,32 +303,26 @@ class PHP_Depend_Log_Jdepend_Xml
         $packageXml = $doc->createElement('Package');
         $packageXml->setAttribute('name', $package->getName());
 
-        $stats = $this->analyzer->getStats($package);
-
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
-                 ->appendChild($doc->createTextNode($stats['tc']));
+            ->appendChild($doc->createTextNode($stats['tc']));
         $statsXml->appendChild($doc->createElement('ConcreteClasses'))
-                 ->appendChild($doc->createTextNode($stats['cc']));
+            ->appendChild($doc->createTextNode($stats['cc']));
         $statsXml->appendChild($doc->createElement('AbstractClasses'))
-                 ->appendChild($doc->createTextNode($stats['ac']));
+            ->appendChild($doc->createTextNode($stats['ac']));
         $statsXml->appendChild($doc->createElement('Ca'))
-                 ->appendChild($doc->createTextNode($stats['ca']));
+            ->appendChild($doc->createTextNode($stats['ca']));
         $statsXml->appendChild($doc->createElement('Ce'))
-                 ->appendChild($doc->createTextNode($stats['ce']));
+            ->appendChild($doc->createTextNode($stats['ce']));
         $statsXml->appendChild($doc->createElement('A'))
-                 ->appendChild($doc->createTextNode($stats['a']));
+            ->appendChild($doc->createTextNode($stats['a']));
         $statsXml->appendChild($doc->createElement('I'))
-                 ->appendChild($doc->createTextNode($stats['i']));
+            ->appendChild($doc->createTextNode($stats['i']));
         $statsXml->appendChild($doc->createElement('D'))
-                 ->appendChild($doc->createTextNode($stats['d']));
+            ->appendChild($doc->createTextNode($stats['d']));
 
         $dependsUpon = $doc->createElement('DependsUpon');
-
-        // TODO: Remove this ugly sorting stuff
-        $efferents = $this->analyzer->getEfferents($package);
-        usort($efferents, array($this, '_compareNodes'));
-        foreach ($efferents as $efferent) {
+        foreach ($this->analyzer->getEfferents($package) as $efferent) {
             $efferentXml = $doc->createElement('Package');
             $efferentXml->appendChild($doc->createTextNode($efferent->getName()));
 
@@ -317,11 +330,7 @@ class PHP_Depend_Log_Jdepend_Xml
         }
 
         $usedBy = $doc->createElement('UsedBy');
-
-        // TODO: Remove this ugly sorting stuff
-        $afferents = $this->analyzer->getAfferents($package);
-        usort($afferents, array($this, '_compareNodes'));
-        foreach ($afferents as $afferent) {
+        foreach ($this->analyzer->getAfferents($package) as $afferent) {
             $afferentXml = $doc->createElement('Package');
             $afferentXml->appendChild($doc->createTextNode($afferent->getName()));
 
@@ -340,7 +349,7 @@ class PHP_Depend_Log_Jdepend_Xml
 
             foreach ($cycles as $cycle) {
                 $cycleXml->appendChild($doc->createElement('Package'))
-                         ->appendChild($doc->createTextNode($cycle->getName()));
+                    ->appendChild($doc->createTextNode($cycle->getName()));
             }
 
             $this->cycles->appendChild($cycleXml);
@@ -350,12 +359,12 @@ class PHP_Depend_Log_Jdepend_Xml
             $type->accept($this);
         }
 
-        $this->packages->appendChild($packageXml);
-    }
+        if ($this->concreteClasses->firstChild === null 
+            && $this->abstractClasses->firstChild === null
+        ) {
+            return;
+        }
 
-    private function _compareNodes(PHP_Reflection_AST_NodeI $node1,
-                                   PHP_Reflection_AST_NodeI $node2)
-    {
-        return strcasecmp($node1->getName(), $node2->getName());
+        $this->packages->appendChild($packageXml);
     }
 }

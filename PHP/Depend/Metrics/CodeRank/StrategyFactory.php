@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,10 +40,10 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 /**
@@ -53,10 +53,10 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_CodeRank_StrategyFactory
 {
@@ -64,24 +64,24 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
      * The identifier for the inheritance strategy.
      */
     const STRATEGY_INHERITANCE = 'inheritance';
-    
+
     /**
      * The identifier for the property strategy.
      */
     const STRATEGY_PROPERTY = 'property';
-    
+
     /**
      * The identifier for the method strategy.
      */
     const STRATEGY_METHOD = 'method';
-    
+
     /**
      * The default strategy.
      *
      * @var string $_defaultStrategy
      */
     private $_defaultStrategy = self::STRATEGY_INHERITANCE;
-    
+
     /**
      * List of all valid properties.
      *
@@ -92,7 +92,7 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
         self::STRATEGY_METHOD,
         self::STRATEGY_PROPERTY
     );
-    
+
     /**
      * Creates the default code rank strategy.
      *
@@ -102,22 +102,24 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
     {
         return $this->createStrategy($this->_defaultStrategy);
     }
-    
+
     /**
      * Creates a code rank strategy for the given identifier.
      *
      * @param string $id The strategy identifier.
-     * 
+     *
      * @return PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
-     * @throws RuntimeException If the given <b>$id</b> is not valid or no
-     *                          matching class declaration exists.
+     * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
+     *                                  no matching class declaration exists.
      */
     public function createStrategy($id)
     {
         if (in_array($id, $this->_validStrategies) === false) {
-            throw new RuntimeException("Cannot load file for identifier '{$id}'.");
+            throw new InvalidArgumentException(
+                sprintf('Cannot load file for identifier "%s".', $id)
+            );
         }
-        
+
         // Prepare identifier
         $name = ucfirst(strtolower($id));
 
@@ -125,11 +127,7 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
         $className = "PHP_Depend_Metrics_CodeRank_{$name}Strategy";
 
         include_once $fileName;
-        
-        if (class_exists($className, false) === false) {
-            throw new RuntimeException("Unknown strategy class '{$className}'.");
-        }
-        
+
         return new $className();
     }
 }

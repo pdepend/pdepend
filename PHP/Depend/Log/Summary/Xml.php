@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,20 +40,19 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
-// TODO: Refactor this reflection dependency
-require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * This logger generates a summary xml document with aggregated project, class,
@@ -63,13 +62,13 @@ require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Log_Summary_Xml
-       extends PHP_Reflection_Visitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
@@ -82,33 +81,34 @@ class PHP_Depend_Log_Summary_Xml
     private $_logFile = null;
 
     /**
-     * The raw {@link PHP_Reflection_AST_Package} instances.
+     * The raw {@link PHP_Depend_Code_Package} instances.
      *
-     * @var PHP_Reflection_AST_Iterator $_code
+     * @var PHP_Depend_Code_NodeIterator $code
      */
-    private $_code = null;
+    protected $code = null;
 
     /**
      * Set of all analyzed files.
      *
-     * @var array(string=>PHP_Reflection_AST_File) $_fileSet
+     * @var array(string=>PHP_Depend_Code_File) $fileSet
      */
-    private $_fileSet = array();
-
-    /**
-     * List of all generated project metrics.
-     *
-     * @var array(string=>mixed) $_projectMetrics
-     */
-    protected $_projectMetrics = array();
+    protected $fileSet = array();
 
     /**
      * List of all analyzers that implement the node aware interface
      * {@link PHP_Depend_Metrics_NodeAwareI}.
      *
-     * @var array(PHP_Depend_Metrics_AnalyzerI) $_nodeAwareAnalyzers
+     * @var array(PHP_Depend_Metrics_AnalyzerI)
      */
     private $_nodeAwareAnalyzers = array();
+
+    /**
+     * List of all analyzers that implement the node aware interface
+     * {@link PHP_Depend_Metrics_ProjectAwareI}.
+     *
+     * @var array(PHP_Depend_Metrics_ProjectAwareI)
+     */
+    private $_projectAwareAnalyzers = array();
 
     /**
      * The internal used xml stack.
@@ -146,13 +146,13 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Reflection_AST_Iterator $code The code nodes.
+     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
      *
      * @return void
      */
-    public function setCode(PHP_Reflection_AST_Iterator $code)
+    public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
-        $this->_code = $code;
+        $this->code = $code;
     }
 
     /**
@@ -165,23 +165,18 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $accept = false;
-
+        $accepted = false;
         if ($analyzer instanceof PHP_Depend_Metrics_ProjectAwareI) {
-            // Get project metrics
-            $metrics = $analyzer->getProjectMetrics();
-            // Merge with existing metrics.
-            $this->_projectMetrics = array_merge($this->_projectMetrics, $metrics);
+            $this->_projectAwareAnalyzers[] = $analyzer;
 
-            $accept = true;
+            $accepted = true;
         }
         if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
             $this->_nodeAwareAnalyzers[] = $analyzer;
-
-            $accept = true;
+            
+            $accepted = true;
         }
-
-        return $accept;
+        return $accepted;
     }
 
     /**
@@ -200,23 +195,23 @@ class PHP_Depend_Log_Summary_Xml
 
         $dom->formatOutput = true;
 
-        ksort($this->_projectMetrics);
-
         $metrics = $dom->createElement('metrics');
+        $metrics->setAttribute('generated', date('Y-m-d\TH:i:s'));
+        $metrics->setAttribute('pdepend', '@package_version@');
 
-        foreach ($this->_projectMetrics as $name => $value) {
+        foreach ($this->_getProjectMetrics() as $name => $value) {
             $metrics->setAttribute($name, $value);
         }
 
         array_push($this->_xmlStack, $metrics);
 
-        foreach ($this->_code as $node) {
+        foreach ($this->code as $node) {
             $node->accept($this);
         }
 
-        if (count($this->_fileSet) > 0) {
+        if (count($this->fileSet) > 0) {
             $filesXml = $dom->createElement('files');
-            foreach ($this->_fileSet as $file) {
+            foreach ($this->fileSet as $file) {
                 $fileXml = $dom->createElement('file');
                 $fileXml->setAttribute('name', $file->getFileName());
 
@@ -233,15 +228,39 @@ class PHP_Depend_Log_Summary_Xml
     }
 
     /**
+     * Returns an array with all collected project metrics.
+     *
+     * @return array(string=>mixed)
+     * @since 0.9.10
+     */
+    private function _getProjectMetrics()
+    {
+        $projectMetrics = array();
+        foreach ($this->_projectAwareAnalyzers as $analyzer) {
+            $projectMetrics = array_merge(
+                $projectMetrics,
+                $analyzer->getProjectMetrics()
+            );
+        }
+        ksort($projectMetrics);
+
+        return $projectMetrics;
+    }
+
+    /**
      * Visits a class node.
      *
-     * @param PHP_Reflection_AST_ClassI $class The current class node.
+     * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitClass()
+     * @see PHP_Depend_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Reflection_AST_ClassI $class)
+    public function visitClass(PHP_Depend_Code_Class $class)
     {
+        if (!$class->isUserDefined()) {
+            return;
+        }
+
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
 
@@ -268,12 +287,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a function node.
      *
-     * @param PHP_Reflection_AST_Function $function The current function node.
+     * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitFunction()
+     * @see PHP_Depend_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Reflection_AST_FunctionI $function)
+    public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -290,12 +309,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Reflection_AST_InterfaceI $interface The context code interface.
+     * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitInterface()
+     * @see PHP_Depend_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Reflection_AST_InterfaceI $interface)
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         // Empty implementation, because we don't want interface methods.
     }
@@ -303,12 +322,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a method node.
      *
-     * @param PHP_Reflection_AST_MethodI $method The method class node.
+     * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitMethod()
+     * @see PHP_Depend_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Reflection_AST_MethodI $method)
+    public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -324,12 +343,12 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a package node.
      *
-     * @param PHP_Reflection_AST_PackageI $package The package class node.
+     * @param PHP_Depend_Code_Class $package The package class node.
      *
      * @return void
-     * @see PHP_Reflection_VisitorI::visitPackage()
+     * @see PHP_Depend_VisitorI::visitPackage()
      */
-    public function visitPackage(PHP_Reflection_AST_PackageI $package)
+    public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $xml = end($this->_xmlStack);
         $doc = $xml->ownerDocument;
@@ -350,6 +369,10 @@ class PHP_Depend_Log_Summary_Xml
 
         array_pop($this->_xmlStack);
 
+        if ($packageXml->firstChild === null) {
+            return;
+        }
+
         $xml->appendChild($packageXml);
     }
 
@@ -357,13 +380,12 @@ class PHP_Depend_Log_Summary_Xml
      * Aggregates all metrics for the given <b>$node</b> instance and adds them
      * to the <b>DOMElement</b>
      *
-     * @param DOMElement               $xml  Element that represents <b>$node</b>.
-     * @param PHP_Reflection_AST_NodeI $node The context code node instance.
+     * @param DOMElement            $xml  DOM Element that represents <b>$node</b>.
+     * @param PHP_Depend_Code_NodeI $node The context code node instance.
      *
      * @return void
      */
-    protected function writeNodeMetrics(DOMElement $xml,
-                                        PHP_Reflection_AST_NodeI $node)
+    protected function writeNodeMetrics(DOMElement $xml, PHP_Depend_Code_NodeI $node)
     {
         $metrics = array();
         foreach ($this->_nodeAwareAnalyzers as $analyzer) {
@@ -385,20 +407,17 @@ class PHP_Depend_Log_Summary_Xml
      *   </class>
      * </code>
      *
-     * @param DOMElement              $xml  The parent xml element.
-     * @param PHP_Reflection_AST_File $file The code file instance.
+     * @param DOMElement           $xml  The parent xml element.
+     * @param PHP_Depend_Code_File $file The code file instance.
      *
      * @return void
      */
-    protected function writeFileReference(DOMElement $xml,
-                                          PHP_Reflection_AST_File $file = null)
-    {
-        if ($file === null || $file->getFileName() === null) {
-            return;
-        }
-
-        if (in_array($file, $this->_fileSet, true) === false) {
-            $this->_fileSet[] = $file;
+    protected function writeFileReference(
+        DOMElement $xml,
+        PHP_Depend_Code_File $file = null
+    ) {
+        if (in_array($file, $this->fileSet, true) === false) {
+            $this->fileSet[] = $file;
         }
 
         $fileXml = $xml->ownerDocument->createElement('file');

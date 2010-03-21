@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,13 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
+require_once 'PHP/Depend/Metrics/AnalyzerIterator.php';
 
 /**
  * This class provides a simple way to load all required analyzers by class,
@@ -56,141 +56,180 @@ require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
 {
     /**
-     * Mapping of all installed analyzers.
-     *
-     * @var array(string=>string) $_installedAnalyzers
-     */
-    private $_installedAnalyzers = null;
-    
-    /**
      * All matching analyzer instances.
      *
-     * @var array(PHP_Depend_Metrics_AnalyzerI) $_analyzers
+     * @var array(string=>PHP_Depend_Metrics_AnalyzerI)
      */
-    private $_analyzers = array();
+    private $_analyzers = null;
     
+    private $_acceptedTypes = array();
+
+    private $_options = array();
+
     /**
-     * Constructs a new analyzer loader. 
+     * Used locator for installed analyzer classes.
+     *
+     * @var PHP_Depend_Metrics_AnalyzerClassLocator
+     */
+    private $_classLocator = null;
+
+    /**
+     * Constructs a new analyzer loader.
      *
      * @param array(string)        $acceptedTypes Accepted/expected analyzer types.
-     * @param array(string=>mixed) $options       List of cli options. 
+     * @param array(string=>mixed) $options       List of cli options.
      */
     public function __construct(array $acceptedTypes, array $options = array())
     {
-        $this->_loadAcceptedAnalyzers($acceptedTypes, $options);
+        $this->_options       = $options;
+        $this->_acceptedTypes = $acceptedTypes;
     }
-    
+
+    /**
+     * Setter method for the used analyzer class locator.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerClassLocator $locator The analyzer class
+     *        locator instance.
+     *
+     * @return void
+     */
+    public function setClassLocator(PHP_Depend_Metrics_AnalyzerClassLocator $locator)
+    {
+        $this->_classLocator = $locator;
+    }
+
     /**
      * Returns a countable iterator of {@link PHP_Depend_Metrics_AnalyzerI}
-     * instances that match against the given accepted types. 
+     * instances that match against the given accepted types.
      *
      * @return Iterator
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->_analyzers);
+        if ($this->_analyzers === null) {
+            $this->_initAnalyzers();
+        }
+        return new PHP_Depend_Metrics_AnalyzerIterator($this->_analyzers);
     }
-    
+
+    /**
+     * Initializes all accepted analyzers.
+     *
+     * @return void
+     * @since 0.9.10
+     */
+    private function _initAnalyzers()
+    {
+        $this->_analyzers = array();
+        $this->_loadAcceptedAnalyzers($this->_acceptedTypes);
+    }
+
     /**
      * Loads all accepted node analyzers.
      *
-     * @param array(string)        $acceptedTypes Accepted/expected analyzer types.
-     * @param array(string=>mixed) $options       List of cli options. 
+     * @param array(string) $acceptedTypes Accepted/expected analyzer types.
      *
      * @return array(PHP_Depend_Metrics_AnalyzerI)
      */
-    private function _loadAcceptedAnalyzers(array $acceptedTypes, array $options)
+    private function _loadAcceptedAnalyzers(array $acceptedTypes)
     {
-        // First init list of installed analyzers
-        $this->_initInstalledAnalyzers();
-        
         $analyzers = array();
-        foreach ($this->_installedAnalyzers as $fileName => $className) {
-            
-            // Include class definition
-            include_once $fileName;
-
-            $parents    = class_parents($className, false); 
-            $implements = class_implements($className, false); 
-
-            $providedTypes = array($className); 
-            $providedTypes = array_merge($providedTypes, $parents);
-            $providedTypes = array_merge($providedTypes, $implements);
-                
-            // Skip if this analyzer doesn't provide an accepted type
-            if (count(array_intersect($acceptedTypes, $providedTypes)) === 0) {
-                continue;
+        foreach ($this->_classLocator->findAll() as $reflection) {
+            if ($this->_isInstanceOf($reflection, $acceptedTypes)) {
+                $analyzers[] = $this->_createOrReturnAnalyzer($reflection);
             }
-                    
-            // Fist check for already loaded instance
-            if (isset($this->_analyzers[$className])) {
-                // Store reference
-                $analyzers[] = $this->_analyzers[$className];
-                
-                continue;
-            }
-            // Create a new instance
-            $analyzer = new $className($options);
-            
-            if ($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI) {
-                $required          = $analyzer->getRequiredAnalyzers();
-                $requiredAnalyzers = $this->_loadAcceptedAnalyzers($required, $options);
-                
-                foreach ($requiredAnalyzers as $requiredAnalyzer) {
-                    $analyzer->addAnalyzer($requiredAnalyzer);
-                }
-            }
-            
-            // Add analyzer to the return value array
-            $analyzers[] = $analyzer;
-            
-            // Add analyzer to global array
-            $this->_analyzers[$className] = $analyzer;
         }
-
         return $analyzers;
     }
-    
+
     /**
-     * Loads a list of all installed analyzers.
+     * This method checks if the given analyzer class implements one of the
+     * expected analyzer types.
      *
-     * @return void
+     * @param ReflectionClass $reflection    Reflection class for an analyzer.
+     * @param array(string)   $expectedTypes List of accepted analyzer types.
+     *
+     * @return boolean
+     * @since 0.9.10
      */
-    private function _initInstalledAnalyzers()
+    private function _isInstanceOf(ReflectionClass $reflection, array $expectedTypes)
     {
-        // Only load once
-        if ($this->_installedAnalyzers !== null) {
-            return;
-        }
-        
-        // Init object property
-        $this->_installedAnalyzers = array();
-        
-        $dirs = new DirectoryIterator(dirname(__FILE__));
-        foreach ($dirs as $dir) {
-            if (!$dir->isDir() || $dir->isDot()) {
-                continue;
+        foreach ($expectedTypes as $type) {
+            if (interface_exists($type) && $reflection->implementsInterface($type)) {
+                return true;
             }
-            $files = new DirectoryIterator($dir->getPathname());
-            foreach ($files as $file) {
-                if ($file->getFilename() !== 'Analyzer.php') {
-                    continue;
-                }
-                include_once $file->getPathname();
-                
-                $package   = $dir->getFilename();
-                $className = sprintf('PHP_Depend_Metrics_%s_Analyzer', $package);
-                
-                $this->_installedAnalyzers[$file->getPathname()] = $className;
+            if (class_exists($type) && $reflection->isSubclassOf($type)) {
+                return true;
+            }
+            if (strcasecmp($reflection->getName(), $type) === 0) {
+                return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * This method creates a new analyzer instance or returns a previously
+     * created instance of the given reflection instance.
+     *
+     * @param ReflectionClass $reflection Reflection class for an analyzer.
+     *
+     * @return PHP_Depend_Metrics_AnalyzerI
+     * @since 0.9.10
+     */
+    private function _createOrReturnAnalyzer(ReflectionClass $reflection)
+    {
+        $name = $reflection->getName();
+        if (!isset($this->_analyzers[$name])) {
+            $this->_analyzers[$name] = $this->_createAndConfigure($reflection);
+        }
+        return $this->_analyzers[$name];
+    }
+
+    /**
+     * Creates an analyzer instance of the given reflection class instance.
+     *
+     * @param ReflectionClass $reflection Reflection class for an analyzer.
+     *
+     * @return PHP_Depend_Metrics_AnalyzerI
+     * @since 0.9.10
+     */
+    private function _createAndConfigure(ReflectionClass $reflection)
+    {
+        if ($reflection->getConstructor()) {
+            $analyzer = $reflection->newInstance($this->_options);
+        } else {
+            $analyzer = $reflection->newInstance();
+        }
+        return $this->_configure($analyzer);
+    }
+
+    /**
+     * Initializes the given analyzer instance.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer Context analyzer instance.
+     *
+     * @return PHP_Depend_Metrics_AnalyzerI
+     * @since 0.9.10
+     */
+    private function _configure(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    {
+        if (!($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI)) {
+            return $analyzer;
+        }
+        
+        $required = $this->_loadAcceptedAnalyzers($analyzer->getRequiredAnalyzers());
+        foreach ($required as $requiredAnalyzer) {
+            $analyzer->addAnalyzer($requiredAnalyzer);
+        }
+        return $analyzer;
     }
 }

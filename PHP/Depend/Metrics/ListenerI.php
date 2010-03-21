@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Visitor/ListenerI.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Reflection/Visitor/ListenerI.php';
 
 /**
  * An implementation of this listener can be used to recieve informations about
@@ -57,13 +57,13 @@ require_once 'PHP/Reflection/Visitor/ListenerI.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 interface PHP_Depend_Metrics_ListenerI
-    extends PHP_Reflection_Visitor_ListenerI
+    extends PHP_Depend_Visitor_ListenerI
 {
     /**
      * This method is called when the analyzer starts code processing.

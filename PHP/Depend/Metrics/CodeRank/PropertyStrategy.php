@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,15 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
-// TODO: Refactory this reflection dependency
-require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
  * Collects class and package metrics based on class properties.
@@ -57,13 +56,13 @@ require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_CodeRank_PropertyStrategy
-       extends PHP_Reflection_Visitor_AbstractVisitor
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
 {
     /**
@@ -86,26 +85,26 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Visits a property node.
      *
-     * @param PHP_Reflection_AST_PropertyI $property The property class node.
+     * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Reflection_Visitor_AbstractVisitor::visitProperty()
+     * @see PHP_Depend_Visitor_AbstractVisitor::visitProperty()
      */
-    public function visitProperty(PHP_Reflection_AST_PropertyI $property)
+    public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->fireStartProperty($property);
 
-        if (($depClass = $property->getType()) === null) {
+        if (($depClass = $property->getClass()) === null) {
             $this->fireEndProperty($property);
             return;
         }
 
         $depPackage = $depClass->getPackage();
 
-        $class   = $property->getParent();
+        $class   = $property->getDeclaringClass();
         $package = $class->getPackage();
 
-        if (!$depClass->equals($class)) {
+        if ($depClass !== $class) {
             $this->initNode($class);
             $this->initNode($depClass);
 
@@ -113,7 +112,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
             $this->_nodes[$depClass->getUUID()]['out'][] = $class->getUUID();
         }
 
-        if (!$depPackage->equals($package)) {
+        if ($depPackage !== $package) {
             $this->initNode($package);
             $this->initNode($depPackage);
 
@@ -127,18 +126,18 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
      * @return void
      */
-    protected function initNode(PHP_Reflection_AST_NodeI $node)
+    protected function initNode(PHP_Depend_Code_NodeI $node)
     {
         if (!isset($this->_nodes[$node->getUUID()])) {
             $this->_nodes[$node->getUUID()] = array(
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),
-                //'type'  =>  get_class($node)
+                'type'  =>  get_class($node)
             );
         }
     }

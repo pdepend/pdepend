@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,14 +40,14 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once 'PHP/Depend/ProcessListenerI.php';
-require_once 'PHP/Reflection/Visitor/AbstractListener.php';
+require_once 'PHP/Depend/Visitor/AbstractListener.php';
 
 /**
  * Prints current the PDepend status informations.
@@ -56,97 +56,97 @@ require_once 'PHP/Reflection/Visitor/AbstractListener.php';
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_TextUI_ResultPrinter
-       extends PHP_Reflection_Visitor_AbstractListener
+       extends PHP_Depend_Visitor_AbstractListener
     implements PHP_Depend_ProcessListenerI
 {
     /**
      * The step size.
      */
     const STEP_SIZE = 20;
-    
+
     /**
      * Number of processed items.
      *
      * @var integer $_count
      */
     private $_count = 0;
-    
+
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
-     * 
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
+     *
      * @return void
      */
-    public function startParseProcess(PHP_Reflection_BuilderI $builder)
+    public function startParseProcess(PHP_Depend_BuilderI $builder)
     {
         $this->_count = 0;
-        
+
         echo "Parsing source files:\n";
     }
-    
+
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Reflection_BuilderI $builder The used node builder instance.
-     * 
+     * @param PHP_Depend_BuilderI $builder The used node builder instance.
+     *
      * @return void
      */
-    public function endParseProcess(PHP_Reflection_BuilderI $builder)
+    public function endParseProcess(PHP_Depend_BuilderI $builder)
     {
         $this->finish();
     }
-    
+
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
-     * 
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
+     *
      * @return void
      */
-    public function startFileParsing(PHP_Reflection_TokenizerI $tokenizer)
+    public function startFileParsing(PHP_Depend_TokenizerI $tokenizer)
     {
         $this->step();
     }
-    
+
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Reflection_TokenizerI $tokenizer The used tokenizer instance.
-     * 
+     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
+     *
      * @return void
      */
-    public function endFileParsing(PHP_Reflection_TokenizerI $tokenizer)
+    public function endFileParsing(PHP_Depend_TokenizerI $tokenizer)
     {
-        
+
     }
-    
+
     /**
      * Is called when PDepend starts the analyzing process.
-     * 
+     *
      * @return void
      */
     public function startAnalyzeProcess()
     {
-        
+
     }
-    
+
     /**
      * Is called when PDepend has finished the analyzing process.
-     * 
+     *
      * @return void
      */
     public function endAnalyzeProcess()
     {
-        
+
     }
-    
+
     /**
      * Is called when PDepend starts the logging process.
      *
@@ -156,7 +156,7 @@ class PHP_Depend_TextUI_ResultPrinter
     {
         echo "Generating pdepend log files, this may take a moment.\n";
     }
-    
+
     /**
      * Is called when PDepend has finished the logging process.
      *
@@ -164,55 +164,55 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     public function endLogProcess()
     {
-        
+
     }
-    
+
     /**
      * Is called when PDepend starts a new analyzer.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
-     * 
+     *
      * @return void
      */
     public function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $this->_count = 0;
-        
+
         $name = substr(get_class($analyzer), 19, -9);
         echo "Executing {$name}-Analyzer:\n";
     }
-    
+
     /**
      * Is called when PDepend has finished one analyzing process.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
-     * 
+     *
      * @return void
      */
     public function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $this->finish(self::STEP_SIZE);
     }
-    
+
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param PHP_Reflection_AST_NodeI $node The context node instance.
-     * 
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
      * @return void
-     * @see PHP_Reflection_Visitor_AbstractVisitor::startVisitNode()
+     * @see PHP_Depend_Visitor_AbstractVisitor::startVisitNode()
      */
-    public function startVisitNode(PHP_Reflection_AST_NodeI $node)
+    public function startVisitNode(PHP_Depend_Code_NodeI $node)
     {
         $this->step(self::STEP_SIZE);
     }
-    
+
     /**
      * Prints a single dot for the current step.
      *
      * @param integer $size The number of processed items that result in a new dot.
-     * 
-     * @return void 
+     *
+     * @return void
      */
     protected function step($size = 1)
     {
@@ -222,14 +222,14 @@ class PHP_Depend_TextUI_ResultPrinter
         if ($this->_count > 0 && $this->_count % ($size * 60) === 0) {
             printf("% 6s\n", $this->_count);
         }
-        ++$this->_count;        
+        ++$this->_count;
     }
-    
+
     /**
      * Closes the current dot line.
      *
      * @param integer $size The number of processed items that result in a new dot.
-     * 
+     *
      * @return void
      */
     protected function finish($size = 1)

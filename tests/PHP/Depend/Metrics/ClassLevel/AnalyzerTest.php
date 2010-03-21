@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,16 +40,23 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
-require_once dirname(__FILE__) . '/_dummy/TestImplAnalyzer.php';
 
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/File.php';
+require_once 'PHP/Depend/Code/Interface.php';
+require_once 'PHP/Depend/Code/Method.php';
+require_once 'PHP/Depend/Code/NodeIterator.php';
+require_once 'PHP/Depend/Code/Package.php';
+require_once 'PHP/Depend/Code/Property.php';
 require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
+require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
 require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
 
 /**
@@ -59,10 +66,10 @@ require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
 {
@@ -71,14 +78,19 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      * method fails with an exception if no cc analyzer was set.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     * @expectedException RuntimeException
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
-        $packages = self::parseSource('/metrics/class-level/simple-package');
+        $package  = new PHP_Depend_Code_Package('package1');
+        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        
-        $this->setExpectedException('RuntimeException', 'Missing required CC analyzer.');
-        
         $analyzer->analyze($packages);
     }
     
@@ -87,439 +99,428 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
      * fails for an invalid child analyzer.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     * @expectedException InvalidArgumentException
      */
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
     {
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $this->setExpectedException('InvalidArgumentException', 'CC Analyzer required.');
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_ClassLevel_TestImplAnalyzer());
-    }
-    
-    /**
-     * Tests that the analyzer calculates the correct DIT values.
-     *
-     * @return void
-     */
-    public function testCalculateDITMetric()
-    {
-        $packages = self::parseSource('/metrics/class-level/dit/');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $packages->rewind();
-        
-        $expected = array('A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 3, 'F' => 4);
-        foreach ($packages->current()->getClasses() as $class) {
-            // Get class name
-            $name = $class->getName();
-            // Check name is valid
-            $this->assertArrayHasKey($name, $expected);
-            // Fetch class metric
-            $metric = $analyzer->getNodeMetrics($class);
-            // Check dit exists
-            $this->assertArrayHasKey('dit', $metric);
-            // Compare values
-            $this->assertEquals($expected[$name], $metric['dit']);
-            // Remove offset
-            unset($expected[$name]);
-        }
-        // Check that we test all
-        $this->assertEquals(0, count($expected));
+        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CodeRank_Analyzer());
     }
     
     /**
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateIMPLMetric()
     {
-        $packages = self::parseSource('/metrics/class-level/impl/');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $expected = array('A' => 4, 'B' => 6, 'C' => 2);
-        foreach ($packages as $package) {
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for impl key
-                $this->assertArrayHasKey('impl', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['impl']);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that we catch all
-        $this->assertEquals(0, count($expected));
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct IMPL values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetric1()
+    {
+        $this->assertEquals(6, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct IMPL values.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetric2()
+    {
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
+
+    /**
+     * testCalculateIMPLMetricContainsUnknownImplementedInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetricContainsUnknownImplementedInterface()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
+
+    /**
+     * testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'impl'));
+    }
+
+    /**
+     * testCalculateIMPLMetricContainsInternalImplementedInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateIMPLMetricContainsInternalImplementedInterface()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'impl'));
     }
     
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
-    public function testCalculateCISMetric()
+    public function testCalculateCISMetricZeroInheritance()
     {
-        $packages = self::parseSource('/metrics/class-level/cis/');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $expected = array('A' => 2, 'B' => 2, 'C' => 3);
-        foreach ($packages as $package) {
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for cis key
-                $this->assertArrayHasKey('cis', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['cis']);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that we catch all
-        $this->assertEquals(0, count($expected));
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'cis'));
+    }
+
+    /**
+     * Tests that the calculated Class Interface Size(CSI) is correct.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateCISMetricOneLevelInheritance()
+    {
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'cis'));
+    }
+
+    /**
+     * Tests that the calculated Class Interface Size(CSI) is correct.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateCISMetricTwoLevelInheritance()
+    {
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'cis'));
     }
     
     /**
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
-    public function testCalculateCSZMetric()
+    public function testCalculateCSZMetricZeroInheritance()
     {
-        $packages = self::parseSource('/metrics/class-level/csz');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $expected = array('A' => 3, 'B' => 5, 'C' => 1, 'I' => true);
-        foreach ($packages as $package) {
-            // Check classes
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for csz key
-                $this->assertArrayHasKey('csz', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['csz']);
-                // Remove offset
-                unset($expected[$name]);
-            }
-            // Check interfaces
-            foreach ($package->getInterfaces() as $interface) {
-                // Get interface name
-                $name = $interface->getName();
-                // Check for valid interface name
-                $this->assertArrayHasKey($name, $expected);
-                // Get empty metric
-                $metric = $analyzer->getNodeMetrics($interface);
-                // Check that empty is array
-                $this->assertEquals(array(), $metric);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that all match
-        $this->assertEquals(0, count($expected));
+        $this->assertEquals(6, $this->_calculateMetric(__METHOD__, 'csz'));
+    }
+
+    /**
+     * Tests that the calculated Class SiZe(CSZ) metric is correct.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateCSZMetricOneLevelInheritance()
+    {
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'csz'));
     }
     
     /**
      * Tests that the analyzer calculates the correct VARS metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
-    public function testCalculateVARSMetric()
+    public function testCalculateVARSMetricZeroInheritance()
     {
-        $packages = self::parseSource('/metrics/class-level/vars');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $expected = array('A' => 2, 'B' => 3, 'C' => 0, 'I' => 0);
-        foreach ($packages as $package) {
-            // Check classes
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for vars key
-                $this->assertArrayHasKey('vars', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['vars']);
-                // Remove offset
-                unset($expected[$name]);
-            }
-            // Check interfaces
-            foreach ($package->getInterfaces() as $interface) {
-                // Get interface name
-                $name = $interface->getName();
-                // Check for valid interface name
-                $this->assertArrayHasKey($name, $expected);
-                // Get empty metric
-                $metric = $analyzer->getNodeMetrics($interface);
-                // Check that empty is array
-                $this->assertEquals(array(), $metric);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that all match
-        $this->assertEquals(0, count($expected));
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'vars'));
+    }
+    
+    /**
+     * Tests that the analyzer calculates the correct VARS metric
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateVARSMetricOneLevelInheritance()
+    {
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'vars'));
     }
     
     /**
      * Tests that the analyzer calculates the correct VARSi metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSiMetric()
     {
-        $packages = self::parseSource('/metrics/class-level/varsi');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'varsi'));
+    }
 
-        $expected = array('A' => 2, 'B' => 4, 'C' => 4, 'I' => 0);
-        foreach ($packages as $package) {
-            // Check classes
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for varsi key
-                $this->assertArrayHasKey('varsi', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['varsi'], $name);
-                // Remove offset
-                unset($expected[$name]);
-            }
-            // Check interfaces
-            foreach ($package->getInterfaces() as $interface) {
-                // Get interface name
-                $name = $interface->getName();
-                // Check for valid interface name
-                $this->assertArrayHasKey($name, $expected);
-                // Get empty metric
-                $metric = $analyzer->getNodeMetrics($interface);
-                // Check that empty is array
-                $this->assertEquals(array(), $metric);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that all match
-        $this->assertEquals(0, count($expected));
+    /**
+     * Tests that the analyzer calculates the correct VARSi metric
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateVARSiMetricWithInheritance()
+    {
+        $this->assertEquals(5, $this->_calculateMetric(__METHOD__, 'varsi'));
     }
     
     /**
      * Tests that the analyzer calculates the correct VARSnp metric
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateVARSnpMetric()
     {
-        $packages = self::parseSource('/metrics/class-level/varsnp/');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $expected = array('A' => 1, 'B' => 2, 'C' => 0, 'I' => 0);
-        foreach ($packages as $package) {
-            // Check classes
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for varsnp key
-                $this->assertArrayHasKey('varsnp', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['varsnp'], $name);
-                // Remove offset
-                unset($expected[$name]);
-            }
-            // Check interfaces
-            foreach ($package->getInterfaces() as $interface) {
-                // Get interface name
-                $name = $interface->getName();
-                // Check for valid interface name
-                $this->assertArrayHasKey($name, $expected);
-                // Get empty metric
-                $metric = $analyzer->getNodeMetrics($interface);
-                // Check that empty is array
-                $this->assertEquals(array(), $metric);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that all match
-        $this->assertEquals(0, count($expected));
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'varsnp'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct VARSnp metric
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateVARSnpMetricWithInheritance()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'varsnp'));
     }
     
     /**
      * Tests that the analyzer calculates the correct WMC metric. 
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */
     public function testCalculateWMCMetric()
     {
-        $packages = self::parseSource('/metrics/class-level/wmc/');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $expected = array('A' => 2, 'B' => 4, 'C' => 4, 'I' => 0);
-        foreach ($packages as $package) {
-            // Check classes
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for wmc key
-                $this->assertArrayHasKey('wmc', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['wmc'], $name);
-                // Remove offset
-                unset($expected[$name]);
-            }
-            // Check interfaces
-            foreach ($package->getInterfaces() as $interface) {
-                // Get interface name
-                $name = $interface->getName();
-                // Check for valid interface name
-                $this->assertArrayHasKey($name, $expected);
-                // Get empty metric
-                $metric = $analyzer->getNodeMetrics($interface);
-                // Check that empty is array
-                $this->assertEquals(array(), $metric);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that all match
-        $this->assertEquals(0, count($expected));
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmc'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMC metric.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateWMCMetricOneLevelInheritance()
+    {
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmc'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMC metric.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateWMCMetricTwoLevelInheritance()
+    {
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmc'));
     }
     
     /**
      * Tests that the analyzer calculates the correct WMCi metric. 
      *
      * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
      */    
     public function testCalculateWMCiMetric()
     {
-        $packages = self::parseSource('/metrics/class-level/wmci/');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
-        $analyzer->analyze($packages);
-        
-        $expected = array('A' => 2, 'B' => 4, 'C' => 5, 'I' => 0);
-        foreach ($packages as $package) {
-            // Check classes
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for wmci key
-                $this->assertArrayHasKey('wmci', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['wmci'], $name);
-                // Remove offset
-                unset($expected[$name]);
-            }
-            // Check interfaces
-            foreach ($package->getInterfaces() as $interface) {
-                // Get interface name
-                $name = $interface->getName();
-                // Check for valid interface name
-                $this->assertArrayHasKey($name, $expected);
-                // Get empty metric
-                $metric = $analyzer->getNodeMetrics($interface);
-                // Check that empty is array
-                $this->assertEquals(array(), $metric);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that all match
-        $this->assertEquals(0, count($expected));
+        $this->assertEquals(3, $this->_calculateMetric(__METHOD__, 'wmci'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCi metric.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateWMCiMetricOneLevelInheritance()
+    {
+        $this->assertEquals(4, $this->_calculateMetric(__METHOD__, 'wmci'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCi metric.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateWMCiMetricTwoLevelInheritance()
+    {
+        $this->assertEquals(5, $this->_calculateMetric(__METHOD__, 'wmci'));
     }
     
     /**
      * Tests that the analyzer calculates the correct WMCnp metric. 
      *
      * @return void
-     */    
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
     public function testCalculateWMCnpMetric()
     {
-        $packages = self::parseSource('/metrics/class-level/wmcnp/');
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'wmcnp'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCnp metric.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateWMCnpMetricOneLevelInheritance()
+    {
+        $this->assertEquals(2, $this->_calculateMetric(__METHOD__, 'wmcnp'));
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCnp metric.
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::classlevel
+     * @group unittest
+     */
+    public function testCalculateWMCnpMetricTwoLevelInheritance()
+    {
+        $this->assertEquals(1, $this->_calculateMetric(__METHOD__, 'wmcnp'));
+    }
+
+    /**
+     * Analyzes the source code associated with the given test case and returns
+     * a single measured metric.
+     *
+     * @param string $testCase Name of the calling test case.
+     * @param string $metric   Name of the searched metric.
+     *
+     * @return mixed
+     */
+    private function _calculateMetric($testCase, $metric)
+    {
+        $packages = self::parseTestCaseSource($testCase);
+        $package  = $packages->current();
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
         $analyzer->analyze($packages);
-        
-        $expected = array('A' => 0, 'B' => 3, 'C' => 4, 'I' => 0);
-        foreach ($packages as $package) {
-            // Check classes
-            foreach ($package->getClasses() as $class) {
-                // Get class name
-                $name = $class->getName();
-                // Check for valid class name
-                $this->assertArrayHasKey($name, $expected);
-                // Get class metric
-                $metric = $analyzer->getNodeMetrics($class);
-                // Check for wmcnp key
-                $this->assertArrayHasKey('wmcnp', $metric);
-                // Compare values
-                $this->assertEquals($expected[$name], $metric['wmcnp'], $name);
-                // Remove offset
-                unset($expected[$name]);
-            }
-            // Check interfaces
-            foreach ($package->getInterfaces() as $interface) {
-                // Get interface name
-                $name = $interface->getName();
-                // Check for valid interface name
-                $this->assertArrayHasKey($name, $expected);
-                // Get empty metric
-                $metric = $analyzer->getNodeMetrics($interface);
-                // Check that empty is array
-                $this->assertEquals(array(), $metric);
-                // Remove offset
-                unset($expected[$name]);
-            }
-        }
-        // Check that all match
-        $this->assertEquals(0, count($expected));
+
+        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        return $metrics[$metric];
     }
 }

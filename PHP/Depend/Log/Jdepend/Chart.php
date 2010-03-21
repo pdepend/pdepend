@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
- * Copyright (c) 2008-2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,33 +40,35 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 
+require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Log/FileAwareI.php';
 require_once 'PHP/Depend/Log/NoLogOutputException.php';
+require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
+require_once 'PHP/Depend/Util/FileUtil.php';
 require_once 'PHP/Depend/Util/ImageConvert.php';
-require_once 'PHP/Reflection/Visitor/AbstractVisitor.php';
 
 /**
- * Generates a chart with the aggregated metrics. 
+ * Generates a chart with the aggregated metrics.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2009 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.manuel-pichler.de/
+ * @link       http://pdepend.org/
  */
 class PHP_Depend_Log_Jdepend_Chart
-       extends PHP_Reflection_Visitor_AbstractVisitor 
+       extends PHP_Depend_Visitor_AbstractVisitor
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
@@ -77,74 +79,74 @@ class PHP_Depend_Log_Jdepend_Chart
      * @var string $_logFile
      */
     private $_logFile = null;
-    
+
     /**
      * The context source code.
      *
-     * @var PHP_Reflection_AST_Iterator $_code
+     * @var PHP_Depend_Code_NodeIterator $_code
      */
     private $_code = null;
-    
+
     /**
      * The context analyzer instance.
      *
      * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
      */
     private $_analyzer = null;
-    
+
     /**
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     * 
+     *
      * @return void
      */
     public function setLogFile($logFile)
     {
         $this->_logFile = $logFile;
     }
-    
+
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
-     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
      * @return array(string)
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PHP_Depend_Metrics_Dependency_Analyzer');
+        return array(PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
     }
-    
+
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Reflection_AST_Iterator $code The code nodes.
-     * 
+     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     *
      * @return void
      */
-    public function setCode(PHP_Reflection_AST_Iterator $code)
+    public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
         $this->_code = $code;
     }
-    
+
     /**
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
-     * 
+     *
      * @return boolean
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         if ($analyzer instanceof PHP_Depend_Metrics_Dependency_Analyzer) {
             $this->_analyzer = $analyzer;
-            
+
             return true;
         }
         return false;
     }
-    
+
     /**
      * Closes the logger process and writes the output file.
      *
@@ -157,30 +159,39 @@ class PHP_Depend_Log_Jdepend_Chart
         if ($this->_logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
-        
+
         $bias = 0.1;
 
         $svg = new DOMDocument('1.0', 'UTF-8');
         $svg->load(dirname(__FILE__) . '/chart.svg');
-        
+
         $bad   = $svg->getElementById('jdepend.bad');
         $good  = $svg->getElementById('jdepend.good');
         $layer = $svg->getElementById('jdepend.layer');
-        
+
         $max = 0;
         $min = 0;
-        
+
         $items = array();
         foreach ($this->_code as $package) {
+
+            if (!$package->isUserDefined()) {
+                continue;
+            }
+
             $metrics = $this->_analyzer->getStats($package);
-            
+
+            if (count($metrics) === 0) {
+                continue;
+            }
+
             $size = $metrics['cc'] + $metrics['ac'];
             if ($size > $max) {
                 $max = $size;
             } else if ($min === 0 || $size < $min) {
                 $min = $size;
             }
-            
+
             $items[] = array(
                 'size'         =>  $size,
                 'abstraction'  =>  $metrics['a'],
@@ -191,9 +202,12 @@ class PHP_Depend_Log_Jdepend_Chart
         }
 
         $diff = (($max - $min) / 10);
-        
+
         // Sort items by size
-        usort($items, create_function('$a, $b', 'return ($a["size"] - $b["size"]);'));
+        usort(
+            $items,
+            create_function('$a, $b', 'return ($a["size"] - $b["size"]);')
+        );
 
         foreach ($items as $item) {
             if ($item['distance'] < $bias) {
@@ -205,31 +219,32 @@ class PHP_Depend_Log_Jdepend_Chart
             if ($diff !== 0) {
                 $r = 5 + (($item['size'] - $min) / $diff);
             }
-            
+
             $a = $r / 15;
             $e = (50 - $r) + ($item['abstraction'] * 320);
             $f = (20 - $r + 190) - ($item['instability'] * 190);
-            
+
             $transform = "matrix({$a}, 0, 0, {$a}, {$e}, {$f})";
 
             $ellipse->removeAttribute('xml:id');
             $ellipse->setAttribute('id', uniqid('pdepend_'));
             $ellipse->setAttribute('title', $item['name']);
             $ellipse->setAttribute('transform', $transform);
-            
-            $layer->appendChild($ellipse);           
+
+            $layer->appendChild($ellipse);
         }
 
         $bad->parentNode->removeChild($bad);
         $good->parentNode->removeChild($good);
-        
-        $temp = sys_get_temp_dir() . '/' . uniqid('pdepend_') . '.svg';
+
+        $temp  = PHP_Depend_Util_FileUtil::getSysTempDir();
+        $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
-        
+
         PHP_Depend_Util_ImageConvert::convert($temp, $this->_logFile);
-        
+
         // Remove temp file
         unlink($temp);
     }
-    
+
 }
