@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- *   
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
@@ -124,31 +124,31 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
         $result = array();
 
         $paths = explode(PATH_SEPARATOR, get_include_path());
-        $paths = array_filter($paths); 
 
-        array_unshift($paths, $this->_classPath);
+        foreach ($paths as $path)
+        {
+            $dir = $path.'/PHP/Depend/Metrics/';
 
-        foreach ($paths as $path) {
-            $path = rtrim($path, "/\\");
+            if (!is_dir($dir))
+            {
+                continue;
+            }
 
-            $iterator = new RegexIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($path)
-                ),
-                $this->_classRegexp
+            $this->_classPath = $dir;
+
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($dir)
             );
 
             foreach ($iterator as $file) {
-                $pathName = $file->getPathname();
+                if ($file->getFilename() === 'Analyzer.php') {
+                    include_once $file->getPathname();
 
-                $className = $this->_createClassNameFromPath($path, $pathName);
+                    $className = $this->_createClassNameFromPath($dir, $file->getPathname());
 
-                if (!class_exists($className)) {
-                    include_once $pathName;
-                }
-
-                if ($this->_isAnalyzerClass($className)) {
-                    $result[] = new ReflectionClass($className);
+                    if ($this->_isAnalyzerClass($className)) {
+                        $result[] = new ReflectionClass($className);
+                    }
                 }
             }
         }
