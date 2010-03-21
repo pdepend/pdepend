@@ -125,12 +125,10 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
 
         $paths = explode(PATH_SEPARATOR, get_include_path());
 
-        foreach ($paths as $path)
-        {
+        foreach ($paths as $path) {
             $dir = $path.'/PHP/Depend/Metrics/';
 
-            if (!is_dir($dir))
-            {
+            if (!is_dir($dir)) {
                 continue;
             }
 
@@ -142,9 +140,12 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
 
             foreach ($iterator as $file) {
                 if ($file->getFilename() === 'Analyzer.php') {
-                    include_once $file->getPathname();
-
-                    $className = $this->_createClassNameFromPath($dir, $file->getPathname());
+                    $className = $this->_createClassNameFromPath(
+                        $dir, $file->getPathname()
+                    );
+                    if (!class_exists($className)) {
+                        include_once $file->getPathname();
+                    }
 
                     if ($this->_isAnalyzerClass($className)) {
                         $result[] = new ReflectionClass($className);
@@ -166,8 +167,8 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      */
     private function _createClassNameFromPath($classPath, $path)
     {
-        $localPath = substr($path, strlen($classPath) + 1, -4);
-        return strtr($localPath, DIRECTORY_SEPARATOR, '_');
+        $localPath = substr($path, strlen($classPath), -4);
+        return 'PHP_Depend_Metrics_' . strtr($localPath, DIRECTORY_SEPARATOR, '_');
     }
 
     /**
