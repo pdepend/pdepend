@@ -95,7 +95,7 @@ class PHP_Depend_Code_ASTLogicalXorExpressionTest extends PHP_Depend_Code_ASTNod
     public function testLogicalXorExpressionHasExpectedStartColumn()
     {
         $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertEquals(13, $expression->getStartColumn());
+        $this->assertEquals(18, $expression->getStartColumn());
     }
 
     /**
@@ -129,7 +129,7 @@ class PHP_Depend_Code_ASTLogicalXorExpressionTest extends PHP_Depend_Code_ASTNod
     public function testLogicalXorExpressionHasExpectedEndColumn()
     {
         $expression = $this->_getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertEquals(26, $expression->getEndColumn());
+        $this->assertEquals(20, $expression->getEndColumn());
     }
 
     /**
