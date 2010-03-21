@@ -97,7 +97,7 @@ class PHP_Depend_Code_ASTLogicalAndExpressionTest extends PHP_Depend_Code_ASTNod
     public function testLogicalAndExpressionHasExpectedStartColumn()
     {
         $expression = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(13, $expression->getStartColumn());
+        $this->assertEquals(18, $expression->getStartColumn());
     }
 
     /**
@@ -131,7 +131,7 @@ class PHP_Depend_Code_ASTLogicalAndExpressionTest extends PHP_Depend_Code_ASTNod
     public function testLogicalAndExpressionHasExpectedEndColumn()
     {
         $expression = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(26, $expression->getEndColumn());
+        $this->assertEquals(20, $expression->getEndColumn());
     }
 
     /**
