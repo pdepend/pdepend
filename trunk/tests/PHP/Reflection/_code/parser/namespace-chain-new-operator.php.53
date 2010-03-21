@@ -1,6 +1,0 @@
-<?php
-function newTest()
-{
-    $obj1 = new php::reflection1::Parser();
-    $obj2 = new php::reflection2::Parser();
-} 
