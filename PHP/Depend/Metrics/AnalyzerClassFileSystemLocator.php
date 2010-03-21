@@ -166,8 +166,13 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      */
     private function _createClassNameFromPath($classPath, $path)
     {
+<<<<<<< HEAD
         $localPath = substr($path, strlen($classPath) + 1, -4);
         return strtr($localPath, DIRECTORY_SEPARATOR, '_');
+=======
+        $localPath = substr($path, strlen($classPath), -4);
+        return $this->_classPrefix . strtr($localPath, DIRECTORY_SEPARATOR, '_');
+>>>>>>> improved analyzer locator to look for analyzer in the include path
     }
 
     /**
