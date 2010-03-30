@@ -214,10 +214,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Creates a field declaration node.
      *
-     * @return PHP_Depend_Code_ASTMethodPostfix
+     * @return PHP_Depend_Code_ASTFunctionPostfix
      */
     protected function createNodeInstance()
     {
-        return new PHP_Depend_Code_ASTMethodPostfix(__FUNCTION__);
+        return new PHP_Depend_Code_ASTFunctionPostfix(__FUNCTION__);
     }
 }

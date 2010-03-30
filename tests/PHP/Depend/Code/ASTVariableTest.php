@@ -65,6 +65,20 @@ require_once 'PHP/Depend/Code/ASTVariable.php';
 class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesAcceptOnChildNode
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesAcceptOnChildNode()
+    {
+        // Not valid for leaf nodes.
+    }
+
+    /**
      * testVariableHasExpectedStartLine
      *
      * @return void
