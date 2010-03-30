@@ -72,4 +72,20 @@ class PHP_Depend_Code_ASTVariable extends PHP_Depend_Code_ASTNode
      * Type of this node class.
      */
     const CLAZZ = __CLASS__;
+
+    /**
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
+     *
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     * @param mixed                       $data    Optional previous calculated data.
+     *
+     * @return mixed
+     * @since 0.9.12
+     */
+    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
+    {
+        $data = $visitor->visitBeforeVariable($this, $data);
+        return $visitor->visitAfterVariable($this, $data);
+    }
 }
