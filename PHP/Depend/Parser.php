@@ -1563,6 +1563,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_DECLARE:
             case self::T_DO:
             case self::T_ECHO:
+            case self::T_END_HEREDOC:
             case self::T_FOR:
             case self::T_FOREACH:
             case self::T_GLOBAL:
@@ -1665,6 +1666,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseExitExpression();
                 break;
 
+            case self::T_START_HEREDOC:
+                $expressions[] = $this->_parseHeredoc();
+                break;
+
             case self::T_CURLY_BRACE_OPEN:
                 $expressions[] = $this->_parseBraceExpression(
                     $this->_builder->buildASTExpression(),
@@ -1690,7 +1695,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_PLUS_EQUAL:
             case self::T_MINUS_EQUAL:
             case self::T_CONCAT_EQUAL:
-                $expressions[] = $this->_parseAssignmentExpression(array_pop($expressions));
+                $expressions[] = $this->_parseAssignmentExpression(
+                    array_pop($expressions)
+                );
                 break;
 
             default:
@@ -3254,6 +3261,26 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses a here- or nowdoc string instance.
+     *
+     * @return PHP_Depend_Code_ASTHeredoc
+     * @since 0.9.12
+     */
+    private function _parseHeredoc()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_START_HEREDOC);
+
+        $heredoc = $this->_builder->buildASTHeredoc();
+        $this->_parseStringExpressions($heredoc, self::T_END_HEREDOC);
+
+        $token = $this->_consumeToken(self::T_END_HEREDOC);
+        $heredoc->setDelimiter($token->image);
+
+        return $this->_setNodePositionsAndReturn($heredoc);
+    }
+
+    /**
      * Parses a simple string sequence between two tokens of the same type.
      *
      * @param integer $tokenType The start/stop token type.
@@ -3305,37 +3332,57 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $string->setStartLine($token->startLine);
         $string->setStartColumn($token->startColumn);
 
-        while (($tokenType = $this->_tokenizer->peek()) != self::T_EOF) {
-            switch ($tokenType) {
-
-            case $delimiterType:
-                break 2;
-
-            case self::T_BACKSLASH:
-                $string->addChild($this->_parseEscapedASTLiteralString());
-                break;
-
-            case self::T_DOLLAR:
-            case self::T_VARIABLE:
-                $expr = $this->_parseCompoundVariableOrVariableVariableOrVariable();
-                $string->addChild($expr);
-                break;
-
-            case self::T_CURLY_BRACE_OPEN:
-                $string->addChild($this->_parseCompoundExpressionOrLiteral());
-                break;
-
-            default:
-                $string->addChild($this->_parseLiteral());
-                break;
-            }
-        }
+        $this->_parseStringExpressions($string, $delimiterType);
 
         $token = $this->_consumeToken($delimiterType);
         $string->setEndLine($token->endLine);
         $string->setEndColumn($token->endColumn);
 
         return $string;
+    }
+
+    /**
+     * This method parses the contents of a string or here-/now-doc node. It
+     * will not consume the given stop token, so it is up to the calling method
+     * to consume the stop token. The return value of this method is the prepared
+     * input string node.
+     *
+     * @param PHP_Depend_Code_ASTNode $node      The parent string or nowdoc node.
+     * @param integer                 $stopToken The stop token type.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.12
+     */
+    private function _parseStringExpressions(
+        PHP_Depend_Code_ASTNode $node,
+        $stopToken
+    ) {
+        while (($tokenType = $this->_tokenizer->peek()) != self::T_EOF) {
+            switch ($tokenType) {
+
+            case $stopToken:
+                break 2;
+
+            case self::T_BACKSLASH:
+                $node->addChild($this->_parseEscapedASTLiteralString());
+                break;
+
+            case self::T_DOLLAR:
+            case self::T_VARIABLE:
+                $expr = $this->_parseCompoundVariableOrVariableVariableOrVariable();
+                $node->addChild($expr);
+                break;
+
+            case self::T_CURLY_BRACE_OPEN:
+                $node->addChild($this->_parseCompoundExpressionOrLiteral());
+                break;
+
+            default:
+                $node->addChild($this->_parseLiteral());
+                break;
+            }
+        }
+        return $node;
     }
 
     /**
