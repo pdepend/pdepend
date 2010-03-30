@@ -66,4 +66,25 @@ class PHP_Depend_Code_ASTComment extends PHP_Depend_Code_ASTNode
      * The type of this class.
      */
     const CLAZZ = __CLASS__;
+
+    /**
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
+     *
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     * @param mixed                       $data    Optional previous calculated data.
+     *
+     * @return mixed
+     * @since 0.9.12
+     */
+    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
+    {
+        $data = $visitor->visitBeforeComment($this, $data);
+
+        foreach ($this->nodes as $node) {
+            $data = $node->accept($visitor, $data);
+        }
+
+        return $visitor->visitAfterComment($this, $data);
+    }
 }
