@@ -743,6 +743,14 @@ interface PHP_Depend_BuilderI
     function buildASTString();
 
     /**
+     * Builds a new heredoc node.
+     *
+     * @return PHP_Depend_Code_ASTHeredoc
+     * @since 0.9.12
+     */
+    function buildASTHeredoc();
+
+    /**
      * Builds a new constant definition node.
      *
      * <code>

@@ -1399,6 +1399,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new heredoc node.
+     *
+     * @return PHP_Depend_Code_ASTHeredoc
+     * @since 0.9.12
+     */
+    public function buildASTHeredoc()
+    {
+        return $this->_buildASTNodeInstance('ASTHeredoc');
+    }
+
+    /**
      * Builds a new constant definition node.
      *
      * <code>
