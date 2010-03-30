@@ -427,6 +427,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * @return mixed
      * @since 0.9.8
      */
+    /*
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         $data = $visitor->visitBefore($this, $data);
@@ -437,6 +438,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 
         return $visitor->visitAfter($this, $data);
     }
+    */
 
     /**
      * This method can be called by the PHP_Depend runtime environment or a
