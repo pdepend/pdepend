@@ -76,9 +76,12 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      */
     public function testAcceptInvokesVisitBeforeOnGivenVisitor()
     {
+        $methodName = 'visitBefore' . substr(get_class($this), 19, -4);
+
         $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('visitBefore');
+        $visitor->expects($this->at(0))
+            ->method('__call')
+            ->with($this->equalTo($methodName));
 
         $node = $this->createNodeInstance();
         $node->accept($visitor);
@@ -95,9 +98,12 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      */
     public function testAcceptInvokesVisitAfterOnGivenVisitor()
     {
+        $methodName = 'visitAfter' . substr(get_class($this), 19, -4);
+
         $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('visitAfter');
+        $visitor->expects($this->at(1))
+            ->method('__call')
+            ->with($this->equalTo($methodName));
 
         $node = $this->createNodeInstance();;
         $node->accept($visitor);
