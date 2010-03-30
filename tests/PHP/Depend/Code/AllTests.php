@@ -88,6 +88,7 @@ require_once dirname(__FILE__) . '/ASTForeachStatementTest.php';
 require_once dirname(__FILE__) . '/ASTFunctionPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTGlobalStatementTest.php';
 require_once dirname(__FILE__) . '/ASTGotoStatementTest.php';
+require_once dirname(__FILE__) . '/ASTHeredocTest.php';
 require_once dirname(__FILE__) . '/ASTIfStatementTest.php';
 require_once dirname(__FILE__) . '/ASTInstanceOfExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTMemberPrimaryPrefixTest.php';
@@ -212,6 +213,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTFunctionPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTGlobalStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTGotoStatementTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTHeredocTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTIfStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTInstanceOfExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTLiteralTest');
