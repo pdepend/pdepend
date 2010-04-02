@@ -68,7 +68,8 @@ require_once 'PHP/Depend/Util/MathUtil.php';
  */
 class PHP_Depend_Metrics_NPathComplexity_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI,
+    implements PHP_Depend_Code_ASTVisitorI,
+               PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI
 {
@@ -258,7 +259,106 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
             $method->getTokens()
         );
 
+        $data = array();
+        foreach ($method->getChildren() as $child) {
+            $data = $child->accept($this, $data);
+        }
+        echo $this->mul($data), PHP_EOL;
+        echo $this->_metrics[$method->getUUID()], PHP_EOL;
+exit(42);
         $this->fireEndMethod($method);
+    }
+
+    private $_stack = array();
+
+    public function  __call($method, $args)
+    {
+        return $args[1];
+    }
+
+    public function visitBeforeIfStatement($node, $data)
+    {
+        return $this->push($data);
+    }
+
+    public function visitAfterIfStatement($node, $data)
+    {
+        return $this->pop($this->sum($data));
+    }
+
+    public function visitBeforeConditionalExpression($node, $data)
+    {
+        return $this->push($data);
+    }
+
+    public function visitAfterConditionalExpression($node, $data)
+    {
+        return $this->pop($this->sum($data));
+    }
+
+    public function visitBeforeScopeStatement($node, $data)
+    {
+        return $this->push($data);
+    }
+
+    public function visitAfterScopeStatement($node, $data)
+    {
+        return $this->pop($this->mul($data));
+    }
+
+    public function visitAfterBooleanOrExpression($node, $data)
+    {
+        $data[] = '1';
+        return $data;
+    }
+
+    public function visitAfterEchoStatement($node, $data)
+    {
+        return $this->push($data);
+    }
+
+    public function visitBeforeEchoStatement($node, $data)
+    {
+        return $this->pop($this->sum($data));
+    }
+
+    public function visitAfterStatement($node, $data)
+    {
+        $data[] = '1';
+        return $data;
+    }
+
+    protected function push(array $data)
+    {
+        $this->_stack[] = $data;
+
+        return array();
+    }
+
+    protected function pop($sum)
+    {
+        $result   = array_pop($this->_stack);
+        $result[] = $sum;
+
+        return $result;
+    }
+
+    protected function sum(array $data)
+    {
+        $sum = '1';
+        foreach ($data as $npath) {
+            $sum = PHP_Depend_Util_MathUtil::add($npath, $sum);
+        }
+        return $sum;
+    }
+
+    protected function mul(array $data)
+    {
+        $product = '1';
+        foreach ($data as $npath) {
+            $product = PHP_Depend_Util_MathUtil::mul($npath, $product);
+        }
+        return $product;
     }
 
     /**
@@ -786,8 +886,9 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
 
             next($this->_tokens);
         }
-
+print_r($input);
         $input = array_pad(array_filter($input), 5, '1');
+print_r($input);
         $npath = '0';
         foreach ($input as $value) {
             $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
