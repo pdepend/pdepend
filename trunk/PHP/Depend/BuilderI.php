@@ -375,6 +375,17 @@ interface PHP_Depend_BuilderI
     function buildASTCloneExpression($image);
 
     /**
+     * Builds a new list-expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTListExpression
+     * @author Joey Mazzarelli
+     * @since 0.9.12
+     */
+    function buildASTListExpression($image);
+
+    /**
      * Builds a new array-expression node.
      *
      * @return PHP_Depend_Code_ASTArrayExpression

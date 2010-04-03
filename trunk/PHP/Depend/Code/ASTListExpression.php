@@ -40,11 +40,12 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Joey Mazzarelli
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.8
+ * @since      0.9.12
  */
 
 require_once 'PHP/Depend/Code/ASTExpression.php';
@@ -56,11 +57,12 @@ require_once 'PHP/Depend/Code/ASTExpression.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Joey Mazzarelli
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.8
+ * @since      0.9.12
  */
 class PHP_Depend_Code_ASTListExpression extends PHP_Depend_Code_ASTExpression
 {
