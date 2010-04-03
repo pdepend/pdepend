@@ -1,3 +1,9 @@
+PHP_Depend 0.9.12
+-----------------
+
+- Fixed #125: PHP_Depend silently parses list statements. Fixed in svn
+  revision #1223. Thanks to Joey Mazzarelli for providing this patch.
+
 PHP_Depend 0.9.11
 -----------------
 

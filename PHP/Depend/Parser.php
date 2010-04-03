@@ -1102,7 +1102,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * This method parses a single list-statement node.
      *
-     * @return PHP_Depend_Code_ASTForeachStatement
+     * @return PHP_Depend_Code_ASTListExpression
+     * @author Joey Mazzarelli
      * @since 0.9.12
      */
     private function _parseListExpression()
