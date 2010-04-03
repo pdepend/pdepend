@@ -1100,6 +1100,50 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a single list-statement node.
+     *
+     * @return PHP_Depend_Code_ASTForeachStatement
+     * @since 0.9.12
+     */
+    private function _parseListExpression()
+    {
+        $this->_tokenStack->push();
+        
+        $token = $this->_consumeToken(self::T_LIST);
+        $this->_consumeComments();
+
+        $list = $this->_builder->buildASTListExpression($token->image);
+
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+        $this->_consumeComments();
+
+        while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
+
+            // The variable is optional:
+            //   list(, , , , $something) = ...;
+            // is valid.
+            if ($tokenType === self::T_VARIABLE) {
+                $list->addChild($this->_parseVariable());
+
+                $this->_consumeComments();
+                $tokenType = $this->_tokenizer->peek();
+            }
+
+            if ($tokenType === self::T_COMMA) {
+                $this->_consumeToken(self::T_COMMA);
+                $this->_consumeComments();
+            } else {
+                // no comma, must be the end
+                break;
+            }
+        }
+
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+
+        return $this->_setNodePositionsAndReturn($list);
+    }
+
+    /**
      * Parses one or more optional php array expressions.
      *
      * @param PHP_Depend_Code_ASTNode $node The parent/context node instance.
@@ -1623,6 +1667,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_DOLLAR:
             case self::T_VARIABLE:
                 $expressions[] = $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+                break;
+
+            case self::T_LIST:
+                $expressions[] = $this->_parseListExpression();
                 break;
 
             case self::T_STATIC:
