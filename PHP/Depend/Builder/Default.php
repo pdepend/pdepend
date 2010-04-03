@@ -805,6 +805,20 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new list-expression node.
+     *
+     * @param string $image The source image of this expression.
+     *
+     * @return PHP_Depend_Code_ASTListExpression
+     * @author Joey Mazzarelli
+     * @since 0.9.12
+     */
+    public function buildASTListExpression($image)
+    {
+        return $this->_buildASTNodeInstance('ASTListExpression', $image);
+    }
+
+    /**
      * Builds a new array-expression node.
      *
      * @return PHP_Depend_Code_ASTArrayExpression
@@ -1107,25 +1121,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTForeachStatement($image);
-    }
-
-    /**
-     * Builds a new list-statement node.
-     *
-     * @param string $image The source image of this statement.
-     *
-     * @return PHP_Depend_Code_ASTListExpression
-     * @since 0.9.8
-     */
-    public function buildASTListExpression($image)
-    {
-        include_once 'PHP/Depend/Code/ASTListExpression.php';
-
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTListExpression()'
-        );
-
-        return new PHP_Depend_Code_ASTListExpression($image);
     }
 
     /**
