@@ -1,5 +1,5 @@
 <?php
-function testForeachStatementHasExpectedEndLine()
+function testListExpressionHasExpectedEndLine()
 {
     list($a, $b) = array("a", "b");
 }
