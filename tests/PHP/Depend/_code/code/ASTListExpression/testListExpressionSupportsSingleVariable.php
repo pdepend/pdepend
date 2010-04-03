@@ -1,5 +1,5 @@
 <?php
-function testForeachStatementSuppportsSingleVariable()
+function testListExpressionSupportsSingleVariable()
 {
     list($a) = array("a", "b", "c");
 }

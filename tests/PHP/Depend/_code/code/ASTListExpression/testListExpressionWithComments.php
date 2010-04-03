@@ -1,5 +1,5 @@
 <?php
-function testForeachStatementSuppportsManyVariables()
+function testListExpressionWithComments()
 {
     list/* foo */(/*bar*/$a /*abc*/, // something
           $b, /* sheesh */ $c # blah
