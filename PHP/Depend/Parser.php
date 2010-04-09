@@ -2688,7 +2688,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
         }
 
-
         $prefix->addChild(
             $this->_parseMethodOrPropertyPostfix(
                 $this->_parseOptionalArrayExpression($child)
@@ -2746,10 +2745,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         default:
             $postfix = $this->_parseMethodOrPropertyPostfix(
-                $this->_parseCompoundVariableOrVariableVariableOrVariable()
+                $this->_parseOptionalArrayExpression(
+                    $this->_parseCompoundVariableOrVariableVariableOrVariable()
+                )
             );
             break;
         }
+
+
+
         $prefix->addChild($postfix);
 
         return $prefix;

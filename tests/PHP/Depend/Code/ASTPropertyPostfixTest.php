@@ -262,11 +262,75 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
-     * @expectedException PHP_Depend_Parser_InvalidStateException
      */
-    public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
+    public function testPropertyPostfixStructureForParentVariableAccess()
     {
-        self::parseTestCaseSource(__METHOD__);
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTParentReference::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * testPropertyPostfixGraphForObjectPropertyArrayExpression
+     *
+     * <code>
+     * $this->arguments[42] = func_get_args();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPropertyPostfixGraphForObjectPropertyArrayExpression()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * testPropertyPostfixGraphForPropertyArrayExpression
+     *
+     * <code>
+     * self::$arguments[42] = func_get_args();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPropertyPostfixGraphForStaticPropertyArrayExpression()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTSelfReference::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -279,17 +343,11 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
+     * @expectedException PHP_Depend_Parser_InvalidStateException
      */
-    public function testPropertyPostfixStructureForParentVariableAccess()
+    public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
     {
-        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
-        $expected = array(
-            PHP_Depend_Code_ASTParentReference::CLAZZ,
-            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-            PHP_Depend_Code_ASTVariable::CLAZZ
-        );
-
-        $this->assertGraphEquals($prefix, $expected);
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
