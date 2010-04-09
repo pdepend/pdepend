@@ -394,7 +394,7 @@ interface PHP_Depend_BuilderI
     function buildASTArrayExpression();
 
     /**
-     * Builds a new instanceof expression node.
+     * Builds a new instanceof-expression node.
      *
      * @param string $image The source image of this expression.
      *
@@ -402,6 +402,26 @@ interface PHP_Depend_BuilderI
      * @since 0.9.6
      */
     function buildASTInstanceOfExpression($image);
+
+    /**
+     * Builds a new isset-expression node.
+     *
+     * <code>
+     * //  -----------
+     * if (isset($foo)) {
+     * //  -----------
+     * }
+     *
+     * //  -----------------------
+     * if (isset($foo, $bar, $baz)) {
+     * //  -----------------------
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTIssetExpression
+     * @since 0.9.12
+     */
+    function buildASTIssetExpression();
 
     /**
      * Builds a new boolean conditional-expression.
