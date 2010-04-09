@@ -1134,7 +1134,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_consumeToken(self::T_COMMA);
                 $this->_consumeComments();
             } else {
-                // no comma, must be the end
                 break;
             }
         }
@@ -1251,11 +1250,62 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         // Consume the "instanceof" keyword and strip comments
         $token = $this->_consumeToken(self::T_INSTANCEOF);
-
-        // Create a new instanceof expression and parse identifier
+        
         return $this->_parseExpressionTypeReference(
             $this->_builder->buildASTInstanceOfExpression($token->image), false
         );
+    }
+
+    /**
+     * Parses an isset-expression node.
+     *
+     * <code>
+     * //  -----------
+     * if (isset($foo)) {
+     * //  -----------
+     * }
+     *
+     * //  -----------------------
+     * if (isset($foo, $bar, $baz)) {
+     * //  -----------------------
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTIssetExpression
+     * @since 0.9.12
+     */
+    private function _parseIssetExpression()
+    {
+        $startToken = $this->_consumeToken(self::T_ISSET);
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+
+        $expr = $this->_builder->buildASTIssetExpression();
+
+        $this->_consumeComments();
+        while ($this->_tokenizer->peek() !== self::T_EOF) {
+            $expr->addChild($this->_parseVariableOrConstantOrPrimaryPrefix());
+
+            $this->_consumeComments();
+            if ($this->_tokenizer->peek() === self::T_COMMA) {
+
+                $this->_consumeToken(self::T_COMMA);
+                $this->_consumeComments();
+            } else {
+                break;
+            }
+        }
+
+        $stopToken = $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+
+        $expr->configureLinesAndColumns(
+            $startToken->startLine,
+            $stopToken->endLine,
+            $startToken->startColumn,
+            $stopToken->endColumn
+        );
+
+        return $expr;
     }
 
     /**
@@ -1579,6 +1629,26 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses a mandatory ast expression or throws an exception when the parser
+     * does not find an expression.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @throws PHP_Depend_Parser_InvalidStateException If no expression was found.
+     * @since 0.9.12
+     * @todo The exception Line number is currently -1 which isn't correct and
+     *       not really useful.
+     */
+    private function _parseExpression()
+    {
+        if (($expr = $this->_parseOptionalExpression()) == null) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                -1, $this->_sourceFile->getFileName(), 'Expression required'
+            );
+        }
+        return $expr;
+    }
+
+    /**
      * This method optionally parses an expression node and returns it. When no
      * expression was found this method will return <b>null</b>.
      *
@@ -1625,6 +1695,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_WHILE:
                 break 2;
 
+            case self::T_SELF:
+            case self::T_STRING:
+            case self::T_PARENT:
+            case self::T_STATIC:
+            case self::T_DOLLAR:
+            case self::T_VARIABLE:
+            case self::T_BACKSLASH:
+            case self::T_NAMESPACE:
+                $expressions[] = $this->_parseVariableOrConstantOrPrimaryPrefix();
+                break;
+
             case self::T_TRUE:
             case self::T_FALSE:
             case self::T_LNUMBER:
@@ -1651,31 +1732,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseInstanceOfExpression();
                 break;
 
-            case self::T_STRING:
-            case self::T_BACKSLASH:
-            case self::T_NAMESPACE:
-                $expressions[] = $this->_parseMemberPrefixOrFunctionPostfix();
-                break;
-
-            case self::T_SELF:
-                $expressions[] = $this->_parseConstantOrSelfMemberPrimaryPrefix();
-                break;
-
-            case self::T_PARENT:
-                $expressions[] = $this->_parseConstantOrParentMemberPrimaryPrefix();
-                break;
-
-            case self::T_DOLLAR:
-            case self::T_VARIABLE:
-                $expressions[] = $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+            case self::T_ISSET:
+                $expressions[] = $this->_parseIssetExpression();
                 break;
 
             case self::T_LIST:
                 $expressions[] = $this->_parseListExpression();
-                break;
-
-            case self::T_STATIC:
-                $expressions[] = $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
                 break;
 
             case self::T_QUESTION_MARK:
@@ -2812,6 +2874,38 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_PARENTHESIS_OPEN),
             self::T_PARENTHESIS_CLOSE
         );
+    }
+
+    /**
+     * This method implements the parsing for various expression types like
+     * variables, object/static method. All these expressions are valid in
+     * several php language constructs like, isset, empty, unset etc.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.12
+     */
+    private function _parseVariableOrConstantOrPrimaryPrefix()
+    {
+        $this->_consumeComments();
+        switch ($this->_tokenizer->peek()) {
+
+        case self::T_DOLLAR:
+        case self::T_VARIABLE:
+            return $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+
+        case self::T_SELF:
+            return $this->_parseConstantOrSelfMemberPrimaryPrefix();
+
+        case self::T_PARENT:
+            return $this->_parseConstantOrParentMemberPrimaryPrefix();
+            break;
+
+        case self::T_STATIC:
+            return $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+        }
+
+        // T_NAMESPACE or T_BACKSLASH or T_STRING
+        return $this->_parseMemberPrefixOrFunctionPostfix();
     }
 
     /**

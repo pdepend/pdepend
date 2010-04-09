@@ -91,6 +91,7 @@ require_once dirname(__FILE__) . '/ASTGotoStatementTest.php';
 require_once dirname(__FILE__) . '/ASTHeredocTest.php';
 require_once dirname(__FILE__) . '/ASTIfStatementTest.php';
 require_once dirname(__FILE__) . '/ASTInstanceOfExpressionTest.php';
+require_once dirname(__FILE__) . '/ASTIssetExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTMemberPrimaryPrefixTest.php';
 require_once dirname(__FILE__) . '/ASTMethodPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTLabelStatementTest.php';
@@ -217,6 +218,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTHeredocTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTIfStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTInstanceOfExpressionTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTIssetExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTLiteralTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTLabelStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTListExpressionTest');
