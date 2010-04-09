@@ -189,11 +189,116 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
         $this->assertEquals(3, count($vars));
     }
 
+    /**
+     * testListExpressionWithComments
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTListExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
     public function testListExpressionWithComments()
     {
         $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
         $vars = $statement->getChildren();
         $this->assertEquals(3, count($vars));
+    }
+
+    /**
+     * testListExpressionWithoutChildExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTListExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testListExpressionWithoutChildExpression()
+    {
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $vars = $stmt->getChildren();
+        $this->assertEquals(0, count($vars));
+    }
+
+    /**
+     * testListExpressionWithVariableVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTListExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testListExpressionWithVariableVariable()
+    {
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $var  = $stmt->getChild(0);
+
+        $this->assertType(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $var);
+    }
+
+    /**
+     * testListExpressionWithCompoundVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTListExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testListExpressionWithCompoundVariable()
+    {
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $var  = $stmt->getChild(0);
+
+        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $var);
+    }
+
+    /**
+     * testListExpressionWithArrayElement
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTListExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testListExpressionWithArrayElement()
+    {
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $var  = $stmt->getChild(0);
+
+        $this->assertType(PHP_Depend_Code_ASTArrayExpression::CLAZZ, $var);
+    }
+
+    /**
+     * testListExpressionWithObjectProperty
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTListExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testListExpressionWithObjectProperty()
+    {
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $var  = $stmt->getChild(0);
+
+        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $var);
     }
 
     /**

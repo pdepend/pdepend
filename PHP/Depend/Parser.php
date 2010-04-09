@@ -1123,17 +1123,19 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // The variable is optional:
             //   list(, , , , $something) = ...;
             // is valid.
-            if ($tokenType === self::T_VARIABLE) {
-                $list->addChild($this->_parseVariable());
+            switch ($tokenType) {
 
-                $this->_consumeComments();
-                $tokenType = $this->_tokenizer->peek();
-            }
-
-            if ($tokenType === self::T_COMMA) {
+            case self::T_COMMA:
                 $this->_consumeToken(self::T_COMMA);
                 $this->_consumeComments();
-            } else {
+                break;
+
+            case self::T_PARENTHESIS_CLOSE:
+                break 2;
+
+            default:
+                $list->addChild($this->_parseVariableOrConstantOrPrimaryPrefix());
+                $this->_consumeComments();
                 break;
             }
         }
