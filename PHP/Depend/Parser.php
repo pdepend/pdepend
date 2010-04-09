@@ -2676,29 +2676,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         switch ($tokenType) {
 
         case self::T_STRING:
-            $prefix->addChild(
-                $this->_parseMethodOrPropertyPostfix(
-                    $this->_parseIdentifier()
-                )
-            );
+            $child = $this->_parseIdentifier();
             break;
 
         case self::T_CURLY_BRACE_OPEN:
-            $prefix->addChild(
-                $this->_parseMethodOrPropertyPostfix(
-                    $this->_parseCompoundExpression()
-                )
-            );
+            $child = $this->_parseCompoundExpression();
             break;
 
         default:
-            $prefix->addChild(
-                $this->_parseMethodOrPropertyPostfix(
-                    $this->_parseCompoundVariableOrVariableVariableOrVariable()
-                )
-            );
+            $child = $this->_parseCompoundVariableOrVariableVariableOrVariable();
             break;
         }
+
+
+        $prefix->addChild(
+            $this->_parseMethodOrPropertyPostfix(
+                $this->_parseOptionalArrayExpression($child)
+            )
+        );
         return $prefix;
     }
 

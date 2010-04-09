@@ -103,6 +103,24 @@ class PHP_Depend_Code_ASTIssetExpressionTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testIssetExpressionGraphWithArrayProperty
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIssetExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIssetExpressionGraphWithArrayProperty()
+    {
+        $expr = $this->_getFirstIssetExpressionInFunction(__METHOD__);
+        $vars = $expr->findChildrenOfType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ);
+        $this->assertEquals(1, count($vars));
+    }
+
+    /**
      * testIssetExpressionHasExpectedStartLine
      *
      * @return void

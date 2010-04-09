@@ -416,6 +416,66 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testMethodPostfixGraphForArrayElementInvocation
+     *
+     * <code>
+     * $this->$foo[0]();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMethodPostfixGraphForVariableArrayElementInvocation()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * testMethodPostfixGraphForPropertyArrayElementInvocation
+     *
+     * <code>
+     * $this->foo[$bar]();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMethodPostfixGraphForPropertyArrayElementInvocation()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
@@ -424,13 +484,8 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     private function _getFirstMemberPrimaryPrefixInFunction($testCase)
     {
-        $packages = self::parseTestCaseSource($testCase);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        return $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
     }
 
@@ -443,13 +498,8 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     private function _getFirstMemberPrimaryPrefixInClass($testCase)
     {
-        $packages = self::parseTestCaseSource($testCase);
-        $class    = $packages->current()
-            ->getClasses()
-            ->current();
-
-        return $class->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
     }
 
