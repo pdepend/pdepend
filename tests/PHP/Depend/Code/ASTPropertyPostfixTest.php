@@ -69,6 +69,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -76,18 +77,14 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForSimpleIdentifierAccess()
     {
-        $prefix = $this->getFirstNodeOfTypeInFunction(
-            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ
         );
 
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ
-            )
-        );
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -95,6 +92,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -102,18 +100,14 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForVariableAccess()
     {
-        $prefix = $this->getFirstNodeOfTypeInFunction(
-            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
         );
 
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
-            )
-        );
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -121,6 +115,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -128,19 +123,15 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForVariableVariableAccess()
     {
-        $prefix = $this->getFirstNodeOfTypeInFunction(
-            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariableVariable::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
         );
 
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariableVariable::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
-            )
-        );
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -148,6 +139,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -155,22 +147,18 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForCompoundVariableAccess()
     {
-        $prefix = $this->getFirstNodeOfTypeInFunction(
-            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+            PHP_Depend_Code_ASTExpression::CLAZZ,
+            PHP_Depend_Code_ASTConstant::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
         );
 
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
-                PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
-                PHP_Depend_Code_ASTExpression::CLAZZ,
-                PHP_Depend_Code_ASTConstant::CLAZZ,
-                PHP_Depend_Code_ASTLiteral::CLAZZ
-            )
-        );
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -178,6 +166,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -185,19 +174,15 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForCompoundExpressionAccess()
     {
-        $prefix = $this->getFirstNodeOfTypeInFunction(
-            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
         );
 
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
-            )
-        );
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -205,6 +190,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -212,18 +198,14 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForStaticVariableAccess()
     {
-        $prefix = $this->getFirstNodeOfTypeInFunction(
-            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
         );
 
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
-            )
-        );
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -231,6 +213,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -238,17 +221,11 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForStaticAccessOnVariable()
     {
-        $prefix = $this->getFirstNodeOfTypeInFunction(
-            __METHOD__, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
-        );
-
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
-            )
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
         );
     }
 
@@ -257,6 +234,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -264,19 +242,14 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixStructureForSelfVariableAccess()
     {
-        $prefix = $this->getFirstClassForTestCase(__METHOD__)
-            ->getMethods()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ);
-
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTSelfReference::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
-            )
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTSelfReference::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
         );
+
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -284,6 +257,88 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPropertyPostfixStructureForParentVariableAccess()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTParentReference::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * testPropertyPostfixGraphForObjectPropertyArrayExpression
+     *
+     * <code>
+     * $this->arguments[42] = func_get_args();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPropertyPostfixGraphForObjectPropertyArrayExpression()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * testPropertyPostfixGraphForPropertyArrayExpression
+     *
+     * <code>
+     * self::$arguments[42] = func_get_args();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPropertyPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPropertyPostfixGraphForStaticPropertyArrayExpression()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTSelfReference::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * Tests that a parsed property postfix has the expected object structure.
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -300,33 +355,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testPropertyPostfixStructureForParentVariableAccess()
-    {
-        $prefix = $this->getFirstClassForTestCase(__METHOD__)
-            ->getMethods()
-            ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ);
-
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTParentReference::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
-            )
-        );
-    }
-
-    /**
-     * Tests that a parsed property postfix has the expected object structure.
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -343,6 +372,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPropertyPostfix
      * @group pdepend
      * @group pdepend::ast
@@ -362,5 +392,33 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTPropertyPostfix(__CLASS__);
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     */
+    private function _getFirstMemberPrimaryPrefixInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        );
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     */
+    private function _getFirstMemberPrimaryPrefixInClass($testCase)
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        );
     }
 }

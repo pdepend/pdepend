@@ -69,477 +69,438 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForSimpleInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
-        $this->assertSame('baz', $postfix->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-        $this->assertSame('baz', $identifier->getImage());
-
-        $arguments = $postfix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $arguments);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForVariableInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertSame('->', $prefix->getImage());
-
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
-        $this->assertSame('$baz', $postfix->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $identifier);
-        $this->assertSame('$baz', $identifier->getImage());
-
-        $arguments = $postfix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $arguments);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForVariableVariableInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariableVariable::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertSame('->', $prefix->getImage());
-
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
-        $this->assertSame('$', $postfix->getImage());
-
-        $varVariable = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $varVariable);
-        $this->assertSame('$', $varVariable->getImage());
-
-        $identifier = $varVariable->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $identifier);
-        $this->assertSame('$bar', $identifier->getImage());
-
-        $arguments = $postfix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $arguments);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForCompoundVariableInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+            PHP_Depend_Code_ASTConstant::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('$object', $variable->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
-        $this->assertSame('$', $postfix->getImage());
-
-        $compound = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $compound);
-        $this->assertSame('$', $compound->getImage());
-
-        $expression = $compound->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
-
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $postfix->getChild(1));
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      * 
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForSimpleStaticInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $children = $prefix->getChildren();
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $children[0]);
-        $this->assertSame('Bar', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $children[1]);
-        $this->assertSame('baz', $children[1]->getImage());
-
-        $children = $children[1]->getChildren();
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $children[0]);
-        $this->assertSame('baz', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $children[1]);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForVariableStaticInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $children = $prefix->getChildren();
-        $this->assertSame(2, count($children));
-
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $children[0]);
-        $this->assertSame('Bar', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $children[1]);
-        $this->assertSame('$baz', $children[1]->getImage());
-
-        $this->assertSame(0, count($children[0]->getChildren()));
-
-        $children = $children[1]->getChildren();
-        $this->assertSame(2, count($children));
-
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[0]);
-        $this->assertSame('$baz', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $children[1]);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForVariableVariableStaticInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariableVariable::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $children = $prefix->getChildren();
-        $this->assertSame(2, count($children));
-
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $children[0]);
-        $this->assertSame('Bar', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $children[1]);
-        $this->assertSame('$', $children[1]->getImage());
-
-        $this->assertSame(0, count($children[0]->getChildren()));
-
-        $children = $children[1]->getChildren();
-        $this->assertSame(2, count($children));
-
-        $this->assertType(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $children[0]);
-        $this->assertSame('$', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $children[1]);
-
-        $children = $children[0]->getChildren();
-
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $children[0]);
-        $this->assertSame('$baz', $children[0]->getImage());
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForCompoundVariableStaticInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+            PHP_Depend_Code_ASTConstant::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $children = $prefix->getChildren();
-        $this->assertSame(2, count($children));
-
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $children[0]);
-        $this->assertSame('Bar', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $children[1]);
-        $this->assertSame('$', $children[1]->getImage());
-
-        $this->assertSame(0, count($children[0]->getChildren()));
-
-        $children = $children[1]->getChildren();
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $children[0]);
-        $this->assertSame('$', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $children[1]);
-
-        $compound = $children[0]->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $compound);
-
-        $constant = $compound->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
-        $this->assertSame('BAZ', $constant->getImage());
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForVariableCompoundVariableStaticInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        
+        $expected = array(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTVariableVariable::CLAZZ,
+            PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+            PHP_Depend_Code_ASTConstant::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $children = $prefix->getChildren();
-        $this->assertSame(2, count($children));
-
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $children[0]);
-        $this->assertSame('Bar', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $children[1]);
-        $this->assertSame('$', $children[1]->getImage());
-
-        $this->assertSame(0, count($children[0]->getChildren()));
-
-        $children = $children[1]->getChildren();
-        $this->assertSame(2, count($children));
-
-        $this->assertType(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $children[0]);
-        $this->assertSame('$', $children[0]->getImage());
-
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $children[1]);
-
-        $children = $children[0]->getChildren();
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $children[0]);
-        $this->assertSame('$', $children[0]->getImage());
-
-        $compound = $children[0]->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $compound);
-
-        $constant = $compound->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
-        $this->assertSame('BAZ', $constant->getImage());
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForStaticInvocationWithConsecutiveInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix1 = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
-        
-        $reference = $prefix1->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-        $this->assertSame('Bar', $reference->getImage());
 
-        $prefix2 = $prefix1->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix2);
-        $this->assertSame('->', $prefix2->getImage());
-
-        $postfix1 = $prefix2->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix1);
-
-        $identifier1 = $postfix1->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier1);
-        $this->assertSame('baz', $identifier1->getImage());
-
-        $postfix2 = $prefix2->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix2);
-
-        $identifier2 = $postfix2->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier2);
-        $this->assertSame('foo', $identifier2->getImage());
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForStaticInvocationOnVariable()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertSame('::', $prefix->getImage());
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-
-        $arguments = $postfix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $arguments);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForSelfInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $method   = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current();
-
-        $prefix = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTSelfReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTSelfReference::CLAZZ, $reference);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixStructureForParentInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $method   = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current();
-
-        $prefix = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTParentReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTParentReference::CLAZZ, $reference);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
      * Tests that a parsed method postfix has the expected object graph.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testMethodPostfixGraphForStaticReferenceInvocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $method   = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current();
-
-        $prefix = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTStaticReference::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTStaticReference::CLAZZ, $reference);
+        $this->assertGraphEquals($prefix, $expected);
+    }
 
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
+    /**
+     * testMethodPostfixGraphForArrayElementInvocation
+     *
+     * <code>
+     * $this->$foo[0]();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMethodPostfixGraphForVariableArrayElementInvocation()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * testMethodPostfixGraphForPropertyArrayElementInvocation
+     *
+     * <code>
+     * $this->foo[$bar]();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMethodPostfixGraphForPropertyArrayElementInvocation()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+        );
+
+        $this->assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     */
+    private function _getFirstMemberPrimaryPrefixInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        );
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     */
+    private function _getFirstMemberPrimaryPrefixInClass($testCase)
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        );
     }
 
     /**
