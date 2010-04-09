@@ -2099,10 +2099,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseUnsetStatement()
     {
         $this->_tokenStack->push();
+
         $this->_consumeToken(self::T_UNSET);
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN);
 
         $stmt = $this->_builder->buildASTUnsetStatement();
-        $stmt->addChild($this->_parseParenthesisExpression());
+        $stmt = $this->_parseVariableList($stmt);
+
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
         
         $this->_parseStatementTermination();
 
