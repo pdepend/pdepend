@@ -1281,20 +1281,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_PARENTHESIS_OPEN);
 
         $expr = $this->_builder->buildASTIssetExpression();
-
-        $this->_consumeComments();
-        while ($this->_tokenizer->peek() !== self::T_EOF) {
-            $expr->addChild($this->_parseVariableOrConstantOrPrimaryPrefix());
-
-            $this->_consumeComments();
-            if ($this->_tokenizer->peek() === self::T_COMMA) {
-
-                $this->_consumeToken(self::T_COMMA);
-                $this->_consumeComments();
-            } else {
-                break;
-            }
-        }
+        $expr = $this->_parseVariableList($expr);
 
         $stopToken = $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
 
@@ -1626,26 +1613,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
 
         return $this->_setNodePositionsAndReturn($scope);
-    }
-
-    /**
-     * Parses a mandatory ast expression or throws an exception when the parser
-     * does not find an expression.
-     *
-     * @return PHP_Depend_Code_ASTExpression
-     * @throws PHP_Depend_Parser_InvalidStateException If no expression was found.
-     * @since 0.9.12
-     * @todo The exception Line number is currently -1 which isn't correct and
-     *       not really useful.
-     */
-    private function _parseExpression()
-    {
-        if (($expr = $this->_parseOptionalExpression()) == null) {
-            throw new PHP_Depend_Parser_InvalidStateException(
-                -1, $this->_sourceFile->getFileName(), 'Expression required'
-            );
-        }
-        return $expr;
     }
 
     /**
@@ -3186,6 +3153,34 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         return $variable;
+    }
+
+    /**
+     * This method parses a comma separated list of valid php variables and/or
+     * properties and adds them to the given node instance.
+     *
+     * @param PHP_Depend_Code_ASTNode $node The context parent node.
+     *
+     * @return PHP_Depend_Code_ASTNode The prepared entire node.
+     * @since 0.9.12
+     */
+    private function _parseVariableList(PHP_Depend_Code_ASTNode $node)
+    {
+        $this->_consumeComments();
+        while ($this->_tokenizer->peek() !== self::T_EOF) {
+            $node->addChild($this->_parseVariableOrConstantOrPrimaryPrefix());
+
+            $this->_consumeComments();
+            if ($this->_tokenizer->peek() === self::T_COMMA) {
+
+                $this->_consumeToken(self::T_COMMA);
+                $this->_consumeComments();
+            } else {
+                break;
+            }
+        }
+
+        return $node;
     }
 
     /**
