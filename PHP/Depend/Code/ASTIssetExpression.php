@@ -40,7 +40,6 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @author     Joey Mazzarelli <mazzarelli@gmail.com>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
@@ -51,20 +50,19 @@
 require_once 'PHP/Depend/Code/ASTExpression.php';
 
 /**
- * This node class represents a list-expression.
+ * This node class represents an isste-expression/function.
  *
  * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @author     Joey Mazzarelli <mazzarelli@gmail.com>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  * @since      0.9.12
  */
-class PHP_Depend_Code_ASTListExpression extends PHP_Depend_Code_ASTExpression
+class PHP_Depend_Code_ASTIssetExpression extends PHP_Depend_Code_ASTExpression
 {
     /**
      * The type of this class.
@@ -83,12 +81,12 @@ class PHP_Depend_Code_ASTListExpression extends PHP_Depend_Code_ASTExpression
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeListExpression($this, $data);
+        $data = $visitor->visitBeforeIssetExpression($this, $data);
 
         foreach ($this->nodes as $node) {
             $data = $node->accept($visitor, $data);
         }
 
-        return $visitor->visitAfterListExpression($this, $data);
+        return $visitor->visitAfterIssetExpression($this, $data);
     }
 }

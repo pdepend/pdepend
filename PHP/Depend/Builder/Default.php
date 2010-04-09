@@ -849,6 +849,29 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new isset-expression node.
+     *
+     * <code>
+     * //  -----------
+     * if (isset($foo)) {
+     * //  -----------
+     * }
+     *
+     * //  -----------------------
+     * if (isset($foo, $bar, $baz)) {
+     * //  -----------------------
+     * }
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTIssetExpression
+     * @since 0.9.12
+     */
+    public function buildASTIssetExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTIssetExpression');
+    }
+
+    /**
      * Builds a new boolean conditional-expression.
      *
      * <code>
