@@ -2082,9 +2082,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeToken(self::T_GLOBAL);
 
         $stmt = $this->_builder->buildASTGlobalStatement();
-        if (($expr = $this->_parseOptionalExpression()) != null) {
-            $stmt->addChild($expr);
-        }
+        $stmt = $this->_parseVariableList($stmt);
+        
         $this->_parseStatementTermination();
 
         return $this->_setNodePositionsAndReturn($stmt);
