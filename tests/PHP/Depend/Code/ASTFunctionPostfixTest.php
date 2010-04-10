@@ -68,147 +68,184 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFunctionPostfixStructureSimple()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $postfix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
+        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
         );
-        
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-        $this->assertSame(__FUNCTION__, $identifier->getImage());
 
-        $arguments = $postfix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $arguments);
+        $this->assertGraphEquals($postfix, $expected);
     }
 
     /**
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFunctionPostfixStructureVariable()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
+        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
-        $this->assertType(PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $prefix);
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-
-        $arguments = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $arguments);
+        $this->assertGraphEquals($postfix, $expected);
     }
 
     /**
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFunctionPostfixStructureCompoundVariable()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
+        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+            PHP_Depend_Code_ASTConstant::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+            PHP_Depend_Code_ASTConstant::CLAZZ
         );
-        $this->assertType(PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $prefix);
 
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $variable);
-
-        $expression = $variable->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $expression);
-
-//        $constant = $expression->getChild(0);
-//        $this->assertType(PHP_Depend_Code_ASTConstant::CLAZZ, $constant);
-
-        $arguments = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $arguments);
+        $this->assertGraphEquals($postfix, $expected);
     }
 
     /**
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFunctionPostfixStructureWithMemberPrimaryPrefixMethod()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
         );
 
-        $function = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $function);
-
-        $functionName = $function->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $functionName);
-        $this->assertSame(__FUNCTION__, $functionName->getImage());
-
-        $functionArgs = $function->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $functionArgs);
-
-        $method = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $method);
-
-        $methodName = $method->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $methodName);
-
-        $methodArgs = $method->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $methodArgs);
+        $this->assertGraphEquals($postfix, $expected);
     }
 
     /**
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testFunctionPostfixStructureWithMemberPrimaryPrefixProperty()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $prefix = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
         );
 
-        $function = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $function);
+        $this->assertGraphEquals($postfix, $expected);
+    }
 
-        $functionName = $function->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $functionName);
-        $this->assertSame(__FUNCTION__, $functionName->getImage());
+    /**
+     * testFunctionPostfixHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testFunctionPostfixHasExpectedStartLine()
+    {
+        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $this->assertEquals(4, $init->getStartLine());
+    }
 
-        $functionArgs = $function->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTArguments::CLAZZ, $functionArgs);
+    /**
+     * testFunctionPostfixHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testFunctionPostfixHasExpectedStartColumn()
+    {
+        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $this->assertEquals(5, $init->getStartColumn());
+    }
 
-        $property = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $property);
+    /**
+     * testFunctionPostfixHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testFunctionPostfixHasExpectedEndLine()
+    {
+        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $this->assertEquals(8, $init->getEndLine());
+    }
 
-        $propertyName = $property->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $propertyName);
+    /**
+     * testFunctionPostfixHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTFunctionPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testFunctionPostfixHasExpectedEndColumn()
+    {
+        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $this->assertEquals(13, $init->getEndColumn());
     }
 
     /**
@@ -219,5 +256,19 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTFunctionPostfix(__FUNCTION__);
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTFunctionPostfix
+     */
+    private function _getFirstFunctionPostfixInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
+        );
     }
 }

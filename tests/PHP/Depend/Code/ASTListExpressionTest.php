@@ -80,8 +80,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionHasExpectedStartLine()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -97,8 +97,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -114,8 +114,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionHasExpectedEndLine()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getEndLine());
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getEndLine());
     }
 
     /**
@@ -131,8 +131,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(16, $statement->getEndColumn());
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $this->assertEquals(16, $stmt->getEndColumn());
     }
 
     /**
@@ -148,8 +148,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionSupportsManyVariables()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $statement->getChildren();
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $vars = $stmt->getChildren();
         $this->assertEquals(3, count($vars));
     }
 
@@ -166,8 +166,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionSupportsSingleVariable()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $statement->getChildren();
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $vars = $stmt->getChildren();
         $this->assertEquals(1, count($vars));
     }
 
@@ -184,8 +184,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionSupportsExtraCommas()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $statement->getChildren();
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $vars = $stmt->getChildren();
         $this->assertEquals(3, count($vars));
     }
 
@@ -202,8 +202,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionWithComments()
     {
-        $statement = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $statement->getChildren();
+        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
+        $vars = $stmt->getChildren();
         $this->assertEquals(3, count($vars));
     }
 
