@@ -436,7 +436,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
         $expected = array(
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTLiteral::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
@@ -466,7 +466,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
         $expected = array(
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
             PHP_Depend_Code_ASTIdentifier::CLAZZ,
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
