@@ -1146,40 +1146,131 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Parses one or more optional php array expressions.
+     * Parses one or more optional php <b>array</b> or <b>string</b> expressions.
+     *
+     * <code>
+     * ---------
+     * $array[0];
+     * ---------
+     *
+     * ----------------
+     * $array[1]['foo'];
+     * ----------------
+     *
+     * ----------------
+     * $string{1}[0]{0};
+     * ----------------
+     * </code>
      *
      * @param PHP_Depend_Code_ASTNode $node The parent/context node instance.
      *
-     * @return PHP_Depend_Code_ASTArrayExpression
+     * @return PHP_Depend_Code_ASTNode
      * @since 0.9.12
      */
-    private function _parseOptionalArrayExpression(PHP_Depend_Code_ASTNode $node)
+    private function _parseOptionalIndexExpression(PHP_Depend_Code_ASTNode $node)
     {
         $this->_consumeComments();
-        if ($this->_tokenizer->peek() !== self::T_SQUARED_BRACKET_OPEN) {
-            return $node;
+
+        switch ($this->_tokenizer->peek()) {
+            
+        case self::T_CURLY_BRACE_OPEN:
+            return $this->_parseStringIndexExpression($node);
+
+        case self::T_SQUARED_BRACKET_OPEN:
+            return $this->_parseArrayIndexExpression($node);
         }
 
-        $expr = $this->_builder->buildASTArrayExpression();
-        $expr->addChild($node);
+        return $node;
+    }
 
-        $this->_consumeToken(self::T_SQUARED_BRACKET_OPEN);
+    /**
+     * Parses an index expression as it is valid to access elements in a php
+     * string or array.
+     *
+     * @param PHP_Depend_Code_ASTNode       $node  The context source node.
+     * @param PHP_Depend_Code_ASTExpression $expr  The concrete index expression.
+     * @param integer                       $open  The open token type.
+     * @param integer                       $close The close token type.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.12
+     */
+    private function _parseIndexExpression(
+        PHP_Depend_Code_ASTNode $node,
+        PHP_Depend_Code_ASTExpression $expr, 
+        $open,
+        $close
+    ) {
+        $this->_consumeToken($open);
 
-        // TODO: $expr->addChild($this->_parseExpression());
         if (($child = $this->_parseOptionalExpression()) != null) {
             $expr->addChild($child);
         }
 
-        $token = $this->_consumeToken(self::T_SQUARED_BRACKET_CLOSE);
+        $token = $this->_consumeToken($close);
 
         $expr->configureLinesAndColumns(
-            $node->getStartColumn(),
             $node->getStartLine(),
             $token->endLine,
+            $node->getStartColumn(),
             $token->endColumn
         );
 
-        return $this->_parseOptionalArrayExpression($expr);
+        return $this->_parseOptionalIndexExpression($expr);
+    }
+
+    /**
+     * Parses a mandatory array index expression.
+     *
+     * <code>
+     * //    ---
+     * $array[0];
+     * //    ---
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNode $node The context source node.
+     *
+     * @return PHP_Depend_Code_ASTArrayIndexExpression
+     * @since 0.9.12
+     */
+    private function _parseArrayIndexExpression(PHP_Depend_Code_ASTNode $node)
+    {
+        $expr = $this->_builder->buildASTArrayIndexExpression();
+        $expr->addChild($node);
+
+        return $this->_parseIndexExpression(
+            $node,
+            $expr,
+            self::T_SQUARED_BRACKET_OPEN,
+            self::T_SQUARED_BRACKET_CLOSE
+        );
+    }
+
+    /**
+     * Parses a mandatory array index expression.
+     *
+     * <code>
+     * //     ---
+     * $string{0};
+     * //     ---
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNode $node The context source node.
+     *
+     * @return PHP_Depend_Code_ASTStringIndexExpression
+     * @since 0.9.12
+     */
+    private function _parseStringIndexExpression(PHP_Depend_Code_ASTNode $node)
+    {
+        $expr = $this->_builder->buildASTStringIndexExpression();
+        $expr->addChild($node);
+
+        return $this->_parseIndexExpression(
+            $node,
+            $expr,
+            self::T_CURLY_BRACE_OPEN,
+            self::T_CURLY_BRACE_CLOSE
+        );
     }
 
     /**
@@ -2690,7 +2781,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $prefix->addChild(
             $this->_parseMethodOrPropertyPostfix(
-                $this->_parseOptionalArrayExpression($child)
+                $this->_parseOptionalIndexExpression($child)
             )
         );
         return $prefix;
@@ -2745,7 +2836,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         default:
             $postfix = $this->_parseMethodOrPropertyPostfix(
-                $this->_parseOptionalArrayExpression(
+                $this->_parseOptionalIndexExpression(
                     $this->_parseCompoundVariableOrVariableVariableOrVariable()
                 )
             );
@@ -2901,7 +2992,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
 
         $variable = $this->_parseCompoundVariableOrVariableVariableOrVariable();
-        $variable = $this->_parseOptionalArrayExpression($variable);
+        $variable = $this->_parseOptionalIndexExpression($variable);
 
         $this->_consumeComments();
         switch ($this->_tokenizer->peek()) {
