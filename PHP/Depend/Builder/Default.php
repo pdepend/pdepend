@@ -830,6 +830,23 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new string-expression node.
+     *
+     * <code>
+     * //     --------
+     * $string{$index}
+     * //     --------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTStringIndexExpression
+     * @since 0.9.12
+     */
+    public function buildASTStringIndexExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTStringIndexExpression');
+    }
+
+    /**
      * Builds a new instanceof expression node.
      *
      * @param string $image The source image of this expression.

@@ -394,6 +394,20 @@ interface PHP_Depend_BuilderI
     function buildASTArrayIndexExpression();
 
     /**
+     * Builds a new string-expression node.
+     *
+     * <code>
+     * //     --------
+     * $string{$index}
+     * //     --------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTStringIndexExpression
+     * @since 0.9.12
+     */
+    function buildASTStringIndexExpression();
+
+    /**
      * Builds a new instanceof-expression node.
      *
      * @param string $image The source image of this expression.
