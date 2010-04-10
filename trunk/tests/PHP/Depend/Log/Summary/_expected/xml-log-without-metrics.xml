@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metrics generated="2009-07-27T18:00:36" pdepend="@package_version@">
+  <files>
+    <file name="???"/>
+  </files>
+  <package name="+global">
+    <function name="bar">
+      <file name="???"/>
+    </function>
+  </package>
+  <package name="pkg1">
+    <class name="FooBar">
+      <file name="???"/>
+      <method name="x"/>
+      <method name="y"/>
+    </class>
+    <function name="foo">
+      <file name="???"/>
+    </function>
+  </package>
+  <package name="pkg3">
+    <class name="Bar">
+      <file name="???"/>
+      <method name="y"/>
+    </class>
+  </package>
+</metrics>

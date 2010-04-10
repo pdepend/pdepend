@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1265694896" phpunit="3.4.10">
+  <project name="org::pdepend::reflection::AllTests" timestamp="1265694896">
+    <package name="Package_foo">
+      <file name="${pathName}/metrics/CrapIndex/testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage.php">
+        <class name="testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage" fullPackage="Package_foo" category="PHP" package="Package_foo">
+          <metrics methods="4" coveredmethods="4" statements="15" coveredstatements="15" elements="19" coveredelements="19"/>
+        </class>
+        <line num="4" type="method" name="foo" count="1"/>
+        <line num="6" type="stmt" count="1"/>
+        <line num="7" type="stmt" count="1"/>
+        <metrics loc="122" ncloc="35" classes="1" methods="4" coveredmethods="4" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+      </file>
+      <file name="${pathName}/metrics/CrapIndex/testAnalyzerReturnsExpectedResultForMethodWithoutCoverage.php">
+        <class name="testAnalyzerReturnsExpectedResultForMethodWithoutCoverage" fullPackage="Package_foo" category="PHP" package="Package_foo">
+          <metrics methods="4" coveredmethods="4" statements="15" coveredstatements="15" elements="19" coveredelements="19"/>
+        </class>
+      </file>
+      <file name="${pathName}/metrics/CrapIndex/testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage.php">
+        <class name="testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage" fullPackage="Package_foo" category="PHP" package="Package_foo">
+          <metrics methods="4" coveredmethods="4" statements="15" coveredstatements="15" elements="19" coveredelements="19"/>
+        </class>
+        <line num="4" type="method" name="foo" count="1"/>
+        <line num="5" type="stmt" count="0"/>
+        <line num="6" type="stmt" count="1"/>
+        <line num="7" type="stmt" count="0"/>
+        <metrics loc="122" ncloc="35" classes="1" methods="4" coveredmethods="4" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+      </file>
+      <file name="${pathName}/metrics/CrapIndex/testAnalyzerIgnoresAbstractMethods.php">
+        <class name="testAnalyzerIgnoresAbstractMethods" fullPackage="Package_foo" category="PHP" package="Package_foo">
+          <metrics methods="4" coveredmethods="4" statements="15" coveredstatements="15" elements="19" coveredelements="19"/>
+        </class>
+        <line num="4" type="method" name="foo" count="1"/>
+        <metrics loc="122" ncloc="35" classes="1" methods="4" coveredmethods="4" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+      </file>
+    </package>
+    <metrics files="45" loc="10308" ncloc="4448" classes="42" methods="414" coveredmethods="380" statements="1876" coveredstatements="1616" elements="2290" coveredelements="1996"/>
+  </project>
+</coverage>

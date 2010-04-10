@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1265694896" phpunit="3.4.10">
+  <project name="org::pdepend::reflection::AllTests" timestamp="1265694896">
+    <package name="Package_foo">
+      <file name="/testNamespacedReportReturnsExpected0PercentCoverage.php">
+        <class name="testNamespacedReportReturnsExpected0PercentCoverage" fullPackage="Package_foo" category="PHP" package="Package_foo">
+          <metrics methods="4" coveredmethods="4" statements="15" coveredstatements="15" elements="19" coveredelements="19"/>
+        </class>
+        <line num="1" type="method" name="foo" count="0"/>
+        <line num="2" type="stmt" count="0"/>
+        <line num="3" type="stmt" count="0"/>
+        <metrics loc="122" ncloc="35" classes="1" methods="4" coveredmethods="4" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+      </file>
+      <file name="/testNamespacedReportReturnsExpected50PercentCoverage.php">
+        <class name="testNamespacedReportReturnsExpected50PercentCoverage" fullPackage="Package_foo" category="PHP" package="Package_foo">
+          <metrics methods="4" coveredmethods="4" statements="15" coveredstatements="15" elements="19" coveredelements="19"/>
+        </class>
+        <line num="1" type="method" name="foo" count="1"/>
+        <line num="2" type="stmt" count="0"/>
+        <line num="3" type="stmt" count="1"/>
+        <line num="4" type="stmt" count="0"/>
+        <metrics loc="122" ncloc="35" classes="1" methods="4" coveredmethods="4" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+      </file>
+      <file name="/testNamespacedReportReturnsExpected100PercentCoverage.php">
+        <class name="testNamespacedReportReturnsExpected100PercentCoverage" fullPackage="Package_foo" category="PHP" package="Package_foo">
+          <metrics methods="4" coveredmethods="4" statements="15" coveredstatements="15" elements="19" coveredelements="19"/>
+        </class>
+        <line num="1" type="method" name="foo" count="1"/>
+        <line num="2" type="stmt" count="1"/>
+        <line num="3" type="stmt" count="1"/>
+        <line num="4" type="stmt" count="1"/>
+      </file>
+    </package>
+    <metrics files="45" loc="10308" ncloc="4448" classes="42" methods="414" coveredmethods="380" statements="1876" coveredstatements="1616" elements="2290" coveredelements="1996"/>
+  </project>
+</coverage>

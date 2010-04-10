@@ -1,0 +1,6 @@
+<?php
+namespace pkg1;
+
+class pkg1Foobar extends pkg1Bar implements pkg3::pkg3FooI {
+    
+}

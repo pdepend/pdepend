@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1265694896" phpunit="3.4.10">
+  <project name="org::pdepend::reflection::AllTests" timestamp="1265694896">
+    <package name="pdepend\reflection">
+      <file name="/tmp">
+      </file>
+    </package>
+  </project>
+</coverage>

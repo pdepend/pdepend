@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metrics generated="2009-07-27T18:00:36" pdepend="@package_version@">
+  <files>
+    <file name="???"/>
+  </files>
+  <package name="+global" loc="42" ncloc="23">
+    <function name="bar" loc="9" ncloc="7">
+      <file name="???"/>
+    </function>
+  </package>
+  <package name="pkg1" loc="101" ncloc="99">
+    <class name="FooBar" loc="90" ncloc="80">
+      <file name="???"/>
+      <method name="x" loc="50" ncloc="45"/>
+      <method name="y" loc="30" ncloc="22"/>
+    </class>
+    <function name="foo" loc="9" ncloc="9">
+      <file name="???"/>
+    </function>
+  </package>
+  <package name="pkg3" loc="42" ncloc="23">
+    <class name="Bar" loc="33" ncloc="20">
+      <file name="???"/>
+      <method name="y" loc="9" ncloc="7"/>
+    </class>
+  </package>
+</metrics>

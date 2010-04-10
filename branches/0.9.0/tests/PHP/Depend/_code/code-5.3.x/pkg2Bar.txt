@@ -1,0 +1,12 @@
+<?php
+namespace pkg2;
+
+use pkg1::pkg1Bar as pkg1Bar;
+use pkg1::pkg1Foobar as pkg1Foobar;
+
+abstract class pkg2Bar extends pkg1Bar {
+    public static function doIt(Bar $foo = null)
+    {
+        $foo = new pkg1Foobar();
+    }
+}

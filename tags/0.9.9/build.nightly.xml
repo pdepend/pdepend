@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PHP_Depend" default="build" basedir=".">
+    
+    <property name="test.source" value="/opt/pdepend-sources" />
+    <property name="version.number" value="0.9.6" />
+    
+    <target name="build" depends="default.build,create,extended.tests,release">
+        
+    </target>
+    
+    <!--
+        Creates the required build directories for the nightly build.
+    -->
+    <target name="create" depends="clean,copy">
+        <mkdir dir="${basedir}/build/nightly/build/tmp" />
+    </target>
+    
+    <!--
+        Copies all contents from the original directory into the nightly build
+        directory.
+    -->
+    <target name="copy">
+        <copy todir="${basedir}/build/nightly">
+            <fileset dir="${basedir}">
+                <include name="docs/**/*.*" />
+                <include name="PHP/**/*.*" />
+                <include name="scripts/**/*.*" />
+                <include name="tests/**/*.*" />
+                <include name="build.xml" />
+                <include name="CHANGELOG" />
+                <include name="LICENSE" />
+                <include name="package.xml" />
+                <include name="pdepend.bat" />
+                <include name="pdepend.php" />
+                <include name="phpunit.xml" />
+            </fileset>
+        </copy>
+    </target>
+    
+    <!--
+        Removes all contents from the nightly build directory.
+    -->
+    <target name="clean">
+        <delete>
+            <fileset dir="${basedir}/build/nightly">
+                <include name="**/*.*" />
+                <exclude name=".svn"/>
+            </fileset>
+        </delete>
+    </target>
+    
+    <!--
+        Performs all build steps from the default build.xml file
+    -->
+    <target name="default.build">
+        <ant antfile="${basedir}/build.xml" target="build" />
+    </target>
+    
+    <target name="release">
+        
+        <echo message="Update pear package.xml" />
+        <exec executable="php" failonerror="true" dir="${basedir}/build/nightly/scripts">
+            <arg line="update-manifest.php" />
+        </exec>
+        
+        <!-- Create date string for today -->
+        <tstamp>
+          <format property="date.now" pattern="yyyy-MM-dd" />
+        </tstamp>
+        
+        <!-- Replace date tag in package file -->
+        <replaceregexp file="${basedir}/build/nightly/package.xml"
+                       match="date&gt;[^&lt;]+&lt;/date"
+                       replace="date&gt;${date.now}&lt;/date" />
+                
+        <!-- Get build version number -->
+        <buildnumber file="build_number_${version.number}.build"/>
+        
+        <!-- Replace release version number -->
+        <replaceregexp file="${basedir}/build/nightly/package.xml"
+                       match="release&gt;[^&lt;]+&lt;/release"
+                       replace="release&gt;${version.number}build${build.number}&lt;/release" />
+        
+        <echo message="Create a pear package." />
+        <exec executable="pear" failonerror="true" dir="${basedir}/build/nightly">
+            <arg line="package" />
+        </exec>
+    </target>
+    
+    <!--
+        Executes some extended tests against different project sources.
+    -->
+    <target name="extended.tests">
+        <antcall target="extended.tests.arbit" />
+        <antcall target="extended.tests.ezc" />
+        <antcall target="extended.tests.ezpublish" />
+        <antcall target="extended.tests.phpunit34" />
+        <antcall target="extended.tests.typo3v4" />
+        <antcall target="extended.tests.zend-framework" />
+        <antcall target="extended.tests.flow3" />
+        <antcall target="extended.tests.symfony" />
+        <antcall target="extended.tests.yii" />
+        <antcall target="extended.tests.drupal" />
+    </target>
+
+    <!--
+        Tests PHP_Depend against the Arbit source code.
+    -->
+    <target name="extended.tests.arbit">
+        <echo message="Testing PHP_Depend against arbit" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --ignore=*/tests*
+                       --summary-xml=${basedir}/build/nightly/build/tmp/arbit-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/arbit-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/arbit-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/arbit-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/arbit-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/arbit/src"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the eZ Components source code.
+    -->
+    <target name="extended.tests.ezc">
+        <echo message="Testing PHP_Depend against eZ Components" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --ignore=tests
+                       --summary-xml=${basedir}/build/nightly/build/tmp/ezc-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/ezc-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/ezc-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/ezc-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/ezc-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/ezcomponents"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the eZ Publish source code.
+    -->
+    <target name="extended.tests.ezpublish">
+        <echo message="Testing PHP_Depend against eZ Publish" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --bad-documentation
+                       --summary-xml=${basedir}/build/nightly/build/tmp/ezp-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/ezp-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/ezp-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/ezp-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/ezp-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/ezpublish"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the PHPUnit 3.4 source code.
+    -->
+    <target name="extended.tests.phpunit34">
+        <echo message="Testing PHP_Depend against PHPUnit" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --summary-xml=${basedir}/build/nightly/build/tmp/phpunit-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/phpunit-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/phpunit-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/phpunit-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/phpunit-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/phpunit/PHPUnit"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the Typo3 version 4 source code.
+    -->
+    <target name="extended.tests.typo3v4">
+        <echo message="Testing PHP_Depend against Typo3 Version 4" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --bad-documentation
+                       --summary-xml=${basedir}/build/nightly/build/tmp/typo3v4-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/typo3v4-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/typo3v4-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/typo3v4-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/typo3v4-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/typo3v4"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the Zend Framework source code.
+    -->
+    <target name="extended.tests.zend-framework">
+        <echo message="Testing PHP_Depend against Zend Framework" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --summary-xml=${basedir}/build/nightly/build/tmp/zf-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/zf-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/zf-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/zf-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/zf-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/ZendFramework/library"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the flow3 source code.
+    -->
+    <target name="extended.tests.flow3">
+        <echo message="Testing PHP_Depend against flow3" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --summary-xml=${basedir}/build/nightly/build/tmp/flow3-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/flow3-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/flow3-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/flow3-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/flow3-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/flow3"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the symfony source code.
+    -->
+    <target name="extended.tests.symfony">
+        <echo message="Testing PHP_Depend against symfony" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       -d xdebug.max_nesting_level=1000 
+                       --summary-xml=${basedir}/build/nightly/build/tmp/symfony-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/symfony-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/symfony-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/symfony-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/symfony-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/symfony/lib"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the yii-framework source code.
+    -->
+    <target name="extended.tests.yii">
+        <echo message="Testing PHP_Depend against yii" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --summary-xml=${basedir}/build/nightly/build/tmp/yii-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/yii-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/yii-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/yii-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/yii-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/yii/framework"/>
+        </exec>
+    </target>
+
+    <!--
+        Tests PHP_Depend against the drupal source code.
+    -->
+    <target name="extended.tests.drupal">
+        <echo message="Testing PHP_Depend against drupal" />
+        <exec executable="php" failonerror="true">
+            <arg line="-f ${basedir}/build/nightly/pdepend.php
+                       --
+                       -d memory_limit=1024M
+                       --bad-documentation
+                       --summary-xml=${basedir}/build/nightly/build/tmp/drupal-summary.xml
+                       --jdepend-chart=${basedir}/build/nightly/build/tmp/drupal-jdepend.svg
+                       --jdepend-xml=${basedir}/build/nightly/build/tmp/drupal-jdepend.xml
+                       --overview-pyramid=${basedir}/build/nightly/build/tmp/drupal-pyramid.svg
+                       --phpunit-xml=${basedir}/build/nightly/build/tmp/drupal-phpunit.xml
+                       --coderank-mode=inheritance,property,method
+                       ${test.source}/drupal"/>
+        </exec>
+    </target>
+    
+</project>

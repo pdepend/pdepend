@@ -1,0 +1,6 @@
+<?php
+namespace pkg2;
+
+interface pkg2FooI extends pkg1::pkg1FooI {
+
+}
