@@ -279,7 +279,7 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
         $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
         $var  = $stmt->getChild(0);
 
-        $this->assertType(PHP_Depend_Code_ASTArrayExpression::CLAZZ, $var);
+        $this->assertType(PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ, $var);
     }
 
     /**

@@ -72,7 +72,7 @@ require_once 'PHP/Depend/Code/ASTExpression.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.12
  */
-class PHP_Depend_Code_ASTArrayExpression extends PHP_Depend_Code_ASTExpression
+class PHP_Depend_Code_ASTArrayIndexExpression extends PHP_Depend_Code_ASTExpression
 {
     /**
      * The type of this class.
@@ -91,12 +91,12 @@ class PHP_Depend_Code_ASTArrayExpression extends PHP_Depend_Code_ASTExpression
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeArrayExpression($this, $data);
+        $data = $visitor->visitBeforeArrayIndexExpression($this, $data);
 
         foreach ($this->nodes as $node) {
             $data = $node->accept($visitor, $data);
         }
 
-        return $visitor->visitAfterArrayExpression($this, $data);
+        return $visitor->visitAfterArrayIndexExpression($this, $data);
     }
 }
