@@ -1,1 +1,0 @@
-<?php "Issue `$ticketNo`";
