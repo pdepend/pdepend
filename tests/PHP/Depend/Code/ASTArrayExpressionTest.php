@@ -65,6 +65,88 @@ require_once 'PHP/Depend/Code/ASTArrayExpression.php';
 class PHP_Depend_Code_ASTArrayExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testArrayExpressionGraphForVariable
+     *
+     * <code>
+     * $array[42];
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testArrayExpressionGraphForVariable()
+    {
+        $expression = $this->_getFirstArrayExpressionInFunction(__METHOD__);
+        $expected   = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($expression, $expected);
+    }
+
+    /**
+     * testArrayExpressionGraphForProperty
+     *
+     * <code>
+     * $object->foo[42];
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testArrayExpressionGraphForProperty()
+    {
+        $expression = $this->_getFirstArrayExpressionInFunction(__METHOD__);
+        $expected   = array(
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($expression, $expected);
+    }
+
+    /**
+     * testArrayExpressionGraphForChainedArrayAccess
+     *
+     * <code>
+     * $array[0][0][0];
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTArrayExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testArrayExpressionGraphForChainedArrayAccess()
+    {
+        $expression = $this->_getFirstArrayExpressionInFunction(__METHOD__);
+        $expected   = array(
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($expression, $expected);
+    }
+
+    /**
      * testArrayExpressionHasExpectedStartLine
      *
      * @return void
@@ -77,8 +159,8 @@ class PHP_Depend_Code_ASTArrayExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArrayExpressionHasExpectedStartLine()
     {
-        $statement = $this->_getFirstArrayExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $expression = $this->_getFirstArrayExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expression->getStartLine());
     }
 
     /**
@@ -94,8 +176,8 @@ class PHP_Depend_Code_ASTArrayExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArrayExpressionHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstArrayExpressionInFunction(__METHOD__);
-        $this->assertEquals(10, $statement->getStartColumn());
+        $expression = $this->_getFirstArrayExpressionInFunction(__METHOD__);
+        $this->assertEquals(10, $expression->getStartColumn());
     }
 
     /**
@@ -111,8 +193,8 @@ class PHP_Depend_Code_ASTArrayExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArrayExpressionHasExpectedEndLine()
     {
-        $statement = $this->_getFirstArrayExpressionInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getEndLine());
+        $expression = $this->_getFirstArrayExpressionInFunction(__METHOD__);
+        $this->assertEquals(6, $expression->getEndLine());
     }
 
     /**
@@ -128,8 +210,8 @@ class PHP_Depend_Code_ASTArrayExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArrayExpressionHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstArrayExpressionInFunction(__METHOD__);
-        $this->assertEquals(13, $statement->getEndColumn());
+        $expression = $this->_getFirstArrayExpressionInFunction(__METHOD__);
+        $this->assertEquals(13, $expression->getEndColumn());
     }
 
     /**

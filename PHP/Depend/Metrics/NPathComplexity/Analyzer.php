@@ -275,7 +275,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->_tokens = array();
         foreach ($tokens as $token) {
-            
+
             if (count($this->_tokens) === 0
                 && $token->type !== PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN
             ) {
