@@ -1172,11 +1172,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
 
         switch ($this->_tokenizer->peek()) {
-            case self::T_CURLY_BRACE_OPEN:
-                return $this->_parseStringIndexExpression($node);
+            
+        case self::T_CURLY_BRACE_OPEN:
+            return $this->_parseStringIndexExpression($node);
 
-            case self::T_SQUARED_BRACKET_OPEN:
-                return $this->_parseArrayIndexExpression($node);
+        case self::T_SQUARED_BRACKET_OPEN:
+            return $this->_parseArrayIndexExpression($node);
         }
 
         return $node;
