@@ -78,18 +78,9 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      */
     public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
     {
-        $packages = self::parseTestCaseSource(__METHOD__, false);
-
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
-
-        $declaration = $class->getFirstChildOfType(
-            PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
-        );
+        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
 
         $reference = $declaration->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
         $this->assertEquals(__FUNCTION__, $reference->getType()->getName());
     }
 

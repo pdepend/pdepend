@@ -1172,7 +1172,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
 
         switch ($this->_tokenizer->peek()) {
-            
+
         case self::T_CURLY_BRACE_OPEN:
             return $this->_parseStringIndexExpression($node);
 
@@ -3071,7 +3071,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             );
         }
 
-        return $this->_builder->buildASTStaticReference($this->_classOrInterface);
+        $ref = $this->_builder->buildASTStaticReference($this->_classOrInterface);
+        $ref->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $ref;
     }
 
     /**

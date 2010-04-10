@@ -68,6 +68,8 @@ class PHP_Depend_Code_ASTPrimitiveTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testIsArrayReturnsFalse
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPrimitiveType
      * @group pdepend
      * @group pdepend::ast
@@ -83,6 +85,8 @@ class PHP_Depend_Code_ASTPrimitiveTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testIsPrimitiveReturnsTrue
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTPrimitiveType
      * @group pdepend
      * @group pdepend::ast

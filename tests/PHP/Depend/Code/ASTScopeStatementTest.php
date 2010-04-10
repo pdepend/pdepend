@@ -69,6 +69,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
@@ -76,8 +77,8 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
-        $this->assertSame(4, $statement->getStartLine());
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -85,6 +86,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
@@ -92,8 +94,8 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
-        $this->assertSame(34, $statement->getStartColumn());
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(34, $stmt->getStartColumn());
     }
 
     /**
@@ -101,6 +103,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
@@ -108,8 +111,8 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
-        $this->assertSame(6, $statement->getEndLine());
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -117,6 +120,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTScopeStatement
      * @group pdepend
      * @group pdepend::ast
@@ -124,8 +128,8 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstScopeStatementInFunction(__METHOD__);
-        $this->assertSame(5, $statement->getEndColumn());
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
