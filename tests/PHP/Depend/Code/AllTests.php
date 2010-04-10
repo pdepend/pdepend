@@ -54,7 +54,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/ASTAllocationExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTArgumentsTest.php';
-require_once dirname(__FILE__) . '/ASTArrayExpressionTest.php';
+require_once dirname(__FILE__) . '/ASTArrayIndexExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTArrayTypeTest.php';
 require_once dirname(__FILE__) . '/ASTAssignmentExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTBooleanAndExpressionTest.php';
@@ -181,7 +181,7 @@ class PHP_Depend_Code_AllTests
 
         $suite->addTestSuite('PHP_Depend_Code_ASTAllocationExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArgumentsTest');
-        $suite->addTestSuite('PHP_Depend_Code_ASTArrayExpressionTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTArrayIndexExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArrayTypeTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTAssignmentExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTBooleanAndExpressionTest');

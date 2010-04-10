@@ -388,10 +388,10 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new array-expression node.
      *
-     * @return PHP_Depend_Code_ASTArrayExpression
+     * @return PHP_Depend_Code_ASTArrayIndexExpression
      * @since 0.9.12
      */
-    function buildASTArrayExpression();
+    function buildASTArrayIndexExpression();
 
     /**
      * Builds a new instanceof-expression node.

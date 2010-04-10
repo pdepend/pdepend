@@ -154,7 +154,7 @@ and the NDepend metric tool.
             <file name="ASTVariableVariable.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTArrayExpression.php" role="php">
+            <file name="ASTArrayIndexExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTLogicalOrExpression.php" role="php">
@@ -899,7 +899,7 @@ and the NDepend metric tool.
           <file name="ASTMemberPrimaryPrefixTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="ASTArrayExpressionTest.php" role="test">
+          <file name="ASTArrayIndexExpressionTest.php" role="test">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ASTForUpdateTest.php" role="test">
@@ -3600,17 +3600,17 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <dir name="ASTArrayExpression">
-              <file name="testArrayExpressionHasExpectedEndLine.php" role="test">
+            <dir name="ASTArrayIndexExpression">
+              <file name="testArrayIndexExpressionHasExpectedEndLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testArrayExpressionHasExpectedStartLine.php" role="test">
+              <file name="testArrayIndexExpressionHasExpectedStartLine.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testArrayExpressionHasExpectedEndColumn.php" role="test">
+              <file name="testArrayIndexExpressionHasExpectedEndColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
-              <file name="testArrayExpressionHasExpectedStartColumn.php" role="test">
+              <file name="testArrayIndexExpressionHasExpectedStartColumn.php" role="test">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>

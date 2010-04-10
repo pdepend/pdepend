@@ -821,12 +821,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new array-expression node.
      *
-     * @return PHP_Depend_Code_ASTArrayExpression
+     * @return PHP_Depend_Code_ASTArrayIndexExpression
      * @since 0.9.12
      */
-    public function buildASTArrayExpression()
+    public function buildASTArrayIndexExpression()
     {
-        return $this->_buildASTNodeInstance('ASTArrayExpression');
+        return $this->_buildASTNodeInstance('ASTArrayIndexExpression');
     }
 
     /**
