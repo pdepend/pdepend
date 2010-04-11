@@ -386,6 +386,14 @@ interface PHP_Depend_BuilderI
     function buildASTListExpression($image);
 
     /**
+     * Builds a new require- or require_once-expression.
+     *
+     * @return PHP_Depend_Code_ASTRequireExpression
+     * @since 0.9.12
+     */
+    function buildASTRequireExpression();
+
+    /**
      * Builds a new array-expression node.
      *
      * @return PHP_Depend_Code_ASTArrayIndexExpression

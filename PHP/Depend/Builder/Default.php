@@ -819,6 +819,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new require- or require_once-expression.
+     *
+     * @return PHP_Depend_Code_ASTRequireExpression
+     * @since 0.9.12
+     */
+    public function buildASTRequireExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTRequireExpression');
+    }
+
+    /**
      * Builds a new array-expression node.
      *
      * @return PHP_Depend_Code_ASTArrayIndexExpression
