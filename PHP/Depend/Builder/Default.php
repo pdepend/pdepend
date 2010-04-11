@@ -819,6 +819,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new include- or include_once-expression.
+     *
+     * @return PHP_Depend_Code_ASTIncludeExpression
+     * @since 0.9.12
+     */
+    public function buildASTIncludeExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTIncludeExpression');
+    }
+
+    /**
      * Builds a new require- or require_once-expression.
      *
      * @return PHP_Depend_Code_ASTRequireExpression
