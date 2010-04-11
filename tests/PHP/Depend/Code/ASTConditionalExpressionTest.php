@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testConditionalExpressionHasExpectedStartLine()
     {
-        $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getStartLine());
+        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testConditionalExpressionHasExpectedStartColumn()
     {
-        $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(18, $expression->getStartColumn());
+        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $this->assertEquals(18, $expr->getStartColumn());
     }
 
     /**
@@ -111,8 +111,8 @@ class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testConditionalExpressionHasExpectedEndLine()
     {
-        $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getEndLine());
+        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -128,8 +128,8 @@ class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testConditionalExpressionHasExpectedEndColumn()
     {
-        $expression = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(26, $expression->getEndColumn());
+        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $this->assertEquals(26, $expr->getEndColumn());
     }
 
     /**

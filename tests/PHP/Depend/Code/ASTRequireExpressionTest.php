@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testIsOnceReturnsTrueForRequireOnceExpression()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertTrue($expression->isOnce());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertTrue($expr->isOnce());
     }
 
     /**
@@ -111,8 +111,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionHasExpectedStartLine()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getStartLine());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -128,8 +128,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionHasExpectedStartColumn()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $expression->getStartColumn());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -145,8 +145,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionHasExpectedEndLine()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getEndLine());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -162,8 +162,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionHasExpectedEndColumn()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(35, $expression->getEndColumn());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(35, $expr->getEndColumn());
     }
 
     /**
@@ -179,8 +179,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartLine()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getStartLine());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -196,8 +196,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartColumn()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $expression->getStartColumn());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -213,8 +213,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndLine()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(6, $expression->getEndLine());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(6, $expr->getEndLine());
     }
 
     /**
@@ -230,8 +230,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndColumn()
     {
-        $expression = $this->_getFirstRequireExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $expression->getEndColumn());
+        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $this->assertEquals(5, $expr->getEndColumn());
     }
 
     /**
