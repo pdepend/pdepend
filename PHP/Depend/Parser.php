@@ -1146,6 +1146,62 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses a require-expression node.
+     *
+     * @return PHP_Depend_Code_ASTRequireExpression
+     * @since 0.9.12
+     */
+    private function _parseRequireExpression()
+    {
+        $expr = $this->_builder->buildASTRequireExpression();
+
+        return $this->_parseRequireOrIncludeExpression($expr, self::T_REQUIRE);
+    }
+
+    /**
+     * Parses a require_once-expression node.
+     *
+     * @return PHP_Depend_Code_ASTRequireExpression
+     * @since 0.9.12
+     */
+    private function _parseRequireOnceExpression()
+    {
+        $expr = $this->_builder->buildASTRequireExpression();
+        $expr->setOnce();
+
+        return $this->_parseRequireOrIncludeExpression($expr, self::T_REQUIRE_ONCE);
+    }
+
+    /**
+     * Parses a <b>require_once</b>-, <b>require</b>-, <b>include_once</b>- or
+     * <b>include</b>-expression node.
+     *
+     * @param PHP_Depend_Code_ASTExpression $expr The concrete expression type.
+     * @param integer                       $type The token type to read.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.9.12
+     */
+    private function _parseRequireOrIncludeExpression(
+        PHP_Depend_Code_ASTExpression $expr, $type
+    ) {
+        $this->_tokenStack->push();
+
+        $this->_consumeToken($type);
+        $this->_consumeComments();
+
+        if ($this->_tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
+            $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+            $expr->addChild($this->_parseOptionalExpression());
+            $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+        } else {
+            $expr->addChild($this->_parseOptionalExpression());
+        }
+
+        return $this->_setNodePositionsAndReturn($expr);
+    }
+
+    /**
      * Parses one or more optional php <b>array</b> or <b>string</b> expressions.
      *
      * <code>
@@ -1855,6 +1911,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $this->_consumeToken(self::T_SQUARED_BRACKET_OPEN),
                     self::T_SQUARED_BRACKET_CLOSE
                 );
+                break;
+
+            case self::T_REQUIRE:
+                $expressions[] = $this->_parseRequireExpression();
+                break;
+
+            case self::T_REQUIRE_ONCE:
+                $expressions[] = $this->_parseRequireOnceExpression();
                 break;
 
             case self::T_EQUAL:
