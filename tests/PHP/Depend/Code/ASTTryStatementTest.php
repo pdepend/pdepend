@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTryStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTryStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -111,8 +111,8 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTryStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
-        $this->assertEquals(8, $statement->getEndLine());
+        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -128,8 +128,8 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTryStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstTryStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getEndColumn());
+        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**

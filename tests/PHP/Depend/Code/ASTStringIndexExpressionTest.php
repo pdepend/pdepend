@@ -79,8 +79,8 @@ class PHP_Depend_Code_ASTStringIndexExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testStringIndexExpressionHasExpectedStartLine()
     {
-        $expression = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getStartLine());
+        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -96,8 +96,8 @@ class PHP_Depend_Code_ASTStringIndexExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testStringIndexExpressionHasExpectedStartColumn()
     {
-        $expression = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
-        $this->assertEquals(23, $expression->getStartColumn());
+        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
+        $this->assertEquals(23, $expr->getStartColumn());
     }
 
     /**
@@ -113,8 +113,8 @@ class PHP_Depend_Code_ASTStringIndexExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testStringIndexExpressionHasExpectedEndLine()
     {
-        $expression = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getEndLine());
+        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -130,8 +130,8 @@ class PHP_Depend_Code_ASTStringIndexExpressionTest extends PHP_Depend_Code_ASTNo
      */
     public function testStringIndexExpressionHasExpectedEndColumn()
     {
-        $expression = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
-        $this->assertEquals(28, $expression->getEndColumn());
+        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
+        $this->assertEquals(28, $expr->getEndColumn());
     }
 
     /**

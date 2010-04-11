@@ -94,7 +94,7 @@ class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testExpressionGraphWithBooleanExpressions()
     {
-        $expression = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
         $expected   = array(
             PHP_Depend_Code_ASTExpression::CLAZZ,
             PHP_Depend_Code_ASTVariable::CLAZZ,
@@ -104,7 +104,7 @@ class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTVariable::CLAZZ,
         );
 
-        $this->assertGraphEquals($expression, $expected);
+        $this->assertGraphEquals($expr, $expected);
     }
 
     /**

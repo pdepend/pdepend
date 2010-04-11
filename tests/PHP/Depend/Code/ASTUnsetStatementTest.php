@@ -76,8 +76,8 @@ class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnsetStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstUnsetStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -92,8 +92,8 @@ class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnsetStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstUnsetStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -108,8 +108,8 @@ class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnsetStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstUnsetStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getEndLine());
+        $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -124,8 +124,8 @@ class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnsetStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstUnsetStatementInFunction(__METHOD__);
-        $this->assertEquals(22, $statement->getEndColumn());
+        $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
+        $this->assertEquals(22, $stmt->getEndColumn());
     }
 
     /**

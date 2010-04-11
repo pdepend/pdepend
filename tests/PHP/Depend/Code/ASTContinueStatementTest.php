@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTContinueStatementTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testContinueStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartLine());
+        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartLine());
     }
 
     /**
@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTContinueStatementTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testContinueStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(9, $statement->getStartColumn());
+        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $this->assertEquals(9, $stmt->getStartColumn());
     }
 
     /**
@@ -111,8 +111,8 @@ class PHP_Depend_Code_ASTContinueStatementTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testContinueStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $statement->getEndLine());
+        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $this->assertEquals(7, $stmt->getEndLine());
     }
 
     /**
@@ -128,8 +128,8 @@ class PHP_Depend_Code_ASTContinueStatementTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testContinueStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(17, $statement->getEndColumn());
+        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $this->assertEquals(17, $stmt->getEndColumn());
     }
 
     /**
