@@ -2425,7 +2425,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
         $token = $this->_consumeToken(self::T_FOREACH);
-        
+
         $foreach = $this->_builder->buildASTForeachStatement($token->image);
         
         $this->_consumeComments();
@@ -2438,12 +2438,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         
         $this->_consumeToken(self::T_AS);
         $this->_consumeComments();
-        
+
         if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
             $foreach->addChild($this->_parseVariableByReference());
         } else {
             $foreach->addChild($this->_parseVariable());
-            
+
             if ($this->_tokenizer->peek() === self::T_DOUBLE_ARROW) {
                 $this->_consumeToken(self::T_DOUBLE_ARROW);
                 $foreach->addChild($this->_parseVariableOptionalByReference());
@@ -3213,7 +3213,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
             return $this->_parseVariableByReference();
         }
-        return $this->_parseVariable();
+        return $this->_parseCompoundVariableOrVariableVariableOrVariable();
     }
     
     /**
@@ -3230,8 +3230,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_BITWISE_AND);
         $this->_consumeComments();
 
+        $variable = $this->_parseCompoundVariableOrVariableVariableOrVariable();
+
         $expression = $this->_builder->buildASTUnaryExpression($token->image);
-        $expression->addChild($this->_parseVariable());
+        $expression->addChild($variable);
         
         return $this->_setNodePositionsAndReturn($expression);
     }
