@@ -79,8 +79,8 @@ class PHP_Depend_Code_ASTLogicalAndExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testLogicalAndExpressionHasExpectedStartLine()
     {
-        $expression = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getStartLine());
+        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -96,8 +96,8 @@ class PHP_Depend_Code_ASTLogicalAndExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testLogicalAndExpressionHasExpectedStartColumn()
     {
-        $expression = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(18, $expression->getStartColumn());
+        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $this->assertEquals(18, $expr->getStartColumn());
     }
 
     /**
@@ -113,8 +113,8 @@ class PHP_Depend_Code_ASTLogicalAndExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testLogicalAndExpressionHasExpectedEndLine()
     {
-        $expression = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expression->getEndLine());
+        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -130,8 +130,8 @@ class PHP_Depend_Code_ASTLogicalAndExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testLogicalAndExpressionHasExpectedEndColumn()
     {
-        $expression = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(20, $expression->getEndColumn());
+        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $this->assertEquals(20, $expr->getEndColumn());
     }
 
     /**

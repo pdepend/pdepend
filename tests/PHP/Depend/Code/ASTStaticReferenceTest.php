@@ -120,8 +120,8 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testStaticReferenceHasExpectedStartLine()
     {
-        $statement = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $statement->getStartLine());
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(5, $ref->getStartLine());
     }
 
     /**
@@ -137,8 +137,8 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testStaticReferenceHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(13, $statement->getStartColumn());
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(13, $ref->getStartColumn());
     }
 
     /**
@@ -154,8 +154,8 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testStaticReferenceHasExpectedEndLine()
     {
-        $statement = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $statement->getEndLine());
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(5, $ref->getEndLine());
     }
 
     /**
@@ -171,8 +171,8 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testStaticReferenceHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(18, $statement->getEndColumn());
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(18, $ref->getEndColumn());
     }
 
     /**
