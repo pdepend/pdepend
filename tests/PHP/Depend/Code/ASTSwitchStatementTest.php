@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementGraphWithBooleanExpressions()
     {
-        $statement = $this->_getFirstSwitchStatementInFunction(__METHOD__);
-        $children  = $statement->getChildren();
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $children  = $stmt->getChildren();
 
         $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
     }
@@ -96,8 +96,8 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementGraphWithLabels()
     {
-        $statement = $this->_getFirstSwitchStatementInFunction(__METHOD__);
-        $children  = $statement->getChildren();
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $children  = $stmt->getChildren();
 
         $this->assertType(PHP_Depend_Code_ASTSwitchLabel::CLAZZ, $children[1]);
         $this->assertType(PHP_Depend_Code_ASTSwitchLabel::CLAZZ, $children[2]);
@@ -116,8 +116,8 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstSwitchStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -133,8 +133,8 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstSwitchStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartColumn());
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -150,8 +150,8 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstSwitchStatementInFunction(__METHOD__);
-        $this->assertEquals(8, $statement->getEndLine());
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -167,8 +167,8 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstSwitchStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getEndColumn());
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
