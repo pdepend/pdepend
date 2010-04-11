@@ -2442,7 +2442,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->_tokenizer->peek() === self::T_BITWISE_AND) {
             $foreach->addChild($this->_parseVariableByReference());
         } else {
-            $foreach->addChild($this->_parseVariable());
+            $variable = $this->_parseCompoundVariableOrVariableVariableOrVariable();
+            $foreach->addChild($variable);
 
             if ($this->_tokenizer->peek() === self::T_DOUBLE_ARROW) {
                 $this->_consumeToken(self::T_DOUBLE_ARROW);
@@ -2450,6 +2451,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
         }
 
+        $this->_consumeComments();
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
 
         return $this->_setNodePositionsAndReturn(

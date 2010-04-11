@@ -252,6 +252,22 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     }
 
     /**
+     * testForeachStatementWithCommentBeforeClosingParenthesis
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementWithCommentBeforeClosingParenthesis()
+    {
+        $this->_getFirstForeachStatementInFunction(__METHOD__);
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
