@@ -386,6 +386,14 @@ interface PHP_Depend_BuilderI
     function buildASTListExpression($image);
 
     /**
+     * Builds a new include- or include_once-expression.
+     *
+     * @return PHP_Depend_Code_ASTIncludeExpression
+     * @since 0.9.12
+     */
+    function buildASTIncludeExpression();
+
+    /**
      * Builds a new require- or require_once-expression.
      *
      * @return PHP_Depend_Code_ASTRequireExpression
