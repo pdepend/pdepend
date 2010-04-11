@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTCloneExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testCloneExpressionHasExpectedStartLine()
     {
-        $statement = $this->_getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $statement->getStartLine());
+        $expr = $this->_getFirstCloneExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTCloneExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testCloneExpressionHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(12, $statement->getStartColumn());
+        $expr = $this->_getFirstCloneExpressionInFunction(__METHOD__);
+        $this->assertEquals(12, $expr->getStartColumn());
     }
 
     /**
@@ -111,8 +111,8 @@ class PHP_Depend_Code_ASTCloneExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testCloneExpressionHasExpectedEndLine()
     {
-        $statement = $this->_getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(6, $statement->getEndLine());
+        $expr = $this->_getFirstCloneExpressionInFunction(__METHOD__);
+        $this->assertEquals(6, $expr->getEndLine());
     }
 
     /**
@@ -128,8 +128,8 @@ class PHP_Depend_Code_ASTCloneExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testCloneExpressionHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(21, $statement->getEndColumn());
+        $expr = $this->_getFirstCloneExpressionInFunction(__METHOD__);
+        $this->assertEquals(21, $expr->getEndColumn());
     }
 
     /**
