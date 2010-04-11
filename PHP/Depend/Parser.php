@@ -1146,6 +1146,33 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses a include-expression node.
+     *
+     * @return PHP_Depend_Code_ASTIncludeExpression
+     * @since 0.9.12
+     */
+    private function _parseIncludeExpression()
+    {
+        $expr = $this->_builder->buildASTIncludeExpression();
+
+        return $this->_parseRequireOrIncludeExpression($expr, self::T_INCLUDE);
+    }
+
+    /**
+     * Parses a include_once-expression node.
+     *
+     * @return PHP_Depend_Code_ASTIncludeExpression
+     * @since 0.9.12
+     */
+    private function _parseIncludeOnceExpression()
+    {
+        $expr = $this->_builder->buildASTIncludeExpression();
+        $expr->setOnce();
+
+        return $this->_parseRequireOrIncludeExpression($expr, self::T_INCLUDE_ONCE);
+    }
+
+    /**
      * Parses a require-expression node.
      *
      * @return PHP_Depend_Code_ASTRequireExpression
@@ -1911,6 +1938,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $this->_consumeToken(self::T_SQUARED_BRACKET_OPEN),
                     self::T_SQUARED_BRACKET_CLOSE
                 );
+                break;
+
+            case self::T_INCLUDE:
+                $expressions[] = $this->_parseIncludeExpression();
+                break;
+
+            case self::T_INCLUDE_ONCE:
+                $expressions[] = $this->_parseIncludeOnceExpression();
                 break;
 
             case self::T_REQUIRE:
