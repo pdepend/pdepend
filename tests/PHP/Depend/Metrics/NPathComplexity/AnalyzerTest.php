@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Metrics/NPathComplexity/Analyzer.php';
@@ -63,652 +63,246 @@ require_once 'PHP/Depend/Metrics/NPathComplexity/Analyzer.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
-     * Tests a empty method an expects a
+     * testNPathComplexityIsZeroForEmptyMethod
      *
      * @return unknown_type
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testEmptyMethod()
+    public function testNPathComplexityIsZeroForEmptyMethod()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 1), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(1, $npath);
     }
 
     /**
      * Tests a method body with a simple if statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleIfStatement()
+    public function testNPathComplexityForMethodWithSimpleIfStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 2), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(2, $npath);
     }
 
     /**
      * Tests a method body with a simple if statement with dynamic identifier.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testIfStatementWithNestedDynamicIdentifier()
+    public function testNPathComplexityForIfStatementWithNestedDynamicIdentifier()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SELF, 'self', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_COLON, '::', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$var', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '}', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 2), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(2, $npath);
     }
 
     /**
      * Tests the analyzer implementation against consecutive if-statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testConsecutiveIfStatements()
+    public function testNPathComplexityForConsecutiveIfStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_AND, '&&', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_AND, '&&', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_AND, '&&', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 80), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(80, $npath);
     }
 
     /**
      * Tests the analyzer implementation against multiple if-else-if statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testConsecutiveIfElseIfStatements()
+    public function testNPathComplexityForConsecutiveIfElseIfStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ELSE, 'else', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ELSE, 'else', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ELSE, 'else', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 4), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(4, $npath);
     }
 
     /**
      * Tests the analyzer implementation against multiple if-elseif statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testConsecutiveIfElsifStatements()
+    public function testNPathComplexityForConsecutiveIfElsifStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ELSEIF, 'elseif', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ELSEIF, 'elseif', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ELSE, 'else', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $function = $this->getMock('PHP_Depend_Code_Function', array(), array(null), '', false);
-        $function->expects($this->once())
-                 ->method('getTokens')
-                 ->will($this->returnValue($tokens));
-        $function->expects($this->any())
-                 ->method('getUUID')
-                 ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitFunction($function);
-
-        $this->assertEquals(array('npath' => 4), $analyzer->getNodeMetrics($function));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(4, $npath);
     }
 
     /**
      * Tests the analyzer implementation against an empty while statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testEmptyWhileStatement()
+    public function testNPathComplexityForEmptyWhileStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'while', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_OR, '||', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 3), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(3, $npath);
     }
 
     /**
      * Tests the anaylzer with nested while statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testNestedWhileStatements()
+    public function testNPathComplexityForNestedWhileStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'while', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_OR, '||', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'while', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_AND, '&&', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ECHO, 'echo', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CONSTANT_ENCAPSED_STRING, "'echo'", 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 5), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(5, $npath);
     }
 
     /**
      * Tests the npath algorithm with a simple do-while statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleDoStatement()
+    public function testNPathComplexityForSimpleDoWhileStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DO, 'do', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ECHO, 'echo', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LOGICAL_OR, 'or', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'while', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LOGICAL_AND, 'and', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 3), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(3, $npath);
     }
 
     /**
      * Tests the analyzer with a simple for statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleForStatement()
+    public function testNPathComplexityForSimpleForStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'for', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '0', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ANGLE_BRACKET_OPEN, '<', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '42', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_INC, '++', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 2), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(2, $npath);
     }
 
     /**
      * Tests the analyzer with a complex for statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testComplexForStatement()
+    public function testNPathComplexityForComplexForStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FOR, 'for', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '0', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMA, ',', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$j', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '42', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ANGLE_BRACKET_OPEN, '<', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$j', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_AND, '&&', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$j', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ANGLE_BRACKET_CLOSE, '>', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '23', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_OR, '||', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$j', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ANGLE_BRACKET_OPEN, '<', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '42', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DEC, '--', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COMMA, ',', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_INC, '++', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$j', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 4), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(4, $npath);
     }
 
     /**
      * Tests the analyzer implementation with a simple foreach statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleForeachStatement()
+    public function testNPathComplexityForSimpleForeachStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FOREACH, 'foreach', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$array', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_AS, 'as', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$key', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DOUBLE_ARROW, '=>', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$value', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 2), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(2, $npath);
     }
 
     /**
      * Tests the algorithm with a simple return statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleReturnStatement()
+    public function testNPathComplexityForSimpleReturnStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 1), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(1, $npath);
     }
 
     /**
      * Tests the algorithm with a return statement that contains boolean expressions.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testReturnStatementWithBooleanExpressions()
+    public function testNPathComplexityForReturnStatementWithBooleanExpressions()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_AND, '&&', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_OR, '||', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 2), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(2, $npath);
     }
 
     /**
      * Tests the algorithm with a return statement that contains a conditional.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testReturnStatementWithConditionalStatement()
+    public function testNPathComplexityForReturnStatementWithConditionalStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 5), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(5, $npath);
     }
 
     /**
@@ -716,42 +310,16 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Abstrac
      * child.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleSwitchStatement()
+    public function testNPathComplexityForSimpleSwitchStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SWITCH, 'switch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '1', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_INC, '++', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BREAK, 'break', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 1), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(1, $npath);
     }
 
     /**
@@ -759,62 +327,16 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Abstrac
      * statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSwitchStatementWithMultipleCaseStatements()
+    public function testNPathComplexityForSwitchStatementWithMultipleCaseStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SWITCH, 'switch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '1', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '2', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_INC, '++', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BREAK, 'break', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '3', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '4', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '5', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DEC, '--', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$i', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BREAK, 'break', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 5), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(5, $npath);
     }
 
     /**
@@ -822,381 +344,112 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Abstrac
      * statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSwitchStatementWithComplexCaseStatements()
+    public function testNPathComplexityForSwitchStatementWithComplexCaseStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SWITCH, 'switch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '0', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '1', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'for', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BREAK, 'break', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '2', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DO, 'do', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'while', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BREAK, 'break', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CASE, 'case', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '3', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BREAK, 'break', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_DEFAULT, 'default', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_WHILE, 'while', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BREAK, 'break', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 8), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(8, $npath);
     }
 
     /**
      * Tests the algorithm with a simple try statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleTryCatchStatement()
+    public function testNPathComplexityForSimpleTryCatchStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRY, 'try', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CATCH, 'catch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'E1', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$e', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 2), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(2, $npath);
     }
 
     /**
      * Tests the algorithm with a try statement with multiple catch statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testTryStatementWithMutlipleCatchStatements()
+    public function testNPathComplexityForTryStatementWithMutlipleCatchStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRY, 'try', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CATCH, 'catch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'E1', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$e', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CATCH, 'catch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'E2', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$e', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CATCH, 'catch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'E3', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$e', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CATCH, 'catch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'E4', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$e', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 5), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(5, $npath);
     }
 
     /**
      * Tests the algorithm with a try statement with nested if statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testTryCatchStatementWithNestedIfStatements()
+    public function testNPathComplexityForTryCatchStatementWithNestedIfStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRY, 'try', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CATCH, 'catch', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_STRING, 'E1', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$e', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_ELSE, 'else', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 5), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(5, $npath);
     }
 
     /**
      * Tests the algorithm with a conditional statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testSimpleConditionalStatement()
+    public function testNPathComplexityForSimpleConditionalStatement()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 5), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(5, $npath);
     }
 
     /**
      * Tests the algorithm with nested conditional statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testTwoNestedConditionalStatements()
+    public function testNPathComplexityForTwoNestedConditionalStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 9), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(9, $npath);
     }
 
     /**
      * Tests the algorithm with nested conditional statements.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testThreeNestedConditionalStatements()
+    public function testNPathComplexityForThreeNestedConditionalStatements()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 13), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(13, $npath);
     }
 
     /**
@@ -1204,83 +457,71 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Abstrac
      * expressions.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testConditionalStatementWithLogicalExpressions()
+    public function testNPathComplexityForConditionalStatementWithLogicalExpressions()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LOGICAL_OR, 'or', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$b', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_BOOLEAN_AND, '&&', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LOGICAL_AND, 'and', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$c', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$d', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LOGICAL_XOR, 'xor', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$e', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $this->assertEquals(array('npath' => 6), $analyzer->getNodeMetrics($method));
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(6, $npath);
     }
 
     /**
-     * Tests the algorithm implementation against an existing bug in the combination
-     * of return, conditional and if statement.
+     * Tests the algorithm implementation against an existing bug in the
+     * combination of return, conditional and if statement.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
      */
-    public function testReturnStatementWithConditionalBug80()
+    public function testNPathComplexityForReturnStatementWithConditional()
     {
-        $tokens = array(
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(6, $npath);
+    }
 
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_IF, 'if', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_TRUE, 'true', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_VARIABLE, '$a', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_QUESTION_MARK, '?', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_COLON, ':', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_LNUMBER, '2', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 0, 0, 0, 0),
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-
-            new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 0, 0, 0, 0),
-        );
-
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null), '', false);
-        $method->expects($this->once())
-               ->method('getTokens')
-               ->will($this->returnValue($tokens));
-        $method->expects($this->any())
-               ->method('getUUID')
-               ->will($this->returnValue('uuid'));
+    /**
+     * Returns the NPath Complexity of the first method found in source file
+     * associated with the calling test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return integer
+     * @since 0.9.12
+     */
+    private function _getNPathComplexityForFirstMethodInTestSource($testCase)
+    {
+        $method = $this->_getFirstMethodForTestCase($testCase);
 
         $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
         $analyzer->visitMethod($method);
 
-        $this->assertEquals(array('npath' => 6), $analyzer->getNodeMetrics($method));
+        $metrics = $analyzer->getNodeMetrics($method);
+        return $metrics['npath'];
+    }
+
+    /**
+     * Parses the source code associated with the calling test case and returns
+     * the first method found in the test case source file.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Method
+     * @since 0.9.12
+     */
+    private function _getFirstMethodForTestCase($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
     }
 }
-?>

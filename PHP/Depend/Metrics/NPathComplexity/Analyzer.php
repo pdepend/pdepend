@@ -46,6 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once 'PHP/Depend/Code/ASTVisitorI.php';
 require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
 require_once 'PHP/Depend/Metrics/AnalyzerI.php';
 require_once 'PHP/Depend/Metrics/FilterAwareI.php';
@@ -70,7 +71,8 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_NodeAwareI
+               PHP_Depend_Metrics_NodeAwareI,
+               PHP_Depend_Code_ASTVisitorI
 {
     /**
      * Type of this analyzer class.
@@ -253,12 +255,22 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->fireStartMethod($method);
 
+/*
+foreach ($method->getChildren() as $child) {
+    $child->accept($this);
+}
+*/
         $this->_calculateMethodOrFunction(
             $method->getUUID(),
             $method->getTokens()
         );
 
         $this->fireEndMethod($method);
+    }
+
+    public function __call($method, $args)
+    {
+        return $args[0];
     }
 
     /**
