@@ -1,5 +1,0 @@
-<?php
-function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
-{
-    return
-}

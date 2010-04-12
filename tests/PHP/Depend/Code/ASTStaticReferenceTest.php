@@ -69,6 +69,12 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid static results in the expected exception.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
@@ -84,6 +90,12 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid static results in the expected exception.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
@@ -93,6 +105,74 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
         );
 
         $packages = self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
+     * testStaticReferenceHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testStaticReferenceHasExpectedStartLine()
+    {
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(5, $ref->getStartLine());
+    }
+
+    /**
+     * testStaticReferenceHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testStaticReferenceHasExpectedStartColumn()
+    {
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(13, $ref->getStartColumn());
+    }
+
+    /**
+     * testStaticReferenceHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testStaticReferenceHasExpectedEndLine()
+    {
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(5, $ref->getEndLine());
+    }
+
+    /**
+     * testStaticReferenceHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testStaticReferenceHasExpectedEndColumn()
+    {
+        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $this->assertEquals(18, $ref->getEndColumn());
     }
 
     /**
@@ -108,6 +188,20 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
                 array(),
                 array(__CLASS__)
             )
+        );
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTStaticReference
+     */
+    private function _getFirstStaticReferenceInClass($testCase)
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTStaticReference::CLAZZ
         );
     }
 }

@@ -78,17 +78,7 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
     public function testConstantPostfixStructureForSimpleStaticAccess()
     {
         $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $prefix  = $postfix->getParent();
-
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-        $this->assertEquals('Bar', $reference->getImage());
-
         $this->assertEquals('BAZ', $postfix->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
-        $this->assertEquals('BAZ', $identifier->getImage());
     }
 
     /**
@@ -105,14 +95,7 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
     public function testConstantPostfixStructureForStaticAccessOnVariable()
     {
         $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $prefix  = $postfix->getParent();
-
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-        $this->assertEquals('$foo', $variable->getImage());
-
-        $identifier = $postfix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $identifier);
+        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $postfix->getChild(0));
     }
 
     /**

@@ -77,8 +77,8 @@ class PHP_Depend_Code_ASTBreakStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testBreakStatementHasExpectedStartLine()
     {
-        $statement = $this->_getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $statement->getStartLine());
+        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartLine());
     }
 
     /**
@@ -94,8 +94,8 @@ class PHP_Depend_Code_ASTBreakStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testBreakStatementHasExpectedStartColumn()
     {
-        $statement = $this->_getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(9, $statement->getStartColumn());
+        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $this->assertEquals(9, $stmt->getStartColumn());
     }
 
     /**
@@ -111,8 +111,8 @@ class PHP_Depend_Code_ASTBreakStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testBreakStatementHasExpectedEndLine()
     {
-        $statement = $this->_getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $statement->getEndLine());
+        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $this->assertEquals(7, $stmt->getEndLine());
     }
 
     /**
@@ -128,8 +128,8 @@ class PHP_Depend_Code_ASTBreakStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testBreakStatementHasExpectedEndColumn()
     {
-        $statement = $this->_getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(17, $statement->getEndColumn());
+        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $this->assertEquals(17, $stmt->getEndColumn());
     }
 
     /**

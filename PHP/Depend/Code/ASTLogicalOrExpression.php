@@ -47,7 +47,7 @@
  * @since      0.9.8
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
+require_once 'PHP/Depend/Code/ASTExpression.php';
 
 /**
  * This node class represents a logical <b>or</b>-expression.
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.8
  */
-class PHP_Depend_Code_ASTLogicalOrExpression extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Code_ASTLogicalOrExpression extends PHP_Depend_Code_ASTExpression
 {
     /**
      * The type of this class.

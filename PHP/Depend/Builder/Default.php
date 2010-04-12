@@ -819,14 +819,53 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
-     * Builds a new array-expression node.
+     * Builds a new include- or include_once-expression.
      *
-     * @return PHP_Depend_Code_ASTArrayExpression
+     * @return PHP_Depend_Code_ASTIncludeExpression
      * @since 0.9.12
      */
-    public function buildASTArrayExpression()
+    public function buildASTIncludeExpression()
     {
-        return $this->_buildASTNodeInstance('ASTArrayExpression');
+        return $this->_buildASTNodeInstance('ASTIncludeExpression');
+    }
+
+    /**
+     * Builds a new require- or require_once-expression.
+     *
+     * @return PHP_Depend_Code_ASTRequireExpression
+     * @since 0.9.12
+     */
+    public function buildASTRequireExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTRequireExpression');
+    }
+
+    /**
+     * Builds a new array-expression node.
+     *
+     * @return PHP_Depend_Code_ASTArrayIndexExpression
+     * @since 0.9.12
+     */
+    public function buildASTArrayIndexExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTArrayIndexExpression');
+    }
+
+    /**
+     * Builds a new string-expression node.
+     *
+     * <code>
+     * //     --------
+     * $string{$index}
+     * //     --------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTStringIndexExpression
+     * @since 0.9.12
+     */
+    public function buildASTStringIndexExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTStringIndexExpression');
     }
 
     /**

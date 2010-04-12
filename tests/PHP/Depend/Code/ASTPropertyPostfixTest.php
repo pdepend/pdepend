@@ -276,7 +276,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testPropertyPostfixGraphForObjectPropertyArrayExpression
+     * testPropertyPostfixGraphForObjectPropertyArrayIndexExpression
      *
      * <code>
      * $this->arguments[42] = func_get_args();
@@ -290,13 +290,13 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @group pdepend::ast
      * @group unittest
      */
-    public function testPropertyPostfixGraphForObjectPropertyArrayExpression()
+    public function testPropertyPostfixGraphForObjectPropertyArrayIndexExpression()
     {
         $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
         $expected = array(
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
             PHP_Depend_Code_ASTIdentifier::CLAZZ,
             PHP_Depend_Code_ASTLiteral::CLAZZ
         );
@@ -305,7 +305,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testPropertyPostfixGraphForPropertyArrayExpression
+     * testPropertyPostfixGraphForPropertyArrayIndexExpression
      *
      * <code>
      * self::$arguments[42] = func_get_args();
@@ -319,13 +319,13 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @group pdepend::ast
      * @group unittest
      */
-    public function testPropertyPostfixGraphForStaticPropertyArrayExpression()
+    public function testPropertyPostfixGraphForStaticPropertyArrayIndexExpression()
     {
         $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
         $expected = array(
             PHP_Depend_Code_ASTSelfReference::CLAZZ,
             PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-            PHP_Depend_Code_ASTArrayExpression::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTLiteral::CLAZZ
         );

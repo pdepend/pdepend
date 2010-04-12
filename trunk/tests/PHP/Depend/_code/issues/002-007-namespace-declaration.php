@@ -1,5 +1,0 @@
-<?php
-namespace {
-    class Foo {}
-}
-?>
