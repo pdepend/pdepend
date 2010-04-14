@@ -91,13 +91,6 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     private $_loc = null;
 
     /**
-     * The tokens for this file.
-     *
-     * @var array(array) $_tokens
-     */
-    private $_tokens = array();
-
-    /**
      * The comment for this type.
      *
      * @var string $_docComment
