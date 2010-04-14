@@ -255,22 +255,67 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->fireStartMethod($method);
 
-/*
-foreach ($method->getChildren() as $child) {
-    $child->accept($this);
-}
-*/
         $this->_calculateMethodOrFunction(
             $method->getUUID(),
             $method->getTokens()
         );
+$npath = 1;
+foreach ($method->getChildren() as $child) {
+    $npath = $child->accept($this, $npath);
+}
+echo "New: ", $npath, '; old: ', $this->_metrics[$method->getUUID()],
+     '  ', $method->getName(), PHP_EOL;
 
         $this->fireEndMethod($method);
     }
 
     public function __call($method, $args)
     {
-        return $args[0];
+        return $args[1];
+    }
+
+    public function visitBeforeIfStatement($node, $data)
+    {
+        if (($complexity = $this->sumComplexity($node->getChild(0))) === 0) {
+            $complexity = 1;
+        }
+        $complexity += $node->getChild(1)->accept($this, 1);
+
+        return $complexity * $data;
+    }
+
+    public function visitBeforeReturnStatement($node, $data)
+    {
+        if (($complexity = $this->sumComplexity($node)) === 0) {
+            return 1;
+        }
+        return $complexity * $data;
+    }
+
+    public function visitBeforeTryCatchStatement($node, $data)
+    {
+        return $node->getChild(0)->accept($this, 1) * $data;
+    }
+
+    public function sumComplexity($node)
+    {
+        $sum = 0;
+        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ) as $node) {
+            ++$sum;
+        }
+        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ) as $node) {
+            ++$sum;
+        }
+        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTLogicalAndExpression::CLAZZ) as $node) {
+            ++$sum;
+        }
+        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTLogicalOrExpression::CLAZZ) as $node) {
+            ++$sum;
+        }
+        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTLogicalXorExpression::CLAZZ) as $node) {
+            ++$sum;
+        }
+        return $sum;
     }
 
     /**
