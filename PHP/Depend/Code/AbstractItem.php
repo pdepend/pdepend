@@ -136,6 +136,19 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * Sets the unique identifier for this node instance.
+     *
+     * @param string $uuid Identifier for this node.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
+    }
+
+    /**
      * Returns the source file for this item.
      *
      * @return PHP_Depend_Code_File

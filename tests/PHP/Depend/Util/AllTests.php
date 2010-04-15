@@ -53,6 +53,7 @@ require_once dirname(__FILE__) . '/FileUtilTest.php';
 require_once dirname(__FILE__) . '/ImageConvertTest.php';
 require_once dirname(__FILE__) . '/MathUtilTest.php';
 require_once dirname(__FILE__) . '/TypeTest.php';
+require_once dirname(__FILE__) . '/UuidBuilderTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Util package.
@@ -84,6 +85,7 @@ class PHP_Depend_Util_AllTests
 
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
         $suite->addTestSuite('PHP_Depend_Util_TypeTest');
+        $suite->addTestSuite('PHP_Depend_Util_UuidBuilderTest');
 
         return $suite;
     }

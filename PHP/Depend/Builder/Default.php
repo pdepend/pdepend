@@ -533,13 +533,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function buildASTFieldDeclaration()
     {
-        include_once 'PHP/Depend/Code/ASTFieldDeclaration.php';
-
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTFieldDeclaration()'
-        );
-
-        return new PHP_Depend_Code_ASTFieldDeclaration();
+        return $this->_buildASTNodeInstance('ASTFieldDeclaration');
     }
 
     /**
