@@ -313,7 +313,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     }
 
     /**
-     * Visits a boolean AND expression.
+     * Visits a boolean AND-expression.
      *
      * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
@@ -328,7 +328,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     }
 
     /**
-     * Visits a boolean OR expression.
+     * Visits a boolean OR-expression.
      *
      * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
