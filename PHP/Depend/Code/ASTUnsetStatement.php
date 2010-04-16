@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTUnsetStatement extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeUnsetStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterUnsetStatement($this, $data);
+        return $visitor->visitUnsetStatement($this, $data);
     }
 }

@@ -111,13 +111,7 @@ class PHP_Depend_Code_ASTFormalParameters extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeFormalParameters($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterFormalParameters($this, $data);
+        return $visitor->visitFormalParameters($this, $data);
     }
 }
 

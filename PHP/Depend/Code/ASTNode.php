@@ -418,29 +418,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
-     * @param array(string=>integer)      $data    Optional previous calculated data.
-     *
-     * @return mixed
-     * @since 0.9.8
-     */
-    /*
-    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
-    {
-        $data = $visitor->visitBefore($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfter($this, $data);
-    }
-    */
-
-    /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for
      * PHP version < 5.3 where cyclic references can not be resolved

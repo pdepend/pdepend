@@ -102,12 +102,6 @@ class PHP_Depend_Code_ASTTypeNode extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeTypeNode($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterTypeNode($this, $data);
+        return $visitor->visitTypeNode($this, $data);
     }
 }

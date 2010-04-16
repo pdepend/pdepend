@@ -107,12 +107,6 @@ class PHP_Depend_Code_ASTRequireExpression extends PHP_Depend_Code_ASTExpression
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeRequireExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterRequireExpression($this, $data);
+        return $visitor->visitRequireExpression($this, $data);
     }
 }

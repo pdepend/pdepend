@@ -80,12 +80,6 @@ class PHP_Depend_Code_ASTIdentifier extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeIdentifier($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterIdentifier($this, $data);
+        return $visitor->visitIdentifier($this, $data);
     }
 }

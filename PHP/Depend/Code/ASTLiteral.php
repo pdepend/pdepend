@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTLiteral extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeLiteral($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterLiteral($this, $data);
+        return $visitor->visitLiteral($this, $data);
     }
 }

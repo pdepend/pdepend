@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTLabelStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeLabelStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterLabelStatement($this, $data);
+        return $visitor->visitLabelStatement($this, $data);
     }
 }

@@ -91,12 +91,6 @@ class PHP_Depend_Code_ASTCompoundVariable extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeCompoundVariable($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterCompoundVariable($this, $data);
+        return $visitor->visitCompoundVariable($this, $data);
     }
 }

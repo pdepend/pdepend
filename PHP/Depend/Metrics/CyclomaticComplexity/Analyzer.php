@@ -295,8 +295,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
 
     /**
      * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call the <b>visitBefore${NodeClassName}</b> and
-     * <b>visitAfter${NodeClassName}</b> on each node.
+     * With this method we can call <b>visit${NodeClassName}</b> on each node.
      *
      * @param string $method Name of the called method.
      * @param array  $args   Array with method argument.
@@ -306,7 +305,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     public function __call($method, $args)
     {
-        return $args[1];
+        $value = $args[1];
+        foreach ($args[0]->getChildren() as $child) {
+            $value = $child->accept($this, $value);
+        }
+        return $value;
     }
 
     /**
@@ -318,10 +321,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeBooleanAndExpression($node, $data)
+    public function visitBooleanAndExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+        return $this->visit($node, $data);
     }
 
     /**
@@ -333,10 +336,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeBooleanOrExpression($node, $data)
+    public function visitBooleanOrExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+        return $this->visit($node, $data);
     }
 
     /**
@@ -348,13 +351,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeSwitchLabel($node, $data)
+    public function visitSwitchLabel($node, $data)
     {
         if (!$node->isDefault()) {
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
-        return $data;
+        return $this->visit($node, $data);
     }
 
     /**
@@ -366,11 +369,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeCatchStatement($node, $data)
+    public function visitCatchStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 
     /**
@@ -382,11 +386,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeElseIfStatement($node, $data)
+    public function visitElseIfStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 
     /**
@@ -398,11 +403,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeForStatement($node, $data)
+    public function visitForStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 
     /**
@@ -414,11 +420,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeForeachStatement($node, $data)
+    public function visitForeachStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 
     /**
@@ -430,11 +437,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeIfStatement($node, $data)
+    public function visitIfStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 
     /**
@@ -446,10 +454,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeLogicalAndExpression($node, $data)
+    public function visitLogicalAndExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+        return $this->visit($node, $data);
     }
 
     /**
@@ -461,10 +469,10 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeLogicalOrExpression($node, $data)
+    public function visitLogicalOrExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+        return $this->visit($node, $data);
     }
 
     /**
@@ -476,11 +484,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeConditionalExpression($node, $data)
+    public function visitConditionalExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 
     /**
@@ -492,11 +501,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.8
      */
-    public function visitBeforeWhileStatement($node, $data)
+    public function visitWhileStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 
     /**
@@ -508,10 +518,11 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @return array(string=>integer)
      * @since 0.9.12
      */
-    public function visitBeforeDoWhileStatement($node, $data)
+    public function visitDoWhileStatement($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $data;
+
+        return $this->visit($node, $data);
     }
 }

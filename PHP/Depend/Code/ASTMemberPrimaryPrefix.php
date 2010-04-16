@@ -111,12 +111,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefix extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeMemberPrimaryPrefix($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterMemberPrimaryPrefix($this, $data);
+        return $visitor->visitMemberPrimaryPrefix($this, $data);
     }
 }

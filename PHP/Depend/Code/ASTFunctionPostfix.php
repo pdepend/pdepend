@@ -91,12 +91,6 @@ class PHP_Depend_Code_ASTFunctionPostfix extends PHP_Depend_Code_ASTInvocation
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeFunctionPostfix($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterFunctionPostfix($this, $data);
+        return $visitor->visitFunctionPostfix($this, $data);
     }
 }

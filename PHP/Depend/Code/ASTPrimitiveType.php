@@ -93,12 +93,6 @@ class PHP_Depend_Code_ASTPrimitiveType extends PHP_Depend_Code_ASTTypeNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforePrimitiveType($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterPrimitiveType($this, $data);
+        return $visitor->visitPrimitiveType($this, $data);
     }
 }

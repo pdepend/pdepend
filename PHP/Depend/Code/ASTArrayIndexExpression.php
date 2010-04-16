@@ -91,12 +91,6 @@ class PHP_Depend_Code_ASTArrayIndexExpression extends PHP_Depend_Code_ASTExpress
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeArrayIndexExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterArrayIndexExpression($this, $data);
+        return $visitor->visitArrayIndexExpression($this, $data);
     }
 }

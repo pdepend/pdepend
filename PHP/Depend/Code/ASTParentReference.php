@@ -118,12 +118,6 @@ final class PHP_Depend_Code_ASTParentReference
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeParentReference($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterParentReference($this, $data);
+        return $visitor->visitParentReference($this, $data);
     }
 }

@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTElseIfStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeElseIfStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterElseIfStatement($this, $data);
+        return $visitor->visitElseIfStatement($this, $data);
     }
 }
