@@ -65,6 +65,74 @@ require_once 'PHP/Depend/Code/ASTElseIfStatement.php';
 class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testHasElseMethodReturnsFalseByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsFalseByDefault()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertFalse($stmt->hasElse());
+    }
+
+    /**
+     * testHasElseMethodReturnsFalseWhenElseIfBranchExists
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsFalseWhenElseIfBranchExists()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertFalse($stmt->hasElse());
+    }
+
+    /**
+     * testHasElseMethodReturnsFalseWhenElseBranchWithIfExists
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsFalseWhenElseBranchWithIfExists()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertFalse($stmt->hasElse());
+    }
+
+    /**
+     * testHasElseMethodReturnsTrueWhenElseBranchExists
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsTrueWhenElseBranchExists()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertTrue($stmt->hasElse());
+    }
+
+    /**
      * Tests the generated object graph of an elseif statement.
      *
      * @return void

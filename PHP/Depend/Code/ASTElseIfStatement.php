@@ -70,6 +70,24 @@ class PHP_Depend_Code_ASTElseIfStatement extends PHP_Depend_Code_ASTStatement
     const CLAZZ = __CLASS__;
 
     /**
+     * Returns <b>true</b> when this <b>elseif</b>-statement is followed by an
+     * <b>else</b>-statement.
+     *
+     * @return boolean
+     * @since 0.9.12
+     */
+    public function hasElse()
+    {
+        if (count($this->nodes) === 3) {
+            return (
+                !($this->nodes[2] instanceof PHP_Depend_Code_ASTElseIfStatement) &&
+                !($this->nodes[2] instanceof PHP_Depend_Code_ASTIfStatement)
+            );
+        }
+        return false;
+    }
+
+    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
