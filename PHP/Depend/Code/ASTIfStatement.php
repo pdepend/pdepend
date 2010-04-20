@@ -78,13 +78,7 @@ class PHP_Depend_Code_ASTIfStatement extends PHP_Depend_Code_ASTStatement
      */
     public function hasElse()
     {
-        if (count($this->nodes) === 3) {
-            return (
-                !($this->nodes[2] instanceof PHP_Depend_Code_ASTElseIfStatement) &&
-                !($this->nodes[2] instanceof PHP_Depend_Code_ASTIfStatement)
-            );
-        }
-        return false;
+        return (count($this->nodes) === 3);
     }
 
     /**
