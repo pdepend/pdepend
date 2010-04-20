@@ -51,6 +51,7 @@ require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/Value.php';
 require_once 'PHP/Depend/Util/Log.php';
 require_once 'PHP/Depend/Util/Type.php';
+require_once 'PHP/Depend/Util/UuidBuilder.php';
 require_once 'PHP/Depend/Parser/SymbolTable.php';
 require_once 'PHP/Depend/Parser/TokenStack.php';
 require_once 'PHP/Depend/Parser/InvalidStateException.php';
@@ -232,6 +233,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_tokenStack = null;
 
     /**
+     * Used identifier builder instance.
+     *
+     * @var PHP_Depend_Util_UuidBuilder
+     * @since 0.9.12
+     */
+    private $_uuidBuilder = null;
+
+    /**
      * Used function name parser.
      *
      * @var PHP_Depend_Parser_FunctionNameParser
@@ -251,6 +260,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenizer = $tokenizer;
         $this->_builder   = $builder;
 
+        $this->_uuidBuilder    = new PHP_Depend_Util_UuidBuilder();
         $this->_tokenStack     = new PHP_Depend_Parser_TokenStack();
         $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable(true);
     }
@@ -311,6 +321,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         // Get currently parsed source file
         $this->_sourceFile = $this->_tokenizer->getSourceFile();
+        $this->_sourceFile->setUUID(
+            $this->_uuidBuilder->forFile($this->_sourceFile)
+        );
 
         // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->_sourceFile);
@@ -413,6 +426,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $interface = $this->_builder->buildInterface($qualifiedName);
         $interface->setSourceFile($this->_sourceFile);
         $interface->setDocComment($this->_docComment);
+        $interface->setUUID($this->_uuidBuilder->forClassOrInterface($interface));
         $interface->setUserDefined();
 
         // Strip comments and fetch next token type
@@ -465,6 +479,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $class->setSourceFile($this->_sourceFile);
         $class->setModifiers($this->_modifiers);
         $class->setDocComment($this->_docComment);
+        $class->setUUID($this->_uuidBuilder->forClassOrInterface($class));
         $class->setUserDefined();
 
         $this->_consumeComments();
@@ -722,7 +737,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_FUNCTION:
                 $method = $this->_parseMethodDeclaration();
+                $method->setParent($this->_classOrInterface);
                 $method->setModifiers($modifiers);
+                $method->setSourceFile($this->_sourceFile);
+                $method->setUUID($this->_uuidBuilder->forMethod($method));
                 $method->setTokens($this->_tokenStack->pop());
                 return $method;
 
@@ -820,11 +838,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         if ($this->_isNextTokenFormalParameterList()) {
             $callable = $this->_parseClosureDeclaration();
+            $callable->setSourceFile($this->_sourceFile);
         } else {
             $callable = $this->_parseFunctionDeclaration();
+            $callable->setSourceFile($this->_sourceFile);
+            $callable->setUUID($this->_uuidBuilder->forFunction($callable));
         }
 
-        $callable->setSourceFile($this->_sourceFile);
         $callable->setDocComment($this->_docComment);
         $callable->setTokens($this->_tokenStack->pop());
         $this->_prepareCallable($callable);

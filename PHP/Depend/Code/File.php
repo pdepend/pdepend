@@ -91,13 +91,6 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     private $_loc = null;
 
     /**
-     * The tokens for this file.
-     *
-     * @var array(array) $_tokens
-     */
-    private $_tokens = array();
-
-    /**
      * The comment for this type.
      *
      * @var string $_docComment
@@ -114,8 +107,6 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         if ($fileName !== null) {
             $this->_fileName = realpath($fileName);
         }
-
-        $this->_uuid = spl_object_hash($this);
     }
 
     /**
@@ -149,6 +140,19 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * Sets the unique identifier for this file instance.
+     *
+     * @param string $uuid Identifier for this file.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    public function setUUID($uuid)
+    {
+        $this->_uuid = $uuid;
+    }
+
+    /**
      * Returns the lines of code with stripped whitespaces.
      *
      * @return array(integer=>string)
@@ -178,7 +182,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function getTokens()
     {
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore($this->getUUID(), __CLASS__);
+        return (array) $storage->restore(md5($this->_fileName), __CLASS__);
     }
 
     /**
@@ -191,7 +195,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function setTokens(array $tokens)
     {
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, $this->getUUID(), __CLASS__);
+        $storage->store($tokens, md5($this->_fileName), __CLASS__);
     }
 
     /**
