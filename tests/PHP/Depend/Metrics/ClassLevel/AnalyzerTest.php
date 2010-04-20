@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/File.php';
@@ -71,7 +71,7 @@ require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
      * Tests that the {@link PHP_Depend_Metrics_ClassLevel_Analyzer::analyzer()}
