@@ -53,12 +53,6 @@ require_once 'PHP/Depend/Metrics/FilterAwareI.php';
 require_once 'PHP/Depend/Metrics/NodeAwareI.php';
 require_once 'PHP/Depend/Util/MathUtil.php';
 
-require_once 'PHP/Depend/Code/ASTBooleanAndExpression.php';
-require_once 'PHP/Depend/Code/ASTBooleanOrExpression.php';
-require_once 'PHP/Depend/Code/ASTLogicalAndExpression.php';
-require_once 'PHP/Depend/Code/ASTLogicalOrExpression.php';
-require_once 'PHP/Depend/Code/ASTLogicalXorExpression.php';
-
 /**
  * This analyzer calculates the NPath complexity of functions and methods. The
  * NPath complexity metric measures the acyclic execution paths through a method
@@ -240,12 +234,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
-
-        $this->_calculateMethodOrFunction(
-            $function->getUUID(),
-            $function->getTokens()
-        );
-
+        $this->calculateComplexity($function);
         $this->fireEndFunction($function);
     }
 
@@ -260,20 +249,41 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-
-        $this->_calculateMethodOrFunction(
-            $method->getUUID(),
-            $method->getTokens()
-        );
-        $npath = 1;
-        foreach ($method->getChildren() as $child) {
-            $npath *= $child->accept($this, $npath);
-        }
-        $this->_metrics[$method->getUUID()] = $npath;
-
+        $this->calculateComplexity($method);
         $this->fireEndMethod($method);
     }
 
+    /**
+     * This method will calculate the NPath complexity for the given callable
+     * instance.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    protected function calculateComplexity(
+        PHP_Depend_Code_AbstractCallable $callable
+    ) {
+        $npath = '1';
+        foreach ($callable->getChildren() as $child) {
+            $stmt  = $child->accept($this, $npath);
+            $npath = PHP_Depend_Util_MathUtil::mul($npath, $stmt);
+        }
+
+        $this->_metrics[$callable->getUUID()] = $npath;
+    }
+
+    /**
+     * Magic call method used to provide simplified visitor implementations.
+     * With this method we can call <b>visit${NodeClassName}</b> on each node.
+     *
+     * @param string $method Name of the called method.
+     * @param array  $args   Array with method argument.
+     *
+     * @return mixed
+     * @since 0.9.12
+     */
     public function __call($method, $args)
     {
         $value = $args[1];
@@ -283,298 +293,180 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         return $value;
     }
 
+    /**
+     * This method calculates the NPath Complexity of a conditional-statement,
+     * the meassured value is then returned as a string.
+     *
+     * <code>
+     * <expr1> ? <expr2> : <expr3>
+     *
+     * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
+     * @return string
+     * @since 0.9.12
+     */
     public function visitConditionalExpression($node, $data)
     {
-        $npath = 3;
-        foreach ($node->getChildren() as $child) {
-            $npath += $child->accept($this, 1);
+        // New PHP 5.3 ifsetor-operator $x ?: $y
+        if (count($node->getChildren()) === 1) {
+            $npath = '4';
+        } else {
+            $npath = '3';
         }
-        return $npath * $data;
+
+        foreach ($node->getChildren() as $child) {
+            if (($cn = $this->sumComplexity($child)) === '0') {
+                $cn = '1';
+            }
+            $npath = PHP_Depend_Util_MathUtil::add($npath, $cn);
+        }
+
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
+    /**
+     * This method calculates the NPath Complexity of a do-while-statement, the
+     * meassured value is then returned as a string.
+     *
+     * <code>
+     * do
+     *   <do-range>
+     * while (<expr>)
+     * S;
+     *
+     * -- NP(do) = NP(<do-range>) + NP(<expr>) + 1 --
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
+     * @return string
+     * @since 0.9.12
+     */
     public function visitDoWhileStatement($node, $data)
     {
-        $npath  = 1 + $node->getChild(0)->accept($this, 1);
-        $npath += $this->sumComplexity($node->getChild(1));
+        $stmt = $node->getChild(0)->accept($this, 1);
+        $expr = $this->sumComplexity($node->getChild(1));
 
-        return $npath * $data;
+        $npath = PHP_Depend_Util_MathUtil::add($expr, $stmt);
+        $npath = PHP_Depend_Util_MathUtil::add($npath, '1');
+
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
+    /**
+     * This method calculates the NPath Complexity of an elseif-statement, the
+     * meassured value is then returned as a string.
+     *
+     * <code>
+     * elseif (<expr>)
+     *   <elseif-range>
+     * S;
+     *
+     * -- NP(elseif) = NP(<elseif-range>) + NP(<expr>) + 1 --
+     *
+     *
+     * elseif (<expr>)
+     *   <elseif-range>
+     * else
+     *   <else-range>
+     * S;
+     *
+     * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
+     * @return string
+     * @since 0.9.12
+     */
     public function visitElseIfStatement($node, $data)
     {
         $npath = $this->sumComplexity($node->getChild(0));
-
         foreach ($node->getChildren() as $child) {
             if ($child instanceof PHP_Depend_Code_ASTStatement) {
-                $npath += $child->accept($this, 1);
+                $expr  = $child->accept($this, 1);
+                $npath = PHP_Depend_Util_MathUtil::add($npath, $expr);
             }
         }
 
         if (!$node->hasElse()) {
-            ++$npath;
+            $npath = PHP_Depend_Util_MathUtil::add($npath, '1');
         }
 
-        return $npath * $data;
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
+    /**
+     * This method calculates the NPath Complexity of a for-statement, the
+     * meassured value is then returned as a string.
+     *
+     * <code>
+     * for (<expr1>; <expr2>; <expr3>)
+     *   <for-range>
+     * S;
+     *
+     * -- NP(for) = NP(<for-range>) + NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 1 --
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
+     * @return string
+     * @since 0.9.12
+     */
     public function visitForStatement($node, $data)
     {
-        $npath = 1;
+        $npath = '1';
         foreach ($node->getChildren() as $child) {
             if ($child instanceof PHP_Depend_Code_ASTStatement) {
-                $npath += $child->accept($this, 1);
+                $stmt  = $child->accept($this, 1);
+                $npath = PHP_Depend_Util_MathUtil::add($npath, $stmt);
             } else if ($child instanceof PHP_Depend_Code_ASTExpression) {
-                $npath += $this->sumComplexity($child);
+                $expr  = $this->sumComplexity($child);
+                $npath = PHP_Depend_Util_MathUtil::add($npath, $expr);
             }
         }
 
-        return $npath * $data;
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
+    /**
+     * This method calculates the NPath Complexity of a for-statement, the
+     * meassured value is then returned as a string.
+     *
+     * <code>
+     * fpreach (<expr>)
+     *   <foreach-range>
+     * S;
+     *
+     * -- NP(foreach) = NP(<foreach-range>) + NP(<expr>) + 1 --
+     * </code>
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
+     * @return string
+     * @since 0.9.12
+     */
     public function visitForeachStatement($node, $data)
-    {   
-        $npath = 1 + $this->sumComplexity($node->getChild(0));
-
-        foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTStatement) {
-                $npath += $child->accept($this, 1);
-            }
-        }
-
-        return $npath * $data;
-    }
-
-    public function visitIfStatement($node, $data)
     {
         $npath = $this->sumComplexity($node->getChild(0));
+        $npath = PHP_Depend_Util_MathUtil::add($npath, '1');
 
         foreach ($node->getChildren() as $child) {
             if ($child instanceof PHP_Depend_Code_ASTStatement) {
-                $npath += $child->accept($this, 1);
+                $stmt  = $child->accept($this, 1);
+                $npath = PHP_Depend_Util_MathUtil::add($npath, $stmt);
             }
         }
 
-        if (!$node->hasElse()) {
-            ++$npath;
-        }
-
-        return $npath * $data;
-    }
-
-    public function visitReturnStatement($node, $data)
-    {
-        if (($npath = $this->sumComplexity($node)) > 0) {
-            return $npath * $data;
-        }
-        return $data;
-    }
-
-    public function visitSwitchStatement($node, $data)
-    {
-        $npath = $this->sumComplexity($node->getChild(0));
-        foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTSwitchLabel) {
-                $npath += $child->accept($this, 1);
-            }
-        }
-        return ($npath * $data);
-    }
-
-    public function visitTryStatement($node, $data)
-    {
-        $npath = 0;
-        foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTStatement) {
-                $npath += $child->accept($this, 1);
-            }
-        }
-        return $npath * $data;
-    }
-
-    public function visitWhileStatement($node, $data)
-    {
-        $npath  = 1 + $this->sumComplexity($node->getChild(0));
-        $npath += $node->getChild(1)->accept($this, 1);
-
-        return $npath * $data;
-    }
-
-    public function visitBooleanAndExpression($node, $data)
-    {
-        return 1;
-    }
-
-    public function visitBooleanOrExpression($node, $data)
-    {
-        return 1;
-    }
-
-    public function visitLogicalAndExpression($node, $data)
-    {
-        return 1;
-    }
-
-    public function visitLogicalOrExpression($node, $data)
-    {
-        return 1;
-    }
-
-    public function visitLogicalXorExpression($node, $data)
-    {
-        return 1;
-    }
-
-    public function sumComplexity($node)
-    {
-        $sum = 0;
-        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ) as $expr) {
-            ++$sum;
-        }
-        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ) as $expr) {
-            ++$sum;
-        }
-        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTLogicalAndExpression::CLAZZ) as $expr) {
-            ++$sum;
-        }
-        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTLogicalOrExpression::CLAZZ) as $expr) {
-            ++$sum;
-        }
-        foreach ($node->findChildrenOfType(PHP_Depend_Code_ASTLogicalXorExpression::CLAZZ) as $expr) {
-            ++$sum;
-        }
-        return $sum;
-    }
-
-    /**
-     * This method calculates the NPath complexity for the given <b>$tokens</b>
-     * array of a function or method. The result value is stored in the object's
-     * <strong>$_metrics</strong> with the key <strong>$uuid</strong>.
-     *
-     * @param string $uuid   The unique function or method identifier.
-     * @param array  $tokens The function or method body tokens.
-     *
-     * @return void
-     */
-    private function _calculateMethodOrFunction($uuid, array $tokens)
-    {
-        $this->_tokens = array();
-        foreach ($tokens as $token) {
-
-            if (count($this->_tokens) === 0
-                && $token->type !== PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN
-            ) {
-                continue;
-            }
-            if (isset(self::$_validTokens[$token->type])) {
-                $this->_tokens[] = $token;
-            }
-        }
-
-        $this->_index  = 0;
-        $this->_length = count($this->_tokens);
-
-        $this->_metrics[$uuid] = $this->_calculateScope();
-    }
-
-    /**
-     * This method calculates the complexity of a scope '{' ... '}' or a single
-     * statement. Then it returns the complexity value as a string.
-     *
-     * @return string
-     */
-    private function _calculateScopeOrStatement()
-    {
-        $npath = '1';
-        if (($token = current($this->_tokens)) !== false) {
-            if ($token->type ===  PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
-                $npath = $this->_calculateScope();
-            } else {
-                $npath = $this->_calculateStatement();
-            }
-        }
-        return $npath;
-    }
-
-    /**
-     * This method calculates the complexity of a scope block, then it returns
-     * the complexity value as a string.
-     *
-     * @return string
-     */
-    private function _calculateScope()
-    {
-        $npath = '1';
-        $scope = 0;
-
-        while (($token = current($this->_tokens)) !== false) {
-            if ($token->type === PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN) {
-                next($this->_tokens);
-                ++$scope;
-            } else if ($token->type === PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE) {
-                next($this->_tokens);
-                --$scope;
-            }
-
-            if ($scope === 0) {
-                break;
-            }
-
-            $value = $this->_calculateScopeOrStatement();
-            $npath = PHP_Depend_Util_MathUtil::mul($npath, $value);
-        }
-        return $npath;
-    }
-
-    /**
-     * This method calculates the NPath complexity for a statement, then it
-     * returns the complexity value as a string.
-     *
-     * @return string
-     */
-    private function _calculateStatement()
-    {
-        $token = current($this->_tokens);
-        while ($token !== false) {
-
-            switch ($token->type) {
-
-            case PHP_Depend_ConstantsI::T_IF:
-            case PHP_Depend_ConstantsI::T_ELSEIF:
-                return $this->_calculateIfStatement();
-
-            case PHP_Depend_ConstantsI::T_WHILE:
-                return $this->_calculateWhileStatement();
-
-            case PHP_Depend_ConstantsI::T_DO:
-                return $this->_calculateDoStatement();
-
-            case PHP_Depend_ConstantsI::T_FOR:
-                return $this->_calculateForStatement();
-
-            case PHP_Depend_ConstantsI::T_FOREACH:
-                return $this->_calculateForeachStatement();
-
-            case PHP_Depend_ConstantsI::T_RETURN:
-                return $this->_calculateReturnStatement();
-
-            case PHP_Depend_ConstantsI::T_SWITCH:
-                return $this->_calculateSwitchStatement();
-
-            case PHP_Depend_ConstantsI::T_TRY:
-                return $this->_calculateTryStatement();
-
-            case PHP_Depend_ConstantsI::T_QUESTION_MARK:
-                return $this->_calculateConditionalStatement();
-
-            case PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE:
-                break 2;
-
-            default:
-                next($this->_tokens);
-            }
-            break;
-        }
-        return '1';
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
     /**
@@ -598,154 +490,28 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
      * @return string
+     * @since 0.9.12
      */
-    private function _calculateIfStatement()
+    public function visitIfStatement($node, $data)
     {
-        // Remove <if> token
-        next($this->_tokens);
+        $npath = $this->sumComplexity($node->getChild(0));
 
-        $npath = PHP_Depend_Util_MathUtil::add(
-            $e = $this->_sumExpressionComplexity(),
-            $this->_calculateScopeOrStatement()
-        );
-
-        $value = '1';
-        if ($token = current($this->_tokens)) {
-            if ($token->type === PHP_Depend_ConstantsI::T_ELSE) {
-                next($this->_tokens);
-                $value = $this->_calculateScopeOrStatement();
-            } else if ($token->type === PHP_Depend_ConstantsI::T_ELSEIF) {
-                $value = $this->_calculateStatement();
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof PHP_Depend_Code_ASTStatement) {
+                $stmt  = $child->accept($this, 1);
+                $npath = PHP_Depend_Util_MathUtil::add($npath, $stmt);
             }
-        } else {
-            // FIXME: Log error
         }
-        return PHP_Depend_Util_MathUtil::add($npath, $value);
-    }
 
-    /**
-     * This method calculates the NPath Complexity of a while-statement, the
-     * meassured value is then returned as a string.
-     *
-     * <code>
-     * while (<expr>)
-     *   <while-range>
-     * S;
-     *
-     * -- NP(while) = NP(<while-range>) + NP(<expr>) + 1 --
-     * </code>
-     *
-     * @return string
-     */
-    private function _calculateWhileStatement()
-    {
-        // Remove <while> token
-        next($this->_tokens);
+        if (!$node->hasElse()) {
+            $npath = PHP_Depend_Util_MathUtil::add($npath, '1');
+        }
 
-        $npath = '1';
-
-        $value = $this->_sumExpressionComplexity();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        $value = $this->_calculateScopeOrStatement();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        return $npath;
-    }
-
-    /**
-     * This method calculates the NPath Complexity of a do-while-statement, the
-     * meassured value is then returned as a string.
-     *
-     * <code>
-     * do
-     *   <do-range>
-     * while (<expr>)
-     * S;
-     *
-     * -- NP(do) = NP(<do-range>) + NP(<expr>) + 1 --
-     * </code>
-     *
-     * @return string
-     */
-    private function _calculateDoStatement()
-    {
-        // Remove <do> token
-        next($this->_tokens);
-
-        $npath = '1';
-
-        $value = $this->_calculateScopeOrStatement();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        // Remove <while> token
-        next($this->_tokens);
-
-        $value = $this->_sumExpressionComplexity();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        return $npath;
-    }
-
-    /**
-     * This method calculates the NPath Complexity of a for-statement, the
-     * meassured value is then returned as a string.
-     *
-     * <code>
-     * for (<expr1>; <expr2>; <expr3>)
-     *   <for-range>
-     * S;
-     *
-     * -- NP(for) = NP(<for-range>) + NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 1 --
-     * </code>
-     *
-     * @return string
-     */
-    private function _calculateForStatement()
-    {
-        // Remove <for> token
-        next($this->_tokens);
-
-        $npath = '1';
-
-        $value = $this->_sumExpressionComplexity();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        $value = $this->_calculateScopeOrStatement();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        return $npath;
-    }
-
-    /**
-     * This method calculates the NPath Complexity of a for-statement, the
-     * meassured value is then returned as a string.
-     *
-     * <code>
-     * fpreach (<expr>)
-     *   <foreach-range>
-     * S;
-     *
-     * -- NP(foreach) = NP(<foreach-range>) + NP(<expr>) + 1 --
-     * </code>
-     *
-     * @return string
-     */
-    private function _calculateForeachStatement()
-    {
-        // Remove <foreach> token
-        next($this->_tokens);
-
-        $npath = '1';
-
-        $value = $this->_sumExpressionComplexity();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        $value = $this->_calculateScopeOrStatement();
-        $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-
-        return $npath;
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
     /**
@@ -758,39 +524,18 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(return) = NP(<expr>) --
      * </code>
      *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
      * @return string
+     * @since 0.9.12
      */
-    private function _calculateReturnStatement()
+    public function visitReturnStatement($node, $data)
     {
-        // Remove <return> token
-        next($this->_tokens);
-
-        $npath = '0';
-        while (($token = current($this->_tokens)) !== false) {
-            switch ($token->type) {
-
-            case PHP_Depend_ConstantsI::T_QUESTION_MARK:
-                $compl = $this->_calculateConditionalStatement();
-                $npath = PHP_Depend_Util_MathUtil::add($npath, $compl);
-                continue 2;
-
-            case PHP_Depend_ConstantsI::T_BOOLEAN_AND:
-            case PHP_Depend_ConstantsI::T_BOOLEAN_OR:
-            case PHP_Depend_ConstantsI::T_LOGICAL_AND:
-            case PHP_Depend_ConstantsI::T_LOGICAL_OR:
-            case PHP_Depend_ConstantsI::T_LOGICAL_XOR:
-                $npath = PHP_Depend_Util_MathUtil::add('1', $npath);
-                break;
-
-            case PHP_Depend_ConstantsI::T_CLOSE_TAG:
-            case PHP_Depend_ConstantsI::T_SEMICOLON:
-                break 2;
-
-            }
-
-            next($this->_tokens);
+        if (($npath = $this->sumComplexity($node)) === '0') {
+            return $data;
         }
-        return ($npath === '0' ? '1' : $npath);
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
     /**
@@ -807,50 +552,22 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(switch) = NP(<expr>) + NP(<default-range>) +  NP(<case-range1>) ... --
      * </code>
      *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
      * @return string
+     * @since 0.9.12
      */
-    private function _calculateSwitchStatement()
+    public function visitSwitchStatement($node, $data)
     {
-        // Remove <switch> token
-        next($this->_tokens);
-
-        $scope = 0;
-
-        $case  = '0';
-        $npath = $this->_sumExpressionComplexity();
-        while (($token = current($this->_tokens)) !== false) {
-            switch ($token->type) {
-
-            case PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN:
-                ++$scope;
-                $token = next($this->_tokens);
-                break;
-
-            case PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE:
-                --$scope;
-                $token = next($this->_tokens);
-                break;
-
-            case PHP_Depend_ConstantsI::T_CASE:
-            case PHP_Depend_ConstantsI::T_DEFAULT:
-                $token = next($this->_tokens);
-                $npath = PHP_Depend_Util_MathUtil::add($npath, $case);
-                $case  = '1';
-                break;
-
-            default:
-                $comp = $this->_calculateScopeOrStatement();
-                $case = PHP_Depend_Util_MathUtil::mul($case, $comp);
-                break;
+        $npath = $this->sumComplexity($node->getChild(0));
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof PHP_Depend_Code_ASTSwitchLabel) {
+                $label = $child->accept($this, 1);
+                $npath = PHP_Depend_Util_MathUtil::add($npath, $label);
             }
-
-            if ($scope === 0) {
-                break;
-            }
-
         }
-
-        return PHP_Depend_Util_MathUtil::add($npath, $case);
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
     /**
@@ -877,152 +594,82 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(try) = NP(<try-range>) + NP(<catch-range1>) + NP(<catch-range2>) ... --
      * </code>
      *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
      * @return string
+     * @since 0.9.12
      */
-    private function _calculateTryStatement()
+    public function visitTryStatement($node, $data)
     {
-        // Remove <try> token
-        next($this->_tokens);
-
-        $npath = $this->_calculateScopeOrStatement();
-        while (($token = next($this->_tokens)) !== false) {
-
-            $this->_sumExpressionComplexity();
-
-            $compl = $this->_calculateScopeOrStatement();
-            $npath = PHP_Depend_Util_MathUtil::add($compl, $npath);
-
-            $token = current($this->_tokens);
-            if ($token->type === PHP_Depend_ConstantsI::T_CATCH) {
-                continue;
+        $npath = '0';
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof PHP_Depend_Code_ASTStatement) {
+                $stmt  = $child->accept($this, 1);
+                $npath = PHP_Depend_Util_MathUtil::add($npath, $stmt);
             }
-            break;
         }
-        return $npath;
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
     /**
-     * This method calculates the NPath Complexity of a conditional-statement,
-     * the meassured value is then returned as a string.
+     * This method calculates the NPath Complexity of a while-statement, the
+     * meassured value is then returned as a string.
      *
      * <code>
-     * <expr1> ? <expr2> : <expr3>
+     * while (<expr>)
+     *   <while-range>
+     * S;
      *
-     * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
+     * -- NP(while) = NP(<while-range>) + NP(<expr>) + 1 --
      * </code>
      *
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param string                   $data The previously calculated npath value.
+     *
      * @return string
+     * @since 0.9.12
      */
-    private function _calculateConditionalStatement()
+    public function visitWhileStatement($node, $data)
     {
-        // Remove < ? > token
-        next($this->_tokens);
+        $expr = $this->sumComplexity($node->getChild(0));
+        $stmt = $node->getChild(1)->accept($this, 1);
 
-        // We don't know the complexity of the first expression
-        $input = array('0', '0');
-        $scope = 1;
-        $colon = 0;
+        $npath = PHP_Depend_Util_MathUtil::add($expr, $stmt);
+        $npath = PHP_Depend_Util_MathUtil::add($npath, '1');
 
-        while (($token = current($this->_tokens)) !== false) {
-            switch ($token->type) {
-
-            case PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN:
-            case PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN:
-                ++$scope;
-                break;
-
-            case PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE:
-            case PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE:
-                --$scope;
-                break;
-
-            case PHP_Depend_ConstantsI::T_QUESTION_MARK:
-                $complex  = $this->_calculateConditionalStatement();
-                $input[0] = PHP_Depend_Util_MathUtil::add($complex, $input[0]);
-                break;
-
-            case PHP_Depend_ConstantsI::T_COLON:
-                if ($colon === 0) {
-                    array_unshift($input, '0');
-                } else if ($colon === 1) {
-                    // Nested conditional statement
-                    break 2;
-                }
-                ++$colon;
-                break;
-
-            case PHP_Depend_ConstantsI::T_BOOLEAN_AND:
-            case PHP_Depend_ConstantsI::T_BOOLEAN_OR:
-            case PHP_Depend_ConstantsI::T_LOGICAL_AND:
-            case PHP_Depend_ConstantsI::T_LOGICAL_OR:
-            case PHP_Depend_ConstantsI::T_LOGICAL_XOR:
-                $input[0] = PHP_Depend_Util_MathUtil::add(1, $input[0]);
-                break;
-
-            case PHP_Depend_ConstantsI::T_SEMICOLON:
-            case PHP_Depend_ConstantsI::T_CLOSE_TAG:
-                break 2;
-            }
-
-            if ($scope === 0) {
-                break;
-            }
-
-            next($this->_tokens);
-        }
-
-        $input = array_pad(array_filter($input), 5, '1');
-        $npath = '0';
-        foreach ($input as $value) {
-            $npath = PHP_Depend_Util_MathUtil::add($npath, $value);
-        }
-        return $npath;
+        return PHP_Depend_Util_MathUtil::mul($npath, $data);
     }
 
     /**
-     * This method calculates the NPath Complexity of a block in parenthesis and
-     * it returns the meassured value as a string.
+     * Calculates the expression sum of the given node.
      *
-     * <code>
-     * ($a && ($b || $c))
-     * ($array as $a => $b)
-     * ...
-     * </code>
+     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
      *
      * @return string
+     * @since 0.9.12
+     * @todo I don't like this method implementation, it should be possible to
+     *       implement this method with more visitor behavior for the boolean
+     *       and logical expressions.
      */
-    private function _sumExpressionComplexity()
+    public function sumComplexity($node)
     {
-        $npath = '0';
-        $scope = 0;
-
-        while (($token = current($this->_tokens)) !== false) {
-            switch ($token->type) {
-
-            case PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN:
-                ++$scope;
-                break;
-
-            case PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE:
-                --$scope;
-                break;
-
-            case PHP_Depend_ConstantsI::T_BOOLEAN_AND:
-            case PHP_Depend_ConstantsI::T_BOOLEAN_OR:
-            case PHP_Depend_ConstantsI::T_LOGICAL_AND:
-            case PHP_Depend_ConstantsI::T_LOGICAL_OR:
-            case PHP_Depend_ConstantsI::T_LOGICAL_XOR:
-                $npath = PHP_Depend_Util_MathUtil::add('1', $npath);
-                break;
-            }
-
-            next($this->_tokens);
-
-            if ($scope === 0) {
-                break;
+        $sum = '0';
+        if ($node instanceof PHP_Depend_Code_ASTConditionalExpression) {
+            $sum = PHP_Depend_Util_MathUtil::add($sum, $node->accept($this, 1));
+        } else if ($node instanceof PHP_Depend_Code_ASTBooleanAndExpression 
+            || $node instanceof PHP_Depend_Code_ASTBooleanOrExpression
+            || $node instanceof PHP_Depend_Code_ASTLogicalAndExpression
+            || $node instanceof PHP_Depend_Code_ASTLogicalOrExpression
+            || $node instanceof PHP_Depend_Code_ASTLogicalXorExpression
+        ) {
+            $sum = PHP_Depend_Util_MathUtil::add($sum, '1');
+        } else {
+            foreach ($node->getChildren() as $child) {
+                $expr = $this->sumComplexity($child);
+                $sum  = PHP_Depend_Util_MathUtil::add($sum, $expr);
             }
         }
-        return $npath;
+        return $sum;
     }
 }
-?>
