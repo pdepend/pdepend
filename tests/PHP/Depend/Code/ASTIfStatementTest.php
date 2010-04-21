@@ -82,7 +82,7 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testHasElseMethodReturnsFalseWhenElseIfBranchExists
+     * testHasElseMethodReturnsTrueWhenElseIfBranchExists
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -92,14 +92,14 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @group pdepend::ast
      * @group unittest
      */
-    public function testHasElseMethodReturnsFalseWhenElseIfBranchExists()
+    public function testHasElseMethodReturnsTrueWhenElseIfBranchExists()
     {
         $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertFalse($stmt->hasElse());
+        $this->assertTrue($stmt->hasElse());
     }
 
     /**
-     * testHasElseMethodReturnsFalseWhenElseBranchWithIfExists
+     * testHasElseMethodReturnsTrueWhenElseBranchWithIfExists
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -109,10 +109,10 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * @group pdepend::ast
      * @group unittest
      */
-    public function testHasElseMethodReturnsFalseWhenElseBranchWithIfExists()
+    public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists()
     {
         $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertFalse($stmt->hasElse());
+        $this->assertTrue($stmt->hasElse());
     }
 
     /**
