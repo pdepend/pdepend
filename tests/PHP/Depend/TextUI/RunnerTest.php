@@ -144,7 +144,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner,
-            self::createCodeResourceURI('')
+            self::createCodeResourceURI('textui/Runner/' . __FUNCTION__)
         );
 
         $this->assertEquals($expected, $actual);
