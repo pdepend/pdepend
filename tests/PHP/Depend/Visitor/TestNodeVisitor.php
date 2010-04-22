@@ -134,18 +134,6 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
     }
 
     /**
-     * Visits a closure node.
-     *
-     * @param PHP_Depend_Code_Closure $closure  The current closure node.
-     *
-     * @return void
-     */
-    public function visitClosure(PHP_Depend_Code_Closure $closure)
-    {
-
-    }
-
-    /**
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.

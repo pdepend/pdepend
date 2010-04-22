@@ -79,12 +79,6 @@ class PHP_Depend_Code_ASTAssignmentExpression extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeAssignmentExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterAssignmentExpression($this, $data);
+        return $visitor->visitAssignmentExpression($this, $data);
     }
 }

@@ -93,12 +93,6 @@ class PHP_Depend_Code_ASTUnaryExpression extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeUnaryExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterUnaryExpression($this, $data);
+        return $visitor->visitUnaryExpression($this, $data);
     }
 }

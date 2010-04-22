@@ -95,12 +95,6 @@ class PHP_Depend_Code_ASTStaticVariableDeclaration extends PHP_Depend_Code_ASTNo
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeStaticVariableDeclaration($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterStaticVariableDeclaration($this, $data);
+        return $visitor->visitStaticVariableDeclaration($this, $data);
     }
 }

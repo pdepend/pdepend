@@ -94,12 +94,6 @@ class PHP_Depend_Code_ASTAllocationExpression extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeAllocationExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterAllocationExpression($this, $data);
+        return $visitor->visitAllocationExpression($this, $data);
     }
 }

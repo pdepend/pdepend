@@ -93,12 +93,6 @@ class PHP_Depend_Code_ASTClassReference
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeClassReference($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterClassReference($this, $data);
+        return $visitor->visitClassReference($this, $data);
     }
 }

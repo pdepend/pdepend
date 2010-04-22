@@ -70,6 +70,21 @@ class PHP_Depend_Code_ASTElseIfStatement extends PHP_Depend_Code_ASTStatement
     const CLAZZ = __CLASS__;
 
     /**
+     * Returns <b>true</b> when this <b>elseif</b>-statement is followed by an
+     * <b>else</b>-statement.
+     *
+     * @return boolean
+     * @since 0.9.12
+     */
+    public function hasElse()
+    {
+        if (count($this->nodes) === 3) {
+            return (count($this->nodes) === 3);
+        }
+        return false;
+    }
+
+    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
@@ -81,12 +96,6 @@ class PHP_Depend_Code_ASTElseIfStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeElseIfStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterElseIfStatement($this, $data);
+        return $visitor->visitElseIfStatement($this, $data);
     }
 }

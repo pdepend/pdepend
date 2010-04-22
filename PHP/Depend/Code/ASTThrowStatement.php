@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTThrowStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeThrowStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterThrowStatement($this, $data);
+        return $visitor->visitThrowStatement($this, $data);
     }
 }

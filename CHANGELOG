@@ -4,7 +4,7 @@ PHP_Depend 0.9.12
 - Fixed #125: PHP_Depend silently parses list statements. Fixed in svn
   revision #1223. Thanks to Joey Mazzarelli for providing this patch.
 - Implemented #126: Generate reproducable node identifiers instead of
-  random numbers. Implemented in svn revision #
+  random numbers. Implemented in svn revision #1244.
 - Fixed #128: Variable variables in foreach statement cause an exception.
   Fixed in svn revision #
 

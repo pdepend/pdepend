@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTLogicalOrExpression extends PHP_Depend_Code_ASTExpressi
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeLogicalOrExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterLogicalOrExpression($this, $data);
+        return $visitor->visitLogicalOrExpression($this, $data);
     }
 }

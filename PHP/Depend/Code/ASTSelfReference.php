@@ -101,12 +101,6 @@ final class PHP_Depend_Code_ASTSelfReference
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeSelfReference($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterSelfReference($this, $data);
+        return $visitor->visitSelfReference($this, $data);
     }
 }

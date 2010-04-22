@@ -48,8 +48,9 @@
  */
 
 /**
- * Base interface for an ast visitor. An implementation of this interface that
- * provides the <b>visitBefore()</b> and <b>visitAfter()</b> methods.
+ * Base interface for an ast visitor. An implementation of this interface must
+ * provide PHP's magic <b>__call()</b> to allow invocations to various variants
+ * of <b>visit$NodeName()</b> methods.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -65,8 +66,13 @@ interface PHP_Depend_Code_ASTVisitorI
 {
     /**
      * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call the <b>visitBefore${NodeClassName}</b> and
-     * <b>visitAfter${NodeClassName}</b> on each node.
+     * With this method we can call <b>visit${NodeClassName}</b> on each node.
+     *
+     * <code>
+     * $visitor->visitAllocationExpression($alloc);
+     *
+     * $visitor->visitStatement($stmt);
+     * </code>
      *
      * All visit methods takes two argument. The first argument is the current
      * context ast node and the second argument is a data array or object that

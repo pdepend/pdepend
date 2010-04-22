@@ -85,7 +85,6 @@ class PHP_Depend_Code_ASTVariable extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeVariable($this, $data);
-        return $visitor->visitAfterVariable($this, $data);
+        return $visitor->visitVariable($this, $data);
     }
 }
