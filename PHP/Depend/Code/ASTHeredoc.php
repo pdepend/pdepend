@@ -99,12 +99,6 @@ class PHP_Depend_Code_ASTHeredoc extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeHeredoc($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterHeredoc($this, $data);
+        return $visitor->visitHeredoc($this, $data);
     }
 }

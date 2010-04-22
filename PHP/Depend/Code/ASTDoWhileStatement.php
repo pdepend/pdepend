@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTDoWhileStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeDoWhileStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterDoWhileStatement($this, $data);
+        return $visitor->visitDoWhileStatement($this, $data);
     }
 }

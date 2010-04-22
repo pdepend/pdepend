@@ -101,12 +101,6 @@ final class PHP_Depend_Code_ASTStaticReference
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeStaticReference($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterStaticReference($this, $data);
+        return $visitor->visitStaticReference($this, $data);
     }
 }

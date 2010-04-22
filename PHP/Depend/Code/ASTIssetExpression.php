@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTIssetExpression extends PHP_Depend_Code_ASTExpression
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeIssetExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterIssetExpression($this, $data);
+        return $visitor->visitIssetExpression($this, $data);
     }
 }

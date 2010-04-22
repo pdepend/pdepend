@@ -65,6 +65,74 @@ require_once 'PHP/Depend/Code/ASTIfStatement.php';
 class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testHasElseMethodReturnsFalseByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsFalseByDefault()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertFalse($stmt->hasElse());
+    }
+
+    /**
+     * testHasElseMethodReturnsTrueWhenElseIfBranchExists
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsTrueWhenElseIfBranchExists()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertTrue($stmt->hasElse());
+    }
+
+    /**
+     * testHasElseMethodReturnsTrueWhenElseBranchWithIfExists
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertTrue($stmt->hasElse());
+    }
+
+    /**
+     * testHasElseMethodReturnsTrueWhenElseBranchExists
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testHasElseMethodReturnsTrueWhenElseBranchExists()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertTrue($stmt->hasElse());
+    }
+    
+    /**
      * Tests the generated object graph of an if statement.
      *
      * @return void

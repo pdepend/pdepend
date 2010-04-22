@@ -125,12 +125,6 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeClassOrInterfaceReference($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterClassOrInterfaceReference($this, $data);
+        return $visitor->visitClassOrInterfaceReference($this, $data);
     }
 }

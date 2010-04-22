@@ -79,24 +79,6 @@ interface PHP_Depend_Visitor_ListenerI
     function endVisitClass(PHP_Depend_Code_Class $class);
 
     /**
-     * Is called when the visitor starts a new closure instance.
-     *
-     * @param PHP_Depend_Code_Closure $closure The context closure instance.
-     *
-     * @return void
-     */
-    function startVisitClosure(PHP_Depend_Code_Closure $closure);
-
-    /**
-     * Is called when the visitor ends with a closure instance.
-     *
-     * @param PHP_Depend_Code_Closure $closure The context closure instance.
-     *
-     * @return void
-     */
-    function endVisitClosure(PHP_Depend_Code_Closure $closure);
-
-    /**
      * Is called when the visitor starts a new file instance.
      *
      * @param PHP_Depend_Code_File $file The context file instance.

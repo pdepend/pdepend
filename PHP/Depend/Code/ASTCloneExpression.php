@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTCloneExpression extends PHP_Depend_Code_ASTExpression
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeCloneExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterCloneExpression($this, $data);
+        return $visitor->visitCloneExpression($this, $data);
     }
 }

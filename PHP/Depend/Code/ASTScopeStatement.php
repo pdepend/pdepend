@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTScopeStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeScopeStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterScopeStatement($this, $data);
+        return $visitor->visitScopeStatement($this, $data);
     }
 }
