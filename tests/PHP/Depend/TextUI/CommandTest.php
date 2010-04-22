@@ -249,7 +249,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
                 '--without-annotations',
                 '--coderank-mode=property'
             ),
-            self::createCodeResourceURI('')
+            self::createCodeResourceURI('textui/Command/' . __FUNCTION__)
         );
 
         $this->assertEquals($expected, $actual);
