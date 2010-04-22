@@ -66,6 +66,76 @@ require_once 'PHP/Depend/Metrics/NPathComplexity/Analyzer.php';
 class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
+     * testNPathComplexityForNestedIfStatementsWithScope
+     *
+     * @return unknown_type
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForNestedIfStatementsWithScope()
+    {
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(4, $npath);
+    }
+
+    /**
+     * testNPathComplexityForNestedIfStatementsWithoutScope
+     *
+     * @return unknown_type
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForNestedIfStatementsWithoutScope()
+    {
+        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $this->assertEquals(4, $npath);
+    }
+
+    /**
+     * testNPathComplexityForSiblingConditionalExpressions
+     *
+     * @return unknown_type
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForSiblingConditionalExpressions()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        $this->assertEquals(25, $npath);
+    }
+
+    /**
+     * testNPathComplexityForSiblingExpressions
+     *
+     * @return unknown_type
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     * @todo What happens with boolean/logical expressions within the body of
+     *       any other statement/expression?
+     */
+    public function testNPathComplexityForSiblingExpressions()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        $this->assertEquals(15, $npath);
+    }
+
+    /**
      * testNPathComplexityIsZeroForEmptyMethod
      *
      * @return unknown_type
@@ -487,6 +557,39 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
     }
 
     /**
+     * Returns the NPath Complexity of the first function found in source file
+     * associated with the calling test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return integer
+     * @since 0.9.12
+     */
+    private function _getNPathComplexityForFirstFunctionInTestSource($testCase)
+    {
+        return $this->_calculateNPathComplexity(
+            $this->_getFirstFunctionForTestCase($testCase)
+        );
+    }
+
+    /**
+     * Parses the source code associated with the calling test case and returns
+     * the first function found in the test case source file.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Function
+     * @since 0.9.12
+     */
+    private function _getFirstFunctionForTestCase($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
+            ->getFunctions()
+            ->current();
+    }
+
+    /**
      * Returns the NPath Complexity of the first method found in source file
      * associated with the calling test case.
      *
@@ -497,13 +600,9 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     private function _getNPathComplexityForFirstMethodInTestSource($testCase)
     {
-        $method = $this->_getFirstMethodForTestCase($testCase);
-
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->visitMethod($method);
-
-        $metrics = $analyzer->getNodeMetrics($method);
-        return $metrics['npath'];
+        return $this->_calculateNPathComplexity(
+            $this->_getFirstMethodForTestCase($testCase)
+        );
     }
 
     /**
@@ -523,5 +622,22 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
             ->current()
             ->getMethods()
             ->current();
+    }
+
+    /**
+     * Calculates the NPath complexity for the given callable instance.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
+     *
+     * @return string
+     * @since 0.9.12
+     */
+    private function _calculateNPathComplexity(PHP_Depend_Code_AbstractCallable $callable)
+    {
+        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $callable->accept($analyzer);
+
+        $metrics = $analyzer->getNodeMetrics($callable);
+        return $metrics['npath'];
     }
 }
