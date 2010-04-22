@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTExitExpression extends PHP_Depend_Code_ASTExpression
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeExitExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterExitExpression($this, $data);
+        return $visitor->visitExitExpression($this, $data);
     }
 }

@@ -108,12 +108,6 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeSwitchLabel($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterSwitchLabel($this, $data);
+        return $visitor->visitSwitchLabel($this, $data);
     }
 }

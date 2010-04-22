@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTGotoStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeGotoStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterGotoStatement($this, $data);
+        return $visitor->visitGotoStatement($this, $data);
     }
 }

@@ -79,6 +79,6 @@ class PHP_Depend_Code_Closure extends PHP_Depend_Code_AbstractCallable
      */
     public function accept(PHP_Depend_VisitorI $visitor)
     {
-        $visitor->visitClosure($this);
+        // DEPRECATED
     }
 }

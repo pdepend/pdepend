@@ -87,12 +87,6 @@ class PHP_Depend_Code_ASTConditionalExpression extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeConditionalExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterConditionalExpression($this, $data);
+        return $visitor->visitConditionalExpression($this, $data);
     }
 }

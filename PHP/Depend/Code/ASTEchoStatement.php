@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTEchoStatement extends PHP_Depend_Code_ASTStatement
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeEchoStatement($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterEchoStatement($this, $data);
+        return $visitor->visitEchoStatement($this, $data);
     }
 }

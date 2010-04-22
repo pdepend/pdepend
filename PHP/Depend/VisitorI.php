@@ -89,15 +89,6 @@ interface PHP_Depend_VisitorI
     function visitClass(PHP_Depend_Code_Class $class);
 
     /**
-     * Visits a closure node.
-     *
-     * @param PHP_Depend_Code_Closure $closure The current closure node.
-     *
-     * @return void
-     */
-    function visitClosure(PHP_Depend_Code_Closure $closure);
-
-    /**
      * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.

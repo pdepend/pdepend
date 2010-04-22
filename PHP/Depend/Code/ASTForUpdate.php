@@ -87,12 +87,6 @@ class PHP_Depend_Code_ASTForUpdate extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeForUpdate($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterForUpdate($this, $data);
+        return $visitor->visitForUpdate($this, $data);
     }
 }

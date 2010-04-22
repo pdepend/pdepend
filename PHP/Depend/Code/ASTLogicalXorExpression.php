@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTLogicalXorExpression extends PHP_Depend_Code_ASTExpress
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeLogicalXorExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterLogicalXorExpression($this, $data);
+        return $visitor->visitLogicalXorExpression($this, $data);
     }
 }

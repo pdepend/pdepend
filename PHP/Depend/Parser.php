@@ -978,9 +978,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseClosureDeclaration()
     {
         $closure = $this->_builder->buildClosure();
-        $closure->addChild(
-            $this->_parseFormalParameters()
-        );
+        $closure->addChild($this->_parseFormalParameters());
 
         $this->_consumeComments();
         if ($this->_tokenizer->peek() === self::T_USE) {

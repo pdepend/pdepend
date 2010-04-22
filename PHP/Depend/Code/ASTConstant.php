@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTConstant extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeConstant($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterConstant($this, $data);
+        return $visitor->visitConstant($this, $data);
     }
 }

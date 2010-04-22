@@ -303,40 +303,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the default listener implementation delegates a closure call
-     * to the startVisitNode() and endVisitNode() methods.
-     *
-     * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
-     */
-    public function testListenerCallsStartNodeEndNodeForClosure()
-    {
-        include_once 'PHP/Depend/Code/Closure.php';
-
-        $closure = $this->getMock('PHP_Depend_Code_Closure', array('getName'));
-        $closure->expects($this->atLeastOnce())
-            ->method('getName')
-            ->will($this->returnValue(__FUNCTION__));
-
-        $listener = new PHP_Depend_Visitor_TestListener();
-        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
-        $visitor->addVisitListener($listener);
-
-        $closure->accept($visitor);
-
-        $actual   = $listener->nodes;
-        $expected = array(
-            __FUNCTION__ . '#start' => true,
-            __FUNCTION__ . '#end' => true,
-        );
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
      * testListenerCallsStartVisitNodeForPassedParameterInstance
      *
      * @return void

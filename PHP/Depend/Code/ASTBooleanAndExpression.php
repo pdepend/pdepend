@@ -81,12 +81,6 @@ class PHP_Depend_Code_ASTBooleanAndExpression extends PHP_Depend_Code_ASTNode
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeBooleanAndExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterBooleanAndExpression($this, $data);
+        return $visitor->visitBooleanAndExpression($this, $data);
     }
 }

@@ -86,12 +86,6 @@ class PHP_Depend_Code_ASTStringIndexExpression extends PHP_Depend_Code_ASTExpres
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $data = $visitor->visitBeforeStringIndexExpression($this, $data);
-
-        foreach ($this->nodes as $node) {
-            $data = $node->accept($visitor, $data);
-        }
-
-        return $visitor->visitAfterStringIndexExpression($this, $data);
+        return $visitor->visitStringIndexExpression($this, $data);
     }
 }
