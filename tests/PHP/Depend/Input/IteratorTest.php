@@ -69,23 +69,56 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * Tests that the filter iterator only returns files with a .php extension.
      *
      * @return void
+     * @covers PHP_Depend_Input_Iterator
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
      */
-    public function testFilterIterator()
+    public function testIteratorWithExtensionFilterForPhpFilesOnly()
     {
-        $dir = dirname(__FILE__) . '/../_code';
+        $dir = self::createCodeResourceURI('input/iterator');
         $it  = new PHP_Depend_Input_Iterator(
             new DirectoryIterator($dir),
             new PHP_Depend_Input_ExtensionFilter(array('php'))
         );
 
         $expected = array(
-            'class_and_interface_comment.php',
-            'classes.php',
-            'func_class.php',
-            'func_code.php',
-            'mixed_code.php',
-            'package_file_level.php',
-            'package_subpackage_support.php',
+            'class.php',
+            'mixed.php',
+            'package.php',
+        );
+
+        $result = array();
+        foreach ($it as $file) {
+            $result[] = $file->getFilename();
+        }
+
+        sort($expected);
+        sort($result);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * testIteratorWithExtensionFilterForIncAndTxtFiles
+     *
+     * @return void
+     * @covers PHP_Depend_Input_Iterator
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testIteratorWithExtensionFilterForIncAndTxtFiles()
+    {
+        $dir = self::createCodeResourceURI('input/iterator');
+        $it  = new PHP_Depend_Input_Iterator(
+            new DirectoryIterator($dir),
+            new PHP_Depend_Input_ExtensionFilter(array('inc', 'txt'))
+        );
+
+        $expected = array(
+            'function.inc',
+            'function.txt',
         );
 
         $result = array();
