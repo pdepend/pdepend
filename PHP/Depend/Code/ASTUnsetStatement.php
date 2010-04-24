@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/ASTStatement.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.12
  */
-class PHP_Depend_Code_ASTUnsetStatement extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Code_ASTUnsetStatement extends PHP_Depend_Code_ASTStatement
 {
     /**
      * Type of this node class.
