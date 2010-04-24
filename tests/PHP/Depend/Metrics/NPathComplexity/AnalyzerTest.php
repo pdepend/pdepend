@@ -136,6 +136,57 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
     }
 
     /**
+     * testNPathComplexityForTwoSiblingIfStatetements
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForTwoSiblingIfStatetements()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        $this->assertEquals(4, $npath);
+    }
+
+    /**
+     * testNPathComplexityForForeachStatementWithNestedIfStatetements
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForForeachStatementWithNestedIfStatetements()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        $this->assertEquals(3, $npath);
+    }
+
+    /**
+     * testNPathComplexityForSiblingIfStatementsAndForeachStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForSiblingIfStatementsAndForeachStatement()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        $this->assertEquals(12, $npath);
+    }
+
+    /**
      * testNPathComplexityIsZeroForEmptyMethod
      *
      * @return unknown_type
