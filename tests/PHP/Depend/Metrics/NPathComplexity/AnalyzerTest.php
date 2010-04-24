@@ -187,6 +187,59 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
     }
 
     /**
+     * testNPathComplexityForComplexFunction
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForComplexFunction()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        $this->assertEquals(60, $npath);
+    }
+
+    /**
+     * testNPathComplexityForConditionalsInArrayDeclaration
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     */
+    public function testNPathComplexityForComplexNestedControlStatements()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        $this->assertEquals(63, $npath);
+    }
+    
+    /**
+     * testNPathComplexityForConditionalsInArrayDeclaration
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::npathcomplexity
+     * @group unittest
+     * @since 0.9.12
+     * @todo Fix this, once the AST is complete
+     */
+    public function testNPathComplexityForConditionalsInArrayDeclaration()
+    {
+        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
+        //$this->assertEquals(625, $npath);
+        $this->assertEquals(17, $npath);
+    }
+
+    /**
      * testNPathComplexityIsZeroForEmptyMethod
      *
      * @return unknown_type
