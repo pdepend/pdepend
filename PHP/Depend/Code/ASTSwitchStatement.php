@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
+require_once 'PHP/Depend/Code/ASTStatement.php';
 
 /**
  * This node class represents a switch statement.
@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTSwitchStatement extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Code_ASTSwitchStatement extends PHP_Depend_Code_ASTStatement
 {
     /**
      * The type of this class.
