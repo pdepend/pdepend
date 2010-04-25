@@ -1,12 +1,21 @@
 PHP_Depend 0.9.12
 -----------------
 
-- Fixed #125: PHP_Depend silently parses list statements. Fixed in svn
-  revision #1223. Thanks to Joey Mazzarelli for providing this patch.
+- Implemented #97: Replace current token approach in CCN- and NPath-Analyzer
+  with AST-Nodes. Implemented in svn revision #1248.
+- Implemented #125: PHP_Depend silently parses list statements. Fixed in
+  svn revision #1223. Thanks to Joey Mazzarelli for providing this patch.
 - Implemented #126: Generate reproducable node identifiers instead of
   random numbers. Implemented in svn revision #1244.
 - Fixed #128: Variable variables in foreach statement cause an exception.
-  Fixed in svn revision #
+  Fixed in svn revision #1237.
+- Fixed #133: Fatal error: Maximum function nesting level of '100' reached,
+  aborting! in /usr/share/pear/PHP/Depend/Util/Log.php on line 109. Fixed
+  in svn revision #1257.
+- Fixed #134: ASTReturnStatement is not derived from ASTStatement. Fixed
+  in svn revision #1250.
+- Fixed #135: Several Statement classes do not inherit ASTStatement. Fixed
+  in svn revision #1255.
 
 PHP_Depend 0.9.11
 -----------------
