@@ -604,6 +604,7 @@ class PHP_Depend
             $tokenizer->setSourceFile($file);
 
             $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
+            $parser->setMaxNestingLevel(1024);
 
             // Disable annotation parsing?
             if ($this->_withoutAnnotations === true) {
@@ -638,6 +639,8 @@ class PHP_Depend
 
         $this->fireStartAnalyzeProcess();
 
+        ini_set('xdebug.max_nesting_level', 1024);
+
         foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware
             if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
@@ -653,6 +656,8 @@ class PHP_Depend
                 $logger->log($analyzer);
             }
         }
+
+        ini_restore('xdebug.max_nesting_level');
 
         $this->fireEndAnalyzeProcess();
     }
