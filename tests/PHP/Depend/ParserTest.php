@@ -65,6 +65,29 @@ require_once 'PHP/Depend/Tokenizer/Internal.php';
 class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testParserHandlesMaxNestingLevel
+     * 
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesMaxNestingLevel()
+    {
+        ini_set('xdebug.max_nesting_level', 50);
+
+        $builder = new PHP_Depend_Builder_Default();
+
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(self::createCodeResourceURI('parser/' . __FUNCTION__ . '.php'));
+
+        $parser = new PHP_Depend_Parser($tokenizer, $builder);
+        $parser->setMaxNestingLevel(512);
+        $parser->parse();
+    }
+
+    /**
      * Tests the main parse method.
      *
      * @return void
@@ -72,9 +95,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParseMixedCode()
     {
         $expected = array(
-            'pkg1'                                         =>  true,
-            'pkg2'                                         =>  true,
-            'pkg3'                                         =>  true,
+            'pkg1'                                =>  true,
+            'pkg2'                                =>  true,
+            'pkg3'                                =>  true,
             PHP_Depend_BuilderI::DEFAULT_PACKAGE  =>  true
         );
 

@@ -248,6 +248,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_functionNameParser = null;
 
     /**
+     * The maximum valid nesting level allowed.
+     *
+     * @var integer
+     * @since 0.9.12
+     */
+    private $_maxNestingLevel = 1024;
+
+    /**
      * Constructs a new source parser.
      *
      * @param PHP_Depend_TokenizerI $tokenizer The used code tokenizer.
@@ -312,6 +320,30 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Configures the maximum allowed nesting level.
+     *
+     * @param integer $maxNestingLevel The maximum allowed nesting level.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    public function setMaxNestingLevel($maxNestingLevel)
+    {
+        $this->_maxNestingLevel = $maxNestingLevel;
+    }
+
+    /**
+     * Returns the maximum allowed nesting/recursion level.
+     *
+     * @return integer
+     * @since 0.9.12
+     */
+    protected function getMaxNestingLevel()
+    {
+        return $this->_maxNestingLevel;
+    }
+
+    /**
      * Parses the contents of the tokenizer and generates a node tree based on
      * the found tokens.
      *
@@ -319,7 +351,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     public function parse()
     {
-        // Get currently parsed source file
+        $this->setUpEnvironment();
+
+       // Get currently parsed source file
         $this->_sourceFile = $this->_tokenizer->getSourceFile();
         $this->_sourceFile->setUUID(
             $this->_uuidBuilder->forFile($this->_sourceFile)
@@ -327,10 +361,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->_sourceFile);
-
-        $this->_useSymbolTable->createScope();
-
-        $this->reset();
 
         $tokenType = $this->_tokenizer->peek();
         while ($tokenType !== self::T_EOF) {
@@ -387,6 +417,34 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->_tokenizer->peek();
         }
+
+        $this->tearDownEnvironment();
+    }
+
+    /**
+     * Initializes the parser environment.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    protected function setUpEnvironment()
+    {
+        ini_set('xdebug.max_nesting_level', $this->getMaxNestingLevel());
+
+        $this->_useSymbolTable->createScope();
+
+        $this->reset();
+    }
+
+    /**
+     * Restores the parser environment back.
+     *
+     * @return void
+     * @since 0.9.12
+     */
+    protected function tearDownEnvironment()
+    {
+        ini_restore('xdebug.max_nesting_level');
 
         $this->_useSymbolTable->destroyScope();
     }
