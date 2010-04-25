@@ -156,8 +156,8 @@ class PHP_Depend_ManifestUpdater
     private function _createContentStruct()
     {
         $struct = array(
-            'PHP'               =>  array('php', array()),
-            'tests/PHP/Depend'  =>  array('test', array()),
+            'PHP'  =>  array('php', array()),
+            // 'tests/PHP/Depend'  =>  array('test', array()),
         );
 
         foreach (array_keys($struct) as $name) {
