@@ -83,8 +83,8 @@ class PHP_Depend_TextUI_Runner
     const OPTIMZATION_BEST = 'best';
 
     /**
-     * Marks the passthru optimization strategy that will consume most memory and
-     * will perform all actions without caching.
+     * Marks the pass through optimization strategy that will consume most
+     * memory and will perform all actions without caching.
      */
     const OPTIMZATION_NONE = 'none';
 
