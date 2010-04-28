@@ -15,7 +15,7 @@ and the NDepend metric tool.
   </lead>
   <date>2010-04-25</date>
   <version>
-    <release>0.9.12</release>
+    <release>0.9.13</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,21 +24,8 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Implemented #97: Replace current token approach in CCN- and NPath-Analyzer
-  with AST-Nodes. Implemented in svn revision #1248.
-- Implemented #125: PHP_Depend silently parses list statements. Fixed in
-  svn revision #1223. Thanks to Joey Mazzarelli for providing this patch.
-- Implemented #126: Generate reproducable node identifiers instead of
-  random numbers. Implemented in svn revision #1244.
-- Fixed #128: Variable variables in foreach statement cause an exception.
-  Fixed in svn revision #1237.
-- Fixed #133: Fatal error: Maximum function nesting level of '100' reached,
-  aborting! in /usr/share/pear/PHP/Depend/Util/Log.php on line 109. Fixed
-  in svn revision #1257.
-- Fixed #134: ASTReturnStatement is not derived from ASTStatement. Fixed
-  in svn revision #1250.
-- Fixed #135: Several Statement classes do not inherit ASTStatement. Fixed
-  in svn revision #1255.
+- Fixed #145: Incorrect require_once statement in ASTSwitchStatement
+  source file. Fixed in svn revision #
   </notes>
   <contents>
     <dir name="/">
@@ -1205,11 +1192,41 @@ and the NDepend metric tool.
 - Fixed #119: Three test cases fail for PHP lower 5.3. Fixed in svn
   revision #1114.
 - Critical issue in PHP_Depend's temporary data cache fixed. This bug
-  only occured when running several instances of PHP_Depend in
+  only occurred when running several instances of PHP_Depend in
   parallel. In this setup the used cache key spl_object_hash() has
   caused a corrupted cache, because different php process instances
   have written different data to the same cache file.
         </notes>
+    </release>
+
+    <release>
+      <date>2010-04-25</date>
+      <version>
+        <release>0.9.12</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Implemented #97: Replace current token approach in CCN- and NPath-Analyzer
+  with AST-Nodes. Implemented in svn revision #1248.
+- Implemented #125: PHP_Depend silently parses list statements. Fixed in
+  svn revision #1223. Thanks to Joey Mazzarelli for providing this patch.
+- Implemented #126: Generate reproducable node identifiers instead of
+  random numbers. Implemented in svn revision #1244.
+- Fixed #128: Variable variables in foreach statement cause an exception.
+  Fixed in svn revision #1237.
+- Fixed #133: Fatal error: Maximum function nesting level of '100' reached,
+  aborting! in /usr/share/pear/PHP/Depend/Util/Log.php on line 109. Fixed
+  in svn revision #1257.
+- Fixed #134: ASTReturnStatement is not derived from ASTStatement. Fixed
+  in svn revision #1250.
+- Fixed #135: Several Statement classes do not inherit ASTStatement. Fixed
+  in svn revision #1255.
+      </notes>
     </release>
   </changelog>
 </package>

@@ -1,3 +1,9 @@
+PHP_Depend 0.9.13
+-----------------
+
+- Fixed #145: Incorrect require_once statement in ASTSwitchStatement 
+  source file. Fixed in svn revision #.
+
 PHP_Depend 0.9.12
 -----------------
 
