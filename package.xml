@@ -25,7 +25,7 @@ and the NDepend metric tool.
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
 - Fixed #145: Incorrect require_once statement in ASTSwitchStatement
-  source file. Fixed in svn revision #
+  source file. Fixed in svn revision #1262.
   </notes>
   <contents>
     <dir name="/">
