@@ -65,6 +65,99 @@ require_once 'PHP/Depend/Code/ASTMemberPrimaryPrefix.php';
 class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testMemberPrimaryPrefixGraphForObjectPropertyAccess
+     * 
+     * <code>
+     * $obj->foo = 42;
+     * </code>
+     * 
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMemberPrimaryPrefixGraphForObjectPropertyAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphForObjectPropertyAccess
+     *
+     * <code>
+     * $obj->foo();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMemberPrimaryPrefixGraphForObjectMethodAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphForChainedObjectMemberAccess
+     *
+     * <code>
+     * $obj->foo->bar()->baz();
+     * </code>
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMemberPrimaryPrefixGraphForChainedObjectMemberAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
+    }
+
+    /**
      * testObjectMemberPrimaryPrefixHasExpectedStartLine
      *
      * @return void

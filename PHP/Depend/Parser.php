@@ -353,7 +353,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->setUpEnvironment();
 
-       // Get currently parsed source file
+        // Get currently parsed source file
         $this->_sourceFile = $this->_tokenizer->getSourceFile();
         $this->_sourceFile->setUUID(
             $this->_uuidBuilder->forFile($this->_sourceFile)
