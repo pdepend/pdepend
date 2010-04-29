@@ -112,7 +112,6 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     public function __construct($name)
     {
         $this->name = $name;
-        $this->uuid = spl_object_hash($this);
     }
 
     /**
@@ -132,6 +131,9 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      */
     public function getUUID()
     {
+        if ($this->uuid === null) {
+            $this->uuid = md5(microtime());
+        }
         return $this->uuid;
     }
 
