@@ -502,33 +502,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend_Code_Class::addMethod()} reparents the
-     * new method if it already has a parent class instance.
-     *
-     * @return void
-     * @covers PHP_Depend_Code_AbstractClassOrInterface
-     * @covers PHP_Depend_Code_Class
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
-     */
-    public function testAddNewMethodAndReparent()
-    {
-        $class1 = new PHP_Depend_Code_Class('clazz1', 0);
-        $class2 = new PHP_Depend_Code_Class('clazz2', 0);
-        $method = new PHP_Depend_Code_Method('method', 0);
-        
-        $class1->addMethod($method);
-        $this->assertSame($class1, $method->getParent());
-        $this->assertSame($method, $class1->getMethods()->current());
-        
-        $class2->addMethod($method);
-        $this->assertSame($class2, $method->getParent());
-        $this->assertSame($method, $class2->getMethods()->current());
-        $this->assertEquals(0, $class1->getMethods()->count());
-    }
-    
-    /**
      * Tests that the {@link PHP_Depend_Code_Class::getPackage()} returns as
      * default value <b>null</b> and that the package could be set and unset.
      *
