@@ -53,7 +53,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/InternalTest.php';
-require_once dirname(__FILE__) . '/PHP53NamespaceHelperTest.php';
+require_once dirname(__FILE__) . '/PHP52HelperTest.php';
 
 /**
  * Main test suite for the PHP_Depend_Tokenizer package.
@@ -88,7 +88,7 @@ class PHP_Depend_Tokenizer_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Tokenizer - AllTests');
 
         $suite->addTestSuite('PHP_Depend_Tokenizer_InternalTest');
-        $suite->addTestSuite('PHP_Depend_Tokenizer_PHP53NamespaceHelperTest');
+        $suite->addTestSuite('PHP_Depend_Tokenizer_PHP52HelperTest');
 
         return $suite;
     }

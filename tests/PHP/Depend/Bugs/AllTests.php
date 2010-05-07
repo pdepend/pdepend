@@ -81,6 +81,7 @@ require_once dirname(__FILE__) . '/KeywordFunctionNameResultsInExceptionBug116Te
 require_once dirname(__FILE__) . '/MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test.php';
 require_once dirname(__FILE__) . '/VariableVariablesInForeachStatementBug128Test.php';
 require_once dirname(__FILE__) . '/ReconfigureXdebugMaxNestingLevelBug133Test.php';
+require_once dirname(__FILE__) . '/InvalidNowdocSubstitutionBug150Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -143,6 +144,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test');
         $suite->addTestSuite('PHP_Depend_Bugs_VariableVariablesInForeachStatementBug128Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ReconfigureXdebugMaxNestingLevelBug133Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_InvalidNowdocSubstitutionBug150Test');
 
         return $suite;
     }
