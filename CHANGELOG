@@ -3,6 +3,8 @@ PHP_Depend 0.9.13
 
 - Fixed #145: Incorrect require_once statement in ASTSwitchStatement 
   source file. Fixed in svn revision #1262.
+- Fixed #150: Invalid nowdoc substitution has produced broken code.
+  Fixed in svn revision #1266.
 
 PHP_Depend 0.9.12
 -----------------

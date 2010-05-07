@@ -26,6 +26,8 @@ and the NDepend metric tool.
   <notes>
 - Fixed #145: Incorrect require_once statement in ASTSwitchStatement
   source file. Fixed in svn revision #1262.
+- Fixed #150: Invalid nowdoc substitution has produced broken code.
+  Fixed in svn revision #1266.
   </notes>
   <contents>
     <dir name="/">
