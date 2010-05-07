@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Tokenizer
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,78 +46,35 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once dirname(__FILE__) . '/AbstractTest.php';
+
 /**
- * Utility class that can be used to handle PHP's namespace separator in all
- * PHP environments lower than 5.3alpha3
+ * Test case for ticket #150.
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Tokenizer
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- *
- * @todo Rename this class into PHP52Helper and make methods none static.
  */
-final class PHP_Depend_Tokenizer_PHP53NamespaceHelper
+class PHP_Depend_Bugs_InvalidNowdocSubstitutionBug150Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * This method implements a workaround for all PHP versions lower 5.3alpha3
-     * that do not handle the namespace separator char.
+     * testTokenizerDoesNotDetectNowdocSyntaxInString
      *
-     * @param string $source The raw source code.
-     *
-     * @return array The tokens.
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
-    public static function tokenize($source)
+    public function testTokenizerDoesNotDetectNowdocSyntaxInString()
     {
-        // Replace backslash with valid token
-        $source = preg_replace(
-            array('#\\\\([^"\'`\\\\])#i', '(<<<(\s*)(["\'])([\w\d]+)\2)'),
-            array(':::\\1', '<<<\1\3'),
-            $source
-        );
+        $packages = self::parseTestCaseSource(__METHOD__);
 
-        $tokens = self::_tokenize($source);
-
-        $result = array();
-        for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
-            if (is_string($tokens[$i])) {
-                $result[] = str_replace(':::', '\\', $tokens[$i]);
-            } else if ($tokens[$i][0] !== T_DOUBLE_COLON) {
-                $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
-                $result[]      = $tokens[$i];
-            } else if (!isset($tokens[$i + 1]) || $tokens[$i + 1] !== ':') {
-                $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
-                $result[]      = $tokens[$i];
-            } else {
-                $result[] = '\\';
-                ++$i;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Executes the internal tokenizer function and decorates it with some
-     * exception handling.
-     *
-     * @param string $source The raw php source code.
-     *
-     * @return array
-     * @todo Exception should be moved into a general package.
-     */
-    private static function _tokenize($source)
-    {
-        $error  = error_get_last();
-        $tokens = @token_get_all($source);
-        
-        if ($error == error_get_last()) {
-            return $tokens;
-        }
-        throw new PHP_Depend_Parser_TokenException($error['message']);
+        $this->assertEquals(1, $packages->current()->getFunctions()->count());
     }
 }
