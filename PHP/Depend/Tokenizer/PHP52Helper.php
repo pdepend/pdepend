@@ -61,7 +61,7 @@
  *
  * @todo Rename this class into PHP52Helper and make methods none static.
  */
-final class PHP_Depend_Tokenizer_PHP53NamespaceHelper
+final class PHP_Depend_Tokenizer_PHP52Helper
 {
     /**
      * This method implements a workaround for all PHP versions lower 5.3alpha3

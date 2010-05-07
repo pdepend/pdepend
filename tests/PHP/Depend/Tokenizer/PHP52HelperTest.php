@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Tokenizer/PHP53NamespaceHelper.php';
+require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
 
 /**
- * Test case for the {@link PHP_Depend_Tokenizer_PHP53NamespaceHelper} class.
+ * Test case for the {@link PHP_Depend_Tokenizer_PHP52Helper} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,21 +62,21 @@ require_once 'PHP/Depend/Tokenizer/PHP53NamespaceHelper.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
 {
     /**
      * Tests that the helper class creates the expected token array with
      * namespace separators.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @covers PHP_Depend_Tokenizer_PHP52Helper
      * @group pdepend
      * @group pdepend::tokenizer
      * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithBackslash()
     {
-        $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize(
+        $tokens = PHP_Depend_Tokenizer_PHP52Helper::tokenize(
             '<?php namespace \foo\bar; ?>'
         );
 
@@ -105,14 +105,14 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * namespace separators.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @covers PHP_Depend_Tokenizer_PHP52Helper
      * @group pdepend
      * @group pdepend::tokenizer
      * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithNamespacedAllocation()
     {
-        $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize(
+        $tokens = PHP_Depend_Tokenizer_PHP52Helper::tokenize(
             '<?php new \foo\Bar(); ?>'
         );
 
@@ -140,14 +140,14 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * namespace separators.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @covers PHP_Depend_Tokenizer_PHP52Helper
      * @group pdepend
      * @group pdepend::tokenizer
      * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithNamespacedQualifiedName()
     {
-        $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize(
+        $tokens = PHP_Depend_Tokenizer_PHP52Helper::tokenize(
             '<?php \foo::bar(); ?>'
         );
 
@@ -172,14 +172,14 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * Tests that the helper ignores backslashes used as escape character.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @covers PHP_Depend_Tokenizer_PHP52Helper
      * @group pdepend
      * @group pdepend::tokenizer
      * @group unittest
      */
     public function testHelperIgnoresBackslashAsDoubleQuoteEscapeCharacter()
     {
-        $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize(
+        $tokens = PHP_Depend_Tokenizer_PHP52Helper::tokenize(
             '<?php echo "foo\"bar";'
         );
 
@@ -199,14 +199,14 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * Tests that the helper ignores backslashes used as escape character.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @covers PHP_Depend_Tokenizer_PHP52Helper
      * @group pdepend
      * @group pdepend::tokenizer
      * @group unittest
      */
     public function testHelperIgnoresBackslashAsSignleQuoteEscapeCharacter()
     {
-        $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize(
+        $tokens = PHP_Depend_Tokenizer_PHP52Helper::tokenize(
             "<?php echo 'foo\'bar';"
         );
 
@@ -226,14 +226,14 @@ class PHP_Depend_Tokenizer_PHP53NamespaceHelperTest extends PHP_Depend_AbstractT
      * Tests that the helper ignores a class name in a string.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP53NamespaceHelper
+     * @covers PHP_Depend_Tokenizer_PHP52Helper
      * @group pdepend
      * @group pdepend::tokenizer
      * @group unittest
      */
     public function testHelperIgnoresQualifiedClassNameInDoubleQuotedString()
     {
-        $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize(
+        $tokens = PHP_Depend_Tokenizer_PHP52Helper::tokenize(
             '<?php $clazz = "foo\\bar";'
         );
 

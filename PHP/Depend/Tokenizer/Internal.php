@@ -49,7 +49,7 @@
 require_once 'PHP/Depend/Token.php';
 require_once 'PHP/Depend/TokenizerI.php';
 require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Tokenizer/PHP53NamespaceHelper.php';
+require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
@@ -488,7 +488,7 @@ class PHP_Depend_Tokenizer_Internal
         );
 
         if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
-            $tokens = PHP_Depend_Tokenizer_PHP53NamespaceHelper::tokenize($source);
+            $tokens = PHP_Depend_Tokenizer_PHP52Helper::tokenize($source);
         } else {
             $tokens = token_get_all($source);
         }
