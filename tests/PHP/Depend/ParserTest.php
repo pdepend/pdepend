@@ -75,7 +75,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesMaxNestingLevel()
     {
-        ini_set('xdebug.max_nesting_level', 50);
+        if (version_compare(phpversion(), '5.2.10') < 0) {
+            $this->markTestSkipped();
+        }
+        
+        ini_set('xdebug.max_nesting_level', '100');
 
         $builder = new PHP_Depend_Builder_Default();
 
