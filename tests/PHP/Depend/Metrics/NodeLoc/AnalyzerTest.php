@@ -88,24 +88,28 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
                 'loc'    =>  6,
                 'cloc'   =>  3,
                 'eloc'   =>  2,
+                'lloc'   =>  0,
                 'ncloc'  =>  3
             ),
             'func_without_comment'  =>  array(
                 'loc'    =>  7,
                 'cloc'   =>  4,
                 'eloc'   =>  2,
+                'lloc'   =>  0,
                 'ncloc'  =>  3,
             ),
             'func_without_doc_comment'  =>  array(
                 'loc'    =>  3,
                 'cloc'   =>  0,
                 'eloc'   =>  2,
+                'lloc'   =>  0,
                 'ncloc'  =>  3,
             ),
             'another_func_with_comment'  =>  array(
                 'loc'    =>  4,
                 'cloc'   =>  1,
                 'eloc'   =>  2,
+                'lloc'   =>  0,
                 'ncloc'  =>  3,
             ),
         );
@@ -147,6 +151,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
             'loc'    =>  31,
             'cloc'   =>  15,
             'eloc'   =>  13,
+            'lloc'   =>  4,
             'ncloc'  =>  16
         );
         $this->assertEquals($expected, $actual);
@@ -251,6 +256,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
             'loc'    =>  21,
             'cloc'   =>  10,
             'eloc'   =>  8,
+            'lloc'   =>  4,
             'ncloc'  =>  11
         );
         $this->assertEquals($expected, $actual);
@@ -281,6 +287,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
             'loc'    =>  22,
             'cloc'   =>  7,
             'eloc'   =>  3,
+            'lloc'   =>  1,
             'ncloc'  =>  15
         );
         $this->assertEquals($expected, $actual);
@@ -312,6 +319,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
             'loc'    =>  21,
             'cloc'   =>  10,
             'eloc'   =>  8,
+            'lloc'   =>  4,
             'ncloc'  =>  11
         );
         $this->assertEquals($expected, $actual);
@@ -342,6 +350,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
             'loc'    =>  17,
             'cloc'   =>  7,
             'eloc'   =>  0,
+            'lloc'   =>  0,
             'ncloc'  =>  10
         );
         $this->assertEquals($expected, $actual);
@@ -369,6 +378,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
             'loc'    =>  260,
             'cloc'   =>  144,
             'eloc'   =>  89,
+            'lloc'   =>  40,
             'ncloc'  =>  116
         );
 
@@ -473,5 +483,216 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
 
         $metrics = $analyzer->getNodeMetrics($class);
         $this->assertEquals(0, $metrics['eloc']);
+    }
+
+    /**
+     * testCalculatesExpectedProjectLLocForFileWithInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedProjectLLocForFileWithInterfaces()
+    {
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertEquals(1, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForReturnStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForReturnStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(1, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForIfAndElseIfStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForIfAndElseIfStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(5, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForForStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForForStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(3, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForSwitchStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForSwitchStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(7, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForTryCatchStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForTryCatchStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(8, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForForeachStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForForeachStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(2, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForWhileStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForWhileStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(2, $metrics['lloc']);
+    }
+
+    /**
+     * testCalculatesExpectedLLocForDoWhileStatement
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testCalculatesExpectedLLocForDoWhileStatement()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        $this->assertEquals(3, $metrics['lloc']);
     }
 }
