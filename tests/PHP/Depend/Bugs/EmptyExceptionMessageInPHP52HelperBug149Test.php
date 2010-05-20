@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Tokenizer
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,80 +46,58 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once dirname(__FILE__) . '/AbstractTest.php';
+
 /**
- * Utility class that can be used to handle PHP's namespace separator in all
- * PHP environments lower than 5.3alpha3
+ * Test case for bug #149
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Tokenizer
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- *
- * @todo Rename this class into PHP52Helper and make methods none static.
  */
-final class PHP_Depend_Tokenizer_PHP52Helper
+class PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * This method implements a workaround for all PHP versions lower 5.3alpha3
-     * that do not handle the namespace separator char.
+     * testHelperThrowsExceptionForInvalidToken
      *
-     * @param string $source The raw source code.
-     *
-     * @return array The tokens.
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     * @expectedException PHP_Depend_Parser_TokenException
      */
-    public static function tokenize($source)
+    public function testHelperThrowsExceptionForInvalidToken()
     {
-        // Replace backslash with valid token
-        $source = preg_replace(
-            array('#\\\\([^"\'`\\\\])#i', '(<<<(\s*)(["\'])([\w\d]+)\2)'),
-            array(':::\\1', '<<<\1\3'),
-            $source
-        );
-
-        $tokens = self::_tokenize($source);
-
-        $result = array();
-        for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
-            if (is_string($tokens[$i])) {
-                $result[] = str_replace(':::', '\\', $tokens[$i]);
-            } else if ($tokens[$i][0] !== T_DOUBLE_COLON) {
-                $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
-                $result[]      = $tokens[$i];
-            } else if (!isset($tokens[$i + 1]) || $tokens[$i + 1] !== ':') {
-                $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
-                $result[]      = $tokens[$i];
-            } else {
-                $result[] = '\\';
-                ++$i;
-            }
+        if (version_compare(phpversion(), '5.3.0') >= 0) {
+            $this->markTestSkipped('This test is related to php versions < 5.3.0');
         }
-
-        return $result;
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
-     * Executes the internal tokenizer function and decorates it with some
-     * exception handling.
+     * testHelperThrowsExceptionWithExpectedExceptionMessage
      *
-     * @param string $source The raw php source code.
-     *
-     * @return array
-     * @todo Exception should be moved into a general package.
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
-    private static function _tokenize($source)
+    public function testHelperThrowsExceptionWithExpectedExceptionMessage()
     {
-        ini_set('track_errors', 'on');
-        $php_errormsg = null;
-
-        $tokens = @token_get_all($source);
-
-        if ($php_errormsg === null) {
-            return $tokens;
+        if (version_compare(phpversion(), '5.3.0') >= 0) {
+            $this->markTestSkipped('This test is related to php versions < 5.3.0');
         }
-        throw new PHP_Depend_Parser_TokenException($php_errormsg);
+
+        $this->setExpectedException('Exception', "Unexpected character in input:  '\' (ASCII=92) state=1");
+
+        self::parseTestCaseSource(__METHOD__);
     }
 }
