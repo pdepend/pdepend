@@ -1,3 +1,9 @@
+PHP_Depend 0.9.14
+-----------------
+
+- Fixed #149: Exception Message is empty. Fixed in svn revision #1277.
+- Concurrency issue in PHP_Depend's file cache fixed.
+
 PHP_Depend 0.9.13
 -----------------
 
