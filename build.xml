@@ -58,14 +58,7 @@
         </exec>
     </target>
 
-    <target name="test-static" depends="clean">
-        <parallel>
-            <antcall target="phpcs" />
-            <antcall target="pdepend" />
-            <antcall target="lint" />
-        </parallel>
-        <antcall target="phpmd" />
-    </target>
+    <target name="test-static" depends="phpcs,pdepend,lint,phpmd" />
 
     <target name="phpcs" depends="clean">
         <exec executable="phpcs" 
