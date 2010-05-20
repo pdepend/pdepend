@@ -13,7 +13,7 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2010-04-25</date>
+  <date>2010-05-10</date>
   <version>
     <release>0.9.13</release>
     <api>1.0.0</api>
@@ -655,7 +655,7 @@ and the NDepend metric tool.
             </file>
           </dir>
           <dir name="Tokenizer">
-            <file name="PHP53NamespaceHelper.php" role="php">
+            <file name="PHP52Helper.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="CacheDecorator.php" role="php">
@@ -1200,7 +1200,6 @@ and the NDepend metric tool.
   have written different data to the same cache file.
         </notes>
     </release>
-
     <release>
       <date>2010-04-25</date>
       <version>
