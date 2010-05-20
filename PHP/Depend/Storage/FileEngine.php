@@ -176,8 +176,14 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
 
         $lifetime = time() - $this->getMaxLifetime();
 
+        if ($this->hasPrune()) {
+            $pattern = '*.' . $this->_engineInstanceKey . '.data';
+        } else {
+            $pattern = '*.data';
+        }
+
         foreach ($directories as $directory) {
-            foreach (glob($directory . '/*.data') as $filename) {
+            foreach (glob($directory . '/' . $pattern) as $filename) {
                 if (filemtime($filename) < $lifetime) {
                     @unlink($filename);
                 }
