@@ -1,3 +1,9 @@
+PHP_Depend 0.9.15
+-----------------
+
+- Implemented #148: Implement cast expressions. Implemented in svn
+  revision #.
+
 PHP_Depend 0.9.14
 -----------------
 

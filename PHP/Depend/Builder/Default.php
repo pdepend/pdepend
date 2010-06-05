@@ -1391,6 +1391,19 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new cast-expression node instance.
+     *
+     * @param string $image The cast-expression image/character.
+     *
+     * @return PHP_Depend_Code_ASTCastExpression
+     * @since 0.9.15
+     */
+    public function buildASTCastExpression($image)
+    {
+        return $this->_buildASTNodeInstance('ASTCastExpression', $image);
+    }
+
+    /**
      * Builds a new function/method scope instance.
      *
      * @return PHP_Depend_Code_ASTScope
