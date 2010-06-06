@@ -889,6 +889,16 @@ interface PHP_Depend_BuilderI
     function buildASTUnaryExpression($image);
 
     /**
+     * Builds a new cast-expression node instance.
+     *
+     * @param string $image The cast-expression image/character.
+     *
+     * @return PHP_Depend_Code_ASTCastExpression
+     * @since 0.9.15
+     */
+    function buildASTCastExpression($image);
+
+    /**
      * Builds a new function/method scope instance.
      *
      * @return PHP_Depend_Code_ASTScope

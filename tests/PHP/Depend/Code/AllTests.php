@@ -60,6 +60,7 @@ require_once dirname(__FILE__) . '/ASTAssignmentExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTBooleanAndExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTBooleanOrExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTBreakStatementTest.php';
+require_once dirname(__FILE__) . '/ASTCastExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTCatchStatementTest.php';
 require_once dirname(__FILE__) . '/ASTClassOrInterfaceReferenceTest.php';
 require_once dirname(__FILE__) . '/ASTClassReferenceTest.php';
@@ -190,6 +191,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTBooleanAndExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTBooleanOrExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTBreakStatementTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTCastExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTCatchStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTClassOrInterfaceReferenceTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTClassReferenceTest');
