@@ -1303,33 +1303,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($expr);
     }
 
+    /**
+     * Parses a cast-expression node.
+     *
+     * @return PHP_Depend_Code_ASTCaseExpression
+     * @since 0.9.15
+     */
     private function _parseCastExpression()
     {
-        switch ($tokenType = $this->_tokenizer->peek()) {
+        $token = $this->_consumeToken($this->_tokenizer->peek());
 
-        case self::T_INT_CAST:
-        case self::T_BOOL_CAST:
-        case self::T_ARRAY_CAST:
-        case self::T_UNSET_CAST:
-        case self::T_DOUBLE_CAST:
-        case self::T_STRING_CAST:
-        case self::T_OBJECT_CAST:
-            $token = $this->_consumeToken($tokenType);
-
-            $expr = $this->_builder->buildASTCastExpression($token->image);
-            $expr->configureLinesAndColumns(
-                $token->startLine,
-                $token->endLine,
-                $token->startColumn,
-                $token->endColumn
-            );
-
-            return $expr;
-        }
-        throw new PHP_Depend_Parser_UnexpectedTokenException(
-            $this->_tokenizer->next(),
-            $this->_sourceFile->getFileName()
+        $expr = $this->_builder->buildASTCastExpression($token->image);
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+
+        return $expr;
     }
 
     /**
