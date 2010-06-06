@@ -1303,6 +1303,35 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($expr);
     }
 
+    private function _parseCastExpression()
+    {
+        switch ($tokenType = $this->_tokenizer->peek()) {
+
+        case self::T_INT_CAST:
+        case self::T_BOOL_CAST:
+        case self::T_ARRAY_CAST:
+        case self::T_UNSET_CAST:
+        case self::T_DOUBLE_CAST:
+        case self::T_STRING_CAST:
+        case self::T_OBJECT_CAST:
+            $token = $this->_consumeToken($tokenType);
+
+            $expr = $this->_builder->buildASTCastExpression($token->image);
+            $expr->configureLinesAndColumns(
+                $token->startLine,
+                $token->endLine,
+                $token->startColumn,
+                $token->endColumn
+            );
+
+            return $expr;
+        }
+        throw new PHP_Depend_Parser_UnexpectedTokenException(
+            $this->_tokenizer->next(),
+            $this->_sourceFile->getFileName()
+        );
+    }
+
     /**
      * Parses one or more optional php <b>array</b> or <b>string</b> expressions.
      *
@@ -2031,6 +2060,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseRequireOnceExpression();
                 break;
 
+            case self::T_INT_CAST:
+            case self::T_BOOL_CAST:
+            case self::T_ARRAY_CAST:
+            case self::T_UNSET_CAST:
+            case self::T_OBJECT_CAST:
+            case self::T_DOUBLE_CAST:
+            case self::T_STRING_CAST:
+                $expressions[] = $this->_parseCastExpression();
+                break;
+
             case self::T_EQUAL:
             case self::T_OR_EQUAL:
             case self::T_AND_EQUAL:
@@ -2058,7 +2097,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return $expressions[0];
         }
         $expr = $this->_builder->buildASTExpression();
-        foreach ($expressions as $node) {
+        foreach ($this->_reduce($expressions) as $node) {
             $expr->addChild($node);
         }
         $expr->configureLinesAndColumns(
@@ -2069,6 +2108,46 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         return $expr;
+    }
+
+    /**
+     * Applies all reduce rules against the given expression list.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions Unprepared input
+     *        array with parsed expression nodes found in the source tree.
+     *
+     * @return array(PHP_Depend_Code_ASTExpression)
+     * @since 0.9.15
+     */
+    private function _reduce(array $expressions)
+    {
+        return $this->_reduceCastExpression($expressions);
+    }
+
+    /**
+     * Reduces cast expressions in the given expression list.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions Unprepared input
+     *        array with parsed expression nodes found in the source tree.
+     *
+     * @return array(PHP_Depend_Code_ASTExpression)
+     * @since 0.9.15
+     */
+    private function _reduceCastExpression(array $expressions)
+    {
+        for ($i = count($expressions) - 2; $i >= 0; --$i) {
+            $expression = $expressions[$i];
+            if ($expression instanceof PHP_Depend_Code_ASTCastExpression) {
+                $child = $expressions[$i + 1];
+
+                $expression->addChild($child);
+                $expression->setEndColumn($child->getEndColumn());
+                $expression->setEndLine($child->getEndLine());
+
+                unset($expressions[$i + 1]);
+            }
+        }
+        return array_values($expressions);
     }
 
     /**
