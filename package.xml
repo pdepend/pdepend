@@ -1245,5 +1245,6 @@ and the NDepend metric tool.
   Fixed in svn revision #1266.
       </notes>
     </release>
+
   </changelog>
 </package>
