@@ -1325,27 +1325,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Parses a cast-expression node.
-     *
-     * @return PHP_Depend_Code_ASTCaseExpression
-     * @since 0.9.15
-     */
-    private function _parseCastExpression()
-    {
-        $token = $this->_consumeToken($this->_tokenizer->peek());
-
-        $expr = $this->_builder->buildASTCastExpression($token->image);
-        $expr->configureLinesAndColumns(
-            $token->startLine,
-            $token->endLine,
-            $token->startColumn,
-            $token->endColumn
-        );
-
-        return $expr;
-    }
-
-    /**
      * Parses one or more optional php <b>array</b> or <b>string</b> expressions.
      *
      * <code>
