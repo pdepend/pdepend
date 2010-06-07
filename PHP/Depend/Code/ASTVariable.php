@@ -74,6 +74,18 @@ class PHP_Depend_Code_ASTVariable extends PHP_Depend_Code_ASTNode
     const CLAZZ = __CLASS__;
 
     /**
+     * This method will return <b>true</b> when this variable instance represents
+     * the <b>$this</b> scope of a class instance.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    public function isThis()
+    {
+        return ($this->image === '$this');
+    }
+
+    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

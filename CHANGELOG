@@ -1,6 +1,8 @@
 PHP_Depend 0.9.15
 -----------------
 
+- Implemented #131: Add new method isThis() to PHP_Depend's ASTVariable
+  class. Implemented in svn revision #.
 - Implemented #148: Implement cast expressions. Implemented in svn
   revision #1283.
 
