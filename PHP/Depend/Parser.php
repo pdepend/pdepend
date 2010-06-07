@@ -2103,14 +2103,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
         }
 
+        $expressions = $this->_reduce($expressions);
+
         $count = count($expressions);
         if ($count == 0) {
             return null;
         } else if ($count == 1) {
             return $expressions[0];
         }
+
         $expr = $this->_builder->buildASTExpression();
-        foreach ($this->_reduce($expressions) as $node) {
+        foreach ($expressions as $node) {
             $expr->addChild($node);
         }
         $expr->configureLinesAndColumns(
