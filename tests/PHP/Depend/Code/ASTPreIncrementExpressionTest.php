@@ -65,6 +65,130 @@ require_once 'PHP/Depend/Code/ASTPreIncrementExpression.php';
 class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testPreIncrementExpressionOnStaticClassMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPreIncrementExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPreIncrementExpressionOnStaticClassMember()
+    {
+        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTClassOrInterfaceReference',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testPreIncrementExpressionOnSelfClassMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPreIncrementExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPreIncrementExpressionOnSelfClassMember()
+    {
+        $expr = $this->_getFirstPreIncrementExpressionInClass(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTSelfReference',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testPreIncrementExpressionOnParentClassMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPreIncrementExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPreIncrementExpressionOnParentClassMember()
+    {
+        $expr = $this->_getFirstPreIncrementExpressionInClass(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTParentReference',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testPreIncrementExpressionOnFunctionPostfix
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPreIncrementExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPreIncrementExpressionOnFunctionPostfix()
+    {
+        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTFunctionPostfix',
+                'PHP_Depend_Code_ASTIdentifier',
+                'PHP_Depend_Code_ASTArguments'
+            )
+        );
+    }
+
+    /**
+     * testPreIncrementExpressionOnStaticVariableMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPreIncrementExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testPreIncrementExpressionOnStaticVariableMember()
+    {
+        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTVariable',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
      * testPreIncrementExpressionHasExpectedStartLine
      *
      * @return void
@@ -77,8 +201,8 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      */
     public function testPreIncrementExpressionHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -94,8 +218,8 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      */
     public function testPreIncrementExpressionHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(13, $stmt->getStartColumn());
+        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $this->assertEquals(13, $expr->getStartColumn());
     }
 
     /**
@@ -111,8 +235,8 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      */
     public function testPreIncrementExpressionHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getEndLine());
+        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -128,8 +252,22 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      */
     public function testPreIncrementExpressionHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(20, $stmt->getEndColumn());
+        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $this->assertEquals(20, $expr->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTPreIncrementExpression
+     */
+    private function _getFirstPreIncrementExpressionInClass($testCase)
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTPreIncrementExpression::CLAZZ
+        );
     }
 
     /**
