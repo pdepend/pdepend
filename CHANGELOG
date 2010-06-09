@@ -1,3 +1,9 @@
+PHP_Depend 0.9.15
+-----------------
+
+- Fixed #152: Endless loop bug for identical class and parent name.
+  Fixed in svn revision #1296.
+
 PHP_Depend 0.9.14
 -----------------
 
