@@ -13,9 +13,9 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2010-05-20</date>
+  <date>2010-05-10</date>
   <version>
-    <release>0.9.14</release>
+    <release>0.9.13</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,8 +24,10 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Fixed #149: Exception Message is empty. Fixed in svn revision #1277.
-- Concurrency issue in PHP_Depend's file cache fixed.
+- Fixed #145: Incorrect require_once statement in ASTSwitchStatement
+  source file. Fixed in svn revision #1262.
+- Fixed #150: Invalid nowdoc substitution has produced broken code.
+  Fixed in svn revision #1266.
   </notes>
   <contents>
     <dir name="/">
@@ -1227,24 +1229,5 @@ and the NDepend metric tool.
   in svn revision #1255.
       </notes>
     </release>
-    <release>
-      <date>2010-05-10</date>
-      <version>
-        <release>0.9.13</release>
-        <api>1.0.0</api>
-      </version>
-      <stability>
-        <release>beta</release>
-        <api>stable</api>
-      </stability>
-      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
-      <notes>
-- Fixed #145: Incorrect require_once statement in ASTSwitchStatement
-  source file. Fixed in svn revision #1262.
-- Fixed #150: Invalid nowdoc substitution has produced broken code.
-  Fixed in svn revision #1266.
-      </notes>
-    </release>
   </changelog>
 </package>
-
