@@ -660,8 +660,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     public static function dataProviderParserKeepsQualifiedTypeNameInFunction()
     {
         return array(
-            array('issues/002-016-resolve-qualified-type-names.php', '+global'),
-            array('issues/002-020-resolve-qualified-type-names.php', '+global'),
+            array('issues/002-016-resolve-qualified-type-names.php', ''),
+            array('issues/002-020-resolve-qualified-type-names.php', ''),
             array('issues/002-024-resolve-qualified-type-names.php', 'baz'),
             array('issues/002-028-resolve-qualified-type-names.php', 'bar'),
             array('issues/002-048-resolve-qualified-type-names.php', 'foo'),
@@ -726,8 +726,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     public static function dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax()
     {
         return array(
-            array('issues/002-018-resolve-qualified-type-names.php', '+global'),
-            array('issues/002-022-resolve-qualified-type-names.php', '+global'),
+            array('issues/002-018-resolve-qualified-type-names.php', ''),
+            array('issues/002-022-resolve-qualified-type-names.php', ''),
             array('issues/002-026-resolve-qualified-type-names.php', 'baz'),
             array('issues/002-030-resolve-qualified-type-names.php', 'baz'),
             array('issues/002-050-resolve-qualified-type-names.php', 'baz\baz'),
