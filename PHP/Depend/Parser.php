@@ -2113,7 +2113,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $expr = $this->_builder->buildASTExpression();
-        foreach ($this->_reduce($expressions) as $node) {
+        foreach ($expressions as $node) {
             $expr->addChild($node);
         }
         $expr->configureLinesAndColumns(
