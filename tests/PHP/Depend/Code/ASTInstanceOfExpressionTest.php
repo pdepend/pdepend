@@ -126,7 +126,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
                 ->current()
                 ->getFunctions()
                 ->current(),
-                'foo\bar\Baz'
+                '\foo\bar\Baz'
         );
     }
 
@@ -148,7 +148,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
                 ->current()
                 ->getFunctions()
                 ->current(),
-                'foo\bar\Baz'
+                '\foo\bar\Baz'
         );
     }
 
