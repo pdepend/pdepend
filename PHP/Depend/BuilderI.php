@@ -917,6 +917,14 @@ interface PHP_Depend_BuilderI
     function buildASTPreIncrementExpression();
 
     /**
+     * Builds a new pre-decrement-expression node instance.
+     *
+     * @return PHP_Depend_Code_ASTPreDecrementExpression
+     * @since 0.10.0
+     */
+    function buildASTPreDecrementExpression();
+
+    /**
      * Builds a new function/method scope instance.
      *
      * @return PHP_Depend_Code_ASTScope
