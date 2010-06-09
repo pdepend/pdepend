@@ -83,6 +83,7 @@ require_once dirname(__FILE__) . '/VariableVariablesInForeachStatementBug128Test
 require_once dirname(__FILE__) . '/ReconfigureXdebugMaxNestingLevelBug133Test.php';
 require_once dirname(__FILE__) . '/EmptyExceptionMessageInPHP52HelperBug149Test.php';
 require_once dirname(__FILE__) . '/InvalidNowdocSubstitutionBug150Test.php';
+require_once dirname(__FILE__) . '/EndLessLoopBetweenForParentClassBug152Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -147,6 +148,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ReconfigureXdebugMaxNestingLevelBug133Test');
         $suite->addTestSuite('PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InvalidNowdocSubstitutionBug150Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test');
 
         return $suite;
     }

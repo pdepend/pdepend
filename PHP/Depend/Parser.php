@@ -4525,7 +4525,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
-            return ltrim(join('', $fragments), '\\');
+            return join('', $fragments);
         }
 
         // Search for an use alias
@@ -4540,7 +4540,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Prepend current namespace
             array_unshift($fragments, $this->_namespaceName, '\\');
         }
-        return ltrim(join('', $fragments), '\\');
+        return join('', $fragments);
     }
 
     /**
