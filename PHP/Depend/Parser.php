@@ -4637,7 +4637,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseQualifiedName()
     {
         $fragments = $this->_parseQualifiedNameRaw();
-        
+
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
             return join('', $fragments);

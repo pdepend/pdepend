@@ -233,6 +233,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        if (false === $class->isUserDefined()) {
+            return;
+        }
+
         $this->fireStartClass($class);
 
         ++$this->_cls;
