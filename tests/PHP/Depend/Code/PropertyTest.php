@@ -64,6 +64,66 @@ require_once 'PHP/Depend/Code/Property.php';
 class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetClassForPropertyWithNamespacedInternalType
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Property
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetClassForPropertyWithNamespacedRootType()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertEquals('Foo', $property->getClass()->getName());
+    }
+
+    /**
+     * testGetClassForPropertyWithNamespacedType
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Property
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetClassForPropertyWithNamespacedType()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertEquals('Baz', $property->getClass()->getName());
+    }
+
+    /**
+     * testGetClassForPropertyWithNamespacedArrayRootType
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Property
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetClassForPropertyWithNamespacedArrayRootType()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertEquals('Foo', $property->getClass()->getName());
+    }
+
+    /**
+     * testGetClassForPropertyWithNamespacedArrayType
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Property
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetClassForPropertyWithNamespacedArrayType()
+    {
+        $property = $this->_getFirstPropertyInClass(__METHOD__);
+        $this->assertEquals('Baz', $property->getClass()->getName());
+    }
+
+    /**
      * Tests that the <b>isDefaultValueAvailable()</b> method returns the
      * expected result.
      *
