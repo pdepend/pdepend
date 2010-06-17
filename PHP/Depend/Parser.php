@@ -1307,13 +1307,52 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a cast-expression node.
      *
      * @return PHP_Depend_Code_ASTCaseExpression
-     * @since 0.9.15
+     * @since 0.10.0
      */
     private function _parseCastExpression()
     {
         $token = $this->_consumeToken($this->_tokenizer->peek());
 
         $expr = $this->_builder->buildASTCastExpression($token->image);
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    private function _parseIncrementExpression(array $exprs)
+    {
+        if ($this->_isReadWriteVariable(end($exprs))) {
+            return $this->_parsePostIncrementExpression(array_pop($exprs));
+        }
+        return $this->_parsePreIncrementExpression();
+    }
+
+    private function _parsePostIncrementExpression(PHP_Depend_Code_ASTNode $child)
+    {
+        $token = $this->_consumeToken(self::T_INC);
+
+        $expr = $this->_builder->buildASTPostfixExpression($token->image);
+        $expr->addChild($child);
+        $expr->configureLinesAndColumns(
+            $child->getStartLine(),
+            $token->endLine,
+            $child->getStartColumn(),
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    private function _parsePreIncrementExpression()
+    {
+        $token = $this->_consumeToken(self::T_INC);
+
+        $expr = $this->_builder->buildASTPreIncrementExpression();
         $expr->configureLinesAndColumns(
             $token->startLine,
             $token->endLine,
@@ -2052,6 +2091,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseRequireOnceExpression();
                 break;
 
+            case self::T_INC:
+                $expressions[] = $this->_parseIncrementExpression($expressions);
+                break;
+
             case self::T_INT_CAST:
             case self::T_BOOL_CAST:
             case self::T_ARRAY_CAST:
@@ -2112,11 +2155,29 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *        array with parsed expression nodes found in the source tree.
      *
      * @return array(PHP_Depend_Code_ASTExpression)
-     * @since 0.9.15
+     * @since 0.10.0
      */
     private function _reduce(array $expressions)
     {
+        $expressions = $this->_reducePreIncrementDecrementExpression($expressions);
         return $this->_reduceCastExpression($expressions);
+    }
+
+    private function _reducePreIncrementDecrementExpression(array $expressions)
+    {
+        for ($i = count($expressions) - 2; $i >= 0; --$i) {
+            $expression = $expressions[$i];
+            if ($expression instanceof PHP_Depend_Code_ASTPreIncrementExpression) {
+                $child = $expressions[$i + 1];
+
+                $expression->addChild($child);
+                $expression->setEndColumn($child->getEndColumn());
+                $expression->setEndLine($child->getEndLine());
+
+                unset($expressions[$i + 1]);
+            }
+        }
+        return array_values($expressions);
     }
 
     /**
@@ -2126,7 +2187,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *        array with parsed expression nodes found in the source tree.
      *
      * @return array(PHP_Depend_Code_ASTExpression)
-     * @since 0.9.15
+     * @since 0.10.0
      */
     private function _reduceCastExpression(array $expressions)
     {
@@ -5163,6 +5224,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $defaultValue->setValue($staticValue);
 
         return $defaultValue;
+    }
+
+    private function _isReadWriteVariable($expression)
+    {
+        return ($expression instanceof PHP_Depend_Code_ASTVariable
+            || $expression instanceof PHP_Depend_Code_ASTFunctionPostfix
+            || $expression instanceof PHP_Depend_Code_ASTVariableVariable
+            || $expression instanceof PHP_Depend_Code_ASTCompoundVariable
+            || $expression instanceof PHP_Depend_Code_ASTMemberPrimaryPrefix);
     }
 
     /**
