@@ -131,7 +131,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                       @var\s+
                        (array\(\s*
                          (\w+\s*=>\s*)?
-                         ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
+                         ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*)\s*
                        \)
                        |
                        ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
