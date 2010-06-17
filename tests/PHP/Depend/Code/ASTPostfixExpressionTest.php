@@ -65,6 +65,232 @@ require_once 'PHP/Depend/Code/ASTPostfixExpression.php';
 class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testIncrementPostfixExpressionOnStaticClassMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnStaticClassMember()
+    {
+        $expr = $this->_getFirstPostfixExpressionInClass(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTClassOrInterfaceReference',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnSelfClassMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnSelfClassMember()
+    {
+        $expr = $this->_getFirstPostfixExpressionInClass(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTSelfReference',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnParentClassMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnParentClassMember()
+    {
+        $expr = $this->_getFirstPostfixExpressionInClass(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTParentReference',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnThisObjectMember
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnThisObjectMember()
+    {
+        $expr = $this->_getFirstPostfixExpressionInClass(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTVariable',
+                'PHP_Depend_Code_ASTPropertyPostfix',
+                'PHP_Depend_Code_ASTIdentifier'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnFunctionPostfix
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnFunctionPostfix()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTFunctionPostfix',
+                'PHP_Depend_Code_ASTIdentifier',
+                'PHP_Depend_Code_ASTArguments',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnVariableVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnVariableVariable()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTVariableVariable',
+                'PHP_Depend_Code_ASTVariableVariable',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnCompoundVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnCompoundVariable()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTCompoundVariable',
+                'PHP_Depend_Code_ASTCompoundExpression',
+                'PHP_Depend_Code_ASTConstant'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnObjectMethodPostfix
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnObjectMethodPostfix()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTVariable',
+                'PHP_Depend_Code_ASTMethodPostfix',
+                'PHP_Depend_Code_ASTIdentifier',
+                'PHP_Depend_Code_ASTArguments',
+                'PHP_Depend_Code_ASTVariable'
+            )
+        );
+    }
+
+    /**
+     * testIncrementPostfixExpressionOnStaticMethodPostfix
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIncrementPostfixExpressionOnStaticMethodPostfix()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertGraphEquals(
+            $expr,
+            array(
+                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
+                'PHP_Depend_Code_ASTClassOrInterfaceReference',
+                'PHP_Depend_Code_ASTMethodPostfix',
+                'PHP_Depend_Code_ASTIdentifier',
+                'PHP_Depend_Code_ASTArguments'
+            )
+        );
+    }
+
+    /**
      * testIncrementPostfixExpressionHasExpectedStartLine
      *
      * @return void
@@ -77,8 +303,8 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testIncrementPostfixExpressionHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartLine());
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(5, $expr->getStartLine());
     }
 
     /**
@@ -94,8 +320,8 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testIncrementPostfixExpressionHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(9, $stmt->getStartColumn());
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(9, $expr->getStartColumn());
     }
 
     /**
@@ -111,8 +337,8 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testIncrementPostfixExpressionHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(7, $stmt->getEndLine());
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(7, $expr->getEndLine());
     }
 
     /**
@@ -128,8 +354,22 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testIncrementPostfixExpressionHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(14, $stmt->getEndColumn());
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(14, $expr->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTPostfixExpression
+     */
+    private function _getFirstPostfixExpressionInClass($testCase)
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            $testCase, PHP_Depend_Code_ASTPostfixExpression::CLAZZ
+        );
     }
 
     /**
