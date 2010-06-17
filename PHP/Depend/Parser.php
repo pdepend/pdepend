@@ -105,39 +105,39 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * method or function doc comments.
      */
     const REGEXP_THROWS_TYPE = '(\*\s*
-                                 @throws\s+
-                                   ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)
-                                )ix';
+                             @throws\s+
+                               ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\\\\]*)
+                            )ix';
 
     /**
      * Regular expression for types defined in annotations like <b>return</b> or
      * <b>var</b> in doc comments of functions and methods.
      */
     const REGEXP_RETURN_TYPE = '(\*\s*
-                                 @return\s+
-                                  (array\(\s*
-                                    (\w+\s*=>\s*)?
-                                    ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
-                                  \)
-                                  |
-                                  ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*))\s+
-                                )ix';
+                     @return\s+
+                      (array\(\s*
+                        (\w+\s*=>\s*)?
+                        ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
+                      \)
+                      |
+                      ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
+                    )ix';
 
     /**
      * Regular expression for types defined in annotations like <b>return</b> or
      * <b>var</b> in doc comments of functions and methods.
      */
     const REGEXP_VAR_TYPE = '(\*\s*
-                              @var\s+
-                               (array\(\s*
-                                 (\w+\s*=>\s*)?
-                                 ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
-                               \)
-                               |
-                               ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*))\s+
-                               |
-                               (array)\(\s*\)\s+
-                             )ix';
+                      @var\s+
+                       (array\(\s*
+                         (\w+\s*=>\s*)?
+                         ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
+                       \)
+                       |
+                       ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
+                       |
+                       (array)\(\s*\)\s+
+                     )ix';
 
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
