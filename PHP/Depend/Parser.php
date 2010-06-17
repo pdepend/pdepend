@@ -1324,6 +1324,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $expr;
     }
 
+    /**
+     * This method will parse an increment-expression. Depending on the previous
+     * node this can be a {@link PHP_Depend_Code_ASTPostIncrementExpression} or
+     * {@link PHP_Depend_Code_ASTPostfixExpression}.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions List of previous
+     *        parsed expression nodes.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.10.0
+     */
     private function _parseIncrementExpression(array $expressions)
     {
         if ($this->_isReadWriteVariable(end($expressions))) {
@@ -1332,6 +1343,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_parsePreIncrementExpression();
     }
 
+    /**
+     * Parses a post increment-expression and adds the given child to that node.
+     *
+     * @param PHP_Depend_Code_ASTNode $child The child expression node.
+     *
+     * @return PHP_Depend_Code_ASTPostfixExpression
+     * @since 0.10.0
+     */
     private function _parsePostIncrementExpression(PHP_Depend_Code_ASTNode $child)
     {
         $token = $this->_consumeToken(self::T_INC);
@@ -1348,6 +1367,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $expr;
     }
 
+    /**
+     * Parses a pre increment-expression and adds the given child to that node.
+     *
+     * @return PHP_Depend_Code_ASTPreIncrementExpression
+     * @since 0.10.0
+     */
     private function _parsePreIncrementExpression()
     {
         $token = $this->_consumeToken(self::T_INC);
@@ -1363,6 +1388,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $expr;
     }
 
+    /**
+     * This method will parse an decrement-expression. Depending on the previous
+     * node this can be a {@link PHP_Depend_Code_ASTPostDecrementExpression} or
+     * {@link PHP_Depend_Code_ASTPostfixExpression}.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions List of previous
+     *        parsed expression nodes.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.10.0
+     */
     private function _parseDecrementExpression(array $expressions)
     {
         if ($this->_isReadWriteVariable(end($expressions))) {
@@ -1371,6 +1407,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_parsePreDecrementExpression();
     }
 
+    /**
+     * Parses a post decrement-expression and adds the given child to that node.
+     *
+     * @param PHP_Depend_Code_ASTNode $child The child expression node.
+     *
+     * @return PHP_Depend_Code_ASTPostfixExpression
+     * @since 0.10.0
+     */
     private function _parsePostDecrementExpression(PHP_Depend_Code_ASTNode $child)
     {
         $token = $this->_consumeToken(self::T_DEC);
@@ -1387,6 +1431,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $expr;
     }
 
+    /**
+     * Parses a pre decrement-expression and adds the given child to that node.
+     *
+     * @return PHP_Depend_Code_ASTPreDecrementExpression
+     * @since 0.10.0
+     */
     private function _parsePreDecrementExpression()
     {
         $token = $this->_consumeToken(self::T_DEC);
@@ -5251,6 +5301,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $defaultValue;
     }
 
+    /**
+     * Checks if the given expression is a read/write variable as defined in
+     * the PHP zend_language_parser.y definition.
+     *
+     * @param PHP_Depend_Code_ASTNode $expression The context node instance.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
     private function _isReadWriteVariable($expression)
     {
         return ($expression instanceof PHP_Depend_Code_ASTVariable
