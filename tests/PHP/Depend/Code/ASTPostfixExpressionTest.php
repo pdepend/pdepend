@@ -357,6 +357,74 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
         $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(14, $expr->getEndColumn());
     }
+    
+    /**
+     * testDecrementPostfixExpressionHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDecrementPostfixExpressionHasExpectedStartLine()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(7, $expr->getStartLine());
+    }
+
+    /**
+     * testDecrementPostfixExpressionHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDecrementPostfixExpressionHasExpectedStartColumn()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(17, $expr->getStartColumn());
+    }
+
+    /**
+     * testDecrementPostfixExpressionHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDecrementPostfixExpressionHasExpectedEndLine()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(9, $expr->getEndLine());
+    }
+
+    /**
+     * testDecrementPostfixExpressionHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTPostfixExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDecrementPostfixExpressionHasExpectedEndColumn()
+    {
+        $expr = $this->_getFirstPostfixExpressionInFunction(__METHOD__);
+        $this->assertEquals(10, $expr->getEndColumn());
+    }
 
     /**
      * Returns a node instance for the currently executed test case.

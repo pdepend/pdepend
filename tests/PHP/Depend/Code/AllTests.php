@@ -103,6 +103,7 @@ require_once dirname(__FILE__) . '/ASTLogicalAndExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTLogicalOrExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTLogicalXorExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTPostfixExpressionTest.php';
+require_once dirname(__FILE__) . '/ASTPreDecrementExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTPreIncrementExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTPrimitiveTypeTest.php';
 require_once dirname(__FILE__) . '/ASTPropertyPostfixTest.php';
@@ -236,6 +237,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTMemberPrimaryPrefixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTMethodPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTPostfixExpressionTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTPreDecrementExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTPreIncrementExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTPrimitiveTypeTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTPropertyPostfixTest');
