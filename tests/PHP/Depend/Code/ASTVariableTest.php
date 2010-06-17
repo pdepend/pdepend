@@ -65,6 +65,51 @@ require_once 'PHP/Depend/Code/ASTVariable.php';
 class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testIsThisReturnsTrueForThisImageName
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTVariable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsThisReturnsTrueForThisImageName()
+    {
+        $variable = new PHP_Depend_Code_ASTVariable('$this');
+        $this->assertTrue($variable->isThis());
+    }
+
+    /**
+     * testIsThisReturnsFalseForThisImageButDifferentCase
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTVariable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsThisReturnsFalseForThisImageButDifferentCase()
+    {
+        $variable = new PHP_Depend_Code_ASTVariable('$This');
+        $this->assertFalse($variable->isThis());
+    }
+
+    /**
+     * testIsThisReturnsFalseForDifferentImage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTVariable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsThisReturnsFalseForDifferentImage()
+    {
+        $variable = new PHP_Depend_Code_ASTVariable('$foo');
+        $this->assertFalse($variable->isThis());
+    }
+
+    /**
      * testAcceptInvokesAcceptOnChildNode
      *
      * @return void

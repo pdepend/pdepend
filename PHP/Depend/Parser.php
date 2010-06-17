@@ -96,7 +96,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     const REGEXP_INLINE_TYPE = '(^\s*/\*\s*
                                  @var\s+
-                                   \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\s+
+                                   \$[a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff]*\s+
                                    (.*?)
                                 \s*\*/\s*$)ix';
 
@@ -105,39 +105,39 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * method or function doc comments.
      */
     const REGEXP_THROWS_TYPE = '(\*\s*
-                                 @throws\s+
-                                   ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)
-                                )ix';
+                             @throws\s+
+                               ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\\\\]*)
+                            )ix';
 
     /**
      * Regular expression for types defined in annotations like <b>return</b> or
      * <b>var</b> in doc comments of functions and methods.
      */
     const REGEXP_RETURN_TYPE = '(\*\s*
-                                 @return\s+
-                                  (array\(\s*
-                                    (\w+\s*=>\s*)?
-                                    ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
-                                  \)
-                                  |
-                                  ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*))\s+
-                                )ix';
+                     @return\s+
+                      (array\(\s*
+                        (\w+\s*=>\s*)?
+                        ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*)\s*
+                      \)
+                      |
+                      ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
+                    )ix';
 
     /**
      * Regular expression for types defined in annotations like <b>return</b> or
      * <b>var</b> in doc comments of functions and methods.
      */
     const REGEXP_VAR_TYPE = '(\*\s*
-                              @var\s+
-                               (array\(\s*
-                                 (\w+\s*=>\s*)?
-                                 ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
-                               \)
-                               |
-                               ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*))\s+
-                               |
-                               (array)\(\s*\)\s+
-                             )ix';
+                      @var\s+
+                       (array\(\s*
+                         (\w+\s*=>\s*)?
+                         ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*)\s*
+                       \)
+                       |
+                       ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
+                       |
+                       (array)\(\s*\)\s+
+                     )ix';
 
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
@@ -1304,6 +1304,155 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses a cast-expression node.
+     *
+     * @return PHP_Depend_Code_ASTCaseExpression
+     * @since 0.10.0
+     */
+    private function _parseCastExpression()
+    {
+        $token = $this->_consumeToken($this->_tokenizer->peek());
+
+        $expr = $this->_builder->buildASTCastExpression($token->image);
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    /**
+     * This method will parse an increment-expression. Depending on the previous
+     * node this can be a {@link PHP_Depend_Code_ASTPostIncrementExpression} or
+     * {@link PHP_Depend_Code_ASTPostfixExpression}.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions List of previous
+     *        parsed expression nodes.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.10.0
+     */
+    private function _parseIncrementExpression(array $expressions)
+    {
+        if ($this->_isReadWriteVariable(end($expressions))) {
+            return $this->_parsePostIncrementExpression(array_pop($expressions));
+        }
+        return $this->_parsePreIncrementExpression();
+    }
+
+    /**
+     * Parses a post increment-expression and adds the given child to that node.
+     *
+     * @param PHP_Depend_Code_ASTNode $child The child expression node.
+     *
+     * @return PHP_Depend_Code_ASTPostfixExpression
+     * @since 0.10.0
+     */
+    private function _parsePostIncrementExpression(PHP_Depend_Code_ASTNode $child)
+    {
+        $token = $this->_consumeToken(self::T_INC);
+
+        $expr = $this->_builder->buildASTPostfixExpression($token->image);
+        $expr->addChild($child);
+        $expr->configureLinesAndColumns(
+            $child->getStartLine(),
+            $token->endLine,
+            $child->getStartColumn(),
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    /**
+     * Parses a pre increment-expression and adds the given child to that node.
+     *
+     * @return PHP_Depend_Code_ASTPreIncrementExpression
+     * @since 0.10.0
+     */
+    private function _parsePreIncrementExpression()
+    {
+        $token = $this->_consumeToken(self::T_INC);
+
+        $expr = $this->_builder->buildASTPreIncrementExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    /**
+     * This method will parse an decrement-expression. Depending on the previous
+     * node this can be a {@link PHP_Depend_Code_ASTPostDecrementExpression} or
+     * {@link PHP_Depend_Code_ASTPostfixExpression}.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions List of previous
+     *        parsed expression nodes.
+     *
+     * @return PHP_Depend_Code_ASTExpression
+     * @since 0.10.0
+     */
+    private function _parseDecrementExpression(array $expressions)
+    {
+        if ($this->_isReadWriteVariable(end($expressions))) {
+            return $this->_parsePostDecrementExpression(array_pop($expressions));
+        }
+        return $this->_parsePreDecrementExpression();
+    }
+
+    /**
+     * Parses a post decrement-expression and adds the given child to that node.
+     *
+     * @param PHP_Depend_Code_ASTNode $child The child expression node.
+     *
+     * @return PHP_Depend_Code_ASTPostfixExpression
+     * @since 0.10.0
+     */
+    private function _parsePostDecrementExpression(PHP_Depend_Code_ASTNode $child)
+    {
+        $token = $this->_consumeToken(self::T_DEC);
+
+        $expr = $this->_builder->buildASTPostfixExpression($token->image);
+        $expr->addChild($child);
+        $expr->configureLinesAndColumns(
+            $child->getStartLine(),
+            $token->endLine,
+            $child->getStartColumn(),
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    /**
+     * Parses a pre decrement-expression and adds the given child to that node.
+     *
+     * @return PHP_Depend_Code_ASTPreDecrementExpression
+     * @since 0.10.0
+     */
+    private function _parsePreDecrementExpression()
+    {
+        $token = $this->_consumeToken(self::T_DEC);
+
+        $expr = $this->_builder->buildASTPreDecrementExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    /**
      * Parses one or more optional php <b>array</b> or <b>string</b> expressions.
      *
      * <code>
@@ -2031,6 +2180,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseRequireOnceExpression();
                 break;
 
+            case self::T_DEC:
+                $expressions[] = $this->_parseDecrementExpression($expressions);
+                break;
+
+            case self::T_INC:
+                $expressions[] = $this->_parseIncrementExpression($expressions);
+                break;
+
+            case self::T_INT_CAST:
+            case self::T_BOOL_CAST:
+            case self::T_ARRAY_CAST:
+            case self::T_UNSET_CAST:
+            case self::T_OBJECT_CAST:
+            case self::T_DOUBLE_CAST:
+            case self::T_STRING_CAST:
+                $expressions[] = $this->_parseCastExpression();
+                break;
+
             case self::T_EQUAL:
             case self::T_OR_EQUAL:
             case self::T_AND_EQUAL:
@@ -2051,12 +2218,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
         }
 
+        $expressions = $this->_reduce($expressions);
+
         $count = count($expressions);
         if ($count == 0) {
             return null;
         } else if ($count == 1) {
             return $expressions[0];
         }
+
         $expr = $this->_builder->buildASTExpression();
         foreach ($expressions as $node) {
             $expr->addChild($node);
@@ -2069,6 +2239,46 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         return $expr;
+    }
+
+    /**
+     * Applies all reduce rules against the given expression list.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions Unprepared input
+     *        array with parsed expression nodes found in the source tree.
+     *
+     * @return array(PHP_Depend_Code_ASTExpression)
+     * @since 0.10.0
+     */
+    private function _reduce(array $expressions)
+    {
+        return $this->_reduceUnaryExpression($expressions);
+    }
+
+    /**
+     * Reduces all unary-expressions in the given expression list.
+     *
+     * @param array(PHP_Depend_Code_ASTExpression) $expressions Unprepared input
+     *        array with parsed expression nodes found in the source tree.
+     *
+     * @return array(PHP_Depend_Code_ASTExpression)
+     * @since 0.10.0
+     */
+    private function _reduceUnaryExpression(array $expressions)
+    {
+        for ($i = count($expressions) - 2; $i >= 0; --$i) {
+            $expression = $expressions[$i];
+            if ($expression instanceof PHP_Depend_Code_ASTUnaryExpression) {
+                $child = $expressions[$i + 1];
+
+                $expression->addChild($child);
+                $expression->setEndColumn($child->getEndColumn());
+                $expression->setEndLine($child->getEndLine());
+
+                unset($expressions[$i + 1]);
+            }
+        }
+        return array_values($expressions);
     }
 
     /**
@@ -4427,7 +4637,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseQualifiedName()
     {
         $fragments = $this->_parseQualifiedNameRaw();
-        
+
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
             return join('', $fragments);
@@ -5089,6 +5299,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $defaultValue->setValue($staticValue);
 
         return $defaultValue;
+    }
+
+    /**
+     * Checks if the given expression is a read/write variable as defined in
+     * the PHP zend_language_parser.y definition.
+     *
+     * @param PHP_Depend_Code_ASTNode $expression The context node instance.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    private function _isReadWriteVariable($expression)
+    {
+        return ($expression instanceof PHP_Depend_Code_ASTVariable
+            || $expression instanceof PHP_Depend_Code_ASTFunctionPostfix
+            || $expression instanceof PHP_Depend_Code_ASTVariableVariable
+            || $expression instanceof PHP_Depend_Code_ASTCompoundVariable
+            || $expression instanceof PHP_Depend_Code_ASTMemberPrimaryPrefix);
     }
 
     /**

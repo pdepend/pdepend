@@ -120,7 +120,24 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
             ->getParameters()
             ->current()
             ->getClass();
+    }
 
+    /**
+     * testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     * @group barbaz
+     */
+    public function testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage()
+    {
+        $classes = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getClasses();
 
+        $this->assertEquals(1, count($classes));
     }
 }
