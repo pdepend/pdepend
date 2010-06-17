@@ -96,7 +96,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     const REGEXP_INLINE_TYPE = '(^\s*/\*\s*
                                  @var\s+
-                                   \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\s+
+                                   \$[a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff]*\s+
                                    (.*?)
                                 \s*\*/\s*$)ix';
 
@@ -117,7 +117,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                      @return\s+
                       (array\(\s*
                         (\w+\s*=>\s*)?
-                        ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\|]*)\s*
+                        ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*)\s*
                       \)
                       |
                       ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
