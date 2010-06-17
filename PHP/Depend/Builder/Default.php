@@ -1391,6 +1391,54 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new cast-expression node instance.
+     *
+     * @param string $image The cast-expression image/character.
+     *
+     * @return PHP_Depend_Code_ASTCastExpression
+     * @since 0.10.0
+     */
+    public function buildASTCastExpression($image)
+    {
+        return $this->_buildASTNodeInstance('ASTCastExpression', $image);
+    }
+
+    /**
+     * Builds a new postfix-expression node instance.
+     *
+     * @param string $image The postfix-expression image/character.
+     *
+     * @return PHP_Depend_Code_ASTPostfixExpression
+     * @since 0.10.0
+     */
+    public function buildASTPostfixExpression($image)
+    {
+        return $this->_buildASTNodeInstance('ASTPostfixExpression', $image);
+    }
+
+    /**
+     * Builds a new pre-increment-expression node instance.
+     *
+     * @return PHP_Depend_Code_ASTPreIncrementExpression
+     * @since 0.10.0
+     */
+    public function buildASTPreIncrementExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTPreIncrementExpression');
+    }
+
+    /**
+     * Builds a new pre-decrement-expression node instance.
+     *
+     * @return PHP_Depend_Code_ASTPreDecrementExpression
+     * @since 0.10.0
+     */
+    public function buildASTPreDecrementExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTPreDecrementExpression');
+    }
+
+    /**
      * Builds a new function/method scope instance.
      *
      * @return PHP_Depend_Code_ASTScope

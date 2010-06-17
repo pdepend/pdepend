@@ -889,6 +889,42 @@ interface PHP_Depend_BuilderI
     function buildASTUnaryExpression($image);
 
     /**
+     * Builds a new cast-expression node instance.
+     *
+     * @param string $image The cast-expression image/character.
+     *
+     * @return PHP_Depend_Code_ASTCastExpression
+     * @since 0.10.0
+     */
+    function buildASTCastExpression($image);
+
+    /**
+     * Builds a new postfix-expression node instance.
+     *
+     * @param string $image The postfix-expression image/character.
+     *
+     * @return PHP_Depend_Code_ASTPostfixExpression
+     * @since 0.10.0
+     */
+    function buildASTPostfixExpression($image);
+
+    /**
+     * Builds a new pre-increment-expression node instance.
+     *
+     * @return PHP_Depend_Code_ASTPreIncrementExpression
+     * @since 0.10.0
+     */
+    function buildASTPreIncrementExpression();
+
+    /**
+     * Builds a new pre-decrement-expression node instance.
+     *
+     * @return PHP_Depend_Code_ASTPreDecrementExpression
+     * @since 0.10.0
+     */
+    function buildASTPreDecrementExpression();
+
+    /**
      * Builds a new function/method scope instance.
      *
      * @return PHP_Depend_Code_ASTScope

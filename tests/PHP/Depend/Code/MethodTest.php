@@ -65,6 +65,126 @@ require_once 'PHP/Depend/Code/Method.php';
 class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
+     * testGetReturnClassForMethodWithNamespacedRootClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetReturnClassForMethodWithNamespacedRootClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('Foo', $method->getReturnClass()->getName());
+    }
+
+    /**
+     * testGetReturnClassForMethodWithNamespacedClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetReturnClassForMethodWithNamespacedClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('Baz', $method->getReturnClass()->getName());
+    }
+
+    /**
+     * testGetReturnClassForMethodWithNamespacedArrayRootClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetReturnClassForMethodWithNamespacedArrayRootClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('Foo', $method->getReturnClass()->getName());
+    }
+
+    /**
+     * testGetReturnClassForMethodWithNamespacedArrayClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetReturnClassForMethodWithNamespacedArrayClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('Baz', $method->getReturnClass()->getName());
+    }
+
+    /**
+     * testGetExceptionsForMethodWithNamespacedRootClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetExceptionsForMethodWithNamespacedRootClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('Exception', $method->getExceptionClasses()->current()->getName());
+    }
+
+    /**
+     * testGetExceptionsForMethodWithNamespacedClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetExceptionsForMethodWithNamespacedClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('ErrorException', $method->getExceptionClasses()->current()->getName());
+    }
+
+    /**
+     * testInlineDependencyForMethodWithNamespacedRootClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testInlineDependencyForMethodWithNamespacedRootClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('ASTBuilder', $method->getDependencies()->current()->getName());
+    }
+
+    /**
+     * testInlineDependencyForMethodWithNamespacedClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testInlineDependencyForMethodWithNamespacedClass()
+    {
+        $method = $this->getFirstMethodInClass(__METHOD__);
+        $this->assertEquals('ASTBuilder', $method->getDependencies()->current()->getName());
+    }
+
+    /**
      * testReturnsReferenceReturnsExpectedTrue
      *
      * @return void
@@ -81,7 +201,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
                         ->current()
                         ->getMethods()
                         ->current();
-                        
+        
         $this->assertTrue($method->returnsReference());
     }
     
@@ -670,6 +790,24 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 
         $children = $method->findChildrenOfType(get_class($node2));
         $this->assertSame(array($node2), $children);
+    }
+
+    /**
+     * Returns the first method defined in a source file associated with the
+     * given test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Method
+     */
+    protected function getFirstMethodInClass($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
     }
     
     /**
