@@ -50,7 +50,7 @@
 require_once 'PHP/Depend/Code/ASTUnaryExpression.php';
 
 /**
- * This node class represents a pre-increment-expression.
+ * This node class represents a pre-decrement-expression.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/ASTUnaryExpression.php';
  * @link       http://www.pdepend.org/
  * @since      0.10.0
  */
-class PHP_Depend_Code_ASTPreIncrementExpression 
+class PHP_Depend_Code_ASTPreDecrementExpression 
     extends PHP_Depend_Code_ASTUnaryExpression
 {
     /**
@@ -81,6 +81,6 @@ class PHP_Depend_Code_ASTPreIncrementExpression
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        return $visitor->visitPreIncrementExpression($this, $data);
+        return $visitor->visitPreDecrementExpression($this, $data);
     }
 }

@@ -1324,10 +1324,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $expr;
     }
 
-    private function _parseIncrementExpression(array $exprs)
+    private function _parseIncrementExpression(array $expressions)
     {
-        if ($this->_isReadWriteVariable(end($exprs))) {
-            return $this->_parsePostIncrementExpression(array_pop($exprs));
+        if ($this->_isReadWriteVariable(end($expressions))) {
+            return $this->_parsePostIncrementExpression(array_pop($expressions));
         }
         return $this->_parsePreIncrementExpression();
     }
@@ -1353,6 +1353,45 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_INC);
 
         $expr = $this->_builder->buildASTPreIncrementExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    private function _parseDecrementExpression(array $expressions)
+    {
+        if ($this->_isReadWriteVariable(end($expressions))) {
+            return $this->_parsePostDecrementExpression(array_pop($expressions));
+        }
+        return $this->_parsePreDecrementExpression();
+    }
+
+    private function _parsePostDecrementExpression(PHP_Depend_Code_ASTNode $child)
+    {
+        $token = $this->_consumeToken(self::T_DEC);
+
+        $expr = $this->_builder->buildASTPostfixExpression($token->image);
+        $expr->addChild($child);
+        $expr->configureLinesAndColumns(
+            $child->getStartLine(),
+            $token->endLine,
+            $child->getStartColumn(),
+            $token->endColumn
+        );
+
+        return $expr;
+    }
+
+    private function _parsePreDecrementExpression()
+    {
+        $token = $this->_consumeToken(self::T_DEC);
+
+        $expr = $this->_builder->buildASTPreDecrementExpression();
         $expr->configureLinesAndColumns(
             $token->startLine,
             $token->endLine,
@@ -2091,6 +2130,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseRequireOnceExpression();
                 break;
 
+            case self::T_DEC:
+                $expressions[] = $this->_parseDecrementExpression($expressions);
+                break;
+
             case self::T_INC:
                 $expressions[] = $this->_parseIncrementExpression($expressions);
                 break;
@@ -2159,29 +2202,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _reduce(array $expressions)
     {
-        $expressions = $this->_reducePreIncrementDecrementExpression($expressions);
-        return $this->_reduceCastExpression($expressions);
-    }
-
-    private function _reducePreIncrementDecrementExpression(array $expressions)
-    {
-        for ($i = count($expressions) - 2; $i >= 0; --$i) {
-            $expression = $expressions[$i];
-            if ($expression instanceof PHP_Depend_Code_ASTPreIncrementExpression) {
-                $child = $expressions[$i + 1];
-
-                $expression->addChild($child);
-                $expression->setEndColumn($child->getEndColumn());
-                $expression->setEndLine($child->getEndLine());
-
-                unset($expressions[$i + 1]);
-            }
-        }
-        return array_values($expressions);
+        return $this->_reduceUnaryExpression($expressions);
     }
 
     /**
-     * Reduces cast expressions in the given expression list.
+     * Reduces all unary-expressions in the given expression list.
      *
      * @param array(PHP_Depend_Code_ASTExpression) $expressions Unprepared input
      *        array with parsed expression nodes found in the source tree.
@@ -2189,11 +2214,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return array(PHP_Depend_Code_ASTExpression)
      * @since 0.10.0
      */
-    private function _reduceCastExpression(array $expressions)
+    private function _reduceUnaryExpression(array $expressions)
     {
         for ($i = count($expressions) - 2; $i >= 0; --$i) {
             $expression = $expressions[$i];
-            if ($expression instanceof PHP_Depend_Code_ASTCastExpression) {
+            if ($expression instanceof PHP_Depend_Code_ASTUnaryExpression) {
                 $child = $expressions[$i + 1];
 
                 $expression->addChild($child);

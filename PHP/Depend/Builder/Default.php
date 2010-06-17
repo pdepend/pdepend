@@ -1428,6 +1428,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new pre-decrement-expression node instance.
+     *
+     * @return PHP_Depend_Code_ASTPreDecrementExpression
+     * @since 0.10.0
+     */
+    public function buildASTPreDecrementExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTPreDecrementExpression');
+    }
+
+    /**
      * Builds a new function/method scope instance.
      *
      * @return PHP_Depend_Code_ASTScope
