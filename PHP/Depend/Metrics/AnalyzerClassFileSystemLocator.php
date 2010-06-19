@@ -148,12 +148,14 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
                     }
 
                     if ($this->_isAnalyzerClass($className)) {
-                        $result[] = new ReflectionClass($className);
+                        $result[$className] = new ReflectionClass($className);
                     }
                 }
             }
         }
-        return $result;
+        
+        ksort($result);
+        return array_values($result);
     }
 
     /**
