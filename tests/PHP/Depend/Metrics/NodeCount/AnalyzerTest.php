@@ -70,6 +70,106 @@ require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
 class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testVisitClassIgnoresClassesThatAreNotUserDefined
+     * 
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testVisitClassIgnoresClassesThatAreNotUserDefined()
+    {
+        $notUserDefined = new PHP_Depend_Code_Class('Pichler');
+
+        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package->addType($notUserDefined);
+
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+
+        $metrics = $analyzer->getNodeMetrics($package);
+        $this->assertEquals(0, $metrics['noc']);
+    }
+
+    /**
+     * testVisitClassCountsClassesThatAreNotUserDefined
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testVisitClassCountsClassesThatAreNotUserDefined()
+    {
+
+        $userDefined = new PHP_Depend_Code_Class('Manuel');
+        $userDefined->setUserDefined();
+
+        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package->addType($userDefined);
+
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+
+        $metrics = $analyzer->getNodeMetrics($package);
+        $this->assertEquals(1, $metrics['noc']);
+    }
+
+    /**
+     * testVisitClassIgnoresInterfacesThatAreNotUserDefined
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testVisitClassIgnoresInterfacesThatAreNotUserDefined()
+    {
+        $notUserDefined = new PHP_Depend_Code_Interface('Pichler');
+
+        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package->addType($notUserDefined);
+
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+
+        $metrics = $analyzer->getNodeMetrics($package);
+        $this->assertEquals(0, $metrics['noi']);
+    }
+
+    /**
+     * testVisitClassCountsInterfacesThatAreNotUserDefined
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testVisitClassCountsInterfacesThatAreNotUserDefined()
+    {
+
+        $userDefined = new PHP_Depend_Code_Interface('Manuel');
+        $userDefined->setUserDefined();
+
+        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package->addType($userDefined);
+
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+
+        $metrics = $analyzer->getNodeMetrics($package);
+        $this->assertEquals(1, $metrics['noi']);
+    }
+
+    /**
      * Tests that the analyzer calculates the correct number of packages value.
      *
      * @return void
