@@ -216,6 +216,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
+        if (false === $class->isUserDefined()) {
+            return;
+        }
+
         $this->fireStartClass($class);
 
         // Update global class count
@@ -268,6 +272,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
+        if (false === $interface->isUserDefined()) {
+            return;
+        }
+
         $this->fireStartInterface($interface);
 
         // Update global class count
