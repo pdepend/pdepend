@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Interface.php';
@@ -67,7 +67,7 @@ require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
      * testVisitClassIgnoresClassesThatAreNotUserDefined
@@ -173,215 +173,223 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_AbstractTest
      * Tests that the analyzer calculates the correct number of packages value.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
      */
-    public function testAnalyzerCalculatesCorrectNumberOfPackages()
+    public function testCalculatesExpectedNumberOfPackages()
     {
-        $packageA = new PHP_Depend_Code_Package('A');
-        $packageB = new PHP_Depend_Code_Package('B');
-        $packageC = new PHP_Depend_Code_Package('C');
-        
-        $packages = array($packageA, $packageB, $packageC);
+        $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator($packages));
+        $analyzer->analyze($packages);
         
-        $project = $analyzer->getProjectMetrics();
-        
-        $this->assertArrayHasKey('nop', $project);
-        $this->assertEquals(3, $project['nop']);
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertEquals(3, $metrics['nop']);
     }
     
     /**
-     * Tests that the analyzer calculates the correct number of classes values.
+     * testCalculatesExpectedNumberOfClassesInProject
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
      */
-    public function testAnalyzerCalculatesCorrectNumberOfClasses()
+    public function testCalculatesExpectedNumberOfClassesInProject()
     {
-        $packageA = new PHP_Depend_Code_Package('A');
-        $packageA->addType(new PHP_Depend_Code_Class('A1'));
-        $packageA->addType(new PHP_Depend_Code_Class('A2'));
-        $packageA->addType(new PHP_Depend_Code_Class('A3'));
-        $packageB = new PHP_Depend_Code_Package('B');
-        $packageB->addType(new PHP_Depend_Code_Class('B1'));
-        $packageB->addType(new PHP_Depend_Code_Class('B2'));
-        $packageC = new PHP_Depend_Code_Package('C');
-        $packageC->addType(new PHP_Depend_Code_Class('C1'));
-        
-        $packages = array($packageA, $packageB, $packageC);
+        $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator($packages));
+        $analyzer->analyze($packages);
         
-        $project = $analyzer->getProjectMetrics();
-        
-        $this->assertArrayHasKey('noc', $project);
-        $this->assertEquals(6, $project['noc']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageA);
-        $this->assertArrayHasKey('noc', $metrics);
-        $this->assertEquals(3, $metrics['noc']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageB);
-        $this->assertArrayHasKey('noc', $metrics);
-        $this->assertEquals(2, $metrics['noc']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageC);
-        $this->assertArrayHasKey('noc', $metrics);
-        $this->assertEquals(1, $metrics['noc']);
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertEquals(6, $metrics['noc']);
+    }
+
+    /**
+     * testCalculatesExpectedNumberOfClassesInPackages
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testCalculatesExpectedNumberOfClassesInPackages()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = array();
+        foreach ($packages as $package) {
+            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        }
+
+        $this->assertEquals(
+            array(
+                'A' => array('noc' => 3, 'noi' => 0, 'nom' => 0, 'nof' => 0),
+                'B' => array('noc' => 2, 'noi' => 0, 'nom' => 0, 'nof' => 0),
+                'C' => array('noc' => 1, 'noi' => 0, 'nom' => 0, 'nof' => 0),
+            ),
+            $metrics
+        );
     }
     
     /**
-     * Tests that the analyzer calculates the correct number of interfaces values.
+     * testCalculatesExpectedNumberOfInterfacesInProject
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
      */
-    public function testAnalyzerCalculatesCorrectNumberOfInterfaces()
+    public function testCalculatesExpectedNumberOfInterfacesInProject()
     {
-        $packageA = new PHP_Depend_Code_Package('A');
-        $packageA->addType(new PHP_Depend_Code_Class('A1'));
-        $packageA->addType(new PHP_Depend_Code_Class('A2'));
-        $packageA->addType(new PHP_Depend_Code_Interface('A3'));
-        $packageB = new PHP_Depend_Code_Package('B');
-        $packageB->addType(new PHP_Depend_Code_Interface('B1'));
-        $packageB->addType(new PHP_Depend_Code_Interface('B2'));
-        $packageC = new PHP_Depend_Code_Package('C');
-        $packageC->addType(new PHP_Depend_Code_Interface('C1'));
-        
-        $packages = array($packageA, $packageB, $packageC);
+        $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator($packages));
+        $analyzer->analyze($packages);
         
-        $project = $analyzer->getProjectMetrics();
-        
-        $this->assertArrayHasKey('noi', $project);
-        $this->assertEquals(4, $project['noi']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageA);
-        $this->assertArrayHasKey('noi', $metrics);
-        $this->assertEquals(1, $metrics['noi']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageB);
-        $this->assertArrayHasKey('noi', $metrics);
-        $this->assertEquals(2, $metrics['noi']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageC);
-        $this->assertArrayHasKey('noi', $metrics);
-        $this->assertEquals(1, $metrics['noi']);
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertEquals(9, $metrics['noi']);
+    }
+
+    /**
+     * testCalculatesExpectedNumberOfInterfacesInPackages
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testCalculatesExpectedNumberOfInterfacesInPackages()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = array();
+        foreach ($packages as $package) {
+            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        }
+
+        $this->assertEquals(
+            array(
+                'A' => array('noc' => 0, 'noi' => 1, 'nom' => 0, 'nof' => 0),
+                'B' => array('noc' => 0, 'noi' => 2, 'nom' => 0, 'nof' => 0),
+                'C' => array('noc' => 0, 'noi' => 3, 'nom' => 0, 'nof' => 0),
+            ),
+            $metrics
+        );
     }
     
     /**
-     * Tests that the analyzer calculates the correct number of methods values.
+     * testCalculatesExpectedNumberOfMethodsInProject
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
      */
-    public function testAnalyzerCalculatesCorrectNumberOfMethods()
+    public function testCalculatesExpectedNumberOfMethodsInProject()
     {
-        $packageA = new PHP_Depend_Code_Package('A');
-        
-        $classA1 = $packageA->addType(new PHP_Depend_Code_Class('A1'));
-        $classA1->addMethod(new PHP_Depend_Code_Method('a1a'));
-        $classA1->addMethod(new PHP_Depend_Code_Method('a1b'));
-        
-        $classA2 = $packageA->addType(new PHP_Depend_Code_Class('A2'));
-        $classA2->addMethod(new PHP_Depend_Code_Method('a2a'));
-        
-        $interfsA3 = $packageA->addType(new PHP_Depend_Code_Interface('A3'));
-        $interfsA3->addMethod(new PHP_Depend_Code_Method('a3a'));
-        
-        $packageB = new PHP_Depend_Code_Package('B');
-        $interfsB1 = $packageB->addType(new PHP_Depend_Code_Interface('B1'));
-        $interfsB1->addMethod(new PHP_Depend_Code_Method('b1a'));
-        $interfsB1->addMethod(new PHP_Depend_Code_Method('b1b'));
-        
-        $interfsB2 = $packageB->addType(new PHP_Depend_Code_Interface('B2'));
-        $interfsB2->addMethod(new PHP_Depend_Code_Method('b2a'));
-        
-        $packageC  = new PHP_Depend_Code_Package('C');
-        $interfsC1 = $packageC->addType(new PHP_Depend_Code_Interface('C1'));
-        $interfsC1->addMethod(new PHP_Depend_Code_Method('c1a'));
-        $interfsC1->addMethod(new PHP_Depend_Code_Method('c1b'));
-        
-        $packages = array($packageA, $packageB, $packageC);
+        $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator($packages));
+        $analyzer->analyze($packages);
         
-        $project = $analyzer->getProjectMetrics();
-        
-        $this->assertArrayHasKey('nom', $project);
-        $this->assertEquals(9, $project['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageA);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(4, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($classA1);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(2, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($classA2);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(1, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($interfsA3);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(1, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageB);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(3, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($interfsB1);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(2, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($interfsB2);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(1, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageC);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(2, $metrics['nom']);
-        
-        $metrics = $analyzer->getNodeMetrics($interfsC1);
-        $this->assertArrayHasKey('nom', $metrics);
-        $this->assertEquals(2, $metrics['nom']);        
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertEquals(9, $metrics['nom']);
     }
-    
+
     /**
-     * Tests that the analyzer calculates the correct number of functions values.
+     * testCalculatesExpectedNumberOfMethodsInPackages
      *
      * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
      */
-    public function testAnalyzerCalculatesCorrectNumberOfFunctions()
+    public function testCalculatesExpectedNumberOfMethodsInPackages()
     {
-        $packageA = new PHP_Depend_Code_Package('A');
-        $packageA->addFunction(new PHP_Depend_Code_Function('a1'));
-        $packageA->addFunction(new PHP_Depend_Code_Function('a2'));
-        $packageA->addFunction(new PHP_Depend_Code_Function('a3'));
-        $packageB = new PHP_Depend_Code_Package('B');
-        $packageB->addFunction(new PHP_Depend_Code_Function('b1'));
-        $packageB->addFunction(new PHP_Depend_Code_Function('b2'));
-        $packageC = new PHP_Depend_Code_Package('C');
-        $packageC->addFunction(new PHP_Depend_Code_Function('c1'));
-        
-        $packages = array($packageA, $packageB, $packageC);
+        $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator($packages));
-        
-        $project = $analyzer->getProjectMetrics();
-        
-        $this->assertArrayHasKey('nof', $project);
-        $this->assertEquals(6, $project['nof']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageA);
-        $this->assertArrayHasKey('nof', $metrics);
-        $this->assertEquals(3, $metrics['nof']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageB);
-        $this->assertArrayHasKey('nof', $metrics);
-        $this->assertEquals(2, $metrics['nof']);
-        
-        $metrics = $analyzer->getNodeMetrics($packageC);
-        $this->assertArrayHasKey('nof', $metrics);
-        $this->assertEquals(1, $metrics['nof']);
+        $analyzer->analyze($packages);
+
+        $metrics = array();
+        foreach ($packages as $package) {
+            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        }
+
+        $this->assertEquals(
+            array(
+                'A' => array('noc' => 2, 'noi' => 1, 'nom' => 4, 'nof' => 0),
+                'B' => array('noc' => 0, 'noi' => 2, 'nom' => 3, 'nof' => 0),
+                'C' => array('noc' => 0, 'noi' => 1, 'nom' => 2, 'nof' => 0),
+            ),
+            $metrics
+        );
+    }
+
+    /**
+     * testCalculatesExpectedNumberOfFunctionsInProject
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testCalculatesExpectedNumberOfFunctionsInProject()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertEquals(6, $metrics['nof']);
+    }
+
+    /**
+     * testCalculatesExpectedNumberOfFunctionsInPackages
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodecount
+     * @group unittest
+     */
+    public function testCalculatesExpectedNumberOfFunctionsInPackages()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = array();
+        foreach ($packages as $package) {
+            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        }
+
+        $this->assertEquals(
+            array(
+                'A' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 3),
+                'B' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 2),
+                'C' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 1),
+            ),
+            $metrics
+        );
     }
 }
