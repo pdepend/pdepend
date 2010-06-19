@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                         http://pear.php.net/dtd/tasks-1.0.xsd                         http://pear.php.net/dtd/package-2.0                         http://pear.php.net/dtd/package-2.0.xsd">
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.0" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                         http://pear.php.net/dtd/tasks-1.0.xsd                         http://pear.php.net/dtd/package-2.0                         http://pear.php.net/dtd/package-2.0.xsd">
   <name>PHP_Depend</name>
   <channel>pear.pdepend.org</channel>
   <summary>PHP_Depend design quality metrics for PHP packages</summary>
-  <description>
-PHP_Depend is an adaption of the Java design quality metrics software JDepend 
-and the NDepend metric tool.
-  </description>
+  <description>PHP_Depend is an adaption of the Java design quality metrics software JDepend 
+and the NDepend metric tool.</description>
   <lead>
     <name>Manuel Pichler</name>
     <user>mapi</user>
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2010-05-20</date>
+  <date>2010-06-18</date>
+  <time>20:08:44</time>
   <version>
-    <release>0.9.14</release>
+    <release>0.9.15</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,17 +23,17 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Fixed #149: Exception Message is empty. Fixed in svn revision #1277.
-- Concurrency issue in PHP_Depend's file cache fixed.
-  </notes>
+- Fixed #152: Endless loop bug for identical class and parent name.
+  Fixed in svn revision #1296.
+ </notes>
   <contents>
     <dir name="/">
-      <file name="pdepend.bat" role="script">
+      <file md5sum="e057930bdc257a38991cee0b6af3f229" name="pdepend.bat" role="script">
         <tasks:replace from="@package_version@" to="version" type="package-info"/>
         <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
         <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config"/>
       </file>
-      <file name="pdepend.php" role="script">
+      <file md5sum="b2085ad03e0822d0057c00dc06e3c205" name="pdepend.php" role="script">
         <tasks:replace from="@package_version@" to="version" type="package-info"/>
         <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
         <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
@@ -58,25 +57,28 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
-            <file name="Package.php" role="php">
+            <file name="ASTStringIndexExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTFormalParameters.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTScopeStatement.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTFormalParameter.php" role="php">
+            <file name="Package.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTMethodPostfix.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTStringIndexExpression.php" role="php">
+            <file name="ASTScopeStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTForStatement.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTHeredoc.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTParentReference.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="NodeI.php" role="php">
@@ -88,13 +90,16 @@ and the NDepend metric tool.
             <file name="ASTAssignmentExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTHeredoc.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTStatement.php" role="php">
+            <file name="ASTFormalParameter.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTCompoundVariable.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTLogicalAndExpression.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Method.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTLogicalXorExpression.php" role="php">
@@ -106,13 +111,16 @@ and the NDepend metric tool.
             <file name="ASTVariable.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTElseIfStatement.php" role="php">
+            <file name="ASTSwitchStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTLogicalAndExpression.php" role="php">
+            <file name="Value.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="Method.php" role="php">
+            <file name="ASTFieldDeclaration.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTCastExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTForUpdate.php" role="php">
@@ -121,31 +129,25 @@ and the NDepend metric tool.
             <file name="ASTConstantDefinition.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="Value.php" role="php">
+            <file name="ASTStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTSwitchStatement.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTParentReference.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTFieldDeclaration.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTListExpression.php" role="php">
+            <file name="ASTThrowStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTStaticReference.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTPostfixExpression.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTListExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTComment.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTForInit.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTWhileStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="AbstractClassOrInterface.php" role="php">
@@ -166,10 +168,16 @@ and the NDepend metric tool.
             <file name="ASTRequireExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="ASTWhileStatement.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="ASTPropertyPostfix.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTGotoStatement.php" role="php">
+            <file name="ASTGlobalStatement.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTPreDecrementExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTIncludeExpression.php" role="php">
@@ -181,13 +189,13 @@ and the NDepend metric tool.
             <file name="ASTFunctionPostfix.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTThrowStatement.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTGlobalStatement.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="File.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTEvalExpression.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTGotoStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTReturnStatement.php" role="php">
@@ -199,13 +207,10 @@ and the NDepend metric tool.
             <file name="ASTClosure.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTEvalExpression.php" role="php">
+            <file name="ASTElseIfStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTConditionalExpression.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTBooleanOrExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTNode.php" role="php">
@@ -214,13 +219,13 @@ and the NDepend metric tool.
             <file name="ASTNodeI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="ASTPreIncrementExpression.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="ASTClassReference.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTConstant.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTArrayIndexExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTUnaryExpression.php" role="php">
@@ -241,13 +246,16 @@ and the NDepend metric tool.
             <file name="ASTLabelStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="ASTArrayIndexExpression.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="ASTArguments.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="AbstractCallable.php" role="php">
+            <file name="ASTTypeNode.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTTypeNode.php" role="php">
+            <file name="Class.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTExitExpression.php" role="php">
@@ -259,10 +267,13 @@ and the NDepend metric tool.
             <file name="ASTIfStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="Class.php" role="php">
+            <file name="ASTEchoStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTEchoStatement.php" role="php">
+            <file name="FilterI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AbstractCallable.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTScope.php" role="php">
@@ -274,9 +285,6 @@ and the NDepend metric tool.
             <file name="ASTStaticVariableDeclaration.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="FilterI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="ASTTryStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -284,6 +292,9 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTCatchStatement.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ClassOrInterfaceReferenceIterator.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="Property.php" role="php">
@@ -295,10 +306,13 @@ and the NDepend metric tool.
             <file name="ASTConstantDeclarator.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ClassOrInterfaceReferenceIterator.php" role="php">
+            <file name="ASTLiteral.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTLiteral.php" role="php">
+            <file name="AbstractItem.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTBooleanOrExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTCloneExpression.php" role="php">
@@ -308,9 +322,6 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="Function.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AbstractItem.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTSelfReference.php" role="php">
@@ -764,7 +775,7 @@ and the NDepend metric tool.
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
 - Initial release.
-      </notes>
+   </notes>
     </release>
     <release>
       <lead>
@@ -784,8 +795,8 @@ and the NDepend metric tool.
       <date>2008-02-17</date>
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
-- Checkout and test cases fixed for windows users. 
-      </notes>
+- Checkout and test cases fixed for windows users.
+   </notes>
     </release>
     <release>
       <lead>
@@ -817,7 +828,7 @@ and the NDepend metric tool.
   - NodeLoc (loc, cloc, ncloc)
 - Pluggable logger architecture.
 - Pluggable metric analyzer architecture.
-      </notes>
+   </notes>
     </release>
     <release>
       <lead>
@@ -840,7 +851,7 @@ and the NDepend metric tool.
 - #18 + Introduce a CodeAware interface for loggers.
 - #23 + Use an SVG-Template for the jdepend chart.
 - #24 + There is an endless loop for inline html.
-      </notes>
+   </notes>
     </release>
     <release>
       <lead>
@@ -864,7 +875,7 @@ and the NDepend metric tool.
 - #26 + Handle class and interface names case insensitive.
 - #27 + Handle internal classes and interfaces.
 - #28 + Add option --bad-documentation.
-      </notes>
+   </notes>
     </release>
     <release>
       <lead>
@@ -888,7 +899,7 @@ and the NDepend metric tool.
 - #34 + Support for pattern based package filter.
 - #37 + Remove Logger - XML Config dependency.
 - #38 + The Logger interface should not force a default ctor-signature.
-      </notes>
+   </notes>
     </release>
     <release>
       <lead>
@@ -909,7 +920,7 @@ and the NDepend metric tool.
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
 - No more features or bug fixes, beta4 seems to be stable.
-      </notes>
+   </notes>
     </release>
     <release>
       <lead>
@@ -929,11 +940,11 @@ and the NDepend metric tool.
       <date>2008-12-15</date>
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
-    - PHP_Depend works with PHP 5.2.0
-    - #19 + Implement a phpunit compatible xml logger.
-    - #20 + Add support for class constants.
-    - #30 + Improve Lines Of Code. 
-      </notes>
+- PHP_Depend works with PHP 5.2.0
+- #19 + Implement a phpunit compatible xml logger.
+- #20 + Add support for class constants.
+- #30 + Improve Lines Of Code.
+   </notes>
     </release>
     <release>
       <lead>
@@ -953,11 +964,11 @@ and the NDepend metric tool.
       <date>2008-12-31</date>
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
-    - Performance improvements
-    - #21 + Support for the NPath Complexity metric.
-    - #78 + Parser fails for comment in function signature.
-    - #79 + Token objects instead of arrays.
-      </notes>
+- Performance improvements
+- #21 + Support for the NPath Complexity metric.
+- #78 + Parser fails for comment in function signature.
+- #79 + Token objects instead of arrays.
+   </notes>
     </release>
     <release>
       <lead>
@@ -977,8 +988,8 @@ and the NDepend metric tool.
       <date>2009-01-02</date>
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
-    - #84 + Critical bug, a backslash could kill PHP_Depend with all PHP Versions lower 5.3.0alpha3
-      </notes>
+- #84 + Critical bug, a backslash could kill PHP_Depend with all PHP Versions lower 5.3.0alpha3
+   </notes>
     </release>
     <release>
       <version>
@@ -992,13 +1003,13 @@ and the NDepend metric tool.
       <date>2009-01-19</date>
       <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
       <notes>
-    - #89 + Source file is never set for methods, properties and constants.
-    - #83 + Storage layer for node tokens added, reduces memory consumption.
-    - #85 + TextUI displays the execution time and the memory usage(linux only).
-    - #82 + Tokenizer cache added, reduces runtime up to 25%.
-    - Code restructured, input filters and iterator moved to package "Input".
-    - Test suite restructured to reflect the actual project structure.
-      </notes>
+- #89 + Source file is never set for methods, properties and constants.
+- #83 + Storage layer for node tokens added, reduces memory consumption.
+- #85 + TextUI displays the execution time and the memory usage(linux only).
+- #82 + Tokenizer cache added, reduces runtime up to 25%.
+- Code restructured, input filters and iterator moved to package "Input".
+- Test suite restructured to reflect the actual project structure.
+   </notes>
     </release>
     <release>
       <date>2009-02-21</date>
@@ -1027,7 +1038,7 @@ and the NDepend metric tool.
 - Support for class final modifier added.
 - Support for chained types like "false|Iterator" or "array(false|Iterator)" in
   doc comments added.
-        </notes>
+   </notes>
     </release>
     <release>
       <date>2009-05-18</date>
@@ -1062,7 +1073,7 @@ and the NDepend metric tool.
 - #73 + Inconsistent state when an interface and a class with the same name
   exists, fixed in svn revision #776. (Fixed)
 - #76 + Tokenizer keyword detection is broken, fixed in svn revision #871. (Fixed)
-        </notes>
+   </notes>
     </release>
     <release>
       <date>2009-08-02</date>
@@ -1094,7 +1105,7 @@ and the NDepend metric tool.
   array property, fixed in svn revision #944.
 - Closes #92: Use class constants as analyzer identifiers, implemented in svn
   revision #950.
-      </notes>
+   </notes>
     </release>
     <release>
       <date>2009-12-14</date>
@@ -1118,7 +1129,7 @@ and the NDepend metric tool.
   #1010.
 - Fixed #103: The parser does not handle all strings as parameter default value
   correct, fixed in svn revision #1009.
-        </notes>
+   </notes>
     </release>
     <release>
       <date>2009-12-26</date>
@@ -1136,7 +1147,7 @@ and the NDepend metric tool.
   svn revision #1015.
 - Implemented #104: Add isStatic() method on ASTMemberPrimaryPrefix node,
   implemented in svn revision #1013.
-      </notes>
+   </notes>
     </release>
     <release>
       <date>2010-02-24</date>
@@ -1171,7 +1182,7 @@ and the NDepend metric tool.
 - Performance intensive calculation result cached.
 - Test code restructured and improved.
 - Concurrency issue for parallel running pdepend instances fixed.
-      </notes>
+   </notes>
     </release>
     <release>
       <date>2010-03-02</date>
@@ -1196,7 +1207,7 @@ and the NDepend metric tool.
   parallel. In this setup the used cache key spl_object_hash() has
   caused a corrupted cache, because different php process instances
   have written different data to the same cache file.
-        </notes>
+   </notes>
     </release>
     <release>
       <date>2010-04-25</date>
@@ -1225,7 +1236,7 @@ and the NDepend metric tool.
   in svn revision #1250.
 - Fixed #135: Several Statement classes do not inherit ASTStatement. Fixed
   in svn revision #1255.
-      </notes>
+   </notes>
     </release>
     <release>
       <date>2010-05-10</date>
@@ -1243,8 +1254,23 @@ and the NDepend metric tool.
   source file. Fixed in svn revision #1262.
 - Fixed #150: Invalid nowdoc substitution has produced broken code.
   Fixed in svn revision #1266.
-      </notes>
+   </notes>
+    </release>
+    <release>
+      <date>2010-05-20</date>
+      <version>
+        <release>0.9.14</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Fixed #149: Exception Message is empty. Fixed in svn revision #1277.
+- Concurrency issue in PHP_Depend's file cache fixed.
+   </notes>
     </release>
   </changelog>
 </package>
- 
