@@ -165,7 +165,7 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
      * @return void
      * @see PHP_Depend_Storage_AbstractEngine#garbageCollect()
      */
-    protected function garbageCollect()
+    protected function garbageCollect($version = '@package_version@')
     {
         $directories = array($this->_dirname);
         if (count($this->_groups) > 0) {
@@ -177,7 +177,7 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
         $lifetime = time() - $this->getMaxLifetime();
 
         if ($this->hasPrune()) {
-            $pattern = '*.' . $this->_engineInstanceKey . '.data';
+            $pattern = '*.' . $this->_engineInstanceKey . '.' . $version . '.data';
         } else {
             $pattern = '*.data';
         }
