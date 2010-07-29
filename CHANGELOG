@@ -1,11 +1,3 @@
-PHP_Depend 0.9.16 
------------------
-
-- Fixed #153: Only count those classes and interfaces that are flagged
-  as user defined types. Fixed in subversion revision #1327.
-- Implemented #154: Make execution order of analyzers reproducable.
-  Implemented in svn revision #1331.
-
 PHP_Depend 0.9.16
 -----------------
 
