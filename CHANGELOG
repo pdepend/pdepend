@@ -1,19 +1,17 @@
-PHP_Depend 0.10.0
+PHP_Depend 0.9.16 
 -----------------
 
-- Implemented #131: Add new method isThis() to PHP_Depend's ASTVariable
-  class. Implemented in svn revision #1291.
-- Implemented #139: Implement Post-/Pre- Increment/Decrement. Implemented
-  in svn revision #
-- Implemented #148: Implement cast expressions. Implemented in svn
-  revision #1283.
+- Fixed #153: Only count those classes and interfaces that are flagged
+  as user defined types. Fixed in subversion revision #1327.
+- Implemented #154: Make execution order of analyzers reproducable.
+  Implemented in svn revision #1331.
 
 PHP_Depend 0.9.15
 -----------------
 
-- Fixed #152: Endless loop bug for identical class and parent name. Fixed
-  in svn revision #1296.
- 
+- Fixed #152: Endless loop bug for identical class and parent name.
+  Fixed in svn revision #1296.
+
 PHP_Depend 0.9.14
 -----------------
 
