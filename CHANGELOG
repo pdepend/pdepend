@@ -1,6 +1,9 @@
 PHP_Depend 0.10.0
 -----------------
 
+- Implemented #130: Simplify PHP_Depend's ASTCompoundVariable and skip
+  nested ASTCompoundExpression node instance. Implemented in svn revision
+  number #1344.
 - Implemented #131: Add new method isThis() to PHP_Depend's ASTVariable
   class. Implemented in svn revision #1291.
 - Implemented #139: Implement Post-/Pre- Increment/Decrement. Implemented
