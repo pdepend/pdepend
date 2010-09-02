@@ -84,6 +84,7 @@ require_once dirname(__FILE__) . '/ReconfigureXdebugMaxNestingLevelBug133Test.ph
 require_once dirname(__FILE__) . '/EmptyExceptionMessageInPHP52HelperBug149Test.php';
 require_once dirname(__FILE__) . '/InvalidNowdocSubstitutionBug150Test.php';
 require_once dirname(__FILE__) . '/EndLessLoopBetweenForParentClassBug152Test.php';
+require_once dirname(__FILE__) . '/InvalidTokenObjectOperatorInForeachLoopBug161Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -149,11 +150,8 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InvalidNowdocSubstitutionBug150Test');
         $suite->addTestSuite('PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_InvalidTokenObjectOperatorInForeachLoopBug161Test');
 
         return $suite;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Bugs_AllTests::main') {
-    PHP_Depend_Bugs_AllTests::main();
 }
