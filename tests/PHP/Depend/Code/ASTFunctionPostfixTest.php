@@ -125,7 +125,6 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
         $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
         $expected = array(
             PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
-            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
             PHP_Depend_Code_ASTConstant::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
             PHP_Depend_Code_ASTConstant::CLAZZ

@@ -156,7 +156,6 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
             PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
-            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
             PHP_Depend_Code_ASTConstant::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
@@ -255,7 +254,6 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
             PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
-            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
             PHP_Depend_Code_ASTConstant::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
@@ -283,7 +281,6 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
             PHP_Depend_Code_ASTVariableVariable::CLAZZ,
             PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
-            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
             PHP_Depend_Code_ASTConstant::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
