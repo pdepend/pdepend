@@ -235,6 +235,96 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     }
 
     /**
+     * testForeachStatementWithObjectPropertyByReference
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_parseForeachStatement
+     * @covers PHP_Depend_Parser::_parseVariableOrMemberByReference
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementWithObjectPropertyByReference()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
+    }
+
+    /**
+     * testForeachStatementWithKeyAndObjectPropertyByReference
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_parseForeachStatement
+     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementWithKeyAndObjectPropertyByReference()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
+    }
+
+    /**
+     * testForeachStatementWithObjectPropertyAsKey
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_parseForeachStatement
+     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementWithObjectPropertyAsKey()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+    }
+
+    /**
+     * testForeachStatementWithObjectPropertyAsValue
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_parseForeachStatement
+     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementWithObjectPropertyAsValue()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+    }
+
+    /**
+     * testForeachStatementWithObjectPropertyAsKeyAndValue
+     *
+     * @return void
+     * @covers PHP_Depend_Parser::_parseForeachStatement
+     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementWithObjectPropertyAsKeyAndValue()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+    }
+
+    /**
      * testForeachStatementThrowsExpectedExceptionForKeyByReference
      *
      * @return void
