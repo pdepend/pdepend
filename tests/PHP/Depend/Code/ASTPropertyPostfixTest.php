@@ -152,7 +152,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
             PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
-            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
             PHP_Depend_Code_ASTExpression::CLAZZ,
             PHP_Depend_Code_ASTConstant::CLAZZ,
             PHP_Depend_Code_ASTLiteral::CLAZZ
