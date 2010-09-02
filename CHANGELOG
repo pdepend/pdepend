@@ -11,6 +11,12 @@ PHP_Depend 0.10.0
 - Implemented #148: Implement cast expressions. Implemented in svn
   revision #1283.
 
+PHP_Depend 0.9.18
+-----------------
+
+- Fixed #161: Unexpected token: -> in foreach statement. Fixed in 
+  subversion revision #1347.
+
 PHP_Depend 0.9.17
 -----------------
 

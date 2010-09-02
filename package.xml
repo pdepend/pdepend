@@ -12,10 +12,10 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2010-07-29</date>
+  <date>2010-09-03</date>
   <time>20:08:44</time>
   <version>
-    <release>0.9.17</release>
+    <release>0.9.18</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -24,8 +24,8 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Fixed #156: Temp Folder /tmp/pdpend_storage-1000 grows very large.
-  Fixed with Sebastian Marek's patch in svn revision #1335.
+- Fixed #161: Unexpected token: -&gt; in foreach statement. Fixed in
+  subversion revision #1347.
   </notes>
   <contents>
     <dir name="/">
@@ -1290,7 +1290,6 @@ and the NDepend metric tool.
   Fixed in svn revision #1296.
             </notes>
     </release>
-
     <release>
       <date>2010-06-19</date>
       <time>20:08:44</time>
@@ -1308,6 +1307,23 @@ and the NDepend metric tool.
   as user defined types. Fixed in subversion revision #1327.
 - Implemented #154: Make execution order of analyzers reproducable.
   Implemented in svn revision #1331.
+      </notes>
+    </release>
+    <release>
+      <date>2010-07-29</date>
+      <time>20:08:44</time>
+      <version>
+        <release>0.9.17</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Fixed #156: Temp Folder /tmp/pdpend_storage-1000 grows very large.
+  Fixed with Sebastian Marek's patch in svn revision #1335.
       </notes>
     </release>
   </changelog>
