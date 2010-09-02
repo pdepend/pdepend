@@ -2,7 +2,7 @@ PHP_Depend 0.9.18
 -----------------
 
 - Fixed #161: Unexpected token: -> in foreach statement. Fixed in 
-  subversion revision #.
+  subversion revision #1347.
 
 PHP_Depend 0.9.17
 -----------------
