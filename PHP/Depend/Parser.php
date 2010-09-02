@@ -3749,12 +3749,34 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
 
         default:
-            $variable = $this->_builder->buildASTCompoundVariable($token->image);
-            $variable->addChild($this->_parseCompoundExpression());
+            $variable = $this->_parseCompoundVariable($token);
             break;
         }
 
         return $this->_setNodePositionsAndReturn($variable);
+    }
+
+    /**
+     * This method parses a compound variable like:
+     *
+     * <code>
+     * //     ----------------
+     * return ${'Foo' . 'Bar'};
+     * //     ----------------
+     * </code>
+     *
+     * @param PHP_Depend_Token $token The dollar token.
+     *
+     * @return PHP_Depend_Code_ASTCompoundVariable
+     * @since 0.10.0
+     */
+    private function _parseCompoundVariable(PHP_Depend_Token $token)
+    {
+        return $this->_parseBraceExpression(
+            $this->_builder->buildASTCompoundVariable($token->image),
+            $this->_consumeToken(self::T_CURLY_BRACE_OPEN),
+            self::T_CURLY_BRACE_CLOSE
+        );
     }
 
     /**

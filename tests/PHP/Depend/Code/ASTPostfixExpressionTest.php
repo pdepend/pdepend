@@ -230,9 +230,8 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
         $this->assertGraphEquals(
             $expr,
             array(
-                'PHP_Depend_Code_ASTCompoundVariable',
-                'PHP_Depend_Code_ASTCompoundExpression',
-                'PHP_Depend_Code_ASTConstant'
+                PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+                PHP_Depend_Code_ASTConstant::CLAZZ
             )
         );
     }

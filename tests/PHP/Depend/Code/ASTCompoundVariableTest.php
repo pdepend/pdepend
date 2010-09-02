@@ -81,7 +81,7 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
     {
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
-        $string = $variable->getChild(0)->getChild(0);
+        $string = $variable->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTString::CLAZZ, $string);
     }
 
@@ -100,7 +100,7 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
     {
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
-        $literal = $variable->getChild(0)->getChild(0);
+        $literal = $variable->getChild(0);
         $this->assertEquals("'FOO{\$bar}'", $literal->getImage());
     }
 
@@ -119,7 +119,7 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
     {
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
-        $string = $variable->getChild(0)->getChild(0);
+        $string = $variable->getChild(0);
         $this->assertType(PHP_Depend_Code_ASTString::CLAZZ, $string);
     }
 
@@ -138,7 +138,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
     {
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
         $expected = array(
-            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
             PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
