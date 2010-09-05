@@ -58,8 +58,6 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- *
- * @todo Rename this class into PHP52Helper and make methods none static.
  */
 final class PHP_Depend_Tokenizer_PHP52Helper
 {
