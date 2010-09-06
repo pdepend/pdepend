@@ -65,86 +65,130 @@ require_once 'PHP/Depend/Input/ExcludePathFilter.php';
 class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the exclude filter with a single file in the exclude list.
+     * testExcludePathFilterRejectsFile
      *
      * @return void
+     * @covers PHP_Depend_Input_ExcludePathFilter
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
      */
-    public function testExcludePathFilterWithFile()
+    public function testExcludePathFilterRejectsFile()
     {
-        $files  = array('code-5.2.x/package2.php');
-        $filter = new PHP_Depend_Input_ExcludePathFilter($files);
-        $it     = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code/code-5.2.x')
-        );
+        $excludes  = array('/package2.php');
+        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
 
-        $result = array();
-        foreach ($it as $file) {
-            if ($filter->accept($file)) {
-                $result[$file->getFilename()] = true;
-            }
-        }
+        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $expected = array('package1.php', 'package3.php');
 
-        $this->assertArrayHasKey('package1.php', $result);
-        $this->assertArrayHasKey('package3.php', $result);
-        $this->assertArrayNotHasKey('package2.php', $result);
+        self::assertEquals($expected, $actual);
     }
 
     /**
-     * Tests the path exclude filter with a directory in the exclude list.
+     * testExcludePathFilterRejectsFiles
      *
      * @return void
+     * @covers PHP_Depend_Input_ExcludePathFilter
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
      */
-    public function testExcludePathFilterWithDirectory()
+    public function testExcludePathFilterRejectsFiles()
     {
-        $files  = array('/code-5.2.x/', '/code-without-comments');
-        $filter = new PHP_Depend_Input_ExcludePathFilter($files);
-        $it     = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
-        );
+        $excludes  = array('/package2.php', 'package1.php');
+        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
 
-        $result = array();
-        foreach ($it as $file) {
-            if ($filter->accept($file)) {
-                $result[$file->getFilename()] = true;
-            }
-        }
+        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $expected = array('package3.php');
 
-        $this->assertArrayHasKey('pkg3FooI.txt', $result);
-        $this->assertArrayHasKey('invalid_class_with_code.txt', $result);
-        $this->assertArrayNotHasKey('package1.php', $result);
+        self::assertEquals($expected, $actual);
     }
 
     /**
-     * Tests the path exclude filter with a mix of files and directories.
+     * testExcludePathFilterRejectsDirectory
      *
      * @return void
+     * @covers PHP_Depend_Input_ExcludePathFilter
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
      */
-    public function testExcludePathFilterWithFileAndDirectory()
+    public function testExcludePathFilterRejectsDirectory()
     {
-        $filter = new PHP_Depend_Input_ExcludePathFilter(
-            array(
-                '/code-5.3.x/',
-                '/code-5.2.x/package1.php',
-                '/code-without-comments/',
-                '/function.inc'
-            )
+        $excludes  = array('/package1');
+        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
+
+        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $expected = array('file2.php', 'file3.php');
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * testExcludePathFilterRejectsDirectories
+     *
+     * @return void
+     * @covers PHP_Depend_Input_ExcludePathFilter
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testExcludePathFilterRejectsDirectories()
+    {
+        $excludes  = array('/package1', 'package3');
+        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
+
+        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $expected = array('file2.php');
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * testExcludePathFilterRejectsFilesAndDirectories
+     *
+     * @return void
+     * @covers PHP_Depend_Input_ExcludePathFilter
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testExcludePathFilterRejectsFilesAndDirectories()
+    {
+        $excludes  = array('/package1', 'package3/file3.php');
+        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
+
+        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $expected = array('file2.php');
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * Creates an array with those files that were acceptable for the exclude
+     * path filter.
+     *
+     * @param array(string) $excludes  The filtered patterns
+     * @param string        $directory The input directory
+     *
+     * @return array(string)
+     */
+    protected function createFilteredFileList(array $excludes, $directory)
+    {
+        $filter = new PHP_Depend_Input_ExcludePathFilter($excludes);
+
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($directory)
         );
 
-        $it = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(dirname(__FILE__) . '/../_code')
-        );
-
-        $result = array();
-        foreach ($it as $file) {
-            if ($filter->accept($file)) {
-                $result[$file->getFilename()] = true;
+        $actual = array();
+        foreach ($files as $file) {
+            if ($filter->accept($file) && $file->isFile()) {
+                $actual[] = $file->getFilename();
             }
         }
+        sort($actual);
 
-        $this->assertArrayHasKey('package2.php', $result);
-        $this->assertArrayHasKey('invalid_class_with_code.txt', $result);
-        $this->assertArrayNotHasKey('pkg3FooI.txt', $result);
-        $this->assertArrayNotHasKey('package1.php', $result);
-        $this->assertArrayNotHasKey('function.inc', $result);
+        return $actual;
     }
 }
