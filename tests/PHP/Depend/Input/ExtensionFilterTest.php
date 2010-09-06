@@ -65,63 +65,70 @@ require_once 'PHP/Depend/Input/ExtensionFilter.php';
 class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the extension filter for simple *.txt.
+     * testExtensionFilterAcceptsOneFileExtension
      *
      * @return void
+     * @covers PHP_Depend_Input_ExtensionFilter
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
      */
-    public function testFileExtensionFilterWithTxtExtension()
+    public function testExtensionFilterAcceptsOneFileExtension()
     {
-        $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
-        $filter = new PHP_Depend_Input_ExtensionFilter(array('txt'));
+        $includes  = array('php4');
+        $directory = self::createCodeResourceURI('input/ExtensionFilter/' . __FUNCTION__);
 
-        $result = array();
-        foreach ($it as $file) {
-            if ($filter->accept($file)) {
-                $result[] = $file->getFilename();
-            }
-        }
+        $actual   = $this->createFilteredFileList($includes, $directory);
+        $expected = array('file4.php4');
 
-        sort($result);
-
-        $expected = array(
-            'invalid_class_with_code.txt',
-            'invalid_function1.txt',
-            'invalid_function2.txt',
-            'not_closed_class.txt',
-            'not_closed_function.txt'
-        );
-
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $actual);
     }
 
     /**
-     * Tests the extension filter with multiple allowed file extensions.
+     * testExtensionFilterAcceptsMultipleFileExtensions
      *
      * @return void
+     * @covers PHP_Depend_Input_ExtensionFilter
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
      */
-    public function testFileExtensionFilterWithMultipleExtensions()
+    public function testExtensionFilterAcceptsMultipleFileExtensions()
     {
-        $it     = new DirectoryIterator(dirname(__FILE__) . '/../_code');
-        $filter = new PHP_Depend_Input_ExtensionFilter(array('txt', 'inc'));
+        $includes  = array('inc', 'php');
+        $directory = self::createCodeResourceURI('input/ExtensionFilter/' . __FUNCTION__);
 
-        $result = array();
-        foreach ($it as $file) {
-            if ($filter->accept($file)) {
-                $result[] = $file->getFilename();
-            }
-        }
+        $actual   = $this->createFilteredFileList($includes, $directory);
+        $expected = array('file1.inc', 'file2.php');
 
-        sort($result);
+        self::assertEquals($expected, $actual);
+    }
 
-        $expected = array(
-            'function.inc',
-            'invalid_class_with_code.txt',
-            'invalid_function1.txt',
-            'invalid_function2.txt',
-            'not_closed_class.txt',
-            'not_closed_function.txt'
+    /**
+     * Creates an array with those files that were acceptable for the extension
+     * filter.
+     *
+     * @param array(string) $includes  The file extensions
+     * @param string        $directory The input directory
+     *
+     * @return array(string)
+     */
+    protected function createFilteredFileList(array $includes, $directory)
+    {
+        $filter = new PHP_Depend_Input_ExtensionFilter($includes);
+
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($directory)
         );
 
-        $this->assertEquals($expected, $result);
+        $actual = array();
+        foreach ($files as $file) {
+            if ($filter->accept($file) && $file->isFile()) {
+                $actual[] = $file->getFilename();
+            }
+        }
+        sort($actual);
+
+        return $actual;
     }
 }
