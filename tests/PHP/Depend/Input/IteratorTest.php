@@ -66,7 +66,7 @@ require_once 'PHP/Depend/Input/Iterator.php';
 class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that the filter iterator only returns files with a .php extension.
+     * testIteratorWithOneFileExtension
      *
      * @return void
      * @covers PHP_Depend_Input_Iterator
@@ -74,33 +74,19 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * @group pdepend::input
      * @group unittest
      */
-    public function testIteratorWithExtensionFilterForPhpFilesOnly()
+    public function testIteratorWithOneFileExtension()
     {
-        $dir = self::createCodeResourceURI('input/iterator');
-        $it  = new PHP_Depend_Input_Iterator(
-            new DirectoryIterator($dir),
-            new PHP_Depend_Input_ExtensionFilter(array('php'))
-        );
+        $includes  = array('php4');
+        $directory = self::createCodeResourceURI('input/Iterator/' . __FUNCTION__);
 
-        $expected = array(
-            'class.php',
-            'mixed.php',
-            'package.php',
-        );
+        $actual   = $this->createFilteredFileList($includes, $directory);
+        $expected = array('file4.php4');
 
-        $result = array();
-        foreach ($it as $file) {
-            $result[] = $file->getFilename();
-        }
-
-        sort($expected);
-        sort($result);
-
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $actual);
     }
 
     /**
-     * testIteratorWithExtensionFilterForIncAndTxtFiles
+     * testIteratorWithMultipleFileExtensions
      *
      * @return void
      * @covers PHP_Depend_Input_Iterator
@@ -108,27 +94,38 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * @group pdepend::input
      * @group unittest
      */
-    public function testIteratorWithExtensionFilterForIncAndTxtFiles()
+    public function testIteratorWithMultipleFileExtensions()
     {
-        $dir = self::createCodeResourceURI('input/iterator');
-        $it  = new PHP_Depend_Input_Iterator(
-            new DirectoryIterator($dir),
-            new PHP_Depend_Input_ExtensionFilter(array('inc', 'txt'))
+        $includes  = array('inc', 'php');
+        $directory = self::createCodeResourceURI('input/Iterator/' . __FUNCTION__);
+
+        $actual   = $this->createFilteredFileList($includes, $directory);
+        $expected = array('file1.inc', 'file2.php');
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * Creates an array of file names that were returned by the input iterator.
+     *
+     * @param array(string) $includes  The accepted file extension.
+     * @param string        $directory The source directory
+     *
+     * @return array(string)
+     */
+    protected function createFilteredFileList(array $includes, $directory)
+    {
+        $filter = new PHP_Depend_Input_ExtensionFilter($includes);
+        $files  = new PHP_Depend_Input_Iterator(
+            new DirectoryIterator($directory), $filter
         );
 
-        $expected = array(
-            'function.inc',
-            'function.txt',
-        );
-
-        $result = array();
-        foreach ($it as $file) {
-            $result[] = $file->getFilename();
+        $actual = array();
+        foreach ($files as $file) {
+            $actual[] = $file->getFilename();
         }
+        sort($actual);
 
-        sort($expected);
-        sort($result);
-
-        $this->assertEquals($expected, $result);
+        return $actual;
     }
 }
