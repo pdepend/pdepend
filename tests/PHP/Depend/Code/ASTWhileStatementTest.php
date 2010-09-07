@@ -184,6 +184,74 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testWhileStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testWhileStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testWhileStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testWhileStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testWhileStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testWhileStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(8, $stmt->getEndLine());
+    }
+
+    /**
+     * testWhileStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTWhileStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testWhileStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $this->assertEquals(13, $stmt->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
