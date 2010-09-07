@@ -110,6 +110,7 @@ class PHP_Depend_Tokenizer_Internal
         T_THROW                     =>  self::T_THROW,
         T_UNSET                     =>  self::T_UNSET,
         T_WHILE                     =>  self::T_WHILE,
+        T_ENDFOR                    =>  self::T_ENDFOR,
         T_ELSEIF                    =>  self::T_ELSEIF,
         T_FUNC_C                    =>  self::T_FUNC_C,
         T_GLOBAL                    =>  self::T_GLOBAL,

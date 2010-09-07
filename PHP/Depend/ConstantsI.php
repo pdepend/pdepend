@@ -849,9 +849,14 @@ interface PHP_Depend_ConstantsI
     const T_ENDIF = 148;
 
     /**
+     * Alternative end token for a for-statement.
+     */
+    const T_ENDFOR = 149;
+
+    /**
      * Alternative end token for a foreach-statement.
      */
-    const T_ENDFOREACH = 149;
+    const T_ENDFOREACH = 150;
 
     /**
      * Marks any content not between php tags.

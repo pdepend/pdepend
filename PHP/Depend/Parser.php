@@ -2012,6 +2012,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_ENDIF);
             $this->_consumeComments();
             $this->_consumeToken(self::T_SEMICOLON);
+        } else if ($tokenType === self::T_ENDFOR) {
+            $this->_consumeToken(self::T_ENDFOR);
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_SEMICOLON);
         }
 
         return $this->_setNodePositionsAndReturn($scope);
@@ -4608,6 +4612,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_ELSE:
         case self::T_ENDIF:
         case self::T_ELSEIF:
+        case self::T_ENDFOR:
         case self::T_ENDFOREACH:
         case self::T_CURLY_BRACE_CLOSE:
             return null;
