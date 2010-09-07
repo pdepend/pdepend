@@ -320,6 +320,74 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testIfElseStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testIfElseStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testIfElseStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(8, $stmt->getEndLine());
+    }
+
+    /**
+     * testIfElseStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(10, $stmt->getEndColumn());
+    }
+
+    /**
      * testIfStatementWithElseContainsExpectedNumberOfChildNodes
      *
      * @return void
