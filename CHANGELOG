@@ -6,6 +6,8 @@ PHP_Depend 0.10.0
   number #1344.
 - Implemented #131: Add new method isThis() to PHP_Depend's ASTVariable
   class. Implemented in svn revision #1291.
+- Implemented #132: Housekeeping: Cleanup the PHP_Depend_Input package test
+  code. Done in svn revision #1366.
 - Implemented #139: Implement Post-/Pre- Increment/Decrement. Implemented
   in svn revision #1317.
 - Implemented #148: Implement cast expressions. Implemented in svn
