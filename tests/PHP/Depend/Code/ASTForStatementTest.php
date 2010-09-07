@@ -390,6 +390,74 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testForStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testForStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testForStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(12, $stmt->getEndLine());
+    }
+
+    /**
+     * testForStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $this->assertEquals(11, $stmt->getEndColumn());
+    }
+
+    /**
      * testParserHandlesBooleanLiteralInForExpression
      *
      * @return void

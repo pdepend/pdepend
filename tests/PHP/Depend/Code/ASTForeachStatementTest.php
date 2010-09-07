@@ -358,6 +358,74 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     }
 
     /**
+     * testForeachStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        self::assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testForeachStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        self::assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testForeachStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        self::assertEquals(6, $stmt->getEndLine());
+    }
+
+    /**
+     * testForeachStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForeachStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForeachStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        self::assertEquals(15, $stmt->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
