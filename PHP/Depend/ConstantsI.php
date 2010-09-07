@@ -844,6 +844,16 @@ interface PHP_Depend_ConstantsI
     const T_GOTO = 147;
 
     /**
+     * Alternative end token for an if-statement.
+     */
+    const T_ENDIF = 148;
+
+    /**
+     * Alternative end token for a foreach-statement.
+     */
+    const T_ENDFOREACH = 149;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

@@ -252,6 +252,74 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testIfStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testIfStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testIfStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(10, $stmt->getEndLine());
+    }
+
+    /**
+     * testIfStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(9, $stmt->getEndColumn());
+    }
+
+    /**
      * testIfStatementWithElseContainsExpectedNumberOfChildNodes
      *
      * @return void
