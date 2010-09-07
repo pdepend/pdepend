@@ -859,6 +859,16 @@ interface PHP_Depend_ConstantsI
     const T_ENDFOREACH = 150;
 
     /**
+     * Alternative end token for a switch-statement.
+     */
+    const T_ENDSWITCH = 151;
+
+    /**
+     * Alternative end token for a while-statement.
+     */
+    const T_ENDWHILE = 152;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

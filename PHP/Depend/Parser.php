@@ -2016,10 +2016,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_ENDFOR);
             $this->_consumeComments();
             $this->_consumeToken(self::T_SEMICOLON);
+        } else if ($tokenType === self::T_ENDWHILE) {
+            $this->_consumeToken(self::T_ENDWHILE);
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_SEMICOLON);
         }
-
         return $this->_setNodePositionsAndReturn($scope);
-
     }
 // =======================================
     /**
@@ -2344,11 +2346,21 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         PHP_Depend_Code_ASTSwitchStatement $switch
     ) {
         $this->_consumeComments();
-        $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+        if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
+            $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+        } else {
+            $this->_consumeToken(self::T_COLON);
+        }
 
         while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
 
             switch ($tokenType) {
+
+            case self::T_ENDSWITCH:
+                $this->_consumeToken(self::T_ENDSWITCH);
+                $this->_consumeComments();
+                $this->_consumeToken(self::T_SEMICOLON);
+                return $switch;
 
             case self::T_CURLY_BRACE_CLOSE:
                 $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
@@ -2462,6 +2474,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_CASE:
             case self::T_DEFAULT:
+            case self::T_ENDSWITCH:
                 return $label;
 
             default:
@@ -4613,6 +4626,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_ENDIF:
         case self::T_ELSEIF:
         case self::T_ENDFOR:
+        case self::T_ENDWHILE:
+        case self::T_ENDSWITCH:
         case self::T_ENDFOREACH:
         case self::T_CURLY_BRACE_CLOSE:
             return null;
