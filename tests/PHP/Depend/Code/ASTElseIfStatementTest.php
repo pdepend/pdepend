@@ -269,6 +269,74 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testElseIfStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseIfStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getStartLine());
+    }
+
+    /**
+     * testElseIfStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseIfStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testElseIfStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseIfStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(11, $stmt->getEndLine());
+    }
+
+    /**
+     * testElseIfStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTElseIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseIfStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
+        $this->assertEquals(9, $stmt->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.

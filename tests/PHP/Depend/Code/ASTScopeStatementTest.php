@@ -133,6 +133,74 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testAlternativeScopeStatementHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTScopeStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAlternativeScopeStatementHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(6, $stmt->getStartLine());
+    }
+
+    /**
+     * testAlternativeScopeStatementHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTScopeStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAlternativeScopeStatementHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(13, $stmt->getStartColumn());
+    }
+
+    /**
+     * testAlternativeScopeStatementHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTScopeStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAlternativeScopeStatementHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(17, $stmt->getEndLine());
+    }
+
+    /**
+     * testAlternativeScopeStatementHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTScopeStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAlternativeScopeStatementHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $this->assertEquals(15, $stmt->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.

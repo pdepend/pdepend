@@ -234,6 +234,74 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testSwitchStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testSwitchStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testSwitchStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(25, $stmt->getEndLine());
+    }
+
+    /**
+     * testSwitchStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testSwitchStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->assertEquals(14, $stmt->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
