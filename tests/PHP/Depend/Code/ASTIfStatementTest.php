@@ -252,6 +252,210 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testIfStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testIfStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testIfStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(10, $stmt->getEndLine());
+    }
+
+    /**
+     * testIfStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(9, $stmt->getEndColumn());
+    }
+
+    /**
+     * testIfElseStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(4, $stmt->getStartLine());
+    }
+
+    /**
+     * testIfElseStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(5, $stmt->getStartColumn());
+    }
+
+    /**
+     * testIfElseStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(8, $stmt->getEndLine());
+    }
+
+    /**
+     * testIfElseStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfElseStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        $this->assertEquals(10, $stmt->getEndColumn());
+    }
+
+    /**
+     * testElseStatementAlternativeScopeHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseStatementAlternativeScopeHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__)->getChild(2);
+        $this->assertEquals(7, $stmt->getStartLine());
+    }
+
+    /**
+     * testElseStatementAlternativeScopeHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseStatementAlternativeScopeHasExpectedStartColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__)->getChild(2);
+        $this->assertEquals(13, $stmt->getStartColumn());
+    }
+
+    /**
+     * testElseStatementAlternativeScopeHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseStatementAlternativeScopeHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__)->getChild(2);
+        $this->assertEquals(10, $stmt->getEndLine());
+    }
+
+    /**
+     * testElseStatementAlternativeScopeHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testElseStatementAlternativeScopeHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__)->getChild(2);
+        $this->assertEquals(17, $stmt->getEndColumn());
+    }
+
+    /**
      * testIfStatementWithElseContainsExpectedNumberOfChildNodes
      *
      * @return void

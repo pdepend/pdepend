@@ -1983,13 +1983,47 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($tokenType === self::T_CURLY_BRACE_OPEN) {
             $stmt->addChild($this->_parseScopeStatement());
         } else if ($tokenType === self::T_COLON) {
-            // TODO: Alternative syntax
+            $stmt->addChild($this->_parseAlternativeScope($stmt));
         } else {
             $stmt->addChild($this->_parseOptionalStatement());
         }
         return $stmt;
     }
+// =======================================
+    private function _parseAlternativeScope(PHP_Depend_Code_ASTStatement $stmt)
+    {
+        $this->_tokenStack->push();
 
+        $this->_consumeToken(self::T_COLON);
+
+        $scope = $this->_builder->buildASTScopeStatement();
+        while (($child = $this->_parseOptionalStatement()) != null) {
+            if ($child instanceof PHP_Depend_Code_ASTNode) {
+                $scope->addChild($child);
+            }
+        }
+
+        $tokenType = $this->_tokenizer->peek();
+        if ($tokenType === self::T_ENDFOREACH) {
+            $this->_consumeToken(self::T_ENDFOREACH);
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_SEMICOLON);
+        } else if ($tokenType === self::T_ENDIF) {
+            $this->_consumeToken(self::T_ENDIF);
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_SEMICOLON);
+        } else if ($tokenType === self::T_ENDFOR) {
+            $this->_consumeToken(self::T_ENDFOR);
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_SEMICOLON);
+        } else if ($tokenType === self::T_ENDWHILE) {
+            $this->_consumeToken(self::T_ENDWHILE);
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_SEMICOLON);
+        }
+        return $this->_setNodePositionsAndReturn($scope);
+    }
+// =======================================
     /**
      * Parse a scope enclosed by curly braces.
      *
@@ -2046,6 +2080,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_DO:
             case self::T_ECHO:
             case self::T_END_HEREDOC:
+            case self::T_ENDFOREACH:
             case self::T_FOR:
             case self::T_FOREACH:
             case self::T_GLOBAL:
@@ -2311,11 +2346,21 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         PHP_Depend_Code_ASTSwitchStatement $switch
     ) {
         $this->_consumeComments();
-        $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+        if ($this->_tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
+            $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
+        } else {
+            $this->_consumeToken(self::T_COLON);
+        }
 
         while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
 
             switch ($tokenType) {
+
+            case self::T_ENDSWITCH:
+                $this->_consumeToken(self::T_ENDSWITCH);
+                $this->_consumeComments();
+                $this->_consumeToken(self::T_SEMICOLON);
+                return $switch;
 
             case self::T_CURLY_BRACE_CLOSE:
                 $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
@@ -2429,6 +2474,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_CASE:
             case self::T_DEFAULT:
+            case self::T_ENDSWITCH:
                 return $label;
 
             default:
@@ -4576,6 +4622,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_CURLY_BRACE_OPEN:
             return $this->_parseScopeStatement();
 
+        case self::T_ELSE:
+        case self::T_ENDIF:
+        case self::T_ELSEIF:
+        case self::T_ENDFOR:
+        case self::T_ENDWHILE:
+        case self::T_ENDSWITCH:
+        case self::T_ENDFOREACH:
         case self::T_CURLY_BRACE_CLOSE:
             return null;
 
