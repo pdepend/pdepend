@@ -1288,7 +1288,7 @@ and the NDepend metric tool.
       <notes>
 - Fixed #152: Endless loop bug for identical class and parent name.
   Fixed in svn revision #1296.
-            </notes>
+      </notes>
     </release>
     <release>
       <date>2010-06-19</date>
