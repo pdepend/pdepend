@@ -883,4 +883,3 @@ interface PHP_Depend_ConstantsI
      */
     const PACKAGE_SEPARATOR = '\\';
 }
-?>
