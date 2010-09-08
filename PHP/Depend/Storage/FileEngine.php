@@ -162,6 +162,8 @@ class PHP_Depend_Storage_FileEngine extends PHP_Depend_Storage_AbstractEngine
      * This method implements a garbage collection mechanism for this storage
      * engine.
      *
+     * @param string $version The used PHP_Depend version identifier.
+     *
      * @return void
      * @see PHP_Depend_Storage_AbstractEngine#garbageCollect()
      */
