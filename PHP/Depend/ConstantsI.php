@@ -869,6 +869,11 @@ interface PHP_Depend_ConstantsI
     const T_ENDWHILE = 152;
 
     /**
+     * Alternative end token for a declare-statement.
+     */
+    const T_ENDDECLARE = 153;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;
