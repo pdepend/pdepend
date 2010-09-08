@@ -1981,76 +1981,123 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->_tokenizer->peek();
 
         if ($tokenType === self::T_CURLY_BRACE_OPEN) {
-            $stmt->addChild($this->_parseScopeStatement());
+            $stmt->addChild($this->_parseRegularScope());
         } else if ($tokenType === self::T_COLON) {
-            $stmt->addChild($this->_parseAlternativeScope($stmt));
+            $stmt->addChild($this->_parseAlternativeScope());
         } else {
             $stmt->addChild($this->_parseOptionalStatement());
         }
         return $stmt;
     }
-// =======================================
-    private function _parseAlternativeScope(PHP_Depend_Code_ASTStatement $stmt)
-    {
-        $this->_tokenStack->push();
 
-        $this->_consumeToken(self::T_COLON);
-
-        $scope = $this->_builder->buildASTScopeStatement();
-        while (($child = $this->_parseOptionalStatement()) != null) {
-            if ($child instanceof PHP_Depend_Code_ASTNode) {
-                $scope->addChild($child);
-            }
-        }
-
-        $tokenType = $this->_tokenizer->peek();
-        if ($tokenType === self::T_ENDFOREACH) {
-            $this->_consumeToken(self::T_ENDFOREACH);
-            $this->_consumeComments();
-            $this->_consumeToken(self::T_SEMICOLON);
-        } else if ($tokenType === self::T_ENDIF) {
-            $this->_consumeToken(self::T_ENDIF);
-            $this->_consumeComments();
-            $this->_consumeToken(self::T_SEMICOLON);
-        } else if ($tokenType === self::T_ENDFOR) {
-            $this->_consumeToken(self::T_ENDFOR);
-            $this->_consumeComments();
-            $this->_consumeToken(self::T_SEMICOLON);
-        } else if ($tokenType === self::T_ENDWHILE) {
-            $this->_consumeToken(self::T_ENDWHILE);
-            $this->_consumeComments();
-            $this->_consumeToken(self::T_SEMICOLON);
-        } else if ($tokenType === self::T_ENDDECLARE) {
-            $this->_consumeToken(self::T_ENDDECLARE);
-            $this->_consumeComments();
-            $this->_consumeToken(self::T_SEMICOLON);
-        }
-        return $this->_setNodePositionsAndReturn($scope);
-    }
-// =======================================
     /**
      * Parse a scope enclosed by curly braces.
      *
      * @return PHP_Depend_Code_ASTScope
      * @since 0.9.12
      */
-    private function _parseScopeStatement()
+    private function _parseRegularScope()
     {
         $this->_tokenStack->push();
 
         $this->_consumeComments();
         $this->_consumeToken(self::T_CURLY_BRACE_OPEN);
 
-        $scope = $this->_builder->buildASTScopeStatement();
-        while (($stmt = $this->_parseOptionalStatement()) != null) {
-            if ($stmt instanceof PHP_Depend_Code_ASTNode) {
-                $scope->addChild($stmt);
-            }
-        }
+        $scope = $this->_parseScopeStatements();
 
         $this->_consumeToken(self::T_CURLY_BRACE_CLOSE);
-
         return $this->_setNodePositionsAndReturn($scope);
+    }
+
+    /**
+     * Parses the scope of a statement that is surrounded with PHP's alternative
+     * syntax for statements.
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 0.10.0
+     */
+    private function _parseAlternativeScope()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_COLON);
+
+        $scope = $this->_parseScopeStatements();
+
+        $this->_parseOptionalAlternativeScopeTermination();
+        return $this->_setNodePositionsAndReturn($scope);
+    }
+
+    /**
+     * Parses all statements that exist in a scope an adds them to a scope
+     * instance.
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 0.10.0
+     */
+    private function _parseScopeStatements()
+    {
+        $scope = $this->_builder->buildASTScopeStatement();
+        while (($child = $this->_parseOptionalStatement()) != null) {
+            if ($child instanceof PHP_Depend_Code_ASTNode) {
+                $scope->addChild($child);
+            }
+        }
+        return $scope;
+    }
+
+    /**
+     * Parses the termination of a scope statement that uses PHP's laternative
+     * syntax format.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    private function _parseOptionalAlternativeScopeTermination()
+    {
+        $tokenType = $this->_tokenizer->peek();
+        if ($this->_isAlternativeScopeTermination($tokenType)) {
+            $this->_parseAlternativeScopeTermination($tokenType);
+        }
+    }
+
+    /**
+     * This method returns <b>true</b> when the given token identifier represents
+     * the end token of a alternative scope termination symbol. Otherwise this
+     * method will return <b>false</b>.
+     *
+     * @param integer $tokenType The token type identifier.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    private function _isAlternativeScopeTermination($tokenType)
+    {
+        return in_array(
+            $tokenType,
+            array(
+                self::T_ENDDECLARE,
+                self::T_ENDFOR,
+                self::T_ENDFOREACH,
+                self::T_ENDIF,
+                self::T_ENDSWITCH,
+                self::T_ENDWHILE
+            )
+        );
+    }
+
+    /**
+     * Parses a series of tokens that represent an alternative scope termination.
+     *
+     * @param integer $tokenType The token type identifier.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    private function _parseAlternativeScopeTermination($tokenType)
+    {
+        $this->_consumeToken($tokenType);
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_SEMICOLON);
     }
 
     /**
@@ -2361,9 +2408,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             switch ($tokenType) {
 
             case self::T_ENDSWITCH:
-                $this->_consumeToken(self::T_ENDSWITCH);
-                $this->_consumeComments();
-                $this->_consumeToken(self::T_SEMICOLON);
+                $this->_parseAlternativeScopeTermination(self::T_ENDSWITCH);
                 return $switch;
 
             case self::T_CURLY_BRACE_CLOSE:
@@ -2526,7 +2571,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->_consumeToken(self::T_TRY);
 
         $stmt = $this->_builder->buildASTTryStatement($token->image);
-        $stmt->addChild($this->_parseScopeStatement());
+        $stmt->addChild($this->_parseRegularScope());
 
         do {
             $stmt->addChild($this->_parseCatchStatement());
@@ -2670,7 +2715,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_consumeComments();
         $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
 
-        $catch->addChild($this->_parseScopeStatement());
+        $catch->addChild($this->_parseRegularScope());
 
         return $this->_setNodePositionsAndReturn($catch);
     }
@@ -2880,7 +2925,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             if ($this->_tokenizer->peek() === self::T_DOUBLE_ARROW) {
                 $this->_consumeToken(self::T_DOUBLE_ARROW);
-                $foreach->addChild($this->_parseVariableOrMemberOptionalByReference());
+                $foreach->addChild(
+                    $this->_parseVariableOrMemberOptionalByReference()
+                );
             }
         }
 
@@ -2935,6 +2982,30 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($stmt);
     }
 
+    /**
+     * This method parses a declare-statement.
+     *
+     * <code>
+     * -------------------------------
+     * declare(encoding='ISO-8859-1');
+     * -------------------------------
+     *
+     * -------------------
+     * declare(ticks=42) {
+     *     // ...
+     * }
+     * -
+     *
+     * ------------------
+     * declare(ticks=42):
+     *     // ...
+     * enddeclare;
+     * -----------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTDeclareStatement
+     * @since 0.10.0
+     */
     private function _parseDeclareStatement()
     {
         $this->_tokenStack->push();
@@ -2946,7 +3017,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         return $this->_setNodePositionsAndReturn($stmt);
     }
-    
+   
+    /**
+     * This method parses a list of declare values. A declare list value always
+     * consists of a string token and a static scalar.
+     *
+     * @param PHP_Depend_Code_ASTDeclareStatement $stmt The declare statement that
+     *        is the owner of this list. 
+     * 
+     * @return PHP_Depend_Code_ASTDeclareStatement
+     * @since 0.10.0
+     */
     private function _parseDeclareList(PHP_Depend_Code_ASTDeclareStatement $stmt)
     {
         $this->_consumeComments();
@@ -4665,7 +4746,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             );
 
         case self::T_CURLY_BRACE_OPEN:
-            return $this->_parseScopeStatement();
+            return $this->_parseRegularScope();
 
         case self::T_DECLARE:
             return $this->_parseDeclareStatement();
