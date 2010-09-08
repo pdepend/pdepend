@@ -123,7 +123,10 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
 
         $actual = array();
         foreach ($files as $file) {
-            if ($filter->accept($file) && $file->isFile()) {
+            if ($filter->accept($file) 
+                && $file->isFile() 
+                && false === stripos($file->getPathname(), '.svn')
+            ) {
                 $actual[] = $file->getFilename();
             }
         }
