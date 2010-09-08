@@ -624,6 +624,32 @@ interface PHP_Depend_BuilderI
     function buildASTDoWhileStatement($image);
 
     /**
+     * Builds a new declare-statement node.
+     *
+     * <code>
+     * -------------------------------
+     * declare(encoding='ISO-8859-1');
+     * -------------------------------
+     *
+     * -------------------
+     * declare(ticks=42) {
+     *     // ...
+     * }
+     * -
+     *
+     * ------------------
+     * declare(ticks=42):
+     *     // ...
+     * enddeclare;
+     * -----------
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTDeclareStatement
+     * @since 0.10.0
+     */
+    function buildASTDeclareStatement();
+
+    /**
      * Builds a new member primary expression node.
      *
      * <code>

@@ -2020,6 +2020,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_consumeToken(self::T_ENDWHILE);
             $this->_consumeComments();
             $this->_consumeToken(self::T_SEMICOLON);
+        } else if ($tokenType === self::T_ENDDECLARE) {
+            $this->_consumeToken(self::T_ENDDECLARE);
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_SEMICOLON);
         }
         return $this->_setNodePositionsAndReturn($scope);
     }
@@ -2929,6 +2933,47 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_parseStatementTermination();
 
         return $this->_setNodePositionsAndReturn($stmt);
+    }
+
+    private function _parseDeclareStatement()
+    {
+        $this->_tokenStack->push();
+        $this->_consumeToken(self::T_DECLARE);
+
+        $stmt = $this->_builder->buildASTDeclareStatement();
+        $stmt = $this->_parseDeclareList($stmt);
+        $stmt = $this->_parseStatementBody($stmt);
+
+        return $this->_setNodePositionsAndReturn($stmt);
+    }
+    
+    private function _parseDeclareList(PHP_Depend_Code_ASTDeclareStatement $stmt)
+    {
+        $this->_consumeComments();
+        $this->_consumeToken(self::T_PARENTHESIS_OPEN);
+
+        while (true) {
+            $this->_consumeComments();
+            $name = $this->_consumeToken(self::T_STRING)->image;
+
+            $this->_consumeComments();
+            $this->_consumeToken(self::T_EQUAL);
+
+            $this->_consumeComments();
+            $value = $this->_parseStaticValue();
+
+            $stmt->addValue($name, $value);
+
+            $this->_consumeComments();
+            if ($this->_tokenizer->peek() === self::T_COMMA) {
+                $this->_consumeToken(self::T_COMMA);
+                continue;
+            }
+            break;
+        }
+        
+        $this->_consumeToken(self::T_PARENTHESIS_CLOSE);
+        return $stmt;
     }
 
     /**
@@ -4622,12 +4667,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_CURLY_BRACE_OPEN:
             return $this->_parseScopeStatement();
 
+        case self::T_DECLARE:
+            return $this->_parseDeclareStatement();
+
         case self::T_ELSE:
         case self::T_ENDIF:
         case self::T_ELSEIF:
         case self::T_ENDFOR:
         case self::T_ENDWHILE:
         case self::T_ENDSWITCH:
+        case self::T_ENDDECLARE:
         case self::T_ENDFOREACH:
         case self::T_CURLY_BRACE_CLOSE:
             return null;

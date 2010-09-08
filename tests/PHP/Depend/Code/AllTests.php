@@ -75,6 +75,7 @@ require_once dirname(__FILE__) . '/ASTConstantDefinitionTest.php';
 require_once dirname(__FILE__) . '/ASTConstantPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTConstantTest.php';
 require_once dirname(__FILE__) . '/ASTContinueStatementTest.php';
+require_once dirname(__FILE__) . '/ASTDeclareStatementTest.php';
 require_once dirname(__FILE__) . '/ASTDoWhileStatementTest.php';
 require_once dirname(__FILE__) . '/ASTEchoStatementTest.php';
 require_once dirname(__FILE__) . '/ASTElseIfStatementTest.php';
@@ -210,6 +211,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTConstantTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTContinueStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTDoWhileStatementTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTDeclareStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTEchoStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTElseIfStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTEvalExpressionTest');
@@ -266,8 +268,4 @@ class PHP_Depend_Code_AllTests
 
         return $suite;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_AllTests::main') {
-    PHP_Depend_Code_AllTests::main();
 }

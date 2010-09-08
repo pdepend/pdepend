@@ -156,6 +156,7 @@ class PHP_Depend_Tokenizer_Internal
         T_PROTECTED                 =>  self::T_PROTECTED,
         T_CURLY_OPEN                =>  self::T_CURLY_BRACE_OPEN,
         T_ENDFOREACH                =>  self::T_ENDFOREACH,
+        T_ENDDECLARE                =>  self::T_ENDDECLARE,
         T_IMPLEMENTS                =>  self::T_IMPLEMENTS,
         T_NUM_STRING                =>  self::T_NUM_STRING,
         T_PLUS_EQUAL                =>  self::T_PLUS_EQUAL,
