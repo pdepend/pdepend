@@ -13,7 +13,7 @@ PHP_Depend 0.10.0
 - Implemented #143: Support PHP's alternative control structure syntax.
   Done in svn revision #1375.
 - Implemented #146: Implement PHP's declare-statement. Done in subversion
-  revision #1375.
+  revision #1375. 
 - Implemented #148: Implement cast expressions. Implemented in svn
   revision #1283.
 
