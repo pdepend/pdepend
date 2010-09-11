@@ -69,6 +69,7 @@ class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGlobalStatement
      * @group pdepend
      * @group pdepend::ast
@@ -85,6 +86,7 @@ class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGlobalStatement
      * @group pdepend
      * @group pdepend::ast
@@ -101,6 +103,7 @@ class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGlobalStatement
      * @group pdepend
      * @group pdepend::ast
@@ -117,6 +120,7 @@ class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGlobalStatement
      * @group pdepend
      * @group pdepend::ast
