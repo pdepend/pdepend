@@ -17,17 +17,17 @@ PHP_Depend 0.10.0
 - Implemented #148: Implement cast expressions. Implemented in svn
   revision #1283.
 
+PHP_Depend 0.9.19
+-----------------
+
+- Fixed #162: Parser does not recognize $ string literal in string.
+  Fixed in subversion revision #1379.
+
 PHP_Depend 0.9.18
 -----------------
 
 - Fixed #161: Unexpected token: -> in foreach statement. Fixed in 
   subversion revision #1347.
-
-PHP_Depend 0.9.17
------------------
-
-- Fixed #156: Temp Folder /tmp/pdpend_storage-1000 grows very large.
-  Fixed with Sebastian Marek's patch in svn revision #1335.
 
 PHP_Depend 0.9.17
 -----------------
@@ -46,9 +46,9 @@ PHP_Depend 0.9.16
 PHP_Depend 0.9.15
 -----------------
 
-- Fixed #152: Endless loop bug for identical class and parent name. Fixed
-  in svn revision #1296.
- 
+- Fixed #152: Endless loop bug for identical class and parent name.
+  Fixed in svn revision #1296.
+
 PHP_Depend 0.9.14
 -----------------
 

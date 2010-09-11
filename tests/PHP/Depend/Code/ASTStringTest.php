@@ -180,6 +180,125 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testDoubleQuoteStringContainsVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Builder_Default
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringContainsVariable()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(0));
+    }
+
+    /**
+     * testDoubleQuoteStringContainsVariableAfterNotOperator
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Builder_Default
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringContainsVariableAfterNotOperator()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+    }
+
+    /**
+     * testDoubleQuoteStringContainsVariableAfterSilenceOperator
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Builder_Default
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringContainsVariableAfterSilenceOperator()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+    }
+
+    /**
+     * testDoubleQuoteStringContainsCompoundVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Builder_Default
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringContainsCompoundVariable()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        self::assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
+    }
+
+    /**
+     * testDoubleQuoteStringContainsCompoundExpressionAfterLiteral
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Builder_Default
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringContainsCompoundExpressionAfterLiteral()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        self::assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $string->getChild(1));
+    }
+
+    /**
+     * testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Builder_Default
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+    }
+
+    /**
+     * testDoubleQuoteStringContainsDollarLiteralForVariableVariable
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTString
+     * @covers PHP_Depend_Builder_Default
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testDoubleQuoteStringContainsDollarLiteralForVariableVariable()
+    {
+        $string = $this->_getFirstStringInFunction(__METHOD__);
+        self::assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(0));
+    }
+
+    /**
      * Tests that an invalid literal results in the expected exception.
      *
      * @return void
