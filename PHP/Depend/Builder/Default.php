@@ -376,28 +376,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         }
         return $interface;
     }
-    
-    /**
-     * Builds a new code type reference instance.
-     *
-     * @param string $qualifiedName The qualified name of the referenced type.
-     *
-     * @return PHP_Depend_Code_ASTInterfaceReference
-     * @since 0.9.5
-     */
-    public function buildInterfaceReference($qualifiedName)
-    {
-        $this->checkBuilderState();
-
-        include_once 'PHP/Depend/Code/ASTInterfaceReference.php';
-
-        // Debug method creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTInterfaceReference(' . $qualifiedName . ')'
-        );
-
-        return new PHP_Depend_Code_ASTInterfaceReference($this, $qualifiedName);
-    }
 
     /**
      * Builds a new method instance.

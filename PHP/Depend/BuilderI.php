@@ -143,16 +143,6 @@ interface PHP_Depend_BuilderI
     function getInterface($qualifiedName);
 
     /**
-     * Builds a new code type reference instance.
-     *
-     * @param string $qualifiedName The qualified name of the referenced type.
-     *
-     * @return PHP_Depend_Code_ASTInterfaceReference
-     * @since 0.9.5
-     */
-    function buildInterfaceReference($qualifiedName);
-
-    /**
      * Builds a new package instance.
      *
      * @param string $name The package name.
