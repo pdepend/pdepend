@@ -67,6 +67,49 @@ require_once 'PHP/Depend/Code/ASTIncludeExpression.php';
 class PHP_Depend_Code_ASTIncludeExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTIncludeExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitIncludeExpression'));
+
+        $expr = new PHP_Depend_Code_ASTIncludeExpression();
+        $expr->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTIncludeExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitIncludeExpression'))
+            ->will($this->returnValue(42));
+
+        $expr = new PHP_Depend_Code_ASTIncludeExpression();
+        self::assertEquals(42, $expr->accept($visitor));
+    }
+
+    /**
      * testIsOnceReturnsFalseByDefault
      *
      * @return void

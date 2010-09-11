@@ -48,6 +48,7 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
+require_once 'PHP/Depend/BuilderI.php';
 require_once 'PHP/Depend/Code/ASTClassReference.php';
 
 /**
@@ -64,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTClassReference.php';
  */
 class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
+    /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTClassReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitClassReference'));
+
+        $ref = new PHP_Depend_Code_ASTClassReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
+        $ref->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTClassReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitClassReference'))
+            ->will($this->returnValue(42));
+
+        $ref = new PHP_Depend_Code_ASTClassReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
+        self::assertEquals(42, $ref->accept($visitor));
+    }
+
     /**
      * testClassReferenceHasExpectedStartLine
      *

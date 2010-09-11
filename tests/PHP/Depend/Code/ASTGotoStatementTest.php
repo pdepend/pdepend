@@ -65,10 +65,54 @@ require_once 'PHP/Depend/Code/ASTGotoStatement.php';
 class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTGotoStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitGotoStatement'));
+
+        $stmt = new PHP_Depend_Code_ASTGotoStatement();
+        $stmt->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTGotoStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitGotoStatement'))
+            ->will($this->returnValue(42));
+
+        $stmt = new PHP_Depend_Code_ASTGotoStatement();
+        self::assertEquals(42, $stmt->accept($visitor));
+    }
+
+    /**
      * testGotoStatementHasExpectedStartLine
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGotoStatement
      * @group pdepend
      * @group pdepend::ast
@@ -85,6 +129,7 @@ class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGotoStatement
      * @group pdepend
      * @group pdepend::ast
@@ -101,6 +146,7 @@ class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGotoStatement
      * @group pdepend
      * @group pdepend::ast
@@ -117,6 +163,7 @@ class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
      * @covers PHP_Depend_Code_ASTGotoStatement
      * @group pdepend
      * @group pdepend::ast

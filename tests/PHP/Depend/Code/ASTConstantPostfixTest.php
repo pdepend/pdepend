@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTConstantPostfix.php';
 class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitConstantPostfix'));
+
+        $postfix = new PHP_Depend_Code_ASTConstantPostfix();
+        $postfix->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTConstantPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitConstantPostfix'))
+            ->will($this->returnValue(42));
+
+        $postfix = new PHP_Depend_Code_ASTConstantPostfix();
+        self::assertEquals(42, $postfix->accept($visitor));
+    }
+
+    /**
      * Tests that a parsed constant postfix has the expected object structure.
      *
      * @return void

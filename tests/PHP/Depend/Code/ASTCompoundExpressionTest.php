@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTCompoundExpression.php';
 class PHP_Depend_Code_ASTCompoundExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTCompoundExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitCompoundExpression'));
+
+        $node = new PHP_Depend_Code_ASTCompoundExpression();
+        $node->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTCompoundExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitCompoundExpression'))
+            ->will($this->returnValue(42));
+
+        $node = new PHP_Depend_Code_ASTCompoundExpression();
+        self::assertEquals(42, $node->accept($visitor));
+    }
+
+    /**
      * testExpressionHasExpectedStartLine
      *
      * @return void

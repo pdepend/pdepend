@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTConstant.php';
 class PHP_Depend_Code_ASTConstantTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitConstant'));
+
+        $constant = new PHP_Depend_Code_ASTConstant();
+        $constant->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTConstant
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitConstant'))
+            ->will($this->returnValue(42));
+
+        $constant = new PHP_Depend_Code_ASTConstant();
+        self::assertEquals(42, $constant->accept($visitor));
+    }
+
+    /**
      * Tests that a parsed constant has the expected object graph.
      *
      * @return void

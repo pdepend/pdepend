@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTExitExpression.php';
 class PHP_Depend_Code_ASTExitExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTExitExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitExitExpression'));
+
+        $expr = new PHP_Depend_Code_ASTExitExpression();
+        $expr->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTExitExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitExitExpression'))
+            ->will($this->returnValue(42));
+
+        $expr = new PHP_Depend_Code_ASTExitExpression();
+        self::assertEquals(42, $expr->accept($visitor));
+    }
+
+    /**
      * testExitExpressionHasExpectedStartLine
      *
      * @return void

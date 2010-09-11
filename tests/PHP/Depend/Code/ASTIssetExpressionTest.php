@@ -67,6 +67,49 @@ require_once 'PHP/Depend/Code/ASTIssetExpression.php';
 class PHP_Depend_Code_ASTIssetExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTIssetExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitIssetExpression'));
+
+        $expr = new PHP_Depend_Code_ASTIssetExpression();
+        $expr->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTIssetExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitIssetExpression'))
+            ->will($this->returnValue(42));
+
+        $expr = new PHP_Depend_Code_ASTIssetExpression();
+        self::assertEquals(42, $expr->accept($visitor));
+    }
+
+    /**
      * testIssetExpressionGraphWithMultipleVariables
      *
      * @return void
