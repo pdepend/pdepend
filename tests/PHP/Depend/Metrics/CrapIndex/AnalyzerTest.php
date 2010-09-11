@@ -212,6 +212,21 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     }
 
     /**
+     * testAnalyterReturnsExpectedResultForFunctionWithoutCoverageData
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CrapIndex_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::crapindex
+     * @group unittest
+     */
+    public function testAnalyterReturnsExpectedResultForFunctionWithoutCoverageData()
+    {
+        $this->_testCrapIndexCalculation(__METHOD__, 12, 156);
+    }
+
+    /**
      * Tests the crap index algorithm implementation.
      *
      * @param string  $testCase  Name of the calling test case.
@@ -244,11 +259,19 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
 
         $packages->rewind();
+
+        if ($packages->current()->getTypes()->count() > 0) {
+            return $analyzer->getNodeMetrics(
+                $packages->current()
+                    ->getTypes()
+                    ->current()
+                    ->getMethods()
+                    ->current()
+            );
+        }
         return $analyzer->getNodeMetrics(
             $packages->current()
-                ->getTypes()
-                ->current()
-                ->getMethods()
+                ->getFunctions()
                 ->current()
         );
     }

@@ -327,10 +327,6 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        if (!$package->isUserDefined()) {
-            //return;
-        }
-
         $this->fireStartPackage($package);
 
         foreach ($package->getTypes() as $type) {

@@ -418,6 +418,27 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
     }
 
     /**
+     * testAnalyzerIgnoresClassesThatAreNotUserDefined
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Inheritance_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testAnalyzerIgnoresClassesThatAreNotUserDefined()
+    {
+        $class = new PHP_Depend_Code_Class(null);
+
+        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer->visitClass($class);
+
+        $metrics = $analyzer->getNodeMetrics($class);
+        $this->assertEquals(array(), $metrics);
+    }
+
+    /**
      * Analyzes the source associated with the calling test and returns the
      * calculated metric value.
      *

@@ -135,6 +135,20 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testGetPrimitiveTypeReturnsNullForNonPrimitive
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Type::getPrimitiveType
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testGetPrimitiveTypeReturnsNullForNonPrimitive()
+    {
+        self::assertNull(PHP_Depend_Util_Type::getPrimitiveType('FooBarBaz'));
+    }
+
+    /**
      * testGetPrimitiveTypeFindsTypeByMetaphone
      *
      * @return void
@@ -194,5 +208,47 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
     {
         $extensionName = PHP_Depend_Util_Type::getTypePackage('\LogicException');
         $this->assertEquals('+spl', $extensionName);
+    }
+    
+    /**
+     * testIsArrayReturnsFalseForNonArrayString
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Type
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testIsArrayReturnsFalseForNonArrayString()
+    {
+        self::assertFalse(PHP_Depend_Util_Type::isArrayType('Pdepend'));
+    }
+
+    /**
+     * testIsArrayReturnsTrueForLowerCaseArrayString
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Type
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testIsArrayReturnsTrueForLowerCaseArrayString()
+    {
+        self::assertTrue(PHP_Depend_Util_Type::isArrayType('array'));
+    }
+
+    /**
+     * testIsArrayPerfromsCheckCaseInsensitive
+     *
+     * @return void
+     * @covers PHP_Depend_Util_Type
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testIsArrayPerfromsCheckCaseInsensitive()
+    {
+        self::assertTrue(PHP_Depend_Util_Type::isArrayType('ArRaY'));
     }
 }
