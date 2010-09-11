@@ -159,6 +159,27 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     }
 
     /**
+     * testAnalyzerIgnoresClassesThatAreNotUserDefined
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testAnalyzerIgnoresClassesThatAreNotUserDefined()
+    {
+        $class = new PHP_Depend_Code_Class(null);
+
+        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer->visitClass($class);
+
+        $metrics = $analyzer->getNodeMetrics($class);
+        $this->assertEquals(array(), $metrics);
+    }
+
+    /**
      * Tests that {@link PHP_Depend_Metrics_Hierarchy_Analyzer::getNodeMetrics()}
      * returns an empty <b>array</b> for an unknown node uuid.
      *

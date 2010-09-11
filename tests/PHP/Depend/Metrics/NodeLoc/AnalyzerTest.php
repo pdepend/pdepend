@@ -695,4 +695,26 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
         $metrics = $analyzer->getNodeMetrics($function);
         $this->assertEquals(3, $metrics['lloc']);
     }
+
+    /**
+     * testAnalyzerIgnoresFilesWithoutFileName
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::nodeloc
+     * @group unittest
+     */
+    public function testAnalyzerIgnoresFilesWithoutFileName()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        $file->setUUID(42);
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->visitFile($file);
+
+        $metrics = $analyzer->getNodeMetrics($file);
+        $this->assertEquals(array(), $metrics);
+    }
 }
