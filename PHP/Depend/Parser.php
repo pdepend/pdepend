@@ -3766,6 +3766,38 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses a PHP compound variable or a simple literal node.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.9.19
+     */
+    private function _parseCompoundVariableOrLiteral()
+    {
+        $this->_tokenStack->push();
+
+        // Read the dollar token
+        $token = $this->_consumeToken(self::T_DOLLAR);
+        $this->_consumeComments();
+
+        // Get next token type
+        $tokenType = $this->_tokenizer->peek();
+
+        switch ($tokenType) {
+
+        case self::T_CURLY_BRACE_OPEN:
+            $variable = $this->_builder->buildASTCompoundVariable($token->image);
+            $variable->addChild($this->_parseCompoundExpression());
+            break;
+
+        default:
+            $variable = $this->_builder->buildASTLiteral($token->image);
+            break;
+        }
+
+        return $this->_setNodePositionsAndReturn($variable);
+    }
+
+    /**
      * This method implements a decision point between compound-variables and
      * variable-variable. It expects that the next token in the token-stream is
      * of type <b>T_DOLLAR</b> and removes it from the stream. Then this method
@@ -4053,8 +4085,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_DOLLAR:
+                $expr = $this->_parseCompoundVariableOrLiteral();
+                $node->addChild($expr);
+                break;
+
             case self::T_VARIABLE:
-                $expr = $this->_parseCompoundVariableOrVariableVariableOrVariable();
+                $expr = $this->_parseVariable();
                 $node->addChild($expr);
                 break;
 
