@@ -936,7 +936,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTGlobalStatement
      * @since 0.9.12
      */
-    function buildASTGlobalStatement()
+    public function buildASTGlobalStatement()
     {
         return $this->_buildASTNodeInstance('ASTGlobalStatement');
     }
