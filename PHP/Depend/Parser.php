@@ -621,7 +621,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         while (true) {
 
             $abstractType->addInterfaceReference(
-                $this->_builder->buildInterfaceReference(
+                $this->_builder->buildASTClassOrInterfaceReference(
                     $this->_parseQualifiedName()
                 )
             );

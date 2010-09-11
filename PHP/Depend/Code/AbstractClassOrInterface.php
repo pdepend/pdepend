@@ -48,7 +48,6 @@
 
 require_once 'PHP/Depend/Code/AbstractItem.php';
 require_once 'PHP/Depend/Code/ASTClassReference.php';
-require_once 'PHP/Depend/Code/ASTInterfaceReference.php';
 require_once 'PHP/Depend/Code/Method.php';
 
 /**
@@ -77,7 +76,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * List of all interfaces implemented/extended by the this type.
      *
-     * @var array(PHP_Depend_Code_ASTInterfaceReference) $_interfaceReferences
+     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference) $_interfaceReferences
      */
     private $_interfaceReferences = array();
 
@@ -326,14 +325,14 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * Adds a interface reference node.
      *
-     * @param PHP_Depend_Code_ASTInterfaceReference $interfaceReference The extended
-     *        or implemented interface reference.
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference $interfaceReference The
+     *        extended or implemented interface reference.
      *
      * @return void
      * @since 0.9.5
      */
     public function addInterfaceReference(
-        PHP_Depend_Code_ASTInterfaceReference $interfaceReference
+        PHP_Depend_Code_ASTClassOrInterfaceReference $interfaceReference
     ) {
         $this->_interfaceReferences[] = $interfaceReference;
     }
