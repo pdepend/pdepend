@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTInstanceOfExpression.php';
 class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitInstanceOfExpression'));
+
+        $expr = new PHP_Depend_Code_ASTInstanceOfExpression();
+        $expr->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTInstanceOfExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitInstanceOfExpression'))
+            ->will($this->returnValue(42));
+
+        $expr = new PHP_Depend_Code_ASTInstanceOfExpression();
+        self::assertEquals(42, $expr->accept($visitor));
+    }
+
+    /**
      * Tests that the created instanceof object graph has the expected structure.
      * 
      * @return void

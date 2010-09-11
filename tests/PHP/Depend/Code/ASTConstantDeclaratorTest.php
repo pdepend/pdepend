@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTConstantDeclarator.php';
 class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTConstantDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitConstantDeclarator'));
+
+        $node = new PHP_Depend_Code_ASTConstantDeclarator();
+        $node->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTConstantDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitConstantDeclarator'))
+            ->will($this->returnValue(42));
+
+        $node = new PHP_Depend_Code_ASTConstantDeclarator();
+        self::assertEquals(42, $node->accept($visitor));
+    }
+
+    /**
      * testConstantDeclaratorHasExpectedStartLine
      *
      * @return void

@@ -67,6 +67,49 @@ require_once 'PHP/Depend/Code/ASTLogicalAndExpression.php';
 class PHP_Depend_Code_ASTLogicalAndExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLogicalAndExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitLogicalAndExpression'));
+
+        $expr = new PHP_Depend_Code_ASTLogicalAndExpression();
+        $expr->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLogicalAndExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitLogicalAndExpression'))
+            ->will($this->returnValue(42));
+
+        $expr = new PHP_Depend_Code_ASTLogicalAndExpression();
+        self::assertEquals(42, $expr->accept($visitor));
+    }
+
+    /**
      * testLogicalAndExpressionHasExpectedStartLine
      *
      * @return void

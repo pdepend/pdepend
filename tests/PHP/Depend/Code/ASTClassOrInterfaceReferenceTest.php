@@ -67,12 +67,55 @@ require_once 'PHP/Depend/Code/Class.php';
 class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitClassOrInterfaceReference'));
+
+        $ref = new PHP_Depend_Code_ASTClassOrInterfaceReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
+        $ref->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitClassOrInterfaceReference'))
+            ->will($this->returnValue(42));
+
+        $ref = new PHP_Depend_Code_ASTClassOrInterfaceReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
+        self::assertEquals(42, $ref->accept($visitor));
+    }
+
+    /**
      * testGetTypeInvokesBuildClassOrInterface
      * 
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
+     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -103,7 +146,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
+     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -120,7 +163,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
+     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -137,7 +180,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
+     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -154,7 +197,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
+     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest

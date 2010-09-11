@@ -67,6 +67,49 @@ require_once 'PHP/Depend/Code/ASTClassReference.php';
 class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitAllocationExpression'));
+
+        $node = new PHP_Depend_Code_ASTAllocationExpression();
+        $node->accept($visitor);
+    }
+
+    /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTAllocationExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitAllocationExpression'))
+            ->will($this->returnValue(42));
+
+        $node = new PHP_Depend_Code_ASTAllocationExpression();
+        self::assertEquals(42, $node->accept($visitor));
+    }
+    
+    /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void

@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTArrayIndexExpression.php';
 class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTArrayIndexExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitArrayIndexExpression'));
+
+        $node = new PHP_Depend_Code_ASTArrayIndexExpression();
+        $node->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTArrayIndexExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitArrayIndexExpression'))
+            ->will($this->returnValue(42));
+
+        $node = new PHP_Depend_Code_ASTArrayIndexExpression();
+        self::assertEquals(42, $node->accept($visitor));
+    }
+    
+    /**
      * testArrayIndexExpressionGraphForVariable
      *
      * <code>
