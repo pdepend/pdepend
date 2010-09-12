@@ -3734,8 +3734,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 )
             );
         }
+        
+        $ref = $this->_builder->buildASTParentReference($classReference);
+        $ref->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
 
-        return $this->_builder->buildASTParentReference($classReference);
+        return $ref;
     }
 
     /**
