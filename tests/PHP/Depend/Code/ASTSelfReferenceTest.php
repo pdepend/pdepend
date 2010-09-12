@@ -48,11 +48,11 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTStaticReference.php';
+require_once 'PHP/Depend/Code/ASTSelfReference.php';
 require_once 'PHP/Depend/Code/Class.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTStaticReference} class.
+ * Test case for the {@link PHP_Depend_Code_ASTSelfReference} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -63,14 +63,14 @@ require_once 'PHP/Depend/Code/Class.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -80,7 +80,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
         $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
         $visitor->expects($this->once())
             ->method('__call')
-            ->with($this->equalTo('visitStaticReference'));
+            ->with($this->equalTo('visitSelfReference'));
 
         $node = $this->createNodeInstance();
         $node->accept($visitor);
@@ -91,7 +91,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -101,7 +101,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
         $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
         $visitor->expects($this->once())
             ->method('__call')
-            ->with($this->equalTo('visitStaticReference'))
+            ->with($this->equalTo('visitSelfReference'))
             ->will($this->returnValue(42));
 
         $node = $this->createNodeInstance();
@@ -109,123 +109,115 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * Tests that an invalid static results in the expected exception.
+     * testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
+     * @expectedException PHP_Depend_Parser_InvalidStateException
      */
-    public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
+    public function testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
-            'The keyword "static" was used outside of a class/method scope.'
-        );
-
-        $packages = self::parseTestCaseSource(__METHOD__);
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
-     * Tests that an invalid static results in the expected exception.
+     * testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
+     * @expectedException PHP_Depend_Parser_InvalidStateException
      */
-    public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
+    public function testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
-            'The keyword "static" was used outside of a class/method scope.'
-        );
-
-        $packages = self::parseTestCaseSource(__METHOD__);
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
-     * testStaticReferenceHasExpectedStartLine
+     * testSelfReferenceHasExpectedStartLine
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testStaticReferenceHasExpectedStartLine()
+    public function testSelfReferenceHasExpectedStartLine()
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
         $this->assertEquals(5, $ref->getStartLine());
     }
 
     /**
-     * testStaticReferenceHasExpectedStartColumn
+     * testSelfReferenceHasExpectedStartColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testStaticReferenceHasExpectedStartColumn()
+    public function testSelfReferenceHasExpectedStartColumn()
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
         $this->assertEquals(13, $ref->getStartColumn());
     }
 
     /**
-     * testStaticReferenceHasExpectedEndLine
+     * testSelfReferenceHasExpectedEndLine
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testStaticReferenceHasExpectedEndLine()
+    public function testSelfReferenceHasExpectedEndLine()
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
+        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
         $this->assertEquals(5, $ref->getEndLine());
     }
 
     /**
-     * testStaticReferenceHasExpectedEndColumn
+     * testSelfReferenceHasExpectedEndColumn
      *
      * @return void
      * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
+     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testStaticReferenceHasExpectedEndColumn()
+    public function testSelfReferenceHasExpectedEndColumn()
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(18, $ref->getEndColumn());
+        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
+        $this->assertEquals(16, $ref->getEndColumn());
     }
 
     /**
      * Creates a concrete node implementation.
      *
-     * @return PHP_Depend_Code_ASTStaticReference
+     * @return PHP_Depend_Code_ASTSelfReference
      */
     protected function createNodeInstance()
     {
-        return new PHP_Depend_Code_ASTStaticReference(
+        return new PHP_Depend_Code_ASTSelfReference(
             $this->getMock(
                 'PHP_Depend_Code_Class',
                 array(),
@@ -239,12 +231,12 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTStaticReference
+     * @return PHP_Depend_Code_ASTSelfReference
      */
-    private function _getFirstStaticReferenceInClass($testCase)
+    private function _getFirstSelfReferenceInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTStaticReference::CLAZZ
+            $testCase, PHP_Depend_Code_ASTSelfReference::CLAZZ
         );
     }
 }

@@ -97,18 +97,4 @@ class PHP_Depend_Code_ASTPrimitiveTypeTest extends PHP_Depend_Code_ASTNodeTest
         $type = new PHP_Depend_Code_ASTPrimitiveType();
         $this->assertTrue($type->isPrimitive());
     }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_ASTPrimitiveType
-     */
-    private function _getFirstPrimitiveTypeInFunction($testCase)
-    {
-        return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTPrimitiveType::CLAZZ
-        );
-    }
 }

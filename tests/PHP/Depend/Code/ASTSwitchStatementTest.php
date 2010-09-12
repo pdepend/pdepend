@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTSwitchStatement.php';
 class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitSwitchStatement'));
+
+        $stmt = new PHP_Depend_Code_ASTSwitchStatement();
+        $stmt->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTSwitchStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitSwitchStatement'))
+            ->will($this->returnValue(42));
+
+        $stmt = new PHP_Depend_Code_ASTSwitchStatement();
+        self::assertEquals(42, $stmt->accept($visitor));
+    }
+
+    /**
      * Tests the generated object graph of a switch statement.
      *
      * @return void
