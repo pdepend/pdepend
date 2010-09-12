@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTThrowStatement.php';
 class PHP_Depend_Code_ASTThrowStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTThrowStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitThrowStatement'));
+
+        $stmt = new PHP_Depend_Code_ASTThrowStatement();
+        $stmt->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTThrowStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitThrowStatement'))
+            ->will($this->returnValue(42));
+
+        $stmt = new PHP_Depend_Code_ASTThrowStatement();
+        self::assertEquals(42, $stmt->accept($visitor));
+    }
+
+    /**
      * testThrowStatementHasExpectedStartLine
      *
      * @return void

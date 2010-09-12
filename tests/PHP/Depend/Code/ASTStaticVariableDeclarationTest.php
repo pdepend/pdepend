@@ -63,21 +63,65 @@ require_once 'PHP/Depend/Code/ASTNodeTest.php';
 class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitStaticVariableDeclaration'));
+
+        $expr = new PHP_Depend_Code_ASTStaticVariableDeclaration();
+        $expr->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitStaticVariableDeclaration'))
+            ->will($this->returnValue(42));
+
+        $expr = new PHP_Depend_Code_ASTStaticVariableDeclaration();
+        self::assertEquals(42, $expr->accept($visitor));
+    }
+
+    /**
      * Tests that the declaration has the expected start line value.
      * 
      * @return void
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedStartLine()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
-
+        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(4, $declaration->getStartLine());
     }
 
@@ -85,18 +129,17 @@ class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_A
      * Tests that the declaration has the expected start column value.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedStartColumn()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
-
+        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(5, $declaration->getStartColumn());
     }
 
@@ -104,18 +147,17 @@ class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_A
      * Tests that the declaration has the expected end line value.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedEndLine()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
-
+        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(5, $declaration->getEndLine());
     }
 
@@ -123,19 +165,32 @@ class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_A
      * Tests that the declaration has the expected end column value.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedEndColumn()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $declaration = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
-        );
-
+        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(23, $declaration->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTStringIndexExpression
+     */
+    private function _getFirstStaticVariableDeclarationInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
+        );
     }
 
     /**

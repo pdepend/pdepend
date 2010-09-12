@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTReturnStatement.php';
 class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTReturnStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitReturnStatement'));
+
+        $stmt = new PHP_Depend_Code_ASTReturnStatement();
+        $stmt->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTReturnStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitReturnStatement'))
+            ->will($this->returnValue(42));
+
+        $stmt = new PHP_Depend_Code_ASTReturnStatement();
+        self::assertEquals(42, $stmt->accept($visitor));
+    }
+
+    /**
      * testReturnStatementHasExpectedStartLine
      *
      * @return void

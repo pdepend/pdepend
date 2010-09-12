@@ -65,6 +65,49 @@ require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testAcceptInvokesVisitOnGivenVisitor
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTVariableDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitVariableDeclarator'));
+
+        $expr = new PHP_Depend_Code_ASTVariableDeclarator();
+        $expr->accept($visitor);
+    }
+
+    /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTVariableDeclarator
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitVariableDeclarator'))
+            ->will($this->returnValue(42));
+
+        $expr = new PHP_Depend_Code_ASTVariableDeclarator();
+        self::assertEquals(42, $expr->accept($visitor));
+    }
+
+    /**
      * testVariableDeclaratorHasExpectedStartLine
      *
      * @return void

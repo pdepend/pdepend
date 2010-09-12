@@ -3660,7 +3660,16 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 'The keyword "self" was used outside of a class/method scope.'
             );
         }
-        return $this->_builder->buildASTSelfReference($this->_classOrInterface);
+        
+        $ref = $this->_builder->buildASTSelfReference($this->_classOrInterface);
+        $ref->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $ref;
     }
 
     /**
