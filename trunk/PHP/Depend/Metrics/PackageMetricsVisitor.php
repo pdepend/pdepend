@@ -1,6 +1,6 @@
 <?php
 require_once 'PHP/Depend/Code/NodeVisitor.php';
-require_once 'PHP/Depend/Metrics/PackageMetrics.php';
+require_once 'PHP/Depend/Metrics/Metrics.php';
 
 class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVisitor
 {
