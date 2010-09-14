@@ -7,7 +7,7 @@ abstract class Foo {
 }
 
 class Bar extends Foo {
-    function foo() {
+    public function foo() {
         FooBar::bar();
         $bar = 'foo';
         $foo = true;
