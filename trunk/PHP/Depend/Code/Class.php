@@ -69,6 +69,14 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
     protected $name = '';
     
     /**
+     * The source file for this class.
+     *
+     * @type string
+     * @var string $sourceFile
+     */
+    protected $sourceFile = '';
+    
+    /**
      * The parent package for this class.
      *
      * @type PHP_Depend_Code_Package
@@ -101,13 +109,15 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
     protected $dependencies = array();
     
     /**
-     * Constructs a new class for the given <b>$name</b>.
+     * Constructs a new class for the given <b>$name</b> and <b>$sourceFile</b>.
      *
-     * @param string $name The class name.
+     * @param string $name       The class name.
+     * @param string $sourceFile The source file for this class.
      */
-    public function __construct($name)
+    public function __construct($name, $sourceFile)
     {
-        $this->name = $name;
+        $this->name       = $name;
+        $this->sourceFile = $sourceFile;
     }
     
     /**
@@ -118,6 +128,16 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Returns the source file for this class.
+     *
+     * @return string
+     */
+    public function getSourceFile()
+    {
+        return $this->sourceFile;
     }
     
     /**
