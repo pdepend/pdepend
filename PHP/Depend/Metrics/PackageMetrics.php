@@ -45,40 +45,129 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+/**
+ * Represents the metrics for a php package.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Metrics_PackageMetrics
 {
+    /**
+     * The name of the context package.
+     *
+     * @type string
+     * @var string $name
+     */
     protected $name = '';
     
+    /**
+     * Number of concrete classes in this package.
+     *
+     * @type integer
+     * @var integer $cc
+     */
     protected $cc = 0;
     
+    /**
+     * Number of abstract classes in this package.
+     *
+     * @type integer
+     * @var integer $ac
+     */
     protected $ac = 0;
     
+    /**
+     * Number of packages that internal classes depend on.
+     * 
+     * @type integer
+     * @var integer $ca
+     */
     protected $ca = 0;
     
+    /**
+     * Number of packages that depend on internal classes.
+     * 
+     * @type integer
+     * @var integer $ce
+     */
     protected $ce = 0;
     
+    /**
+     * The package abstractness (0-1).
+     *
+     * @type float
+     * @var float $a
+     */
     protected $a = 0;
     
+    /**
+     * The package instability (0-1).
+     *
+     * @type float
+     * @var float $i
+     */
     protected $i = 0;
     
+    /**
+     * The package's distance from the main sequence (D).
+     *
+     * @type float
+     * @var float $d
+     */
     protected $d = 0;
     
+    /**
+     * The total number of all classes and interfaces in this package
+     *
+     * @type integer
+     * @var integer $tc
+     */
     protected $tc = 0;
     
     protected $concreteClasses = array();
     
     protected $abstractClasses = array();
     
-    protected $efferentCouplings = array();
+    /**
+     * List of {@link PHP_Depend_Code_Package} objects that internal classes
+     * depend on.
+     *
+     * @type array<PHP_Depend_Code_Package>
+     * @var array(PHP_Depend_Code_Package) $efferents
+     */
+    protected $efferents = array();
     
-    protected $afferentCouplings = array();
+    /**
+     * List of {@link PHP_Depend_Code_Package} objects that depend on classes
+     * from this package.
+     *
+     * @type array<PHP_Depend_Code_Package>
+     * @var array(PHP_Depend_Code_Package) $afferents
+     */
+    protected $afferents = array();
     
+    /**
+     * Constructs a new package metrics instance.
+     *
+     * @param string                         $name The name of the context package.
+     * @param array(PHP_Depend_Code_Class)   $cc   Concrete classes.
+     * @param array(PHP_Depend_Code_Class)   $ac   Abstract classes and interfaces.
+     * @param array(PHP_Depend_Code_Package) $ca   Incoming dependencies.
+     * @param array(PHP_Depend_Code_Package) $ce   Outgoing dependencies.
+     */
     public function __construct($name, array $cc, array $ac, array $ca, array $ce)
     {
-        $this->concreteClasses   = $cc;
-        $this->abstractClasses   = $ac;
-        $this->efferentCouplings = $ce;
-        $this->afferentCouplings = $ca;
+        $this->concreteClasses = $cc;
+        $this->abstractClasses = $ac;
+        
+        $this->efferents = $ce;
+        $this->afferents = $ca;
 
         $this->name = $name;
         
@@ -93,67 +182,136 @@ class PHP_Depend_Metrics_PackageMetrics
         $this->d = abs(($this->a + $this->i) - 1);
     }
     
+    /**
+     * Returns all concrete classes in this package
+     *
+     * @return Iterator
+     */
     public function getConcreteClasses()
     {
-        return $this->concreteClasses;
+        return new ArrayIterator($this->concreteClasses);
     }
     
+    /**
+     * Returns all abstract classes and interfaces in this package
+     *
+     * @return Iterator
+     */
     public function getAbstractClasses()
     {
-        return $this->abstractClasses;
+        return new ArrayIterator($this->abstractClasses);
     }
     
-    public function getAfferentCouplings()
+    /**
+     * Returns {@link PHP_Depend_Code_Package} objects that depend on classes
+     * from this package.
+     *
+     * @return Iterator
+     */
+    public function getAfferents()
     {
-        return $this->afferentCouplings;
+        return $this->afferents;
     }
     
-    public function getEfferentCouplings()
+    /**
+     * Returns {@link PHP_Depend_Code_Package} objects that internal classes
+     * depend on.
+     *
+     * @return Iterator
+     */
+    public function getEfferents()
     {
-        return $this->efferentCouplings;
+        return new ArrayIterator($this->efferents);
     }
     
+    /**
+     * Returns the name of the context package.
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
     
-    public function getTC()
+    /**
+     * Returns the total number of all classes and interfaces in this package.
+     *
+     * @return integer
+     */
+    public function getTotalClassCount()
     {
         return $this->tc;
     }
     
-    public function getCC()
+    /**
+     * Returns the number of concrete classes in this package.
+     *
+     * @return integer
+     */
+    public function getConcreteClassCount()
     {
         return $this->cc;
     }
     
-    public function getAC()
+    /**
+     * Returns the number of abstract classes in this package.
+     *
+     * @return integer
+     */
+    public function getAbstractClassCount()
     {
         return $this->ac;
     }
     
-    public function getCA()
+    /**
+     * The number of other packages that depend upon classes within the package 
+     * is an indicator of the package's responsibility.
+     *
+     * @return integer The afferent coupling (Ca) of this package.
+     */
+    public function afferentCoupling()
     {
         return $this->ca;
     }
     
-    public function getCE()
+    /**
+     * The number of other packages that the classes in the package depend upon 
+     * is an indicator of the package's independence.
+     *
+     * @return integer The efferent coupling (Ce) of this package.
+     */
+    public function efferentCoupling()
     {
         return $this->ce;
     }
     
-    public function getA()
+    /**
+     * Returns the package abstractness (0-1).
+     *
+     * @return float
+     */
+    public function abstractness()
     {
         return $this->a;
     }
     
-    public function getI()
+    /**
+     * Returns the package instability (0-1).
+     *
+     * @return float
+     */
+    public function instability()
     {
         return $this->i;
     }
     
-    public function getD()
+    /**
+     * Returns the package's distance from the main sequence (D).
+     *
+     * @return float
+     */
+    public function distance()
     {
         return $this->d;
     }
