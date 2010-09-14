@@ -185,7 +185,16 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
      */
     public function removeFunction(PHP_Depend_Code_Function $function)
     {
-        $this->functions = array_diff($this->functions, array($function));
+        foreach ($this->functions as $i => $f) {
+            if ($f === $function) {
+                // Remove function from internal list
+                unset($this->functions[$i]);
+                // Remove this as parent
+                $function->setPackage(null);
+                
+                break;
+            }
+        }
     }
     
     /**
