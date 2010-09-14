@@ -267,7 +267,3 @@ class PHP_Depend_Code_AllTests
         return $suite;
     }
 }
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_AllTests::main') {
-    PHP_Depend_Code_AllTests::main();
-}
