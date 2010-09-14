@@ -19,7 +19,7 @@ class PHP_Depend_Metrics_PackageMetricsVisitor implements PHP_Depend_Code_NodeVi
         $this->metrics = array();
         
         foreach ($this->visible as $pkg) {
-            $this->metrics[] = new PHP_Depend_Metrics_PackageMetrics(
+            $this->metrics[] = new PHP_Depend_Metrics_Metrics(
                 $pkg,
                 $this->data[$pkg]['cc'],
                 $this->data[$pkg]['ac'],
