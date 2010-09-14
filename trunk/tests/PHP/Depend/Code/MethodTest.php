@@ -45,22 +45,13 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
-{
-    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_AllTests::main' );
-}
+require_once dirname(__FILE__) . '/AbstractDependencyTest.php';
+require_once dirname(__FILE__) . '/TestNodeVisitor.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/ClassTest.php';
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
-require_once dirname(__FILE__) . '/MethodTest.php';
-require_once dirname(__FILE__) . '/PackageTest.php';
+require_once 'PHP/Depend/Code/Method.php';
 
 /**
- * Main test suite for the PHP_Depend_Code package.
+ * Test case implementation for the PHP_Depend_Code_Method class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -70,36 +61,59 @@ require_once dirname(__FILE__) . '/PackageTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_AllTests
+class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractDependencyTest
 {
     /**
-     * Test suite main method.
+     * Tests the ctor and the {@link PHP_Depend_Code_Method::getName()} method.
      *
      * @return void
      */
-    public static function main()
+    public function testCreateNewMethodInstance()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertEquals('method', $method->getName());
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Tests that the {@link PHP_Depend_Code_Method::getClass()} returns as
+     * default value <b>null</b> and that the package could be set and unset.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testGetSetClass()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
-        $suite->addTestSuite('PHP_Depend_Code_ClassTest');
-        $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
-        $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
-        $suite->addTestSuite('PHP_Depend_Code_MethodTest');
-        $suite->addTestSuite('PHP_Depend_Code_PackageTest');
-
-        return $suite;
+        $class  = new PHP_Depend_Code_Class('clazz', 'clazz.php');
+        $method = new PHP_Depend_Code_Method('method');
+        
+        $this->assertNull($method->getClass());
+        $method->setClass($class);
+        $this->assertSame($class, $method->getClass());
+        $method->setClass(null);
+        $this->assertNull($method->getClass());
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_AllTests::main') {
-    PHP_Depend_Code_AllTests::main();
+    
+    /**
+     * Tests the visitor accept method.
+     *
+     * @return void
+     */
+    public function testVisitorAccept()
+    {
+        $method  = new PHP_Depend_Code_Method('method');
+        $visitor = new PHP_Depend_Code_TestNodeVisitor();
+        
+        $this->assertNull($visitor->method);
+        $method->accept($visitor);
+        $this->assertSame($method, $visitor->method);
+    }
+    
+    /**
+     * Generates a node instance that can handle dependencies.
+     *
+     * @return PHP_Depend_Code_DependencyNode
+     */
+    protected function createDependencyNode()
+    {
+        return new PHP_Depend_Code_Method('method');
+    }
 }
