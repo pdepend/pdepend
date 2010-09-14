@@ -47,29 +47,81 @@
 
 require_once 'PHP/Depend/Code/Node.php';
 
+/**
+ * Represents a php package node.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
 {
+    /**
+     * The package name.
+     *
+     * @type string
+     * @var string $name
+     */
     protected $name = '';
     
+    /**
+     * List of all {@link PHP_Depend_Code_Class} objects for this package.
+     *
+     * @type array<PHP_Depend_Code_Class>
+     * @var array(PHP_Depend_Code_Class) $classes
+     */
     protected $classes = array();
     
+    /**
+     * List of all standalone {@link PHP_Depend_Code_Function} objects in this
+     * package.
+     *
+     * @type array<PHP_Depend_Code_Function>
+     * @var array(PHP_Depend_Code_Function) $functions
+     */
     protected $functions = array();
     
+    /**
+     * Constructs a new package for the given <b>$name</b>
+     *
+     * @param string $name The package name.
+     */
     public function __construct($name)
     {
         $this->name = $name;
     }
     
+    /**
+     * Returns the package name.
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
     
+    /**
+     * Returns all {@link PHP_Depend_Code_Class} objects in this package.
+     *
+     * @return Iterator
+     */
     public function getClasses()
     {
         return new ArrayIterator($this->classes);
     }
     
+    /**
+     * Adds the given class to this package.
+     *
+     * @param PHP_Depend_Code_Class $class The new package class.
+     * 
+     * @return void
+     */
     public function addClass(PHP_Depend_Code_Class $class)
     {
         if ($class->getPackage()) {
@@ -82,6 +134,13 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
         $this->classes[] = $class;
     }
     
+    /**
+     * Removes the given class from this package.
+     *
+     * @param PHP_Depend_Code_Class $class The class to remove.
+     * 
+     * @return void
+     */
     public function removeClass(PHP_Depend_Code_Class $class)
     {
         // Remove this package
@@ -95,21 +154,47 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
         }
     }
     
+    /**
+     * Returns all {@link PHP_Depend_Code_Function} objects in this package.
+     *
+     * @return Iterator
+     */
     public function getFunctions()
     {
         return new ArrayIterator($this->functions);
     }
     
+    /**
+     * Adds the given function to this package.
+     *
+     * @param PHP_Depend_Code_Function $function The new package function.
+     * 
+     * @return void
+     */
     public function addFunction(PHP_Depend_Code_Function $function)
     {
         $this->functions[] = $function;
     }
     
+    /**
+     * Removes the given function from this package.
+     *
+     * @param PHP_Depend_Code_Function $function The function to remove
+     * 
+     * @return void
+     */
     public function removeFunction(PHP_Depend_Code_Function $function)
     {
         $this->functions = array_diff($this->functions, array($function));
     }
     
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor implementation.
+     * 
+     * @return void
+     */
     public function accept(PHP_Depend_Code_NodeVisitor $visitor)
     {
         $visitor->visitPackage($this);

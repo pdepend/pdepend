@@ -90,6 +90,13 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_Node
         $this->package = $package;
     }
     
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor implementation.
+     * 
+     * @return void
+     */
     public function accept(PHP_Depend_Code_NodeVisitor $visitor)
     {
         $visitor->visitFunction($this);
