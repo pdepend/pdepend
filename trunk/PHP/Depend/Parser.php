@@ -159,9 +159,7 @@ class PHP_Depend_Parser
                 break;
                     
             default:
-                if ($this->className !== null) {
-                    throw new RuntimeException('Invalid state' . var_export($token, true));
-                }
+                // TODO: Handle/log unused tokens
             }
         }
     }
@@ -219,13 +217,19 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 break;
+            
+            default:
+                // TODO: Handle/log unused tokens 
             }
             
             if ($curly === 0) {
-                return;
+                 break;
             }
-            
             $token = $this->tokenizer->next();
+        }
+        
+        if ($curly !== 0) {
+            throw new RuntimeException('Invalid state, unclosed class body.');
         }
     }
     
@@ -259,8 +263,6 @@ class PHP_Depend_Parser
         foreach ($dependencies as $dependency) {
             $function->addDependency($this->builder->buildClass($dependency, $this->tokenizer->getSourceFile()));
         }
-        
-        //echo "FUNCTION: {$function}\n";print_r($dependencies);echo "\n";
     }
 
     /**
@@ -270,8 +272,8 @@ class PHP_Depend_Parser
      */
     protected function  parseFunctionSignature()
     {
-        while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
-            $this->tokenizer->next();
+        if ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
+            throw new RuntimeException('Invalid function signature.');
         }
         
         $token = $this->tokenizer->next();
@@ -279,7 +281,7 @@ class PHP_Depend_Parser
         $parenthesis  = 1;
         $dependencies = array();
         
-        while (($token = $this->tokenizer->next()) !== null) {
+        while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
 
             switch ($token[0]) {
             case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN:
@@ -293,15 +295,16 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_STRING:
                 $dependencies[] = $token[1];
                 break;
+
+            default:
+                // TODO: Handle/log unused tokens
             }
             
             if ($parenthesis === 0) {
-                break;
+                return $dependencies;
             }
-            
         }
-        
-        return $dependencies;
+        throw new RuntimeException('Invalid function signature.');
     }
     
     /**
@@ -346,6 +349,9 @@ class PHP_Depend_Parser
             case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
                 --$curly;
                 break;
+
+            default:
+                // TODO: Handle/log unused tokens
             }
             
             if ($curly === 0) {
@@ -353,7 +359,7 @@ class PHP_Depend_Parser
             }
         }
 
-        throw new RuntimeException('Invalid state.');
+        throw new RuntimeException('Invalid state, unclosed function body.');
     }
     
     /**
