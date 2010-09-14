@@ -69,7 +69,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */
     public function testInternalTokenizerWithClasses()
     {
-        $sourceFile = dirname(__FILE__) . '/code/classes.php';
+        $sourceFile = dirname(__FILE__) . '/../code/classes.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
@@ -116,7 +116,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */   
     public function testInternalTokenizerWithMixedContent()
     {
-        $sourceFile = dirname(__FILE__) . '/code/func_class.php';
+        $sourceFile = dirname(__FILE__) . '/../code/func_class.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
@@ -152,7 +152,7 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
      */
     public function testInternalTokenizerWithProceduralCodeAndFunction()
     {
-        $sourceFile = dirname(__FILE__) . '/code/func_code.php';
+        $sourceFile = dirname(__FILE__) . '/../code/func_code.php';
         $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
         
         $tokens = array(
