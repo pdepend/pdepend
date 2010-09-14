@@ -223,9 +223,10 @@ class PHP_Depend_Parser
             }
             
             if ($curly === 0) {
-                 break;
+                $token = PHP_Depend_Code_Tokenizer::T_EOF;
+            } else {
+                $token = $this->tokenizer->next();
             }
-            $token = $this->tokenizer->next();
         }
         
         if ($curly !== 0) {

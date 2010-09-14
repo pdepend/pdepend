@@ -145,7 +145,7 @@ class PHP_Depend
     public function countClasses()
     {
         if ($this->packages === null) {
-            throw new RuntimeException('Invalid state');
+            throw new RuntimeException('countClasses() doesn\'t work before the source was analyzed.');
         }
         
         $classes = 0;
@@ -163,7 +163,7 @@ class PHP_Depend
     public function countPackages()
     {
         if ($this->packages === null) {
-            throw new RuntimeException('Invalid state');
+            throw new RuntimeException('countPackages() doesn\'t work before the source was analyzed.');
         }
         // TODO: This is internal knownhow, it is an ArrayIterator
         //       Replace it with a custom iterator interface
@@ -180,14 +180,14 @@ class PHP_Depend
     public function getPackage($name)
     {
         if ($this->packages === null) {
-            throw new RuntimeException('Invalid state');
+            throw new RuntimeException('getPackage() doesn\'t work before the source was analyzed.');
         }
         foreach ($this->packages as $package) {
             if ($package->getName() === $name) {
                 return $package;
             }
         }
-        return null;
+        throw new OutOfBoundsException(sprintf('Unknown package "%s".', $name));
     }
     
     /**
@@ -198,7 +198,7 @@ class PHP_Depend
     public function getPackages()
     {
         if ($this->packages === null) {
-            throw new RuntimeException('Invalid state');
+            throw new RuntimeException('getPackages() doesn\'t work before the source was analyzed.');
         }
         return $this->packages;
     }
