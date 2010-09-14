@@ -129,6 +129,13 @@ interface PHP_Depend_Code_Tokenizer
     const T_SEMICOLON = 13;
     
     /**
+     * Returns the name of the source file.
+     *
+     * @return string
+     */
+    function getFilename();
+    
+    /**
      * Returns the next token or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
      * there is no next token.
      *
