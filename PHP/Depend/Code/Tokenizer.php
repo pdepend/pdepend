@@ -150,4 +150,12 @@ interface PHP_Depend_Code_Tokenizer
      * @return integer
      */
     function peek();
+    
+    /**
+     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} 
+     * if there is no previous token.
+     *
+     * @return integer
+     */
+    function prev();
 }
