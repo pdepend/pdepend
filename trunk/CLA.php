@@ -4,7 +4,6 @@ class PHPFilterIterator extends FilterIterator
 {
     public function accept() 
     {
-        //return ( substr($this->getInnerIterator()->current(), -12, 12) === 'package1.php' );
         return ( substr($this->getInnerIterator()->current(), -4, 4) === '.php' );
     }
 }
@@ -15,7 +14,7 @@ if ( isset( $argv[1] ) )
 }
 else
 {
-    $dir = dirname( __FILE__ ) . '/code';
+    $dir = dirname( __FILE__ ) . '/data/code-5.2.x';
 }
 
 $it = new PHPFilterIterator( 
@@ -44,7 +43,7 @@ foreach ( $it as $file )
     $parser->parse();
 }
 
-$visitor = new PHP_Depend_Metrics_PackageMetricsVisitor();
+$visitor = new PHP_Depend_Metrics_MetricsVisitor();
 
 foreach ($builder as $pkg) {
     $pkg->accept($visitor);
