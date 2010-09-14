@@ -45,8 +45,26 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+/**
+ * Represents any possible code node.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   SVN: $Id$
+ * @link      http://www.manuel-pichler.de/
+ */
 interface PHP_Depend_Code_Node
 {
+    /**
+     * Returns the name for this code node.
+     *
+     * @return string
+     */
+    function getName();
+    
     /**
      * Visitor method for node tree traversal.
      *
