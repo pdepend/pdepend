@@ -1289,6 +1289,10 @@ and the NDepend metric tool.
   Fixed in svn revision #1296.
             </notes>
     </release>
+<<<<<<< HEAD
+=======
+
+>>>>>>> a8a7d8dbc2ac5573c5a871b51d79109e5c434ca8
     <release>
       <date>2010-06-19</date>
       <time>20:08:44</time>
@@ -1308,6 +1312,7 @@ and the NDepend metric tool.
   Implemented in svn revision #1331.
       </notes>
     </release>
+<<<<<<< HEAD
     <release>
       <date>2010-07-29</date>
       <time>20:08:44</time>
@@ -1342,5 +1347,7 @@ and the NDepend metric tool.
   subversion revision #1347.
       </notes>
     </release>
+=======
+>>>>>>> a8a7d8dbc2ac5573c5a871b51d79109e5c434ca8
   </changelog>
 </package>

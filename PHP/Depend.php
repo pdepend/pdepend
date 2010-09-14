@@ -803,4 +803,3 @@ class PHP_Depend
 
     // @codeCoverageIgnoreEnd
 }
-
