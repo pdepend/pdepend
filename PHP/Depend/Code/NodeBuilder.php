@@ -1,7 +1,7 @@
 <?php
 interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
 {
-    const DEFAULT_PACKAGE = '__default__';
+    const DEFAULT_PACKAGE = 'global';
     
     /**
      * Enter description here...
