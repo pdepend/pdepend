@@ -191,6 +191,20 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
     }
     
     /**
+     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} 
+     * if there is no previous token.
+     *
+     * @return integer
+     */
+    public function prev()
+    {
+        if ($this->index > 0) {
+            return $this->tokens[$this->index - 1][0];
+        }
+        return self::T_EOF;
+    }
+    
+    /**
      * Tokenizes the content of the source file with {@link token_get_all()} and
      * filters this token stream.
      * 
