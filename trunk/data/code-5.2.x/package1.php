@@ -38,14 +38,11 @@ class pkg1Barfoo extends pkg1Bar implements pkg1FooI {
     
     public function bar(pkg2FooI $fx)
     {
-        new pkg2Bar();//::doIt();
+        new pkg2Bar();
     }
 }
 
 /**
  * @package package1
  */
-function foobar2($x)
-{
-    pkg2Barfoo::xyz($x);
-}
+//function foobar2($x){    pkg2Barfoo::xyz($x);}

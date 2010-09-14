@@ -43,7 +43,7 @@ foreach ( $it as $file )
     $parser->parse();
 }
 
-$visitor = new PHP_Depend_Metrics_MetricsVisitor();
+$visitor = new PHP_Depend_Metrics_PackageMetricsVisitor();
 
 foreach ($builder as $pkg) {
     $pkg->accept($visitor);

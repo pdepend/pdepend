@@ -2,18 +2,8 @@
 /**
  * @package package2
  */
-class pkg2FooI implements pkg1FooI {
+interface pkg2FooI extends pkg1FooI {
 
-    /**
-     * Command manager singleton method which returns a configured instance
-     * or <b>null</b>.
-     *
-     * @return mxpControllerCommandManager
-     */
-    public static function get()
-    {
-        return self::$manager;
-    }
 }
 
 /**
@@ -30,7 +20,19 @@ abstract class pkg2Bar extends pkg1Bar {
  * @package package2
  */
 class pkg2Foobar extends pkg1Bar {
+
+    protected static $manager = null;
     
+    /**
+     * Command manager singleton method which returns a configured instance
+     * or <b>null</b>.
+     *
+     * @return mxpControllerCommandManager
+     */
+    public static function get()
+    {
+        return self::$manager;
+    }
 }
 
 /**
