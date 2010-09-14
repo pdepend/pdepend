@@ -177,4 +177,30 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         $parser->parse();
     }
+    
+    /**
+     * Test case for parser bug 01 that doesn't add dependencies for static
+     * method calls.
+     * 
+     * @return void
+     */
+    public function testParserStaticCallBug01()
+    {
+        $sourceFile = dirname(__FILE__) . '/data/bugs/01.php';
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        $builder    = new PHP_Depend_Code_DefaultBuilder();
+        $parser     = new PHP_Depend_Parser($tokenizer, $builder);
+        
+        $parser->parse();
+        
+        $packages = $builder->getPackages();
+        $this->assertEquals(1, $packages->count());        
+        $package  = $packages->current();
+        $this->assertEquals('package0', $package->getName());
+        $classes  = $package->getClasses();
+        $this->assertEquals(1, $classes->count()); 
+        $methods  = $classes->current()->getMethods();
+        $this->assertEquals(1, $methods->count());
+        $this->assertEquals(1, $methods->current()->getDependencies()->count());
+    }
 }
