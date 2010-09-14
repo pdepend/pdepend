@@ -45,43 +45,57 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+/**
+ * Base interface for all code node builders.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 interface PHP_Depend_Code_NodeBuilder extends IteratorAggregate
 {
+    /**
+     * The default package name.
+     */
     const DEFAULT_PACKAGE = 'global';
     
     /**
-     * Enter description here...
+     * Builds a new package instance.
      *
-     * @param unknown_type $name
+     * @param string $name The class name.
      * 
-     * @return PHP_Depend_Code_Class
+     * @return PHP_Depend_Code_Class The created class object.
      */
     function buildClass($name);
     
     /**
-     * Enter description here...
+     * Builds a new package instance.
      *
-     * @param unknown_type $name
+     * @param string $name The package name.
      * 
-     * @return PHP_Depend_Code_Package
+     * @return PHP_Depend_Code_Package The created package object.
      */
     function buildPackage($name);
     
     /**
-     * Enter description here...
+     * Builds a new method instance.
      *
-     * @param unknown_type $name
+     * @param string $name The method name.
      * 
-     * @return PHP_Depend_Code_Method
+     * @return PHP_Depend_Code_Method The created class method object.
      */
     function buildMethod($name);
     
     /**
-     * Enter description here...
+     * Builds a new function instance.
      *
-     * @param unknown_type $name
+     * @param string $name The function name.
      * 
-     * @return PHP_Depend_Code_Function
+     * @return PHP_Depend_Code_Function The function instance
      */
     function buildFunction($name);
 }
