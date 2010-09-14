@@ -45,9 +45,8 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
-{
-    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_Metrics_AllTests::main' );
+if (defined('PHPUnit_MAIN_METHOD') === false) {
+    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Metrics_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';

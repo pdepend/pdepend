@@ -105,6 +105,11 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
         $this->assertEquals(4, $it->count());
     }
     
+    /**
+     * Tests that the iterator returns the node name as key.
+     *
+     * @return void
+     */
     public function testNodeIteratorLoopWithKey()
     {
         $names = array('clazz', 'pkg', 'method', 'func');
