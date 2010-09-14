@@ -110,9 +110,9 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
      * The name of the source file.
      *
      * @type string
-     * @var string $fileName
+     * @var string $sourceFile
      */
-    protected $fileName = '';
+    protected $sourceFile = '';
     
     /**
      * Count of all tokens.
@@ -141,11 +141,11 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
     /**
      * Constructs a new tokenizer for the given file.
      *
-     * @param string $fileName A php source file.
+     * @param string $sourceFile A php source file.
      */
-    public function __construct($fileName)
+    public function __construct($sourceFile)
     {
-        $this->fileName = $fileName;
+        $this->sourceFile = $sourceFile;
         
         $this->tokenize();
     }
@@ -155,9 +155,9 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
      *
      * @return string
      */
-    public function getFilename()
+    public function getSourceFile()
     {
-        return $this->fileName;
+        return $this->sourceFile;
     }
     
     /**
@@ -196,7 +196,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
      */
     protected function tokenize()
     {
-        $source = file_get_contents($this->fileName);
+        $source = file_get_contents($this->sourceFile);
         $tokens = token_get_all($source);
         
         foreach ($tokens as $token) {
