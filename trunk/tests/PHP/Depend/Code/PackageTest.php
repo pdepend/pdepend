@@ -230,6 +230,187 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests the {@link PHP_Depend_Code_Package::collectCycle()} method with
+     * an one to one cycle.
+     *
+     * @return void
+     */
+    public function testCollectCycleWithOneToOneCycle()
+    {
+        $package0 = new PHP_Depend_Code_Package('package0');
+        $package1 = new PHP_Depend_Code_Package('package1');
+        $package2 = new PHP_Depend_Code_Package('package2');
+        $package3 = new PHP_Depend_Code_Package('package3');
+        $package4 = new PHP_Depend_Code_Package('package4');
+        
+        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $package0->addClass($class01);
+        
+        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $package1->addClass($class11);
+        
+        $class21 = new PHP_Depend_Code_Class('class21', null);
+        $package2->addClass($class21);
+        
+        $class31 = new PHP_Depend_Code_Class('class31', null);
+        $package3->addClass($class31);
+        
+        $class41 = new PHP_Depend_Code_Class('class41', null);
+        $package4->addClass($class41);
+        
+        // Cycle package2 <--> package3
+        $class01->addDependency($class11);
+        $class11->addDependency($class21);
+        $class21->addDependency($class31);
+        $class31->addDependency($class21);
+        $class31->addDependency($class41);
+        $class41->addDependency($class11);
+        
+        $storage = new SplObjectStorage();
+        $package0->collectCycle($storage);
+        
+        $this->assertEquals(2, $storage->count());
+        $this->assertTrue($storage->contains($package2));
+        $this->assertTrue($storage->contains($package3));
+        $this->assertFalse($storage->contains($package4));
+        $this->assertFalse($storage->contains($package0));
+        $this->assertFalse($storage->contains($package1));
+    }
+    
+    /**
+     * Tests the {@link PHP_Depend_Code_Package::collectCycle()} method with
+     * a large cycle.
+     *
+     * @return void
+     */
+    public function testCollectCycleWithLargePackageCycle()
+    {
+        $package0 = new PHP_Depend_Code_Package('package0');
+        $package1 = new PHP_Depend_Code_Package('package1');
+        $package2 = new PHP_Depend_Code_Package('package2');
+        $package3 = new PHP_Depend_Code_Package('package3');
+        $package4 = new PHP_Depend_Code_Package('package4');
+        
+        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $package0->addClass($class01);
+        
+        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $package1->addClass($class11);
+        
+        $class21 = new PHP_Depend_Code_Class('class21', null);
+        $package2->addClass($class21);
+        
+        $class31 = new PHP_Depend_Code_Class('class31', null);
+        $package3->addClass($class31);
+        
+        $class41 = new PHP_Depend_Code_Class('class41', null);
+        $package4->addClass($class41);
+        
+        // Cycle package2 <--> package3
+        // Cycle package1 --> package2 --> package3 --> package4 --> package1
+        $class01->addDependency($class11);
+        $class11->addDependency($class21);
+        $class21->addDependency($class31);
+        $class31->addDependency($class41);
+        $class41->addDependency($class11);
+        
+        $storage = new SplObjectStorage();
+        $package4->collectCycle($storage);
+        
+        $this->assertEquals(4, $storage->count());
+    }
+    
+    /**
+     * Tests the result of {@link PHP_Depend_Code_Package::collectCycle()} against
+     * a graph that has no cycle.
+     * 
+     * @return void
+     */
+    public function testCollectCycleWithoutCycle()
+    {
+        $package0 = new PHP_Depend_Code_Package('package0');
+        $package1 = new PHP_Depend_Code_Package('package1');
+        $package2 = new PHP_Depend_Code_Package('package2');
+        $package3 = new PHP_Depend_Code_Package('package3');
+        $package4 = new PHP_Depend_Code_Package('package4');
+        
+        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $package0->addClass($class01);
+        
+        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $package1->addClass($class11);
+        
+        $class21 = new PHP_Depend_Code_Class('class21', null);
+        $package2->addClass($class21);
+        
+        $class31 = new PHP_Depend_Code_Class('class31', null);
+        $package3->addClass($class31);
+        
+        $class41 = new PHP_Depend_Code_Class('class41', null);
+        $package4->addClass($class41);
+
+        // package0 --> package1 --> package2 --> package3 --> package4
+        $class01->addDependency($class11);
+        $class11->addDependency($class21);
+        $class21->addDependency($class31);
+        $class31->addDependency($class41);
+        
+        $storage = new SplObjectStorage();
+        $package4->collectCycle($storage);
+        
+        $this->assertEquals(0, $storage->count());        
+    }
+    
+    /**
+     * Tests the result of {@link PHP_Depend_Code_Package::containsCycle()} against
+     * an one to one cycle.
+     *
+     * @return void
+     */
+    public function testContainsCycleWithOneToOneCycle()
+    {
+        $package0 = new PHP_Depend_Code_Package('package0');
+        $package1 = new PHP_Depend_Code_Package('package1');
+        
+        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $package0->addClass($class01);
+        
+        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $package1->addClass($class11);
+
+        // package0 <--> package1
+        $class01->addDependency($class11);
+        $class11->addDependency($class01);
+        
+        $this->assertTrue($package0->containsCycle());
+        $this->assertTrue($package1->containsCycle());
+    }
+    
+    /**
+     * Tests the result of {@link PHP_Depend_Code_Package::containsCycle()} against
+     * a not cycled graph.
+     *
+     * @return void
+     */
+    public function testContainsCycleWithoutCycleGraph()
+    {
+        $package0 = new PHP_Depend_Code_Package('package0');
+        $package1 = new PHP_Depend_Code_Package('package1');
+        
+        $class01 = new PHP_Depend_Code_Class('class01', null);
+        $package0->addClass($class01);
+        
+        $class11 = new PHP_Depend_Code_Class('class11', null);
+        $package1->addClass($class11);
+
+        // package0 --> package1
+        $class01->addDependency($class11);
+        
+        $this->assertFalse($package0->containsCycle());
+        $this->assertFalse($package1->containsCycle());        
+    }
+    
+    /**
      * Tests the visitor accept method.
      *
      * @return void

@@ -199,6 +199,51 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_Node
     }
     
     /**
+     * Returns <b>true</b> if this package or one of the efferent packages 
+     * contains a cycle.
+     *
+     * @return boolean
+     */
+    public function containsCycle()
+    {
+        return $this->collectCycle(new SplObjectStorage());
+    }
+
+    /**
+     * Collects a single cycle that is reachable by this package. All packages
+     * that are part of the cylce are stored in the given {@link SplObjectStorage}
+     * instance. 
+     *
+     * @param SplObjectStorage $storage The cycle package object store.
+     * 
+     * @return boolean If this method detects a cycle the return value is <b>true</b>
+     *                 otherwise this method will return <b>false</b>.
+     */
+    public function collectCycle(SplObjectStorage $storage)
+    {
+        if ($storage->contains($this)) {
+            $storage->rewind();
+            while (($tmp = $storage->current()) !== $this) {
+                $storage->detach($tmp);
+            }
+            return true;
+        }
+        
+        $storage->attach($this);
+
+        foreach ($this->getClasses() as $class) {
+            foreach ($class->getDependencies() as $dependency) {
+                if ($dependency->getPackage()->collectCycle($storage)) {
+                    return true;
+                }
+            }
+        }
+        $storage->detach($this);
+        
+        return false;
+    }
+
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
