@@ -99,6 +99,140 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the build interface method recreates an existing class as 
+     * interface. 
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesRecreateTypeForExistingClass()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $type0 = $builder->buildClassOrInterface('FooBar');
+        $this->assertType('PHP_Depend_Code_Class', $type0);
+        $type1 = $builder->buildInterface('FooBar');
+        $this->assertType('PHP_Depend_Code_Interface', $type1);
+        $type2 = $builder->buildClassOrInterface('FooBar');
+        $this->assertType('PHP_Depend_Code_Interface', $type2);
+    }
+    
+    /**
+     * Tests that a type recreate forces all class dependencies to be updated.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateClassDependencies()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $class = $builder->buildClass('Bar');
+        $type0 = $builder->buildClassOrInterface('FooBar');
+        
+        $class->addDependency($type0);
+        $this->assertEquals(1, $class->getDependencies()->count());
+        $this->assertEquals($type0, $class->getDependencies()->current());
+        
+        $type1 = $builder->buildInterface('FooBar');
+        $this->assertEquals(1, $class->getDependencies()->count());
+        $this->assertEquals($type1, $class->getDependencies()->current());
+    }
+    
+    /**
+     * Tests that a type recreate forces all interface dependencies to be updated.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateInterfaceDependencies()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $interface = $builder->buildInterface('Bar');
+        $type0     = $builder->buildClassOrInterface('FooBar');
+        
+        $interface->addDependency($type0);
+        $this->assertEquals(1, $interface->getDependencies()->count());
+        $this->assertEquals($type0, $interface->getDependencies()->current());
+        
+        $type1 = $builder->buildInterface('FooBar');
+        $this->assertEquals(1, $interface->getDependencies()->count());
+        $this->assertEquals($type1, $interface->getDependencies()->current());
+    }
+    
+    /**
+     * Tests that a type recreate forces all function dependencies to be updated.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateFunctionDependencies()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $function = $builder->buildFunction('bar', 0);
+        $type0    = $builder->buildClassOrInterface('FooBar');
+        
+        $function->addDependency($type0);
+        $this->assertEquals(1, $function->getDependencies()->count());
+        $this->assertEquals($type0, $function->getDependencies()->current());
+        
+        $type1 = $builder->buildInterface('FooBar');
+        $this->assertEquals(1, $function->getDependencies()->count());
+        $this->assertEquals($type1, $function->getDependencies()->current());
+    }
+    
+    /**
+     * Tests that a type recreate forces all method dependencies to be updated.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceForcesUpdateMethodDependencies()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder();
+        
+        $method = $builder->buildMethod('bar', 0);
+        $type0  = $builder->buildClassOrInterface('FooBar');
+        
+        $method->addDependency($type0);
+        $this->assertEquals(1, $method->getDependencies()->count());
+        $this->assertEquals($type0, $method->getDependencies()->current());
+        
+        $type1 = $builder->buildInterface('FooBar');
+        $this->assertEquals(1, $method->getDependencies()->count());
+        $this->assertEquals($type1, $method->getDependencies()->current());
+    }
+    
+    /**
+     * Tests that build interface updates the source file information for null
+     * values.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceSetsSourceFileInformationForNull()
+    {
+        $builder   = new PHP_Depend_Code_DefaultBuilder();
+        $interface = $builder->buildInterface('FooBar');
+        
+        $this->assertNull($interface->getSourceFile());
+        $builder->buildInterface('FooBar', 0, 'HelloWorld.php');
+        $this->assertEquals('HelloWorld.php', $interface->getSourceFile());
+    }
+    
+    /**
+     * Tests that the build interface method doesn't update an existing source
+     * file info.
+     *
+     * @return void
+     */
+    public function testBuildInterfaceDoesntSetSourceFileInformationForNotNullValues()
+    {
+        $builder   = new PHP_Depend_Code_DefaultBuilder();
+        $interface = $builder->buildInterface('FooBar', 0, 'FooBar.php');
+        
+        $this->assertEquals('FooBar.php', $interface->getSourceFile());
+        $builder->buildInterface('FooBar', 0, 'HelloWorld.php');
+        $this->assertEquals('FooBar.php', $interface->getSourceFile());
+    }
+    
+    /**
      * Tests the PHP_Depend_Code_Method build method.
      *
      * @return void
@@ -169,6 +303,21 @@ class PHP_Depend_Code_DefaultBuilderTest extends PHP_Depend_AbstractTest
             $this->assertEquals($name, $package->getName());
             $this->assertSame($packages[$name], $package);
         }
+    }
+    
+    /**
+     * Tests that the function build method creates an unique function instance.
+     *
+     * @return void
+     */
+    public function testBuildFunctionUnique()
+    {
+        $builder = new PHP_Depend_Code_DefaultBuilder(); 
+        
+        $function1 = $builder->buildFunction('foobar', 0);
+        $function2 = $builder->buildFunction('foobar', 0);
+        
+        $this->assertSame($function1, $function2);
     }
     
     /**

@@ -99,6 +99,6 @@ abstract class PHP_Depend_Renderer_AbstractRendererTest extends PHP_Depend_Abstr
             $package->accept($visitor);
         }
         
-        $this->metrics = $visitor->getPackageMetrics();
+        $this->metrics = $visitor->getPackages();
     }
 }

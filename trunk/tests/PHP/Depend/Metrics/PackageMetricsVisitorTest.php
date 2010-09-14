@@ -119,7 +119,7 @@ class PHP_Depend_Metrics_PackageMetricsVisitorTest extends PHP_Depend_AbstractTe
         foreach ($this->builder->getPackages() as $package) {
             $package->accept($visitor);
         }
-        $metrics0 = $visitor->getPackageMetrics(); 
+        $metrics0 = $visitor->getPackages(); 
         foreach ($metrics0 as $metrics) {
             if (!isset($expected[$metrics->getName()])) {
                 continue;
@@ -149,8 +149,8 @@ class PHP_Depend_Metrics_PackageMetricsVisitorTest extends PHP_Depend_AbstractTe
         foreach ($this->builder->getPackages() as $package) {
             $package->accept($visitor);
         }
-        $metrics0 = $visitor->getPackageMetrics();
-        $metrics1 = $visitor->getPackageMetrics();
+        $metrics0 = $visitor->getPackages();
+        $metrics1 = $visitor->getPackages();
         
         $this->assertNotNull($metrics0);
         $this->assertNotNull($metrics1);
