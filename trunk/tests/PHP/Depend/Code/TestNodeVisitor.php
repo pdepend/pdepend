@@ -45,19 +45,10 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
-{
-    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_AllTests::main' );
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/InternalTokenizerTest.php';
-require_once dirname(__FILE__) . '/PackageTest.php';
+require_once 'PHP/Depend/Code/NodeVisitor.php';
 
 /**
- * Main test suite for the PHP_Depend_Code package.
+ * Simple test node visitor implementation.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -67,33 +58,85 @@ require_once dirname(__FILE__) . '/PackageTest.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_AllTests
+class PHP_Depend_Code_TestNodeVisitor implements PHP_Depend_Code_NodeVisitor
 {
     /**
-     * Test suite main method.
+     * The last visited class instance.
      *
+     * @type PHP_Depend_Code_Class
+     * @var PHP_Depend_Code_Class $class
+     */
+    public $class = null;
+    
+    /**
+     * The last visited method instance.
+     *
+     * @type PHP_Depend_Code_Method
+     * @var PHP_Depend_Code_Method $method
+     */
+    public $method = null;
+    
+    /**
+     * The last visited package instance.
+     *
+     * @type PHP_Depend_Code_Package
+     * @var PHP_Depend_Code_Package $method
+     */
+    public $package = null;
+    
+    /**
+     * The last visited function instance.
+     *
+     * @type PHP_Depend_Code_Function
+     * @var PHP_Depend_Code_Function $method
+     */
+    public $function = null;
+    
+    /**
+     * Visits a class node. 
+     *
+     * @param PHP_Depend_Code_Class $class The current class node.
+     * 
      * @return void
      */
-    public static function main()
+    public function visitClass(PHP_Depend_Code_Class $class)
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $this->class = $class;
     }
     
     /**
-     * Creates the phpunit test suite for this package.
+     * Visits a method node. 
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_Depend_Code_Class $method The method class node.
+     * 
+     * @return void
      */
-    public static function suite()
+    public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Code - AllTests');
-        $suite->addTestSuite('PHP_Depend_Code_InternalTokenizerTest');
-        $suite->addTestSuite('PHP_Depend_Code_PackageTest');
-
-        return $suite;
+        $this->method = $method;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Code_AllTests::main') {
-    PHP_Depend_Code_AllTests::main();
+    
+    /**
+     * Visits a package node. 
+     *
+     * @param PHP_Depend_Code_Class $package The package class node.
+     * 
+     * @return void
+     */
+    public function visitPackage(PHP_Depend_Code_Package $package)
+    {
+        $this->package = $package;
+    }
+    
+    /**
+     * Visits a function node. 
+     *
+     * @param PHP_Depend_Code_Function $function The current function node.
+     * 
+     * @return void
+     */
+    public function visitFunction(PHP_Depend_Code_Function $function)
+    {
+        $this->function = $function;
+    }
 }
