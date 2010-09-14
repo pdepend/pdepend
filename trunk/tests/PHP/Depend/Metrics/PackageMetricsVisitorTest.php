@@ -50,7 +50,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once 'PHP/Depend/Metrics/PackageMetricsVisitorTest.php';
 
 /**
- * Tests the xml output render.
+ * Tests the for the package metrics visitor.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
