@@ -45,10 +45,29 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/../Tokenizer.php';
+require_once 'PHP/Depend/Code/Tokenizer.php';
 
+/**
+ * This tokenizer uses the internal {@link token_get_all()} function as token stream
+ * generator.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ *
+ */
 class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tokenizer
 {
+    /**
+     * Mapping between php internal tokens and php depend tokens.
+     *
+     * @type array<integer>
+     * @var array(integer=>integer) $tokenMap
+     */
     protected static $tokenMap = array(
         T_NEW           =>  self::T_NEW,
         T_CLASS         =>  self::T_CLASS,
@@ -61,6 +80,12 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         T_DOUBLE_COLON  =>  self::T_DOUBLE_COLON,
     );
     
+    /**
+     * Mapping between php internal text tokens an php depend numeric tokens.
+     *
+     * @type array<integer>
+     * @var array(string=>integer) $literalMap
+     */
     protected static $literalMap = array(
         ';'  =>  self::T_SEMICOLON,
         '{'  =>  self::T_CURLY_BRACE_OPEN,
@@ -69,24 +94,58 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         ')'  =>  self::T_PARENTHESIS_CLOSE,
     );
     
+    /**
+     * List of ignorable <b>T_STRING</b> tokens that are php keywords.
+     *
+     * @type array<boolean>
+     * @var array(string=>boolean) $ignoreMap
+     */
     protected static $ignoreMap = array(
         'null'    =>  true,
         'array'   =>  true,
         'parent'  =>  true
-//        'self'   =>  true,
     );
     
+    /**
+     * Count of all tokens.
+     *
+     * @type integer
+     * @var integer $count
+     */
     protected $count = 0;
-    
+
+    /**
+     * Internal stream pointer index.
+     *
+     * @type integer
+     * @var integer $index
+     */
     protected $index = 0;
     
+    /**
+     * Prepared token list.
+     *
+     * @type array<array>
+     * @var array(array) $tokens
+     */
     protected $tokens = array();
     
+    /**
+     * Constructs a new tokenizer for the given file.
+     *
+     * @param string $fileName A php source file.
+     */
     public function __construct($fileName)
     {
         $this->tokenize($fileName);
     }
     
+    /**
+     * Returns the next token or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * there is no next token.
+     *
+     * @return array|integer
+     */
     public function next()
     {
         if ($this->index < $this->count) {
@@ -95,6 +154,12 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         return self::T_EOF;
     }
     
+    /**
+     * Returns the next token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * there is no next token.
+     *
+     * @return integer
+     */
     public function peek()
     {
         if ($this->index < $this->count) {
@@ -103,6 +168,14 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
         return self::T_EOF;
     }
     
+    /**
+     * Tokenizes the content of <b>$fileName</b> with {@link token_get_all()} and
+     * filters this token stream.
+     *
+     * @param string $fileName A php source file.
+     * 
+     * @return void
+     */
     protected function tokenize($fileName)
     {
         $source = file_get_contents($fileName);
