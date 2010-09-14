@@ -358,4 +358,3 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         $this->types = array();
     }
 }
-
