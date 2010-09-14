@@ -146,6 +146,20 @@ class PHP_Depend_Code_InternalTokenizerTest extends PHP_Depend_AbstractTest
     }
     
     /**
+     * Tests that the tokenizer returns <b>T_BOF</b> if there is no previous
+     * token.
+     *
+     * @return void
+     */
+    public function testInternalTokenizerReturnsBOFTokenForPrevCall()
+    {
+        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
+        $tokenizer  = new PHP_Depend_Code_Tokenizer_InternalTokenizer($sourceFile);
+        
+        $this->assertEquals(PHP_Depend_Code_Tokenizer::T_BOF, $tokenizer->prev());
+    }
+    
+    /**
      * Tests the tokenizer with a combination of procedural code and functions.
      *
      * @return void

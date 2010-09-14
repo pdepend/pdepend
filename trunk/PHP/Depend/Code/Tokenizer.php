@@ -64,6 +64,11 @@ interface PHP_Depend_Code_Tokenizer
     const T_EOF = -1;
     
     /**
+     * Marke the beginning of the token stream.
+     */
+    const T_BOF = -2;
+    
+    /**
      * Marks a class token.
      */
     const T_CLASS = 1;
@@ -152,7 +157,7 @@ interface PHP_Depend_Code_Tokenizer
     function peek();
     
     /**
-     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} 
+     * Returns the previous token type or {@link PHP_Depend_Code_Tokenizer::T_BOF} 
      * if there is no previous token.
      *
      * @return integer
