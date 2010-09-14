@@ -133,7 +133,7 @@ interface PHP_Depend_Code_Tokenizer
      *
      * @return string
      */
-    function getFilename();
+    function getSourceFile();
     
     /**
      * Returns the next token or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
