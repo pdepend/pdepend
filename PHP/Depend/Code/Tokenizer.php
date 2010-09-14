@@ -45,37 +45,102 @@
  * @link      http://www.manuel-pichler.de/
  */
 
+/**
+ * Base interface for all php code tokenizers.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 interface PHP_Depend_Code_Tokenizer
-{    
+{
+    /**
+     * Marks the end of the token stream.
+     */
     const T_EOF = -1;
     
+    /**
+     * Marks a class token.
+     */
     const T_CLASS = 1;
     
+    /**
+     * Marks an interface token.
+     */
     const T_INTERFACE = 2;
     
+    /**
+     * Marks an abstract token.
+     */
     const T_ABSTRACT = 3;
     
+    /**
+     * Marks a curly brace open.
+     */
     const T_CURLY_BRACE_OPEN = 4;
     
+    /**
+     * Marks a curly brace close.
+     */
     const T_CURLY_BRACE_CLOSE = 5;
     
+    /**
+     * Marks a parenthesis open.
+     */
     const T_PARENTHESIS_OPEN = 6;
     
+    /**
+     * Marks a parenthesis close.
+     */
     const T_PARENTHESIS_CLOSE = 7;
     
+    /**
+     * Marks a new token.
+     */
     const T_NEW = 8;
     
+    /**
+     * Marks a function.
+     */
     const T_FUNCTION = 9;
     
+    /**
+     * Marks a double colon.
+     */
     const T_DOUBLE_COLON = 10;
     
+    /**
+     * Marks a string token.
+     */
     const T_STRING = 11;
     
+    /**
+     * Marks a doc comment.
+     */
     const T_DOC_COMMENT = 12;
     
+    /**
+     * Marks a semicolon.
+     */
     const T_SEMICOLON = 13;
     
+    /**
+     * Returns the next token or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * there is no next token.
+     *
+     * @return array|integer
+     */
     function next();
     
+    /**
+     * Returns the next token type or {@link PHP_Depend_Code_Tokenizer::T_EOF} if 
+     * there is no next token.
+     *
+     * @return integer
+     */
     function peek();
 }

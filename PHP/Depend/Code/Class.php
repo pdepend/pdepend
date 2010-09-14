@@ -282,4 +282,3 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     
     // @codeCoverageIgnoreEnd
 }
-

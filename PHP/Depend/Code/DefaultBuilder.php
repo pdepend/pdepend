@@ -51,15 +51,47 @@ require_once 'PHP/Depend/Code/Function.php';
 require_once 'PHP/Depend/Code/Method.php';
 require_once 'PHP/Depend/Code/Package.php';
 
+/**
+ * Default code tree builder implementation.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
 {
-    
+    /**
+     * Default package which contains all functions and classes with an unknown 
+     * scope. 
+     *
+     * @type PHP_Depend_Code_Package
+     * @var PHP_Depend_Code_Package $defaultPackage
+     */
     protected $defaultPackage = null;
     
+    /**
+     * All generated {@link PHP_Depend_Code_Class} objects
+     *
+     * @type array<PHP_Depend_Code_Class>
+     * @var array(string=>PHP_Depend_Code_Class) $classes
+     */
     protected $classes = array();
     
+    /**
+     * All generated {@link PHP_Depend_Code_Package} objects
+     *
+     * @type array<PHP_Depend_Code_Package>
+     * @var array(string=>PHP_Depend_Code_Package) $packages
+     */
     protected $packages = array();
     
+    /**
+     * Constructs a new builder instance.
+     */
     public function __construct()
     {
         $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
@@ -114,18 +146,30 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
      *
      * @param string $name The function name.
      * 
-     * @return PHP_Depend_Code_Function The function instance
+     * @return PHP_Depend_Code_Function The function instance.
      */
     public function buildFunction($name)
     {
         return new PHP_Depend_Code_Function($name);
     }
     
+    /**
+     * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
+     * objects.
+     *
+     * @return Iterator
+     */
     public function getIterator()
     {
         return $this->getPackages();
     }
     
+    /**
+     * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
+     * objects.
+     *
+     * @return Iterator
+     */
     public function getPackages()
     {
         return new ArrayIterator($this->packages);

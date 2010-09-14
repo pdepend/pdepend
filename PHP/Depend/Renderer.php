@@ -47,7 +47,25 @@
 
 require_once 'PHP/Depend/Metrics/PackageMetrics.php';
 
+/**
+ * Base interface for all output renderers.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 interface PHP_Depend_Renderer
 {
-    function render(Iterator $packages);
+    /**
+     * Generates the metrics output.
+     *
+     * @param Iterator $metrics The aggregated metrics.
+     * 
+     * @return void
+     */
+    function render(Iterator $metrics);
 }
