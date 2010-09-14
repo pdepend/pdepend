@@ -244,3 +244,4 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
         $this->setParent();
     }
 }
+
