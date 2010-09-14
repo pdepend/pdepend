@@ -70,10 +70,13 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAddInvalidDirectoryFail()
     {
-        $this->setExpectedException('RuntimeException', 'Invalid directory added.');
+        $dir = dirname(__FILE__) . '/foobar';
+        $msg = sprintf('Invalid directory "%s" added.', $dir);
+        
+        $this->setExpectedException('RuntimeException', $msg);
         
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(dirname(__FILE__) . '/foobar');
+        $pdepend->addDirectory($dir);
     }
     /**
      * Tests that the {@link PHP_Depend::addDirectory()} method with an existing
