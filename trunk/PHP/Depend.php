@@ -50,12 +50,33 @@ require_once 'PHP/Depend/Code/DefaultBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer/InternalTokenizer.php';
 require_once 'PHP/Depend/Util/PHPFilterIterator.php';
 
+/**
+ * PHP_Depend analyzes php class files and generates metrics.
+ * 
+ * The PHP_Depend is a php port/adaption of the Java class file analyzer 
+ * <a href="http://clarkware.com/software/JDepend.html">JDepend</a>.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend
 {
     protected $directories = array();
     
     protected $packages = null;
 
+    /**
+     * Adds the specified directory to the list of directories to be analyzed.
+     *
+     * @param string $directory The php source directory.
+     * 
+     * @return void
+     */
     public function addDirectory($directory)
     {
         $dir = realpath($directory);
@@ -67,24 +88,27 @@ class PHP_Depend
         $this->directories[] = $dir;
     }
     
+    /**
+     * Analyzes the registered directories and returns the collection of 
+     * analyzed packages.
+     *
+     * @return Iterator
+     */
     public function analyze()
     {
         $iterator = new AppendIterator();
         
         foreach ($this->directories as $directory) {
-            $iterator->append(
-                new PHP_Depend_Util_PHPFilterIterator( 
-                    new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($directory)
-                    )
+            $iterator->append(new PHP_Depend_Util_PHPFilterIterator(
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($directory)
                 )
-            );
+            ));
         }
         
         $builder = new PHP_Depend_Code_DefaultBuilder();
 
-        foreach ( $iterator as $file ) 
-        {
+        foreach ( $iterator as $file ) {
             $parser = new PHP_Depend_Parser(
                 new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), $builder
             );
@@ -101,6 +125,11 @@ class PHP_Depend
         return $this->packages;
     }
     
+    /**
+     * Returns the number of analyzed php classes and interfaces.
+     *
+     * @return integer
+     */
     public function countClasses()
     {
         if ($this->packages === null) {
@@ -109,11 +138,33 @@ class PHP_Depend
         
         $classes = 0;
         foreach ($this->packages as $package) {
-            $classes += $package->getTC();
+            $classes += $package->getTotalClassCount();
         }
         return $classes;
     }
     
+    /**
+     *  Returns the number of analyzed packages.
+     *
+     * @return integer
+     */
+    public function countPackages()
+    {
+        if ($this->packages === null) {
+            throw new RuntimeException('Invalid state');
+        }
+        // TODO: This is internal knownhow, it is an ArrayIterator
+        //       Replace it with a custom iterator interface
+        return $this->packages->count();
+    }
+    
+    /**
+     * Returns the analyzed package of the specified name.
+     *
+     * @param string $name The package name.
+     * 
+     * @return PHP_Depend_Metrics_PackageMetrics
+     */
     public function getPackage($name)
     {
         if ($this->packages === null) {
@@ -127,21 +178,16 @@ class PHP_Depend
         return null;
     }
     
+    /**
+     * Returns an iterator of the analyzed packages.
+     *
+     * @return Iterator
+     */
     public function getPackages()
     {
         if ($this->packages === null) {
             throw new RuntimeException('Invalid state');
         }
         return $this->packages;
-    }
-    
-    public function countPackages()
-    {
-        if ($this->packages === null) {
-            throw new RuntimeException('Invalid state');
-        }
-        // TODO: This is internal knownhow, it is an ArrayIterator
-        //       Replace it with a custom iterator interface
-        return $this->packages->count();
     }
 }

@@ -69,21 +69,21 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
             $stats = $pkg->appendChild($dom->createElement('Stats'));
             
             $stats->appendChild($dom->createElement('TotalClasses'))
-                  ->appendChild($dom->createTextNode($metric->getTC()));
+                  ->appendChild($dom->createTextNode($metric->getTotalClassCount()));
             $stats->appendChild($dom->createElement('ConcreteClasses'))
-                  ->appendChild($dom->createTextNode($metric->getCC()));
+                  ->appendChild($dom->createTextNode($metric->getConcreteClassCount()));
             $stats->appendChild($dom->createElement('AbstractClasses'))
-                  ->appendChild($dom->createTextNode($metric->getAC()));
+                  ->appendChild($dom->createTextNode($metric->getAbstractClassCount()));
             $stats->appendChild($dom->createElement('Ca'))
-                  ->appendChild($dom->createTextNode($metric->getCA()));
+                  ->appendChild($dom->createTextNode($metric->afferentCoupling()));
             $stats->appendChild($dom->createElement('Ce'))
-                  ->appendChild($dom->createTextNode($metric->getCE()));
+                  ->appendChild($dom->createTextNode($metric->efferentCoupling()));
             $stats->appendChild($dom->createElement('A'))
-                  ->appendChild($dom->createTextNode($metric->getA()));
+                  ->appendChild($dom->createTextNode($metric->abstractness()));
             $stats->appendChild($dom->createElement('I'))
-                  ->appendChild($dom->createTextNode($metric->getI()));
+                  ->appendChild($dom->createTextNode($metric->instability()));
             $stats->appendChild($dom->createElement('D'))
-                  ->appendChild($dom->createTextNode($metric->getD()));
+                  ->appendChild($dom->createTextNode($metric->distance()));
             // TODO: V
             
             $cc = $pkg->appendChild($dom->createElement('ConcreteClasses'));
@@ -101,13 +101,13 @@ class PHP_Depend_Renderer_XMLRenderer implements PHP_Depend_Renderer
             }
             
             $ce = $pkg->appendChild($dom->createElement('DependsUpon'));
-            foreach ($metric->getEfferentCouplings() as $dep) {
+            foreach ($metric->getEfferents() as $dep) {
                 $p = $ce->appendChild($dom->createElement('Package'));
                 $p->appendChild($dom->createTextNode($dep->getName()));
             }
             
             $ce = $pkg->appendChild($dom->createElement('UserBy'));
-            foreach ($metric->getAfferentCouplings() as $dep) {
+            foreach ($metric->getAfferents() as $dep) {
                 $p = $ce->appendChild($dom->createElement('Package'));
                 $p->appendChild($dom->createTextNode($dep->getName()));
             }
