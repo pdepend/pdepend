@@ -45,7 +45,7 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/Node.php';
+require_once 'PHP/Depend/Code/DependencyNode.php';
 require_once 'PHP/Depend/Code/NodeIterator.php';
 
 /**
@@ -59,7 +59,7 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Class implements PHP_Depend_Code_Node
+class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
 {
     /**
      * The name for this class.

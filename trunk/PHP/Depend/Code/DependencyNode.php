@@ -45,10 +45,10 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once 'PHP/Depend/Code/DependencyNode.php';
+require_once 'PHP/Depend/Code/Node.php';
 
 /**
- * Represents a php function node.
+ * Base interface for all nodes that can handle dependencies.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -58,75 +58,23 @@ require_once 'PHP/Depend/Code/DependencyNode.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
+interface PHP_Depend_Code_DependencyNode extends PHP_Depend_Code_Node
 {
     /**
-     * The function name.
-     *
-     * @type string
-     * @var string $name
-     */
-    protected $name = null;
-    
-    /**
-     * The parent package for this function.
-     *
-     * @type PHP_Depend_Code_Package
-     * @var PHP_Depend_Code_Package $package
-     */
-    protected $package = null;
-    
-    /**
-     * List of {@link PHP_Depend_Code_Class} objects this function depends on.
-     *
-     * @type array<PHP_Depend_Code_Class>
-     * @var array(PHP_Depend_Code_Class) $dependencies
-     */
-    protected $dependencies = array();
-    
-    /**
-     * Constructs a new function for the given <b>$name</b>.
-     *
-     * @param string $name The function name.
-     */
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-    
-    /**
-     * Return the function name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * Returns all {@link PHP_Depend_Code_Class} objects this function depends on.
+     * Returns all {@link PHP_Depend_Code_Class} objects this node depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
-    public function getDependencies()
-    {
-        return new PHP_Depend_Code_NodeIterator($this->dependencies);
-    }
+    function getDependencies();
     
     /**
      * Adds the given {@link PHP_Depend_Code_Class} object as dependency.
      *
-     * @param PHP_Depend_Code_Class $class A class this function depends on.
+     * @param PHP_Depend_Code_Class $class A class this node depends on.
      * 
      * @return void
      */
-    public function addDependency(PHP_Depend_Code_Class $class)
-    {
-        if (in_array($class, $this->dependencies, true) === false) {
-            $this->dependencies[] = $class;
-        }
-    }
+    function addDependency(PHP_Depend_Code_Class $class);
     
     /**
      * Removes the given {@link PHP_Depend_Code_Class} object from the dependency
@@ -136,45 +84,5 @@ class PHP_Depend_Code_Function implements PHP_Depend_Code_DependencyNode
      * 
      * @return void
      */
-    public function removeDependency(PHP_Depend_Code_Class $class)
-    {
-        if (($i = array_search($class, $this->dependencies, true)) !== false) {
-            // Remove from internal list
-            unset($this->dependencies[$i]);
-        }
-    }
-    
-    /**
-     * Returns the parent package for this function.
-     *
-     * @return PHP_Depend_Code_Package
-     */
-    public function getPackage()
-    {
-        return $this->package;
-    }
-    
-    /**
-     * Sets the parent package for this function.
-     *
-     * @param PHP_Depend_Code_Package $package The parent package.
-     * 
-     * @return void
-     */
-    public function setPackage(PHP_Depend_Code_Package $package = null)
-    {
-        $this->package = $package;
-    }
-    
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor implementation.
-     * 
-     * @return void
-     */
-    public function accept(PHP_Depend_Code_NodeVisitor $visitor)
-    {
-        $visitor->visitFunction($this);
-    }
+    function removeDependency(PHP_Depend_Code_Class $class);
 }
