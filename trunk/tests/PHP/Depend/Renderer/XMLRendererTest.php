@@ -73,7 +73,10 @@ class PHP_Depend_Renderer_XMLRendererTest extends PHP_Depend_Renderer_AbstractRe
         $renderer = new PHP_Depend_Renderer_XMLRenderer($output);
         $renderer->render($this->metrics);
         
-        $this->assertXmlFileEqualsXmlFile(dirname(__FILE__) . '/ref.xml', $output);
+        $expected = $this->loadReferenceXML();
+        $result   = file_get_contents($output);
+        
+        $this->assertXmlStringEqualsXmlString($expected, $result);
         
         // Unlink temp file
         @unlink($output);
@@ -92,8 +95,24 @@ class PHP_Depend_Renderer_XMLRendererTest extends PHP_Depend_Renderer_AbstractRe
         $result = ob_get_contents();
         ob_end_clean();
         
-        $expected = file_get_contents(dirname(__FILE__) . '/ref.xml');
+        $expected = $this->loadReferenceXML();
         
         $this->assertXmlStringEqualsXmlString($expected, $result);
+    }
+    
+    /**
+     * Loads a prepared reference xml document.
+     *
+     * @return string
+     */
+    protected function loadReferenceXML()
+    {
+        $replace = '/home/manu/Projects/workspace.xplib.de/PHP_Depend/trunk/tests/PHP/Depend';
+        $current = realpath(dirname(__FILE__) . '/..');
+        
+        $file = dirname(__FILE__) . '/ref.xml';
+        $xml  = file_get_contents($file);
+        
+        return str_replace($replace, $current, $xml);        
     }
 }
