@@ -99,16 +99,16 @@ class PHP_Depend_Renderer_GdChartRenderer implements PHP_Depend_Renderer
                 continue;
             }
             
-            $sum      = ( $metric->getCC() + $metric->getAC() );
+            $sum      = ( $metric->getConcreteClassCount() + $metric->getAbstractClassCount() );
             $diameter = ( sqrt( $sum ) * $size ) / sqrt( $size );
 
-            $A = $metric->getA();
-            $I = $metric->getI();
+            $A = $metric->abstractness();
+            $I = $metric->instability();
 
             $offsetX = $size + ceil( $A * ( 10 * $size ) ) + ( $size / 2 );
             $offsetY = $size + ceil( 10.5 * $size ) + ( $I * ( -10 * $size ) );
 
-            if ( $metric->getD() < $bias )
+            if ( $metric->distance() < $bias )
             {
                 $color = $green;
             }
