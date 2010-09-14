@@ -16,6 +16,7 @@ class PHP_Depend_Code_Tokenizer_InternalTokenizer implements PHP_Depend_Code_Tok
     );
     
     protected static $literalMap = array(
+        ';'  =>  self::T_SEMICOLON,
         '{'  =>  self::T_CURLY_BRACE_OPEN,
         '}'  =>  self::T_CURLY_BRACE_CLOSE,
         '('  =>  self::T_PARENTHESIS_OPEN,

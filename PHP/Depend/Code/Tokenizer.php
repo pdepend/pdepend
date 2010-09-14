@@ -27,6 +27,8 @@ interface PHP_Depend_Code_Tokenizer
     
     const T_DOC_COMMENT = 12;
     
+    const T_SEMICOLON = 13;
+    
     function next();
     
     function peek();
