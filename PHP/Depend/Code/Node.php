@@ -47,5 +47,12 @@
 
 interface PHP_Depend_Code_Node
 {
+    /**
+     * Visitor method for node tree traversal.
+     *
+     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor implementation.
+     * 
+     * @return void
+     */
     function accept(PHP_Depend_Code_NodeVisitor $visitor);
 }
