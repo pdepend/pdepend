@@ -94,7 +94,9 @@ class PHP_Depend
         $dir = realpath($directory);
         
         if (!is_dir($dir)) {
-            throw new RuntimeException('Invalid directory added.');
+            throw new RuntimeException(sprintf(
+                'Invalid directory "%s" added.', $directory
+            ));
         }
         
         $this->directories[] = $dir;
@@ -120,7 +122,7 @@ class PHP_Depend
         
         $builder = new PHP_Depend_Code_DefaultBuilder();
 
-        foreach ( $iterator as $file ) {
+        foreach ($iterator as $file) {
             $parser = new PHP_Depend_Parser(
                 new PHP_Depend_Code_Tokenizer_InternalTokenizer($file), $builder
             );
