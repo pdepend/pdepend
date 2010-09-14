@@ -100,14 +100,15 @@ class PHP_Depend_Code_DefaultBuilder implements PHP_Depend_Code_NodeBuilder
     /**
      * Builds a new package instance.
      *
-     * @param string $name The class name.
+     * @param string $name       The class name.
+     * @param string $sourceFile The source file for the class.
      * 
      * @return PHP_Depend_Code_Class The created class object.
      */
-    public function buildClass($name)
+    public function buildClass($name, $sourceFile)
     {
         if (!isset($this->classes[$name])) {
-            $this->classes[$name] = new PHP_Depend_Code_Class($name);
+            $this->classes[$name] = new PHP_Depend_Code_Class($name, $sourceFile);
             
             $this->defaultPackage->addClass($this->classes[$name]);
         }
