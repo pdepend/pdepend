@@ -45,12 +45,18 @@
  * @link      http://www.manuel-pichler.de/
  */
 
-require_once dirname(__FILE__) . '/AbstractRendererTest.php';
+if ( defined( 'PHPUnit_MAIN_METHOD' ) === false )
+{
+    define( 'PHPUnit_MAIN_METHOD', 'PHP_Depend_Metrics_AllTests::main' );
+}
 
-require_once 'PHP/Depend/Renderer/GdChartRenderer.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+require_once dirname(__FILE__) . '/PackageMetricsVisitorTest.php';
 
 /**
- * Tests the gd output render.
+ * Main test suite for the PHP_Depend_Metrics package.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -60,22 +66,32 @@ require_once 'PHP/Depend/Renderer/GdChartRenderer.php';
  * @version   Release: @package_version@
  * @link      http://www.manuel-pichler.de/
  */
-class PHP_Depend_Renderer_GdChartRendererTest extends PHP_Depend_Renderer_AbstractRendererTest
+class PHP_Depend_Metrics_AllTests
 {
     /**
-     * Tests the gd renderer generates an output file. 
+     * Test suite main method.
      *
      * @return void
      */
-    public function testRenderImage()
+    public static function main()
     {
-        $output   = tempnam(sys_get_temp_dir(), 'php_depend');
-        $renderer = new PHP_Depend_Renderer_GdChartRenderer($output);
-        $renderer->render($this->metrics);
-        
-        $this->assertFileExists($output);
-        
-        // Unlink temp file
-        @unlink($output);
+        PHPUnit_TextUI_TestRunner::run(self::suite());
     }
+    
+    /**
+     * Creates the phpunit test suite for this package.
+     *
+     * @return PHPUnit_Framework_TestSuite
+     */
+    public static function suite()
+    {
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Metrics - AllTests');
+        $suite->addTestSuite('PHP_Depend_Metrics_PackageMetricsVisitorTest');
+        
+        return $suite;
+    }
+}
+
+if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Metrics_AllTests::main') {
+    PHP_Depend_Metrics_AllTests::main();
 }
