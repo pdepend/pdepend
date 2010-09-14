@@ -5,6 +5,8 @@
 function xyz($x, $y) {
     new Foo($x, $y);
 }
+
+
 /**
  * Foo
  */
