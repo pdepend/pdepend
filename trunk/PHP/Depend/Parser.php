@@ -48,12 +48,41 @@
 require_once 'PHP/Depend/Code/NodeBuilder.php';
 require_once 'PHP/Depend/Code/Tokenizer.php';
 
+/**
+ * The php source parser.
+ * 
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Parser
 {
+    /**
+     * Last parsed package tag.
+     *
+     * @type string
+     * @var string $package
+     */
     protected $package = '';
     
+    /**
+     * Marks the current class as abstract.
+     *
+     * @type boolean
+     * @var boolean $abstract
+     */
     protected $abstract = false;
     
+    /**
+     * The name of the context class.
+     *
+     * @type string 
+     * @var string $className
+     */
     protected $className = '';
     
     /**
@@ -72,12 +101,24 @@ class PHP_Depend_Parser
      */
     protected $builder = null;
     
+    /**
+     * Constructs a new source parser.
+     *
+     * @param PHP_Depend_Code_Tokenizer   $tokenizer The used code tokenizer.
+     * @param PHP_Depend_Code_NodeBuilder $builder   The used node builder.
+     */
     public function __construct(PHP_Depend_Code_Tokenizer $tokenizer, PHP_Depend_Code_NodeBuilder $builder)
     {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
     }
     
+    /**
+     * Parses the contents of the tokenizer and generates a node tree based on
+     * the found tokens.
+     *
+     * @return void
+     */
     public function parse()
     {
         $this->reset();
@@ -85,57 +126,63 @@ class PHP_Depend_Parser
         while (($token = $this->tokenizer->next()) !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
             switch ($token[0]) {
-                case PHP_Depend_Code_Tokenizer::T_ABSTRACT:
-                    $this->abstract = true;
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_ABSTRACT:
+                $this->abstract = true;
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_DOC_COMMENT:
-                    $this->package = $this->parsePackage($token[1]);
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_DOC_COMMENT:
+                $this->package = $this->parsePackage($token[1]);
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_INTERFACE:
-                    $this->abstract = true;
+            case PHP_Depend_Code_Tokenizer::T_INTERFACE:
+                $this->abstract = true;
                     
-                case PHP_Depend_Code_Tokenizer::T_CLASS:
-                    // Get class name
-                    $token = $this->tokenizer->next();
+            case PHP_Depend_Code_Tokenizer::T_CLASS:
+                // Get class name
+                $token = $this->tokenizer->next();
                     
-                    $this->className = $token[1];
+                $this->className = $token[1];
                     
-                    $class = $this->builder->buildClass($this->className);
-                    $class->setAbstract($this->abstract);
-                    foreach ($this->parseClassSignature() as $dependency) {
-                        $class->addDependency(
-                            $this->builder->buildClass($dependency)
-                        );
-                    }
-                    $this->builder->buildPackage($this->package)->addClass($class);
+                $class = $this->builder->buildClass($this->className);
+                $class->setAbstract($this->abstract);
+                foreach ($this->parseClassSignature() as $dependency) {
+                    $class->addDependency($this->builder->buildClass($dependency));
+                }
+                $this->builder->buildPackage($this->package)->addClass($class);
 
-
-                    $this->parseClassBody();
+                $this->parseClassBody();
+                $this->reset();
+                break;
                     
-                    $this->reset();
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_FUNCTION:
+                $this->parseFunction();
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_FUNCTION:
-                    $this->parseFunction();
-                    break;
-                    
-                default:
-                    if ($this->className !== null) {
-                        throw new RuntimeException('Invalid state' . var_export($token, true));
-                    }
+            default:
+                if ($this->className !== null) {
+                    throw new RuntimeException('Invalid state' . var_export($token, true));
+                }
             }
         }
     }
     
+    /**
+     * Resets some object properties.
+     *
+     * @return void
+     */
     protected function reset()
     {
-        $this->package      = null;
-        $this->abstract     = false;
-        $this->className    = null;
+        $this->package   = null;
+        $this->abstract  = false;
+        $this->className = null;
     }
     
+    /**
+     * Parses the dependencies in a class signature.
+     *
+     * @return array(string)
+     */
     protected function parseClassSignature()
     {
         $dependencies = array();
@@ -148,6 +195,11 @@ class PHP_Depend_Parser
         return $dependencies;
     }
     
+    /**
+     * Parses a class/interface body.
+     *
+     * @return void
+     */
     protected function parseClassBody()
     {
         $token = $this->tokenizer->next();
@@ -156,17 +208,17 @@ class PHP_Depend_Parser
         while ($token !== PHP_Depend_Code_Tokenizer::T_EOF) {
             
             switch ($token[0]) {
-                case PHP_Depend_Code_Tokenizer::T_FUNCTION:
-                    $this->parseFunction();
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_FUNCTION:
+                $this->parseFunction();
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
-                    ++$curly;
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
+                ++$curly;
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
-                    --$curly;
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
+                --$curly;
+                break;
             }
             
             if ($curly === 0) {
@@ -177,6 +229,11 @@ class PHP_Depend_Parser
         }
     }
     
+    /**
+     * Parses a function or a method and adds it to the parent context node.
+     *
+     * @return void
+     */
     protected function parseFunction()
     {
         $token = $this->tokenizer->next();
@@ -184,9 +241,7 @@ class PHP_Depend_Parser
         $dependencies = $this->parseFunctionSignature();
         if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN) {
             // Get function body dependencies 
-            $dependencies = array_merge(
-                $dependencies, $this->parseFunctionBody()
-            );
+            $dependencies = array_merge($dependencies, $this->parseFunctionBody());
         }
         
         $dependencies = array_map('trim', $dependencies);
@@ -202,14 +257,17 @@ class PHP_Depend_Parser
         }
 
         foreach ($dependencies as $dependency) {
-            $function->addDependency(
-                $this->builder->buildClass($dependency)
-            );
+            $function->addDependency($this->builder->buildClass($dependency));
         }
         
         //echo "FUNCTION: {$function}\n";print_r($dependencies);echo "\n";
     }
-    
+
+    /**
+     * Extracts all dependencies from a function signature.
+     *
+     * @return array(string)
+     */
     protected function  parseFunctionSignature()
     {
         while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN) {
@@ -224,17 +282,17 @@ class PHP_Depend_Parser
         while (($token = $this->tokenizer->next()) !== null) {
 
             switch ($token[0]) {
-                case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN:
-                    ++$parenthesis;
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_OPEN:
+                ++$parenthesis;
+                break;
+                 
+            case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE:
+                --$parenthesis;
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_PARENTHESIS_CLOSE:
-                    --$parenthesis;
-                    break;
-                    
-                case PHP_Depend_Code_Tokenizer::T_STRING:
-                    $dependencies[] = $token[1];
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_STRING:
+                $dependencies[] = $token[1];
+                break;
             }
             
             if ($parenthesis === 0) {
@@ -246,10 +304,14 @@ class PHP_Depend_Parser
         return $dependencies;
     }
     
+    /**
+     * Extracts all dependencies from a function body.
+     *
+     * @return array(string)
+     */
     protected function parseFunctionBody()
     {
-        $curly = 0;
-
+        $curly        = 0;
         $dependencies = array();
 
         while ($this->tokenizer->peek() !== PHP_Depend_Code_Tokenizer::T_EOF) {
@@ -257,33 +319,33 @@ class PHP_Depend_Parser
             $token = $this->tokenizer->next();
 
             switch ($token[0]) {
-                case PHP_Depend_Code_Tokenizer::T_NEW:
-                    // Check that the next token is a string
+            case PHP_Depend_Code_Tokenizer::T_NEW:
+                // Check that the next token is a string
+                if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
+                    $token          = $this->tokenizer->next();
+                    $dependencies[] = $token[1];
+                }
+                break;
+                    
+            case PHP_Depend_Code_Tokenizer::T_STRING:
+                if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON) {
+                    // Skip double colon
+                    $this->tokenizer->next();
+                    // Check for method call
                     if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
-                        $token          = $this->tokenizer->next();
-                        $dependencies[] = $token[1];
-                    }
-                    break;
-                    
-                case PHP_Depend_Code_Tokenizer::T_STRING:
-                    if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_DOUBLE_COLON) {
-                        // Skip double colon
+                        // Skip method call
                         $this->tokenizer->next();
-                        // Check for method call
-                        if ($this->tokenizer->peek() === PHP_Depend_Code_Tokenizer::T_STRING) {
-                            // Skip method call
-                            $this->tokenizer->next();
-                        }
                     }
-                    break;
+                }
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
-                    ++$curly;
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_OPEN:
+                ++$curly;
+                break;
                     
-                case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
-                    --$curly;
-                    break;
+            case PHP_Depend_Code_Tokenizer::T_CURLY_BRACE_CLOSE:
+                --$curly;
+                break;
             }
             
             if ($curly === 0) {
@@ -294,6 +356,13 @@ class PHP_Depend_Parser
         throw new RuntimeException('Invalid state.');
     }
     
+    /**
+     * Extracts the @package information from the given comment.
+     *
+     * @param string $comment A doc comment block.
+     * 
+     * @return string
+     */
     protected function parsePackage($comment)
     {
         if (preg_match('#\*\s*@package\s+(.*)#', $comment, $match)) {

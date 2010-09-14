@@ -47,15 +47,44 @@
 
 require_once 'PHP/Depend/Code/Node.php';
 
+/**
+ * Represents a php method node.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2008 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.manuel-pichler.de/
+ */
 class PHP_Depend_Code_Method extends PHP_Depend_Code_Function
 {
+    /**
+     * The parent class object.
+     *
+     * @type PHP_Depend_Code_Class
+     * @var PHP_Depend_Code_Class $class
+     */
     protected $class = null;
     
+    /**
+     * Returns the parent class object or <b>null</b>
+     *
+     * @return PHP_Depend_Code_Class|null
+     */
     public function getClass()
     {
         return $this->class;
     }
     
+    /**
+     * Sets the parent class object.
+     *
+     * @param PHP_Depend_Code_Class $class The parent class.
+     * 
+     * @return void
+     */
     public function setClass(PHP_Depend_Code_Class $class = null)
     {
         $this->class = $class;
