@@ -273,7 +273,8 @@ class PHP_Depend_Code_Class implements PHP_Depend_Code_DependencyNode
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor implementation.
+     * @param PHP_Depend_Code_NodeVisitor $visitor The context visitor 
+     *                                             implementation.
      * 
      * @return void
      */
