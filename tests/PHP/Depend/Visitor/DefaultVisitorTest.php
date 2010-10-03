@@ -166,7 +166,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $listener->expects($this->exactly(2))
                  ->method('startVisitParameter');
 
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -189,7 +189,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $listener->expects($this->exactly(3))
                  ->method('endVisitParameter');
 
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -212,7 +212,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $listener->expects($this->once())
                  ->method('startVisitInterface');
 
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -235,7 +235,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $listener->expects($this->once())
                  ->method('endVisitInterface');
 
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -258,7 +258,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $listener->expects($this->once())
                  ->method('startVisitProperty');
 
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -281,7 +281,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $listener->expects($this->once())
                  ->method('endVisitProperty');
 
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
