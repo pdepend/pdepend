@@ -64,5 +64,8 @@ require_once 'PHP/Depend/Code/ASTNode.php';
  */
 abstract class PHP_Depend_Code_ASTInvocation extends PHP_Depend_Code_ASTNode
 {
+    /**
+     * The type of this class.
+     */
     const CLAZZ = __CLASS__;
 }
