@@ -273,7 +273,11 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
 
         include_once strtr($class, '_', '/') . '.php';
 
-        return new $class(__METHOD__);
+        $reflection = new ReflectionClass($class);
+        if ($reflection->isAbstract()) {
+            return $this->getMockForAbstractClass($class, array(__METHOD__));
+        }
+        return $reflection->newInstanceArgs(array(__METHOD__));
     }
 
     /**
