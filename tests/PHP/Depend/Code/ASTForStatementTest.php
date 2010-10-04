@@ -501,6 +501,23 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testForStatementTerminatedByPhpCloseTag
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTForStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testForStatementTerminatedByPhpCloseTag()
+    {
+        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        self::assertEquals(9, $stmt->getEndColumn());
+    }
+
+    /**
      * testParserHandlesBooleanLiteralInForExpression
      *
      * @return void
