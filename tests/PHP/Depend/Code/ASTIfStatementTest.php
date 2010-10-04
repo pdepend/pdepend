@@ -499,6 +499,23 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testIfStatementTerminatedByPhpCloseTag
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTIfStatement
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIfStatementTerminatedByPhpCloseTag()
+    {
+        $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
+        self::assertEquals(9, $stmt->getEndColumn());
+    }
+
+    /**
      * testIfStatementWithElseContainsExpectedNumberOfChildNodes
      *
      * @return void

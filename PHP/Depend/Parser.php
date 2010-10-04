@@ -2097,7 +2097,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_consumeToken($tokenType);
         $this->_consumeComments();
-        $this->_consumeToken(self::T_SEMICOLON);
+
+        if ($this->_tokenizer->peek() === self::T_SEMICOLON) {
+            $this->_consumeToken(self::T_SEMICOLON);
+        } else {
+            $this->_parseNonePhpCode();
+        }
     }
 
     /**
@@ -4841,19 +4846,24 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function _parseNonePhpCode()
     {
         $this->_consumeToken(self::T_CLOSE_TAG);
+
+        $this->_tokenStack->push();
         while (($tokenType = $this->_tokenizer->peek()) !== self::T_EOF) {
             switch ($tokenType) {
 
             case self::T_OPEN_TAG:
             case self::T_OPEN_TAG_WITH_ECHO:
                 $this->_consumeToken($tokenType);
-                return $this->_tokenizer->peek();
+                $tokenType = $this->_tokenizer->peek();
+                break 2;
 
             default:
                 $token = $this->_consumeToken($tokenType);
                 break;
             }
         }
+        $this->_tokenStack->pop();
+
         return $tokenType;
     }
 
