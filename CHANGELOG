@@ -17,7 +17,7 @@ PHP_Depend 0.10.0
 - Implemented #148: Implement cast expressions. Implemented in svn
   revision #1283.
 - Fixed #163: Alternative syntax end tokens can terminate with closing
-  PHP-tag. Fixed in svn revision #.
+  PHP-tag. Fixed in svn revision #1527.
 
 PHP_Depend 0.9.19
 -----------------
