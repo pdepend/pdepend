@@ -439,6 +439,156 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $children = $function->findChildrenOfType(get_class($node2));
         $this->assertSame(array($node2), $children);
     }
+
+    /**
+     * testUnserializedFunctionStillReferencesSameDependency
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionStillReferencesSameDependency()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getDependencies()->current(),
+            $copy->getDependencies()->current()
+        );
+    }
+
+    /**
+     * testUnserializedFunctionStillReferencesSameReturnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionStillReferencesSameReturnClass()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getReturnClass(),
+            $copy->getReturnClass()
+        );
+    }
+
+    /**
+     * testUnserializedFunctionStillReferencesSameParameterClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionStillReferencesSameParameterClass()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getDependencies()->current(),
+            $copy->getDependencies()->current()
+        );
+    }
+
+    /**
+     * testUnserializedFunctionStillReferencesSameExceptionClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionStillReferencesSameExceptionClass()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getExceptionClasses()->current(),
+            $copy->getExceptionClasses()->current()
+        );
+    }
+
+    /**
+     * testUnserializedFunctionStillReferencesSameDependencyInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionStillReferencesSameDependencyInterface()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getDependencies()->current(),
+            $copy->getDependencies()->current()
+        );
+    }
+
+    /**
+     * testUnserializedFunctionStillReferencesSamePackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionStillReferencesSamePackage()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame($orig->getPackage(), $copy->getPackage());
+    }
+
+    /**
+     * testUnserializedFunctionIsInSameNamespace
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionIsInSameNamespace()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertEquals('Baz', $copy->getPackage()->getClasses()->current()->getName());
+    }
+
+    /**
+     * This method will return the first function instance within the source
+     * file of the calling test case.
+     *
+     * @param string $testCase The calling test case.
+     *
+     * @return PHP_Depend_Code_Function
+     */
+    private function _getFirstFunctionForTestCase($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
+            ->getFunctions()
+            ->current();
+    }
     
     /**
      * Tests the visitor accept method.

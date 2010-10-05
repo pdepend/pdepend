@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Code/ASTVisitorI.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-interface PHP_Depend_Code_ASTNodeI
+interface PHP_Depend_Code_ASTNodeI extends Serializable
 {
     /**
      * Returns the source image of this ast node.

@@ -130,4 +130,12 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     {
         $this->_package = null;
     }
+
+    public function __wakeup()
+    {
+        $builder = PHP_Depend_Builder_Registry::getDefault();
+
+        $package = $builder->buildPackage($this->_package->getName());
+        $this->setPackage($package);
+    }
 }

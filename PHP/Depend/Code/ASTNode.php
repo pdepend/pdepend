@@ -98,28 +98,28 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @var integer
      */
-    private $_startLine = -1;
+    protected $startLine = -1;
 
     /**
      * The end line for this node.
      *
      * @var integer
      */
-    private $_endLine = -1;
+    protected $endLine = -1;
 
     /**
      * The start column for this node.
      *
      * @var integer
      */
-    private $_startColumn = -1;
+    protected $startColumn = -1;
 
     /**
      * The end column for this node.
      *
      * @var integer
      */
-    private $_endColumn = -1;
+    protected $endColumn = -1;
 
     /**
      * Constructs a new ast node instance.
@@ -151,7 +151,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartLine($startLine)
     {
-        $this->_startLine = $startLine;
+        $this->startLine = $startLine;
     }
 
     /**
@@ -161,7 +161,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartLine()
     {
-        return $this->_startLine;
+        return $this->startLine;
     }
 
     /**
@@ -174,7 +174,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartColumn($startColumn)
     {
-        $this->_startColumn = $startColumn;
+        $this->startColumn = $startColumn;
     }
 
     /**
@@ -184,7 +184,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartColumn()
     {
-        return $this->_startColumn;
+        return $this->startColumn;
     }
 
     /**
@@ -197,7 +197,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndLine($endLine)
     {
-        $this->_endLine = $endLine;
+        $this->endLine = $endLine;
     }
 
     /**
@@ -207,7 +207,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndLine()
     {
-        return $this->_endLine;
+        return $this->endLine;
     }
 
     /**
@@ -220,7 +220,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndColumn($endColumn)
     {
-        $this->_endColumn = $endColumn;
+        $this->endColumn = $endColumn;
     }
 
     /**
@@ -230,7 +230,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndColumn()
     {
-        return $this->_endColumn;
+        return $this->endColumn;
     }
 
     /**
@@ -251,10 +251,10 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         $startColumn,
         $endColumn
     ) {
-        $this->_startLine   = $startLine;
-        $this->_startColumn = $startColumn;
-        $this->_endLine     = $endLine;
-        $this->_endColumn   = $endColumn;
+        $this->startLine   = $startLine;
+        $this->startColumn = $startColumn;
+        $this->endLine     = $endLine;
+        $this->endColumn   = $endColumn;
     }
 
     /**
@@ -430,6 +430,38 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     {
         $this->_removeReferenceToParentNode();
         $this->_removeReferencesToChildNodes();
+    }
+
+    public function serialize()
+    {
+        return serialize(
+            array(
+                $this->image,
+                $this->comment,
+                $this->startLine,
+                $this->startColumn,
+                $this->endLine,
+                $this->endColumn,
+                $this->nodes
+            )
+        );
+    }
+
+    public function unserialize($data)
+    {
+        list(
+            $this->image,
+            $this->comment,
+            $this->startLine,
+            $this->startColumn,
+            $this->endLine,
+            $this->endColumn,
+            $this->nodes
+        ) = unserialize($data);
+
+        foreach ($this->nodes as $node) {
+            $node->setParent($this);
+        }
     }
 
     /**
