@@ -395,13 +395,28 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testCreateNewClassInstance()
     {
-        $class = new PHP_Depend_Code_Class('clazz', 0);
-        $this->assertEquals('clazz', $class->getName());
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $this->assertEquals(__CLASS__, $class->getName());
+    }
+
+    /**
+     * testIsAbstractReturnsFalseByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsAbstractReturnsFalseByDefault()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        self::assertFalse($class->isAbstract());
     }
     
     /**
-     * Tests that the default {@link PHP_Depend_Code_Class::isAbstract()}
-     * value is <b>false</b> but could be changed.
+     * testMarkClassInstanceAsAbstract
      *
      * @return void
      * @covers PHP_Depend_Code_AbstractClassOrInterface
@@ -412,17 +427,30 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testMarkClassInstanceAsAbstract()
     {
-        $class = new PHP_Depend_Code_Class('clazz', 0);
-        
-        $this->assertFalse($class->isAbstract());
+        $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
-        $this->assertTrue($class->isAbstract());
+        
+        self::assertTrue($class->isAbstract());
     }
 
     /**
-     * Tests that the default behavior of {@link PHP_Depend_Code_Class::isFinal()}
-     * is a return value <b>false</b> that can be changed with the correct
-     * modifier.
+     * testIsFinalReturnsFalseByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsFinalReturnsFalseByDefault()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        self::assertFalse($class->isFinal());
+    }
+
+    /**
+     * testMarkClassInstanceAsFinal
      *
      * @return void
      * @covers PHP_Depend_Code_AbstractClassOrInterface
@@ -433,11 +461,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testMarkClassInstanceAsFinal()
     {
-        $class = new PHP_Depend_Code_Class('clazz', 0);
-
-        $this->assertFalse($class->isFinal());
+        $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
-        $this->assertTrue($class->isFinal());
+
+        self::assertTrue($class->isFinal());
     }
 
     /**
@@ -450,12 +477,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * @group pdepend
      * @group pdepend::code
      * @group unittest
+     * @expectedException InvalidArgumentException
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifier()
     {
-        $class = new PHP_Depend_Code_Class('clazz');
-
-        $this->setExpectedException('InvalidArgumentException');
+        $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_ABSTRACT
                            | PHP_Depend_ConstantsI::IS_FINAL);
     }
@@ -471,12 +497,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * @group pdepend::code
      * @group unittest
      */
-    public function testGetMethodNodeIterator()
+    public function testGetMethodsNodeIteratorIsEmptyByDefault()
     {
-        $class   = new PHP_Depend_Code_Class('clazz', 0);
-        $methods = $class->getMethods();
-        
-        $this->assertEquals(0, $methods->count());
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        self::assertEquals(0, $class->getMethods()->count());
     }
     
     /**
@@ -515,6 +539,22 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         
         self::assertSame($class, $method->getParent());
     }
+
+    /**
+     * testGetPackageReturnsNullByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetPackageReturnsNullByDefault()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        self::assertNull($class->getPackage());
+    }
     
     /**
      * Tests that the {@link PHP_Depend_Code_Class::getPackage()} returns as
@@ -529,14 +569,30 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetSetPackage()
     {
-        $package = new PHP_Depend_Code_Package('package');
-        $class   = new PHP_Depend_Code_Class('clazz');
+        $package = new PHP_Depend_Code_Package(__FUNCTION__);
+        $class   = new PHP_Depend_Code_Class(__CLASS__);
         
-        $this->assertNull($class->getPackage());
         $class->setPackage($package);
-        $this->assertSame($package, $class->getPackage());
+        self::assertSame($package, $class->getPackage());
+    }
+
+    /**
+     * testSetPackageAcceptsNullAndResetsPackageReference
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testSetPackageAcceptsNullAndResetsPackageReference()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+
+        $class->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
         $class->setPackage(null);
-        $this->assertNull($class->getPackage());
+        self::assertNull($class->getPackage());
     }
     
     /**
@@ -824,7 +880,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testSetModifiersThrowsExpectedExceptionOnOverwrite()
     {
-        $class = new PHP_Depend_Code_Class('FooBar');
+        $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
     }
@@ -841,11 +897,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testVisitorAccept()
     {
-        $class   = new PHP_Depend_Code_Class('clazz', 0);
+        $class   = new PHP_Depend_Code_Class(__CLASS__);
         $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
 
         $class->accept($visitor);
-        $this->assertSame($class, $visitor->class);
+        self::assertSame($class, $visitor->class);
         
     }
     
@@ -856,6 +912,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     protected function createItem()
     {
-        return new PHP_Depend_Code_Class('clazz', 0);
+        return new PHP_Depend_Code_Class(__CLASS__);
     }
 }
