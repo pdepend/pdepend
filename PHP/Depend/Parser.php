@@ -899,8 +899,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $callable->setSourceFile($this->_sourceFile);
         } else {
             $callable = $this->_parseFunctionDeclaration();
-            $callable->setSourceFile($this->_sourceFile);
-            $callable->setUUID($this->_uuidBuilder->forFunction($callable));
         }
 
         $callable->setDocComment($this->_docComment);
@@ -982,6 +980,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $functionName = $this->getFunctionNameParser()->parse($this->_tokenizer);
 
         $function = $this->_builder->buildFunction($functionName);
+        $function->setSourceFile($this->_sourceFile);
+        $function->setUUID($this->_uuidBuilder->forFunction($function));
         $this->_parseCallableDeclaration($function);
 
         // First check for an existing namespace
@@ -992,7 +992,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         } else {
             $packageName = $this->_globalPackageName;
         }
-        $this->_builder->buildPackage($packageName)->addFunction($function);
+        
+        $this->_builder
+            ->buildPackage($packageName)
+            ->addFunction($function);
 
         return $function;
     }

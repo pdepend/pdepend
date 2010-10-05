@@ -133,7 +133,8 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
 
     public function  __wakeup()
     {
-        $builder = PHP_Depend_Builder_Registry::getDefault();
-        $this->setPackage($builder->buildPackage($this->_package->getName()));
+        PHP_Depend_Builder_Registry::getDefault()
+            ->buildPackage($this->_package->getName())
+            ->addFunction($this);
     }
 }

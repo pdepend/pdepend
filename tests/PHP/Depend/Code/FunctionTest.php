@@ -575,6 +575,40 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testUnserializedFunctionNotAddsDublicateToPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionNotAddsDublicateToPackage()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertEquals(1, count($copy->getPackage()->getFunctions()));
+    }
+
+    /**
+     * testUnserializedFunctionIsChildOfParentPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedFunctionIsChildOfParentPackage()
+    {
+        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame($copy, $orig->getPackage()->getFunctions()->current());
+    }
+
+    /**
      * This method will return the first function instance within the source
      * file of the calling test case.
      *
