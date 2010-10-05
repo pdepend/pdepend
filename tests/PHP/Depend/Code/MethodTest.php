@@ -793,6 +793,106 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testUnserializedMethodStillReferencesSameDependency
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedMethodStillReferencesSameDependency()
+    {
+        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getDependencies()->current(),
+            $copy->getDependencies()->current()
+        );
+    }
+
+    /**
+     * testUnserializedMethodStillReferencesSameReturnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedMethodStillReferencesSameReturnClass()
+    {
+        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getReturnClass(),
+            $copy->getReturnClass()
+        );
+    }
+
+    /**
+     * testUnserializedMethodStillReferencesSameParameterClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedMethodStillReferencesSameParameterClass()
+    {
+        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getDependencies()->current(),
+            $copy->getDependencies()->current()
+        );
+    }
+
+    /**
+     * testUnserializedMethodStillReferencesSameExceptionClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedMethodStillReferencesSameExceptionClass()
+    {
+        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getExceptionClasses()->current(),
+            $copy->getExceptionClasses()->current()
+        );
+    }
+
+    /**
+     * testUnserializedMethodStillReferencesSameDependencyInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedMethodStillReferencesSameDependencyInterface()
+    {
+        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getDependencies()->current(),
+            $copy->getDependencies()->current()
+        );
+    }
+
+    /**
      * Returns the first method defined in a source file associated with the
      * given test case.
      *
@@ -804,7 +904,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     {
         return self::parseTestCaseSource($testCase)
             ->current()
-            ->getClasses()
+            ->getTypes()
             ->current()
             ->getMethods()
             ->current();
