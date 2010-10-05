@@ -490,15 +490,30 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * @group pdepend::code
      * @group unittest
      */
-    public function testAddNewMethod()
+    public function testAddMethodStoresNewlyAddedMethodInCollection()
     {
-        $class  = new PHP_Depend_Code_Class('clazz', 0);
-        $method = new PHP_Depend_Code_Method('method', 0);
+        $class  = new PHP_Depend_Code_Class(__CLASS__);
+        $method = $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
+
+        self::assertEquals(1, $class->getMethods()->count());
+    }
+
+    /**
+     * testAddMethodSetsParentOfNewlyAddedMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testAddMethodSetsParentOfNewlyAddedMethod()
+    {
+        $class  = new PHP_Depend_Code_Class(__CLASS__);
+        $method = $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
         
-        $this->assertNull($method->getParent());
-        $class->addMethod($method);
-        $this->assertSame($class, $method->getParent());
-        $this->assertEquals(1, $class->getMethods()->count());
+        self::assertSame($class, $method->getParent());
     }
     
     /**
