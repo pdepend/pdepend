@@ -117,11 +117,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
                 PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
             );
             foreach ($declarations as $declaration) {
-
-                $classOrInterfaceReference = $declaration->getFirstChildOfType(
-                    PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-                );
-
                 $declarators = $declaration->findChildrenOfType(
                     PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
                 );
