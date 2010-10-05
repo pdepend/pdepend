@@ -434,16 +434,14 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 
     public function serialize()
     {
-        return serialize(
-            array(
-                $this->image,
-                $this->comment,
-                $this->startLine,
-                $this->startColumn,
-                $this->endLine,
-                $this->endColumn,
-                $this->nodes
-            )
+        return array(
+            $this->image,
+            $this->comment,
+            $this->startLine,
+            $this->startColumn,
+            $this->endLine,
+            $this->endColumn,
+            $this->nodes
         );
     }
 
@@ -457,7 +455,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
             $this->endLine,
             $this->endColumn,
             $this->nodes
-        ) = unserialize($data);
+        ) = $data;
 
         foreach ($this->nodes as $node) {
             $node->setParent($this);
