@@ -982,6 +982,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $function = $this->_builder->buildFunction($functionName);
         $function->setSourceFile($this->_sourceFile);
         $function->setUUID($this->_uuidBuilder->forFunction($function));
+
         $this->_parseCallableDeclaration($function);
 
         // First check for an existing namespace

@@ -217,6 +217,42 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
         $visitor->visitMethod($this);
     }
 
+    public function serialize()
+    {
+        return serialize(
+            array(
+                $this->nodes,
+                $this->uuid,
+                $this->name,
+                $this->startLine,
+                $this->endLine,
+                $this->docComment,
+                $this->sourceFile,
+                $this->returnsReference,
+                $this->returnClassReference,
+                $this->exceptionClassReferences,
+                $this->_modifiers
+            )
+        );
+    }
+
+    public function unserialize($data)
+    {
+        list(
+            $this->nodes,
+            $this->uuid,
+            $this->name,
+            $this->startLine,
+            $this->endLine,
+            $this->docComment,
+            $this->sourceFile,
+            $this->returnsReference,
+            $this->returnClassReference,
+            $this->exceptionClassReferences,
+            $this->_modifiers
+        ) = unserialize($data);
+    }
+
     /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for

@@ -131,10 +131,43 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
         $this->_package = null;
     }
 
-    public function  __wakeup()
+    public function serialize()
     {
+        return serialize(
+            array(
+                $this->nodes,
+                $this->uuid,
+                $this->name,
+                $this->startLine,
+                $this->endLine,
+                $this->docComment,
+                $this->sourceFile,
+                $this->returnsReference,
+                $this->returnClassReference,
+                $this->exceptionClassReferences,
+                $this->_package->getName()
+            )
+        );
+    }
+
+    public function unserialize($data)
+    {
+        list(
+            $this->nodes,
+            $this->uuid,
+            $this->name,
+            $this->startLine,
+            $this->endLine,
+            $this->docComment,
+            $this->sourceFile,
+            $this->returnsReference,
+            $this->returnClassReference,
+            $this->exceptionClassReferences,
+            $packageName
+        ) = unserialize($data);
+
         PHP_Depend_Builder_Registry::getDefault()
-            ->buildPackage($this->_package->getName())
+            ->buildPackage($packageName)
             ->addFunction($this);
     }
 }

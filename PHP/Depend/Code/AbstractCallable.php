@@ -71,7 +71,9 @@ require_once 'PHP/Depend/Code/ClassOrInterfaceReferenceIterator.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_AbstractItem
+abstract class PHP_Depend_Code_AbstractCallable
+       extends PHP_Depend_Code_AbstractItem
+    implements Serializable
 {
     /**
      * A reference instance for the return value of this callable. By
@@ -80,7 +82,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * @var PHP_Depend_Code_ASTClassOrInterfaceReference $_returnClassReference
      * @since 0.9.5
      */
-    private $_returnClassReference = null;
+    protected $returnClassReference = null;
 
     /**
      * List of all exceptions classes referenced by this callable.
@@ -88,30 +90,14 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
      * @since 0.9.5
      */
-    private $_exceptionClassReferences = array();
-
-    /**
-     * List of class references for all classes or interfaces this callable
-     * depends on.
-     *
-     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
-     * @since 0.9.5
-     */
-    private $_dependencyClassReferences = array();
-
-    /**
-     * List of method/function parameters.
-     *
-     * @var PHP_Depend_Code_NodeIterator $_parameters
-     */
-    private $_parameters = null;
+    protected $exceptionClassReferences = array();
 
     /**
      * Does this callable return a value by reference?
      *
      * @var boolean $_returnsReference
      */
-    private $_returnsReference = false;
+    protected $returnsReference = false;
 
     /**
      * List of all parsed child nodes.
@@ -119,7 +105,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * @var array(PHP_Depend_Code_ASTNodeI) $_nodes
      * @since 0.9.6
      */
-    private $_nodes = array();
+    protected $nodes = array();
 
     /**
      * The start line number of the method or function declaration.
@@ -127,7 +113,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * @var integer
      * @since 0.9.12
      */
-    private $_startLine = 0;
+    protected $startLine = 0;
 
     /**
      * The end line number of the method or function declaration.
@@ -135,7 +121,14 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      * @var integer
      * @since 0.9.12
      */
-    private $_endLine = 0;
+    protected $endLine = 0;
+
+    /**
+     * List of method/function parameters.
+     *
+     * @var PHP_Depend_Code_NodeIterator $_parameters
+     */
+    private $_parameters = null;
 
     /**
      * Adds a parsed child node to this node.
@@ -148,7 +141,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function addChild(PHP_Depend_Code_ASTNodeI $node)
     {
-        $this->_nodes[] = $node;
+        $this->nodes[] = $node;
     }
 
     /**
@@ -159,7 +152,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getChildren()
     {
-        return $this->_nodes;
+        return $this->nodes;
     }
 
     /**
@@ -175,7 +168,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getFirstChildOfType($targetType)
     {
-        foreach ($this->_nodes as $node) {
+        foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
                 return $node;
             }
@@ -198,7 +191,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
-        foreach ($this->_nodes as $node) {
+        foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
                 $results[] = $node;
             }
@@ -227,8 +220,8 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function setTokens(array $tokens)
     {
-        $this->_startLine = reset($tokens)->startLine;
-        $this->_endLine   = end($tokens)->endLine;
+        $this->startLine = reset($tokens)->startLine;
+        $this->endLine   = end($tokens)->endLine;
         
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
         $storage->store($tokens, $this->getUUID(), get_class($this));
@@ -242,7 +235,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getStartLine()
     {
-        return $this->_startLine;
+        return $this->startLine;
     }
 
     /**
@@ -253,7 +246,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getEndLine()
     {
-        return $this->_endLine;
+        return $this->endLine;
     }
 
     /**
@@ -264,17 +257,10 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getDependencies()
     {
-        $classReferences = $this->_dependencyClassReferences;
-
-        $references = $this->findChildrenOfType(
-            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-        );
-        foreach ($references as $reference) {
-            $classReferences[] = $reference;
-        }
-
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
-            $classReferences
+            $this->findChildrenOfType(
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
+            )
         );
     }
 
@@ -288,10 +274,10 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function getReturnClass()
     {
-        if ($this->_returnClassReference === null) {
+        if ($this->returnClassReference === null) {
             return null;
         }
-        return $this->_returnClassReference->getType();
+        return $this->returnClassReference->getType();
     }
 
     /**
@@ -307,7 +293,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function setReturnClassReference(
         PHP_Depend_Code_ASTClassOrInterfaceReference $classReference
     ) {
-        $this->_returnClassReference = $classReference;
+        $this->returnClassReference = $classReference;
     }
 
     /**
@@ -323,7 +309,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function addExceptionClassReference(
         PHP_Depend_Code_ASTClassOrInterfaceReference $classReference
     ) {
-        $this->_exceptionClassReferences[] = $classReference;
+        $this->exceptionClassReferences[] = $classReference;
     }
 
     /**
@@ -335,7 +321,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
     public function getExceptionClasses()
     {
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator(
-            $this->_exceptionClassReferences
+            $this->exceptionClassReferences
         );
     }
 
@@ -367,7 +353,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function returnsReference()
     {
-        return $this->_returnsReference;
+        return $this->returnsReference;
     }
 
     /**
@@ -380,7 +366,7 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     public function setReturnsReference()
     {
-        $this->_returnsReference = true;
+        $this->returnsReference = true;
     }
 
     /**
@@ -488,10 +474,10 @@ abstract class PHP_Depend_Code_AbstractCallable extends PHP_Depend_Code_Abstract
      */
     private function _removeReferencesToNodes()
     {
-        foreach ($this->_nodes as $i => $node) {
+        foreach ($this->nodes as $i => $node) {
             $node->free();
         }
-        $this->_nodes = array();
+        $this->nodes = array();
     }
 
     // DEPRECATED METHODS AND PROPERTIES
