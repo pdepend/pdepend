@@ -280,7 +280,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as function package
         $function->setPackage($this);
         // Append function to internal list
-        $this->functions[] = $function;
+        $this->functions[$function->getUUID()] = $function;
 
         return $function;
     }
