@@ -348,8 +348,153 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassStillIsParentOfChildMethods()
     {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
-        self::assertSame($class, $class->getMethods()->current()->getParent());
+        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame($copy, $copy->getMethods()->current()->getParent());
+    }
+
+    /**
+     * testUnserializedClassAndChildMethodsStillReferenceTheSameFile
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassAndChildMethodsStillReferenceTheSameFile()
+    {
+        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $copy->getSourceFile(),
+            $copy->getMethods()->current()->getSourceFile()
+        );
+    }
+
+    /**
+     * testUnserializedClassStillReferencesSameParentClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassStillReferencesSameParentClass()
+    {
+        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getParentClass(),
+            $copy->getParentClass()
+        );
+    }
+
+    /**
+     * testUnserializedClassStillReferencesSameParentInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassStillReferencesSameParentInterface()
+    {
+        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getInterfaces()->current(),
+            $copy->getInterfaces()->current()
+        );
+    }
+
+    /**
+     * testUnserializedClassIsReturnedByMethodAsReturnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassIsReturnedByMethodAsReturnClass()
+    {
+        $orig   = $this->getFirstClassForTestCase(__METHOD__);
+        $method = $orig->getMethods()->current();
+
+        $copy = unserialize(serialize($orig));
+        
+        self::assertSame(
+            $method->getReturnClass(),
+            $copy
+        );
+    }
+
+    /**
+     * testUnserializedClassStillReferencesSamePackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassStillReferencesSamePackage()
+    {
+        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getPackage(),
+            $copy->getPackage()
+        );
+    }
+
+    /**
+     * testUnserializedClassRegistersToPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassRegistersToPackage()
+    {
+        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame($copy, $orig->getPackage()->getClasses()->current());
+    }
+
+    /**
+     * testUnserializedClassNotAddsDublicateClassToPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassNotAddsDublicateClassToPackage()
+    {
+        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertEquals(1, $orig->getPackage()->getClasses()->count());
     }
 
     /**

@@ -231,7 +231,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as class package
         $type->setPackage($this);
         // Append class to internal list
-        $this->types[] = $type;
+        $this->types[$type->getUUID()] = $type;
 
         return $type;
     }

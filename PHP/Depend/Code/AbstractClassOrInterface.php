@@ -595,8 +595,16 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function __wakeup()
     {
         foreach ($this->_methods as $method) {
+            $method->sourceFile = $this->sourceFile;
             $method->setParent($this);
         }
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->buildPackage($this->_package->getName())
+            ->addType($this);
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->restoreClass($this);
     }
 
     /**

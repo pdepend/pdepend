@@ -1817,8 +1817,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $this->_frozenClasses    = $this->_copyTypesWithPackage($this->_classes);
         $this->_frozenInterfaces = $this->_copyTypesWithPackage($this->_interfaces);
-        //$this->_frozenClasses    = $this->_classes;
-        //$this->_frozenInterfaces = $this->_interfaces;
 
         $this->_classes    = array();
         $this->_interfaces = array();
@@ -1848,6 +1846,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         return $copiedTypes;
     }
 
+    public function restoreClass($class)
+    {
+        $className   = $class->getName();
+        $packageName = $class->getPackage()->getName();
+
+        if ($class instanceof PHP_Depend_Code_Class) {
+            $this->storeClass($className, $packageName, $class);
+        } else {
+            $this->storeInterface($className, $packageName, $class);
+        }
+    }
+
     /**
      * This method will persist a class instance for later reuse.
      *
@@ -1865,7 +1875,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         if (!isset($this->_classes[$caseInsensitiveName][$packageName])) {
             $this->_classes[$caseInsensitiveName][$packageName] = array();
         }
-        $this->_classes[$caseInsensitiveName][$packageName][] = $class;
+        $this->_classes[$caseInsensitiveName][$packageName][$class->getUUID()] = $class;
     }
 
     /**
