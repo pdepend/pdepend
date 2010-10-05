@@ -80,18 +80,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterface()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getClasses()
-            ->current();
-
-        $actual   = array_keys($class->getAllMethods());
-        $expected = array('foo', 'bar', 'baz');
-
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $actual = array_keys($class->getAllMethods());
         sort($actual);
-        sort($expected);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -105,18 +98,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterfaces()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getClasses()
-            ->current();
-
-        $actual   = array_keys($class->getAllMethods());
-        $expected = array('foo', 'bar', 'baz');
-
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $actual = array_keys($class->getAllMethods());
         sort($actual);
-        sort($expected);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -130,18 +116,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfIndirectImplementedInterfaces()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getClasses()
-            ->current();
-
-        $actual   = array_keys($class->getAllMethods());
-        $expected = array('foo', 'bar', 'baz');
-
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $actual = array_keys($class->getAllMethods());
         sort($actual);
-        sort($expected);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -155,18 +134,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfParentClass()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getClasses()
-            ->current();
-
-        $actual   = array_keys($class->getAllMethods());
-        $expected = array('foo', 'bar', 'baz');
-
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $actual = array_keys($class->getAllMethods());
         sort($actual);
-        sort($expected);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -180,18 +152,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfParentClasses()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getClasses()
-            ->current();
-
-        $actual   = array_keys($class->getAllMethods());
-        $expected = array('foo', 'bar', 'baz');
-
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $actual = array_keys($class->getAllMethods());
         sort($actual);
-        sort($expected);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -331,14 +296,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $params = $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
 
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
-
-        $parameter = $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
-        $this->assertType(PHP_Depend_Code_ASTFormalParameter::CLAZZ, $parameter);
+        self::assertType(PHP_Depend_Code_ASTFormalParameter::CLAZZ, $params);
     }
 
     /**
@@ -352,14 +313,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
-
-        $parameters = $class->findChildrenOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
-        $this->assertEquals(4, count($parameters));
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $params = $class->findChildrenOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        
+        self::assertEquals(4, count($params));
     }
 
     /**
@@ -373,14 +330,26 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $params = $class->findChildrenOfType(PHP_Depend_Code_ASTVariableDeclarator::CLAZZ);
+        
+        self::assertEquals(2, count($params));
+    }
 
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
-
-        $parameters = $class->findChildrenOfType(PHP_Depend_Code_ASTVariableDeclarator::CLAZZ);
-        $this->assertEquals(2, count($parameters));
+    /**
+     * testUnserializedClassStillIsParentOfChildMethods
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedClassStillIsParentOfChildMethods()
+    {
+        $class = $this->getFirstClassForTestCase(__METHOD__);
+        self::assertSame($class, $class->getMethods()->current()->getParent());
     }
 
     /**
@@ -396,7 +365,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testCreateNewClassInstance()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $this->assertEquals(__CLASS__, $class->getName());
+        self::assertEquals(__CLASS__, $class->getName());
     }
 
     /**
@@ -713,7 +682,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             'F' => false
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -749,7 +718,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             'F' => false
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -785,7 +754,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             'F' => true
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -799,12 +768,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedProperties()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()->getClasses()->current();
+        $class = $this->getFirstClassForTestCase(__METHOD__);
         $class->free();
 
-        $this->assertEquals(0, $class->getProperties()->count());
+        self::assertEquals(0, $class->getProperties()->count());
     }
 
     /**
@@ -819,12 +786,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedParentInterfaces()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()->getClasses()->current();
+        $class = $this->getFirstClassForTestCase(__METHOD__);
         $class->free();
 
-        $this->assertEquals(0, $class->getInterfaces()->count());
+        self::assertEquals(0, $class->getInterfaces()->count());
     }
 
     /**
@@ -839,12 +804,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedClassMethods()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()->getClasses()->current();
+        $class = $this->getFirstClassForTestCase(__METHOD__);
         $class->free();
 
-        $this->assertEquals(0, $class->getMethods()->count());
+        self::assertEquals(0, $class->getMethods()->count());
     }
 
     /**
@@ -859,12 +822,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedASTNodes()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()->getClasses()->current();
+        $class = $this->getFirstClassForTestCase(__METHOD__);
         $class->free();
 
-        $this->assertEquals(array(), $class->getChildren());
+        self::assertEquals(array(), $class->getChildren());
     }
 
     /**
@@ -902,7 +863,22 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
         $class->accept($visitor);
         self::assertSame($class, $visitor->class);
-        
+    }
+
+    /**
+     * Returns the first class that could be found in the source file associated
+     * with the given test case.
+     *
+     * @param string $testCase The test case name.
+     *
+     * @return PHP_Depend_Code_Class
+     */
+    protected function getFirstClassForTestCase($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
+            ->getClasses()
+            ->current();
     }
     
     /**

@@ -592,6 +592,13 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
     }
 
+    public function __wakeup()
+    {
+        foreach ($this->_methods as $method) {
+            $method->setParent($this);
+        }
+    }
+
     /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for
