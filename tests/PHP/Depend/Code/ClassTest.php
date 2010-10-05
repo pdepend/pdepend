@@ -543,15 +543,13 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             ->getClasses()
             ->current();
 
-        $expected = array('A' => 'A', 'C' => 'C', 'E' => 'E', 'F' => 'F');
-
-        $interfaces = $class->getInterfaces();
-        $this->assertSame(4, $interfaces->count());
-
-        foreach ($interfaces as $interface) {
-            $this->assertArrayHasKey($interface->getName(), $expected);
-            unset($expected[$interface->getName()]);
+        $actual = array();
+        foreach ($class->getInterfaces() as $interface) {
+            $actual[] = $interface->getName();
         }
+        sort($actual);
+
+        self::assertEquals(array('A', 'C', 'E', 'F'), $actual);
     }
     
     /**
@@ -568,29 +566,19 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetInterfacesByInheritence()
     {
         $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
         $classes = $packages->current()
             ->getClasses();
 
         $classes->next();
         $class = $classes->current();
 
-        $expected = array(
-            'A' => 'A',
-            'B' => 'B',
-            'C' => 'C',
-            'D' => 'D',
-            'E' => 'E',
-            'F' => 'F'
-        );
-
-        $interfaces = $class->getInterfaces();
-        $this->assertEquals(count($expected), $interfaces->count());
-
-        foreach ($interfaces as $interface) {
-            $this->assertArrayHasKey($interface->getName(), $expected);
-            unset($expected[$interface->getName()]);
+        $actual = array();
+        foreach ($class->getInterfaces() as $interface) {
+            $actual[$interface->getName()] = $interface->getName();
         }
+        sort($actual);
+
+        self::assertEquals(array('A', 'B', 'C', 'D', 'E', 'F'), $actual);
     }
 
     /**
@@ -612,18 +600,13 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             ->getClasses()
             ->current();
 
-        $expected = array(
-            'A' => 'A',
-            'B' => 'B',
-        );
-
-        $interfaces = $class->getInterfaces();
-        $this->assertSame(count($expected), $interfaces->count());
-
-        foreach ($interfaces as $interface) {
-            $this->assertArrayHasKey($interface->getName(), $expected);
-            unset($expected[$interface->getName()]);
+        $actual = array();
+        foreach ($class->getInterfaces() as $interface) {
+            $actual[] = $interface->getName();
         }
+        sort($actual);
+
+        self::assertEquals(array('A', 'B'), $actual);
     }
     
     /**
