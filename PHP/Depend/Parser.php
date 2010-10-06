@@ -270,7 +270,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->_uuidBuilder    = new PHP_Depend_Util_UuidBuilder();
         $this->_tokenStack     = new PHP_Depend_Parser_TokenStack();
-        $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable(true);
+
+        $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable();
 
         require_once 'PHP/Depend/Builder/Registry.php';
         PHP_Depend_Builder_Registry::setDefault($builder);
