@@ -52,6 +52,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once 'PHP/Depend/Code/File.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Function.php';
+require_once 'PHP/Depend/Code/Interface.php';
 require_once 'PHP/Depend/Util/UuidBuilder.php';
 
 /**
@@ -83,7 +84,26 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
         $file    = new PHP_Depend_Code_File(__FILE__);
         $builder = new PHP_Depend_Util_UuidBuilder();
 
-        $this->assertRegExp('/^[a-z0-9]{11}$/', $builder->forFile($file));
+        self::assertRegExp('/^[a-z0-9]{11}$/', $builder->forFile($file));
+    }
+
+    /**
+     * testBuilderCreatesCaseSensitiveFileIdentifiers
+     *
+     * @return void
+     * @covers PHP_Depend_Util_UuidBuilder
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testBuilderCreatesCaseSensitiveFileIdentifiers()
+    {
+        $builder = new PHP_Depend_Util_UuidBuilder();
+
+        $identifier0 = $builder->forFile(new PHP_Depend_Code_File(__FILE__));
+        $identifier1 = $builder->forFile(new PHP_Depend_Code_File(strtolower(__FILE__)));
+
+        self::assertNotEquals($identifier0, $identifier1);
     }
 
     /**
@@ -158,6 +178,64 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuilderCreatesCaseInSensitiveClassIdentifiers
+     *
+     * @return void
+     * @covers PHP_Depend_Util_UuidBuilder
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testBuilderCreatesCaseInSensitiveClassIdentifiers()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        $file->setUUID(__FUNCTION__);
+        
+        $class0 = new PHP_Depend_Code_Class(__FUNCTION__);
+        $class0->setSourceFile($file);
+        
+        $class1 = new PHP_Depend_Code_Class(strtolower(__FUNCTION__));
+        $class1->setSourceFile($file);
+
+        $builder0 = new PHP_Depend_Util_UuidBuilder();
+        $builder1 = new PHP_Depend_Util_UuidBuilder();
+
+        self::assertEquals(
+            $builder0->forClassOrInterface($class0),
+            $builder1->forClassOrInterface($class1)
+        );
+    }
+
+    /**
+     * testBuilderCreatesCaseInSensitiveInterfaceIdentifiers
+     *
+     * @return void
+     * @covers PHP_Depend_Util_UuidBuilder
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        $file->setUUID(__FUNCTION__);
+
+        $interface0 = new PHP_Depend_Code_Interface(__FUNCTION__);
+        $interface0->setSourceFile($file);
+
+        $interface1 = new PHP_Depend_Code_Interface(strtolower(__FUNCTION__));
+        $interface1->setSourceFile($file);
+
+        $builder0 = new PHP_Depend_Util_UuidBuilder();
+        $builder1 = new PHP_Depend_Util_UuidBuilder();
+
+        self::assertEquals(
+            $builder0->forClassOrInterface($interface0),
+            $builder1->forClassOrInterface($interface1)
+        );
+    }
+
+    /**
      * testBuilderCreatesExpectedIdentifierForFunction
      *
      * @return void
@@ -177,6 +255,35 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
         $builder = new PHP_Depend_Util_UuidBuilder();
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function));
+    }
+
+    /**
+     * testBuilderCreatesCaseInSensitiveFunctionIdentifiers
+     *
+     * @return void
+     * @covers PHP_Depend_Util_UuidBuilder
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        $file->setUUID(__FUNCTION__);
+
+        $function0 = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function0->setSourceFile($file);
+
+        $function1 = new PHP_Depend_Code_Function(strtolower(__FUNCTION__));
+        $function1->setSourceFile($file);
+
+        $builder0 = new PHP_Depend_Util_UuidBuilder();
+        $builder1 = new PHP_Depend_Util_UuidBuilder();
+
+        self::assertEquals(
+            $builder0->forFunction($function0),
+            $builder1->forFunction($function1)
+        );
     }
 
     /**
@@ -248,5 +355,37 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
         $builder->forFunction($function1);
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function2));
+    }
+
+    /**
+     * testBuilderCreatesCaseInSensitiveMethodIdentifiers
+     *
+     * @return void
+     * @covers PHP_Depend_Util_UuidBuilder
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testBuilderCreatesCaseInSensitiveMethodIdentifiers()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        $file->setUUID(__FUNCTION__);
+
+        $class = new PHP_Depend_Code_Class(__FUNCTION__);
+        $class->setSourceFile($file);
+
+        $method0 = new PHP_Depend_Code_Method(__FUNCTION__);
+        $method0->setParent($class);
+
+        $method1 = new PHP_Depend_Code_Method(strtolower(__FUNCTION__));
+        $method1->setParent($class);
+
+        $builder0 = new PHP_Depend_Util_UuidBuilder();
+        $builder1 = new PHP_Depend_Util_UuidBuilder();
+
+        self::assertEquals(
+            $builder0->forMethod($method0),
+            $builder1->forMethod($method1)
+        );
     }
 }
