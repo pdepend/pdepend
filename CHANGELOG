@@ -19,6 +19,12 @@ PHP_Depend 0.10.0
 - Fixed #163: Alternative syntax end tokens can terminate with closing
   PHP-tag. Fixed in svn revision #1527.
 
+PHP_depend 0.9.20
+-----------------
+
+- Fixed #168: Node identifiers are case sensitive. Fixed in subversion
+  revision #1529.
+
 PHP_Depend 0.9.19
 -----------------
 
