@@ -219,6 +219,14 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $visitor->visitClass($this);
     }
 
+    public function __wakeup()
+    {
+        parent::__wakeup();
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->restoreClass($this);
+    }
+
     /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for

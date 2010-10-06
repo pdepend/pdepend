@@ -602,9 +602,6 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         PHP_Depend_Builder_Registry::getDefault()
             ->buildPackage($this->_package->getName())
             ->addType($this);
-
-        PHP_Depend_Builder_Registry::getDefault()
-            ->restoreClass($this);
     }
 
     /**

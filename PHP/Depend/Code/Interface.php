@@ -141,4 +141,12 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
     {
         $visitor->visitInterface($this);
     }
+
+    public function __wakeup()
+    {
+        parent::__wakeup();
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->restoreInterface($this);
+    }
 }

@@ -386,7 +386,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $package = $this->_builder->buildPackage(
                     $this->_getNamespaceOrPackageName()
                 );
-                $package->addType($this->_parseInterfaceDeclaration());
+                $package->addType($interface = $this->_parseInterfaceDeclaration());
+
+                $this->_builder->restoreInterface($interface);
                 break;
 
             case self::T_CLASS:
@@ -395,7 +397,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $package = $this->_builder->buildPackage(
                     $this->_getNamespaceOrPackageName()
                 );
-                $package->addType($this->_parseClassDeclaration());
+                $package->addType($class = $this->_parseClassDeclaration());
+
+                $this->_builder->restoreClass($class);
                 break;
 
             case self::T_FUNCTION:

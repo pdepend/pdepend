@@ -244,8 +244,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $class = new PHP_Depend_Code_Class($className);
         $class->setSourceFile($this->defaultFile);
 
-        $this->storeClass($className, $packageName, $class);
-
         return $class;
     }
 
@@ -352,8 +350,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $interface = new PHP_Depend_Code_Interface($interfaceName);
         $interface->setSourceFile($this->defaultFile);
-
-        $this->storeInterface($interfaceName, $packageName, $interface);
 
         return $interface;
     }
@@ -1667,10 +1663,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->_internal = true;
 
+        $interface = $this->buildInterface($qualifiedName);
+
         $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        return $package->addType(
-            $this->buildInterface($qualifiedName)
-        );
+        $package->addType($interface);
+
+        $this->restoreInterface($interface);
+
+        return $interface;
     }
 
     /**
@@ -1734,10 +1734,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->_internal = true;
 
+        $class = $this->buildClass($qualifiedName);
+
         $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        return $package->addType(
-            $this->buildClass($qualifiedName)
-        );
+        $package->addType($class);
+
+        $this->restoreClass($class);
+
+        return $class;
     }
 
     /**
@@ -1846,16 +1850,22 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         return $copiedTypes;
     }
 
-    public function restoreClass($class)
+    public function restoreClass(PHP_Depend_Code_Class $class)
     {
-        $className   = $class->getName();
-        $packageName = $class->getPackage()->getName();
+        $this->storeClass(
+            $class->getName(),
+            $class->getPackage()->getName(),
+            $class
+        );
+    }
 
-        if ($class instanceof PHP_Depend_Code_Class) {
-            $this->storeClass($className, $packageName, $class);
-        } else {
-            $this->storeInterface($className, $packageName, $class);
-        }
+    public function restoreInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->storeInterface(
+            $interface->getName(),
+            $interface->getPackage()->getName(),
+            $interface
+        );
     }
 
     /**
