@@ -469,6 +469,162 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             $interface->getModifiers()
         );
     }
+
+    /**
+     * testUnserializedInterfaceStillIsParentOfChildMethods
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedInterfaceStillIsParentOfChildMethods()
+    {
+        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame($copy, $copy->getMethods()->current()->getParent());
+    }
+
+    /**
+     * testUnserializedInterfaceAndChildMethodsStillReferenceTheSameFile
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedInterfaceAndChildMethodsStillReferenceTheSameFile()
+    {
+        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $copy->getSourceFile(),
+            $copy->getMethods()->current()->getSourceFile()
+        );
+    }
+
+    /**
+     * testUnserializedInterfaceStillReferencesSameParentInterface
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedInterfaceStillReferencesSameParentInterface()
+    {
+        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getInterfaces()->current(),
+            $copy->getInterfaces()->current()
+        );
+    }
+
+    /**
+     * testUnserializedInterfaceIsReturnedByMethodAsReturnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedInterfaceIsReturnedByMethodAsReturnClass()
+    {
+        $orig   = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $method = $orig->getMethods()->current();
+
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $method->getReturnClass(),
+            $copy
+        );
+    }
+
+    /**
+     * testUnserializedInterfaceStillReferencesSamePackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedInterfaceStillReferencesSamePackage()
+    {
+        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame(
+            $orig->getPackage(),
+            $copy->getPackage()
+        );
+    }
+
+    /**
+     * testUnserializedInterfaceRegistersToPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedInterfaceRegistersToPackage()
+    {
+        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertSame($copy, $orig->getPackage()->getInterfaces()->current());
+    }
+
+    /**
+     * testUnserializedInterfaceNotAddsDublicateClassToPackage
+     *
+     * @return void
+     * @covers PHP_Depend_Code_AbstractClassOrInterface
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testUnserializedInterfaceNotAddsDublicateClassToPackage()
+    {
+        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $copy = unserialize(serialize($orig));
+
+        self::assertEquals(1, $orig->getPackage()->getInterfaces()->count());
+    }
+
+    /**
+     * Returns the first interface that could be found in the source file
+     * associated with the given test case.
+     *
+     * @param string $testCase The test case name.
+     *
+     * @return PHP_Depend_Code_Interface
+     */
+    protected function getFirstInterfaceForTestCase($testCase)
+    {
+        return self::parseTestCaseSource($testCase)
+            ->current()
+            ->getInterfaces()
+            ->current();
+    }
     
     /**
      * Creates an abstract item instance.

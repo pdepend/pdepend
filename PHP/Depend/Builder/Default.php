@@ -1905,7 +1905,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         if (!isset($this->_interfaces[$caseInsensitiveName][$packageName])) {
             $this->_interfaces[$caseInsensitiveName][$packageName] = array();
         }
-        $this->_interfaces[$caseInsensitiveName][$packageName][] = $interface;
+        $this->_interfaces[$caseInsensitiveName][$packageName][$interface->getUUID()] = $interface;
     }
 
     /**

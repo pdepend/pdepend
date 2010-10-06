@@ -223,6 +223,8 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     {
         parent::__wakeup();
 
+        $this->_properties = null;
+
         PHP_Depend_Builder_Registry::getDefault()
             ->restoreClass($this);
     }
