@@ -238,10 +238,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
         
-        $className   = $this->extractTypeName($name);
-        $packageName = $this->extractPackageName($name);
-
-        $class = new PHP_Depend_Code_Class($className);
+        $class = new PHP_Depend_Code_Class($this->extractTypeName($name));
         $class->setSourceFile($this->defaultFile);
 
         return $class;
@@ -345,10 +342,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
         
-        $interfaceName = $this->extractTypeName($name);
-        $packageName   = $this->extractPackageName($name);
-
-        $interface = new PHP_Depend_Code_Interface($interfaceName);
+        $interface = new PHP_Depend_Code_Interface($this->extractTypeName($name));
         $interface->setSourceFile($this->defaultFile);
 
         return $interface;
