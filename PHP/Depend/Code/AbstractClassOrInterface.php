@@ -63,7 +63,8 @@ require_once 'PHP/Depend/Code/Method.php';
  * @link       http://pdepend.org/
  */
 abstract class PHP_Depend_Code_AbstractClassOrInterface
-    extends PHP_Depend_Code_AbstractItem
+       extends PHP_Depend_Code_AbstractItem
+    implements Serializable
 {
     /**
      * The parent for this class node.
@@ -71,14 +72,14 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @var PHP_Depend_Code_ASTClassReference $_parentClassReference
      * @since 0.9.5
      */
-    private $_parentClassReference = null;
+    protected $parentClassReference = null;
 
     /**
      * List of all interfaces implemented/extended by the this type.
      *
      * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference) $_interfaceReferences
      */
-    private $_interfaceReferences = array();
+    protected $interfaceReferences = array();
 
     /**
      * The parent package for this class.
@@ -92,14 +93,14 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var array(PHP_Depend_Code_Method) $_methods
      */
-    private $_methods = array();
+    protected $methods = array();
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
      * @var array(string=>mixed) $_constants
      */
-    private $_constants = null;
+    protected $constants = null;
 
     /**
      * This property will indicate that the class or interface is user defined.
@@ -109,7 +110,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @var boolean $_userDefined
      * @since 0.9.5
      */
-    private $_userDefined = false;
+    protected $userDefined = false;
 
     /**
      * List of all parsed child nodes.
@@ -117,7 +118,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @var array(PHP_Depend_Code_ASTNodeI) $_nodes
      * @since 0.9.6
      */
-    private $_nodes = array();
+    protected $nodes = array();
 
     /**
      * The start line number of the class or interface declaration.
@@ -125,7 +126,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @var integer
      * @since 0.9.12
      */
-    private $_startLine = 0;
+    protected $startLine = 0;
 
     /**
      * The end line number of the class or interface declaration.
@@ -133,7 +134,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @var integer
      * @since 0.9.12
      */
-    private $_endLine = 0;
+    protected $endLine = 0;
 
     /**
      * Adds a parsed child node to this node.
@@ -146,7 +147,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function addChild(PHP_Depend_Code_ASTNodeI $node)
     {
-        $this->_nodes[] = $node;
+        $this->nodes[] = $node;
     }
 
     /**
@@ -157,7 +158,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getChildren()
     {
-        return $this->_nodes;
+        return $this->nodes;
     }
 
     /**
@@ -174,7 +175,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getFirstChildOfType($targetType)
     {
-        foreach ($this->_nodes as $node) {
+        foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
                 return $node;
             }
@@ -182,7 +183,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
                 return $child;
             }
         }
-        foreach ($this->_methods as $method) {
+        foreach ($this->methods as $method) {
             if (($child = $method->getFirstChildOfType($targetType)) !== null) {
                 return $child;
             }
@@ -203,13 +204,13 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
-        foreach ($this->_nodes as $node) {
+        foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
                 $results[] = $node;
             }
             $node->findChildrenOfType($targetType, $results);
         }
-        foreach ($this->_methods as $method) {
+        foreach ($this->methods as $method) {
             $method->findChildrenOfType($targetType, $results);
         }
         return $results;
@@ -224,7 +225,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isUserDefined()
     {
-        return $this->_userDefined;
+        return $this->userDefined;
     }
 
     /**
@@ -236,7 +237,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function setUserDefined()
     {
-        $this->_userDefined = true;
+        $this->userDefined = true;
     }
 
     /**
@@ -247,11 +248,11 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function getParentClass()
     {
         // No parent? Stop here!
-        if ($this->_parentClassReference === null) {
+        if ($this->parentClassReference === null) {
             return null;
         }
 
-        $parentClass = $this->_parentClassReference->getType();
+        $parentClass = $this->parentClassReference->getType();
 
         // Check parent against global filter
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
@@ -271,7 +272,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getParentClassReference()
     {
-        return $this->_parentClassReference;
+        return $this->parentClassReference;
     }
 
     /**
@@ -286,7 +287,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function setParentClassReference(
         PHP_Depend_Code_ASTClassReference $classReference
     ) {
-        $this->_parentClassReference = $classReference;
+        $this->parentClassReference = $classReference;
     }
 
     /**
@@ -298,7 +299,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function getInterfaces()
     {
         $interfaces = array();
-        foreach ($this->_interfaceReferences as $interfaceReference) {
+        foreach ($this->interfaceReferences as $interfaceReference) {
             $interface = $interfaceReference->getType();
             if (in_array($interface, $interfaces, true) === true) {
                 continue;
@@ -311,11 +312,11 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
             }
         }
 
-        if ($this->_parentClassReference === null) {
+        if ($this->parentClassReference === null) {
             return new PHP_Depend_Code_NodeIterator($interfaces);
         }
 
-        $parentClass = $this->_parentClassReference->getType();
+        $parentClass = $this->parentClassReference->getType();
         foreach ($parentClass->getInterfaces() as $interface) {
             $interfaces[] = $interface;
         }
@@ -334,7 +335,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function addInterfaceReference(
         PHP_Depend_Code_ASTClassOrInterfaceReference $interfaceReference
     ) {
-        $this->_interfaceReferences[] = $interfaceReference;
+        $this->interfaceReferences[] = $interfaceReference;
     }
 
     /**
@@ -345,10 +346,10 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getConstants()
     {
-        if ($this->_constants === null) {
+        if ($this->constants === null) {
             $this->_initConstants();
         }
-        return $this->_constants;
+        return $this->constants;
     }
 
     /**
@@ -362,10 +363,10 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function hasConstant($name)
     {
-        if ($this->_constants === null) {
+        if ($this->constants === null) {
             $this->_initConstants();
         }
-        return array_key_exists($name, $this->_constants);
+        return array_key_exists($name, $this->constants);
     }
 
     /**
@@ -380,7 +381,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function getConstant($name)
     {
         if ($this->hasConstant($name) === true) {
-            return $this->_constants[$name];
+            return $this->constants[$name];
         }
         return false;
     }
@@ -407,7 +408,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
             }
         }
 
-        foreach ($this->_methods as $method) {
+        foreach ($this->methods as $method) {
             $methods[$method->getName()] = $method;
         }
 
@@ -421,7 +422,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getMethods()
     {
-        return new PHP_Depend_Code_NodeIterator($this->_methods);
+        return new PHP_Depend_Code_NodeIterator($this->methods);
     }
 
     /**
@@ -435,7 +436,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     {
         $method->setParent($this);
 
-        $this->_methods[] = $method;
+        $this->methods[] = $method;
 
         return $method;
     }
@@ -448,9 +449,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getDependencies()
     {
-        $references = $this->_interfaceReferences;
-        if ($this->_parentClassReference !== null) {
-            $references[] = $this->_parentClassReference;
+        $references = $this->interfaceReferences;
+        if ($this->parentClassReference !== null) {
+            $references[] = $this->parentClassReference;
         }
 
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator($references);
@@ -476,8 +477,8 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function setTokens(array $tokens)
     {
-        $this->_startLine = reset($tokens)->startLine;
-        $this->_endLine   = end($tokens)->endLine;
+        $this->startLine = reset($tokens)->startLine;
+        $this->endLine   = end($tokens)->endLine;
         
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
         $storage->store($tokens, $this->getUUID(), get_class($this));
@@ -491,7 +492,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getStartLine()
     {
-        return $this->_startLine;
+        return $this->startLine;
     }
 
     /**
@@ -502,7 +503,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getEndLine()
     {
-        return $this->_endLine;
+        return $this->endLine;
     }
 
     /**
@@ -562,14 +563,14 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     private function _initConstants()
     {
-        $this->_constants = array();
+        $this->constants = array();
         if (($parentClass = $this->getParentClass()) !== null) {
-            $this->_constants = $parentClass->getConstants();
+            $this->constants = $parentClass->getConstants();
         }
 
         foreach ($this->getInterfaces() as $interface) {
-            $this->_constants = array_merge(
-                $this->_constants,
+            $this->constants = array_merge(
+                $this->constants,
                 $interface->getConstants()
             );
         }
@@ -587,21 +588,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
                 $image = $declarator->getImage();
                 $value = $declarator->getValue()->getValue();
 
-                $this->_constants[$image] = $value;
+                $this->constants[$image] = $value;
             }
         }
-    }
-
-    public function __wakeup()
-    {
-        foreach ($this->_methods as $method) {
-            $method->sourceFile = $this->sourceFile;
-            $method->setParent($this);
-        }
-
-        PHP_Depend_Builder_Registry::getDefault()
-            ->buildPackage($this->_package->getName())
-            ->addType($this);
     }
 
     /**
@@ -631,7 +620,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     private function _removeReferencesToMethods()
     {
         $this->getMethods()->free();
-        $this->_methods = array();
+        $this->methods = array();
     }
 
     /**
@@ -643,10 +632,10 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     private function _removeReferencesToNodes()
     {
-        foreach ($this->_nodes as $i => $node) {
+        foreach ($this->nodes as $i => $node) {
             $node->free();
         }
-        $this->_nodes = array();
+        $this->nodes = array();
     }
 
     /**
@@ -671,8 +660,8 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     {
         $this->getDependencies()->free();
 
-        $this->_interfaceReferences  = array();
-        $this->_parentClassReference = null;
+        $this->interfaceReferences  = array();
+        $this->parentClassReference = null;
     }
 
     // DEPRECATED METHODS AND PROPERTIES

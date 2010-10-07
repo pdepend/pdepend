@@ -142,9 +142,55 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
         $visitor->visitInterface($this);
     }
 
-    public function __wakeup()
+    public function serialize()
     {
-        parent::__wakeup();
+        return serialize(
+            array(
+                $this->_modifiers,
+                $this->constants,
+                $this->docComment,
+                $this->endLine,
+                $this->interfaceReferences,
+                $this->methods,
+                $this->name,
+                $this->nodes,
+                $this->parentClassReference,
+                $this->sourceFile,
+                $this->startLine,
+                $this->userDefined,
+                $this->uuid,
+                $this->getPackage()->getName()
+            )
+        );
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+                $this->_modifiers,
+                $this->constants,
+                $this->docComment,
+                $this->endLine,
+                $this->interfaceReferences,
+                $this->methods,
+                $this->name,
+                $this->nodes,
+                $this->parentClassReference,
+                $this->sourceFile,
+                $this->startLine,
+                $this->userDefined,
+                $this->uuid,
+                $packageName
+        ) = unserialize($serialized);
+
+        foreach ($this->methods as $method) {
+            $method->sourceFile = $this->sourceFile;
+            $method->setParent($this);
+        }
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->buildPackage($packageName)
+            ->addType($this);
 
         PHP_Depend_Builder_Registry::getDefault()
             ->restoreInterface($this);
