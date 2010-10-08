@@ -97,6 +97,8 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     private $_docComment = null;
 
+    protected $tokens = array();
+
     /**
      * Constructs a new source file instance.
      *
@@ -231,6 +233,20 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitFile($this);
+    }
+
+    protected $childNodes = array();
+
+    public function addChild(PHP_Depend_Code_AbstractItem $item)
+    {
+        $this->childNodes[] = $item;
+    }
+
+    public function  __wakeup()
+    {
+        foreach ($this->childNodes as $childNode) {
+            $childNode->setSourceFile($this);
+        }
     }
 
     /**

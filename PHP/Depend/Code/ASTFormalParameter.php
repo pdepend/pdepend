@@ -124,4 +124,18 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
     {
         return $visitor->visitFormalParameter($this, $data);
     }
+
+    public function  __sleep()
+    {
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'passedByReference'
+        );
+    }
 }

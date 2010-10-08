@@ -73,7 +73,6 @@ require_once 'PHP/Depend/Code/ClassOrInterfaceReferenceIterator.php';
  */
 abstract class PHP_Depend_Code_AbstractCallable
        extends PHP_Depend_Code_AbstractItem
-    implements Serializable
 {
     /**
      * A reference instance for the return value of this callable. By
@@ -200,6 +199,8 @@ abstract class PHP_Depend_Code_AbstractCallable
         return $results;
     }
 
+    protected $tokens = array();
+
     /**
      * Returns the tokens found in the function body.
      *
@@ -207,8 +208,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getTokens()
     {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore($this->getUUID(), get_class($this));
+        return $this->tokens;
     }
 
     /**
@@ -223,8 +223,7 @@ abstract class PHP_Depend_Code_AbstractCallable
         $this->startLine = reset($tokens)->startLine;
         $this->endLine   = end($tokens)->endLine;
         
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, $this->getUUID(), get_class($this));
+        $this->tokens = $tokens;
     }
 
     /**

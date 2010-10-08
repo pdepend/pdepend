@@ -115,4 +115,18 @@ class PHP_Depend_Code_ASTVariableDeclarator extends PHP_Depend_Code_ASTNode
     {
         return $visitor->visitVariableDeclarator($this, $data);
     }
+
+    public function  __sleep()
+    {
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'value'
+        );
+    }
 }

@@ -131,4 +131,18 @@ class PHP_Depend_Code_ASTDeclareStatement extends PHP_Depend_Code_ASTStatement
     {
         return $visitor->visitDeclareStatement($this, $data);
     }
+
+    public function  __sleep()
+    {
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'values'
+        );
+    }
 }

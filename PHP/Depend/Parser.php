@@ -363,6 +363,19 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_uuidBuilder->forFile($this->_sourceFile)
         );
 
+        $path = '/tmp/pdepend-playground/';
+        if (false === file_exists($path)) {
+            mkdir($path);
+        }
+        $file = $path . md5($this->_sourceFile->getFileName()) . '.cache';
+
+        if (file_exists($file)) {
+            unserialize(file_get_contents($file));
+
+            $this->tearDownEnvironment();
+            return;
+        }
+        
         // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->_sourceFile);
 
@@ -389,6 +402,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $package->addType($interface = $this->_parseInterfaceDeclaration());
 
                 $this->_builder->restoreInterface($interface);
+                $this->_sourceFile->addChild($interface);
                 break;
 
             case self::T_CLASS:
@@ -400,10 +414,12 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $package->addType($class = $this->_parseClassDeclaration());
 
                 $this->_builder->restoreClass($class);
+                $this->_sourceFile->addChild($class);
                 break;
 
             case self::T_FUNCTION:
-                $this->_parseFunctionOrClosureDeclaration();
+                $callable = $this->_parseFunctionOrClosureDeclaration();
+                $this->_sourceFile->addChild($callable);
                 break;
 
             case self::T_USE:
@@ -425,6 +441,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->_tokenizer->peek();
         }
+        
+        file_put_contents($file, serialize($this->_sourceFile));
 
         $this->tearDownEnvironment();
     }

@@ -74,7 +74,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      *
      * @var integer $_modifiers
      */
-    private $_modifiers = 0;
+    protected $modifiers = 0;
 
     /**
      * This method sets a OR combined integer of the declared modifiers for this
@@ -92,7 +92,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function setModifiers($modifiers)
     {
-        if ($this->_modifiers !== 0) {
+        if ($this->modifiers !== 0) {
             return;
         }
 
@@ -107,7 +107,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
             throw new InvalidArgumentException('Invalid method modifier given.');
         }
 
-        $this->_modifiers = $modifiers;
+        $this->modifiers = $modifiers;
     }
 
     /**
@@ -117,7 +117,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isAbstract()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_ABSTRACT)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_ABSTRACT)
                                  === PHP_Depend_ConstantsI::IS_ABSTRACT);
     }
 
@@ -129,7 +129,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isPublic()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
                                  === PHP_Depend_ConstantsI::IS_PUBLIC);
     }
 
@@ -141,7 +141,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isProtected()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
                                  === PHP_Depend_ConstantsI::IS_PROTECTED);
     }
 
@@ -153,7 +153,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isPrivate()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
                                  === PHP_Depend_ConstantsI::IS_PRIVATE);
     }
 
@@ -165,7 +165,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isStatic()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_STATIC)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_STATIC)
                                  === PHP_Depend_ConstantsI::IS_STATIC);
     }
 
@@ -177,7 +177,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isFinal()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_FINAL)
                                  === PHP_Depend_ConstantsI::IS_FINAL);
     }
 
@@ -204,6 +204,14 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
         $this->parent = $parent;
     }
 
+    public function getSourceFile()
+    {
+        if ($this->parent === null) {
+            throw new ErrorException('Parent not specified');
+        }
+        return $this->parent->getSourceFile();
+    }
+
     /**
      * Visitor method for node tree traversal.
      *
@@ -217,40 +225,21 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
         $visitor->visitMethod($this);
     }
 
-    public function serialize()
+    public function __sleep()
     {
-        return serialize(
-            array(
-                $this->nodes,
-                $this->uuid,
-                $this->name,
-                $this->startLine,
-                $this->endLine,
-                $this->docComment,
-                $this->sourceFile,
-                $this->returnsReference,
-                $this->returnClassReference,
-                $this->exceptionClassReferences,
-                $this->_modifiers
-            )
+        return array(
+            'nodes',
+            'uuid',
+            'name',
+            'startLine',
+            'tokens',
+            'endLine',
+            'docComment',
+            'returnsReference',
+            'returnClassReference',
+            'exceptionClassReferences',
+            'modifiers'
         );
-    }
-
-    public function unserialize($data)
-    {
-        list(
-            $this->nodes,
-            $this->uuid,
-            $this->name,
-            $this->startLine,
-            $this->endLine,
-            $this->docComment,
-            $this->sourceFile,
-            $this->returnsReference,
-            $this->returnClassReference,
-            $this->exceptionClassReferences,
-            $this->_modifiers
-        ) = unserialize($data);
     }
 
     /**

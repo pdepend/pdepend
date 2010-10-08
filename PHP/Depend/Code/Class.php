@@ -79,7 +79,15 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var integer $_modifiers
      */
-    private $_modifiers = 0;
+    protected $modifiers = 0;
+
+    /**
+     * Name of the owning package. This property is used while we serialize and
+     * unserialize the object tree.
+     *
+     * @var string
+     */
+    protected $packageName = null;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -88,7 +96,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isAbstract()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
                                  === PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
     }
 
@@ -99,7 +107,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isFinal()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_FINAL)
                                  === PHP_Depend_ConstantsI::IS_FINAL);
     }
 
@@ -171,7 +179,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getModifiers()
     {
-        return $this->_modifiers;
+        return $this->modifiers;
     }
 
     /**
@@ -190,7 +198,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function setModifiers($modifiers)
     {
-        if ($this->_modifiers !== 0) {
+        if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
                 'Cannot overwrite previously set class modifiers.'
             );
@@ -204,7 +212,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             throw new InvalidArgumentException('Invalid class modifier given.');
         }
 
-        $this->_modifiers = $modifiers;
+        $this->modifiers = $modifiers;
     }
 
     /**
@@ -219,54 +227,37 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $visitor->visitClass($this);
     }
 
-    public function serialize()
+    public function __sleep()
     {
-        return serialize(
-            array(
-                $this->_modifiers,
-                $this->constants,
-                $this->docComment,
-                $this->endLine,
-                $this->interfaceReferences,
-                $this->methods,
-                $this->name,
-                $this->nodes,
-                $this->parentClassReference,
-                $this->sourceFile,
-                $this->startLine,
-                $this->userDefined,
-                $this->uuid,
-                $this->getPackage()->getName()
-            )
+        $this->packageName = $this->getPackage()->getName();
+
+        return array(
+            'modifiers',
+            'constants',
+            'docComment',
+            'endLine',
+            'interfaceReferences',
+            'methods',
+            'name',
+            'nodes',
+            'parentClassReference',
+            'startLine',
+            'tokens',
+            'userDefined',
+            'uuid',
+            'packageName'
         );
     }
 
-    public function unserialize($serialized)
+    public function  __wakeup()
     {
-        list(
-                $this->_modifiers,
-                $this->constants,
-                $this->docComment,
-                $this->endLine,
-                $this->interfaceReferences,
-                $this->methods,
-                $this->name,
-                $this->nodes,
-                $this->parentClassReference,
-                $this->sourceFile,
-                $this->startLine,
-                $this->userDefined,
-                $this->uuid,
-                $packageName
-        ) = unserialize($serialized);
-
         foreach ($this->methods as $method) {
             $method->sourceFile = $this->sourceFile;
             $method->setParent($this);
         }
 
         PHP_Depend_Builder_Registry::getDefault()
-            ->buildPackage($packageName)
+            ->buildPackage($this->packageName)
             ->addType($this);
 
         PHP_Depend_Builder_Registry::getDefault()

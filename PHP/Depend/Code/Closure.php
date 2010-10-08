@@ -70,38 +70,20 @@ class PHP_Depend_Code_Closure extends PHP_Depend_Code_AbstractCallable
         parent::__construct('#closure');
     }
 
-    public function serialize()
+    public function __sleep()
     {
-        return serialize(
-            array(
-                $this->nodes,
-                $this->uuid,
-                $this->name,
-                $this->startLine,
-                $this->endLine,
-                $this->docComment,
-                $this->sourceFile,
-                $this->returnsReference,
-                $this->returnClassReference,
-                $this->exceptionClassReferences
-            )
+        return  array(
+            'nodes',
+            'uuid',
+            'name',
+            'startLine',
+            'tokens',
+            'endLine',
+            'docComment',
+            'returnsReference',
+            'returnClassReference',
+            'exceptionClassReferences'
         );
-    }
-
-    public function unserialize($data)
-    {
-        list(
-            $this->nodes,
-            $this->uuid,
-            $this->name,
-            $this->startLine,
-            $this->endLine,
-            $this->docComment,
-            $this->sourceFile,
-            $this->returnsReference,
-            $this->returnClassReference,
-            $this->exceptionClassReferences
-        ) = unserialize($data);
     }
 
     /**

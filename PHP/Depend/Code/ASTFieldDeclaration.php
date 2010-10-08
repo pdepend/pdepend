@@ -206,4 +206,18 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
     {
         return $visitor->visitFieldDeclaration($this, $data);
     }
+
+    public function  __sleep()
+    {
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'modifiers'
+        );
+    }
 }

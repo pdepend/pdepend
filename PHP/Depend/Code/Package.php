@@ -312,7 +312,9 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function accept(PHP_Depend_VisitorI $visitor)
     {
+//echo "E\n";
         $visitor->visitPackage($this);
+//echo "Y\n";
     }
 
     /**

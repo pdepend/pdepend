@@ -120,4 +120,18 @@ final class PHP_Depend_Code_ASTParentReference
     {
         return $visitor->visitParentReference($this, $data);
     }
+
+    public function  __sleep()
+    {
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'reference'
+        );
+    }
 }

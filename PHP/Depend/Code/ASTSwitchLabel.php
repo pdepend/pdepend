@@ -74,7 +74,7 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      *
      * @var boolean
      */
-    private $_default = false;
+    protected $default = false;
 
     /**
      * Returns <b>true</b> when this node is the default label.
@@ -83,7 +83,7 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      */
     public function isDefault()
     {
-        return $this->_default;
+        return $this->default;
     }
 
     /**
@@ -93,7 +93,7 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
      */
     public function setDefault()
     {
-        $this->_default = true;
+        $this->default = true;
     }
 
     /**
@@ -109,5 +109,19 @@ class PHP_Depend_Code_ASTSwitchLabel extends PHP_Depend_Code_ASTNode
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitSwitchLabel($this, $data);
+    }
+
+    public function  __sleep()
+    {
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'default'
+        );
     }
 }

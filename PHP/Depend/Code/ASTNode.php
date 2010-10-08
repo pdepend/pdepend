@@ -432,31 +432,21 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         $this->_removeReferencesToChildNodes();
     }
 
-    public function serialize()
+    public function  __sleep()
     {
-        return serialize(array(
-            $this->image,
-            $this->comment,
-            $this->startLine,
-            $this->startColumn,
-            $this->endLine,
-            $this->endColumn,
-            $this->nodes
-        ));
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes'
+        );
     }
 
-    public function unserialize($data)
+    public function __wakeup()
     {
-        list(
-            $this->image,
-            $this->comment,
-            $this->startLine,
-            $this->startColumn,
-            $this->endLine,
-            $this->endColumn,
-            $this->nodes
-        ) = unserialize($data);
-
         foreach ($this->nodes as $node) {
             $node->setParent($this);
         }

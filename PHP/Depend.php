@@ -803,3 +803,10 @@ class PHP_Depend
 
     // @codeCoverageIgnoreEnd
 }
+
+function __autoload($className)
+{
+    if (0 === strpos($className, 'PHP_Depend_')) {
+        include __DIR__ . '/../' . strtr($className, '_', '/') . '.php';
+    }
+}

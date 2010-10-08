@@ -70,6 +70,14 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     private $_package = null;
 
     /**
+     * The name of the parent package for this function. We use this property
+     * to restore the parent package while we unserialize a cached object tree.
+     *
+     * @var string
+     */
+    protected $packageName = null;
+
+    /**
      * Returns the parent package for this function.
      *
      * @return PHP_Depend_Code_Package
@@ -88,7 +96,8 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
-        $this->_package = $package;
+        $this->packageName = $package->getName();
+        $this->_package    = $package;
     }
 
     /**
@@ -131,43 +140,27 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
         $this->_package = null;
     }
 
-    public function serialize()
+    public function  __sleep()
     {
-        return serialize(
-            array(
-                $this->nodes,
-                $this->uuid,
-                $this->name,
-                $this->startLine,
-                $this->endLine,
-                $this->docComment,
-                $this->sourceFile,
-                $this->returnsReference,
-                $this->returnClassReference,
-                $this->exceptionClassReferences,
-                $this->_package->getName()
-            )
+        return array(
+            'nodes',
+            'uuid',
+            'name',
+            'startLine',
+            'tokens',
+            'endLine',
+            'docComment',
+            'returnsReference',
+            'returnClassReference',
+            'exceptionClassReferences',
+            'packageName'
         );
     }
 
-    public function unserialize($data)
+    public function  __wakeup()
     {
-        list(
-            $this->nodes,
-            $this->uuid,
-            $this->name,
-            $this->startLine,
-            $this->endLine,
-            $this->docComment,
-            $this->sourceFile,
-            $this->returnsReference,
-            $this->returnClassReference,
-            $this->exceptionClassReferences,
-            $packageName
-        ) = unserialize($data);
-
         PHP_Depend_Builder_Registry::getDefault()
-            ->buildPackage($packageName)
+            ->buildPackage($this->packageName)
             ->addFunction($this);
     }
 }

@@ -134,4 +134,9 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
 
         $this->builder = PHP_Depend_Builder_Registry::getDefault();
     }
+
+    public function __wakeup()
+    {
+        $this->builder = PHP_Depend_Builder_Registry::getDefault();
+    }
 }
