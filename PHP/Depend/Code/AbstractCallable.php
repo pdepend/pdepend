@@ -208,6 +208,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getTokens()
     {
+return getCached($this->getUUID());
         return $this->tokens;
     }
 
@@ -222,6 +223,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         $this->startLine = reset($tokens)->startLine;
         $this->endLine   = end($tokens)->endLine;
+return setCached($this->getUUID(), $tokens);
         
         $this->tokens = $tokens;
     }

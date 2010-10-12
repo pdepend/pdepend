@@ -448,7 +448,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     public function __wakeup()
     {
         foreach ($this->nodes as $node) {
-            $node->setParent($this);
+            $node->parent = $this;
         }
     }
 

@@ -465,6 +465,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getTokens()
     {
+return getCached($this->getUUID());
         return $this->tokens;
     }
 
@@ -479,6 +480,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     {
         $this->startLine = reset($tokens)->startLine;
         $this->endLine   = end($tokens)->endLine;
+return setCached($this->getUUID(), $tokens);
         
         $this->tokens = $tokens;
     }
@@ -695,4 +697,25 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
     
     // @codeCoverageIgnoreEnd
+}
+
+define('PATH', '/tmp/pdepend-playground/tokens/');
+
+if (file_exists(PATH) === false) {
+    mkdir(PATH, 0777, true);
+}
+
+function getCached($key)
+{
+    $file = PATH . md5($key) .'.dat';
+    if (!file_exists($file)) {
+        return array();
+    }
+    return (array) unserialize(file_get_contents($file));
+}
+
+function setCached($key, $tokens)
+{
+    $file = PATH . md5($key) .'.dat';
+    file_put_contents($file, serialize($tokens));
 }

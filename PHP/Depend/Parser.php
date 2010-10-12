@@ -256,6 +256,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_maxNestingLevel = 1024;
 
     /**
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /**
      * Constructs a new source parser.
      *
      * @param PHP_Depend_TokenizerI $tokenizer The used code tokenizer.
@@ -272,6 +279,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack     = new PHP_Depend_Parser_TokenStack();
 
         $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable();
+
+        $cacheFactory = new PHP_Depend_Util_Cache_Factory();
+        $this->cache  = $cacheFactory->create($this);
 
         require_once 'PHP/Depend/Builder/Registry.php';
         PHP_Depend_Builder_Registry::setDefault($builder);
@@ -363,17 +373,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_uuidBuilder->forFile($this->_sourceFile)
         );
 
-        $path = '/tmp/pdepend-playground/';
-        if (false === file_exists($path)) {
-            mkdir($path);
-        }
-        $file = $path . md5($this->_sourceFile->getFileName()) . '.cache';
+        $key  = md5($this->_sourceFile->getFileName());
+        $hash = md5_file($this->_sourceFile->getFileName());
 
-        if (file_exists($file)) {
-            unserialize(file_get_contents($file));
-
-            $this->tearDownEnvironment();
-            return;
+        if ($this->cache->restore($key, $hash)) {
+            return $this->tearDownEnvironment();
         }
         
         // Debug currently parsed source file.
@@ -441,8 +445,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->_tokenizer->peek();
         }
-        
-        file_put_contents($file, serialize($this->_sourceFile));
+
+        $this->cache->store($key, $this->_sourceFile, $hash);
 
         $this->tearDownEnvironment();
     }
