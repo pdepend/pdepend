@@ -154,10 +154,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InvalidTokenObjectOperatorInForeachLoopBug161Test');
         $suite->addTestSuite('PHP_Depend_Bugs_StringWithDollarStringLiteralBug162Test');
-<<<<<<< HEAD
         $suite->addTestSuite('PHP_Depend_Bug_AlternativeSyntaxClosingTagBug163Test');
-=======
->>>>>>> svn-remote-release-0.9.x
 
         return $suite;
     }
