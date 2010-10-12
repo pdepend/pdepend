@@ -83,10 +83,12 @@
     <Package Name="package1">
       <Package>package1</Package>
       <Package>package2</Package>
+      <Package>package1</Package>
     </Package>
     <Package Name="package2">
       <Package>package2</Package>
       <Package>package1</Package>
+      <Package>package2</Package>
     </Package>
   </Cycles>
 </PDepend>
