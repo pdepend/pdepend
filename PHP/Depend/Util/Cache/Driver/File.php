@@ -1,13 +1,14 @@
 <?php
 class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
 {
-    protected $cacheDir = '/tmp/pdepend-playground';
+    protected $cacheDir = null;
 
-    public function __construct()
+    public function __construct($cacheDir = '/tmp/pdepend-playground')
     {
-        if (false === file_exists($this->cacheDir)) {
-            mkdir($this->cacheDir, 0775, true);
+        if (false === file_exists($cacheDir)) {
+            mkdir($cacheDir, 0775, true);
         }
+        $this->cacheDir = $cacheDir;
     }
 
     public function store($key, $data, $hash = null)
