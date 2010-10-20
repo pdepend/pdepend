@@ -251,7 +251,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
-        include_once 'PHP/Depend/Parser.php';
+        include_once 'PHP/Depend/Parser/VersionAllParser.php';
         include_once 'PHP/Depend/Builder/Default.php';
         include_once 'PHP/Depend/Code/Filter/Collection.php';
         include_once 'PHP/Depend/Tokenizer/Internal.php';
@@ -289,7 +289,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $tokenizer = new PHP_Depend_Tokenizer_Internal();
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser($tokenizer, $builder);
+            $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder);
             if ($ignoreAnnotations === true) {
                 $parser->setIgnoreAnnotations();
             }

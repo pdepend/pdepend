@@ -87,6 +87,7 @@ require_once dirname(__FILE__) . '/EndLessLoopBetweenForParentClassBug152Test.ph
 require_once dirname(__FILE__) . '/InvalidTokenObjectOperatorInForeachLoopBug161Test.php';
 require_once dirname(__FILE__) . '/StringWithDollarStringLiteralBug162Test.php';
 require_once dirname(__FILE__) . '/AlternativeSyntaxClosingTagBug163Test.php';
+require_once dirname(__FILE__) . '/ClassAndInterfaceNamesBug169Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -155,6 +156,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_InvalidTokenObjectOperatorInForeachLoopBug161Test');
         $suite->addTestSuite('PHP_Depend_Bugs_StringWithDollarStringLiteralBug162Test');
         $suite->addTestSuite('PHP_Depend_Bug_AlternativeSyntaxClosingTagBug163Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_ClassAndInterfaceNamesBug169Test');
 
         return $suite;
     }
