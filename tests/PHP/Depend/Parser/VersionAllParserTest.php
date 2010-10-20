@@ -280,6 +280,201 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserAcceptsStringAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsStringAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('myMethodName', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsUseKeywordAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsUseKeywordAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('Use', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsGotoKeywordAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsGotoKeywordAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('Goto', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsSelfKeywordAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsSelfKeywordAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('self', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsNullAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsNullAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('null', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsTrueAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsTrueAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('true', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsFalseAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsFalseAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('false', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsDirConstantAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsDirConstantAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('__DIR__', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsNamespaceKeywordAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsNamespaceKeywordAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('nameSpace', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsNamespaceConstantAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsNamespaceConstantAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('__NAMESPACE__', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsParentKeywordAsMethodName
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserAcceptsParentKeywordAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        self::assertEquals('Parent', $method->getName());
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInvalidToken
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInvalidToken()
+    {
+        self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTokenStreamEnd
+     *
+     * @return void
+     * @covers PHP_Depend_Parser_VersionAllParser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     */
+    public function testParserThrowsExpectedExceptionForTokenStreamEnd()
+    {
+        self::parseTestCaseSource(__METHOD__);
+    }
+
+    /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
@@ -292,6 +487,21 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
         return self::parseTestCaseSource($testCase)
             ->current()
             ->getTypes()
+            ->current();
+    }
+
+    /**
+     * Returns the first method that could be found in the code under test for
+     * the calling test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Method
+     */
+    protected function getFirstMethodForTestCase($testCase)
+    {
+        return $this->getFirstTypeForTestCase($testCase)
+            ->getMethods()
             ->current();
     }
 }

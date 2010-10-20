@@ -234,13 +234,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_uuidBuilder = null;
 
     /**
-     * Used function name parser.
-     *
-     * @var PHP_Depend_Parser_FunctionNameParser
-     */
-    private $_functionNameParser = null;
-
-    /**
      * The maximum valid nesting level allowed.
      *
      * @var integer
@@ -282,41 +275,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     public function setIgnoreAnnotations()
     {
         $this->_ignoreAnnotations = true;
-    }
-
-    /**
-     * Sets the function name parser which will be used to extract function
-     * and/or method names from a token stream.
-     *
-     * @param PHP_Depend_Parser_FunctionNameParser $functionNameParser This
-     *        parser will be used to extract function and/or method names from
-     *        the token stream.
-     *
-     * @return void
-     */
-    public function setFunctionNameParser(
-        PHP_Depend_Parser_FunctionNameParser $functionNameParser
-    ) {
-        $this->_functionNameParser = $functionNameParser;
-        $this->_functionNameParser->setTokenizer($this->tokenizer);
-        $this->_functionNameParser->setTokenStack($this->_tokenStack);
-    }
-
-    /**
-     * Returns the used function name parser instance.
-     *
-     * @return PHP_Depend_Parser_FunctionNameParser
-     */
-    protected function getFunctionNameParser()
-    {
-        if ($this->_functionNameParser === null) {
-            include_once 'PHP/Depend/Parser/FunctionNameParserImpl.php';
-
-            $this->setFunctionNameParser(
-                new PHP_Depend_Parser_FunctionNameParserImpl()
-            );
-        }
-        return $this->_functionNameParser;
     }
 
     /**
@@ -468,10 +426,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * version.
      *
      * @return string
+     * @since 0.9.20
      * @todo This method should be abstract, once we have marked this class as
      *       abstract.
      */
     protected function parseClassName()
+    {
+        return $this->consumeToken(self::T_STRING)->image;
+    }
+
+    /**
+     * Parses a valid method or function name for the currently configured php
+     * version.
+     *
+     * @return string
+     * @since 0.10.0
+     * @todo This method should be abstract, once we have marked this class as
+     *       abstract.
+     */
+    protected function parseFunctionName()
     {
         return $this->consumeToken(self::T_STRING)->image;
     }
@@ -989,7 +962,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeComments();
 
         // Next token must be the function identifier
-        $functionName = $this->getFunctionNameParser()->parse($this->tokenizer);
+        $functionName = $this->parseFunctionName();
 
         $function = $this->_builder->buildFunction($functionName);
         $this->_parseCallableDeclaration($function);
@@ -1021,7 +994,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $returnsReference = $this->_parseOptionalReturnbyReference();
 
-        $methodName = $this->getFunctionNameParser()->parse($this->tokenizer);
+        $methodName = $this->parseFunctionName();
 
         $method = $this->_builder->buildMethod($methodName);
         $method->setDocComment($this->_docComment);

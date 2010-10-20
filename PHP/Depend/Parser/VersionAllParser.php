@@ -100,4 +100,42 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             $this->tokenizer->getSourceFile()
         );
     }
+
+    /**
+     * Parses a function name from the given tokenizer and returns the string
+     * literal representing the function name. If no valid token exists in the
+     * token stream, this method will throw an exception.
+     *
+     * @return string
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When the next available
+     *         token does not represent a valid php function name.
+     * @throws PHP_Depend_Parser_TokenStreamEndException When there is no next
+     *         token available in the given token stream.
+     */
+    public function parseFunctionName()
+    {
+        $type = $this->tokenizer->peek();
+        switch ($type) {
+
+        case PHP_Depend_TokenizerI::T_STRING:
+        case PHP_Depend_TokenizerI::T_USE:
+        case PHP_Depend_TokenizerI::T_GOTO:
+        case PHP_Depend_TokenizerI::T_NULL:
+        case PHP_Depend_TokenizerI::T_SELF:
+        case PHP_Depend_TokenizerI::T_TRUE:
+        case PHP_Depend_TokenizerI::T_FALSE:
+        case PHP_Depend_TokenizerI::T_NAMESPACE:
+        case PHP_Depend_TokenizerI::T_DIR:
+        case PHP_Depend_TokenizerI::T_NS_C:
+        case PHP_Depend_TokenizerI::T_PARENT:
+            return $this->consumeToken($type)->image;
+
+        case PHP_Depend_TokenizerI::T_EOF:
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+        }
+        throw new PHP_Depend_Parser_UnexpectedTokenException(
+            $this->tokenizer->next(),
+            $this->tokenizer->getSourceFile()
+        );
+    }
 }
