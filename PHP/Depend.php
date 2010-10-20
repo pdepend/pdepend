@@ -45,7 +45,7 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Parser.php';
+require_once 'PHP/Depend/Parser/VersionAllParser.php';
 require_once 'PHP/Depend/StorageRegistry.php';
 require_once 'PHP/Depend/VisitorI.php';
 require_once 'PHP/Depend/Builder/Default.php';
@@ -603,7 +603,7 @@ class PHP_Depend
         foreach ($this->_createFileIterator() as $file) {
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser($tokenizer, $this->_builder);
+            $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $this->_builder);
             $parser->setMaxNestingLevel(1024);
 
             // Disable annotation parsing?

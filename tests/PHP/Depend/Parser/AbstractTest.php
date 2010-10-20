@@ -44,15 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
+ * @since      0.9.20
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/FunctionNameParserImplTest.php';
-require_once dirname(__FILE__) . '/VersionAllParserTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Main test suite for the PHP_Depend_Parser package.
+ * Abstract test case class for this sub package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,27 +60,23 @@ require_once dirname(__FILE__) . '/VersionAllParserTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * @since      0.9.20
  */
-class PHP_Depend_Parser_AllTests extends PHPUnit_Framework_TestSuite
+abstract class PHP_Depend_Parser_AbstractTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Constructs a new test suite instance.
-     */
-    public function __construct()
-    {
-        $this->setName('PHP::Depend::Parser::AllTests');
-
-        $this->addTestSuite('PHP_Depend_Parser_FunctionNameParserImplTest');
-        $this->addTestSuite('PHP_Depend_Parser_VersionAllParserTest');
-    }
-
-    /**
-     * Returns a configured test suite instance.
+     * Parses test code for the calling test case.
      *
-     * @return PHP_Depend_Parser_AllTests 
+     * @param string  $testCase          Name of the calling test case.
+     * @param boolean $ignoreAnnotations Should the parser ignore annotations?
+     *
+     * @return PHP_Depend_Code_NodeIterator
      */
-    public static function suite()
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        return new PHP_Depend_Parser_AllTests();
+        list($className, $methodName) = explode('::', $testCase);
+
+        $directory = substr($className, 18, -4);
+        return parent::parseSource("parser/{$directory}/{$methodName}.php", $ignoreAnnotations);
     }
 }
