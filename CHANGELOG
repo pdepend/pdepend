@@ -24,6 +24,8 @@ PHP_depend 0.9.20
 
 - Fixed #168: Node identifiers are case sensitive. Fixed in subversion
   revision #1529.
+- Fixed #169: Null, True and False are valid class or interface names.
+  Fixed in subversion revision #1538.
 
 PHP_Depend 0.9.19
 -----------------
