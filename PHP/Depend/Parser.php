@@ -98,7 +98,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                                  @var\s+
                                    \$[a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff]*\s+
                                    (.*?)
-                                \s*\*/\s*$)ix';
+                                \s*\*/\s*$)ix'; 
 
     /**
      * Regular expression for types defined in <b>throws</b> annotations of
