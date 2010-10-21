@@ -284,18 +284,19 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * testByDefaultGetSourceFileReturnsNull
+     * testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined
      *
      * @return void
      * @covers PHP_Depend_Code_Method
      * @group pdepend
      * @group pdepend::code
      * @group unittest
+     * @expectedException PHP_Depend_Code_Exceptions_SourceNotFoundException
      */
-    public function testByDefaultGetSourceFileReturnsNull()
+    public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $this->assertNull($method->getSourceFile());
+        $method->getSourceFile();
     }
 
     /**
@@ -310,11 +311,28 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testSetSourceFileInformationForNullValue()
     {
-        $method = new PHP_Depend_Code_Method('method');
-        $file   = new PHP_Depend_Code_File(__FILE__);
+        $file = new PHP_Depend_Code_File(__FILE__);
+
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setSourceFile($file);
+
+        $method = new PHP_Depend_Code_Method(__FUNCTION__);
+        $method->setParent($class);
         
-        $method->setSourceFile($file);
-        $this->assertSame($file, $method->getSourceFile());
+        self::assertSame($file, $method->getSourceFile());
+    }
+
+    /**
+     * Tests that the build interface method doesn't update an existing source
+     * file info.
+     *
+     * @return void
+     */
+    public function testDoesntSetSourceFileInformationForNotNullValue()
+    {
+        $this->markTestSkipped(
+            'This test should be removed, but a default implementation exists.'
+        );
     }
     
     /**

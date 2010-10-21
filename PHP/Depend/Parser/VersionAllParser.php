@@ -44,15 +44,17 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.20
  */
 
-require_once 'PHP/Depend/Parser/FunctionNameParser.php';
+require_once 'PHP/Depend/Parser.php';
 require_once 'PHP/Depend/Parser/TokenStreamEndException.php';
 require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
 
 /**
- * Default implementation of the function name parser. This implementation is
- * not fixed to a special php version and its keywords.
+ * Concrete parser implementation that is very tolerant and accepts language
+ * constructs and keywords that are reserved in newer php versions, but not in
+ * older versions.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,48 +64,43 @@ require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.9.20
  */
-class PHP_Depend_Parser_FunctionNameParserImpl
-    implements PHP_Depend_Parser_FunctionNameParser
+class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
 {
     /**
-     * The used tokenizer instance.
+     * Parses a valid class or interface name and returns the image of the parsed
+     * token.
      *
-     * @var PHP_Depend_TokenizerI
+     * @return string
+     * @throws PHP_Depend_Parser_TokenStreamEndException When the current token
+     *         stream does not contain one more token.
+     * @throws PHP_Depend_Parser_UnexpectedTokenException When the next available
+     *         token is not a valid class name.
      */
-    private $_tokenizer = null;
-
-    /**
-     * The used token stack.
-     *
-     * @var PHP_Depend_Parser_TokenStack
-     */
-    private $_tokenStack = null;
-
-    /**
-     * Setter method for the context tokenizer instance.
-     *
-     * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer.
-     *
-     * @return void
-     */
-    public function setTokenizer(PHP_Depend_TokenizerI $tokenizer)
+    protected function parseClassName()
     {
-        $this->_tokenizer = $tokenizer;
+        $type = $this->tokenizer->peek();
+        switch ($type) {
+
+        case self::T_USE:
+        case self::T_NULL:
+        case self::T_TRUE:
+        case self::T_FALSE:
+        case self::T_STRING:
+        case self::T_NAMESPACE:
+            return $this->consumeToken($type)->image;
+
+        case self::T_EOF:
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+        }
+
+        throw new PHP_Depend_Parser_UnexpectedTokenException(
+            $this->tokenizer->next(),
+            $this->tokenizer->getSourceFile()
+        );
     }
 
-    /**
-     * Setter method for the context token stack instance.
-     *
-     * @param PHP_Depend_Parser_TokenStack $tokenStack The context token stack
-     *
-     * @return void
-     */
-    public function setTokenStack(PHP_Depend_Parser_TokenStack $tokenStack)
-    {
-        $this->_tokenStack = $tokenStack;
-    }
-    
     /**
      * Parses a function name from the given tokenizer and returns the string
      * literal representing the function name. If no valid token exists in the
@@ -115,9 +112,10 @@ class PHP_Depend_Parser_FunctionNameParserImpl
      * @throws PHP_Depend_Parser_TokenStreamEndException When there is no next
      *         token available in the given token stream.
      */
-    public function parse()
+    public function parseFunctionName()
     {
-        switch ($this->_tokenizer->peek()) {
+        $type = $this->tokenizer->peek();
+        switch ($type) {
 
         case PHP_Depend_TokenizerI::T_STRING:
         case PHP_Depend_TokenizerI::T_USE:
@@ -130,17 +128,14 @@ class PHP_Depend_Parser_FunctionNameParserImpl
         case PHP_Depend_TokenizerI::T_DIR:
         case PHP_Depend_TokenizerI::T_NS_C:
         case PHP_Depend_TokenizerI::T_PARENT:
-            $token = $this->_tokenizer->next();
-            $this->_tokenStack->add($token);
-
-            return $token->image;
+            return $this->consumeToken($type)->image;
 
         case PHP_Depend_TokenizerI::T_EOF:
-            throw new PHP_Depend_Parser_TokenStreamEndException($this->_tokenizer);
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
         }
         throw new PHP_Depend_Parser_UnexpectedTokenException(
-            $this->_tokenizer->next(),
-            $this->_tokenizer->getSourceFile()
+            $this->tokenizer->next(),
+            $this->tokenizer->getSourceFile()
         );
     }
 }

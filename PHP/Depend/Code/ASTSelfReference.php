@@ -117,6 +117,9 @@ final class PHP_Depend_Code_ASTSelfReference
 
     public function __sleep()
     {
+if ($this->typeInstance == null) {
+    throw new Exception();
+}
         $this->qualfiedName = $this->typeInstance->getPackage()->getName() . '\\' . $this->typeInstance->getName();
 
         return array(

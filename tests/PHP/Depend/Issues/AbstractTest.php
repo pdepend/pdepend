@@ -88,7 +88,20 @@ abstract class PHP_Depend_Issues_AbstractTest extends PHP_Depend_AbstractTest
         if ($testCase === null) {
             $testCase = self::getTestCaseMethod();
         }
+        return self::parseTestCaseSource($testCase);
+    }
 
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string  $testCase          Qualified name of the test case.
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
         list($class, $method) = explode('::', $testCase);
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
             throw new ErrorException('Unexpected class name format');

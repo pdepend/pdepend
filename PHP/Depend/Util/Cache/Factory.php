@@ -14,6 +14,7 @@ class PHP_Depend_Util_Cache_Factory
     {
         $cacheKey = get_class($context);
         if (false === isset($this->caches[$cacheKey])) {
+            //$this->caches[$cacheKey] = new PHP_Depend_Util_Cache_Driver_Memory();
             $this->caches[$cacheKey] = new PHP_Depend_Util_Cache_Driver_File();
         }
         return $this->caches[$cacheKey];

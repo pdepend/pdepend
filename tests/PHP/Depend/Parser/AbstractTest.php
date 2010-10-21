@@ -36,59 +36,47 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
+ * @link       http://pdepend.org/
+ * @since      0.9.20
  */
 
+require_once dirname(__FILE__) . '/AbstractTest.php';
+
 /**
- * Base interface for a function name parser. It will be used by the main parser
- * to extract a function name from a given token stream.
+ * Abstract test case class for this sub package.
  *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
+ * @link       http://pdepend.org/
+ * @since      0.9.20
  */
-interface PHP_Depend_Parser_FunctionNameParser
+abstract class PHP_Depend_Parser_AbstractTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Setter method for the context tokenizer instance.
+     * Parses test code for the calling test case.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer.
+     * @param string  $testCase          Name of the calling test case.
+     * @param boolean $ignoreAnnotations Should the parser ignore annotations?
      *
-     * @return void
+     * @return PHP_Depend_Code_NodeIterator
      */
-    function setTokenizer(PHP_Depend_TokenizerI $tokenizer);
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($className, $methodName) = explode('::', $testCase);
 
-    /**
-     * Setter method for the context token stack instance.
-     *
-     * @param PHP_Depend_Parser_TokenStack $tokenStack The context token stack
-     *
-     * @return void
-     */
-    function setTokenStack(PHP_Depend_Parser_TokenStack $tokenStack);
-
-    /**
-     * Parses a function name from the given tokenizer and returns the string
-     * literal representing the function name. If no valid token exists in the
-     * token stream, this method will throw an exception.
-     *
-     * @return string
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the next available
-     *         token does not represent a valid php function name.
-     * @throws PHP_Depend_Parser_TokenStreamEndException When there is no next
-     *         token available in the given token stream.
-     */
-    function parse();
+        $directory = substr($className, 18, -4);
+        return parent::parseSource("parser/{$directory}/{$methodName}.php", $ignoreAnnotations);
+    }
 }

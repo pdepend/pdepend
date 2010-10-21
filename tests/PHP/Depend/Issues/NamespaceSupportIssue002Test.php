@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for ticket 002, PHP 5.3 namespace support.
@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_AbstractTest
 {
     /**
      * Tests that the parser handles a simple use statement as expected.
@@ -168,9 +168,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax()
     {
-        $packages = self::parseSource('issues/002-005-namespace-declaration.php');
-
-        $this->assertSame('foo', $packages->current()->getName());
+        $packages = self::parseTestCaseSource(__METHOD__);
+        self::assertSame('foo', $packages->current()->getName());
     }
 
     /**
@@ -187,7 +186,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax()
     {
         $packages = self::parseSource('issues/002-006-namespace-declaration.php');
-
+if (!$packages->current()) throw new Exception;
         $this->assertSame('foo', $packages->current()->getName());
     }
 

@@ -60,7 +60,7 @@ require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since     0.9.5
+ * @since      0.9.5
  */
 class PHP_Depend_Code_ASTClassReference
     extends PHP_Depend_Code_ASTClassOrInterfaceReference

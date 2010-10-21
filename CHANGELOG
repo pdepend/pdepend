@@ -18,12 +18,19 @@ PHP_Depend 0.10.0
   revision #1283.
 - Fixed #163: Alternative syntax end tokens can terminate with closing
   PHP-tag. Fixed in svn revision #1527.
+- Implemented #170: Rename FunctionNameParserImpl into
+  FunctionNameParserAllVersions. Task scope changed and complete refactoring
+  done. Parser moved into a version specific parser class. Done in subversion
+  revision #.
+
 
 PHP_depend 0.9.20
 -----------------
 
 - Fixed #168: Node identifiers are case sensitive. Fixed in subversion
   revision #1529.
+- Fixed #169: Null, True and False are valid class or interface names.
+  Fixed in subversion revision #1538.
 
 PHP_Depend 0.9.19
 -----------------

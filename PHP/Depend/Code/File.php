@@ -65,16 +65,30 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * The unique identifier for this function.
      *
-     * @var string $_uuid
+     * @var string
      */
-    private $_uuid = null;
+    protected $uuid = null;
 
     /**
      * The source file name/path.
      *
-     * @var string $_fileName
+     * @var string
      */
-    private $_fileName = null;
+    protected $fileName = null;
+
+    /**
+     * The comment for this type.
+     *
+     * @var string
+     */
+    protected $docComment = null;
+
+    /**
+     * Names of all packages that were defined in this file.
+     *
+     * @var array(string)
+     */
+    protected $packageNames = array();
 
     /**
      * Normalized code in this file.
@@ -91,15 +105,6 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     private $_loc = null;
 
     /**
-     * The comment for this type.
-     *
-     * @var string $_docComment
-     */
-    private $_docComment = null;
-
-    protected $tokens = array();
-
-    /**
      * Constructs a new source file instance.
      *
      * @param string $fileName The source file name/path.
@@ -107,7 +112,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function __construct($fileName)
     {
         if ($fileName !== null) {
-            $this->_fileName = realpath($fileName);
+            $this->fileName = realpath($fileName);
         }
     }
 
@@ -118,7 +123,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**
@@ -128,7 +133,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getFileName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**
@@ -138,7 +143,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getUUID()
     {
-        return $this->_uuid;
+        return $this->uuid;
     }
 
     /**
@@ -151,7 +156,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setUUID($uuid)
     {
-        $this->_uuid = $uuid;
+        $this->uuid = $uuid;
     }
 
     /**
@@ -183,9 +188,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getTokens()
     {
-return getCached($this->_fileName);
+return getCached($this->fileName);
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore(md5($this->_fileName), __CLASS__);
+        return (array) $storage->restore(md5($this->fileName), __CLASS__);
     }
 
     /**
@@ -197,9 +202,9 @@ return getCached($this->_fileName);
      */
     public function setTokens(array $tokens)
     {
-return setCached($this->_fileName, $tokens);
+return setCached($this->fileName, $tokens);
         $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, md5($this->_fileName), __CLASS__);
+        $storage->store($tokens, md5($this->fileName), __CLASS__);
     }
 
     /**
@@ -209,7 +214,7 @@ return setCached($this->_fileName, $tokens);
      */
     public function getDocComment()
     {
-        return $this->_docComment;
+        return $this->docComment;
     }
 
     /**
@@ -221,7 +226,7 @@ return setCached($this->_fileName, $tokens);
      */
     public function setDocComment($docComment)
     {
-        $this->_docComment = $docComment;
+        $this->docComment = $docComment;
     }
 
     /**
@@ -244,10 +249,31 @@ return setCached($this->_fileName, $tokens);
         $this->childNodes[] = $item;
     }
 
-    public function  __wakeup()
+    public function addPackage(PHP_Depend_Code_Package $package)
+    {
+        $this->packageNames[] = $package->getName();
+    }
+
+    public function __sleep()
+    {
+        return array(
+            'uuid',
+            'fileName',
+            'childNodes',
+            'docComment',
+            'packageNames'
+        );
+    }
+
+    public function __wakeup()
     {
         foreach ($this->childNodes as $childNode) {
             $childNode->setSourceFile($this);
+        }
+
+        $builder = PHP_Depend_Builder_Registry::getDefault();
+        foreach ($this->packageNames as $packageName) {
+            $builder->buildPackage($packageName);
         }
     }
 
@@ -272,7 +298,7 @@ return setCached($this->_fileName, $tokens);
      */
     public function __toString()
     {
-        return ($this->_fileName === null ? '' : $this->_fileName);
+        return ($this->fileName === null ? '' : $this->fileName);
     }
 
     /**
@@ -283,7 +309,7 @@ return setCached($this->_fileName, $tokens);
     protected function readSource()
     {
         if ($this->_loc === null) {
-            $source = file_get_contents($this->_fileName);
+            $source = file_get_contents($this->fileName);
 
             $this->_loc = preg_split('#(\r\n|\n|\r)#', $source);
 

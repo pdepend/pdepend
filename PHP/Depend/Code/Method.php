@@ -204,10 +204,18 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
         $this->parent = $parent;
     }
 
+    /**
+     * Returns the source file where this method was declared.
+     *
+     * @return PHP_Depend_Code_File
+     * @throws PHP_Depend_Code_Exceptions_SourceNotFoundException When no parent
+     *         class or interface was set for this method instance.
+     * @since 0.10.0
+     */
     public function getSourceFile()
     {
         if ($this->parent === null) {
-            throw new ErrorException('Parent not specified');
+            throw new PHP_Depend_Code_Exceptions_SourceNotFoundException($this);
         }
         return $this->parent->getSourceFile();
     }
