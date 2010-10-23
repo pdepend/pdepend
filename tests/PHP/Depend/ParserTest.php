@@ -877,12 +877,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectPropertyTypes()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/property2.php');
-
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getProperties();
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties();
 
         $this->assertEquals('$property1', $nodes->current()->getName());
         $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
@@ -921,19 +920,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsExpectedPropertyTypeForChainedComment()
     {
-        $packages = self::parseSource('parser/prop_comment_chained_type.php');
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseCodeResourceForTest();
 
         $class = $packages->current()->getTypes()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
-        $this->assertSame('Parser', $class->getName());
+        self::assertEquals('Parser', $class->getName());
 
         $property = $class->getProperties()->current();
-        $this->assertType('PHP_Depend_Code_Property', $property);
-
-        $type = $property->getClass();
-        $this->assertType('PHP_Depend_Code_Class', $type);
-        $this->assertSame('Runtime', $type->getName());
+        self::assertEquals('Runtime', $property->getClass()->getName());
     }
 
     /**
@@ -954,19 +947,15 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsExpectedPropertyTypeForChainedCommentInArray()
     {
-        $packages = self::parseSource('parser/prop_comment_chained_type_array.php');
-        $this->assertSame(1, $packages->count());
+        $type = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties()
+            ->current()
+            ->getClass();
 
-        $class = $packages->current()->getTypes()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
-        $this->assertSame('Parser', $class->getName());
-
-        $property = $class->getProperties()->current();
-        $this->assertType('PHP_Depend_Code_Property', $property);
-
-        $type = $property->getClass();
-        $this->assertType('PHP_Depend_Code_Class', $type);
-        $this->assertSame('Session', $type->getName());
+        self::assertEquals('Session', $type->getName());
     }
 
     /**
@@ -987,8 +976,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsExpectedReturnTypeForChainedComment()
     {
-        $packages = self::parseSource('parser/return_comment_chained_type.php');
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseCodeResourceForTest();
 
         $class = $packages->current()->getTypes()->current();
         $this->assertType('PHP_Depend_Code_Class', $class);
@@ -1020,8 +1008,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsExpectedReturnTypeForChainedCommentInArray()
     {
-        $packages = self::parseSource('parser/return_comment_chained_type_array.php');
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseCodeResourceForTest();
 
         $class = $packages->current()->getTypes()->current();
         $this->assertType('PHP_Depend_Code_Class', $class);
@@ -2171,9 +2158,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Depend_Code_Method', $method);
 
         $sourceFile = $method->getSourceFile();
-        $this->assertNotNull($sourceFile);
-        $this->assertType('PHP_Depend_Code_File', $sourceFile);
-        $this->assertSame($fileName, $sourceFile->getFileName());
+        self::assertEquals($fileName, $sourceFile->getFileName());
     }
 
     /**
