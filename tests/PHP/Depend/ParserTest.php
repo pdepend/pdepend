@@ -1018,7 +1018,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Depend_Code_Method', $method);
 
         $type = $method->getReturnClass();
-        $this->assertType('PHP_Depend_Code_Class', $type);
         $this->assertSame('Session', $type->getName());
     }
 
@@ -1123,7 +1122,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the parser sets the expected abstract modifier.
+     * testParserSetsAbstractPropertyOnClass
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -1131,21 +1130,40 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * @group pdepend::parser
      * @group unittest
      */
-    public function testParserSetsExpectedAbstractModifier()
+    public function testParserSetsAbstractPropertyOnClass()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/parser/abstract_class.php');
-        $this->assertSame(1, $packages->count());
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
 
-        $class = $packages->current()->getClasses()->current();
-        $this->assertTrue($class->isAbstract());
-        $this->assertSame(
+        self::assertTrue($class->isAbstract());
+    }
+
+    /**
+     * testParserSetsAbstractModifierOnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserSetsAbstractModifierOnClass()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        self::assertSame(
             PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT,
             $class->getModifiers() & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
         );
     }
 
     /**
-     * Tests that the parser sets the expected final modifier.
+     * testParserSetsFinalPropertyOnClass
      *
      * @return void
      * @covers PHP_Depend_Parser
@@ -1153,14 +1171,33 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * @group pdepend::parser
      * @group unittest
      */
-    public function testParserSetsExpectedFinalModifier()
+    public function testParserSetsFinalPropertyOnClass()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/parser/final_class.php');
-        $this->assertSame(1, $packages->count());
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
 
-        $class = $packages->current()->getClasses()->current();
-        $this->assertTrue($class->isFinal());
-        $this->assertSame(
+        self::assertTrue($class->isFinal());
+    }
+
+    /**
+     * testParserSetsFinalModifierOnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserSetsFinalModifierOnClass()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        self::assertSame(
             PHP_Depend_ConstantsI::IS_FINAL,
             $class->getModifiers() & PHP_Depend_ConstantsI::IS_FINAL
         );
