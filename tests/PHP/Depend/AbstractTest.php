@@ -168,6 +168,43 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a code uri for the calling test case.
+     *
+     * @return string
+     */
+    protected static function createCodeResourceUriForTest()
+    {
+        list($class, $method) = explode('::', self::getCallingTestMethod());
+
+        $parts = explode('_', $class);
+
+        $directory0 = substr(array_pop($parts), 0, -4);
+        $directory1 = strtolower(array_pop($parts));
+
+        $fileName = "{$directory1}/{$directory0}/{$method}";
+        try {
+            return self::createCodeResourceURI($fileName);
+        } catch (ErrorException $e) {
+            return self::createCodeResourceURI("{$fileName}.php");
+        }
+    }
+
+    /**
+     * Returns the name of the calling test method.
+     *
+     * @return string
+     */
+    protected static function getCallingTestMethod()
+    {
+        foreach (debug_backtrace() as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                return "{$frame['class']}::{$frame['function']}";
+            }
+        }
+        throw new ErrorException("No calling test case found.");
+    }
+
+    /**
      * Initializes the test environment.
      *
      * @return void
