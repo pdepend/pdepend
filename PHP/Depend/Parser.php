@@ -1012,7 +1012,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             ->addFunction($function);
 
         // Store function in source file, because we need them during the file's
-        // __wakeup() phase.
+        // __wakeup() phase for function declarations within another function or
+        // method declaration.
         $this->_sourceFile->addChild($function);
 
         return $function;
