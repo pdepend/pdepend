@@ -181,7 +181,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testCommandCliReturnsErrorExitCodeIfNoArgvArrayExists()
     {
         list($exitCode, $actual) = $this->_executeCommand();
-        $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        self::assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -209,13 +209,25 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * @group pdepend::textui
      * @group unittest
      */
-    public function testCommandExitsWithCliErrorForEmptyOptionList()
+    public function testCommandDisplaysHelpIfNoOptionsWereSpecified()
     {
         list($exitCode, $actual) = $this->_executeCommand(array());
-
-        $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
-
         $this->assertHelpOutput($actual);
+    }
+
+    /**
+     * testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified()
+    {
+        list($exitCode, $actual) = $this->_executeCommand(array());
+        self::assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -229,8 +241,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandStartsProcessWithDummyLogger()
     {
-        $logFile = self::createRunResourceURI('pdepend.dummy');
-        $source  = realpath(dirname(__FILE__) . '/../_code');
+        $logFile  = self::createRunResourceURI('pdepend.dummy');
+        $resource = self::createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
 
@@ -239,13 +251,35 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             '--ignore=code-5.2.x',
             '--exclude=pdepend.test2',
             '--dummy-logger=' . $logFile,
-            $source
+            $resource
         );
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
         $this->assertFileExists($logFile);
+    }
+
+    /**
+     * testCommandReturnsExitCodeSuccessByDefault
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testCommandReturnsExitCodeSuccessByDefault()
+    {
+        $logFile  = self::createRunResourceURI('pdepend.dummy');
+        $resource = self::createCodeResourceUriForTest();
+
+        set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+
+        $argv = array('--suffix=inc', '--dummy-logger=' . $logFile, $resource);
+
+        list($exitCode, $actual) = $this->_executeCommand($argv);
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -260,8 +294,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testCommandExitsWithCliErrorForUnknownOption()
     {
         list($exitCode, $actual) = $this->_executeCommand(array('--unknown'));
-
-        $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        self::assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -297,7 +330,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
                 '--without-annotations',
                 '--coderank-mode=property'
             ),
-            self::createCodeResourceURI('textui/Command/' . __FUNCTION__)
+            self::createCodeResourceUriForTest()
         );
 
         self::assertEquals($expected, $actual);
@@ -325,10 +358,9 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         $actual = $this->_runCommandAndReturnStatistics(
             array(),
-            self::createCodeResourceURI('code-without-comments')
+            self::createCodeResourceUriForTest()
         );
-
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -399,8 +431,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode, $actual);
-        $this->assertEquals('on', ini_get('html_errors'));
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode, $actual);
+        self::assertEquals('on', ini_get('html_errors'));
 
         ini_set('html_errors', $backup);
     }
@@ -430,8 +462,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
-        $this->assertEquals('off', ini_get('html_errors'));
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals('off', ini_get('html_errors'));
 
         ini_set('html_errors', $backup);
     }
@@ -508,7 +540,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $this->assertEquals(PHP_Depend_TextUI_Command::INPUT_ERROR, $exitCode);
+        self::assertEquals(PHP_Depend_TextUI_Command::INPUT_ERROR, $exitCode);
     }
 
     /**
@@ -530,7 +562,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
