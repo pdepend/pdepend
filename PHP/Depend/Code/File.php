@@ -246,7 +246,7 @@ return setCached($this->fileName, $tokens);
 
     public function addChild(PHP_Depend_Code_AbstractItem $item)
     {
-        $this->childNodes[] = $item;
+        $this->childNodes[$item->getUUID()] = $item;
     }
 
     public function addPackage(PHP_Depend_Code_Package $package)

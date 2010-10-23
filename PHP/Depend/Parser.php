@@ -1006,10 +1006,14 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         } else {
             $packageName = $this->_globalPackageName;
         }
-        
+
         $this->_builder
             ->buildPackage($packageName)
             ->addFunction($function);
+
+        // Store function in source file, because we need them during the file's
+        // __wakeup() phase.
+        $this->_sourceFile->addChild($function);
 
         return $function;
     }
