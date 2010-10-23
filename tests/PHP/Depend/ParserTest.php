@@ -505,7 +505,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserParseNewInstancePHP53()
     {
-        $packages = self::parseTestCaseSource();
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -662,37 +662,38 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct method exception types.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectMethodExceptionTypes()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method3.php');
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
+  
+        $actual = array();
+        foreach ($nodes as $method) {
+            $actual[] = $method->getName();
+            foreach ($method->getExceptionClasses() as $exception) {
+                $actual[] = $exception->getName();
+            }
+        }
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
-
-        $this->assertEquals(3, $nodes->count());
-
-        $this->assertEquals('__construct', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(1, $ex->count());
-        $this->assertEquals('RuntimeException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('method1', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(2, $ex->count());
-        $this->assertEquals('OutOfRangeException', $ex->current()->getName());
-        $ex->next();
-        $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('method2', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(0, $ex->count());
+        self::assertEquals(
+            array(
+                '__construct',
+                'RuntimeException',
+                'method1',
+                'OutOfRangeException',
+                'OutOfBoundsException',
+                'method2'
+            ),
+            $actual
+        );
     }
 
     /**
@@ -1007,7 +1008,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertSame(1, $packages->count());
 
         $class = $packages->current()->getClasses()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
         $this->assertTrue($class->isAbstract());
         $this->assertSame(
             PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT,
@@ -1026,7 +1026,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertSame(1, $packages->count());
 
         $class = $packages->current()->getClasses()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
         $this->assertTrue($class->isFinal());
         $this->assertSame(
             PHP_Depend_ConstantsI::IS_FINAL,
@@ -2099,21 +2098,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                             ->getPackage();
 
         $this->assertSame('PHP\Depend', $package->getName());
-    }
-
-    /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
-     *
-     * @param string  $testCase          Qualified name of the test case.
-     * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public static function parseTestCaseSource($testCase = null, $ignoreAnnotations = false)
-    {
-        $trace = debug_backtrace();
-        return self::parseSource('parser/' . $trace[1]['function'] . '.php');
     }
 
     /**
