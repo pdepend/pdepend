@@ -5099,7 +5099,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Create a package for this namespace
             $this->_namespaceName = $qualifiedName;
-//$this->_builder->buildPackage($qualifiedName);
         } else if ($tokenType === self::T_BACKSLASH) {
             // Same namespace reference, something like:
             //   new namespace\Foo();
@@ -5114,7 +5113,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Create a package for this namespace
             $this->_namespaceName = '';
-//$this->_builder->buildPackage('');
         }
 
         $this->reset();

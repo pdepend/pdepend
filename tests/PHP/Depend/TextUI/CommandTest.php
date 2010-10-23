@@ -91,9 +91,22 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testPrintVersion()
     {
         list($exitCode, $actual) = $this->_executeCommand(array('--version'));
+        self::assertEquals($this->_versionOutput, $actual);
+    }
 
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
-        $this->assertEquals($this->_versionOutput, $actual);
+    /**
+     * testPrintVersionReturnsExitCodeSuccess
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testPrintVersionReturnsExitCodeSuccess()
+    {
+        list($exitCode, $actual) = $this->_executeCommand(array('--version'));
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -108,11 +121,22 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testPrintUsage()
     {
         list($exitCode, $actual) = $this->_executeCommand(array('--usage'));
+        self::assertEquals($this->_versionOutput . $this->_usageOutput, $actual);
+    }
 
-        $expected = $this->_versionOutput . $this->_usageOutput;
-
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
-        $this->assertEquals($expected, $actual);
+    /**
+     * testPrintUsageReturnsExitCodeSuccess
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testPrintUsageReturnsExitCodeSuccess()
+    {
+        list($exitCode, $actual) = $this->_executeCommand(array('--usage'));
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -127,10 +151,22 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testPrintHelp()
     {
         list($exitCode, $actual) = $this->_executeCommand(array('--help'));
-
-        $this->assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
-
         $this->assertHelpOutput($actual);
+    }
+
+    /**
+     * testPrintHelpReturnsExitCodeSuccess
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testPrintHelpReturnsExitCodeSuccess()
+    {
+        list($exitCode, $actual) = $this->_executeCommand(array('--help'));
+        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -142,12 +178,24 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      * @group pdepend::textui
      * @group unittest
      */
-    public function testCommandExitsWithCliErrorIfNotArgvArrayExists()
+    public function testCommandCliReturnsErrorExitCodeIfNoArgvArrayExists()
     {
         list($exitCode, $actual) = $this->_executeCommand();
-
         $this->assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+    }
 
+    /**
+     * testCommandCliErrorMessageIfNoArgvArrayExists
+     *
+     * @return void
+     * @covers PHP_Depend_TextUI_Command
+     * @group pdepend
+     * @group pdepend::textui
+     * @group unittest
+     */
+    public function testCommandCliErrorMessageIfNoArgvArrayExists()
+    {
+        list($exitCode, $actual) = $this->_executeCommand();
         $startsWith = 'Unknown error, no $argv array available.' . PHP_EOL . PHP_EOL;
         $this->assertHelpOutput($actual, $startsWith);
     }
@@ -252,7 +300,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             self::createCodeResourceURI('textui/Command/' . __FUNCTION__)
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
