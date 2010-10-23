@@ -176,12 +176,13 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         list($class, $method) = explode('::', self::getCallingTestMethod());
 
-        $parts = explode('_', $class);
+        $parts = explode('_', strtolower($class));
 
-        $directory0 = substr(array_pop($parts), 0, -4);
-        $directory1 = strtolower(array_pop($parts));
+        // Strip first two parts
+        array_shift($parts);
+        array_shift($parts);
 
-        $fileName = "{$directory1}/{$directory0}/{$method}";
+        $fileName = substr(join('/', $parts), 0, -4) . "/{$method}";
         try {
             return self::createCodeResourceURI($fileName);
         } catch (ErrorException $e) {
