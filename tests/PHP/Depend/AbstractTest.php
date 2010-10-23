@@ -267,6 +267,18 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Parses the test code associated with the calling test method.
+     *
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    protected static function parseCodeResourceForTest($ignoreAnnotations = false)
+    {
+        return self::parseSource(self::createCodeResourceUriForTest(), $ignoreAnnotations);
+    }
+
+    /**
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *

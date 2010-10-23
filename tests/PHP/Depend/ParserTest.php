@@ -557,79 +557,74 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct method exception types.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectFunctionExceptionTypes()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/function1.php');
+        $functions = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions();
 
-        $nodes = $packages->current()
-                          ->getFunctions();
+        $actual = array();
+        foreach ($functions as $function) {
+            foreach ($function->getExceptionClasses() as $exception) {
+                $actual[] = "{$function->getName()} throws {$exception->getName()}";
+            }
+        }
 
-        $this->assertEquals(3, $nodes->count());
-
-        $this->assertEquals('func1', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(1, $ex->count());
-        $this->assertEquals('RuntimeException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('func2', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(2, $ex->count());
-        $this->assertEquals('OutOfRangeException', $ex->current()->getName());
-        $ex->next();
-        $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('func3', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(0, $ex->count());
+        self::assertEquals(
+            array(
+                'func1 throws RuntimeException',
+                'func2 throws OutOfRangeException',
+                'func2 throws InvalidArgumentException',
+            ),
+            $actual
+        );
     }
 
     /**
      * Tests that the parser doesn't handle annotations if this is set to true.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForFunctions()
     {
-        $source   = dirname(__FILE__) . '/_code/comments/function1.php';
-        $packages = self::parseSource($source, true);
+        $functions = self::parseCodeResourceForTest(true)
+            ->current()
+            ->getFunctions();
 
-        $nodes = $packages->current()
-                          ->getFunctions();
+        $actual = array();
+        foreach ($functions as $function) {
+            $actual[] = $function->getExceptionClasses()->count();
+            $actual[] = $function->getReturnClass();
+        }
 
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
+        self::assertSame(array(0, null, 0, null, 0, null), $actual);
     }
 
     /**
      * Tests that doc comment blocks are added to a method.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectMethodDocComment()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method.php');
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
 
         $this->doTestParserSetsCorrectDocComment($nodes);
     }
@@ -638,27 +633,29 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct method return type.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectMethodReturnType()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method3.php');
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
-        $this->assertEquals(3, $nodes->count());
+        $actual = array();
+        foreach ($nodes as $method) {
+            $actual[] = $method->getName();
+            $actual[] = $method->getReturnClass() ? $method->getReturnClass()->getName() : null;
+        }
 
-        $this->assertEquals('__construct', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getReturnClass());
-        $nodes->next();
-        $this->assertEquals('method1', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnClass());
-        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
-        $nodes->next();
-        $this->assertEquals('method2', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnClass());
-        $this->assertEquals('SplSubject', $nodes->current()->getReturnClass()->getName());
+        self::assertEquals(
+            array('__construct', null, 'method1', 'SplObjectStore', 'method2', 'SplSubject'),
+            $actual
+        );
     }
 
     /**
@@ -702,32 +699,26 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser doesn't handle annotations if this is set to true.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForMethods()
     {
-        $source   = dirname(__FILE__) . '/_code/comments/method3.php';
-        $packages = self::parseSource($source, true);
+        $methods = self::parseCodeResourceForTest( true)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
+        $actual = array();
+        foreach ($methods as $method) {
+            $actual[] = $method->getExceptionClasses()->count();
+            $actual[] = $method->getReturnClass();
+        }
 
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
+        self::assertSame(array(0, null, 0, null, 0, null), $actual);
     }
 
     /**
@@ -929,41 +920,18 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testHandlesIgnoreAnnotationsCorrectForProperties()
     {
-        $source   = dirname(__FILE__) . '/_code/comments/property2.php';
-        $packages = self::parseSource($source, true);
+        $nodes = self::parseCodeResourceForTest(true)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties();
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getProperties();
+        $actual = array();
+        foreach ($nodes as $property) {
+            $actual[] = $property->getClass();
+        }
 
-        $this->assertEquals('$property1', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property2', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property3', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property4', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property5', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property6', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
+        self::assertEquals(array(null, null, null, null, null, null), $actual);
     }
 
     /**
