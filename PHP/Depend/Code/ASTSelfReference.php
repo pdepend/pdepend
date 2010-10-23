@@ -109,7 +109,7 @@ final class PHP_Depend_Code_ASTSelfReference
     public function getType()
     {
         if ($this->typeInstance == null) {
-            return PHP_Depend_Builder_Registry::getDefault()
+            $this->typeInstance = PHP_Depend_Builder_Registry::getDefault()
                 ->getClassOrInterface($this->qualfiedName);
         }
         return $this->typeInstance;
@@ -117,10 +117,8 @@ final class PHP_Depend_Code_ASTSelfReference
 
     public function __sleep()
     {
-if ($this->typeInstance == null) {
-    throw new Exception();
-}
-        $this->qualfiedName = $this->typeInstance->getPackage()->getName() . '\\' . $this->typeInstance->getName();
+        $this->qualfiedName = $this->getType()->getPackage()->getName() . '\\' .
+                              $this->getType()->getName();
 
         return array(
             'image',
