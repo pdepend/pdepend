@@ -494,37 +494,4 @@ abstract class PHP_Depend_Code_AbstractCallable
         }
         $this->nodes = array();
     }
-
-    // DEPRECATED METHODS AND PROPERTIES
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Sets the start line for this item.
-     *
-     * @param integer $startLine The start line for this item.
-     *
-     * @return void
-     * @deprecated Since version 0.9.6
-     */
-    public function setStartLine($startLine)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        $this->startLine = $startLine;
-    }
-
-    /**
-     * Sets the end line for this item.
-     *
-     * @param integer $endLine The end line for this item
-     *
-     * @return void
-     * @deprecated Since version 0.9.6
-     */
-    public function setEndLine($endLine)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        $this->endLine = $endLine;
-    }
-
-    // @codeCoverageIgnoreEnd
 }
