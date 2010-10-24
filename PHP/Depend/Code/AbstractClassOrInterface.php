@@ -46,10 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractItem.php';
-require_once 'PHP/Depend/Code/ASTClassReference.php';
-require_once 'PHP/Depend/Code/Method.php';
-
 /**
  * Represents an interface or a class type.
  *
@@ -65,6 +61,14 @@ require_once 'PHP/Depend/Code/Method.php';
 abstract class PHP_Depend_Code_AbstractClassOrInterface
        extends PHP_Depend_Code_AbstractItem
 {
+    /**
+     * The internal used cache instance.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
     /**
      * The parent for this class node.
      *
@@ -134,6 +138,12 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @since 0.9.12
      */
     protected $endLine = 0;
+
+    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    {
+        $this->cache = $cache;
+        return $this;
+    }
 
     /**
      * Adds a parsed child node to this node.
@@ -456,8 +466,6 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator($references);
     }
 
-    protected $tokens = array();
-
     /**
      * Returns an <b>array</b> with all tokens within this type.
      *
@@ -465,8 +473,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getTokens()
     {
-return getCached($this->getUUID());
-        return $this->tokens;
+        return (array) $this->cache
+            ->type('tokens')
+            ->restore($this->uuid);
     }
 
     /**
@@ -480,9 +489,10 @@ return getCached($this->getUUID());
     {
         $this->startLine = reset($tokens)->startLine;
         $this->endLine   = end($tokens)->endLine;
-return setCached($this->getUUID(), $tokens);
-        
-        $this->tokens = $tokens;
+
+        $this->cache
+            ->type('tokens')
+            ->store($this->uuid, $tokens);
     }
 
     /**
@@ -592,6 +602,28 @@ return setCached($this->getUUID(), $tokens);
                 $this->constants[$image] = $value;
             }
         }
+    }
+
+    public function __sleep()
+    {
+        $this->packageName = $this->getPackage()->getName();
+
+        return array(
+            'cache',
+            'modifiers',
+            'constants',
+            'docComment',
+            'endLine',
+            'interfaceReferences',
+            'methods',
+            'name',
+            'nodes',
+            'parentClassReference',
+            'startLine',
+            'userDefined',
+            'uuid',
+            'packageName'
+        );
     }
 
     /**

@@ -227,27 +227,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $visitor->visitClass($this);
     }
 
-    public function __sleep()
-    {
-        $this->packageName = $this->getPackage()->getName();
-
-        return array(
-            'modifiers',
-            'constants',
-            'docComment',
-            'endLine',
-            'interfaceReferences',
-            'methods',
-            'name',
-            'nodes',
-            'parentClassReference',
-            'startLine',
-            'userDefined',
-            'uuid',
-            'packageName'
-        );
-    }
-
     public function  __wakeup()
     {
         foreach ($this->methods as $method) {

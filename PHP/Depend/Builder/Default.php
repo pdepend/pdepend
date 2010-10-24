@@ -252,7 +252,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
         
         $class = new PHP_Depend_Code_Class($this->extractTypeName($name));
-        $class->setSourceFile($this->defaultFile);
+        $class->setCache($this->cache)
+            ->setSourceFile($this->defaultFile);
 
         return $class;
     }
@@ -356,7 +357,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
         
         $interface = new PHP_Depend_Code_Interface($this->extractTypeName($name));
-        $interface->setSourceFile($this->defaultFile);
+        $interface->setCache($this->cache)
+            ->setSourceFile($this->defaultFile);
 
         return $interface;
     }
