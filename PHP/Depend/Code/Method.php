@@ -236,11 +236,11 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     public function __sleep()
     {
         return array(
+            'cache',
             'nodes',
             'uuid',
             'name',
             'startLine',
-            'tokens',
             'endLine',
             'docComment',
             'returnsReference',

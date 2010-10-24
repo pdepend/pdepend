@@ -3,6 +3,11 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
 {
     protected $objects = array();
 
+    public function type($type)
+    {
+        return $this;
+    }
+
     public function store($key, $data, $hash = null)
     {
         $this->objects[$key] = array($hash, $data);

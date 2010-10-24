@@ -267,25 +267,73 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $function->setPackage($package);
         $this->assertSame($package, $function->getPackage());
     }
-    
+
     /**
-     * Tests that {@link PHP_Depend_Code_Function#getTokens()} works as expected.
-     * 
+     * testSetTokensDelegatesToCacheStoreMethod
+     *
      * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
-    public function testGetTokens()
+    public function testSetTokensDelegatesToCacheStoreMethod()
     {
-        $tokens = array(
-            new PHP_Depend_Token(1, '$foo', 3, 3, 0, 0),
-            new PHP_Depend_Token(2, '=', 3, 3, 0, 0),
-            new PHP_Depend_Token(3, '42', 3, 3, 0, 0),
-            new PHP_Depend_Token(4, ';', 3, 3, 0, 0),
-        );
-        
-        $function = new PHP_Depend_Code_Function('function1');
-        $function->setTokens($tokens);
-        
-        $this->assertEquals($tokens, $function->getTokens());
+        $tokens = array(new PHP_Depend_Token(1, '$foo', 3, 3, 0, 0));
+
+        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver_Memory', array('store'));
+        $cache->expects($this->once())
+            ->method('store')
+            ->with(self::equalTo(null), self::equalTo($tokens));
+
+        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function->setCache($cache)
+            ->setTokens($tokens);
+    }
+
+    /**
+     * testGetTokensDelegatesToCacheRestoreMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetTokensDelegatesToCacheRestoreMethod()
+    {
+        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver_Memory', array('restore'));
+        $cache->expects($this->once())
+            ->method('restore')
+            ->with(self::equalTo(null))
+            ->will(self::returnValue(array()));
+
+        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function->setCache($cache)
+            ->getTokens();
+    }
+
+    /**
+     * testGetTokensReturnsArrayEvenWhenCacheReturnsNull
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull()
+    {
+        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver_Memory', array('restore'));
+        $cache->expects($this->once())
+            ->method('restore')
+            ->with(self::equalTo(null))
+            ->will(self::returnValue(null));
+
+        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function->setCache($cache);
+
+        self::assertSame(array(), $function->getTokens());
     }
 
     /**

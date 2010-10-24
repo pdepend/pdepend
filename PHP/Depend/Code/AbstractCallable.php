@@ -75,6 +75,14 @@ abstract class PHP_Depend_Code_AbstractCallable
        extends PHP_Depend_Code_AbstractItem
 {
     /**
+     * The internal used cache instance.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /**
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
@@ -128,6 +136,12 @@ abstract class PHP_Depend_Code_AbstractCallable
      * @var PHP_Depend_Code_NodeIterator $_parameters
      */
     private $_parameters = null;
+
+    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    {
+        $this->cache = $cache;
+        return $this;
+    }
 
     /**
      * Adds a parsed child node to this node.
@@ -199,8 +213,6 @@ abstract class PHP_Depend_Code_AbstractCallable
         return $results;
     }
 
-    protected $tokens = array();
-
     /**
      * Returns the tokens found in the function body.
      *
@@ -208,8 +220,9 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getTokens()
     {
-return getCached($this->getUUID());
-        return $this->tokens;
+        return (array) $this->cache
+            ->type('tokens')
+            ->restore($this->uuid);
     }
 
     /**
@@ -223,9 +236,10 @@ return getCached($this->getUUID());
     {
         $this->startLine = reset($tokens)->startLine;
         $this->endLine   = end($tokens)->endLine;
-return setCached($this->getUUID(), $tokens);
-        
-        $this->tokens = $tokens;
+
+        $this->cache
+            ->type('tokens')
+            ->store($this->uuid, $tokens);
     }
 
     /**

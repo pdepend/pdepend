@@ -308,14 +308,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
 
-        include_once 'PHP/Depend/Code/Closure.php';
-
         // Debug type constant creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_Closure()'
-        );
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_Closure()');
 
-        return new PHP_Depend_Code_Closure();
+        $closure = new PHP_Depend_Code_Closure();
+        $closure->setCache($this->cache);
+
+        return $closure;
     }
 
     /**
@@ -394,12 +393,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug method creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_Method(' . $name . ')'
-        );
+        PHP_Depend_Util_Log::debug("Creating: PHP_Depend_Code_Method({$name})");
 
         // Create a new method instance
-        return new PHP_Depend_Code_Method($name);
+        $method = new PHP_Depend_Code_Method($name);
+        $method->setCache($this->cache);
+
+        return $method;
     }
 
     /**
@@ -434,13 +434,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug function creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_Function(' . $name . ')'
-        );
+        PHP_Depend_Util_Log::debug("Creating: PHP_Depend_Code_Function({$name})");
 
         // Create new function
         $function = new PHP_Depend_Code_Function($name);
-        $function->setSourceFile($this->defaultFile);
+        $function->setCache($this->cache)
+            ->setSourceFile($this->defaultFile);
  
         return $function;
     }
