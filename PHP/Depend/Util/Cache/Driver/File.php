@@ -67,12 +67,12 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
 
     protected function getCacheFile($key)
     {
-        $dir = $this->cacheDir . '/' . substr($key, 0, 2);
-        if (false === file_exists($dir)) {
-            mkdir($dir, 0775, true);
+        $path = $this->cacheDir . '/' . substr($key, 0, 2);
+        if (false === file_exists($path)) {
+            mkdir($path, 0775, true);
         }
 
-        $file = "{$dir}/{$key}.{$this->type}";
+        $file = "{$path}/{$key}.{$this->type}";
 
         $this->type = 'cache';
 
