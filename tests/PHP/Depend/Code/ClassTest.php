@@ -48,14 +48,6 @@
 require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Property.php';
-require_once 'PHP/Depend/Code/ASTFormalParameter.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-
 /**
  * Test case implementation for the PHP_Depend_Code_Class class.
  *
@@ -80,7 +72,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterface()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -98,7 +90,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterfaces()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -116,7 +108,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfIndirectImplementedInterfaces()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -134,7 +126,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfParentClass()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -152,7 +144,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllMethodsContainsMethodsOfParentClasses()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -296,7 +288,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $params = $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
 
         self::assertType(PHP_Depend_Code_ASTFormalParameter::CLAZZ, $params);
@@ -313,7 +305,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
         
         self::assertEquals(4, count($params));
@@ -330,7 +322,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems()
     {
-        $class  = $this->getFirstClassForTestCase(__METHOD__);
+        $class  = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(PHP_Depend_Code_ASTVariableDeclarator::CLAZZ);
         
         self::assertEquals(2, count($params));
@@ -348,7 +340,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassStillIsParentOfChildMethods()
     {
-        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame($copy, $copy->getMethods()->current()->getParent());
@@ -366,7 +358,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassAndChildMethodsStillReferenceTheSameFile()
     {
-        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -387,7 +379,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassStillReferencesSameParentClass()
     {
-        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -408,7 +400,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassStillReferencesSameParentInterface()
     {
-        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -429,7 +421,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassIsReturnedByMethodAsReturnClass()
     {
-        $orig   = $this->getFirstClassForTestCase(__METHOD__);
+        $orig   = $this->getFirstClassForTestCase();
         $method = $orig->getMethods()->current();
 
         $copy = unserialize(serialize($orig));
@@ -452,7 +444,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassStillReferencesSamePackage()
     {
-        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -473,7 +465,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassRegistersToPackage()
     {
-        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame($copy, $orig->getPackage()->getClasses()->current());
@@ -491,7 +483,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedClassNotAddsDublicateClassToPackage()
     {
-        $orig = $this->getFirstClassForTestCase(__METHOD__);
+        $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertEquals(1, $orig->getPackage()->getClasses()->count());
@@ -722,11 +714,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfaces()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
+        $class = $this->getFirstClassForTestCase();
 
         $actual = array();
         foreach ($class->getInterfaces() as $interface) {
@@ -750,8 +738,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesByInheritence()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-        $classes = $packages->current()
+        $classes = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses();
 
         $classes->next();
@@ -779,11 +767,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesByClassInheritence()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
+        $class = $this->getFirstClassForTestCase();
 
         $actual = array();
         foreach ($class->getInterfaces() as $interface) {
@@ -806,14 +790,14 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeInInheritanceHierarchy()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
+        $types = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes();
+        
+        $class = $types->current();
 
         $actual = array();
-        foreach ($packages->current()->getTypes() as $classOrInterface) {
+        foreach ($types as $classOrInterface) {
             $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
         }
         ksort($actual);
@@ -842,14 +826,14 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeInClassInheritanceHierarchy()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
+        $types = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes();
 
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
+        $class = $types->current();
 
         $actual = array();
-        foreach ($packages->current()->getTypes() as $classOrInterface) {
+        foreach ($types as $classOrInterface) {
             $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
         }
         ksort($actual);
@@ -878,14 +862,14 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeInClassAndInterfaceInheritanceHierarchy()
     {
-        $packages = self::parseSource('code/Class/' . __FUNCTION__ . '.php');
+        $types = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes();
 
-        $class = $packages->current()
-            ->getClasses()
-            ->current();
+        $class = $types->current();
 
         $actual = array();
-        foreach ($packages->current()->getTypes() as $classOrInterface) {
+        foreach ($types as $classOrInterface) {
             $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
         }
         ksort($actual);
@@ -913,7 +897,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedProperties()
     {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
+        $class = $this->getFirstClassForTestCase();
         $class->free();
 
         self::assertEquals(0, $class->getProperties()->count());
@@ -931,7 +915,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedParentInterfaces()
     {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
+        $class = $this->getFirstClassForTestCase();
         $class->free();
 
         self::assertEquals(0, $class->getInterfaces()->count());
@@ -949,7 +933,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedClassMethods()
     {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
+        $class = $this->getFirstClassForTestCase();
         $class->free();
 
         self::assertEquals(0, $class->getMethods()->count());
@@ -967,7 +951,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedASTNodes()
     {
-        $class = $this->getFirstClassForTestCase(__METHOD__);
+        $class = $this->getFirstClassForTestCase();
         $class->free();
 
         self::assertEquals(array(), $class->getChildren());
@@ -1012,15 +996,13 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * Returns the first class that could be found in the source file associated
-     * with the given test case.
-     *
-     * @param string $testCase The test case name.
+     * with the calling test case.
      *
      * @return PHP_Depend_Code_Class
      */
-    protected function getFirstClassForTestCase($testCase)
+    protected function getFirstClassForTestCase()
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();

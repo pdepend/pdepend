@@ -48,9 +48,6 @@
 require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Package.php';
-
 /**
  * Test case implementation for the PHP_Depend_Code_Function class.
  *
@@ -75,10 +72,10 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsParentPackageToNull()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-                        ->getFunctions()
-                        ->current();
+        $function = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current();
         $function->free();
 
         $this->assertNull($function->getPackage());
@@ -95,7 +92,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedASTNodes()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
                         ->getFunctions()
                         ->current();
@@ -115,7 +112,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testReturnsReferenceReturnsExpectedTrue()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
                         ->getFunctions()
                         ->current();
@@ -134,7 +131,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testReturnsReferenceReturnsExpectedFalse()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
                         ->getFunctions()
                         ->current();
@@ -168,7 +165,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
                         ->getFunctions()
                         ->current();
@@ -187,7 +184,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
                         ->getFunctions()
                         ->current();
@@ -451,7 +448,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionStillReferencesSameDependency()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -471,7 +468,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionStillReferencesSameReturnClass()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -491,7 +488,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionStillReferencesSameParameterClass()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -511,7 +508,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionStillReferencesSameExceptionClass()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -531,7 +528,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionStillReferencesSameDependencyInterface()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -551,7 +548,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionStillReferencesSamePackage()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame($orig->getPackage(), $copy->getPackage());
@@ -568,7 +565,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionIsInSameNamespace()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertEquals('Baz', $copy->getPackage()->getClasses()->current()->getName());
@@ -585,7 +582,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionNotAddsDublicateToPackage()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertEquals(1, count($copy->getPackage()->getFunctions()));
@@ -602,7 +599,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedFunctionIsChildOfParentPackage()
     {
-        $orig = $this->_getFirstFunctionForTestCase(__METHOD__);
+        $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame($copy, $orig->getPackage()->getFunctions()->current());
@@ -612,13 +609,11 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * This method will return the first function instance within the source
      * file of the calling test case.
      *
-     * @param string $testCase The calling test case.
-     *
      * @return PHP_Depend_Code_Function
      */
-    private function _getFirstFunctionForTestCase($testCase)
+    private function _getFirstFunctionForTestCase()
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();

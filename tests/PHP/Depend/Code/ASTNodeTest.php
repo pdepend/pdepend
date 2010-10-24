@@ -336,7 +336,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      */
     protected function getFirstFunctionForTestCase($testCase)
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -366,7 +366,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      */
     protected function getFirstClassForTestCase($testCase)
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();

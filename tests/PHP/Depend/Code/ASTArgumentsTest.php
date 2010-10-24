@@ -220,7 +220,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsContainsSelfPropertyPostfixExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
             ->getClasses()
             ->current()
@@ -254,7 +254,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsContainsParentMethodPostfixExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
             ->getClasses()
             ->current()
@@ -370,7 +370,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

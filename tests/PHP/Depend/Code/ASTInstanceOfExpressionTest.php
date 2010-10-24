@@ -121,7 +121,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     public function testInstanceOfExpressionGraphWithStringIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseTestCaseSource(__METHOD__)
+            self::parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -143,7 +143,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     public function testInstanceOfExpressionGraphWithLocalNamespaceIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseTestCaseSource(__METHOD__)
+            self::parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -165,7 +165,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     public function testInstanceOfExpressionGraphWithAbsoluteNamespaceIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseTestCaseSource(__METHOD__)
+            self::parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -187,7 +187,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     public function testInstanceOfExpressionGraphWithAliasedNamespaceIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseTestCaseSource(__METHOD__)
+            self::parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -209,7 +209,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     public function testInstanceOfExpressionGraphWithStdClass()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseTestCaseSource(__METHOD__)
+            self::parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -231,7 +231,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     public function testInstanceOfExpressionGraphWithPHPIncompleteClass()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseTestCaseSource(__METHOD__)
+            self::parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -253,7 +253,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
     public function testInstanceOfExpressionGraphWithStaticProperty()
     {
         $this->assertInstanceOfGraphProperty(
-            self::parseTestCaseSource(__METHOD__)
+            self::parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),

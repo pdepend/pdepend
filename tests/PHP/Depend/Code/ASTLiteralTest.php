@@ -115,7 +115,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

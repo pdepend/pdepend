@@ -48,9 +48,6 @@
 require_once dirname(__FILE__) . '/AbstractItemTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
-require_once 'PHP/Depend/Code/ASTNodeI.php';
-require_once 'PHP/Depend/Code/Method.php';
-
 /**
  * Test case implementation for the PHP_Depend_Code_Method class.
  *
@@ -75,7 +72,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetReturnClassForMethodWithNamespacedRootClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('Foo', $method->getReturnClass()->getName());
     }
 
@@ -90,7 +87,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetReturnClassForMethodWithNamespacedClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('Baz', $method->getReturnClass()->getName());
     }
 
@@ -105,7 +102,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetReturnClassForMethodWithNamespacedArrayRootClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('Foo', $method->getReturnClass()->getName());
     }
 
@@ -120,7 +117,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetReturnClassForMethodWithNamespacedArrayClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('Baz', $method->getReturnClass()->getName());
     }
 
@@ -135,7 +132,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetExceptionsForMethodWithNamespacedRootClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('Exception', $method->getExceptionClasses()->current()->getName());
     }
 
@@ -150,7 +147,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetExceptionsForMethodWithNamespacedClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('ErrorException', $method->getExceptionClasses()->current()->getName());
     }
 
@@ -165,7 +162,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testInlineDependencyForMethodWithNamespacedRootClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('ASTBuilder', $method->getDependencies()->current()->getName());
     }
 
@@ -180,7 +177,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testInlineDependencyForMethodWithNamespacedClass()
     {
-        $method = $this->getFirstMethodInClass(__METHOD__);
+        $method = $this->getFirstMethodInClass();
         $this->assertEquals('ASTBuilder', $method->getDependencies()->current()->getName());
     }
 
@@ -195,7 +192,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testReturnsReferenceReturnsExpectedTrue()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
                         ->getClasses()
                         ->current()
@@ -216,7 +213,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testReturnsReferenceReturnsExpectedFalse()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
                         ->getClasses()
                         ->current()
@@ -252,7 +249,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
                         ->getClasses()
                         ->current()
@@ -273,7 +270,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
                         ->getClasses()
                         ->current()
@@ -612,7 +609,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsParentClassToNull()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
                         ->getClasses()
                         ->current()
@@ -634,7 +631,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFreeResetsAllAssociatedASTNodes()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
                         ->getClasses()
                         ->current()
@@ -821,7 +818,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedMethodStillReferencesSameDependency()
     {
-        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -841,7 +838,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedMethodStillReferencesSameReturnClass()
     {
-        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -861,7 +858,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedMethodStillReferencesSameParameterClass()
     {
-        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -881,7 +878,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedMethodStillReferencesSameExceptionClass()
     {
-        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -901,7 +898,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedMethodStillReferencesSameDependencyInterface()
     {
-        $orig = $this->getFirstMethodInClass(__METHOD__);
+        $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -914,13 +911,11 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Returns the first method defined in a source file associated with the
      * given test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_Method
      */
-    protected function getFirstMethodInClass($testCase)
+    protected function getFirstMethodInClass()
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()

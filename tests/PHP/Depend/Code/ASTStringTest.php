@@ -354,7 +354,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

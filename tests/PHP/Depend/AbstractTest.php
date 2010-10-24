@@ -176,7 +176,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         list($class, $method) = explode('::', self::getCallingTestMethod());
 
-        $parts = explode('_', strtolower($class));
+        $parts = explode('_', $class);
 
         // Strip first two parts
         array_shift($parts);

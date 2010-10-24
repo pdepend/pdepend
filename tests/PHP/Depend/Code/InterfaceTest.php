@@ -47,10 +47,6 @@
 
 require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/ASTClassReference.php';
-require_once 'PHP/Depend/Code/Interface.php';
-
 /**
  * Test case for the code interface class.
  *
@@ -205,7 +201,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesZeroInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -226,7 +222,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesOneLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -247,7 +243,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesTwoLevelInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -268,7 +264,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfacesComplexInheritance()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
 
         $interface = $package->getInterfaces()
@@ -290,7 +286,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsSubtypeOfReturnsFalseForNonParents()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
 
         $interfaces = $package->getInterfaces();
@@ -313,7 +309,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            __METHOD__,
             array('A' => true, 'B' => false, 'C' => false, 'D' => false, 'E' => false, 'F' => true)
         );
     }
@@ -331,7 +326,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy1()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            __METHOD__,
             array('A' => true, 'B' => true, 'C' => true, 'D' => true, 'E' => true, 'F' => true)
         );
     }
@@ -349,7 +343,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy2()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            __METHOD__,
             array('B' => false, 'C' => false, 'A' => true, 'D' => true, 'E' => true, 'F' => false)
         );
     }
@@ -367,14 +360,13 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy3()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            __METHOD__,
             array('B' => false, 'C' => false, 'D' => false, 'A' => true, 'E' => false, 'F' => false)
         );
     }
 
-    private function _testIsSubtypeOnInheritanceHierarchy($testCase, array $expected)
+    private function _testIsSubtypeOnInheritanceHierarchy(array $expected)
     {
-        $packages = self::parseTestCaseSource($testCase);
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
         $current  = $package->getInterfaces()->current();
 
@@ -400,7 +392,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $class = $packages->current()
             ->getInterfaces()
@@ -421,9 +413,8 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-
-        $class = $packages->current()
+        $class = self::parseCodeResourceForTest()
+            ->current()
             ->getInterfaces()
             ->current();
 
@@ -482,7 +473,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedInterfaceStillIsParentOfChildMethods()
     {
-        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame($copy, $copy->getMethods()->current()->getParent());
@@ -500,7 +491,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedInterfaceAndChildMethodsStillReferenceTheSameFile()
     {
-        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -521,7 +512,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedInterfaceStillReferencesSameParentInterface()
     {
-        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -542,7 +533,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedInterfaceIsReturnedByMethodAsReturnClass()
     {
-        $orig   = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $orig   = $this->getFirstInterfaceForTestCase();
         $method = $orig->getMethods()->current();
 
         $copy = unserialize(serialize($orig));
@@ -565,7 +556,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedInterfaceStillReferencesSamePackage()
     {
-        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame(
@@ -586,7 +577,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedInterfaceRegistersToPackage()
     {
-        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertSame($copy, $orig->getPackage()->getInterfaces()->current());
@@ -604,7 +595,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testUnserializedInterfaceNotAddsDublicateClassToPackage()
     {
-        $orig = $this->getFirstInterfaceForTestCase(__METHOD__);
+        $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
         self::assertEquals(1, $orig->getPackage()->getInterfaces()->count());
@@ -612,15 +603,13 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * Returns the first interface that could be found in the source file
-     * associated with the given test case.
-     *
-     * @param string $testCase The test case name.
+     * associated with the calling test case.
      *
      * @return PHP_Depend_Code_Interface
      */
-    protected function getFirstInterfaceForTestCase($testCase)
+    protected function getFirstInterfaceForTestCase()
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current();

@@ -84,7 +84,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $builder = new PHP_Depend_Builder_Default();
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(self::createCodeResourceURI('parser/' . __FUNCTION__ . '.php'));
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder);
         $parser->setMaxNestingLevel(512);
@@ -296,7 +296,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
         );
 
-        $packages = self::parseSource('/parser/parser-sets-expected-function-tokens.php');
+        $packages = self::parseSource('/Parser/parser-sets-expected-function-tokens.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -315,7 +315,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectFileComment()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $packages = self::parseCodeResourceForTest();
         $this->assertEquals(1, $packages->count()); // default
 
         $package = $packages->current();
@@ -1763,7 +1763,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**

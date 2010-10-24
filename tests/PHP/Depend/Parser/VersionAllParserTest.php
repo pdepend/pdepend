@@ -49,9 +49,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Parser/VersionAllParser.php';
-
 /**
  * Test case for the {@link PHP_Depend_Parser_VersionAllParser} class.
  *
@@ -78,7 +75,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsStringAsClassName()
     {
-        $class = $this->getFirstTypeForTestCase(__METHOD__);
+        $class = $this->getFirstTypeForTestCase();
         self::assertSame('SimpleClassName', $class->getName());
     }
 
@@ -93,7 +90,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsStringAsInterfaceName()
     {
-        $interface = $this->getFirstTypeForTestCase(__METHOD__);
+        $interface = $this->getFirstTypeForTestCase();
         self::assertSame('SimpleInterfaceName', $interface->getName());
     }
 
@@ -108,7 +105,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsNullAsClassName()
     {
-        $class = $this->getFirstTypeForTestCase(__METHOD__);
+        $class = $this->getFirstTypeForTestCase();
         self::assertSame('Null', $class->getName());
     }
 
@@ -123,7 +120,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsNullAsInterfaceName()
     {
-        $interface = $this->getFirstTypeForTestCase(__METHOD__);
+        $interface = $this->getFirstTypeForTestCase();
         self::assertSame('Null', $interface->getName());
     }
 
@@ -138,7 +135,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsTrueAsClassName()
     {
-        $class = $this->getFirstTypeForTestCase(__METHOD__);
+        $class = $this->getFirstTypeForTestCase();
         self::assertSame('True', $class->getName());
     }
 
@@ -153,7 +150,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsTrueAsInterfaceName()
     {
-        $interface = $this->getFirstTypeForTestCase(__METHOD__);
+        $interface = $this->getFirstTypeForTestCase();
         self::assertSame('True', $interface->getName());
     }
 
@@ -168,7 +165,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsFalseAsClassName()
     {
-        $class = $this->getFirstTypeForTestCase(__METHOD__);
+        $class = $this->getFirstTypeForTestCase();
         self::assertSame('False', $class->getName());
     }
 
@@ -183,7 +180,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsFalseAsInterfaceName()
     {
-        $interface = $this->getFirstTypeForTestCase(__METHOD__);
+        $interface = $this->getFirstTypeForTestCase();
         self::assertSame('False', $interface->getName());
     }
 
@@ -198,7 +195,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsUseAsClassName()
     {
-        $class = $this->getFirstTypeForTestCase(__METHOD__);
+        $class = $this->getFirstTypeForTestCase();
         self::assertSame('Use', $class->getName());
     }
 
@@ -213,7 +210,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsUseAsInterfaceName()
     {
-        $interface = $this->getFirstTypeForTestCase(__METHOD__);
+        $interface = $this->getFirstTypeForTestCase();
         self::assertSame('Use', $interface->getName());
     }
 
@@ -228,7 +225,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsNamespaceAsClassName()
     {
-        $class = $this->getFirstTypeForTestCase(__METHOD__);
+        $class = $this->getFirstTypeForTestCase();
         self::assertSame('Namespace', $class->getName());
     }
 
@@ -243,7 +240,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsNamespaceAsInterfaceName()
     {
-        $interface = $this->getFirstTypeForTestCase(__METHOD__);
+        $interface = $this->getFirstTypeForTestCase();
         self::assertSame('Namespace', $interface->getName());
     }
 
@@ -260,7 +257,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserThrowsExpectedExceptionOnTokenStreamEnd()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -276,7 +273,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserThrowsExpectedExceptionForUnexpectedTokenType()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -290,7 +287,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsStringAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('myMethodName', $method->getName());
     }
 
@@ -305,7 +302,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsUseKeywordAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('Use', $method->getName());
     }
 
@@ -320,7 +317,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsGotoKeywordAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('Goto', $method->getName());
     }
 
@@ -335,7 +332,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsSelfKeywordAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('self', $method->getName());
     }
 
@@ -350,7 +347,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsNullAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('null', $method->getName());
     }
 
@@ -365,7 +362,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsTrueAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('true', $method->getName());
     }
 
@@ -380,7 +377,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsFalseAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('false', $method->getName());
     }
 
@@ -395,7 +392,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsDirConstantAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('__DIR__', $method->getName());
     }
 
@@ -410,7 +407,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsNamespaceKeywordAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('nameSpace', $method->getName());
     }
 
@@ -425,7 +422,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsNamespaceConstantAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('__NAMESPACE__', $method->getName());
     }
 
@@ -440,7 +437,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserAcceptsParentKeywordAsMethodName()
     {
-        $method = $this->getFirstMethodForTestCase(__METHOD__);
+        $method = $this->getFirstMethodForTestCase();
         self::assertEquals('Parent', $method->getName());
     }
 
@@ -456,7 +453,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserThrowsExpectedExceptionForInvalidToken()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -471,20 +468,18 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_AbstractClassOrInterface
      */
-    protected function getFirstTypeForTestCase($testCase)
+    protected function getFirstTypeForTestCase()
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current();
@@ -494,13 +489,11 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * Returns the first method that could be found in the code under test for
      * the calling test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_Method
      */
-    protected function getFirstMethodForTestCase($testCase)
+    protected function getFirstMethodForTestCase()
     {
-        return $this->getFirstTypeForTestCase($testCase)
+        return $this->getFirstTypeForTestCase()
             ->getMethods()
             ->current();
     }
