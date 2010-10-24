@@ -77,18 +77,6 @@ class PHP_Depend_TextUI_Runner
     const EXCEPTION_EXIT = 2;
 
     /**
-     * Marks the best optimization strategy that tries to provide best performance
-     * while it keeps memory usage low.
-     */
-    const OPTIMZATION_BEST = 'best';
-
-    /**
-     * Marks the pass through optimization strategy that will consume most
-     * memory and will perform all actions without caching.
-     */
-    const OPTIMZATION_NONE = 'none';
-
-    /**
      * List of allowed file extensions. Default file extensions are <b>php</b>
      * and <p>php5</b>.
      *
@@ -117,29 +105,6 @@ class PHP_Depend_TextUI_Runner
      * @var array(string) $_sourceArguments
      */
     private $_sourceArguments = array();
-
-    /**
-     * Mapping between optimization strategies and storage engines.
-     *
-     * @var array(string=>array) $_optimizations
-     */
-    private $_optimizations = array(
-        self::OPTIMZATION_BEST => array(
-            PHP_Depend::TOKEN_STORAGE   =>  'PHP_Depend_Storage_FileEngine',
-            PHP_Depend::PARSER_STORAGE  =>  'PHP_Depend_Storage_FileEngine',
-        ),
-        self::OPTIMZATION_NONE => array(
-            PHP_Depend::TOKEN_STORAGE   =>  'PHP_Depend_Storage_MemoryEngine',
-            PHP_Depend::PARSER_STORAGE  =>  'PHP_Depend_Storage_MemoryEngine',
-        ),
-    );
-
-    /**
-     * The selected optimization strategy.
-     *
-     * @var string $_optimization
-     */
-    private $_optimization = self::OPTIMZATION_BEST;
 
     /**
      * Should the parse ignore doc comment annotations?
@@ -230,18 +195,6 @@ class PHP_Depend_TextUI_Runner
     }
 
     /**
-     * Sets the optimization strategy.
-     *
-     * @param string $optimization The optimization strategy.
-     *
-     * @return void
-     */
-    public function setOptimization($optimization)
-    {
-        $this->_optimization = $optimization;
-    }
-
-    /**
      * Should the parser ignore doc comment annotations?
      *
      * @return void
@@ -302,15 +255,6 @@ class PHP_Depend_TextUI_Runner
     {
         $pdepend = new PHP_Depend();
         $pdepend->setOptions($this->_options);
-
-        foreach ($this->_optimizations[$this->_optimization] as $type => $class) {
-            // Import storage engine class definition
-            if (class_exists($class) === false) {
-                include_once strtr($class, '_', '/') . '.php';
-            }
-
-            $pdepend->setStorage($type, new $class());
-        }
 
         if (count($this->_extensions) > 0) {
             $filter = new PHP_Depend_Input_ExtensionFilter($this->_extensions);

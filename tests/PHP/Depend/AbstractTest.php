@@ -77,17 +77,6 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $this->_clearRunResources($run);
 
         include_once 'PHP/Depend.php';
-        include_once 'PHP/Depend/StorageRegistry.php';
-        include_once 'PHP/Depend/Storage/MemoryEngine.php';
-
-        PHP_Depend_StorageRegistry::set(
-            PHP_Depend::TOKEN_STORAGE,
-            new PHP_Depend_Storage_MemoryEngine()
-        );
-        PHP_Depend_StorageRegistry::set(
-            PHP_Depend::PARSER_STORAGE,
-            new PHP_Depend_Storage_MemoryEngine()
-        );
 
         if (defined('STDERR') === false) {
             define('STDERR', fopen('php://stderr', true));

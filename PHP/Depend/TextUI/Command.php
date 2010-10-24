@@ -78,18 +78,6 @@ class PHP_Depend_TextUI_Command
     const INPUT_ERROR = 1743;
 
     /**
-     * Mapping between command line identifiers and optimzation strategies.
-     *
-     * @var array(string=>integer) $_optimizations
-     */
-    private $_optimizations = array(
-        PHP_Depend_TextUI_Runner::OPTIMZATION_BEST =>
-            'Provides lowest memory usage with best possible performance.',
-        PHP_Depend_TextUI_Runner::OPTIMZATION_NONE =>
-            'Highest memory usage without any caching.'
-    );
-
-    /**
      * Collected log options.
      *
      * @var array(string=>string) $_logOptions
@@ -185,15 +173,8 @@ class PHP_Depend_TextUI_Command
         }
 
         if (isset($options['--optimization'])) {
-            // Check optimization strategy
-            if (!isset($this->_optimizations[$options['--optimization']])) {
-                echo 'Invalid optimization ', $options['--optimization'],
-                     ' given.', PHP_EOL;
-                return self::INPUT_ERROR;
-            }
-
-            // Set optimization strategy
-            $this->_runner->setOptimization($options['--optimization']);
+            // This option is deprecated.
+            echo 'Option --optimization is ambiguous.', PHP_EOL;
             // Remove option
             unset($options['--optimization']);
         }
@@ -434,16 +415,6 @@ class PHP_Depend_TextUI_Command
             'Do not parse doc comment annotations.', 
             $l
         );
-        echo PHP_EOL;
-
-        $this->_printOption(
-            '--optimization=<mode>',
-            'Runtime switch to influence the internal processing.',
-            $l
-        );
-        foreach ($this->_optimizations as $name => $help) {
-            $this->_printOption('               "' . $name . '"', $help, $l);
-        }
         echo PHP_EOL;
 
         $this->_printOption('--debug', 'Prints debugging information.', $l);

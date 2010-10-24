@@ -157,16 +157,6 @@ class PHP_Depend
     private $_parseExceptions = array();
 
     /**
-     * Configured storage engines.
-     *
-     * @var array(PHP_Depend_Storage_AbstractEngine) $_storages
-     */
-    private $_storages = array(
-        self::TOKEN_STORAGE   =>  null,
-        self::PARSER_STORAGE  =>  null,
-    );
-
-    /**
      * Constructs a new php depend facade.
      */
     public function __construct()
@@ -240,34 +230,6 @@ class PHP_Depend
     }
 
     /**
-     * Sets a storage instance for a special usage.
-     *
-     * @param integer                    $type   The target identifier.
-     * @param PHP_Depend_Storage_EngineI $engine The storage instance.
-     *
-     * @return void
-     */
-    public function setStorage($type, PHP_Depend_Storage_EngineI $engine)
-    {
-        switch ($type) {
-        case self::TOKEN_STORAGE:
-            $engine->setPrune();
-            break;
-
-        case self::PARSER_STORAGE:
-            $engine->setMaxLifetime(86400);
-            $engine->setProbability(5);
-            break;
-
-        default:
-            $message = sprintf('Unknown storage identifier "%s" given.', $type);
-            throw new InvalidArgumentException($message);
-        }
-
-        $this->_storages[$type] = $engine;
-    }
-
-    /**
      * Sets an additional code filter. These filters could be used to hide
      * external libraries and global stuff from the PDepend output.
      *
@@ -324,8 +286,6 @@ class PHP_Depend
      */
     public function analyze()
     {
-        $this->_initStorages();
-
         $this->_builder = new PHP_Depend_Builder_Default();
 
         $this->_performParseProcess();
@@ -646,27 +606,6 @@ class PHP_Depend
         ini_restore('xdebug.max_nesting_level');
 
         $this->fireEndAnalyzeProcess();
-    }
-
-    /**
-     * This method initializes the storage strategies for node tokens that are
-     * used during a single PHP_Depend run and the parser cache storage.
-     *
-     * @return void
-     */
-    private function _initStorages()
-    {
-        foreach ($this->_storages as $identifier => $storage) {
-            // Fallback for unconfigured storage engines
-            if ($storage === null) {
-                // Include memory storage class definition
-                include_once 'PHP/Depend/Storage/MemoryEngine.php';
-
-                $storage = new PHP_Depend_Storage_MemoryEngine();
-            }
-
-            PHP_Depend_StorageRegistry::set($identifier, $storage);
-        }
     }
 
     /**

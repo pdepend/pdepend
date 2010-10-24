@@ -47,10 +47,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-require_once 'PHP/Depend/Storage/EngineI.php';
-
 /**
  * Test case for PHP_Depend facade.
  *
@@ -381,64 +377,5 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
 
         $pdepend->addFile($fileName);
-    }
-
-    /**
-     * testSetStorageSetsPruneFlagOnTokenCache
-     *
-     * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
-     */
-    public function testSetStorageSetsPruneFlagOnTokenCache()
-    {
-        $cache = $this->getMock('PHP_Depend_Storage_EngineI');
-        $cache->expects($this->once())
-            ->method('setPrune');
-
-        $pdepend = new PHP_Depend();
-        $pdepend->setStorage(PHP_Depend::TOKEN_STORAGE, $cache);
-    }
-
-    /**
-     * testSetStorageSetsMaxLifetimeAndProbabilityOnParserCache
-     *
-     * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
-     */
-    public function testSetStorageSetsMaxLifetimeAndProbabilityOnParserCache()
-    {
-        $cache = $this->getMock('PHP_Depend_Storage_EngineI');
-        $cache->expects($this->once())
-            ->method('setProbability');
-        $cache->expects($this->once())
-            ->method('setMaxLifetime');
-
-        $pdepend = new PHP_Depend();
-        $pdepend->setStorage(PHP_Depend::PARSER_STORAGE, $cache);
-    }
-
-    /**
-     * Tests that the setStorage() method throws an exception when an invalid
-     * storage type was given.
-     *
-     * @return void
-     */
-    public function testSetStorageThrowsTheExpectedExceptionForAnUnknownStorageType()
-    {
-        $pdepend = new PHP_Depend();
-
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Unknown storage identifier'
-        );
-
-        $pdepend->setStorage(
-            PHP_INT_MAX,
-            $this->getMock('PHP_Depend_Storage_EngineI')
-        );
     }
 }

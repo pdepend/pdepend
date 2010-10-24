@@ -608,9 +608,6 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $this->assertRegExp('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
         $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+packages\.)', $actual);
         $this->assertRegExp('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
-        $this->assertRegExp('(  --optimization=<mode>[ ]+Runtime\s+switch\s+to\s+influence\s+the\s+internal\s+processing\.)', $actual);
-        $this->assertRegExp('(  [ ]+"best"[ ]+Provides\s+lowest\s+memory\s+usage\s+with\s+best\s+possible\s+performance\.)', $actual);
-        $this->assertRegExp('(  [ ]+"none"[ ]+Highest\s+memory\s+usage\s+without\s+any\s+caching\.)', $actual);
         $this->assertRegExp('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
         $this->assertRegExp('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
         $this->assertRegExp('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
