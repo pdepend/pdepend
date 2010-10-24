@@ -389,7 +389,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -406,7 +406,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixParentVariableInFunctionThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -423,7 +423,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testPropertyPostfixParentVariableInClassWithoutParentThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

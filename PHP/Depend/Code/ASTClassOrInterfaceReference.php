@@ -127,4 +127,16 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference
     {
         return $visitor->visitClassOrInterfaceReference($this, $data);
     }
+
+    public function unserialize($data)
+    {
+        parent::unserialize($data);
+
+        $this->builder = PHP_Depend_Builder_Registry::getDefault();
+    }
+
+    public function __wakeup()
+    {
+        $this->builder = PHP_Depend_Builder_Registry::getDefault();
+    }
 }

@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend/Metrics/NPathComplexity/Analyzer.php';
-
 /**
  * Test case for bug 95.
  *
@@ -71,7 +69,10 @@ class PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test extends PHP_
      * correct.
      *
      * @return void
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testAnalyzerReturnsExpectedNPathValue()
     {
@@ -83,6 +84,6 @@ class PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test extends PHP_
         $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
         $analyzer->analyze($packages);
 
-        $this->assertSame(array('npath' => '6'), $analyzer->getNodeMetrics($function));
+        self::assertEquals(array('npath' => '6'), $analyzer->getNodeMetrics($function));
     }
 }

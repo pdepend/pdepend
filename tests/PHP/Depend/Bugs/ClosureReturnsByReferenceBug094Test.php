@@ -68,14 +68,15 @@ class PHP_Depend_Bugs_ClosureReturnsByReferenceBug094Test
      * testParserHandlesClosureThatReturnsReference
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group parser
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClosureThatReturnsReference()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
+        self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current();
     }

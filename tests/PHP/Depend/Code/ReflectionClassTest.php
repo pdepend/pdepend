@@ -69,6 +69,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstants()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantsReturnsExpectedResultForSingleConstantDefinition()
     {
@@ -85,6 +89,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstants()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantsReturnsExpectedResultForSingleCommaSeparatedConstantDefinition()
     {
@@ -101,6 +109,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstants()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantsReturnsExpectedResultForMultipleConstantDefinitions()
     {
@@ -117,6 +129,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstants()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantsReturnsExpectedResultForMultipleCommaSeparatedConstantDefinitions()
     {
@@ -133,6 +149,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstants()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantsReturnsExpectedResultForInheritedConstantDefinitions()
     {
@@ -149,6 +169,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstants()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantsReturnsExpectedResultForMultipleInheritedConstantDefinitions()
     {
@@ -165,6 +189,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstants()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantsReturnsExpectedResultForInheritedAndImplementedConstantDefinitions()
     {
@@ -181,6 +209,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>hasConstant()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testHasConstantReturnsTrueForExistingConstantDefinitionWithRegularValue()
     {
@@ -198,6 +230,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>hasConstant()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testHasConstantReturnsTrueForExistingConstantDefinitionWithNullValue()
     {
@@ -215,6 +251,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>hasConstant()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testHasConstantReturnsFalseForNotExistingConstantDefinition()
     {
@@ -232,6 +272,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstant()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantReturnsExpectedValueForConstantDefinition()
     {
@@ -248,6 +292,10 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      * Tests the compatibility of the <b>getConstant()</b> method implementation.
      *
      * @return void
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testGetConstantReturnsExpectedFalseForNotExistingConstantDefinition()
     {
@@ -282,4 +330,3 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
         }
     }
 }
-?>

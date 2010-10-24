@@ -122,6 +122,11 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::summary
+     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -140,6 +145,11 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::summary
+     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -194,6 +204,11 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * metrics.
      *
      * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::summary
+     * @group unittest
      */
     public function testXmlLogWithoutMetrics()
     {
@@ -214,6 +229,11 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * empty source code structure.
      *
      * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::summary
+     * @group unittest
      */
     public function testProjectAwareAnalyzerWithoutCode()
     {
@@ -269,6 +289,16 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         );
     }
 
+    /**
+     * testNodeAwareAnalyzer
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Summary_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::summary
+     * @group unittest
+     */
     public function testNodeAwareAnalyzer()
     {
         $input = array(

@@ -77,17 +77,6 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $this->_clearRunResources($run);
 
         include_once 'PHP/Depend.php';
-        include_once 'PHP/Depend/StorageRegistry.php';
-        include_once 'PHP/Depend/Storage/MemoryEngine.php';
-
-        PHP_Depend_StorageRegistry::set(
-            PHP_Depend::TOKEN_STORAGE,
-            new PHP_Depend_Storage_MemoryEngine()
-        );
-        PHP_Depend_StorageRegistry::set(
-            PHP_Depend::PARSER_STORAGE,
-            new PHP_Depend_Storage_MemoryEngine()
-        );
 
         if (defined('STDERR') === false) {
             define('STDERR', fopen('php://stderr', true));
@@ -168,12 +157,52 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a code uri for the calling test case.
+     *
+     * @return string
+     */
+    protected static function createCodeResourceUriForTest()
+    {
+        list($class, $method) = explode('::', self::getCallingTestMethod());
+
+        $parts = explode('_', $class);
+
+        // Strip first two parts
+        array_shift($parts);
+        array_shift($parts);
+
+        $fileName = substr(join('/', $parts), 0, -4) . "/{$method}";
+        try {
+            return self::createCodeResourceURI($fileName);
+        } catch (ErrorException $e) {
+            return self::createCodeResourceURI("{$fileName}.php");
+        }
+    }
+
+    /**
+     * Returns the name of the calling test method.
+     *
+     * @return string
+     */
+    protected static function getCallingTestMethod()
+    {
+        foreach (debug_backtrace() as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                return "{$frame['class']}::{$frame['function']}";
+            }
+        }
+        throw new ErrorException("No calling test case found.");
+    }
+
+    /**
      * Initializes the test environment.
      *
      * @return void
      */
     public static function init()
     {
+        // First register autoloader
+        spl_autoload_register(array(__CLASS__, 'autoload'));
 
         // Is it not installed?
         if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
@@ -181,20 +210,34 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $path  = realpath(dirname(__FILE__) . '/../../..');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
-
-            PHP_CodeCoverage_Filter::getInstance()->addDirectoryToWhitelist(
-                realpath(dirname(__FILE__) . '/../../../PHP') . '/'
-            );
         }
 
         // Set test path
-        $path  = realpath(dirname(__FILE__) . '/../..') ;
+        $path  = realpath(dirname(__FILE__) . '/../..');
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
 
         include_once 'PHP/Depend/Code/Filter/Collection.php';
 
-        self::initVersionCompatibility();
+        self::_initVersionCompatibility();
+    }
+
+    /**
+     * Autoloader for the test cases.
+     *
+     * @param string $className Name of the missing class.
+     *
+     * @return void
+     */
+    public static function autoload($className)
+    {
+        $file = strtr($className, '_', '/') . '.php';
+        if (is_file(dirname(__FILE__) . '/../../../PHP/Depend.php')) {
+            $file = dirname(__FILE__) . '/../../../' . $file;
+        }
+        if (file_exists($file)) {
+            include $file;
+        }
     }
 
     /**
@@ -204,7 +247,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    private static function initVersionCompatibility()
+    private static function _initVersionCompatibility()
     {
         $reflection = new ReflectionClass('Iterator');
         $extension  = strtolower($reflection->getExtensionName());
@@ -213,6 +256,21 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         if (defined('CORE_PACKAGE') === false ) {
             define('CORE_PACKAGE', '+' . $extension);
         }
+    }
+
+    /**
+     * Parses the test code associated with the calling test method.
+     *
+     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     */
+    protected static function parseCodeResourceForTest($ignoreAnnotations = false)
+    {
+        return self::parseSource(
+            self::createCodeResourceUriForTest(),
+            $ignoreAnnotations
+        );
     }
 
     /**
@@ -283,13 +341,18 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
         sort($files);
 
+        $cache   = new PHP_Depend_Util_Cache_Driver_Memory();
         $builder = new PHP_Depend_Builder_Default();
 
         foreach ($files as $file) {
             $tokenizer = new PHP_Depend_Tokenizer_Internal();
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder);
+            $parser = new PHP_Depend_Parser_VersionAllParser(
+                $tokenizer,
+                $builder,
+                $cache
+            );
             if ($ignoreAnnotations === true) {
                 $parser->setIgnoreAnnotations();
             }

@@ -271,7 +271,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         list($cloc, $eloc, $lloc) = $this->_linesOfCode($file->getTokens());
 
-        $loc   = count($file->getLoc());
+        $loc   = $file->getEndLine();
         $ncloc = $loc - $cloc;
 
         $this->_nodeMetrics[$uuid] = array(

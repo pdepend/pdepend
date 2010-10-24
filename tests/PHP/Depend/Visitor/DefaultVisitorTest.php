@@ -77,6 +77,10 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * Tests the execution order of the default visitor implementation.
      *
      * @return void
+     * @covers PHP_Depend_Visitor_AbstractVisitor
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
      */
     public function testDefaultVisitOrder()
     {

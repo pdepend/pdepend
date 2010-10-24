@@ -122,7 +122,7 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -139,7 +139,7 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

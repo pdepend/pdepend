@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for bug 081 where PHP_Depend does not handle comma separated property
@@ -64,35 +64,41 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the parser handles a comma separated property declaration.
      * 
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration()
     {
-        $packages = self::parseSource('bugs/081/' . __FUNCTION__ . '.php');
-
-        $properties = $packages->current()
+        $properties = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getProperties();
 
-        $this->assertSame(2, count($properties));
+        self::assertEquals(2, count($properties));
     }
 
     /**
      * Tests that the parser handles a comma separated property declaration.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserSetsSameVisibilityForAllPropertyDeclarations()
     {
-        $packages = self::parseSource('bugs/081/' . __FUNCTION__ . '.php');
-
-        $properties = $packages->current()
+        $properties = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getProperties();
@@ -112,12 +118,15 @@ class PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test
      * Tests that the parser handles a comma separated property declaration.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations()
     {
-        $packages = self::parseSource('bugs/081/' . __FUNCTION__ . '.php');
-
-        $properties = $packages->current()
+        $properties = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getProperties();
@@ -127,4 +136,3 @@ class PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test
         $this->assertTrue($properties->current()->isStatic());
     }
 }
-?>

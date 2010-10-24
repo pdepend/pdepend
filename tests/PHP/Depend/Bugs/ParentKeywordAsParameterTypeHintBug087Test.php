@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for the parent keyword type hint bug no #87.
@@ -63,18 +63,21 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the parser handles the parent type hint as expected.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserSetsExpectedParentTypeHintReference()
     {
-        $packages = self::parseSource('bugs/087/' . __FUNCTION__ . '.php');
-
-        $parameter = $packages->current()
+        $parameter = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -90,6 +93,10 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
      * within a function signature.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
     {
@@ -99,9 +106,18 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
             'declaration is not in a class scope.'
         );
 
-        self::parseSource('bugs/087/' . __FUNCTION__ . '.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 
+    /**
+     * testParserThrowsExpectedExceptionForParentTypeHintClassWithoutParent
+     * 
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
     public function testParserThrowsExpectedExceptionForParentTypeHintClassWithoutParent()
     {
         $this->setExpectedException(
@@ -110,7 +126,6 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
             'class "Baz" does not declare a parent.'
         );
 
-        self::parseSource('bugs/087/' . __FUNCTION__ . '.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 }
-?>

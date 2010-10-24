@@ -144,7 +144,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner,
-            self::createCodeResourceURI('textui/Runner/' . __FUNCTION__)
+            self::createCodeResourceUriForTest()
         );
 
         $this->assertEquals($expected, $actual);
@@ -230,7 +230,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
-        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
         $this->assertFalse($runner->hasParseErrors());
@@ -249,7 +249,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
-        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
 
         try {
             $runner->run();
@@ -271,7 +271,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $runner = new PHP_Depend_TextUI_Runner();
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
-        $runner->setSourceArguments(array(self::createCodeResourceURI('textui/Runner/' . __FUNCTION__ . '.php')));
+        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
 
         try {
             $runner->run();

@@ -70,7 +70,10 @@ class PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test extends PH
      * correct.
      *
      * @return void
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterface()
     {
@@ -101,6 +104,10 @@ class PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test extends PH
      * correct.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithClass()
     {

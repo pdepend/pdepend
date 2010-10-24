@@ -120,6 +120,11 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
+     * @covers PHP_Depend_Log_Jdepend_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::jdepend
+     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -135,6 +140,11 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
+     * @covers PHP_Depend_Log_Jdepend_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::jdepend
+     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -153,6 +163,11 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * metrics.
      *
      * @return void
+     * @covers PHP_Depend_Log_Jdepend_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::jdepend
+     * @group unittest
      */
     public function testXmlLogWithoutMetrics()
     {
@@ -169,6 +184,16 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
         );
     }
 
+    /**
+     * testXmlLogAcceptsOnlyTheCorrectAnalyzer
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Jdepend_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::jdepend
+     * @group unittest
+     */
     public function testXmlLogAcceptsOnlyTheCorrectAnalyzer()
     {
         $logger = new PHP_Depend_Log_Jdepend_Xml();

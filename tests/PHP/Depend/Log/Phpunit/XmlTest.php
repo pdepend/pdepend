@@ -111,6 +111,11 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
+     * @covers PHP_Depend_Log_Phpunit_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::phpunit
+     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -129,6 +134,11 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
+     * @covers PHP_Depend_Log_Phpunit_Xml
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::phpunit
+     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -208,7 +218,7 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * @covers PHP_Depend_Log_Phpunit_Xml
      * @group pdepend
      * @group pdepend::logs
-     * @group pdepend::logs::summary
+     * @group pdepend::logs::phpunit
      * @group unittest
      */
     public function testPHPUnitLogNotContainsNotUserDefinedClasses()

@@ -81,12 +81,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         ini_set('xdebug.max_nesting_level', '100');
 
+        $cache   = new PHP_Depend_Util_Cache_Driver_Memory();
         $builder = new PHP_Depend_Builder_Default();
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(self::createCodeResourceURI('parser/' . __FUNCTION__ . '.php'));
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
-        $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder);
+        $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder, $cache);
         $parser->setMaxNestingLevel(512);
         $parser->parse();
     }
@@ -95,6 +96,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests the main parse method.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParseMixedCode()
     {
@@ -133,6 +138,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * stream but not all class curly braces are closed.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserWithUnclosedClassFail()
     {
@@ -150,6 +159,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * stream but not all function curly braces are closed.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserWithUnclosedFunctionFail()
     {
@@ -167,6 +180,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * function signature.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserWithInvalidFunction1Fail()
     {
@@ -183,6 +200,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * function signature.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserWithInvalidFunction2Fail()
     {
@@ -199,6 +220,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * method calls.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserStaticCallBug01()
     {
@@ -218,6 +243,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct line number for a function.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectFunctionLineNumber()
     {
@@ -232,10 +261,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct tokens for a function.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectFunctionTokens()
     {
-        // function foo($foo = array())
         $tokens = array(
             new PHP_Depend_Token(PHP_Depend_TokenizerI::T_FUNCTION, 'function', 5, 5, 1, 8),
             new PHP_Depend_Token(PHP_Depend_TokenizerI::T_STRING, 'foo', 5, 5, 10, 12),
@@ -265,7 +297,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             new PHP_Depend_Token(PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
         );
 
-        $packages = self::parseSource('/parser/parser-sets-expected-function-tokens.php');
+        $packages = self::parseSource('/Parser/parser-sets-expected-function-tokens.php');
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -277,10 +309,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets a detected file comment.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectFileComment()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
+        $packages = self::parseCodeResourceForTest();
         $this->assertEquals(1, $packages->count()); // default
 
         $package = $packages->current();
@@ -307,6 +343,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser doesn't reuse a type comment as file comment.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserDoesntReuseTypeComment()
     {
@@ -327,6 +367,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser doesn't reuse a function comment as file comment.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserDoesntReuseFunctionComment()
     {
@@ -347,6 +391,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct start line number for a class.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectClassStartLineNumber()
     {
@@ -357,6 +405,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct end line number for a class.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectClassEndLineNumber()
     {
@@ -367,6 +419,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct start line number for class methods.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectClassMethodStartLineNumbers()
     {
@@ -381,6 +437,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct end line number for class methods.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectClassMethodEndLineNumbers()
     {
@@ -395,6 +455,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct start line number for an interface.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectInterfaceStartLineNumber()
     {
@@ -405,6 +469,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct end line number for an interface.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectInterfaceEndLineNumber()
     {
@@ -416,6 +484,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * methods.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectInterfaceMethodStartLineNumbers()
     {
@@ -427,6 +499,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct end line number for interface methods.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectInterfaceMethodEndLineNumbers()
     {
@@ -438,6 +514,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser marks all interface methods as abstract.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsAllInterfaceMethodsAbstract()
     {
@@ -446,9 +526,51 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserHandlesClassWithMultipleImplementedInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesClassWithMultipleImplementedInterfaces()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        self::assertEquals(3, count($class->getInterfaces()));
+    }
+
+    /**
+     * testParserHandlesInterfaceWithMultipleParentInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesInterfaceWithMultipleParentInterfaces()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getInterfaces()
+            ->current();
+
+        self::assertEquals(3, count($class->getInterfaces()));
+    }
+
+    /**
      * Tests that the parser sets the correct line number for methods.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectMethodLineNumber()
     {
@@ -469,6 +591,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser doesn't mark a non abstract method as abstract.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserDoesntMarkNonAbstractMethodAsAbstract()
     {
@@ -482,6 +608,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser marks an abstract method as abstract.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParsetMarksAbstractMethodAsAbstract()
     {
@@ -505,7 +635,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserParseNewInstancePHP53()
     {
-        $packages = self::parseTestCaseSource();
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -520,6 +650,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that doc comment blocks are added to a function.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectFunctionDocComment()
     {
@@ -533,6 +667,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct function return type.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectFunctionReturnType()
     {
@@ -545,11 +683,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertNull($nodes->current()->getReturnClass());
         $nodes->next();
         $this->assertEquals('func2', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnClass());
         $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
         $nodes->next();
         $this->assertEquals('func3', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnClass());
         $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
     }
 
@@ -557,79 +693,74 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct method exception types.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectFunctionExceptionTypes()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/function1.php');
+        $functions = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions();
 
-        $nodes = $packages->current()
-                          ->getFunctions();
+        $actual = array();
+        foreach ($functions as $function) {
+            foreach ($function->getExceptionClasses() as $exception) {
+                $actual[] = "{$function->getName()} throws {$exception->getName()}";
+            }
+        }
 
-        $this->assertEquals(3, $nodes->count());
-
-        $this->assertEquals('func1', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(1, $ex->count());
-        $this->assertEquals('RuntimeException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('func2', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(2, $ex->count());
-        $this->assertEquals('OutOfRangeException', $ex->current()->getName());
-        $ex->next();
-        $this->assertEquals('InvalidArgumentException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('func3', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(0, $ex->count());
+        self::assertEquals(
+            array(
+                'func1 throws RuntimeException',
+                'func2 throws OutOfRangeException',
+                'func2 throws InvalidArgumentException',
+            ),
+            $actual
+        );
     }
 
     /**
      * Tests that the parser doesn't handle annotations if this is set to true.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForFunctions()
     {
-        $source   = dirname(__FILE__) . '/_code/comments/function1.php';
-        $packages = self::parseSource($source, true);
+        $functions = self::parseCodeResourceForTest(true)
+            ->current()
+            ->getFunctions();
 
-        $nodes = $packages->current()
-                          ->getFunctions();
+        $actual = array();
+        foreach ($functions as $function) {
+            $actual[] = $function->getExceptionClasses()->count();
+            $actual[] = $function->getReturnClass();
+        }
 
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
+        self::assertSame(array(0, null, 0, null, 0, null), $actual);
     }
 
     /**
      * Tests that doc comment blocks are added to a method.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectMethodDocComment()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method.php');
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
 
         $this->doTestParserSetsCorrectDocComment($nodes);
     }
@@ -638,102 +769,103 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct method return type.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectMethodReturnType()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method3.php');
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
-        $this->assertEquals(3, $nodes->count());
+        $actual = array();
+        foreach ($nodes as $method) {
+            $actual[] = $method->getName();
+            $actual[] = $method->getReturnClass() ? $method->getReturnClass()->getName() : null;
+        }
 
-        $this->assertEquals('__construct', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getReturnClass());
-        $nodes->next();
-        $this->assertEquals('method1', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnClass());
-        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
-        $nodes->next();
-        $this->assertEquals('method2', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getReturnClass());
-        $this->assertEquals('SplSubject', $nodes->current()->getReturnClass()->getName());
+        self::assertEquals(
+            array('__construct', null, 'method1', 'SplObjectStore', 'method2', 'SplSubject'),
+            $actual
+        );
     }
 
     /**
      * Tests that the parser sets the correct method exception types.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectMethodExceptionTypes()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/method3.php');
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
+  
+        $actual = array();
+        foreach ($nodes as $method) {
+            $actual[] = $method->getName();
+            foreach ($method->getExceptionClasses() as $exception) {
+                $actual[] = $exception->getName();
+            }
+        }
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
-
-        $this->assertEquals(3, $nodes->count());
-
-        $this->assertEquals('__construct', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(1, $ex->count());
-        $this->assertEquals('RuntimeException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('method1', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(2, $ex->count());
-        $this->assertEquals('OutOfRangeException', $ex->current()->getName());
-        $ex->next();
-        $this->assertEquals('OutOfBoundsException', $ex->current()->getName());
-
-        $nodes->next();
-
-        $this->assertEquals('method2', $nodes->current()->getName());
-        $ex = $nodes->current()->getExceptionClasses();
-        $this->assertEquals(0, $ex->count());
+        self::assertEquals(
+            array(
+                '__construct',
+                'RuntimeException',
+                'method1',
+                'OutOfRangeException',
+                'OutOfBoundsException',
+                'method2'
+            ),
+            $actual
+        );
     }
 
     /**
      * Tests that the parser doesn't handle annotations if this is set to true.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForMethods()
     {
-        $source   = dirname(__FILE__) . '/_code/comments/method3.php';
-        $packages = self::parseSource($source, true);
+        $methods = self::parseCodeResourceForTest( true)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods();
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getMethods();
+        $actual = array();
+        foreach ($methods as $method) {
+            $actual[] = $method->getExceptionClasses()->count();
+            $actual[] = $method->getReturnClass();
+        }
 
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
-
-        $nodes->next();
-
-        $this->assertEquals(3, $nodes->count());
-        $this->assertEquals(0, $nodes->current()->getExceptionClasses()->count());
-        $this->assertNull($nodes->current()->getReturnClass());
+        self::assertSame(array(0, null, 0, null, 0, null), $actual);
     }
 
     /**
      * Tests that the parser sets the correct doc comment blocks for properties.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectPropertyDocComment()
     {
@@ -750,6 +882,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the correct visibility for properties.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectPropertyVisibility()
     {
@@ -773,30 +909,29 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets property types for non scalar properties.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectPropertyTypes()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/property2.php');
-
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getProperties();
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties();
 
         $this->assertEquals('$property1', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getClass());
         $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property2', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getClass());
         $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property3', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getClass());
         $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property4', $nodes->current()->getName());
-        $this->assertNotNull($nodes->current()->getClass());
         $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
         $nodes->next();
         $this->assertEquals('$property5', $nodes->current()->getName());
@@ -817,22 +952,20 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsExpectedPropertyTypeForChainedComment()
     {
-        $packages = self::parseSource('parser/prop_comment_chained_type.php');
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseCodeResourceForTest();
 
         $class = $packages->current()->getTypes()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
-        $this->assertSame('Parser', $class->getName());
+        self::assertEquals('Parser', $class->getName());
 
         $property = $class->getProperties()->current();
-        $this->assertType('PHP_Depend_Code_Property', $property);
-
-        $type = $property->getClass();
-        $this->assertType('PHP_Depend_Code_Class', $type);
-        $this->assertSame('Runtime', $type->getName());
+        self::assertEquals('Runtime', $property->getClass()->getName());
     }
 
     /**
@@ -846,22 +979,22 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsExpectedPropertyTypeForChainedCommentInArray()
     {
-        $packages = self::parseSource('parser/prop_comment_chained_type_array.php');
-        $this->assertSame(1, $packages->count());
+        $type = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties()
+            ->current()
+            ->getClass();
 
-        $class = $packages->current()->getTypes()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
-        $this->assertSame('Parser', $class->getName());
-
-        $property = $class->getProperties()->current();
-        $this->assertType('PHP_Depend_Code_Property', $property);
-
-        $type = $property->getClass();
-        $this->assertType('PHP_Depend_Code_Class', $type);
-        $this->assertSame('Session', $type->getName());
+        self::assertEquals('Session', $type->getName());
     }
 
     /**
@@ -875,11 +1008,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsExpectedReturnTypeForChainedComment()
     {
-        $packages = self::parseSource('parser/return_comment_chained_type.php');
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseCodeResourceForTest();
 
         $class = $packages->current()->getTypes()->current();
         $this->assertType('PHP_Depend_Code_Class', $class);
@@ -904,11 +1040,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsExpectedReturnTypeForChainedCommentInArray()
     {
-        $packages = self::parseSource('parser/return_comment_chained_type_array.php');
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseCodeResourceForTest();
 
         $class = $packages->current()->getTypes()->current();
         $this->assertType('PHP_Depend_Code_Class', $class);
@@ -918,7 +1057,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Depend_Code_Method', $method);
 
         $type = $method->getReturnClass();
-        $this->assertType('PHP_Depend_Code_Class', $type);
         $this->assertSame('Session', $type->getName());
     }
 
@@ -926,50 +1064,36 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets property types for non scalar properties.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testHandlesIgnoreAnnotationsCorrectForProperties()
     {
-        $source   = dirname(__FILE__) . '/_code/comments/property2.php';
-        $packages = self::parseSource($source, true);
+        $nodes = self::parseCodeResourceForTest(true)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties();
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getProperties();
+        $actual = array();
+        foreach ($nodes as $property) {
+            $actual[] = $property->getClass();
+        }
 
-        $this->assertEquals('$property1', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property2', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property3', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property4', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property5', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-
-        $nodes->next();
-
-        $this->assertEquals('$property6', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
+        self::assertEquals(array(null, null, null, null, null, null), $actual);
     }
 
     /**
      * Tests that parser sets the correct doc comment blocks for classes and
      * interfaces.
      *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsCorrectClassOrInterfaceDocComment()
     {
@@ -994,6 +1118,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser supports sub packages.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSubpackageSupport()
     {
@@ -1006,6 +1134,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser supports sub packages.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsFileLevelFunctionPackage()
     {
@@ -1029,38 +1161,82 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the parser sets the expected abstract modifier.
+     * testParserSetsAbstractPropertyOnClass
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
-    public function testParserSetsExpectedAbstractModifier()
+    public function testParserSetsAbstractPropertyOnClass()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/parser/abstract_class.php');
-        $this->assertSame(1, $packages->count());
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
 
-        $class = $packages->current()->getClasses()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
-        $this->assertTrue($class->isAbstract());
-        $this->assertSame(
+        self::assertTrue($class->isAbstract());
+    }
+
+    /**
+     * testParserSetsAbstractModifierOnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserSetsAbstractModifierOnClass()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        self::assertSame(
             PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT,
             $class->getModifiers() & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
         );
     }
 
     /**
-     * Tests that the parser sets the expected final modifier.
+     * testParserSetsFinalPropertyOnClass
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
-    public function testParserSetsExpectedFinalModifier()
+    public function testParserSetsFinalPropertyOnClass()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/parser/final_class.php');
-        $this->assertSame(1, $packages->count());
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
 
-        $class = $packages->current()->getClasses()->current();
-        $this->assertType('PHP_Depend_Code_Class', $class);
-        $this->assertTrue($class->isFinal());
-        $this->assertSame(
+        self::assertTrue($class->isFinal());
+    }
+
+    /**
+     * testParserSetsFinalModifierOnClass
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserSetsFinalModifierOnClass()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        self::assertSame(
             PHP_Depend_ConstantsI::IS_FINAL,
             $class->getModifiers() & PHP_Depend_ConstantsI::IS_FINAL
         );
@@ -1071,11 +1247,15 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * default value correct.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesNestedArraysAsParameterDefaultValue()
     {
         // Current implementation cannot handle nested structures
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1089,8 +1269,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserStripsCommentsInParseExpressionUntilCorrect()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $method   = $packages->current()
+        $method = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -1105,6 +1285,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * declaration within the default value of a parameter.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue()
     {
@@ -1113,7 +1297,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             'Unexpected token: {, line: 2, col: 29, file: '
         );
 
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1121,6 +1305,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * token within the parameter declaration of a function or method.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue()
     {
@@ -1129,7 +1317,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             'Unexpected token: &, line: 2, col: 27, file: '
         );
 
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1137,6 +1325,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * token in a class body.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody()
     {
@@ -1145,7 +1337,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             'Unexpected token: ;, line: 4, col: 5, file: '
         );
 
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1153,6 +1345,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * token in a method or property declaration.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration()
     {
@@ -1161,7 +1357,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             'Unexpected token: &, line: 4, col: 12, file: '
         );
 
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1169,6 +1365,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * token in a method or property declaration.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
     {
@@ -1177,7 +1377,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             'Unexpected token: const, line: 4, col: 13, file: '
         );
 
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1185,11 +1385,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * value of a function.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesParentKeywordInFunctionParameterDefaultValue()
     {
-        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $parameter = $packages->current()
+        $parameter = self::parseCodeResourceForTest()->current()
             ->getFunctions()
             ->current()
             ->getParameters()
@@ -1203,11 +1406,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * value of a method.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesParentKeywordInMethodParameterDefaultValue()
     {
-        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $parameter = $packages->current()
+        $parameter = self::parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -1222,11 +1428,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser handles the self keyword as parameter type hint.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesSelfKeywordAsParameterTypeHint()
     {
-        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $parameter = $packages->current()
+        $parameter = self::parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -1237,10 +1446,18 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertNotNull($parameter);
     }
 
+    /**
+     * testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
     public function testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $classes  = $packages->current()
+        $classes = self::parseCodeResourceForTest()->current()
             ->getClasses();
 
         $class1 = $classes->current();
@@ -1261,12 +1478,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * even when a similar class exists.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserSetsTheReallySameParameterHintInstanceForKeywordSelf()
     {
-        $packages  = self::parseSource('parser/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()
+        $class = self::parseCodeResourceForTest()->current()
             ->getClasses()
             ->current();
 
@@ -1289,9 +1508,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserStripsLeadingSlashFromNamespacedClassName()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $package  = $packages->current();
-
+        $package = self::parseCodeResourceForTest()->current();
         $this->assertEquals('foo', $package->getName());
     }
 
@@ -1306,8 +1523,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserStripsLeadingSlashFromNamespaceAliasedClassName()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $package  = $packages->current()
+        $package = self::parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getParentClass()
@@ -1327,8 +1543,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserStripsLeadingSlashFromInheritNamespacedClassName()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $package  = $packages->current()
+        $package = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getParentClass()
@@ -1349,7 +1565,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1363,7 +1579,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesDoubleQuoteStringAsConstantDefaultValue()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1377,8 +1593,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesDoubleQuoteStringWithEscapedVariable()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseCodeResourceForTest()
+            ->current()
             ->getFunctions()
             ->current();
 
@@ -1399,8 +1615,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseCodeResourceForTest()
+            ->current()
             ->getFunctions()
             ->current();
 
@@ -1421,8 +1637,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseCodeResourceForTest()
+            ->current()
             ->getFunctions()
             ->current();
 
@@ -1443,8 +1659,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseCodeResourceForTest()
+            ->current()
             ->getFunctions()
             ->current();
 
@@ -1465,8 +1681,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
     {
-        $packages = self::parseSource('parser/' . __FUNCTION__ . '.php');
-        $method   = $packages->current()
+        $method = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -1474,6 +1690,37 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
         $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+    }
+
+    /**
+     * testParserStopsProcessingWhenCacheContainsValidResult
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserStopsProcessingWhenCacheContainsValidResult()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(__FILE__);
+
+        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache->expects($this->once())
+            ->method('restore')
+            ->will(self::returnValue(true));
+        $cache->expects($this->never())
+            ->method('store');
+
+        $parser = new PHP_Depend_Parser_VersionAllParser(
+            $tokenizer,
+            $builder,
+            $cache
+        );
+        $parser->parse();
     }
 
     /**
@@ -1487,7 +1734,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParseClosureAsFunctionArgument()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1501,7 +1748,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParseNowdocInMethodBody()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1515,7 +1762,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParseDoWhileStatement()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1529,7 +1776,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesCompoundExpressionInArrayBrackets()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1543,7 +1790,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesEmptyNonePhpCodeInMethodBody()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1557,7 +1804,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesPhpCloseTagInMethodBody()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1571,7 +1818,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesMultiplePhpCloseTagsInMethodBody()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1586,7 +1833,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
-        self::parseSource('parser/' . __FUNCTION__ . '.php');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -1595,6 +1842,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testVariableClassNameBug10()
     {
@@ -1608,6 +1859,15 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals(0, count($method->getDependencies()));
     }
 
+    /**
+     * testParserCurlyBraceBug11
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
+     */
     public function testParserCurlyBraceBug11()
     {
         $package   = self::parseSource(dirname(__FILE__) . '/_code/bugs/007.php')->current();
@@ -1628,6 +1888,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.xplib.de/index.php?do=details&task_id=12&project=3
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserCurlyBraceBug12()
     {
@@ -1647,6 +1911,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.xplib.de/index.php?do=details&task_id=15&project=3
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserBacktickExpressionBug15()
     {
@@ -1664,6 +1932,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.xplib.de/index.php?do=details&task_id=30&project=3
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserSetsCorrectTypeTokensIssue30()
     {
@@ -1825,6 +2097,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserDetectsTypeWithinInstanceOfOperatorIssue16()
     {
@@ -1855,6 +2131,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      * @todo TODO: It would be a cool feature if PHP_Depend would replace such
      *             combinations (T_VARIABLE = T_CONSTANT_ENCAPSED_STRING with
      *             T_INSTANCEOF + T_VARIABLE).
@@ -1886,6 +2166,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=17
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserDetectsTypeWithinCatchBlockIssue17()
     {
@@ -1910,6 +2194,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserDetectsOnlyTypeHintsWithinTheFunctionSignatureBug33()
     {
@@ -1932,6 +2220,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserDetectsOnlyTypeHintsWithinTheMethodSignatureBug33()
     {
@@ -1954,6 +2246,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the source file of an interface method.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserSetsSourceFileForInterfaceMethodBug89()
     {
@@ -1969,15 +2265,17 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertType('PHP_Depend_Code_Method', $method);
 
         $sourceFile = $method->getSourceFile();
-        $this->assertNotNull($sourceFile);
-        $this->assertType('PHP_Depend_Code_File', $sourceFile);
-        $this->assertSame($fileName, $sourceFile->getFileName());
+        self::assertEquals($fileName, $sourceFile->getFileName());
     }
 
     /**
      * Tests that the parser sets the source file of a class method.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserSetsSourceFileForClassMethodBug89()
     {
@@ -2002,6 +2300,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser sets the source file of a class property.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserSetsSourceFileForClassPropertyBug89()
     {
@@ -2030,6 +2332,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserHandlesStaticMethodCallInFunctionBodyBug69()
     {
@@ -2053,6 +2359,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserHandlesStaticMethodLeadingBackslashCallInFunctionBodyBug69()
     {
@@ -2076,6 +2386,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserDoesNotHandleQualifiedFunctionCallAsDependencyInFunctionBodyBug69()
     {
@@ -2095,6 +2409,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserHandlesQualifiedPropertyAccessAsDependencyInFunctionBodyBug69()
     {
@@ -2118,6 +2436,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::parser
+     * @group regressiontest
      */
     public function testParserHandlesQualifiedConstantAccessAsDependencyInFunctionBodyBug69()
     {
@@ -2131,21 +2453,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
                             ->getPackage();
 
         $this->assertSame('PHP\Depend', $package->getName());
-    }
-
-    /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
-     *
-     * @param string  $testCase          Qualified name of the test case.
-     * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public static function parseTestCaseSource($testCase = null, $ignoreAnnotations = false)
-    {
-        $trace = debug_backtrace();
-        return self::parseSource('parser/' . $trace[1]['function'] . '.php');
     }
 
     /**
@@ -2214,9 +2521,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * @return void
      */
     protected function doTestParserSetsCorrectDocComment(
-                                            PHP_Depend_Code_NodeIterator $nodes,
-                                            $indent = 1)
-    {
+        PHP_Depend_Code_NodeIterator $nodes,
+        $indent = 1
+    ) {
         $ws = str_repeat(" ", 4 * $indent);
 
         $expected = array(

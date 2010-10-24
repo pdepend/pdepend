@@ -196,6 +196,11 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the boolean flag has default value is <b>false</b>.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
      */
     public function testParserHandlesParameterWithoutDefaultValue()
     {

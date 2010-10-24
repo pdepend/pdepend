@@ -66,6 +66,10 @@ class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test extends PHP_
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesSimpleSignedDefaultValue()
     {
@@ -83,6 +87,10 @@ class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test extends PHP_
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesMultipleSignedDefaultValue()
     {
@@ -100,6 +108,10 @@ class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test extends PHP_
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesComplexSignedDefaultValue()
     {
@@ -113,4 +125,3 @@ class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test extends PHP_
         $this->assertSame(-42, $parameter->getDefaultValue());
     }
 }
-?>

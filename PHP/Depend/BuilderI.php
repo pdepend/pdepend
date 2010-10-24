@@ -45,8 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/ConstantsI.php';
-
 /**
  * Base interface for all code node builders.
  *
@@ -61,6 +59,8 @@ require_once 'PHP/Depend/ConstantsI.php';
 interface PHP_Depend_BuilderI
     extends PHP_Depend_ConstantsI, IteratorAggregate
 {
+    function setCache(PHP_Depend_Util_Cache_Driver $cache);
+
     /**
      * This method will try to find an already existing instance for the given
      * qualified name. It will create a new {@link PHP_Depend_Code_Class}

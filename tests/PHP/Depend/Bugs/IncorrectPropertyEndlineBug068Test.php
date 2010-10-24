@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for bug 68 where the property end line of a property was not set
@@ -63,16 +63,20 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the parser sets the expected start and end line for a property.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithoutDefaultValue()
     {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $property = $packages->current()
             ->getClasses()
             ->current()
@@ -87,10 +91,14 @@ class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_Abst
      * Tests that the parser sets the expected start and end line for a property.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithCommentsInDeclaration()
     {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $property = $packages->current()
             ->getClasses()
             ->current()
@@ -105,10 +113,14 @@ class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_Abst
      * Tests that the parser sets the expected start and end line for a property.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithArrayDefaultValue()
     {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $property = $packages->current()
             ->getClasses()
             ->current()
@@ -123,10 +135,14 @@ class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_Abst
      * Tests that the parser sets the expected start and end line for a property.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithScalarDefaultValueAndComments()
     {
-        $packages = self::parseSource('bugs/068/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
         $property = $packages->current()
             ->getClasses()
             ->current()
@@ -137,4 +153,3 @@ class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_Abst
         $this->assertSame(13, $property->getEndLine());
     }
 }
-?>

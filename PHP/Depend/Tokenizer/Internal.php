@@ -355,7 +355,7 @@ class PHP_Depend_Tokenizer_Internal
      *
      * @var array(PHP_Depend_Token) $tokens
      */
-    protected $tokens = array();
+    protected $tokens = null;
 
     /**
      * The next free identifier for unknown string tokens.
@@ -383,9 +383,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function setSourceFile($sourceFile)
     {
+        $this->tokens = null;
         $this->sourceFile = new PHP_Depend_Code_File($sourceFile);
-        $this->_tokenize();
-        $this->sourceFile->setTokens($this->tokens);
     }
 
     /**
@@ -396,6 +395,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function next()
     {
+        $this->_tokenize();
+
         if ($this->index < $this->count) {
             return $this->tokens[$this->index++];
         }
@@ -410,6 +411,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function peek()
     {
+        $this->_tokenize();
+
         if (isset($this->tokens[$this->index])) {
             return $this->tokens[$this->index]->type;
         }
@@ -425,6 +428,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function peekNext()
     {
+        $this->_tokenize();
+        
         $offset = 0;
         do {
             $type = $this->tokens[$this->index + ++$offset]->type;
@@ -440,6 +445,8 @@ class PHP_Depend_Tokenizer_Internal
      */
     public function prev()
     {
+        $this->_tokenize();
+
         if ($this->index > 1) {
             return $this->tokens[$this->index - 2]->type;
         }
@@ -480,6 +487,10 @@ class PHP_Depend_Tokenizer_Internal
      */
     private function _tokenize()
     {
+        if ($this->tokens) {
+            return;
+        }
+
         $this->tokens = array();
         $this->index  = 0;
         $this->count  = 0;

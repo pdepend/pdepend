@@ -72,6 +72,10 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
      * @param array(integer) $tokenTypes List of all expected token types.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      * @dataProvider dataProviderTokenizerKeywordSubstitutionInOperatorChain
      */
     public function testTokenizerKeywordSubstitutionInOperatorChain($sourceFile, array $tokenTypes)

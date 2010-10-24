@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <phpunit>
-  <logging>
-    <log type="test-xml" logIncompleteSkipped="true"/>
-  </logging>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">PHP</directory>
+        </whitelist>
+    </filter>
 </phpunit>

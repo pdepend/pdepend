@@ -76,6 +76,8 @@ final class PHP_Depend_Code_ASTSelfReference
      */
     const IMAGE = 'self';
 
+    protected $qualfiedName = null;
+
     /**
      * Constructs a new type holder instance.
      *
@@ -102,5 +104,31 @@ final class PHP_Depend_Code_ASTSelfReference
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitSelfReference($this, $data);
+    }
+
+    public function getType()
+    {
+        if ($this->typeInstance == null) {
+            $this->typeInstance = PHP_Depend_Builder_Registry::getDefault()
+                ->getClassOrInterface($this->qualfiedName);
+        }
+        return $this->typeInstance;
+    }
+
+    public function __sleep()
+    {
+        $this->qualfiedName = $this->getType()->getPackage()->getName() . '\\' .
+                              $this->getType()->getName();
+
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'qualfiedName'
+        );
     }
 }
