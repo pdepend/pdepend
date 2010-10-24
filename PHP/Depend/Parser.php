@@ -331,10 +331,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_uuidBuilder->forFile($this->_sourceFile)
         );
 
-        $key  = md5($this->_sourceFile->getFileName());
         $hash = md5_file($this->_sourceFile->getFileName());
 
-        if ($this->cache->restore($key, $hash)) {
+        if ($this->cache->restore($this->_sourceFile->getUUID(), $hash)) {
             return $this->tearDownEnvironment();
         }
         
@@ -404,7 +403,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokenType = $this->tokenizer->peek();
         }
 
-        $this->cache->store($key, $this->_sourceFile, $hash);
+        $this->cache->store($this->_sourceFile->getUUID(), $this->_sourceFile, $hash);
 
         $this->tearDownEnvironment();
     }
