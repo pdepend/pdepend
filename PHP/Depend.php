@@ -45,17 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Parser/VersionAllParser.php';
-require_once 'PHP/Depend/StorageRegistry.php';
-require_once 'PHP/Depend/VisitorI.php';
-require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Code/Filter/Null.php';
-require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
-require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
-require_once 'PHP/Depend/Input/CompositeFilter.php';
-require_once 'PHP/Depend/Input/Iterator.php';
-
 /**
  * PHP_Depend analyzes php class files and generates metrics.
  *
