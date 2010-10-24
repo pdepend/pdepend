@@ -90,19 +90,16 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     protected $packageNames = array();
 
+    protected $startLine = 0;
+
+    protected $endLine = 0;
+
     /**
      * Normalized code in this file.
      *
      * @var string $_source
      */
     private $_source = null;
-
-    /**
-     * The lines of code in this file.
-     *
-     * @var array(integer=>string) $_loc
-     */
-    private $_loc = null;
 
     /**
      * Constructs a new source file instance.
@@ -157,17 +154,6 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function setUUID($uuid)
     {
         $this->uuid = $uuid;
-    }
-
-    /**
-     * Returns the lines of code with stripped whitespaces.
-     *
-     * @return array(integer=>string)
-     */
-    public function getLoc()
-    {
-        $this->readSource();
-        return $this->_loc;
     }
 
     /**
@@ -229,6 +215,16 @@ return setCached($this->fileName, $tokens);
         $this->docComment = $docComment;
     }
 
+    public function getStartLine()
+    {
+        return $this->startLine;
+    }
+
+    public function getEndLine()
+    {
+        return $this->endLine;
+    }
+
     /**
      * Visitor method for node tree traversal.
      *
@@ -259,6 +255,8 @@ return setCached($this->fileName, $tokens);
         return array(
             'uuid',
             'fileName',
+            'startLine',
+            'endLine',
             'childNodes',
             'docComment',
             'packageNames'
@@ -308,12 +306,13 @@ return setCached($this->fileName, $tokens);
      */
     protected function readSource()
     {
-        if ($this->_loc === null) {
+        if ($this->_source === null) {
             $source = file_get_contents($this->fileName);
 
-            $this->_loc = preg_split('#(\r\n|\n|\r)#', $source);
+            $this->_source = str_replace(array("\r\n", "\r"), "\n", $source);
 
-            $this->_source = implode("\n", $this->_loc);
+            $this->startLine = 1;
+            $this->endLine   = substr_count($this->_source, "\n") + 1;
         }
     }
 }

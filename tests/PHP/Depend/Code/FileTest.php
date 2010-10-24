@@ -63,15 +63,21 @@ require_once 'PHP/Depend/Code/File.php';
 class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests the {@link PHP_Depend_Code_File#getLoc()} method.
+     * Tests the {@link PHP_Depend_Code_File#getSource()} method.
      *
      * @return void
+     * @covers testGetSourceReturnsOriginalFileContents
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
-    public function testGetLoc()
+    public function testGetSourceReturnsOriginalFileContents()
     {
-        $file = new PHP_Depend_Code_File(dirname(__FILE__) . '/../_code/mixed_code.php');
-        
-        $this->assertType('array', $file->getLoc());
-        $this->assertEquals(62, count($file->getLoc()));
+        $file = new PHP_Depend_Code_File(self::createCodeResourceUriForTest());
+
+        $actual   = $file->getSource();
+        $expected = file_get_contents(self::createCodeResourceUriForTest());
+
+        self::assertEquals($expected, $actual);
     }
 }

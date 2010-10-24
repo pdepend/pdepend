@@ -52,7 +52,6 @@ require_once 'PHP/Depend/Builder/Default.php';
 require_once 'PHP/Depend/Code/Filter/Null.php';
 require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
 require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
-require_once 'PHP/Depend/Tokenizer/CacheDecorator.php';
 require_once 'PHP/Depend/Tokenizer/Internal.php';
 require_once 'PHP/Depend/Input/CompositeFilter.php';
 require_once 'PHP/Depend/Input/Iterator.php';
@@ -594,9 +593,7 @@ class PHP_Depend
         // Reset list of thrown exceptions
         $this->_parseExceptions = array();
 
-        $tokenizer = new PHP_Depend_Tokenizer_CacheDecorator(
-            new PHP_Depend_Tokenizer_Internal()
-        );
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
 
         $this->fireStartParseProcess($this->_builder);
 

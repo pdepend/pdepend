@@ -242,7 +242,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             'nodes',
             'parentClassReference',
             'startLine',
-            'tokens',
             'userDefined',
             'uuid',
             'packageName'

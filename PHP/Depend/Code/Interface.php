@@ -166,7 +166,6 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
             'nodes',
             'parentClassReference',
             'startLine',
-            'tokens',
             'userDefined',
             'uuid',
             'packageName'
