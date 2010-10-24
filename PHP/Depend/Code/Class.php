@@ -269,34 +269,4 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $this->getProperties()->free();
         $this->_properties = array();
     }
-
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Adds a new property to this class instance.
-     *
-     * @param PHP_Depend_Code_Property $property The new class property.
-     *
-     * @return PHP_Depend_Code_Property
-     * @deprecated Since version 0.9.6, use addNode() instead.
-     */
-    public function addProperty(PHP_Depend_Code_Property $property)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-
-        if ($this->_properties === null) {
-            $this->_properties = array();
-        }
-
-        if (in_array($property, $this->_properties, true) === false) {
-            // Add to internal list
-            $this->_properties[] = $property;
-            // Set this as parent
-            $property->setDeclaringClass($this);
-        }
-        return $property;
-    }
-    
-    // @codeCoverageIgnoreEnd
 }
