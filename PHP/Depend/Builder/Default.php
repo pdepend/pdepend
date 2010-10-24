@@ -73,6 +73,14 @@ require_once 'PHP/Depend/Util/Type.php';
 class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 {
     /**
+     * The internal used cache instance.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /**
      * This property holds all packages found during the parsing phase.
      *
      * @param array(PHP_Depend_Code_Package)
@@ -153,6 +161,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->defaultFile    = new PHP_Depend_Code_File(null);
 
         $this->_packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
+    }
+
+    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    {
+        $this->cache = $cache;
     }
 
     /**

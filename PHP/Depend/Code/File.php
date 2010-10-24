@@ -63,6 +63,14 @@ require_once 'PHP/Depend/Code/NodeI.php';
 class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
 {
     /**
+     * The internal used cache instance.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /**
      * The unique identifier for this function.
      *
      * @var string
@@ -156,6 +164,12 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         $this->uuid = $uuid;
     }
 
+    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    {
+        $this->cache = $cache;
+        return $this;
+    }
+
     /**
      * Returns normalized source code with stripped whitespaces.
      *
@@ -174,9 +188,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getTokens()
     {
-return getCached($this->fileName);
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore(md5($this->fileName), __CLASS__);
+        return (array) $this->cache
+            ->type('tokens')
+            ->restore($this->getUUID());
     }
 
     /**
@@ -188,9 +202,9 @@ return getCached($this->fileName);
      */
     public function setTokens(array $tokens)
     {
-return setCached($this->fileName, $tokens);
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, md5($this->fileName), __CLASS__);
+        return $this->cache
+            ->type('tokens')
+            ->store($this->getUUID(), $tokens);
     }
 
     /**
@@ -253,6 +267,7 @@ return setCached($this->fileName, $tokens);
     public function __sleep()
     {
         return array(
+            'cache',
             'uuid',
             'fileName',
             'startLine',

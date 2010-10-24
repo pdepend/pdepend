@@ -3,6 +3,8 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
 {
     protected $cacheDir = null;
 
+    protected $type = 'cache';
+
     public function __construct($cacheDir = '/tmp/pdepend-playground')
     {
         if (false === file_exists($cacheDir)) {
@@ -11,9 +13,15 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
         $this->cacheDir = $cacheDir;
     }
 
+    public function type($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
     public function store($key, $data, $hash = null)
     {
-        $file = "{$this->cacheDir}/{$key}.cache";
+        $file = $this->getCacheFile($key);
         $this->write($file, serialize(array('hash' => $hash, 'data' => $data)));
     }
 
@@ -28,7 +36,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
 
     public function restore($key, $hash = null)
     {
-        $file = "{$this->cacheDir}/{$key}.cache";
+        $file = $this->getCacheFile($key);
         if (file_exists($file)) {
             return $this->restoreFile($file, $hash);
         }
@@ -55,5 +63,13 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
         fclose($handle);
 
         return $data;
+    }
+
+    protected function getCacheFile($key)
+    {
+        $file = "{$this->cacheDir}/{$key}.{$this->type}";
+        $this->type = 'cache';
+
+        return $file;
     }
 }

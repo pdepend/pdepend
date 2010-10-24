@@ -278,6 +278,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         require_once 'PHP/Depend/Builder/Registry.php';
         PHP_Depend_Builder_Registry::setDefault($builder);
+
+        $this->_builder->setCache($this->cache);
     }
 
     /**
@@ -327,15 +329,17 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Get currently parsed source file
         $this->_sourceFile = $this->tokenizer->getSourceFile();
-        $this->_sourceFile->setUUID(
-            $this->_uuidBuilder->forFile($this->_sourceFile)
-        );
+        $this->_sourceFile
+            ->setCache($this->cache)
+            ->setUUID($this->_uuidBuilder->forFile($this->_sourceFile));
 
         $hash = md5_file($this->_sourceFile->getFileName());
 
         if ($this->cache->restore($this->_sourceFile->getUUID(), $hash)) {
             return $this->tearDownEnvironment();
         }
+
+        $this->_tokenStack->push();
         
         // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->_sourceFile);
@@ -403,6 +407,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokenType = $this->tokenizer->peek();
         }
 
+        $this->_sourceFile->setTokens($this->_tokenStack->pop());
         $this->cache->store($this->_sourceFile->getUUID(), $this->_sourceFile, $hash);
 
         $this->tearDownEnvironment();
