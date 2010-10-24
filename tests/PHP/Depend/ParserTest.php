@@ -526,6 +526,44 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserHandlesClassWithMultipleImplementedInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesClassWithMultipleImplementedInterfaces()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        self::assertEquals(3, count($class->getInterfaces()));
+    }
+
+    /**
+     * testParserHandlesInterfaceWithMultipleParentInterfaces
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserHandlesInterfaceWithMultipleParentInterfaces()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getInterfaces()
+            ->current();
+
+        self::assertEquals(3, count($class->getInterfaces()));
+    }
+
+    /**
      * Tests that the parser sets the correct line number for methods.
      *
      * @return void
@@ -1652,6 +1690,37 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
         $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+    }
+
+    /**
+     * testParserStopsProcessingWhenCacheContainsValidResult
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserStopsProcessingWhenCacheContainsValidResult()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile(__FILE__);
+
+        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache->expects($this->once())
+            ->method('restore')
+            ->will(self::returnValue(true));
+        $cache->expects($this->never())
+            ->method('store');
+
+        $parser = new PHP_Depend_Parser_VersionAllParser(
+            $tokenizer,
+            $builder,
+            $cache
+        );
+        $parser->parse();
     }
 
     /**

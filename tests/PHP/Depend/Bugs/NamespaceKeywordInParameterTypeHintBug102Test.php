@@ -70,9 +70,10 @@ class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
      * testParserHandlesNamespaceKeywordInFunctionParameterTypeHint
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group parser
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesNamespaceKeywordInFunctionParameterTypeHint()
     {
@@ -90,9 +91,10 @@ class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
      * testParserHandlesNamespaceKeywordInMethodParameterTypeHint
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group parser
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesNamespaceKeywordInMethodParameterTypeHint()
     {

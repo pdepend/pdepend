@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
 
 /**
  * Main test suite for the PHP_Depend_Util_Cache package.

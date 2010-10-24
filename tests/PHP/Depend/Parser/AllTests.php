@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
 
 require_once dirname(__FILE__) . '/VersionAllParserTest.php';
 

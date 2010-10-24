@@ -111,6 +111,11 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid literal results in the expected exception.
      * 
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()

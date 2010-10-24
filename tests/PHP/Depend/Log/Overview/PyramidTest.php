@@ -74,6 +74,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -95,6 +100,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -111,6 +121,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the log method returns <b>false</b> for an invalid logger.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testPyramidDoesntAcceptInvalidAnalyzer()
     {
@@ -122,6 +137,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoCouplingAnalyzerWasSet()
     {
@@ -143,6 +163,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoCyclomaticComplexityAnalyzerWasSet()
     {
@@ -164,6 +189,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoInheritanceAnalyzerWasSet()
     {
@@ -185,6 +215,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoNodeCountAnalyzerWasSet()
     {
@@ -206,6 +241,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoNodeLOCAnalyzerWasSet()
     {
@@ -223,6 +263,16 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         $log->close();
     }
 
+    /**
+     * testCollectedAndComputedValuesInOutputSVG
+     *
+     * @return void
+     * @covers PHP_Depend_Log_Overview_Pyramid
+     * @group pdepend
+     * @group pdepend::log
+     * @group pdepend::log::overview
+     * @group unittest
+     */
     public function testCollectedAndComputedValuesInOutputSVG()
     {
         $output = self::createRunResourceURI('temp.svg');

@@ -71,6 +71,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * functions.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Coupling_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coupling
+     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectFunctionCoupling()
     {
@@ -96,6 +101,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * methods.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Coupling_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coupling
+     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectMethodCoupling()
     {
@@ -122,6 +132,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * properties.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Coupling_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coupling
+     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectPropertyCoupling()
     {
@@ -148,6 +163,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * properties.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Coupling_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coupling
+     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectClassCoupling()
     {
@@ -174,6 +194,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * complete source.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Coupling_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coupling
+     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectCoupling()
     {
@@ -203,6 +228,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * @param integer $calls    Number of expected calls.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Coupling_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coupling
+     * @group unittest
      * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
     public function testAnalyzerCalculatesExpectedCallCount($fileName, $calls)
@@ -222,6 +252,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * http://bugs.xplib.de/index.php?do=details&task_id=14&project=3
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Coupling_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coupling
+     * @group unittest
      */
     public function testAnalyzerExecutionChainBug14()
     {

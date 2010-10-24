@@ -66,6 +66,17 @@ require_once 'PHP/Depend/Metrics/CodeRank/PropertyStrategy.php';
 class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
     extends PHP_Depend_AbstractTest
 {
+    /**
+     * testStrategyCountsCorrectTypes
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CodeRank_Analyzer
+     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coderank
+     * @group unittest
+     */
     public function testStrategyCountsCorrectTypes()
     {
         $source   = dirname(__FILE__) . '/../../_code/coderank/property.php';

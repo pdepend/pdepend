@@ -71,9 +71,10 @@ class PHP_Depend_Bugs_ParameterStringDefaultValueBug103Test
      * testParserHandlesStringDefaultValueWithEmbeddedExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group parser
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesStringDefaultValueWithEmbeddedExpression()
     {

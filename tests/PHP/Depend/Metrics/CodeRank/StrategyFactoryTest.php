@@ -69,6 +69,11 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactoryTest extends PHP_Depend_Abstrac
      * strategy identifier.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_CodeRank_StrategyFactory
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coderank
+     * @group unittest
      */
     public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier()
     {

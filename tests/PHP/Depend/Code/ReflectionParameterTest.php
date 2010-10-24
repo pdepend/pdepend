@@ -69,6 +69,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * Tests that userland implementation redeclares all methods.
      * 
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testAllReflectionApiMethodsAvailable()
     {
@@ -90,6 +94,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForSimpleParameterIssue67()
     {
@@ -107,6 +115,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForSimpleParameterWithDefaultValueNullIssue67()
     {
@@ -124,6 +136,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForSimpleParameterWithDefaultValueFalseAndReferenceIssue67()
     {
@@ -141,6 +157,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterTypeArrayWithDefaultValueArrayIssue67()
     {
@@ -158,6 +178,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterWithDefaultValueTypeIssue67()
     {
@@ -175,6 +199,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterArrayWithDefaultValueNullIssue67()
     {
@@ -192,6 +220,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterWithDefaultValueArrayIssue67()
     {
@@ -209,6 +241,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterWithDefaultValueStringIssue67()
     {
@@ -226,6 +262,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterWithDefaultValueString2Issue67()
     {
@@ -243,6 +283,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterWithDefaultValueBooleanTrue()
     {
@@ -260,6 +304,10 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
      */
     public function testToStringReturnsExpectedStringForParameterWithDefaultValueFloat()
     {
@@ -299,4 +347,3 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
         return $parameter;
     }
 }
-?>

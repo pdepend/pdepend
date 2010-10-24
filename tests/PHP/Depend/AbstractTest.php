@@ -210,10 +210,6 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $path  = realpath(dirname(__FILE__) . '/../../..');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
-
-            PHP_CodeCoverage_Filter::getInstance()->addDirectoryToWhitelist(
-                realpath(dirname(__FILE__) . '/../../../PHP') . '/'
-            );
         }
 
         // Set test path
