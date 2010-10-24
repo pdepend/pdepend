@@ -87,8 +87,9 @@ require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ * @todo      Rename class from "Parser" to "AbstractParser"
  */
-class PHP_Depend_Parser implements PHP_Depend_ConstantsI
+abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 {
     /**
      * Regular expression for inline type definitions in regular comments. This
@@ -465,13 +466,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return string
      * @since 0.9.20
-     * @todo This method should be abstract, once we have marked this class as
-     *       abstract.
      */
-    protected function parseClassName()
-    {
-        return $this->consumeToken(self::T_STRING)->image;
-    }
+    protected abstract function parseClassName();
 
     /**
      * Parses a valid method or function name for the currently configured php
@@ -479,13 +475,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return string
      * @since 0.10.0
-     * @todo This method should be abstract, once we have marked this class as
-     *       abstract.
      */
-    protected function parseFunctionName()
-    {
-        return $this->consumeToken(self::T_STRING)->image;
-    }
+    protected abstract function parseFunctionName();
 
     /**
      * Parses the dependencies in a interface signature.
