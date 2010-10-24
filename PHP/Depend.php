@@ -780,25 +780,6 @@ class PHP_Depend
 
         return $this->_initAnalyseListeners($loader);
     }
-
-    // Deprecated Stuff
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Should PHP_Depend support projects with a bad documentation. If this
-     * option is set to <b>true</b>, PHP_Depend will treat the default package
-     * <b>+global</b> as a regular project package.
-     *
-     * @return void
-     * @deprecated since 0.9.12
-     */
-    public function setSupportBadDocumentation()
-    {
-        fwrite(STDERR, __METHOD__ . '() is deprecated since 0.9.12.' . PHP_EOL);
-        $this->_supportBadDocumentation = true;
-    }
-
-    // @codeCoverageIgnoreEnd
 }
 
 function __autoload($className)
