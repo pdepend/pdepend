@@ -81,12 +81,13 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         ini_set('xdebug.max_nesting_level', '100');
 
+        $cache   = new PHP_Depend_Util_Cache_Driver_Memory();
         $builder = new PHP_Depend_Builder_Default();
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
-        $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder);
+        $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder, $cache);
         $parser->setMaxNestingLevel(512);
         $parser->parse();
     }
@@ -2451,9 +2452,9 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * @return void
      */
     protected function doTestParserSetsCorrectDocComment(
-                                            PHP_Depend_Code_NodeIterator $nodes,
-                                            $indent = 1)
-    {
+        PHP_Depend_Code_NodeIterator $nodes,
+        $indent = 1
+    ) {
         $ws = str_repeat(" ", 4 * $indent);
 
         $expected = array(

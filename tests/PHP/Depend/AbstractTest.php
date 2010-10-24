@@ -217,15 +217,22 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         // Set test path
-        $path  = realpath(dirname(__FILE__) . '/../..') ;
+        $path  = realpath(dirname(__FILE__) . '/../..');
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
 
         include_once 'PHP/Depend/Code/Filter/Collection.php';
 
-        self::initVersionCompatibility();
+        self::_initVersionCompatibility();
     }
 
+    /**
+     * Autoloader for the test cases.
+     *
+     * @param string $className Name of the missing class.
+     *
+     * @return void
+     */
     public static function autoload($className)
     {
         $file = strtr($className, '_', '/') . '.php';
@@ -244,7 +251,7 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    private static function initVersionCompatibility()
+    private static function _initVersionCompatibility()
     {
         $reflection = new ReflectionClass('Iterator');
         $extension  = strtolower($reflection->getExtensionName());
@@ -264,7 +271,10 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected static function parseCodeResourceForTest($ignoreAnnotations = false)
     {
-        return self::parseSource(self::createCodeResourceUriForTest(), $ignoreAnnotations);
+        return self::parseSource(
+            self::createCodeResourceUriForTest(),
+            $ignoreAnnotations
+        );
     }
 
     /**
@@ -335,13 +345,18 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
         sort($files);
 
+        $cache   = new PHP_Depend_Util_Cache_Driver_Memory();
         $builder = new PHP_Depend_Builder_Default();
 
         foreach ($files as $file) {
             $tokenizer = new PHP_Depend_Tokenizer_Internal();
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $builder);
+            $parser = new PHP_Depend_Parser_VersionAllParser(
+                $tokenizer,
+                $builder,
+                $cache
+            );
             if ($ignoreAnnotations === true) {
                 $parser->setIgnoreAnnotations();
             }

@@ -258,25 +258,25 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Constructs a new source parser.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used code tokenizer.
-     * @param PHP_Depend_BuilderI   $builder   The used node builder.
+     * @param PHP_Depend_TokenizerI        $tokenizer The used code tokenizer.
+     * @param PHP_Depend_BuilderI          $builder   The used node builder.
+     * @param PHP_Depend_Util_Cache_Driver $cache     The used parser cache.
      */
     public function __construct(
         PHP_Depend_TokenizerI $tokenizer,
-        PHP_Depend_BuilderI $builder
+        PHP_Depend_BuilderI $builder,
+        PHP_Depend_Util_Cache_Driver $cache
     ) {
         $this->tokenizer = $tokenizer;
-        $this->_builder   = $builder;
+        $this->_builder  = $builder;
+        $this->cache     = $cache;
 
         $this->_uuidBuilder    = new PHP_Depend_Util_UuidBuilder();
         $this->_tokenStack     = new PHP_Depend_Parser_TokenStack();
 
         $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable();
 
-        $cacheFactory = new PHP_Depend_Util_Cache_Factory();
-        $this->cache  = $cacheFactory->create($this);
-
-        require_once 'PHP/Depend/Builder/Registry.php';
+        include_once 'PHP/Depend/Builder/Registry.php';
         PHP_Depend_Builder_Registry::setDefault($builder);
 
         $this->_builder->setCache($this->cache);
@@ -408,7 +408,11 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $this->_sourceFile->setTokens($this->_tokenStack->pop());
-        $this->cache->store($this->_sourceFile->getUUID(), $this->_sourceFile, $hash);
+        $this->cache->store(
+            $this->_sourceFile->getUUID(),
+            $this->_sourceFile,
+            $hash
+        );
 
         $this->tearDownEnvironment();
     }

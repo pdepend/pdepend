@@ -66,7 +66,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * Tests the {@link PHP_Depend_Code_File#getSource()} method.
      *
      * @return void
-     * @covers testGetSourceReturnsOriginalFileContents
+     * @covers PHP_Depend_Code_File
      * @group pdepend
      * @group pdepend::code
      * @group unittest

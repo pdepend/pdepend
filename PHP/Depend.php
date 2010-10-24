@@ -542,6 +542,10 @@ class PHP_Depend
         // Reset list of thrown exceptions
         $this->_parseExceptions = array();
 
+        // Create a cache instance
+        $cacheFactory = new PHP_Depend_Util_Cache_Factory();
+        $cache = $cacheFactory->create();
+
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
 
         $this->fireStartParseProcess($this->_builder);
@@ -549,7 +553,11 @@ class PHP_Depend
         foreach ($this->_createFileIterator() as $file) {
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser_VersionAllParser($tokenizer, $this->_builder);
+            $parser = new PHP_Depend_Parser_VersionAllParser(
+                $tokenizer,
+                $this->_builder,
+                $cache
+            );
             $parser->setMaxNestingLevel(1024);
 
             // Disable annotation parsing?
