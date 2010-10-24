@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for bug #82 where PHP_Depend does not handle comma separated
@@ -64,23 +64,26 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the parser handles a comma separated constant definition.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesSimpleCommaSeparatedConstantDefinition()
     {
-        $packages = self::parseSource('bugs/082/' . __FUNCTION__ . '.php');
-
-        $constants = $packages->current()
+        $constants = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getConstants();
 
-        $this->assertSame(2, count($constants));
+        self::assertEquals(2, count($constants));
     }
 
     /**
@@ -88,17 +91,20 @@ class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
      * inline comments.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments()
     {
-        $packages = self::parseSource('bugs/082/' . __FUNCTION__ . '.php');
-
-        $constants = $packages->current()
+        $constants = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getConstants();
 
-        $this->assertSame(2, count($constants));
+        self::assertEquals(2, count($constants));
     }
 
     /**
@@ -106,17 +112,19 @@ class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
      * definitions as expected.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesMultipleCommaSeparatedConstantDefinitions()
     {
-        $packages = self::parseSource('bugs/082/' . __FUNCTION__ . '.php');
-
-        $constants = $packages->current()
+        $constants = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getInterfaces()
             ->current()
             ->getConstants();
 
-        $this->assertSame(5, count($constants));
+        self::assertEquals(5, count($constants));
     }
 }
-?>

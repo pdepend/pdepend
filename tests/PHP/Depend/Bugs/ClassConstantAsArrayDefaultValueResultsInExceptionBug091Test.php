@@ -70,10 +70,13 @@ class PHP_Depend_Bugs_ClassConstantAsArrayDefaultValueResultsInExceptionBug091Te
      * Tests that the parser does not throw an exception.
      *
      * @return void
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        self::parseTestCaseSource(__METHOD__);
     }
 }

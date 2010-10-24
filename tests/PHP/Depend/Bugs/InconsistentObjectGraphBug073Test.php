@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once 'PHP/Depend/Log/Summary/Xml.php';
 
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Log/Summary/Xml.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the parser handles the following code correct:
@@ -75,21 +75,23 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage()
     {
-        $packages = self::parseSource('bugs/073-001-inconsistent-object-graph.php');
-
-        $this->assertSame(2, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(2, $package->getTypes()->count());
-        $this->assertSame(2, $package->getClasses()->count());
+        self::assertEquals(2, $package->getTypes()->count());
+        self::assertEquals(2, $package->getClasses()->count());
 
         $packages->next();
         $package = $packages->current();
-        $this->assertSame(1, $package->getTypes()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        self::assertEquals(1, $package->getTypes()->count());
+        self::assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -102,17 +104,19 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage()
     {
-        $packages = self::parseSource('bugs/073-002-inconsistent-object-graph.php');
-
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(3, $package->getTypes()->count());
-        $this->assertSame(2, $package->getClasses()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        self::assertEquals(3, $package->getTypes()->count());
+        self::assertEquals(2, $package->getClasses()->count());
+        self::assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -125,22 +129,24 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage()
     {
-        $packages = self::parseSource('bugs/073-003-inconsistent-object-graph.php');
-
-        $this->assertSame(2, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(2, $package->getTypes()->count());
-        $this->assertSame(1, $package->getClasses()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        self::assertEquals(2, $package->getTypes()->count());
+        self::assertEquals(1, $package->getClasses()->count());
+        self::assertEquals(1, $package->getInterfaces()->count());
 
         $packages->next();
         $package = $packages->current();
-        $this->assertSame(1, $package->getTypes()->count());
-        $this->assertSame(1, $package->getClasses()->count());
+        self::assertEquals(1, $package->getTypes()->count());
+        self::assertEquals(1, $package->getClasses()->count());
     }
 
     /**
@@ -153,17 +159,19 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage()
     {
-        $packages = self::parseSource('bugs/073-004-inconsistent-object-graph.php');
-
-        $this->assertSame(1, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(3, $package->getTypes()->count());
-        $this->assertSame(2, $package->getClasses()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        self::assertEquals(3, $package->getTypes()->count());
+        self::assertEquals(2, $package->getClasses()->count());
+        self::assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -176,21 +184,23 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage()
     {
-        $packages = self::parseSource('bugs/073-005-inconsistent-object-graph.php');
-
-        $this->assertSame(2, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(2, $package->getTypes()->count());
-        $this->assertSame(2, $package->getClasses()->count());
+        self::assertEquals(2, $package->getTypes()->count());
+        self::assertEquals(2, $package->getClasses()->count());
 
         $packages->next();
         $package = $packages->current();
-        $this->assertSame(1, $package->getTypes()->count());
-        $this->assertSame(1, $package->getClasses()->count());
+        self::assertEquals(1, $package->getTypes()->count());
+        self::assertEquals(1, $package->getClasses()->count());
     }
 
     /**
@@ -203,21 +213,23 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage()
     {
-        $packages = self::parseSource('bugs/073-006-inconsistent-object-graph.php');
-
-        $this->assertSame(2, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(2, $package->getTypes()->count());
-        $this->assertSame(2, $package->getInterfaces()->count());
+        self::assertEquals(2, $package->getTypes()->count());
+        self::assertEquals(2, $package->getInterfaces()->count());
 
         $packages->next();
         $package = $packages->current();
-        $this->assertSame(1, $package->getTypes()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        self::assertEquals(1, $package->getTypes()->count());
+        self::assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -234,21 +246,23 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace()
     {
-        $packages = self::parseSource('bugs/073-007-inconsistent-object-graph.php');
-
-        $this->assertSame(2, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(2, $package->getTypes()->count());
-        $this->assertSame(2, $package->getClasses()->count());
+        self::assertEquals(2, $package->getTypes()->count());
+        self::assertEquals(2, $package->getClasses()->count());
 
         $packages->next();
         $package = $packages->current();
-        $this->assertSame(1, $package->getTypes()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        self::assertEquals(1, $package->getTypes()->count());
+        self::assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -265,33 +279,39 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * </code>
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace()
     {
-        $packages = self::parseSource('bugs/073-008-inconsistent-object-graph.php');
-
-        $this->assertSame(2, $packages->count());
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $package = $packages->current();
-        $this->assertSame(2, $package->getTypes()->count());
-        $this->assertSame(1, $package->getClasses()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        self::assertEquals(2, $package->getTypes()->count());
+        self::assertEquals(1, $package->getClasses()->count());
+        self::assertEquals(1, $package->getInterfaces()->count());
 
         $packages->next();
         $package = $packages->current();
-        $this->assertSame(1, $package->getTypes()->count());
-        $this->assertSame(1, $package->getClasses()->count());
+        self::assertEquals(1, $package->getTypes()->count());
+        self::assertEquals(1, $package->getClasses()->count());
     }
 
     /**
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithPackage()
     {
         $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073-001-inconsistent-object-graph.php');
+        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
 
         $log = new PHP_Depend_Log_Summary_Xml();
         $log->setLogFile($logFile);
@@ -306,11 +326,15 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithoutPackage()
     {
         $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073-002-inconsistent-object-graph.php');
+        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
 
         $log = new PHP_Depend_Log_Summary_Xml();
         $log->setLogFile($logFile);
@@ -325,11 +349,15 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithPackage()
     {
         $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073-003-inconsistent-object-graph.php');
+        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
 
         $log = new PHP_Depend_Log_Summary_Xml();
         $log->setLogFile($logFile);
@@ -344,11 +372,15 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug73Test extends PHP_Depend_Abstra
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithoutPackage()
     {
         $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073-004-inconsistent-object-graph.php');
+        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
 
         $log = new PHP_Depend_Log_Summary_Xml();
         $log->setLogFile($logFile);

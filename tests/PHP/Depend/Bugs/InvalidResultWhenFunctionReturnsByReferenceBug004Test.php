@@ -68,7 +68,10 @@ class PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test
      * correct.
      *
      * @return void
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesInvalidFunctionWhenReturnsByReference()
     {
@@ -83,7 +86,10 @@ class PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test
      * correct.
      *
      * @return void
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserCreatesInvalidMethodWhenReturnsByReference()
     {
