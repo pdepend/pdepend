@@ -47,6 +47,8 @@
  * @since      0.10.0
  */
 
+// @codeCoverageIgnoreStart
+
 /**
  * Base interface for a concrete cache driver.
  *
@@ -105,3 +107,5 @@ interface PHP_Depend_Util_Cache_Driver
      */
     function restore($key, $hash = null);
 }
+
+// @codeCoverageIgnoreEnd
