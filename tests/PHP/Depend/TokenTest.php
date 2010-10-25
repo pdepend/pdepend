@@ -45,29 +45,10 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
 require_once dirname(__FILE__) . '/AbstractTest.php';
-require_once dirname(__FILE__) . '/DependTest.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/ParserRegressionTest.php';
-require_once dirname(__FILE__) . '/TokenTest.php';
-require_once dirname(__FILE__) . '/Builder/DefaultTest.php';
-require_once dirname(__FILE__) . '/Bugs/AllTests.php';
-require_once dirname(__FILE__) . '/Code/AllTests.php';
-require_once dirname(__FILE__) . '/Input/AllTests.php';
-require_once dirname(__FILE__) . '/Issues/AllTests.php';
-require_once dirname(__FILE__) . '/Log/AllTests.php';
-require_once dirname(__FILE__) . '/Metrics/AllTests.php';
-require_once dirname(__FILE__) . '/Parser/AllTests.php';
-require_once dirname(__FILE__) . '/TextUI/AllTests.php';
-require_once dirname(__FILE__) . '/Tokenizer/AllTests.php';
-require_once dirname(__FILE__) . '/Util/AllTests.php';
-require_once dirname(__FILE__) . '/Visitor/AllTests.php';
 
 /**
- * Main test suite for the PHP_Depend package.
+ * Test case for the {@link PHP_Depend_Token} class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -76,46 +57,86 @@ require_once dirname(__FILE__) . '/Visitor/AllTests.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Token
  */
-class PHP_Depend_AllTests
+class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * testConstructorSetsTypeProperty
      *
      * @return void
+     * @group pdepend
+     * @group unittest
      */
-    public static function main()
+    public function testConstructorSetsTypeProperty()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
+        self::assertEquals(1, $token->type);
     }
 
     /**
-     * Creates the phpunit test suite for this package.
+     * testConstructorSetsImageProperty
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @group pdepend
+     * @group unittest
      */
-    public static function suite()
+    public function testConstructorSetsImageProperty()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
-        $suite->addTestSuite('PHP_Depend_TokenTest');
+        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
+        self::assertEquals(2, $token->image);
+    }
 
-        $suite->addTest(PHP_Depend_Bugs_AllTests::suite());
-        $suite->addTest(PHP_Depend_Code_AllTests::suite());
-        $suite->addTest(PHP_Depend_Issues_AllTests::suite());
-        $suite->addTest(PHP_Depend_Log_AllTests::suite());
-        $suite->addTest(PHP_Depend_Input_AllTests::suite());
-        $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
-        $suite->addTest(PHP_Depend_Parser_AllTests::suite());
-        $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
-        $suite->addTest(PHP_Depend_Tokenizer_AllTests::suite());
-        $suite->addTest(PHP_Depend_Util_AllTests::suite());
-        $suite->addTest(PHP_Depend_Visitor_AllTests::suite());
+    /**
+     * testConstructorSetsStartLineProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group unittest
+     */
+    public function testConstructorSetsStartLineProperty()
+    {
+        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
+        self::assertEquals(4, $token->startLine);
+    }
 
-        $suite->addTestSuite('PHP_Depend_Builder_DefaultTest');
-        $suite->addTestSuite('PHP_Depend_ParserTest');
-        $suite->addTestSuite('PHP_Depend_ParserRegressionTest');
-        $suite->addTestSuite('PHP_Depend_DependTest');
+    /**
+     * testConstructorSetsEndLineProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group unittest
+     */
+    public function testConstructorSetsEndLineProperty()
+    {
+        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
+        self::assertEquals(8, $token->endLine);
+    }
 
-        return $suite;
+    /**
+     * testConstructorSetsStartColumnProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group unittest
+     */
+    public function testConstructorSetsStartColumnProperty()
+    {
+        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
+        self::assertEquals(16, $token->startColumn);
+    }
+
+    /**
+     * testConstructorSetsEndColumnProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group unittest
+     */
+    public function testConstructorSetsEndColumnProperty()
+    {
+        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
+        self::assertEquals(32, $token->endColumn);
     }
 }

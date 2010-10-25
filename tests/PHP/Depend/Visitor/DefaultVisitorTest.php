@@ -49,16 +49,6 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Property.php';
-require_once 'PHP/Depend/Visitor/ListenerI.php';
-
 /**
  * Test case for the default visitor implementation.
  *
@@ -70,6 +60,8 @@ require_once 'PHP/Depend/Visitor/ListenerI.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Visitor_AbstractVisitor
  */
 class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
 {
@@ -77,7 +69,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * Tests the execution order of the default visitor implementation.
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -117,7 +108,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorVisitsFunctionParameter
      * 
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -137,7 +127,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorVisitsMethodParameter
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -157,7 +146,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesStartVisitParameterOnListener
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -180,7 +168,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesEndVisitParameterOnListener
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -203,7 +190,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesStartVisitInterfaceOnListener
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -226,7 +212,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesEndVisitInterfaceOnListener
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -249,7 +234,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesStartVisitPropertyOnListener
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
      * @group pdepend
      * @group pdepend::visitor
      * @group unittest
@@ -289,5 +273,35 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
+    }
+
+    /**
+     * testGetVisitListenersReturnsIterator
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testGetVisitListenersReturnsIterator()
+    {
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        self::assertType('Iterator', $visitor->getVisitListeners());
+    }
+
+    /**
+     * testGetVisitListenersContainsAddedListener
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::visitor
+     * @group unittest
+     */
+    public function testGetVisitListenersContainsAddedListener()
+    {
+        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor->addVisitListener($this->getMock('PHP_Depend_Visitor_ListenerI'));
+
+        self::assertEquals(1, count($visitor->getVisitListeners()));
     }
 }
