@@ -38,42 +38,59 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Util_Cache_Driver
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-require_once dirname(__FILE__) . '/Driver/AllTests.php';
+require_once dirname(__FILE__) . '/../AbstractDriverTest.php';
 
 /**
- * Main test suite for the PHP_Depend_Util_Cache package.
+ * Test case for the {@link PHP_Depend_Util_Cache_Driver_File} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Util_Cache_Driver
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_Cache_Driver_File
  */
-class PHP_Depend_Util_Cache_AllTests
+class PHP_Depend_Util_Cache_Driver_FileTest
+    extends PHP_Depend_Util_Cache_AbstractDriverTest
 {
     /**
-     * Creates the phpunit test suite for this package.
+     * Temporary cache directory.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @var string
      */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util_Cache - AllTests');
-        $suite->addTest(PHP_Depend_Util_Cache_Driver_AllTests::suite());
+    protected $cacheDir = null;
 
-        return $suite;
+    /**
+     * Initializes a temporary workling directory.
+     * 
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->cacheDir = self::createRunResourceURI('cache');
+    }
+
+    /**
+     * Creates a test fixture.
+     *
+     * @return PHP_Depend_Util_Cache_Driver
+     */
+    protected function createDriver()
+    {
+        return new PHP_Depend_Util_Cache_Driver_File($this->cacheDir);
     }
 }

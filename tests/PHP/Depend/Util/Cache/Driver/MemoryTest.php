@@ -38,42 +38,40 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Util_Cache_Driver
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-require_once dirname(__FILE__) . '/Driver/AllTests.php';
+require_once dirname(__FILE__) . '/../AbstractDriverTest.php';
 
 /**
- * Main test suite for the PHP_Depend_Util_Cache package.
+ * Test case for the {@link PHP_Depend_Util_Cache_Driver_Memory} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Util_Cache_Driver
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * 
+ * @covers PHP_Depend_Util_Cache_Driver_Memory
  */
-class PHP_Depend_Util_Cache_AllTests
+class PHP_Depend_Util_Cache_Driver_MemoryTest
+    extends PHP_Depend_Util_Cache_AbstractDriverTest
 {
     /**
-     * Creates the phpunit test suite for this package.
+     * Creates a test fixture.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return PHP_Depend_Util_Cache_Driver
      */
-    public static function suite()
+    protected function createDriver()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util_Cache - AllTests');
-        $suite->addTest(PHP_Depend_Util_Cache_Driver_AllTests::suite());
-
-        return $suite;
+        return new PHP_Depend_Util_Cache_Driver_Memory();
     }
 }
