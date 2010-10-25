@@ -67,6 +67,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * interface without a body.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesInterfaceDeclarationWithoutBody()
     {
@@ -83,6 +87,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * interface declaration with extend but without a body.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesInterfaceDeclarationWithExtendWithoutBody()
     {
@@ -99,6 +107,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * interface declaration with extend with invalid end of interface list.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesInterfaceDeclarationWithInvalidInterfaceList()
     {
@@ -115,6 +127,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration without a body.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClassDeclarationWithoutBody()
     {
@@ -131,6 +147,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with extend but without a parent class name and a body.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClassDeclarationWithExtendsWithoutClassName()
     {
@@ -147,6 +167,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with implements but without a interface name and a body.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClassDeclarationWithExtendsWithoutInterfaceName()
     {
@@ -163,6 +187,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with parent interface but without a body.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClassDeclarationWithParentInterfaceWithoutBody()
     {
@@ -179,6 +207,10 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with an incomplete parent interface list and without a body.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClassDeclarationWithIncompleteParentInterfaceWithoutBody()
     {
@@ -190,4 +222,3 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
         self::parseSource('bugs/065-008-class-declaration-without-body.fail');
     }
 }
-?>

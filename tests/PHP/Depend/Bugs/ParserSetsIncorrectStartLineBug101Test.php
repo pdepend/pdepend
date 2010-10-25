@@ -65,17 +65,38 @@ class PHP_Depend_Bugs_ParserSetsIncorrectStartLineBug101Test
     extends PHP_Depend_Bugs_AbstractTest
 {
     /**
+     * testParserSetsExpectedStartLineNumber
+     *
      * @return void
-     * @group bugs
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
-    public function testParserSetsExpectedLineNumber()
+    public function testParserSetsExpectedStartLineNumber()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $class    = $packages->current()
+        $class = self::parseTestCaseSource(__METHOD__)->current()
             ->getClasses()
             ->current();
 
-        $this->assertEquals(2, $class->getStartLine());
-        $this->assertEquals(8, $class->getEndLine());
+        self::assertEquals(2, $class->getStartLine());
+    }
+
+    /**
+     * testParserSetsExpectedEndLineNumber
+     *
+     * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserSetsExpectedEndLineNumber()
+    {
+        $class = self::parseTestCaseSource(__METHOD__)->current()
+            ->getClasses()
+            ->current();
+
+        self::assertEquals(8, $class->getEndLine());
     }
 }

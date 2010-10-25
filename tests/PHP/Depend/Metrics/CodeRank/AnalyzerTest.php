@@ -532,6 +532,14 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * values.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_CodeRank_Analyzer
+     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
+     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coderank
+     * @group unittest
      */
     public function testGetNodeMetrics()
     {
@@ -551,6 +559,14 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * returns an empty <b>array</b> for an unknown identifier.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_CodeRank_Analyzer
+     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
+     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coderank
+     * @group unittest
      */
     public function testGetNodeMetricsInvalidIdentifier()
     {

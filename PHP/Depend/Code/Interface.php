@@ -68,7 +68,16 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var integer $_modifiers
      */
-    private $_modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
+    protected $modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
+
+    /**
+     * Name of the parent package for this interface instance. This property is
+     * used to restore the parent package instance while the object tree gets
+     * unserialized from the cache.
+     *
+     * @var string
+     */
+    protected $packageName = null;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -126,7 +135,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getModifiers()
     {
-        return $this->_modifiers;
+        return $this->modifiers;
     }
 
     /**
@@ -140,5 +149,20 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitInterface($this);
+    }
+
+    public function  __wakeup()
+    {
+        foreach ($this->methods as $method) {
+            $method->sourceFile = $this->sourceFile;
+            $method->setParent($this);
+        }
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->buildPackage($this->packageName)
+            ->addType($this);
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->restoreInterface($this);
     }
 }

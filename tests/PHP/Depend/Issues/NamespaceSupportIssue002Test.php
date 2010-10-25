@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for ticket 002, PHP 5.3 namespace support.
@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_AbstractTest
 {
     /**
      * Tests that the parser handles a simple use statement as expected.
@@ -74,15 +74,15 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
      */
     public function testParserHandlesSimpleUseDeclaration()
     {
-        $packages = self::parseSource('issues/002-001-use-declaration.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $class = $packages->current()
                           ->getClasses()
                           ->current();
 
         $parentClass = $class->getParentClass();
-        $this->assertSame('Bar', $parentClass->getName());
-        $this->assertSame('foo', $parentClass->getPackage()->getName());
+        self::assertEquals('Bar', $parentClass->getName());
+        self::assertEquals('foo', $parentClass->getPackage()->getName());
     }
 
     /**
@@ -104,12 +104,12 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                           ->current();
 
         $parentClass = $class->getParentClass();
-        $this->assertSame('FooBar', $parentClass->getName());
-        $this->assertSame('foo', $parentClass->getPackage()->getName());
+        self::assertEquals('FooBar', $parentClass->getName());
+        self::assertEquals('foo', $parentClass->getPackage()->getName());
 
         $interface = $class->getInterfaces()->current();
-        $this->assertSame('Bar', $interface->getName());
-        $this->assertSame('foo', $interface->getPackage()->getName());
+        self::assertEquals('Bar', $interface->getName());
+        self::assertEquals('foo', $interface->getPackage()->getName());
     }
 
     /**
@@ -131,8 +131,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                           ->current();
 
         $parentClass = $class->getParentClass();
-        $this->assertSame('Bar', $parentClass->getName());
-        $this->assertSame('foo\bar', $parentClass->getPackage()->getName());
+        self::assertEquals('Bar', $parentClass->getName());
+        self::assertEquals('foo\bar', $parentClass->getPackage()->getName());
     }
 
     /**
@@ -168,9 +168,24 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax()
     {
-        $packages = self::parseSource('issues/002-005-namespace-declaration.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
+        self::assertEquals('foo', $packages->current()->getName());
+    }
 
-        $this->assertSame('foo', $packages->current()->getName());
+    /**
+     * testParserDoesNotAddEmptyNamespaceToResultSet
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group pdepend::parser
+     * @group unittest
+     */
+    public function testParserDoesNotAddEmptyNamespaceToResultSet()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+        self::assertEquals(0, count($packages));
     }
 
     /**
@@ -186,9 +201,8 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax()
     {
-        $packages = self::parseSource('issues/002-006-namespace-declaration.php');
-
-        $this->assertSame('foo', $packages->current()->getName());
+        $packages = self::parseTestCaseSource(__METHOD__);
+        self::assertEquals(__FUNCTION__, $packages->current()->getName());
     }
 
     /**
@@ -206,7 +220,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     {
         $packages = self::parseSource('issues/002-007-namespace-declaration.php');
 
-        $this->assertSame('', $packages->current()->getName());
+        self::assertEquals('', $packages->current()->getName());
     }
 
     /**
@@ -272,7 +286,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                           ->getClasses()
                           ->current();
 
-        $this->assertSame('bar', $class->getPackage()->getName());
+        self::assertEquals('bar', $class->getPackage()->getName());
     }
 
     /**
@@ -294,7 +308,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                           ->getClasses()
                           ->current();
 
-        $this->assertSame('bar', $class->getPackage()->getName());
+        self::assertEquals('bar', $class->getPackage()->getName());
     }
 
     /**
@@ -311,29 +325,29 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     {
         $packages = self::parseSource('issues/002-012-multiple-namespaces.php');
 
-        $this->assertSame(3, $packages->count());
+        self::assertEquals(3, $packages->count());
         
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('bar', $package->getName());
-        $this->assertSame(1, $types->count());
-        $this->assertSame('BarFoo', $types->current()->getName());
+        self::assertEquals('bar', $package->getName());
+        self::assertEquals(1, $types->count());
+        self::assertEquals('BarFoo', $types->current()->getName());
 
         $packages->next();
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('foo', $package->getName());
-        $this->assertSame(1, $types->count());
-        $this->assertSame('FooBar', $types->current()->getName());
+        self::assertEquals('foo', $package->getName());
+        self::assertEquals(1, $types->count());
+        self::assertEquals('FooBar', $types->current()->getName());
 
         $packages->next();
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('baz', $package->getName());
-        $this->assertSame(1, $types->count());
-        $this->assertSame('FooBaz', $types->current()->getName());
+        self::assertEquals('baz', $package->getName());
+        self::assertEquals(1, $types->count());
+        self::assertEquals('FooBaz', $types->current()->getName());
     }
 
     /**
@@ -350,29 +364,29 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
     {
         $packages = self::parseSource('issues/002-013-multiple-namespaces.php');
 
-        $this->assertSame(3, $packages->count());
+        self::assertEquals(3, $packages->count());
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('bar', $package->getName());
-        $this->assertSame(1, $types->count());
-        $this->assertSame('BarFoo', $types->current()->getName());
+        self::assertEquals('bar', $package->getName());
+        self::assertEquals(1, $types->count());
+        self::assertEquals('BarFoo', $types->current()->getName());
 
         $packages->next();
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('foo', $package->getName());
-        $this->assertSame(1, $types->count());
-        $this->assertSame('FooBar', $types->current()->getName());
+        self::assertEquals('foo', $package->getName());
+        self::assertEquals(1, $types->count());
+        self::assertEquals('FooBar', $types->current()->getName());
 
         $packages->next();
 
         $package = $packages->current();
         $types   = $package->getTypes();
-        $this->assertSame('baz', $package->getName());
-        $this->assertSame(1, $types->count());
-        $this->assertSame('FooBaz', $types->current()->getName());
+        self::assertEquals('baz', $package->getName());
+        self::assertEquals(1, $types->count());
+        self::assertEquals('FooBaz', $types->current()->getName());
     }
 
     /**
@@ -392,7 +406,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                              ->getFunctions()
                              ->current();
 
-        $this->assertSame('foo\bar', $function->getPackage()->getName());
+        self::assertEquals('foo\bar', $function->getPackage()->getName());
     }
 
     /**
@@ -418,7 +432,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                              ->current();
 
         $dependency = $type->getDependencies()->current();
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
@@ -446,7 +460,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $dependency = $function->getDependencies()
                                ->current();
 
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
         $this->assertContains($function->getPackage()->getName(),
                               $dependency->getPackage()->getName());
     }
@@ -474,7 +488,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                              ->current();
 
         $dependency = $type->getDependencies()->current();
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
@@ -494,18 +508,14 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
      */
     public function testParserKeepsQualifiedTypeNameInFunction($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-
-        // Get namespaced function
-        $function = $packages->current()
+        $dependency = self::parseSource($fileName)
+            ->current()
             ->getFunctions()
+            ->current()
+            ->getDependencies()
             ->current();
 
-        $dependency = $function->getDependencies()
-            ->current();
-
-        $this->assertType('PHP_Depend_Code_Class', $dependency);
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
@@ -531,7 +541,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                              ->current();
 
         $dependency = $type->getDependencies()->current();
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
@@ -559,7 +569,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $dependency = $function->getDependencies()
                                ->current();
 
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
@@ -585,7 +595,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
                              ->current();
 
         $dependency = $type->getDependencies()->current();
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**
@@ -613,7 +623,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Abstract
         $dependency = $function->getDependencies()
                                ->current();
 
-        $this->assertSame($namespaceName, $dependency->getPackage()->getName());
+        self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
     /**

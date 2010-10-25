@@ -82,7 +82,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testFreeResetsDeclaringFunctionToNull()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -107,7 +107,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForSimpleVariableIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -131,7 +131,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -155,7 +155,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -179,7 +179,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -203,7 +203,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -227,7 +227,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForTypeHintVariableIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -251,7 +251,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterDeclaringClassReturnsNullForFunctionIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getFunctions()
             ->current()
@@ -273,7 +273,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
 
         $class = $packages->current()
             ->getClasses()
@@ -298,7 +298,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnsExpectedTypeFromASTClassOrInterfaceReference()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
 
         $class = $packages->current()
             ->getClasses()
@@ -323,7 +323,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet()
     {
-        $packages  = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages  = self::parseCodeResourceForTest();
         $parameter = $packages->current()
             ->getClasses()
             ->current()
@@ -346,7 +346,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnsExpectedDeclaringFunction()
     {
-        $packages = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
 
         $function = $package->getFunctions()
@@ -369,7 +369,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnsExpectedDeclaringMethod()
     {
-        $packages = self::parseSource('code/parameter/' . __FUNCTION__ . '.php');
+        $packages = self::parseCodeResourceForTest();
         $package  = $packages->current();
 
         $method = $package->getClasses()

@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for issue #79 where we should store the tokens for each created
@@ -63,42 +63,50 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depend_Issues_AbstractTest
 {
     /**
      * Tests that the parameter contains the start line of the first token.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParameterContainsStartLineOfFirstToken()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $parameter = $packages->current()
+        $parameter = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current()
             ->getParameters()
             ->current();
 
-        $this->assertSame(4, $parameter->getStartLine());
+        self::assertEquals(4, $parameter->getStartLine());
     }
 
     /**
      * Tests that the parameter contains the end line of the last token.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Parameter
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParameterContainsEndLineOfLastToken()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $parameter = $packages->current()
+        $parameter = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current()
             ->getParameters()
             ->current();
 
-        $this->assertSame(11, $parameter->getEndLine());
+        self::assertEquals(11, $parameter->getEndLine());
     }
 
     /**
@@ -106,6 +114,10 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * contains an invalid token.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserThrowsExpectedExceptionForArrayInConstantDeclaration()
     {
@@ -114,18 +126,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             'Unexpected token: array, line: 4, col: 17, file: '
         );
 
-        self::parseSource('issues/079/' . __FUNCTION__ . '.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that the parser stores the expected function tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedFunctionTokens()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current();
 
@@ -141,18 +158,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
-        $this->assertEquals($expected, $function->getTokens());
+        self::assertEquals($expected, $function->getTokens());
     }
 
     /**
      * Tests that the parser stores the expected function tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedFunctionTokensWithParameters()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current();
 
@@ -177,57 +199,69 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
-        $this->assertEquals($expected, $function->getTokens());
+        self::assertEquals($expected, $function->getTokens());
     }
 
     /**
      * Tests that the function uses the start line of the first token.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testFunctionContainsStartLineOfFirstToken()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current();
 
         $tokens = $function->getTokens();
         $token  = reset($tokens);
 
-        $this->assertSame(2, $token->startLine);
-        $this->assertSame($token->startLine, $function->getStartLine());
+        self::assertEquals($token->startLine, $function->getStartLine());
     }
 
     /**
      * Tests that the function uses the end line of the last token.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Function
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testFunctionContainsEndLineOfLastToken()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-        $function = $packages->current()
+        $function = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current();
 
         $tokens = $function->getTokens();
         $token  = end($tokens);
 
-        $this->assertSame(7, $token->endLine);
-        $this->assertSame($token->endLine, $function->getEndLine());
+        self::assertEquals($token->endLine, $function->getEndLine());
     }
 
     /**
      * Tests that the parser stores the expected method tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedMethodTokens()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $method = $packages->current()
+        $method = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -246,19 +280,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
-        $this->assertEquals($expected, $method->getTokens());
+        self::assertEquals($expected, $method->getTokens());
     }
 
     /**
      * Tests that the parser stores the expected method tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedMethodTokensWithStaticModifier()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $method = $packages->current()
+        $method = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -278,19 +316,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
-        $this->assertEquals($expected, $method->getTokens());
+        self::assertEquals($expected, $method->getTokens());
     }
 
     /**
      * Tests that the parser stores the expected method tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $method = $packages->current()
+        $method = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -311,19 +353,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
-        $this->assertEquals($expected, $method->getTokens());
+        self::assertEquals($expected, $method->getTokens());
     }
 
     /**
      * Tests that the method uses the start line of the first token.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testMethodContainsStartLineOfFirstToken()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $method = $packages->current()
+        $method = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -332,20 +378,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         $tokens = $method->getTokens();
         $token  = reset($tokens);
 
-        $this->assertSame(4, $token->startLine);
-        $this->assertSame($token->startLine, $method->getStartLine());
+        self::assertEquals($token->startLine, $method->getStartLine());
     }
 
     /**
      * Tests that the method uses the end line of the last token.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testMethodContainsEndLineOfLastToken()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $method = $packages->current()
+        $method = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -354,20 +403,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         $tokens = $method->getTokens();
         $token  = end($tokens);
 
-        $this->assertSame(11, $token->endLine);
-        $this->assertSame($token->endLine, $method->getEndLine());
+        self::assertEquals($token->endLine, $method->getEndLine());
     }
 
     /**
      * Tests that the parser stores the expected class tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedClassTokens()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current();
 
@@ -385,19 +437,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        $this->assertEquals($expected, $class->getTokens());
+        self::assertEquals($expected, $class->getTokens());
     }
 
     /**
      * Tests that the parser stores the expected class tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedClassTokensWithFinalModifier()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current();
 
@@ -416,19 +472,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        $this->assertEquals($expected, $class->getTokens());
+        self::assertEquals($expected, $class->getTokens());
     }
 
     /**
      * Tests that the parser stores the expected class tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Class
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedClassTokensWithAbstractModifier()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $class = $packages->current()
+        $class = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current();
 
@@ -447,19 +507,23 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        $this->assertEquals($expected, $class->getTokens());
+        self::assertEquals($expected, $class->getTokens());
     }
 
     /**
      * Tests that the parser stores the expected interface tokens.
      *
      * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Interface
+     * @group pdepend
+     * @group pdepend::issues
+     * @group unittest
      */
     public function testParserStoresExpectedInterfaceTokens()
     {
-        $packages = self::parseSource('issues/079/' . __FUNCTION__ . '.php');
-
-        $interface = $packages->current()
+        $interface = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getInterfaces()
             ->current();
 
@@ -476,7 +540,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new PHP_Depend_Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        $this->assertEquals($expected, $interface->getTokens());
+        self::assertEquals($expected, $interface->getTokens());
     }
 }
-?>

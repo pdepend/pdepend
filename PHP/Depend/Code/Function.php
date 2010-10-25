@@ -70,6 +70,14 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     private $_package = null;
 
     /**
+     * The name of the parent package for this function. We use this property
+     * to restore the parent package while we unserialize a cached object tree.
+     *
+     * @var string
+     */
+    protected $packageName = null;
+
+    /**
      * Returns the parent package for this function.
      *
      * @return PHP_Depend_Code_Package
@@ -88,7 +96,13 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      */
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
-        $this->_package = $package;
+        if ($package === null) {
+            $this->packageName = null;
+            $this->_package    = null;
+        } else {
+            $this->packageName = $package->getName();
+            $this->_package    = $package;
+        }
     }
 
     /**
@@ -129,5 +143,29 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     private function _removeReferenceToPackage()
     {
         $this->_package = null;
+    }
+
+    public function  __sleep()
+    {
+        return array(
+            'cache',
+            'nodes',
+            'uuid',
+            'name',
+            'startLine',
+            'endLine',
+            'docComment',
+            'returnsReference',
+            'returnClassReference',
+            'exceptionClassReferences',
+            'packageName'
+        );
+    }
+
+    public function  __wakeup()
+    {
+        PHP_Depend_Builder_Registry::getDefault()
+            ->buildPackage($this->packageName)
+            ->addFunction($this);
     }
 }

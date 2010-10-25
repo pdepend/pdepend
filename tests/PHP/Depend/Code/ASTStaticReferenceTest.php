@@ -126,7 +126,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
             'The keyword "static" was used outside of a class/method scope.'
         );
 
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
     }
 
     /**
@@ -147,7 +147,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
             'The keyword "static" was used outside of a class/method scope.'
         );
 
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
     }
 
     /**

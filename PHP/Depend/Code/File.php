@@ -63,18 +63,44 @@ require_once 'PHP/Depend/Code/NodeI.php';
 class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
 {
     /**
+     * The internal used cache instance.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /**
      * The unique identifier for this function.
      *
-     * @var string $_uuid
+     * @var string
      */
-    private $_uuid = null;
+    protected $uuid = null;
 
     /**
      * The source file name/path.
      *
-     * @var string $_fileName
+     * @var string
      */
-    private $_fileName = null;
+    protected $fileName = null;
+
+    /**
+     * The comment for this type.
+     *
+     * @var string
+     */
+    protected $docComment = null;
+
+    /**
+     * Names of all packages that were defined in this file.
+     *
+     * @var array(string)
+     */
+    protected $packageNames = array();
+
+    protected $startLine = 0;
+
+    protected $endLine = 0;
 
     /**
      * Normalized code in this file.
@@ -84,20 +110,6 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     private $_source = null;
 
     /**
-     * The lines of code in this file.
-     *
-     * @var array(integer=>string) $_loc
-     */
-    private $_loc = null;
-
-    /**
-     * The comment for this type.
-     *
-     * @var string $_docComment
-     */
-    private $_docComment = null;
-
-    /**
      * Constructs a new source file instance.
      *
      * @param string $fileName The source file name/path.
@@ -105,7 +117,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function __construct($fileName)
     {
         if ($fileName !== null) {
-            $this->_fileName = realpath($fileName);
+            $this->fileName = realpath($fileName);
         }
     }
 
@@ -116,7 +128,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**
@@ -126,7 +138,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getFileName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**
@@ -136,7 +148,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getUUID()
     {
-        return $this->_uuid;
+        return $this->uuid;
     }
 
     /**
@@ -149,18 +161,13 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setUUID($uuid)
     {
-        $this->_uuid = $uuid;
+        $this->uuid = $uuid;
     }
 
-    /**
-     * Returns the lines of code with stripped whitespaces.
-     *
-     * @return array(integer=>string)
-     */
-    public function getLoc()
+    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
-        $this->readSource();
-        return $this->_loc;
+        $this->cache = $cache;
+        return $this;
     }
 
     /**
@@ -181,8 +188,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getTokens()
     {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        return (array) $storage->restore(md5($this->_fileName), __CLASS__);
+        return (array) $this->cache
+            ->type('tokens')
+            ->restore($this->getUUID());
     }
 
     /**
@@ -194,8 +202,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setTokens(array $tokens)
     {
-        $storage = PHP_Depend_StorageRegistry::get(PHP_Depend::TOKEN_STORAGE);
-        $storage->store($tokens, md5($this->_fileName), __CLASS__);
+        return $this->cache
+            ->type('tokens')
+            ->store($this->getUUID(), $tokens);
     }
 
     /**
@@ -205,7 +214,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function getDocComment()
     {
-        return $this->_docComment;
+        return $this->docComment;
     }
 
     /**
@@ -217,7 +226,17 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function setDocComment($docComment)
     {
-        $this->_docComment = $docComment;
+        $this->docComment = $docComment;
+    }
+
+    public function getStartLine()
+    {
+        return $this->startLine;
+    }
+
+    public function getEndLine()
+    {
+        return $this->endLine;
     }
 
     /**
@@ -231,6 +250,44 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitFile($this);
+    }
+
+    protected $childNodes = array();
+
+    public function addChild(PHP_Depend_Code_AbstractItem $item)
+    {
+        $this->childNodes[$item->getUUID()] = $item;
+    }
+
+    public function addPackage(PHP_Depend_Code_Package $package)
+    {
+        $this->packageNames[] = $package->getName();
+    }
+
+    public function __sleep()
+    {
+        return array(
+            'cache',
+            'uuid',
+            'fileName',
+            'startLine',
+            'endLine',
+            'childNodes',
+            'docComment',
+            'packageNames'
+        );
+    }
+
+    public function __wakeup()
+    {
+        foreach ($this->childNodes as $childNode) {
+            $childNode->setSourceFile($this);
+        }
+
+        $builder = PHP_Depend_Builder_Registry::getDefault();
+        foreach ($this->packageNames as $packageName) {
+            $builder->buildPackage($packageName);
+        }
     }
 
     /**
@@ -254,7 +311,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function __toString()
     {
-        return ($this->_fileName === null ? '' : $this->_fileName);
+        return ($this->fileName === null ? '' : $this->fileName);
     }
 
     /**
@@ -264,12 +321,13 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     protected function readSource()
     {
-        if ($this->_loc === null) {
-            $source = file_get_contents($this->_fileName);
+        if ($this->_source === null) {
+            $source = file_get_contents($this->fileName);
 
-            $this->_loc = preg_split('#(\r\n|\n|\r)#', $source);
+            $this->_source = str_replace(array("\r\n", "\r"), "\n", $source);
 
-            $this->_source = implode("\n", $this->_loc);
+            $this->startLine = 1;
+            $this->endLine   = substr_count($this->_source, "\n") + 1;
         }
     }
 }

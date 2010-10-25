@@ -231,7 +231,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as class package
         $type->setPackage($this);
         // Append class to internal list
-        $this->types[] = $type;
+        $this->types[$type->getUUID()] = $type;
 
         return $type;
     }
@@ -280,7 +280,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as function package
         $function->setPackage($this);
         // Append function to internal list
-        $this->functions[] = $function;
+        $this->functions[$function->getUUID()] = $function;
 
         return $function;
     }
@@ -312,7 +312,9 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function accept(PHP_Depend_VisitorI $visitor)
     {
+//echo "E\n";
         $visitor->visitPackage($this);
+//echo "Y\n";
     }
 
     /**

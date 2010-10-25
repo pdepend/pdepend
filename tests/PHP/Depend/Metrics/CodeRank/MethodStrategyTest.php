@@ -65,6 +65,17 @@ require_once 'PHP/Depend/Metrics/CodeRank/MethodStrategy.php';
  */
 class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * testStrategyCountsCorrectTypes
+     *
+     * @return void
+     * @covers PHP_Depend_Metrics_CodeRank_Analyzer
+     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::coderank
+     * @group unittest
+     */
     public function testStrategyCountsCorrectTypes()
     {
         $source   = dirname(__FILE__) . '/../../_code/coderank/method.php';

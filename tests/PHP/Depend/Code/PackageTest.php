@@ -48,10 +48,6 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Package.php';
-
 /**
  * Test case implementation for the PHP_Depend_Code_Package class.
  *
@@ -464,7 +460,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFreeResetsAllTypesAssociatedWithThePackage()
     {
-        $packages = self::parseSource('code/Package/' . __FUNCTION__ . '.php');
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         $package->free();
@@ -483,7 +479,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFreeResetsAllFunctionsAssociatedWithThePackage()
     {
-        $packages = self::parseSource('code/Package/' . __FUNCTION__ . '.php');
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         $package->free();

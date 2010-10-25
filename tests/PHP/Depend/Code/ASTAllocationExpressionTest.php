@@ -122,7 +122,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForSimpleIdentifier()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -149,7 +149,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForSelfKeyword()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method = $packages->current()
             ->getClasses()
             ->current()
@@ -179,7 +179,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForParentKeyword()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method = $packages->current()
             ->getClasses()
             ->current()
@@ -208,7 +208,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForLocalNamespaceIdentifier()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -235,7 +235,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForAbsoluteNamespaceIdentifier()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -262,7 +262,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForAbsoluteNamespacedNamespaceIdentifier()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -289,7 +289,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForVariableIdentifier()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -316,7 +316,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForVariableVariableIdentifier()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $function = $packages->current()
             ->getFunctions()
             ->current();
@@ -347,7 +347,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAllocationExpressionGraphForStaticReference()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
             ->getClasses()
             ->current()
@@ -381,7 +381,7 @@ class PHP_Depend_Code_ASTAllocationExpressionTest extends PHP_Depend_Code_ASTNod
             'PHP_Depend_Parser_UnexpectedTokenException',
             'Unexpected token: ;, line: 4, col: 9, file: '
         );
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

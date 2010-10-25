@@ -76,6 +76,8 @@ final class PHP_Depend_Code_ASTStaticReference
      */
     const IMAGE = 'static';
 
+    protected $qualfiedName = null;
+
     /**
      * Constructs a new type holder instance.
      *
@@ -102,5 +104,30 @@ final class PHP_Depend_Code_ASTStaticReference
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitStaticReference($this, $data);
+    }
+
+    public function getType()
+    {
+        if ($this->typeInstance == null) {
+            return PHP_Depend_Builder_Registry::getDefault()
+                ->getClassOrInterface($this->qualfiedName);
+        }
+        return $this->typeInstance;
+    }
+
+    public function __sleep()
+    {
+        $this->qualfiedName = $this->typeInstance->getPackage()->getName() . '\\' . $this->typeInstance->getName();
+
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'qualfiedName'
+        );
     }
 }

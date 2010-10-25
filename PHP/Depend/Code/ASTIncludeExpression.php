@@ -109,4 +109,18 @@ class PHP_Depend_Code_ASTIncludeExpression extends PHP_Depend_Code_ASTExpression
     {
         return $visitor->visitIncludeExpression($this, $data);
     }
+
+    public function  __sleep()
+    {
+        return array(
+            'image',
+            'comment',
+            'startLine',
+            'startColumn',
+            'endLine',
+            'endColumn',
+            'nodes',
+            'once'
+        );
+    }
 }

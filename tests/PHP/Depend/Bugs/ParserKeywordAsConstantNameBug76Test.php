@@ -72,6 +72,10 @@ class PHP_Depend_Bugs_ParserKeywordAsConstantNameBug76Test extends PHP_Depend_Ab
      * @param array(integer) $constantName Name of the expected constant
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      * @dataProvider dataProviderReservedKeywordAsTypeConstantName
      */
     public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName)

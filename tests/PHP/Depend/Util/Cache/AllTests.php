@@ -41,25 +41,22 @@
  * @subpackage Util_Cache
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Autoload.php';
-
-require_once dirname(__FILE__) . '/EngineTest.php';
-require_once dirname(__FILE__) . '/FileEngineTest.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
 
 /**
  * Main test suite for the PHP_Depend_Util_Cache package.
  *
  * @category   QualityAssurance
- * @package    Util_Cache
- * @subpackage Util_Coverage
+ * @package    PHP_Depend
+ * @subpackage Util_Cache
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
@@ -73,9 +70,6 @@ class PHP_Depend_Util_Cache_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util_Cache - AllTests');
-
-        $suite->addTestSuite('PHP_Depend_Util_Cache_EngineTest');
-        $suite->addTestSuite('PHP_Depend_Util_Cache_FileEngineTest');
 
         return $suite;
     }

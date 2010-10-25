@@ -46,7 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case related to bug 70.
@@ -60,93 +60,116 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  */
-class PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the parser does not throw an exception when it detects a
      * lmabda function on file level.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesLambdaFunctionOnFileLevelBug70()
     {
-        self::parseSource('bugs/070-001-closure-results-in-exception.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that the parser handles a lambda function with parameters.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesLambdaFunctionWithParametersBug70()
     {
-        self::parseSource('bugs/070-002-closure-results-in-exception.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that the parser handles a closure function with bound variables.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClosureFunctionWithBoundVariableBug70()
     {
-        self::parseSource('bugs/070-003-closure-results-in-exception.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that the parser handles a closure function with bound variables.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClosureFunctionWithBoundVariableByRefBug70()
     {
-        self::parseSource('bugs/070-004-closure-results-in-exception.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that the parser handles a closure function with bound variables.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70()
     {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_UnexpectedTokenException',
-            'Unexpected token: lexical, line: 3, col: 17, file: '
-        );
-
-        self::parseSource('bugs/070-005-closure-results-in-exception.php');
+        self::parseTestCaseSource(__METHOD__);
     }
 
     /**
      * Tests that the parser handles a nested function within a function.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesFunctionDeclarationWithinFunctionDeclarationBug70()
     {
-        $packages = self::parseSource('bugs/070-006-closure-results-in-exception.php');
+        $functions = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getFunctions();
 
-        $functions = $packages->current()->getFunctions();
-        $this->assertSame(2, count($functions));
-        $this->assertSame('bar', $functions->current()->getName());
+        self::assertEquals('bar', $functions->current()->getName());
         $functions->next();
-        $this->assertSame('foo', $functions->current()->getName());
+        self::assertEquals('foo', $functions->current()->getName());
     }
 
     /**
      * Tests that the parser handles a nested closure within a function declaration.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testParserHandlesClosureWithinFunctionDeclarationBug70()
     {
-        $packages = self::parseSource('bugs/070-007-closure-results-in-exception.php');
-        $function = $packages->current()
-                              ->getFunctions()
-                              ->current();
+        $function = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getFunctions()
+            ->current();
 
-        $this->assertSame('foo', $function->getName());
+        self::assertEquals('foo', $function->getName());
     }
 }
-?>

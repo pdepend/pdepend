@@ -122,7 +122,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -139,7 +139,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParentReferenceInClassWithoutParentThrowsException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -156,7 +156,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

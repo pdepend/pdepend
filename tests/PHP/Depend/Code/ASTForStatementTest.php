@@ -289,7 +289,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserHandlesBooleanLiteralInForInit()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -528,7 +528,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserHandlesBooleanLiteralInForExpression()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -563,7 +563,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserHandlesParenthesisExpressionInForUpdate()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -579,7 +579,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserHandlesBooleanLiteralInForUpdate()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**

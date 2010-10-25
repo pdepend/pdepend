@@ -45,10 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_AllTests::main');
-}
-
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
@@ -56,7 +52,6 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
 require_once dirname(__FILE__) . '/DependTest.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/ParserRegressionTest.php';
-require_once dirname(__FILE__) . '/StorageRegistryTest.php';
 require_once dirname(__FILE__) . '/Builder/DefaultTest.php';
 require_once dirname(__FILE__) . '/Bugs/AllTests.php';
 require_once dirname(__FILE__) . '/Code/AllTests.php';
@@ -118,7 +113,6 @@ class PHP_Depend_AllTests
         $suite->addTestSuite('PHP_Depend_ParserTest');
         $suite->addTestSuite('PHP_Depend_ParserRegressionTest');
         $suite->addTestSuite('PHP_Depend_DependTest');
-        $suite->addTestSuite('PHP_Depend_StorageRegistryTest');
 
         return $suite;
     }

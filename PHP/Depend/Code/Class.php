@@ -79,7 +79,15 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var integer $_modifiers
      */
-    private $_modifiers = 0;
+    protected $modifiers = 0;
+
+    /**
+     * Name of the owning package. This property is used while we serialize and
+     * unserialize the object tree.
+     *
+     * @var string
+     */
+    protected $packageName = null;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -88,7 +96,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isAbstract()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
                                  === PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
     }
 
@@ -99,7 +107,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isFinal()
     {
-        return (($this->_modifiers & PHP_Depend_ConstantsI::IS_FINAL)
+        return (($this->modifiers & PHP_Depend_ConstantsI::IS_FINAL)
                                  === PHP_Depend_ConstantsI::IS_FINAL);
     }
 
@@ -117,11 +125,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
                 PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
             );
             foreach ($declarations as $declaration) {
-
-                $classOrInterfaceReference = $declaration->getFirstChildOfType(
-                    PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
-                );
-
                 $declarators = $declaration->findChildrenOfType(
                     PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
                 );
@@ -176,7 +179,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getModifiers()
     {
-        return $this->_modifiers;
+        return $this->modifiers;
     }
 
     /**
@@ -195,7 +198,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function setModifiers($modifiers)
     {
-        if ($this->_modifiers !== 0) {
+        if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
                 'Cannot overwrite previously set class modifiers.'
             );
@@ -209,7 +212,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             throw new InvalidArgumentException('Invalid class modifier given.');
         }
 
-        $this->_modifiers = $modifiers;
+        $this->modifiers = $modifiers;
     }
 
     /**
@@ -222,6 +225,21 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     public function accept(PHP_Depend_VisitorI $visitor)
     {
         $visitor->visitClass($this);
+    }
+
+    public function  __wakeup()
+    {
+        foreach ($this->methods as $method) {
+            $method->sourceFile = $this->sourceFile;
+            $method->setParent($this);
+        }
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->buildPackage($this->packageName)
+            ->addType($this);
+
+        PHP_Depend_Builder_Registry::getDefault()
+            ->restoreClass($this);
     }
 
     /**
@@ -251,34 +269,4 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $this->getProperties()->free();
         $this->_properties = array();
     }
-
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Adds a new property to this class instance.
-     *
-     * @param PHP_Depend_Code_Property $property The new class property.
-     *
-     * @return PHP_Depend_Code_Property
-     * @deprecated Since version 0.9.6, use addNode() instead.
-     */
-    public function addProperty(PHP_Depend_Code_Property $property)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-
-        if ($this->_properties === null) {
-            $this->_properties = array();
-        }
-
-        if (in_array($property, $this->_properties, true) === false) {
-            // Add to internal list
-            $this->_properties[] = $property;
-            // Set this as parent
-            $property->setDeclaringClass($this);
-        }
-        return $property;
-    }
-    
-    // @codeCoverageIgnoreEnd
 }

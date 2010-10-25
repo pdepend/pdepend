@@ -529,48 +529,4 @@ class PHP_Depend_Code_Property
             PHP_EOL
         );
     }
-
-    // DEPRECATED METHODS
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Returns the parent class object or <b>null</b>
-     *
-     * @return PHP_Depend_Code_Class
-     * @deprecated Since version 0.9.6, use getDeclaringClass() instead.
-     */
-    public function getParent()
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        return $this->getDeclaringClass();
-    }
-
-    /**
-     * Sets the parent class object.
-     *
-     * @param PHP_Depend_Code_Class $parent The parent class.
-     *
-     * @return void
-     * @deprecated Since version 0.9.6, use setDeclaringClass() instead.
-     */
-    public function setParent(PHP_Depend_Code_Class $parent = null)
-    {
-        fwrite(STDERR, 'Since 0.9.6 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        $this->setDeclaringClass($parent);
-    }
-
-    /**
-     * Returns the source tokens used for this property declaration.
-     *
-     * @return array(PHP_Depend_Token)
-     * @since 0.9.6
-     * @deprecated Since version 0.9.12, use setDeclaringClass() instead.
-     */
-    public function getTokens()
-    {
-        fwrite(STDERR, 'Since 0.9.12 ' . __METHOD__ . '() is deprecated.' . PHP_EOL);
-        return $this->_variableDeclarator->getTokens();
-    }
-
-    // @codeCoverageIgnoreEnd
 }

@@ -70,6 +70,22 @@ class PHP_Depend_Code_Closure extends PHP_Depend_Code_AbstractCallable
         parent::__construct('#closure');
     }
 
+    public function __sleep()
+    {
+        return  array(
+            'cache',
+            'nodes',
+            'uuid',
+            'name',
+            'startLine',
+            'endLine',
+            'docComment',
+            'returnsReference',
+            'returnClassReference',
+            'exceptionClassReferences'
+        );
+    }
+
     /**
      * Visitor method for node tree traversal.
      *

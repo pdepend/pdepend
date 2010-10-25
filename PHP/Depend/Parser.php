@@ -87,8 +87,9 @@ require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ * @todo      Rename class from "Parser" to "AbstractParser"
  */
-class PHP_Depend_Parser implements PHP_Depend_ConstantsI
+abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 {
     /**
      * Regular expression for inline type definitions in regular comments. This
@@ -242,6 +243,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private $_maxNestingLevel = 1024;
 
     /**
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 0.10.0
+     */
+    protected $cache = null;
+
+    /*
      * The used code tokenizer.
      *
      * @var PHP_Depend_TokenizerI $_tokenizer
@@ -251,19 +259,28 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Constructs a new source parser.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used code tokenizer.
-     * @param PHP_Depend_BuilderI   $builder   The used node builder.
+     * @param PHP_Depend_TokenizerI        $tokenizer The used code tokenizer.
+     * @param PHP_Depend_BuilderI          $builder   The used node builder.
+     * @param PHP_Depend_Util_Cache_Driver $cache     The used parser cache.
      */
     public function __construct(
         PHP_Depend_TokenizerI $tokenizer,
-        PHP_Depend_BuilderI $builder
+        PHP_Depend_BuilderI $builder,
+        PHP_Depend_Util_Cache_Driver $cache
     ) {
         $this->tokenizer = $tokenizer;
-        $this->_builder   = $builder;
+        $this->_builder  = $builder;
+        $this->cache     = $cache;
 
         $this->_uuidBuilder    = new PHP_Depend_Util_UuidBuilder();
         $this->_tokenStack     = new PHP_Depend_Parser_TokenStack();
+
         $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable();
+
+        include_once 'PHP/Depend/Builder/Registry.php';
+        PHP_Depend_Builder_Registry::setDefault($builder);
+
+        $this->_builder->setCache($this->cache);
     }
 
     /**
@@ -313,10 +330,18 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Get currently parsed source file
         $this->_sourceFile = $this->tokenizer->getSourceFile();
-        $this->_sourceFile->setUUID(
-            $this->_uuidBuilder->forFile($this->_sourceFile)
-        );
+        $this->_sourceFile
+            ->setCache($this->cache)
+            ->setUUID($this->_uuidBuilder->forFile($this->_sourceFile));
 
+        $hash = md5_file($this->_sourceFile->getFileName());
+
+        if ($this->cache->restore($this->_sourceFile->getUUID(), $hash)) {
+            return $this->tearDownEnvironment();
+        }
+
+        $this->_tokenStack->push();
+        
         // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->_sourceFile);
 
@@ -340,7 +365,10 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $package = $this->_builder->buildPackage(
                     $this->_getNamespaceOrPackageName()
                 );
-                $package->addType($this->_parseInterfaceDeclaration());
+                $package->addType($interface = $this->_parseInterfaceDeclaration());
+
+                $this->_builder->restoreInterface($interface);
+                $this->_sourceFile->addChild($interface);
                 break;
 
             case self::T_CLASS:
@@ -349,11 +377,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $package = $this->_builder->buildPackage(
                     $this->_getNamespaceOrPackageName()
                 );
-                $package->addType($this->_parseClassDeclaration());
+                $package->addType($class = $this->_parseClassDeclaration());
+
+                $this->_builder->restoreClass($class);
+                $this->_sourceFile->addChild($class);
                 break;
 
             case self::T_FUNCTION:
-                $this->_parseFunctionOrClosureDeclaration();
+                $callable = $this->_parseFunctionOrClosureDeclaration();
+                $this->_sourceFile->addChild($callable);
                 break;
 
             case self::T_USE:
@@ -375,6 +407,13 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->tokenizer->peek();
         }
+
+        $this->_sourceFile->setTokens($this->_tokenStack->pop());
+        $this->cache->store(
+            $this->_sourceFile->getUUID(),
+            $this->_sourceFile,
+            $hash
+        );
 
         $this->tearDownEnvironment();
     }
@@ -427,13 +466,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return string
      * @since 0.9.20
-     * @todo This method should be abstract, once we have marked this class as
-     *       abstract.
      */
-    protected function parseClassName()
-    {
-        return $this->consumeToken(self::T_STRING)->image;
-    }
+    protected abstract function parseClassName();
 
     /**
      * Parses a valid method or function name for the currently configured php
@@ -441,13 +475,8 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return string
      * @since 0.10.0
-     * @todo This method should be abstract, once we have marked this class as
-     *       abstract.
      */
-    protected function parseFunctionName()
-    {
-        return $this->consumeToken(self::T_STRING)->image;
-    }
+    protected abstract function parseFunctionName();
 
     /**
      * Parses the dependencies in a interface signature.
@@ -882,8 +911,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $callable->setSourceFile($this->_sourceFile);
         } else {
             $callable = $this->_parseFunctionDeclaration();
-            $callable->setSourceFile($this->_sourceFile);
-            $callable->setUUID($this->_uuidBuilder->forFunction($callable));
         }
 
         $callable->setDocComment($this->_docComment);
@@ -965,6 +992,9 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $functionName = $this->parseFunctionName();
 
         $function = $this->_builder->buildFunction($functionName);
+        $function->setSourceFile($this->_sourceFile);
+        $function->setUUID($this->_uuidBuilder->forFunction($function));
+
         $this->_parseCallableDeclaration($function);
 
         // First check for an existing namespace
@@ -975,7 +1005,15 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         } else {
             $packageName = $this->_globalPackageName;
         }
-        $this->_builder->buildPackage($packageName)->addFunction($function);
+
+        $this->_builder
+            ->buildPackage($packageName)
+            ->addFunction($function);
+
+        // Store function in source file, because we need them during the file's
+        // __wakeup() phase for function declarations within another function or
+        // method declaration.
+        $this->_sourceFile->addChild($function);
 
         return $function;
     }
@@ -2045,6 +2083,7 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_parseAlternativeScopeTermination($tokenType);
         }
     }
+
 
     /**
      * This method returns <b>true</b> when the given token identifier represents
@@ -5064,7 +5103,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Create a package for this namespace
             $this->_namespaceName = $qualifiedName;
-            $this->_builder->buildPackage($qualifiedName);
         } else if ($tokenType === self::T_BACKSLASH) {
             // Same namespace reference, something like:
             //   new namespace\Foo();
@@ -5079,7 +5117,6 @@ class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Create a package for this namespace
             $this->_namespaceName = '';
-            $this->_builder->buildPackage('');
         }
 
         $this->reset();

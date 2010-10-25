@@ -140,7 +140,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      */
     public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled()
     {
-        $packages = self::parseTestCaseSource(__METHOD__, true);
+        $packages = self::parseCodeResourceForTest(true);
 
         $class = $packages->current()
             ->getClasses()

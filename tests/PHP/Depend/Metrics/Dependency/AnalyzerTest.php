@@ -123,6 +123,11 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
      * Tests the generated package metrics.
      *
      * @return void
+     * @covers PHP_Depend_Metrics_Dependency_Analyzer
+     * @group pdepend
+     * @group pdepend::metrics
+     * @group pdepend::metrics::dependency
+     * @group unittest
      */
     public function testGenerateMetrics()
     {

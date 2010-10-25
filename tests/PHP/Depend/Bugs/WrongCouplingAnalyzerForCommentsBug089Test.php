@@ -46,9 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for bug 089 where the coupling analyzer calculates wrong results
@@ -66,53 +64,65 @@ require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the analyzer calculates the expected result.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testAnalyzerDetectsIdenticalMethodCallWithFunctionComment()
     {
-        $packages = self::parseSource('bugs/089/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
-        $this->assertSame(1, $project['calls']);
+        self::assertEquals(1, $project['calls']);
     }
 
     /**
      * Tests that the analyzer calculates the expected result.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testAnalyzerDetectsFunctionCallWithCommentBetweenParenthesisAndIdentifier()
     {
-        $packages = self::parseSource('bugs/089/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
-        $this->assertSame(2, $project['calls']);
+        self::assertEquals(2, $project['calls']);
     }
 
     /**
      * Tests that the analyzer calculates the expected result.
      *
      * @return void
+     * @covers stdClass
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
     public function testAnalyzerDetectsObjectAllocation()
     {
-        $packages = self::parseSource('bugs/089/' . __FUNCTION__ . '.php');
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
-        $this->assertSame(0, $project['calls']);
+        self::assertEquals(0, $project['calls']);
     }
 }
