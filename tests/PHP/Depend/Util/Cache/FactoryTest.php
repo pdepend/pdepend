@@ -46,13 +46,10 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-require_once dirname(__FILE__) . '/FactoryTest.php';
-require_once dirname(__FILE__) . '/Driver/AllTests.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 /**
- * Main test suite for the PHP_Depend_Util_Cache package.
+ * Test case for the {@link PHP_Depend_Util_Cache_Factory} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,20 +59,61 @@ require_once dirname(__FILE__) . '/Driver/AllTests.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_Cache_Factory
  */
-class PHP_Depend_Util_Cache_AllTests
+class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Creates the phpunit test suite for this package.
+     * testCreateReturnsDriverInstance
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
      */
-    public static function suite()
+    public function testCreateReturnsDriverInstance()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util_Cache - AllTests');
-        $suite->addTestSuite('PHP_Depend_Util_Cache_FactoryTest');
-        $suite->addTest(PHP_Depend_Util_Cache_Driver_AllTests::suite());
+        $factory = new PHP_Depend_Util_Cache_Factory();
+        self::assertType('PHP_Depend_Util_Cache_Driver', $factory->create());
+    }
 
-        return $suite;
+    /**
+     * testCreateHasSingletonBehaviorForIdenticalCacheNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testCreateHasSingletonBehaviorForIdenticalCacheNames()
+    {
+        $factory = new PHP_Depend_Util_Cache_Factory();
+
+        $cache0 = $factory->create();
+        $cache1 = $factory->create();
+
+        self::assertSame($cache0, $cache1);
+    }
+
+    /**
+     * testCreateReturnsDifferentInstancesForDifferentCacheNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testCreateReturnsDifferentInstancesForDifferentCacheNames()
+    {
+        $factory = new PHP_Depend_Util_Cache_Factory();
+
+        $cache0 = $factory->create();
+        $cache1 = $factory->create(__FUNCTION__);
+
+        self::assertNotSame($cache0, $cache1);
     }
 }
