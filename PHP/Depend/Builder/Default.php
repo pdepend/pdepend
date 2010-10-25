@@ -1852,6 +1852,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         return $copiedTypes;
     }
 
+    /**
+     * Restores a class within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Class $class A class instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
     public function restoreClass(PHP_Depend_Code_Class $class)
     {
         $this->storeClass(
@@ -1861,6 +1869,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
     }
 
+    /**
+     * Restores an interface within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Interface $interface An interface instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
     public function restoreInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->storeInterface(

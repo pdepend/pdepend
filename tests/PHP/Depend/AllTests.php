@@ -53,8 +53,8 @@ require_once dirname(__FILE__) . '/DependTest.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/ParserRegressionTest.php';
 require_once dirname(__FILE__) . '/TokenTest.php';
-require_once dirname(__FILE__) . '/Builder/DefaultTest.php';
 require_once dirname(__FILE__) . '/Bugs/AllTests.php';
+require_once dirname(__FILE__) . '/Builder/AllTests.php';
 require_once dirname(__FILE__) . '/Code/AllTests.php';
 require_once dirname(__FILE__) . '/Input/AllTests.php';
 require_once dirname(__FILE__) . '/Issues/AllTests.php';
@@ -100,6 +100,7 @@ class PHP_Depend_AllTests
         $suite->addTestSuite('PHP_Depend_TokenTest');
 
         $suite->addTest(PHP_Depend_Bugs_AllTests::suite());
+        $suite->addTest(PHP_Depend_Builder_AllTests::suite());
         $suite->addTest(PHP_Depend_Code_AllTests::suite());
         $suite->addTest(PHP_Depend_Issues_AllTests::suite());
         $suite->addTest(PHP_Depend_Log_AllTests::suite());
@@ -111,7 +112,6 @@ class PHP_Depend_AllTests
         $suite->addTest(PHP_Depend_Util_AllTests::suite());
         $suite->addTest(PHP_Depend_Visitor_AllTests::suite());
 
-        $suite->addTestSuite('PHP_Depend_Builder_DefaultTest');
         $suite->addTestSuite('PHP_Depend_ParserTest');
         $suite->addTestSuite('PHP_Depend_ParserRegressionTest');
         $suite->addTestSuite('PHP_Depend_DependTest');

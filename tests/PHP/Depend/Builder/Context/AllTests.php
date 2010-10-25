@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
@@ -44,14 +44,14 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
- * @since      0.10.0
  */
 
+require_once 'PHPUnit/Framework/TestSuite.php';
+
+require_once dirname(__FILE__) . '/GlobalStaticTest.php';
+
 /**
- * This class provides the default implementation of the builder context.
- *
- * This class utilizes the simple <b>static</b> language construct to share the
- * context instance between all using objects.
+ * Main test suite for the PHP_Depend_Builder_Context package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -61,58 +61,19 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
- * @since      0.10.0
  */
-class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Context
+class PHP_Depend_Builder_Context_AllTests
 {
     /**
-     * The currently used ast builder.
+     * Creates the phpunit test suite for this package.
      *
-     * @var PHP_Depend_BuilderI
+     * @return PHPUnit_Framework_TestSuite
      */
-    protected static $builder = null;
-
-    /**
-     * Constructs a new builder context instance.
-     *
-     * @param PHP_Depend_BuilderI $builder The currently used ast builder.
-     */
-    public function __construct(PHP_Depend_BuilderI $builder)
+    public static function suite()
     {
-        self::$builder = $builder;
-    }
-
-    /**
-     * Returns the class instance for the given qualified name.
-     *
-     * @param string $qualifiedName Full qualified class name.
-     *
-     * @return PHP_Depend_Code_Class
-     */
-    public function getClass($qualifiedName)
-    {
-        return $this->getBuilder()->getClass($qualifiedName);
-    }
-
-    /**
-     * Returns a class or an interface instance for the given qualified name.
-     *
-     * @param string $qualifiedName Full qualified class or interface name.
-     *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
-     */
-    public function getClassOrInterface($qualifiedName)
-    {
-        return $this->getBuilder()->getClassOrInterface($qualifiedName);
-    }
-
-    /**
-     * Returns the currently used builder instance.
-     *
-     * @return PHP_Depend_BuilderI
-     */
-    protected function getBuilder()
-    {
-        return self::$builder;
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Builder_Context - AllTests');
+        $suite->addTestSuite('PHP_Depend_Builder_Context_GlobalStaticTest');
+        
+        return $suite;
     }
 }
