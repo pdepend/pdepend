@@ -62,6 +62,69 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
+     * testReturnValueOfMagicSleepContainsContextProperty
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Method
+     * @covers PHP_Depend_Code_AbstractCallable
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testReturnValueOfMagicSleepContainsContextProperty()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        self::assertEquals(
+            array(
+                'modifiers',
+                'cache',
+                'nodes',
+                'uuid',
+                'name',
+                'startLine',
+                'endLine',
+                'docComment',
+                'returnsReference',
+                'returnClassReference',
+                'exceptionClassReferences'
+            ),
+            $method->__sleep()
+        );
+    }
+
+    /**
+     * testParserSetsAbstractFlagOnMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testParserNotSetsAbstractFlagOnMethod()
+    {
+        $method = $this->getFirstMethodInClass();
+        self::assertFalse($method->isAbstract());
+    }
+
+    /**
+     * testParserSetsAbstractFlagOnMethod
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Code_Method
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testParserSetsAbstractFlagOnMethod()
+    {
+        $method = $this->getFirstMethodInClass();
+        self::assertTrue($method->isAbstract());
+    }
+
+    /**
      * testGetReturnClassForMethodWithNamespacedRootClass
      *
      * @return void

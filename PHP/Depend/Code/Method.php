@@ -233,21 +233,17 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
         $visitor->visitMethod($this);
     }
 
+    /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for method instances.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function __sleep()
     {
-        return array(
-            'cache',
-            'nodes',
-            'uuid',
-            'name',
-            'startLine',
-            'endLine',
-            'docComment',
-            'returnsReference',
-            'returnClassReference',
-            'exceptionClassReferences',
-            'modifiers'
-        );
+        return array_merge(array('modifiers'), parent::__sleep());
     }
 
     /**

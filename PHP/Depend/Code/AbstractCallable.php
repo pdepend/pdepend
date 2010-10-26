@@ -454,6 +454,30 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
 
     /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for all callable instances.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function __sleep()
+    {
+        return array(
+            'cache',
+            'nodes',
+            'uuid',
+            'name',
+            'startLine',
+            'endLine',
+            'docComment',
+            'returnsReference',
+            'returnClassReference',
+            'exceptionClassReferences'
+        );
+    }
+
+    /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for
      * PHP version < 5.3 where cyclic references can not be resolved
