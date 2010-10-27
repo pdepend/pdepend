@@ -48,12 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
-require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
-require_once 'PHP/Depend/TextUI/ResultPrinter.php';
-
 /**
  * Test case for the default text ui result printer.
  *
@@ -65,6 +59,8 @@ require_once 'PHP/Depend/TextUI/ResultPrinter.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_TextUI_ResultPrinter
  */
 class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
 {
