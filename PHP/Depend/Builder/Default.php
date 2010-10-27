@@ -46,18 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Parameter.php';
-require_once 'PHP/Depend/Code/Property.php';
-require_once 'PHP/Depend/Util/Log.php';
-require_once 'PHP/Depend/Util/Type.php';
-
 /**
  * Default code tree builder implementation.
  *
@@ -79,6 +67,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @since 0.10.0
      */
     protected $cache = null;
+
+    /**
+     * The ast builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
 
     /**
      * This property holds all packages found during the parsing phase.
@@ -161,6 +157,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->defaultFile    = new PHP_Depend_Code_File(null);
 
         $this->_packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
+
+        $this->context = new PHP_Depend_Builder_Context_GlobalStatic($this);
     }
 
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
@@ -180,8 +178,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->checkBuilderState();
 
-        include_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
         // Debug method creation
         PHP_Depend_Util_Log::debug(
             'Creating: PHP_Depend_Code_ASTClassOrInterfaceReference(' .
@@ -190,7 +186,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         );
 
         return new PHP_Depend_Code_ASTClassOrInterfaceReference(
-            $this,
+            $this->context,
             $qualifiedName
         );
     }
@@ -288,15 +284,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTClassReference($qualifiedName)
     {
         $this->checkBuilderState();
-        
-        include_once 'PHP/Depend/Code/ASTClassReference.php';
 
         // Debug method creation
         PHP_Depend_Util_Log::debug(
             'Creating: PHP_Depend_Code_ASTClassReference(' . $qualifiedName . ')'
         );
 
-        return new PHP_Depend_Code_ASTClassReference($this, $qualifiedName);
+        return new PHP_Depend_Code_ASTClassReference($this->context, $qualifiedName);
     }
 
     /**

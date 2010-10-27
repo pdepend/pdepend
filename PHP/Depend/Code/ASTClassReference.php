@@ -78,7 +78,7 @@ class PHP_Depend_Code_ASTClassReference
     public function getType()
     {
         if ($this->typeInstance === null) {
-            $this->typeInstance = $this->builder->getClass($this->getImage());
+            $this->typeInstance = $this->context->getClass($this->getImage());
         }
         return $this->typeInstance;
     }

@@ -70,6 +70,71 @@ require_once 'PHP/Depend/Code/ASTClassReference.php';
 class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetTypeDelegatesToBuilderContextGetClass
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeDelegatesToBuilderContextGetClass()
+    {
+        $context = $this->getBuilderContextMock();
+        $context->expects($this->once())
+            ->method('getClass')
+            ->with($this->equalTo(__CLASS__))
+            ->will($this->returnValue($this));
+
+        $reference = new PHP_Depend_Code_ASTClassReference($context, __CLASS__);
+        $reference->getType();
+    }
+
+    /**
+     * testGetTypeCachesReturnValueOfBuilderContextGetClass
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeCachesReturnValueOfBuilderContextGetClass()
+    {
+        $context = $this->getBuilderContextMock();
+        $context->expects($this->exactly(1))
+            ->method('getClass')
+            ->with($this->equalTo(__CLASS__))
+            ->will($this->returnValue($this));
+
+        $reference = new PHP_Depend_Code_ASTClassReference($context, __CLASS__);
+        $reference->getType();
+    }
+
+    /**
+     * testReturnValueOfMagicSleepContainsContextProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testReturnValueOfMagicSleepContainsContextProperty()
+    {
+        self::assertEquals(
+            array(
+                'context',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $this->createNodeInstance()->__sleep()
+        );
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
@@ -84,7 +149,7 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
             ->method('__call')
             ->with($this->equalTo('visitClassReference'));
 
-        $ref = new PHP_Depend_Code_ASTClassReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
+        $ref = $this->createNodeInstance();
         $ref->accept($visitor);
     }
 
@@ -104,7 +169,7 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
             ->with($this->equalTo('visitClassReference'))
             ->will($this->returnValue(42));
 
-        $ref = new PHP_Depend_Code_ASTClassReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
+        $ref = $this->createNodeInstance();
         self::assertEquals(42, $ref->accept($visitor));
     }
 
@@ -119,7 +184,7 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testClassReferenceHasExpectedStartLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(4, $reference->getStartLine());
+        self::assertEquals(4, $reference->getStartLine());
     }
 
     /**
@@ -133,7 +198,7 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testClassReferenceHasExpectedStartColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(16, $reference->getStartColumn());
+        self::assertEquals(16, $reference->getStartColumn());
     }
 
     /**
@@ -147,7 +212,7 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testClassReferenceHasExpectedEndLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(4, $reference->getEndLine());
+        self::assertEquals(4, $reference->getEndLine());
     }
 
     /**
@@ -161,7 +226,7 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testClassReferenceHasExpectedEndColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(18, $reference->getEndColumn());
+        self::assertEquals(18, $reference->getEndColumn());
     }
 
     /**
@@ -186,8 +251,18 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTClassReference(
-            $this->getMock('PHP_Depend_BuilderI'),
-            __METHOD__
+            $this->getBuilderContextMock(),
+            __CLASS__
         );
+    }
+
+    /**
+     * Returns a mocked builder context instance.
+     *
+     * @return PHP_Depend_Builder_Context
+     */
+    protected function getBuilderContextMock()
+    {
+        return $this->getMock('PHP_Depend_Builder_Context');
     }
 }

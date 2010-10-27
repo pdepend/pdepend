@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-require_once 'PHP/Depend/Code/Class.php';
-
 /**
  * description
  *
@@ -63,15 +59,45 @@ require_once 'PHP/Depend/Code/Class.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
  */
 class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testReturnValueOfMagicSleepContainsContextProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testReturnValueOfMagicSleepContainsContextProperty()
+    {
+        $reference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $this->getBuilderContextMock(), __CLASS__
+        );
+        self::assertEquals(
+            array(
+                'context',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $reference->__sleep()
+        );
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -83,16 +109,16 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
             ->method('__call')
             ->with($this->equalTo('visitClassOrInterfaceReference'));
 
-        $ref = new PHP_Depend_Code_ASTClassOrInterfaceReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
-        $ref->accept($visitor);
+        $reference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $this->getBuilderContextMock(), __CLASS__
+        );
+        $reference->accept($visitor);
     }
 
     /**
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -105,48 +131,63 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
             ->with($this->equalTo('visitClassOrInterfaceReference'))
             ->will($this->returnValue(42));
 
-        $ref = new PHP_Depend_Code_ASTClassOrInterfaceReference($this->getMock('PHP_Depend_BuilderI'), __CLASS__);
-        self::assertEquals(42, $ref->accept($visitor));
+
+        $reference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $this->getBuilderContextMock(), __CLASS__
+        );
+        self::assertEquals(42, $reference->accept($visitor));
     }
 
     /**
-     * testGetTypeInvokesBuildClassOrInterface
+     * testGetTypeDelegatesToBuilderContextGetClassOrInterface
      * 
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testGetTypeInvokesBuildClassOrInterface()
+    public function testGetTypeDelegatesToBuilderContextGetClassOrInterface()
     {
-        $class = new PHP_Depend_Code_Class(null);
-
-        $builder = $this->getMock('PHP_Depend_BuilderI');
-        $builder->expects($this->once())
+        $context = $this->getBuilderContextMock();
+        $context->expects($this->once())
             ->method('getClassOrInterface')
             ->with($this->equalTo(__CLASS__))
-            ->will($this->returnValue($class));
+            ->will($this->returnValue($this));
 
-        $classOrInterfaceReference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
-            $builder, __CLASS__
+        $reference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $context, __CLASS__
         );
 
-        $this->assertType(
-            'PHP_Depend_Code_Class',
-            $classOrInterfaceReference->getType()
+        $reference->getType();
+    }
+
+    /**
+     * testGetTypeCachesReturnValueOfBuilderContextGetClassOrInterface
+     * 
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeCachesReturnValueOfBuilderContextGetClassOrInterface()
+    {
+        $context = $this->getBuilderContextMock();
+        $context->expects($this->exactly(1))
+            ->method('getClassOrInterface')
+            ->with($this->equalTo(__CLASS__))
+            ->will($this->returnValue($this));
+
+        $reference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
+            $context, __CLASS__
         );
+
+        $reference->getType();
     }
 
     /**
      * testReferenceHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -154,16 +195,13 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
     public function testReferenceHasExpectedStartLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(2, $reference->getStartLine());
+        self::assertEquals(2, $reference->getStartLine());
     }
 
     /**
      * testReferenceHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -171,16 +209,13 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
     public function testReferenceHasExpectedStartColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(14, $reference->getStartColumn());
+        self::assertEquals(14, $reference->getStartColumn());
     }
 
     /**
      * testReferenceHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -188,16 +223,13 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
     public function testReferenceHasExpectedEndLine()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(2, $reference->getEndLine());
+        self::assertEquals(2, $reference->getEndLine());
     }
 
     /**
      * testReferenceHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -205,7 +237,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
     public function testReferenceHasExpectedEndColumn()
     {
         $reference = $this->_getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(29, $reference->getEndColumn());
+        self::assertEquals(29, $reference->getEndColumn());
     }
 
     /**
@@ -230,8 +262,18 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTClassOrInterfaceReference(
-            $this->getMock('PHP_Depend_BuilderI'),
-            __METHOD__
+            $this->getBuilderContextMock(),
+            __CLASS__
         );
+    }
+
+    /**
+     * Returns a mocked builder context instance.
+     *
+     * @return PHP_Depend_Builder_Context
+     */
+    protected function getBuilderContextMock()
+    {
+        return $this->getMock('PHP_Depend_Builder_Context');
     }
 }

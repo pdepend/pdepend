@@ -61,15 +61,72 @@ require_once 'PHP/Depend/Code/ASTConstantDeclarator.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTConstantDeclarator
  */
 class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
+
+    /**
+     * testReturnValueOfMagicSleepContainsValueProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testReturnValueOfMagicSleepContainsValueProperty()
+    {
+        $node = new PHP_Depend_Code_ASTConstantDeclarator();
+        self::assertEquals(
+            array(
+                'value',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $node->__sleep()
+        );
+    }
+
+    /**
+     * testParserInjectsValueObjectIntoConstantDeclarator
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserInjectsValueObjectIntoConstantDeclarator()
+    {
+        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        self::assertType('PHP_Depend_Code_Value', $declarator->getValue());
+    }
+
+    /**
+     * testParserInjectsExpectedScalarValueIntoConstantDeclarator
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testParserInjectsExpectedScalarValueIntoConstantDeclarator()
+    {
+        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        self::assertEquals(42, $declarator->getValue()->getValue());
+    }
+
     /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConstantDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -89,8 +146,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConstantDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -111,9 +166,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDeclaratorHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -128,9 +180,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDeclaratorHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -145,9 +194,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDeclaratorHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -162,9 +208,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDeclaratorHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest

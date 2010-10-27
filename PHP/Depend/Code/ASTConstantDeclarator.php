@@ -140,17 +140,14 @@ class PHP_Depend_Code_ASTConstantDeclarator extends PHP_Depend_Code_ASTNode
         return $visitor->visitConstantDeclarator($this, $data);
     }
 
+    /**
+     * Magic sleep method that returns an array with those property names that
+     * should be cached for this node instance.
+     *
+     * @return array(string)
+     */
     public function  __sleep()
     {
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes',
-            'value'
-        );
+        return array_merge(array('value'), parent::__sleep());
     }
 }
