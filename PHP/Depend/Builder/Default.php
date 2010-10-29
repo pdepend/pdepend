@@ -249,6 +249,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         
         $class = new PHP_Depend_Code_Class($this->extractTypeName($name));
         $class->setCache($this->cache)
+            ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
 
         return $class;
@@ -351,6 +352,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         
         $interface = new PHP_Depend_Code_Interface($this->extractTypeName($name));
         $interface->setCache($this->cache)
+            ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
 
         return $interface;
@@ -1666,9 +1668,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->_internal = true;
 
         $interface = $this->buildInterface($qualifiedName);
-
-        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        $package->addType($interface);
+        $interface->setPackage(
+            $this->buildPackage($this->extractPackageName($qualifiedName))
+        );
 
         $this->restoreInterface($interface);
 
@@ -1737,9 +1739,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->_internal = true;
 
         $class = $this->buildClass($qualifiedName);
-
-        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        $package->addType($class);
+        $class->setPackage(
+            $this->buildPackage($this->extractPackageName($qualifiedName))
+        );
 
         $this->restoreClass($class);
 
@@ -1864,7 +1866,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->storeClass(
             $class->getName(),
-            $class->getPackage()->getName(),
+            $class->getPackageName(),
             $class
         );
     }
@@ -1881,7 +1883,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->storeInterface(
             $interface->getName(),
-            $interface->getPackage()->getName(),
+            $interface->getPackageName(),
             $interface
         );
     }
@@ -1904,6 +1906,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $this->_classes[$caseInsensitiveName][$packageName] = array();
         }
         $this->_classes[$caseInsensitiveName][$packageName][$class->getUUID()] = $class;
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($class);
     }
 
     /**
@@ -1924,6 +1929,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $this->_interfaces[$caseInsensitiveName][$packageName] = array();
         }
         $this->_interfaces[$caseInsensitiveName][$packageName][$interface->getUUID()] = $interface;
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($interface);
     }
 
     /**

@@ -227,19 +227,20 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $visitor->visitClass($this);
     }
 
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @return void
+     * @since 0.10.0
+     */
     public function  __wakeup()
     {
-        foreach ($this->methods as $method) {
-            $method->sourceFile = $this->sourceFile;
-            $method->setParent($this);
-        }
+        parent::__wakeup();
 
-        PHP_Depend_Builder_Registry::getDefault()
-            ->buildPackage($this->packageName)
-            ->addType($this);
-
-        PHP_Depend_Builder_Registry::getDefault()
-            ->restoreClass($this);
+        $this->context->registerClass($this);
     }
 
     /**

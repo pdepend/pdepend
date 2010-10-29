@@ -83,6 +83,32 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
     }
 
     /**
+     * This method can be used to register an existing class in the current
+     * class context.
+     *
+     * @param PHP_Depend_Code_Class $class The class instance.
+     *
+     * @return void
+     */
+    public function registerClass(PHP_Depend_Code_Class $class)
+    {
+        self::$builder->restoreClass($class);
+    }
+
+    /**
+     * This method can be used to register an existing interface in the current
+     * class context.
+     *
+     * @param PHP_Depend_Code_Class $interface The interface instance.
+     *
+     * @return void
+     */
+    public function registerInterface(PHP_Depend_Code_Interface $interface)
+    {
+        self::$builder->restoreInterface($interface);
+    }
+
+    /**
      * Returns the class instance for the given qualified name.
      *
      * @param string $qualifiedName Full qualified class name.
