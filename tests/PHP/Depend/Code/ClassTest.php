@@ -830,6 +830,20 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetPropertiesReturnsExpectedNumberOfProperties
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetPropertiesReturnsExpectedNumberOfProperties()
+    {
+        $class = $this->getFirstClassForTestCase();
+        self::assertEquals(6, count($class->getProperties()));
+    }
+
+    /**
      * testFreeResetsAllAssociatedProperties
      *
      * @return void
@@ -907,6 +921,36 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+    }
+
+    /**
+     * testGetModifiersReturnsZeroByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetModifiersReturnsZeroByDefault()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        self::assertSame(0, $class->getModifiers());
+    }
+
+    /**
+     * testGetModifiersReturnsInjectedModifierValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetModifiersReturnsInjectedModifierValue()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+
+        self::assertSame(PHP_Depend_ConstantsI::IS_FINAL, $class->getModifiers());
     }
     
     /**

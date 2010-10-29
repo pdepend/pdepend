@@ -692,6 +692,20 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testIsAbstractReturnsAlwaysTrue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsAbstractReturnsAlwaysTrue()
+    {
+        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        self::assertTrue($interface->isAbstract());
+    }
+
+    /**
      * testIsUserDefinedReturnsFalseByDefault
      *
      * @return void
@@ -817,6 +831,25 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->with(self::isInstanceOf(PHP_Depend_Code_Interface::TYPE));
 
         $class->setContext($context)->__wakeup();
+    }
+
+    /**
+     * testAcceptInvokesVisitInterfaceOnGivenVisitor
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitInterfaceOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_VisitorI');
+        $visitor->expects($this->once())
+            ->method('visitInterface')
+            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::TYPE));
+
+        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface->accept($visitor);
     }
 
     /**

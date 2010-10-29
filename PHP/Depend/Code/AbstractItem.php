@@ -61,6 +61,13 @@
 abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
 {
     /**
+     * The type of this class.
+     *
+     * @since 0.10.0
+     */
+    const TYPE = __CLASS__;
+
+    /**
      * The name for this item.
      *
      * @var string $name

@@ -64,6 +64,13 @@ abstract class PHP_Depend_Code_AbstractCallable
        extends PHP_Depend_Code_AbstractItem
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const TYPE = __CLASS__;
+
+    /**
      * The internal used cache instance.
      *
      * @var PHP_Depend_Util_Cache_Driver
