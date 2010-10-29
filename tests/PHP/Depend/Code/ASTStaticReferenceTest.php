@@ -197,7 +197,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
         $reference = $this->createNodeInstance();
         self::assertEquals(
             array(
-                'qualfiedName',
+                'qualifiedName',
                 'context',
                 'image',
                 'comment',

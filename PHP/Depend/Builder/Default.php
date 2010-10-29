@@ -461,13 +461,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTSelfReference(
         PHP_Depend_Code_AbstractClassOrInterface $type
     ) {
-        include_once 'PHP/Depend/Code/ASTSelfReference.php';
-
         PHP_Depend_Util_Log::debug(
             'Creating: PHP_Depend_Code_ASTSelfReference(' . $type->getName() . ')'
         );
 
-        return new PHP_Depend_Code_ASTSelfReference($type);
+        return new PHP_Depend_Code_ASTSelfReference($this->context, $type);
     }
 
     /**

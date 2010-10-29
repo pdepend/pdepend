@@ -61,7 +61,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-final class PHP_Depend_Code_ASTSelfReference
+class PHP_Depend_Code_ASTSelfReference
     extends PHP_Depend_Code_ASTClassOrInterfaceReference
 {
     /**
@@ -74,19 +74,75 @@ final class PHP_Depend_Code_ASTSelfReference
      */
     const IMAGE = 'self';
 
-    protected $qualfiedName = null;
+    /**
+     * The source image for this node instance.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $image = self::IMAGE;
+
+    /**
+     * The currently used builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
+
+    /**
+     * The full qualified class name, including the namespace or package name.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $qualifiedName = null;
 
     /**
      * Constructs a new type holder instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
+     * @param PHP_Depend_Builder_Context               $context The currently
+     *        used builder class or interface context.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $target  The type instance
      *        that reference the concrete target of self.
      */
     public function __construct(
-        PHP_Depend_Code_AbstractClassOrInterface $type
+        PHP_Depend_Builder_Context $context,
+        PHP_Depend_Code_AbstractClassOrInterface $target
     ) {
-        $this->image        = self::IMAGE;
-        $this->typeInstance = $type;
+        $this->context      = $context;
+        $this->typeInstance = $target;
+    }
+
+    /**
+     * Returns the class or interface instance that this node instance represents.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.10.0
+     */
+    public function getType()
+    {
+        if ($this->typeInstance == null) {
+            $this->typeInstance = $this->context
+                ->getClassOrInterface($this->qualifiedName);
+        }
+        return $this->typeInstance;
+    }
+
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
+    public function __sleep()
+    {
+        $this->qualifiedName = $this->getType()->getPackageName() . '\\' .
+                               $this->getType()->getName();
+
+        return array_merge(array('qualifiedName'), parent::__sleep());
     }
 
     /**
@@ -102,31 +158,5 @@ final class PHP_Depend_Code_ASTSelfReference
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitSelfReference($this, $data);
-    }
-
-    public function getType()
-    {
-        if ($this->typeInstance == null) {
-            $this->typeInstance = PHP_Depend_Builder_Registry::getDefault()
-                ->getClassOrInterface($this->qualfiedName);
-        }
-        return $this->typeInstance;
-    }
-
-    public function __sleep()
-    {
-        $this->qualfiedName = $this->getType()->getPackage()->getName() . '\\' .
-                              $this->getType()->getName();
-
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes',
-            'qualfiedName'
-        );
     }
 }

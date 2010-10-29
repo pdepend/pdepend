@@ -62,15 +62,57 @@ require_once 'PHP/Depend/Code/Class.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTSelfReference
  */
 class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetTypeReturnsInjectedConstructorTargetArgument
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeReturnsInjectedConstructorTargetArgument()
+    {
+        $target  = $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__));
+        $context = $this->getMock('PHP_Depend_Builder_Context');
+
+        $reference = new PHP_Depend_Code_ASTSelfReference($context, $target);
+        self::assertSame($target, $reference->getType());
+    }
+
+    /**
+     * testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull()
+    {
+        $target = $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__));
+
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('getClassOrInterface');
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+
+        $reference = new PHP_Depend_Code_ASTSelfReference($context, $target);
+        $reference = unserialize(serialize($reference));
+        $reference->getType();
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -90,8 +132,6 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -112,9 +152,6 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -129,9 +166,6 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -143,12 +177,36 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testMagicSelfReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSelfReturnsExpectedSetOfPropertyNames()
+    {
+        $reference = $this->createNodeInstance();
+        self::assertEquals(
+            array(
+                'qualifiedName',
+                'context',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $reference->__sleep()
+        );
+    }
+
+    /**
      * testSelfReferenceHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -163,9 +221,6 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testSelfReferenceHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -180,9 +235,6 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testSelfReferenceHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -197,9 +249,6 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testSelfReferenceHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTSelfReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -218,11 +267,8 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTSelfReference(
-            $this->getMock(
-                'PHP_Depend_Code_Class',
-                array(),
-                array(__CLASS__)
-            )
+            $this->getMock('PHP_Depend_Builder_Context'),
+            $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__))
         );
     }
 
