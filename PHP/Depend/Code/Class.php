@@ -46,13 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTFieldDeclaration.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
-require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-
 /**
  * Represents a php class node.
  *
@@ -67,6 +60,13 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  */
 class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
 {
+    /**
+     * The type of this class.
+     *
+     * @since 0.10.0
+     */
+    const TYPE = __CLASS__;
+
     /**
      * List of associated properties.
      *
