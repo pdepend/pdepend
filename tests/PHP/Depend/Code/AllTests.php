@@ -230,8 +230,8 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTForInitTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTForUpdateTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTForStatementTest');
-        $suite->addTestSuite('PHP_Depend_Code_ASTForeachStatementTest')
-        $suite->addTestSuite('PHP_Depend_Code_ASTFormalParametersTest');;
+        $suite->addTestSuite('PHP_Depend_Code_ASTForeachStatementTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTFormalParametersTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFormalParameterTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFunctionPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTGlobalStatementTest');
