@@ -74,19 +74,44 @@ final class PHP_Depend_Code_ASTStaticReference
      */
     const IMAGE = 'static';
 
+    /**
+     * The source image for this node instance.
+     *
+     * @var string
+     */
+    protected $image = self::IMAGE;
+
+    /**
+     * The currently used builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
+
+    /**
+     * The full qualified class name, including the namespace or package name.
+     *
+     * @var string
+     * @since 0.10.0
+     */
     protected $qualfiedName = null;
 
     /**
      * Constructs a new type holder instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $owner The type instance
+     * @param PHP_Depend_Builder_Context               $context The currently
+     *        used builder class or interface context.
+     * @param PHP_Depend_Code_AbstractClassOrInterface $target  The type instance
      *        that reference the concrete target of self.
      */
     public function __construct(
-        PHP_Depend_Code_AbstractClassOrInterface $owner
+        PHP_Depend_Builder_Context $context,
+        PHP_Depend_Code_AbstractClassOrInterface $target
     ) {
-        $this->image        = self::IMAGE;
-        $this->typeInstance = $owner;
+        $this->context      = $context;
+        $this->typeInstance = $target;
+        $this->qualfiedName = $target->getPackageName() . '\\' . $target->getName();
     }
 
     /**
@@ -104,28 +129,31 @@ final class PHP_Depend_Code_ASTStaticReference
         return $visitor->visitStaticReference($this, $data);
     }
 
+    /**
+     * Returns the class or interface instance that this node instance represents.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.10.0
+     */
     public function getType()
     {
         if ($this->typeInstance == null) {
-            return PHP_Depend_Builder_Registry::getDefault()
+            $this->typeInstance = $this->context
                 ->getClassOrInterface($this->qualfiedName);
         }
         return $this->typeInstance;
     }
 
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function __sleep()
     {
-        $this->qualfiedName = $this->typeInstance->getPackage()->getName() . '\\' . $this->typeInstance->getName();
-
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes',
-            'qualfiedName'
-        );
+        return array_merge(array('qualfiedName'), parent::__sleep());
     }
 }

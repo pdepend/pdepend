@@ -161,9 +161,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->context = new PHP_Depend_Builder_Context_GlobalStatic($this);
     }
 
+    /**
+     * Setter method for the currently used token cache.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache Used token cache instance.
+     *
+     * @return PHP_Depend_Builder_Default
+     * @since 0.10.0
+     */
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
         $this->cache = $cache;
+        return $this;
     }
 
     /**
@@ -494,13 +503,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTStaticReference(
         PHP_Depend_Code_AbstractClassOrInterface $owner
     ) {
-        include_once 'PHP/Depend/Code/ASTStaticReference.php';
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTStaticReference()');
 
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTStaticReference()'
-        );
-
-        return new PHP_Depend_Code_ASTStaticReference($owner);
+        return new PHP_Depend_Code_ASTStaticReference($this->context, $owner);
     }
 
     /**
@@ -1901,11 +1906,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function storeClass(
         $className, $packageName, PHP_Depend_Code_Class $class
     ) {
-        $caseInsensitiveName = strtolower($className);
-        if (!isset($this->_classes[$caseInsensitiveName][$packageName])) {
-            $this->_classes[$caseInsensitiveName][$packageName] = array();
+        $className = strtolower($className);
+        if (!isset($this->_classes[$className][$packageName])) {
+            $this->_classes[$className][$packageName] = array();
         }
-        $this->_classes[$caseInsensitiveName][$packageName][$class->getUUID()] = $class;
+        $this->_classes[$className][$packageName][$class->getUUID()] = $class;
 
         $package = $this->buildPackage($packageName);
         $package->addType($class);
@@ -1924,11 +1929,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function storeInterface(
         $interfaceName, $packageName, PHP_Depend_Code_Interface $interface
     ) {
-        $caseInsensitiveName = strtolower($interfaceName);
-        if (!isset($this->_interfaces[$caseInsensitiveName][$packageName])) {
-            $this->_interfaces[$caseInsensitiveName][$packageName] = array();
+        $interfaceName = strtolower($interfaceName);
+        if (!isset($this->_interfaces[$interfaceName][$packageName])) {
+            $this->_interfaces[$interfaceName][$packageName] = array();
         }
-        $this->_interfaces[$caseInsensitiveName][$packageName][$interface->getUUID()] = $interface;
+        $this->_interfaces[$interfaceName][$packageName][$interface->getUUID()] = $interface;
 
         $package = $this->buildPackage($packageName);
         $package->addType($interface);
