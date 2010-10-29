@@ -44,12 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.10.0
  */
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTFormalParameter} class.
+ * Test case for the {@link PHP_Depend_Code_ASTFormalParameterss} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,12 +60,13 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.10.0
  *
  * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Builder_Default
- * @covers PHP_Depend_Code_ASTFormalParameter
+ * @covers PHP_Depend_Code_ASTFormalParameters
  */
-class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTFormalParametersTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
      * testAcceptInvokesVisitOnGivenVisitor
@@ -79,9 +81,9 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
         $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
         $visitor->expects($this->once())
             ->method('__call')
-            ->with($this->equalTo('visitFormalParameter'));
+            ->with($this->equalTo('visitFormalParameters'));
 
-        $param = new PHP_Depend_Code_ASTFormalParameter();
+        $param = new PHP_Depend_Code_ASTFormalParameters();
         $param->accept($visitor);
     }
 
@@ -98,165 +100,67 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
         $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
         $visitor->expects($this->once())
             ->method('__call')
-            ->with($this->equalTo('visitFormalParameter'))
+            ->with($this->equalTo('visitFormalParameters'))
             ->will($this->returnValue(42));
 
-        $param = new PHP_Depend_Code_ASTFormalParameter();
+        $param = new PHP_Depend_Code_ASTFormalParameters();
         self::assertEquals(42, $param->accept($visitor));
     }
 
     /**
-     * testIsPassedByReferenceReturnsFalseByDefault
+     * testFormalParametersHasExpectedStartLine
      *
      * @return void
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testIsPassedByReferenceReturnsFalseByDefault()
+    public function testFormalParametersHasExpectedStartLine()
     {
-        $param = new PHP_Depend_Code_ASTFormalParameter();
-        self::assertFalse($param->isPassedByReference());
+        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
+        $this->assertEquals(2, $param->getStartLine());
     }
 
     /**
-     * testIsPassedByReferenceCanBeSetToTrue
+     * testFormalParametersHasExpectedStartColumn
      *
      * @return void
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testIsPassedByReferenceCanBeSetToTrue()
+    public function testFormalParametersHasExpectedStartColumn()
     {
-        $param = new PHP_Depend_Code_ASTFormalParameter();
-        $param->setPassedByReference();
-
-        self::assertTrue($param->isPassedByReference());
+        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
+        $this->assertEquals(52, $param->getStartColumn());
     }
 
     /**
-     * testSimpleParameterIsFlaggedAsPassedByReference
+     * testFormalParametersHasExpectedEndLine
      *
      * @return void
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testSimpleParameterIsFlaggedAsPassedByReference()
+    public function testFormalParametersHasExpectedEndLine()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
-        self::assertTrue($param->isPassedByReference());
-    }
-
-    /**
-     * testParameterWithTypeHintIsFlaggedAsPassedByReference
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testParameterWithTypeHintIsFlaggedAsPassedByReference()
-    {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
-        self::assertTrue($param->isPassedByReference());
-    }
-
-    /**
-     * testParameterWithDefaultValueIsFlaggedAsPassedByReference
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testParameterWithDefaultValueIsFlaggedAsPassedByReference()
-    {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
-        self::assertTrue($param->isPassedByReference());
-    }
-
-    /**
-     * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
-    {
-        $param = $this->createNodeInstance();
-        self::assertEquals(
-            array(
-                'passedByReference',
-                'image',
-                'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
-                'nodes'
-            ),
-            $param->__sleep()
-        );
-    }
-
-    /**
-     * testFormalParameterHasExpectedStartLine
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testFormalParameterHasExpectedStartLine()
-    {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
-        $this->assertEquals(3, $param->getStartLine());
-    }
-
-    /**
-     * testFormalParameterHasExpectedStartColumn
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testFormalParameterHasExpectedStartColumn()
-    {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
-        $this->assertEquals(5, $param->getStartColumn());
-    }
-
-    /**
-     * testFormalParameterHasExpectedEndLine
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testFormalParameterHasExpectedEndLine()
-    {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
         $this->assertEquals(6, $param->getEndLine());
     }
 
     /**
-     * testFormalParameterHasExpectedEndColumn
+     * testFormalParametersHasExpectedEndColumn
      *
      * @return void
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testFormalParameterHasExpectedEndColumn()
+    public function testFormalParametersHasExpectedEndColumn()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
-        $this->assertEquals(20, $param->getEndColumn());
+        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
+        $this->assertEquals(1, $param->getEndColumn());
     }
 
     /**
@@ -264,12 +168,12 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTFormalParameter
+     * @return PHP_Depend_Code_ASTFormalParameters
      */
-    private function _getFirstFormalParameterInFunction($testCase)
+    private function _getFirstFormalParametersInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTFormalParameter::CLAZZ
+            $testCase, PHP_Depend_Code_ASTFormalParameters::CLAZZ
         );
     }
 }
