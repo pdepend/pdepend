@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTStatement.php';
-
 /**
  * This node class represents a switch statement.
  *

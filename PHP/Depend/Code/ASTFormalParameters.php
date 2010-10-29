@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This ast class represents a list for formal parameters. This means the
  * parameters of a method, function or closure declaration.

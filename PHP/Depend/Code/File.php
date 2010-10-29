@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/NodeI.php';
-
 /**
  * This class provides an interface to a single source file.
  *

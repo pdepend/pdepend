@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-
 /**
  * Marker interface that marks a result set as node metrics aware.
  *

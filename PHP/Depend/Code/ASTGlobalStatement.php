@@ -47,8 +47,6 @@
  * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTStatement.php';
-
 /**
  * This node class represents a global-statement.
  *

@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Parser/TokenException.php';
-
 /**
  * This type of exception is thrown when the parser reaches the end of the token
  * stream, but expects further tokens.

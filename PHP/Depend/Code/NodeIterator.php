@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/Filter/Collection.php';
-
 /**
  * Iterator for code nodes.
  *

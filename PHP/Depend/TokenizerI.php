@@ -81,8 +81,6 @@ if (!defined('T_GOTO')) {
     define('T_GOTO', 333);
 }
 
-require_once 'PHP/Depend/ConstantsI.php';
-
 /**
  * Base interface for all php code tokenizers.
  *

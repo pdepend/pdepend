@@ -47,8 +47,6 @@
  * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTExpression.php';
-
 /**
  * This node class represents a <b>include</b>- or <b>include_once</b>-expression.
  *

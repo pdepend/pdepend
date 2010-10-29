@@ -47,8 +47,6 @@
  * @since      0.9.10
  */
 
-require_once 'PHP/Depend/Parser/Exception.php';
-
 /**
  * Base class for token/token stream related exceptions.
  *

@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Parser/TokenException.php';
-
 /**
  * This type of exception is thrown when the parser detects an unexpected token.
  *

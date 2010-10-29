@@ -46,11 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTTypeNode.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
-require_once 'PHP/Depend/Code/AbstractItem.php';
-
 /**
  * This code class represents a class property.
  *

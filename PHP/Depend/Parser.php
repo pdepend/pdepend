@@ -45,20 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/ConstantsI.php';
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/TokenizerI.php';
-require_once 'PHP/Depend/Code/Value.php';
-require_once 'PHP/Depend/Util/Log.php';
-require_once 'PHP/Depend/Util/Type.php';
-require_once 'PHP/Depend/Util/UuidBuilder.php';
-require_once 'PHP/Depend/Parser/SymbolTable.php';
-require_once 'PHP/Depend/Parser/TokenStack.php';
-require_once 'PHP/Depend/Parser/InvalidStateException.php';
-require_once 'PHP/Depend/Parser/MissingValueException.php';
-require_once 'PHP/Depend/Parser/TokenStreamEndException.php';
-require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
-
 /**
  * The php source parser.
  *

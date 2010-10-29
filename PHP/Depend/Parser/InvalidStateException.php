@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Parser/Exception.php';
-
 /**
  * This type of exception is thrown when the parser reaches an invalid state
  * and the parsed source does not fill the expected structure.

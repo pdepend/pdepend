@@ -47,8 +47,6 @@
  * @since      0.9.10
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This class represents PHP strings that can embed various other expressions.
  *

@@ -46,12 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
-require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
-require_once 'PHP/Depend/Util/Coverage/Factory.php';
-
 /**
  * This analyzer calculates the C.R.A.P. index for methods an functions when a
  * clover coverage report was supplied. This report can be supplied by using the

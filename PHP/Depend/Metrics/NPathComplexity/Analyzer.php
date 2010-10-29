@@ -46,13 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTVisitorI.php';
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Util/MathUtil.php';
-
 /**
  * This analyzer calculates the NPath complexity of functions and methods. The
  * NPath complexity metric measures the acyclic execution paths through a method

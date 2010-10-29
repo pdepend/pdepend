@@ -46,17 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTFormalParameter.php';
-require_once 'PHP/Depend/Code/ASTFormalParameters.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-require_once 'PHP/Depend/Code/ASTAllocationExpression.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-require_once 'PHP/Depend/Code/ASTStaticVariableDeclaration.php';
-
-require_once 'PHP/Depend/Code/AbstractItem.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/ClassOrInterfaceReferenceIterator.php';
-
 /**
  * Abstract base class for callable objects.
  *

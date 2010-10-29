@@ -46,9 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/NodeI.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-
 /**
  * Represents a php package node.
  *

@@ -46,9 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-
 /**
  * This abstract class provides a base implementation of an analyzer.
  *

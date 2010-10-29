@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTTypeNode.php';
-
 /**
  * This class represents an array type node.
  *

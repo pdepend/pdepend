@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/ListenerI.php';
-
 /**
  * Base interface for all analyzer implementations.
  *

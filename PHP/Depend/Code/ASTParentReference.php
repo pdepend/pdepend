@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
 /**
  * This is a special reference container that is used whenever the keyword
  * <b>parent</b> is used to reference a class or interface.

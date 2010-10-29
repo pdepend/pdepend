@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNodeI.php';
-
 /**
  * This is an abstract base implementation of the ast node interface.
  *

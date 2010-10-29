@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTInvocation.php';
-
 /**
  * This class represents a function postfix expression.
  *

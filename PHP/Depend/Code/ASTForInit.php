@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This node class represent the init part of a for-statement.
  *

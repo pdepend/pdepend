@@ -47,8 +47,6 @@
  * @since      0.9.11
  */
 
-require_once 'PHP/Depend/Code/ASTExpression.php';
-
 /**
  * This class represents an unary expression node.
  *

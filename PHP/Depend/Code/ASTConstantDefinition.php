@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This class represents a single constant definition as it can occure in
  * class definition or interface declaration.

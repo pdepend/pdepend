@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTVisitorI.php';
-
 /**
  * Root interface for an ast node.
  *

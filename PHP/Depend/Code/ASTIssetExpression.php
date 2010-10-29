@@ -47,8 +47,6 @@
  * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTExpression.php';
-
 /**
  * This node class represents an isste-expression/function.
  *

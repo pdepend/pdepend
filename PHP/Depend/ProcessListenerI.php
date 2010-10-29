@@ -45,11 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/TokenizerI.php';
-require_once 'PHP/Depend/Visitor/ListenerI.php';
-require_once 'PHP/Depend/Metrics/ListenerI.php';
-
 /**
  * This listener can be used to get informations about the current pdepend process.
  *

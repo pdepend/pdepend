@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
-
 /**
  * Representation of a code interface.
  *

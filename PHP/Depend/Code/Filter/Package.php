@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/FilterI.php';
-
 /**
  * This class implements a filter that is based on the package.
  *

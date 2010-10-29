@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This node type represents a variable declarator. A variable declarator always
  * contains a variable name and it can optionally provide a variable default

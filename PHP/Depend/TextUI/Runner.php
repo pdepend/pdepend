@@ -46,12 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Code/Filter/Package.php';
-require_once 'PHP/Depend/Log/LoggerFactory.php';
-require_once 'PHP/Depend/Input/ExcludePathFilter.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-
 /**
  * The command line runner starts a PDepend process.
  *

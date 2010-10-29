@@ -46,12 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTArrayType.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
-require_once 'PHP/Depend/Code/NodeI.php';
-
 /**
  * An instance of this class represents a function or method parameter within
  * the analyzed source code.

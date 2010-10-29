@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerIterator.php';
-
 /**
  * This class provides a simple way to load all required analyzers by class,
  * implemented interface or parent class.

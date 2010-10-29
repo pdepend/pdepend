@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/FilterI.php';
-
 /**
  * This is a simple NULL-implementation of the code filter interface.
  *
