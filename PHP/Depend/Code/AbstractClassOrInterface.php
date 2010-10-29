@@ -147,6 +147,15 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     protected $endLine = 0;
 
+    /**
+     * Name of the parent package for this class or interface instance. Or
+     * <b>NULL</b> when no package was specified.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $packageName = null;
+
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
         $this->cache = $cache;
@@ -290,8 +299,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         if ($collection->accept($parentClass) === false) {
             return null;
         }
-
-        // Parent is valid, so return
+        
         return $parentClass;
     }
 
