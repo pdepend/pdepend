@@ -122,6 +122,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
         self::assertEquals(
             array(
                 'reference',
+                'context',
                 'image',
                 'comment',
                 'startLine',
