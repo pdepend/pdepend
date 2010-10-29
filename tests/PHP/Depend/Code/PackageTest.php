@@ -58,6 +58,8 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Code_Package
  */
 class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
 {
@@ -66,7 +68,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * an empty {@link PHP_Depend_Code_NodeIterator}.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -85,7 +86,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * iterator to contain the new class.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -103,7 +103,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testAddTypeSetPackageOnAddedInstance
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -122,7 +121,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * class.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -142,7 +140,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testAddTypeRemovesGivenTypeFromPreviousParentPackage
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -162,7 +159,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * Tests that you cannot add the same type multiple times to a package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -177,6 +173,52 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
 
         $this->assertSame(1, count($package->getClasses()));
     }
+
+    /**
+     * testGetInterfacesReturnsAnEmptyResultByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetInterfacesReturnsAnEmptyResultByDefault()
+    {
+        $package = new PHP_Depend_Code_Package(__FUNCTION__);
+        self::assertEquals(0, count($package->getInterfaces()));
+    }
+
+    /**
+     * testGetInterfacesReturnsInjectInterfaceInstance
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetInterfacesReturnsInjectInterfaceInstance()
+    {
+        $package = new PHP_Depend_Code_Package(__FUNCTION__);
+        $package->addType(new PHP_Depend_Code_Interface(__CLASS__));
+
+        self::assertEquals(1, count($package->getInterfaces()));
+    }
+
+    /**
+     * testGetInterfacesReturnsInjectInterfaceInstance
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetInterfacesReturnsNotInjectClassInstance()
+    {
+        $package = new PHP_Depend_Code_Package(__FUNCTION__);
+        $package->addType(new PHP_Depend_Code_Class(__CLASS__));
+
+        self::assertEquals(0, count($package->getInterfaces()));
+    }
     
     /**
      * Tests that the {@link PHP_Depend_Code_Package::removeType()} method unsets
@@ -184,7 +226,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * iterator to contain the new class.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -207,7 +248,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testRemoveTypeSetsParentPackageToNull
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -228,7 +268,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * returns an empty {@link PHP_Depend_Code_NodeIterator}.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -246,7 +285,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * the actual package as {@link PHP_Depend_Code_Function} owner.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -264,7 +302,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testAddFunctionSetsParentPackageOnGivenInstance
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -283,7 +320,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * function.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -303,7 +339,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testAddFunctionRemovesFunctionFromPreviousParentPackage
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -324,7 +359,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * unsets the actual package as {@link PHP_Depend_Code_Function} owner.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -346,7 +380,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testRemoveFunctionSetsParentPackageToNull
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -366,7 +399,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * Tests the visitor accept method.
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -384,7 +416,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testIsUserDefinedReturnsFalseWhenPackageIsEmpty
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -399,7 +430,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testIsUserDefinedReturnsFalseWhenAllChildElementsAreNotUserDefined
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -416,7 +446,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testIsUserDefinedReturnsTrueWhenChildElementIsUserDefined
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -436,7 +465,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testIsUserDefinedReturnsTrueWhenAtLeastOneFunctionExists
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -453,7 +481,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testFreeResetsAllTypesAssociatedWithThePackage
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -472,7 +499,6 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testFreeResetsAllFunctionsAssociatedWithThePackage
      *
      * @return void
-     * @covers PHP_Depend_Code_Package
      * @group pdepend
      * @group pdepend::code
      * @group unittest
