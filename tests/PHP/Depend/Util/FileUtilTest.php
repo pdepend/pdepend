@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
  
-require_once 'PHPUnit/Extensions/PhptTestSuite.php';
+require_once 'PHP/Depend/AbstractTest.php';
 
 /**
  * Test case for the {@link PHP_Depend_Util_FileUtil} class.
@@ -59,17 +59,25 @@ require_once 'PHPUnit/Extensions/PhptTestSuite.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_FileUtil
  */
-class PHP_Depend_Util_FileUtilTest extends PHPUnit_Extensions_PhptTestSuite
+class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Constructs a new test suite
+     * testGetSysTempDirReturnsExpectedDirectory
+     * 
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
      */
-    public function __construct()
+    public function testGetSysTempDirReturnsExpectedDirectory()
     {
-        parent::__construct(
-            realpath(dirname(__FILE__) . '/../_code/util/fileutil/')
+        self::assertEquals(
+            sys_get_temp_dir(),
+            PHP_Depend_Util_FileUtil::getSysTempDir()
         );
     }
+
 }
-?>

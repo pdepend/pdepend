@@ -69,19 +69,11 @@ final class PHP_Depend_Util_FileUtil
     {
         if (function_exists('sys_get_temp_dir') === true) {
             return sys_get_temp_dir();
-        } else if ($tmp = getenv('TMP')) {
-            return $tmp;
-        } else if ($tmp = getenv('TEMP')) {
-            return $tmp;
-        } else if ($tmp = getenv('TMPDIR')) {
-            return $tmp;
         }
 
-        // Fallback, try to create a tmp directory.
         if (file_exists('/tmp') === false) {
             mkdir('/tmp');
         }
         return '/tmp';
     }
 }
-?>
