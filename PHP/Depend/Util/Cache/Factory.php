@@ -80,9 +80,21 @@ class PHP_Depend_Util_Cache_Factory
     public function create($cacheKey = 'default')
     {
         if (false === isset($this->caches[$cacheKey])) {
-            //$this->caches[$cacheKey] = new PHP_Depend_Util_Cache_Driver_Memory();
-            $this->caches[$cacheKey] = new PHP_Depend_Util_Cache_Driver_File();
+            $this->caches[$cacheKey] = $this->createFileCache();
         }
         return $this->caches[$cacheKey];
+    }
+
+    /**
+     * Creates a new file system based cache instance.
+     *
+     * @return PHP_Depend_Util_Cache_Driver_File
+     */
+    protected function createFileCache()
+    {
+        return new PHP_Depend_Util_Cache_Driver_File(
+            PHP_Depend_Util_FileUtil::getUserHomeDirOrSysTempDir() .
+            '/.pdepend/cache'
+        );
     }
 }

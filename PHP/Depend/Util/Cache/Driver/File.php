@@ -91,7 +91,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      *
      * @param string $cacheDir The cache root directory.
      */
-    public function __construct($cacheDir = '/tmp/pdepend-playground')
+    public function __construct($cacheDir)
     {
         if (false === file_exists($cacheDir)) {
             mkdir($cacheDir, 0775, true);
