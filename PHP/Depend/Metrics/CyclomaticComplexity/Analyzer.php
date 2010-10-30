@@ -124,17 +124,14 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         if ($this->_nodeMetrics === null) {
-//echo "A\n";
             $this->fireStartAnalyzer();
-//echo "B\n";
+
             // Init node metrics
             $this->_nodeMetrics = array();
-//echo "C\n";
+
             // Visit all packages
             foreach ($packages as $package) {
-//echo "D\n";
                 $package->accept($this);
-//echo "Z\n";
             }
 
             $this->fireEndAnalyzer();
@@ -232,14 +229,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     {
         // Empty visit method, we don't want interface metrics
     }
-protected $debug = false;
-protected function debug($method, $node, $data)
-{
-    if (!$this->debug) {
-        return;
-    }
-    echo "Called {$method}\n";
-}
+
     /**
      * Visits a method node.
      *
@@ -250,17 +240,9 @@ protected function debug($method, $node, $data)
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-if ($method->getName() === 'processHeader') {
-    //$this->debug = true;
-}
         $this->fireStartMethod($method);
         $this->calculateComplexity($method);
         $this->fireEndMethod($method);
-
-if ($this->debug) {
-    var_dump($this->_nodeMetrics[$method->getUUID()]);
-    exit;
-}
     }
 
     /**
@@ -333,7 +315,6 @@ if ($this->debug) {
      */
     public function visitBooleanAndExpression($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $this->visit($node, $data);
     }
@@ -349,7 +330,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitBooleanOrExpression($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $this->visit($node, $data);
     }
@@ -366,7 +346,6 @@ $this->debug(__METHOD__, $node, $data);
     public function visitSwitchLabel($node, $data)
     {
         if (!$node->isDefault()) {
-$this->debug(__METHOD__, $node, $data);
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
@@ -384,7 +363,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitCatchStatement($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -402,7 +380,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitElseIfStatement($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -420,7 +397,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitForStatement($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -438,7 +414,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitForeachStatement($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -456,7 +431,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitIfStatement($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -474,7 +448,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitLogicalAndExpression($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $this->visit($node, $data);
     }
@@ -490,7 +463,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitLogicalOrExpression($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         return $this->visit($node, $data);
     }
@@ -506,7 +478,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitConditionalExpression($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -524,7 +495,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitWhileStatement($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
@@ -542,7 +512,6 @@ $this->debug(__METHOD__, $node, $data);
      */
     public function visitDoWhileStatement($node, $data)
     {
-$this->debug(__METHOD__, $node, $data);
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 

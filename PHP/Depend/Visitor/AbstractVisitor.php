@@ -103,13 +103,10 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-//echo "I\n";
         $this->fireStartClass($class);
-//echo "J\n";
-if (!$class->getSourceFile()) throw new ErrorException('No source file set.');
-//echo "I\n";
+
         $class->getSourceFile()->accept($this);
-//echo "J\n";
+
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
         }
@@ -166,7 +163,7 @@ if (!$class->getSourceFile()) throw new ErrorException('No source file set.');
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         $this->fireStartInterface($interface);
-if (!$interface->getSourceFile()) throw new ErrorException('No source file exists.');
+
         $interface->getSourceFile()->accept($this);
 
         foreach ($interface->getMethods() as $method) {
@@ -206,9 +203,8 @@ if (!$interface->getSourceFile()) throw new ErrorException('No source file exist
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
         $this->fireStartPackage($package);
-//echo "F\n";
+
         foreach ($package->getClasses() as $class) {
-//echo "G\n";
             $class->accept($this);
         }
         foreach ($package->getInterfaces() as $interface) {
@@ -217,7 +213,7 @@ if (!$interface->getSourceFile()) throw new ErrorException('No source file exist
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
-//echo "X\n";
+
         $this->fireEndPackage($package);
     }
 
