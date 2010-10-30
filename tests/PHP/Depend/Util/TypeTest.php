@@ -61,6 +61,8 @@ require_once 'PHP/Depend/Util/Type.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_Type
  */
 class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
 {
@@ -75,63 +77,113 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
      */
     public function testIsInternalTypeDetectsInternalClassPrefixedWithBackslash()
     {
-        $this->assertTrue(PHP_Depend_Util_Type::isInternalType('\LogicException'));
+        self::assertTrue(PHP_Depend_Util_Type::isInternalType('\LogicException'));
     }
 
     /**
      * testGetTypePackageReturnsNullWhenGivenClassIsNotExtensionClass
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
      */
     public function testGetTypePackageReturnsNullWhenGivenClassIsNotExtensionClass()
     {
-        $this->assertNull(PHP_Depend_Util_Type::getTypePackage(__CLASS__));
+        self::assertNull(PHP_Depend_Util_Type::getTypePackage(__CLASS__));
     }
 
     /**
      * testIsScalarTypeReturnsTrueCaseInsensitive
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
      */
     public function testIsScalarTypeReturnsTrueCaseInsensitive()
     {
-        $this->assertTrue(PHP_Depend_Util_Type::isScalarType('ArRaY'));
+        self::assertTrue(PHP_Depend_Util_Type::isScalarType('ArRaY'));
     }
 
     /**
      * testIsScalarTypeReturnsTrueMetaphone
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
      */
     public function testIsScalarTypeReturnsTrueMetaphone()
     {
-        $this->assertTrue(PHP_Depend_Util_Type::isScalarType('Arrai'));
+        self::assertTrue(PHP_Depend_Util_Type::isScalarType('Arrai'));
     }
 
     /**
      * testIsScalarTypeReturnsTrueSoundex
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
      */
     public function testIsScalarTypeReturnsTrueSoundex()
     {
-        $this->assertTrue(PHP_Depend_Util_Type::isScalarType('Imteger'));
+        self::assertTrue(PHP_Depend_Util_Type::isScalarType('Imteger'));
+    }
+
+    /**
+     * testGetPrimitiveTypeReturnsExpectedValueForExactMatch
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testIsPrimitiveTypeReturnsTrueForMatchingInput()
+    {
+        self::assertTrue(PHP_Depend_Util_Type::isPrimitiveType('int'));
+    }
+
+    /**
+     * testIsPrimitiveTypeReturnsFalseForNotMatchingInput
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testIsPrimitiveTypeReturnsFalseForNotMatchingInput()
+    {
+        self::assertFalse(PHP_Depend_Util_Type::isPrimitiveType('input'));
+    }
+
+    /**
+     * testGetPrimitiveTypeReturnsExpectedValueForExactMatch
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testGetPrimitiveTypeReturnsExpectedValueForExactMatch()
+    {
+        $actual = PHP_Depend_Util_Type::getPrimitiveType('int');
+        self::assertEquals(PHP_Depend_Util_Type::PHP_TYPE_INTEGER, $actual);
+    }
+
+    /**
+     * testGetPrimitiveTypeWorksCaseInsensitive
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testGetPrimitiveTypeWorksCaseInsensitive()
+    {
+        $actual = PHP_Depend_Util_Type::getPrimitiveType('INT');
+        self::assertEquals(PHP_Depend_Util_Type::PHP_TYPE_INTEGER, $actual);
     }
 
     /**
@@ -160,7 +212,7 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
     public function testGetPrimitiveTypeFindsTypeByMetaphone()
     {
         $int = PHP_Depend_Util_Type::getPrimitiveType('indeger');
-        $this->assertEquals(PHP_Depend_Util_Type::PHP_TYPE_INTEGER, $int);
+        self::assertEquals(PHP_Depend_Util_Type::PHP_TYPE_INTEGER, $int);
     }
 
     /**
@@ -175,14 +227,13 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
     public function testGetPrimitiveTypeFindsTypeBySoundex()
     {
         $int = PHP_Depend_Util_Type::getPrimitiveType('imtege');
-        $this->assertEquals(PHP_Depend_Util_Type::PHP_TYPE_INTEGER, $int);
+        self::assertEquals(PHP_Depend_Util_Type::PHP_TYPE_INTEGER, $int);
     }
 
     /**
      * testIsInternalPackageReturnsTrueForPhpStandardLibrary
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
@@ -192,7 +243,7 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
         if (!extension_loaded('spl')) {
             $this->markTestSkipped('SPL extension not loaded.');
         }
-        $this->assertTrue(PHP_Depend_Util_Type::isInternalPackage('+spl'));
+        self::assertTrue(PHP_Depend_Util_Type::isInternalPackage('+spl'));
     }
 
     /**
@@ -207,14 +258,13 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
     public function testGetTypePackageReturnsExpectedExtensionNameForClassPrefixedWithBackslash()
     {
         $extensionName = PHP_Depend_Util_Type::getTypePackage('\LogicException');
-        $this->assertEquals('+spl', $extensionName);
+        self::assertEquals('+spl', $extensionName);
     }
     
     /**
      * testIsArrayReturnsFalseForNonArrayString
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
@@ -228,7 +278,6 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
      * testIsArrayReturnsTrueForLowerCaseArrayString
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
@@ -242,7 +291,6 @@ class PHP_Depend_Util_TypeTest extends PHP_Depend_AbstractTest
      * testIsArrayPerfromsCheckCaseInsensitive
      *
      * @return void
-     * @covers PHP_Depend_Util_Type
      * @group pdepend
      * @group pdepend::util
      * @group unittest
