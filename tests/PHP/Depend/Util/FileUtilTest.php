@@ -80,4 +80,36 @@ class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
         );
     }
 
+    /**
+     * testGetUserHomeDirReturnsExpectedDirectory
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testGetUserHomeDirReturnsExpectedDirectory()
+    {
+        self::assertEquals(
+            getenv('HOME'),
+            PHP_Depend_Util_FileUtil::getUserHomeDir()
+        );
+    }
+
+    /**
+     * testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group unittest
+     */
+    public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory()
+    {
+        self::assertEquals(
+            getenv('HOME'),
+            PHP_Depend_Util_FileUtil::getUserHomeDirOrSysTempDir()
+        );
+    }
+
 }

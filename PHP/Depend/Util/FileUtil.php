@@ -61,19 +61,42 @@
 final class PHP_Depend_Util_FileUtil
 {
     /**
+     * Returns the home directory of the current user if it exists. Otherwise
+     * this method will return the system temp directory.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    public static function getUserHomeDirOrSysTempDir()
+    {
+        $home = self::getUserHomeDir();
+        if (file_exists($home)) {
+            return $home;
+        }
+        return self::getSysTempDir();
+    }
+
+    /**
      * Returns the system temp directory.
      *
      * @return string
      */
     public static function getSysTempDir()
     {
-        if (function_exists('sys_get_temp_dir') === true) {
-            return sys_get_temp_dir();
-        }
+        return sys_get_temp_dir();
+    }
 
-        if (file_exists('/tmp') === false) {
-            mkdir('/tmp');
+    /**
+     * Returns the home directory of the current user.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    public static function getUserHomeDir()
+    {
+        if (false === stripos(PHP_OS, 'win')) {
+            return getenv('HOME');
         }
-        return '/tmp';
+        return getenv('HOMEDRIVE') . getenv('HOMEPATH');
     }
 }
