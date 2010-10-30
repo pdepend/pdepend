@@ -63,6 +63,13 @@
 abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The source image for this node instance.
      *
      * @var string
@@ -96,28 +103,28 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @var integer
      */
-    protected $startLine = -1;
+    protected $startLine = 0;
 
     /**
      * The end line for this node.
      *
      * @var integer
      */
-    protected $endLine = -1;
+    protected $endLine = 0;
 
     /**
      * The start column for this node.
      *
      * @var integer
      */
-    protected $startColumn = -1;
+    protected $startColumn = 0;
 
     /**
      * The end column for this node.
      *
      * @var integer
      */
-    protected $endColumn = -1;
+    protected $endColumn = 0;
 
     /**
      * Constructs a new ast node instance.

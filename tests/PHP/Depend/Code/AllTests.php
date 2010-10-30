@@ -130,6 +130,7 @@ require_once dirname(__FILE__) . '/ASTVariableDeclaratorTest.php';
 require_once dirname(__FILE__) . '/ASTVariableVariableTest.php';
 require_once dirname(__FILE__) . '/ASTWhileStatementTest.php';
 
+require_once dirname(__FILE__) . '/CommonASTNodeTest.php';
 require_once dirname(__FILE__) . '/CommonCallableTest.php';
 require_once dirname(__FILE__) . '/CommonItemTest.php';
 
@@ -183,6 +184,7 @@ class PHP_Depend_Code_AllTests
         
         $suite->addTest(PHP_Depend_Code_Filter_AllTests::suite());
 
+        $suite->addTestSuite('PHP_Depend_Code_CommonASTNodeTest');
         $suite->addTestSuite('PHP_Depend_Code_CommonCallableTest');
         $suite->addTestSuite('PHP_Depend_Code_CommonItemTest');
 
