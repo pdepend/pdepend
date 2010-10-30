@@ -114,17 +114,16 @@ class PHP_Depend_Code_ASTVariableDeclarator extends PHP_Depend_Code_ASTNode
         return $visitor->visitVariableDeclarator($this, $data);
     }
 
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function  __sleep()
     {
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes',
-            'value'
-        );
+        return array_merge(array('value'), parent::__sleep());
     }
 }

@@ -65,6 +65,13 @@
 class PHP_Depend_Code_Value
 {
     /**
+     * The type of this class.
+     *
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * Boolean flag that is <b>true</b> when a PHP-value was set.
      *
      * @var boolean $_valueAvailable
