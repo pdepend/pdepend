@@ -59,6 +59,13 @@
 class PHP_Depend_Token
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The token type identifier.
      *
      * @var integer $type
