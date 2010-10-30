@@ -63,6 +63,10 @@ require_once 'PHP/Depend/Code/ASTRequireExpression.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  * @since      0.9.12
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTRequireExpression
  */
 class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,8 +74,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -91,8 +93,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -113,7 +113,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testIsOnceReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -128,9 +127,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testIsOnceReturnsTrueForRequireOnceExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -142,12 +138,35 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
     }
 
     /**
+     * testMagicSleepReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    {
+        $expr = new PHP_Depend_Code_ASTRequireExpression();
+        self::assertEquals(
+            array(
+                'once',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $expr->__sleep()
+        );
+    }
+
+    /**
      * testRequireExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -162,9 +181,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -179,9 +195,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -196,9 +209,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -213,9 +223,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -230,9 +237,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -247,9 +251,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -264,9 +265,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTRequireExpression
      * @group pdepend
      * @group pdepend::ast
      * @group unittest

@@ -70,6 +70,13 @@ require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
 class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * The mocked reference instance.
+     *
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference
+     */
+    protected $referenceMock = null;
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
@@ -106,6 +113,24 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
 
         $reference = $this->createNodeInstance();
         self::assertEquals(42, $reference->accept($visitor));
+    }
+
+    /**
+     * testGetTypeDelegatesCallToInjectedReferenceObject
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeDelegatesCallToInjectedReferenceObject()
+    {
+        $reference = $this->createNodeInstance();
+        $this->referenceMock->expects($this->once())
+            ->method('getType');
+
+        
+        $reference->getType();
     }
 
     /**
@@ -241,7 +266,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTParentReference(
-            $this->getMock(
+            $this->referenceMock = $this->getMock(
                 'PHP_Depend_Code_ASTClassOrInterfaceReference',
                 array(),
                 array(null, __CLASS__),
