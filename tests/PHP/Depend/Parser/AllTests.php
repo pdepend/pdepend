@@ -48,6 +48,7 @@
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 
+require_once dirname(__FILE__) . '/TokenStackTest.php';
 require_once dirname(__FILE__) . '/VersionAllParserTest.php';
 
 /**
@@ -71,6 +72,7 @@ class PHP_Depend_Parser_AllTests extends PHPUnit_Framework_TestSuite
     {
         $this->setName('PHP::Depend::Parser::AllTests');
 
+        $this->addTestSuite('PHP_Depend_Parser_TokenStackTest');
         $this->addTestSuite('PHP_Depend_Parser_VersionAllParserTest');
     }
 
