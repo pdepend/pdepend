@@ -46,11 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Token.php';
-require_once 'PHP/Depend/TokenizerI.php';
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
-
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.

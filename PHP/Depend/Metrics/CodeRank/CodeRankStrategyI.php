@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/VisitorI.php';
-
 /**
  * The code rank strategy provides an interface for dependency collection. 
  *

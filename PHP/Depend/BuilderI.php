@@ -59,7 +59,25 @@
 interface PHP_Depend_BuilderI
     extends PHP_Depend_ConstantsI, IteratorAggregate
 {
+    /**
+     * Setter method for the currently used token cache.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache Used token cache instance.
+     *
+     * @return PHP_Depend_Builder_Default
+     * @since 0.10.0
+     */
     function setCache(PHP_Depend_Util_Cache_Driver $cache);
+
+    /**
+     * Restores a function within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Function $function A function instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    function restoreFunction(PHP_Depend_Code_Function $function);
 
     /**
      * This method will try to find an already existing instance for the given
@@ -105,6 +123,16 @@ interface PHP_Depend_BuilderI
     function getClass($qualifiedName);
 
     /**
+     * Restores an existing class instance within the context of this builder.
+     *
+     * @param PHP_Depend_Code_Class $class An existing class instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    function restoreClass(PHP_Depend_Code_Class $class);
+
+    /**
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
@@ -129,6 +157,16 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_Interface The created interface object.
      */
     function buildInterface($qualifiedName);
+
+    /**
+     * Restores an existing interface instance within the context of this builder.
+     *
+     * @param PHP_Depend_Code_Interface $interface An existing interface instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    function restoreInterface(PHP_Depend_Code_Interface $interface);
 
     /**
      * This method will try to find an already existing instance for the given

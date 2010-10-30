@@ -161,9 +161,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->context = new PHP_Depend_Builder_Context_GlobalStatic($this);
     }
 
+    /**
+     * Setter method for the currently used token cache.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache Used token cache instance.
+     *
+     * @return PHP_Depend_Builder_Default
+     * @since 0.10.0
+     */
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
         $this->cache = $cache;
+        return $this;
     }
 
     /**
@@ -249,6 +258,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         
         $class = new PHP_Depend_Code_Class($this->extractTypeName($name));
         $class->setCache($this->cache)
+            ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
 
         return $class;
@@ -351,6 +361,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         
         $interface = new PHP_Depend_Code_Interface($this->extractTypeName($name));
         $interface->setCache($this->cache)
+            ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
 
         return $interface;
@@ -433,6 +444,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         // Create new function
         $function = new PHP_Depend_Code_Function($name);
         $function->setCache($this->cache)
+            ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
  
         return $function;
@@ -450,13 +462,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTSelfReference(
         PHP_Depend_Code_AbstractClassOrInterface $type
     ) {
-        include_once 'PHP/Depend/Code/ASTSelfReference.php';
-
         PHP_Depend_Util_Log::debug(
             'Creating: PHP_Depend_Code_ASTSelfReference(' . $type->getName() . ')'
         );
 
-        return new PHP_Depend_Code_ASTSelfReference($type);
+        return new PHP_Depend_Code_ASTSelfReference($this->context, $type);
     }
 
     /**
@@ -492,13 +502,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTStaticReference(
         PHP_Depend_Code_AbstractClassOrInterface $owner
     ) {
-        include_once 'PHP/Depend/Code/ASTStaticReference.php';
+        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTStaticReference()');
 
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTStaticReference()'
-        );
-
-        return new PHP_Depend_Code_ASTStaticReference($owner);
+        return new PHP_Depend_Code_ASTStaticReference($this->context, $owner);
     }
 
     /**
@@ -1666,9 +1672,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->_internal = true;
 
         $interface = $this->buildInterface($qualifiedName);
-
-        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        $package->addType($interface);
+        $interface->setPackage(
+            $this->buildPackage($this->extractPackageName($qualifiedName))
+        );
 
         $this->restoreInterface($interface);
 
@@ -1737,9 +1743,9 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->_internal = true;
 
         $class = $this->buildClass($qualifiedName);
-
-        $package = $this->buildPackage($this->extractPackageName($qualifiedName));
-        $package->addType($class);
+        $class->setPackage(
+            $this->buildPackage($this->extractPackageName($qualifiedName))
+        );
 
         $this->restoreClass($class);
 
@@ -1853,6 +1859,20 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Restores a function within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Function $function A function instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function restoreFunction(PHP_Depend_Code_Function $function)
+    {
+        $this->buildPackage($function->getPackageName())
+            ->addFunction($function);
+    }
+
+    /**
      * Restores a class within the internal type scope.
      *
      * @param PHP_Depend_Code_Class $class A class instance.
@@ -1864,7 +1884,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->storeClass(
             $class->getName(),
-            $class->getPackage()->getName(),
+            $class->getPackageName(),
             $class
         );
     }
@@ -1881,7 +1901,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->storeInterface(
             $interface->getName(),
-            $interface->getPackage()->getName(),
+            $interface->getPackageName(),
             $interface
         );
     }
@@ -1899,11 +1919,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function storeClass(
         $className, $packageName, PHP_Depend_Code_Class $class
     ) {
-        $caseInsensitiveName = strtolower($className);
-        if (!isset($this->_classes[$caseInsensitiveName][$packageName])) {
-            $this->_classes[$caseInsensitiveName][$packageName] = array();
+        $className = strtolower($className);
+        if (!isset($this->_classes[$className][$packageName])) {
+            $this->_classes[$className][$packageName] = array();
         }
-        $this->_classes[$caseInsensitiveName][$packageName][$class->getUUID()] = $class;
+        $this->_classes[$className][$packageName][$class->getUUID()] = $class;
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($class);
     }
 
     /**
@@ -1919,11 +1942,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected function storeInterface(
         $interfaceName, $packageName, PHP_Depend_Code_Interface $interface
     ) {
-        $caseInsensitiveName = strtolower($interfaceName);
-        if (!isset($this->_interfaces[$caseInsensitiveName][$packageName])) {
-            $this->_interfaces[$caseInsensitiveName][$packageName] = array();
+        $interfaceName = strtolower($interfaceName);
+        if (!isset($this->_interfaces[$interfaceName][$packageName])) {
+            $this->_interfaces[$interfaceName][$packageName] = array();
         }
-        $this->_interfaces[$caseInsensitiveName][$packageName][$interface->getUUID()] = $interface;
+        $this->_interfaces[$interfaceName][$packageName][$interface->getUUID()] = $interface;
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($interface);
     }
 
     /**

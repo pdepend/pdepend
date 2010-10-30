@@ -47,8 +47,6 @@
  * @since      0.9.15
  */
 
-require_once 'PHP/Depend/Code/ASTUnaryExpression.php';
-
 /**
  * This class represents a cast-expression node.
  *

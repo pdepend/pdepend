@@ -46,12 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
-
 /**
  * This analyzer collects different count metrics for code artifacts like
  * classes, methods, functions or packages.

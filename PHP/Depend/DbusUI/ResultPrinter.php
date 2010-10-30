@@ -46,9 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/ProcessListenerI.php';
-require_once 'PHP/Depend/Visitor/AbstractListener.php';
-
 // This is just fun and it is not really testable
 // @codeCoverageIgnoreStart
 

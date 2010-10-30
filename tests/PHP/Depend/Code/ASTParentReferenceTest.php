@@ -62,15 +62,24 @@ require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTParentReference
  */
 class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * The mocked reference instance.
+     *
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference
+     */
+    protected $referenceMock = null;
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -82,16 +91,14 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
             ->method('__call')
             ->with($this->equalTo('visitParentReference'));
 
-        $node = $this->createNodeInstance();
-        $node->accept($visitor);
+        $reference = $this->createNodeInstance();
+        $reference->accept($visitor);
     }
 
     /**
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -104,17 +111,59 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
             ->with($this->equalTo('visitParentReference'))
             ->will($this->returnValue(42));
 
-        $node = $this->createNodeInstance();
-        self::assertEquals(42, $node->accept($visitor));
+        $reference = $this->createNodeInstance();
+        self::assertEquals(42, $reference->accept($visitor));
+    }
+
+    /**
+     * testGetTypeDelegatesCallToInjectedReferenceObject
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeDelegatesCallToInjectedReferenceObject()
+    {
+        $reference = $this->createNodeInstance();
+        $this->referenceMock->expects($this->once())
+            ->method('getType');
+
+        
+        $reference->getType();
+    }
+
+    /**
+     * testMagicSleepReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    {
+        $reference = $this->createNodeInstance();
+        self::assertEquals(
+            array(
+                'reference',
+                'context',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $reference->__sleep()
+        );
     }
 
     /**
      * testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -129,9 +178,6 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceInClassWithoutParentThrowsException
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -146,9 +192,6 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -163,68 +206,56 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
     public function testParentReferenceHasExpectedStartLine()
     {
-        $ref = $this->_getFirstParentReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $ref->getStartLine());
+        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        self::assertEquals(5, $reference->getStartLine());
     }
 
     /**
      * testParentReferenceHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
     public function testParentReferenceHasExpectedStartColumn()
     {
-        $ref = $this->_getFirstParentReferenceInClass(__METHOD__);
-        $this->assertEquals(20, $ref->getStartColumn());
+        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        self::assertEquals(20, $reference->getStartColumn());
     }
 
     /**
      * testParentReferenceHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
     public function testParentReferenceHasExpectedEndLine()
     {
-        $ref = $this->_getFirstParentReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $ref->getEndLine());
+        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        self::assertEquals(5, $reference->getEndLine());
     }
 
     /**
      * testParentReferenceHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTParentReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
     public function testParentReferenceHasExpectedEndColumn()
     {
-        $ref = $this->_getFirstParentReferenceInClass(__METHOD__);
-        $this->assertEquals(25, $ref->getEndColumn());
+        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        self::assertEquals(25, $reference->getEndColumn());
     }
 
     /**
@@ -235,7 +266,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTParentReference(
-            $this->getMock(
+            $this->referenceMock = $this->getMock(
                 'PHP_Depend_Code_ASTClassOrInterfaceReference',
                 array(),
                 array(null, __CLASS__),

@@ -45,10 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Code_AllTests::main');
-}
-
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
@@ -88,6 +84,7 @@ require_once dirname(__FILE__) . '/ASTForUpdateTest.php';
 require_once dirname(__FILE__) . '/ASTForStatementTest.php';
 require_once dirname(__FILE__) . '/ASTForeachStatementTest.php';
 require_once dirname(__FILE__) . '/ASTFormalParameterTest.php';
+require_once dirname(__FILE__) . '/ASTFormalParametersTest.php';
 require_once dirname(__FILE__) . '/ASTFunctionPostfixTest.php';
 require_once dirname(__FILE__) . '/ASTGlobalStatementTest.php';
 require_once dirname(__FILE__) . '/ASTGotoStatementTest.php';
@@ -132,6 +129,10 @@ require_once dirname(__FILE__) . '/ASTVariableTest.php';
 require_once dirname(__FILE__) . '/ASTVariableDeclaratorTest.php';
 require_once dirname(__FILE__) . '/ASTVariableVariableTest.php';
 require_once dirname(__FILE__) . '/ASTWhileStatementTest.php';
+
+require_once dirname(__FILE__) . '/CommonASTNodeTest.php';
+require_once dirname(__FILE__) . '/CommonCallableTest.php';
+require_once dirname(__FILE__) . '/CommonItemTest.php';
 
 require_once dirname(__FILE__) . '/ClassTest.php';
 require_once dirname(__FILE__) . '/FileTest.php';
@@ -183,6 +184,10 @@ class PHP_Depend_Code_AllTests
         
         $suite->addTest(PHP_Depend_Code_Filter_AllTests::suite());
 
+        $suite->addTestSuite('PHP_Depend_Code_CommonASTNodeTest');
+        $suite->addTestSuite('PHP_Depend_Code_CommonCallableTest');
+        $suite->addTestSuite('PHP_Depend_Code_CommonItemTest');
+
         $suite->addTestSuite('PHP_Depend_Code_ClassTest');
         $suite->addTestSuite('PHP_Depend_Code_FileTest');
         $suite->addTestSuite('PHP_Depend_Code_FunctionTest');
@@ -228,6 +233,7 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTForUpdateTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTForStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTForeachStatementTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTFormalParametersTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFormalParameterTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTFunctionPostfixTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTGlobalStatementTest');

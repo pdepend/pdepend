@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/NodeI.php';
-
 /**
  * Abstract base class for code item.
  *
@@ -62,6 +60,13 @@ require_once 'PHP/Depend/Code/NodeI.php';
  */
 abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
 {
+    /**
+     * The type of this class.
+     *
+     * @since 0.10.0
+     */
+    const TYPE = __CLASS__;
+
     /**
      * The name for this item.
      *

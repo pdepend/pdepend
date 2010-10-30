@@ -70,6 +70,14 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     protected $cache = null;
 
     /**
+     * The currently used builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
+
+    /**
      * The parent for this class node.
      *
      * @var PHP_Depend_Code_ASTClassReference $_parentClassReference
@@ -139,9 +147,32 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     protected $endLine = 0;
 
+    /**
+     * Name of the parent package for this class or interface instance. Or
+     * <b>NULL</b> when no package was specified.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $packageName = null;
+
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
         $this->cache = $cache;
+        return $this;
+    }
+
+    /**
+     * Sets the currently active builder context.
+     *
+     * @param PHP_Depend_Builder_Context $context Current builder context.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.10.0
+     */
+    public function setContext(PHP_Depend_Builder_Context $context)
+    {
+        $this->context = $context;
         return $this;
     }
 
@@ -268,8 +299,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         if ($collection->accept($parentClass) === false) {
             return null;
         }
-
-        // Parent is valid, so return
+        
         return $parentClass;
     }
 
@@ -518,6 +548,17 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * Returns the name of the parent package.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    public function getPackageName()
+    {
+        return $this->packageName;
+    }
+
+    /**
      * Returns the parent package for this class.
      *
      * @return PHP_Depend_Code_Package
@@ -537,6 +578,11 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
         $this->_package = $package;
+        if (is_object($package)) {
+            $this->packageName = $package->getName();
+        } else {
+            $this->packageName = null;
+        }
     }
 
     /**
@@ -606,24 +652,31 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
 
     public function __sleep()
     {
-        $this->packageName = $this->getPackage()->getName();
-
         return array(
             'cache',
-            'modifiers',
             'constants',
+            'context',
             'docComment',
             'endLine',
             'interfaceReferences',
             'methods',
+            'modifiers',
             'name',
             'nodes',
+            'packageName',
             'parentClassReference',
             'startLine',
             'userDefined',
-            'uuid',
-            'packageName'
+            'uuid'
         );
+    }
+
+    public function __wakeup()
+    {
+        foreach ($this->methods as $method) {
+            $method->sourceFile = $this->sourceFile;
+            $method->setParent($this);
+        }
     }
 
     /**

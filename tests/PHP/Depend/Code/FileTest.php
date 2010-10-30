@@ -59,14 +59,321 @@ require_once 'PHP/Depend/Code/File.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Code_File
  */
 class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetNameReturnsTheFileName
+     * 
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetNameReturnsTheFileName()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        self::assertEquals(__FILE__, $file->getName());
+    }
+
+    /**
+     * testGetFileNameReturnsTheFileName
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetFileNameReturnsTheFileName()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        self::assertEquals(__FILE__, $file->getFileName());
+    }
+
+    /**
+     * testGetUuidReturnsNullByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetUuidReturnsNullByDefault()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        self::assertNull($file->getUuid());
+    }
+
+    /**
+     * testGetUuidReturnsInjectedUuidValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetUuidReturnsInjectedUuidValue()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        $file->setUUID(__FUNCTION__);
+
+        self::assertEquals(__FUNCTION__, $file->getUuid());
+    }
+
+    /**
+     * testGetDocCommentReturnsNullByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetDocCommentReturnsNullByDefault()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        self::assertNull($file->getDocComment());
+    }
+
+    /**
+     * testGetDocCommentReturnsInjectedDocCommentValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetDocCommentReturnsInjectedDocCommentValue()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        $file->setDocComment('/** Manuel */');
+
+        self::assertEquals('/** Manuel */', $file->getDocComment());
+    }
+
+    /**
+     * testGetTokensDelegatesCallToCacheRestoreWithFileUuid
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetTokensDelegatesCallToCacheRestoreWithFileUuid()
+    {
+        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache->expects($this->once())
+            ->method('type')
+            ->with(self::equalTo('tokens'))
+            ->will($this->returnValue($cache));
+        $cache->expects($this->once())
+            ->method('restore')
+            ->with(self::equalTo(__FUNCTION__));
+
+        $file = new PHP_Depend_Code_File(null);
+        $file->setCache($cache);
+        $file->setUUID(__FUNCTION__);
+
+        $file->getTokens();
+    }
+
+    /**
+     * testSetTokensDelegatesCallToCacheStoreWithFileUuid
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testSetTokensDelegatesCallToCacheStoreWithFileUuid()
+    {
+        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache->expects($this->once())
+            ->method('type')
+            ->with(self::equalTo('tokens'))
+            ->will($this->returnValue($cache));
+        $cache->expects($this->once())
+            ->method('store')
+            ->with(self::equalTo(__FUNCTION__), self::equalTo(array(1, 2, 3)));
+
+        $file = new PHP_Depend_Code_File(null);
+        $file->setCache($cache);
+        $file->setUUID(__FUNCTION__);
+
+        $file->setTokens(array(1, 2, 3));
+    }
+
+    /**
+     * testAcceptInvokesVisitFileOnGivenVisitor
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testAcceptInvokesVisitFileOnGivenVisitor()
+    {
+        $visitor = $this->getMock('PHP_Depend_VisitorI');
+        $visitor->expects($this->once())
+            ->method('visitFile')
+            ->with(self::isInstanceOf(PHP_Depend_Code_File::TYPE));
+
+        $file = new PHP_Depend_Code_File(null);
+        $file->accept($visitor);
+    }
+
+    /**
+     * testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        self::assertSame('', $file->__toString());
+    }
+
+    /**
+     * testMagicStringMethodReturnInjectedFileNameValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testMagicStringMethodReturnInjectedFileNameValue()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        self::assertEquals(__FILE__, $file->__toString());
+    }
+
+    /**
+     * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
+     * 
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        self::assertEquals(
+            array(
+                'cache',
+                'childNodes',
+                'docComment',
+                'endLine',
+                'fileName',
+                'startLine',
+                'uuid'
+            ),
+            $file->__sleep()
+        );
+    }
+
+    /**
+     * testMagicWakeupMethodInvokesSetSourceFileOnChildNodes
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes()
+    {
+        $node = $this->getMock(
+            PHP_Depend_Code_Class::TYPE,
+            array('setSourceFile'),
+            array(__CLASS__)
+        );
+        $node->expects($this->once())
+            ->method('setSourceFile')
+            ->with(self::isInstanceOf(PHP_Depend_Code_File::TYPE));
+
+        $file = new PHP_Depend_Code_File(__FILE__);
+        $file->addChild($node);
+        $file->__wakeup();
+    }
+
+    /**
+     * testGetStartLineReturnsZeroWhenSourceFileNotExists
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStartLineReturnsZeroWhenSourceFileNotExists()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        self::assertSame(0, $file->getStartLine());
+    }
+
+    /**
+     * testGetStartLineReturnsOneWhenSourceFileExists
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetStartLineReturnsOneWhenSourceFileExists()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        self::assertEquals(1, $file->getStartLine());
+    }
+
+    /**
+     * testGetEndLineReturnsZeroWhenSourceFileNotExists
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetEndLineReturnsZeroWhenSourceFileNotExists()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        self::assertSame(0, $file->getEndLine());
+    }
+
+    /**
+     * testGetEndLineReturnsOneWhenSourceFileExists
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetEndLineReturnsOneWhenSourceFileExists()
+    {
+        $file = new PHP_Depend_Code_File(__FILE__);
+        self::assertEquals(391, $file->getEndLine());
+    }
+
+    /**
+     * testGetSourceReturnsNullWhenSourceFileNotExists
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetSourceReturnsNullWhenSourceFileNotExists()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        self::assertNull($file->getSource());
+    }
+
+    /**
      * Tests the {@link PHP_Depend_Code_File#getSource()} method.
      *
      * @return void
-     * @covers PHP_Depend_Code_File
      * @group pdepend
      * @group pdepend::code
      * @group unittest

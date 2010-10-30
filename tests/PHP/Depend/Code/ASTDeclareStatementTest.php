@@ -63,6 +63,10 @@ require_once 'PHP/Depend/Code/ASTDeclareStatement.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  * @since      0.10.0
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTDeclareStatement
  */
 class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,8 +74,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -91,8 +93,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -113,9 +113,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithSingleParameter
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -123,16 +120,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithSingleParameter()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(1, count($stmt->getValues()));
+        self::assertEquals(1, count($stmt->getValues()));
     }
 
     /**
      * testDeclareStatementWithMultipleParameter
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -140,16 +134,39 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithMultipleParameter()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($stmt->getValues()));
+        self::assertEquals(2, count($stmt->getValues()));
+    }
+
+    /**
+     * testMagicSleepReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    {
+        $stmt = $this->createNodeInstance();
+        self::assertEquals(
+            array(
+                'values',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $stmt->__sleep()
+        );
     }
 
     /**
      * testDeclareStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -157,16 +174,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementHasExpectedStartLine()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        self::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testDeclareStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -174,16 +188,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementHasExpectedStartColumn()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        self::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testDeclareStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -191,16 +202,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementHasExpectedEndLine()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getEndLine());
+        self::assertEquals(4, $stmt->getEndLine());
     }
 
     /**
      * testDeclareStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -208,16 +216,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementHasExpectedEndColumn()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(22, $stmt->getEndColumn());
+        self::assertEquals(22, $stmt->getEndColumn());
     }
 
     /**
      * testDeclareStatementWithScopeHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -225,16 +230,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithScopeHasExpectedStartLine()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        self::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testDeclareStatementWithScopeHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -242,16 +244,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithScopeHasExpectedStartColumn()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        self::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testDeclareStatementWithScopeHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -259,16 +258,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithScopeHasExpectedEndLine()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(10, $stmt->getEndLine());
+        self::assertEquals(10, $stmt->getEndLine());
     }
 
     /**
      * testDeclareStatementWithScopeHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -276,16 +272,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithScopeHasExpectedEndColumn()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndColumn());
+        self::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -293,16 +286,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartLine()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        self::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -310,16 +300,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartColumn()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        self::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -327,16 +314,13 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndLine()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(9, $stmt->getEndLine());
+        self::assertEquals(9, $stmt->getEndLine());
     }
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDeclareStatement
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -344,7 +328,7 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndColumn()
     {
         $stmt = $this->_getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(15, $stmt->getEndColumn());
+        self::assertEquals(15, $stmt->getEndColumn());
     }
 
     /**

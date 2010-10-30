@@ -62,6 +62,10 @@ require_once 'PHP/Depend/ConstantsI.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTFieldDeclaration
  */
 class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -69,8 +73,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -90,8 +92,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -112,9 +112,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a field declaration contains the expected class reference.
      * 
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -131,9 +128,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a field declaration does not contain a class reference.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -162,9 +156,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of valid modifiers.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -184,9 +175,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of invalid modifiers.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -206,12 +194,155 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     }
 
     /**
+     * testIsPublicReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsPublicReturnsFalseByDefault()
+    {
+        $declaration = $this->createNodeInstance();
+        self::assertFalse($declaration->isPublic());
+    }
+
+    /**
+     * testIsPublicReturnsTrueWhenCorrespondingModifierWasSet
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet()
+    {
+        $declaration = $this->createNodeInstance();
+        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
+        
+        self::assertTrue($declaration->isPublic());
+    }
+
+    /**
+     * testIsProtectedReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsProtectedReturnsFalseByDefault()
+    {
+        $declaration = $this->createNodeInstance();
+        self::assertFalse($declaration->isProtected());
+    }
+
+    /**
+     * testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet()
+    {
+        $declaration = $this->createNodeInstance();
+        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
+
+        self::assertTrue($declaration->isProtected());
+    }
+
+    /**
+     * testIsPrivateReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsPrivateReturnsFalseByDefault()
+    {
+        $declaration = $this->createNodeInstance();
+        self::assertFalse($declaration->isPrivate());
+    }
+
+    /**
+     * testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet()
+    {
+        $declaration = $this->createNodeInstance();
+        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
+
+        self::assertTrue($declaration->isPrivate());
+    }
+
+    /**
+     * testIsStaticReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsStaticReturnsFalseByDefault()
+    {
+        $declaration = $this->createNodeInstance();
+        self::assertFalse($declaration->isStatic());
+    }
+
+    /**
+     * testIsStaticReturnsTrueWhenCorrespondingModifierWasSet
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsStaticReturnsTrueWhenCorrespondingModifierWasSet()
+    {
+        $declaration = $this->createNodeInstance();
+        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_STATIC);
+
+        self::assertTrue($declaration->isStatic());
+    }
+
+    /**
+     * testMagicSleepReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    {
+        $declaration = $this->createNodeInstance();
+        self::assertEquals(
+            array(
+                'modifiers',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $declaration->__sleep()
+        );
+    }
+
+    /**
      * testFieldDeclarationHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -226,9 +357,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testFieldDeclarationHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -243,9 +371,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testFieldDeclarationHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -260,9 +385,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testFieldDeclarationHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFieldDeclaration
      * @group pdepend
      * @group pdepend::ast
      * @group unittest

@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-
 /**
  * This analyzer interface provides a specialized form that allows an analyzer
  * to aggregate metrics calculated by other analyzers. 

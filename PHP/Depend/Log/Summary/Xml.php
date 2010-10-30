@@ -46,14 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/CodeAwareI.php';
-require_once 'PHP/Depend/Log/FileAwareI.php';
-require_once 'PHP/Depend/Log/NoLogOutputException.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
-
 /**
  * This logger generates a summary xml document with aggregated project, class,
  * method and file metrics.

@@ -47,8 +47,6 @@
  * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This is node represents a single statement.
  *

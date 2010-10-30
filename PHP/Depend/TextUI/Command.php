@@ -47,11 +47,6 @@
  */
 
 require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/TextUI/ResultPrinter.php';
-require_once 'PHP/Depend/TextUI/Runner.php';
-require_once 'PHP/Depend/Util/Configuration.php';
-require_once 'PHP/Depend/Util/ConfigurationInstance.php';
-require_once 'PHP/Depend/Util/Log.php';
 
 /**
  * Handles the command line stuff and starts the text ui runner.

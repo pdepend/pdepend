@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/ListenerI.php';
-
 /**
  * This abstract class provides a default implementation of the node visitor
  * listener.

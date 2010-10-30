@@ -46,13 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTVisitorI.php';
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
-
 /**
  * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
  * methods and functions.

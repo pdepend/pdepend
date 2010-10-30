@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNodeI.php';
-
 /**
  * This is an abstract base implementation of the ast node interface.
  *
@@ -64,6 +62,13 @@ require_once 'PHP/Depend/Code/ASTNodeI.php';
  */
 abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 {
+    /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The source image for this node instance.
      *
@@ -98,28 +103,28 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @var integer
      */
-    protected $startLine = -1;
+    protected $startLine = 0;
 
     /**
      * The end line for this node.
      *
      * @var integer
      */
-    protected $endLine = -1;
+    protected $endLine = 0;
 
     /**
      * The start column for this node.
      *
      * @var integer
      */
-    protected $startColumn = -1;
+    protected $startColumn = 0;
 
     /**
      * The end column for this node.
      *
      * @var integer
      */
-    protected $endColumn = -1;
+    protected $endColumn = 0;
 
     /**
      * Constructs a new ast node instance.
@@ -432,6 +437,14 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         $this->_removeReferencesToChildNodes();
     }
 
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function  __sleep()
     {
         return array(
@@ -445,6 +458,15 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         );
     }
 
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a previously serialized object gets unserialized. This implementation of
+     * the wakeup method restores the dependencies between an ast node and the
+     * node's children.
+     *
+     * @return void
+     * @since 0.10.0
+     */
     public function __wakeup()
     {
         foreach ($this->nodes as $node) {

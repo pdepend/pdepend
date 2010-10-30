@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
 /**
  * This is a special reference container that is used whenever the keyword
  * <b>parent</b> is used to reference a class or interface.
@@ -121,17 +119,16 @@ final class PHP_Depend_Code_ASTParentReference
         return $visitor->visitParentReference($this, $data);
     }
 
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function  __sleep()
     {
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes',
-            'reference'
-        );
+        return array_merge(array('reference'), parent::__sleep());
     }
 }

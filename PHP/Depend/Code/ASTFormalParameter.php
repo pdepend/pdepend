@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This class represents a formal parameter within the signature of a function,
  * method or closure.
@@ -125,17 +123,16 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
         return $visitor->visitFormalParameter($this, $data);
     }
 
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function  __sleep()
     {
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes',
-            'passedByReference'
-        );
+        return array_merge(array('passedByReference'), parent::__sleep());
     }
 }

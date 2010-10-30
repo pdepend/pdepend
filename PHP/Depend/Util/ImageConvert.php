@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Util/ConfigurationInstance.php';
-
 /**
  * Simple utility class that is used to create different image formats. This
  * class can use the ImageMagick cli tool <b>convert</b> and the pecl extension

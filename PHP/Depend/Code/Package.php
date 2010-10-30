@@ -46,9 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/NodeI.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-
 /**
  * Represents a php package node.
  *
@@ -63,6 +60,13 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  */
 class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
 {
+    /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The package name.
      *

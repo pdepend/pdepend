@@ -47,8 +47,6 @@
  * @since      0.9.8
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This node class represents a conditional expression.
  *

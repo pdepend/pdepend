@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-
 /**
  * This interface is used to mark a result set as project summary aware.
  * 

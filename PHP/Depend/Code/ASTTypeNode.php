@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * Abstract base class for a type node.
  *

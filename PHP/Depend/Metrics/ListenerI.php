@@ -46,9 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/ListenerI.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-
 /**
  * An implementation of this listener can be used to recieve informations about
  * the current metric analyzer.

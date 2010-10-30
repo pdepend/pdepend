@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTTypeNode.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTTypeNode} class.
  *
@@ -61,36 +59,75 @@ require_once 'PHP/Depend/Code/ASTTypeNode.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Code_ASTTypeNode
  */
 class PHP_Depend_Code_ASTTypeNodeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testIsArrayReturnsFalse
+     * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTTypeNode
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testIsArrayReturnsFalse()
+    public function testAcceptInvokesVisitOnGivenVisitor()
     {
-        $type = new PHP_Depend_Code_ASTTypeNode();
-        $this->assertFalse($type->isArray());
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitTypeNode'));
+
+        $typeNode = new PHP_Depend_Code_ASTTypeNode();
+        $typeNode->accept($visitor);
     }
 
     /**
-     * testIsPrimitiveReturnsFalse
+     * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTTypeNode
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
      */
-    public function testIsPrimitiveReturnsFalse()
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('visitTypeNode'))
+            ->will($this->returnValue(42));
+
+        $typeNode = new PHP_Depend_Code_ASTTypeNode();
+        self::assertEquals(42, $typeNode->accept($visitor));
+    }
+
+    /**
+     * testIsArrayReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsArrayReturnsFalseByDefault()
     {
         $type = new PHP_Depend_Code_ASTTypeNode();
-        $this->assertFalse($type->isPrimitive());
+        self::assertFalse($type->isArray());
+    }
+
+    /**
+     * testIsPrimitiveReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testIsPrimitiveReturnsFalseByDefault()
+    {
+        $type = new PHP_Depend_Code_ASTTypeNode();
+        self::assertFalse($type->isPrimitive());
     }
 }

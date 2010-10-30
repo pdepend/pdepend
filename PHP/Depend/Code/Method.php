@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractCallable.php';
-
 /**
  * Represents a php method node.
  *

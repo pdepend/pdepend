@@ -46,9 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
-require_once 'PHP/Depend/Metrics/CodeRank/CodeRankStrategyI.php';
-
 /**
  * Collects class and package metrics based on inheritance.
  *

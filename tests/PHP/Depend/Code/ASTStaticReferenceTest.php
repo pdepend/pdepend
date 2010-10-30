@@ -62,15 +62,57 @@ require_once 'PHP/Depend/Code/Class.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Code_ASTStaticReference
  */
 class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetTypeReturnsInjectedConstructorTargetArgument
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeReturnsInjectedConstructorTargetArgument()
+    {
+        $target  = $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__));
+        $context = $this->getMock('PHP_Depend_Builder_Context');
+
+        $reference = new PHP_Depend_Code_ASTStaticReference($context, $target);
+        self::assertSame($target, $reference->getType());
+    }
+
+    /**
+     * testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull()
+    {
+        $target = $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__));
+
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('getClassOrInterface');
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+
+        $reference = new PHP_Depend_Code_ASTStaticReference($context, $target);
+        $reference = unserialize(serialize($reference));
+        $reference->getType();
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -90,8 +132,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -112,9 +152,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid static results in the expected exception.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -133,9 +170,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid static results in the expected exception.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -147,16 +181,40 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
             'The keyword "static" was used outside of a class/method scope.'
         );
 
-        $packages = self::parseCodeResourceForTest();
+        self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testMagicSelfReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSelfReturnsExpectedSetOfPropertyNames()
+    {
+        $reference = $this->createNodeInstance();
+        self::assertEquals(
+            array(
+                'qualifiedName',
+                'context',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $reference->__sleep()
+        );
     }
 
     /**
      * testStaticReferenceHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -171,9 +229,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testStaticReferenceHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -188,9 +243,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testStaticReferenceHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -205,9 +257,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testStaticReferenceHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticReference
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -226,9 +275,9 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTStaticReference(
-            $this->getMock(
-                'PHP_Depend_Code_Class',
-                array(),
+            $this->getMock('PHP_Depend_Builder_Context'),
+            $this->getMockForAbstractClass(
+                'PHP_Depend_Code_AbstractClassOrInterface',
                 array(__CLASS__)
             )
         );

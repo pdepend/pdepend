@@ -47,8 +47,6 @@
  * @since      0.9.12
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * This node class represent the update part of a for-statement.
  *

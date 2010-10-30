@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Input/FilterI.php';
-
 /**
  * Whitelist filter that accepts files by their file extension.
  *

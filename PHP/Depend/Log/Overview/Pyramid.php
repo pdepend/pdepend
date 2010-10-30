@@ -46,12 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/FileAwareI.php';
-require_once 'PHP/Depend/Log/NoLogOutputException.php';
-require_once 'PHP/Depend/Util/FileUtil.php';
-require_once 'PHP/Depend/Util/ImageConvert.php';
-
 /**
  * This logger generates a system overview pyramid, as described in the book
  * <b>Object-Oriented Metrics in Practice</b>.

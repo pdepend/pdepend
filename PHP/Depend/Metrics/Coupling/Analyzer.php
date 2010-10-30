@@ -46,13 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTInvocation.php';
-require_once 'PHP/Depend/Code/ASTMemberPrimaryPrefix.php';
-
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
-
 /**
  * This analyzer collects coupling values for the hole project. It calculates
  * all function and method <b>calls</b> and the <b>fanout</b>, that means the

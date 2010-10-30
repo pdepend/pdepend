@@ -48,8 +48,6 @@
 
 require_once 'PHP/Depend/Code/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTVariableDeclarator} class.
  *
@@ -61,6 +59,10 @@ require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTVariableDeclarator
  */
 class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -68,8 +70,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTVariableDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -89,8 +89,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTVariableDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -108,12 +106,65 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
+     * testGetValueReturnsNullByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetValueReturnsNullByDefault()
+    {
+        $declarator = new PHP_Depend_Code_ASTVariableDeclarator();
+        self::assertNull($declarator->getValue());
+    }
+
+    /**
+     * testGetValueReturnsInjectedValueInstance
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testGetValueReturnsInjectedValueInstance()
+    {
+        $declarator = new PHP_Depend_Code_ASTVariableDeclarator();
+        $declarator->setValue(new PHP_Depend_Code_Value());
+
+        self::assertType(PHP_Depend_Code_Value::CLAZZ, $declarator->getValue());
+    }
+
+    /**
+     * testMagicSleepReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    {
+        $declarator = new PHP_Depend_Code_ASTVariableDeclarator();
+        self::assertEquals(
+            array(
+                'value',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $declarator->__sleep()
+        );
+    }
+
+    /**
      * testVariableDeclaratorHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariableDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -128,9 +179,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testVariableDeclaratorHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariableDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -145,9 +193,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testVariableDeclaratorHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariableDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -162,9 +207,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testVariableDeclaratorHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariableDeclarator
      * @group pdepend
      * @group pdepend::ast
      * @group unittest

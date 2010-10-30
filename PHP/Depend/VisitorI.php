@@ -45,18 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/ListenerI.php';
-
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Closure.php';
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Parameter.php';
-require_once 'PHP/Depend/Code/Property.php';
-
 /**
  * Base interface for visitors that work on the generated node tree.
  *

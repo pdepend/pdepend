@@ -63,6 +63,66 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testRegisterClassCallsRestoreClassOnBuilder
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::builder
+     * @group pdepend::builder::context
+     * @group unittest
+     */
+    public function testRegisterClassCallsRestoreClassOnBuilder()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('restoreClass')
+            ->with(self::isInstanceOf(PHP_Depend_Code_Class::TYPE));
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context->registerClass(new PHP_Depend_Code_Class(__CLASS__));
+    }
+
+    /**
+     * testRegisterInterfaceCallsRestoreInterfaceOnBuilder
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::builder
+     * @group pdepend::builder::context
+     * @group unittest
+     */
+    public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('restoreInterface')
+            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::TYPE));
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context->registerInterface(new PHP_Depend_Code_Interface(__CLASS__));
+    }
+
+    /**
+     * testRegisterFunctionCallsRestoreFunctionOnBuilder
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::builder
+     * @group pdepend::builder::context
+     * @group unittest
+     */
+    public function testRegisterFunctionCallsRestoreFunctionOnBuilder()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('restoreFunction')
+            ->with(self::isInstanceOf(PHP_Depend_Code_Function::TYPE));
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context->registerFunction(new PHP_Depend_Code_Function(__CLASS__));
+    }
+
+    /**
      * testGetClassDelegatesCallToWrappedBuilder
      *
      * @return void

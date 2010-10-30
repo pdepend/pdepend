@@ -46,12 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/AbstractAnalyzer.php';
-require_once 'PHP/Depend/Metrics/AggregateAnalyzerI.php';
-require_once 'PHP/Depend/Metrics/FilterAwareI.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
-
 /**
  * Generates some class level based metrics. This analyzer is based on the
  * metrics specified in the following document.

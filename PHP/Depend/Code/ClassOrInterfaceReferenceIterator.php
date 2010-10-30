@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/NodeIterator.php';
-
 /**
  * This is a special implementation of the node iterator that will translate
  * a list of given {@link PHP_Depend_Code_ASTClassOrInterfaceReference} holders

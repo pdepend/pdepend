@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/VisitorI.php';
-
 /**
  * This abstract visitor implementation provides a default traversal algorithm
  * that can be used for custom visitors.

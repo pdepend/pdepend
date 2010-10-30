@@ -47,10 +47,6 @@
  * @since      0.9.20
  */
 
-require_once 'PHP/Depend/Parser.php';
-require_once 'PHP/Depend/Parser/TokenStreamEndException.php';
-require_once 'PHP/Depend/Parser/UnexpectedTokenException.php';
-
 /**
  * Concrete parser implementation that is very tolerant and accepts language
  * constructs and keywords that are reserved in newer php versions, but not in

@@ -47,8 +47,6 @@
  * @since      0.10.0
  */
 
-require_once 'PHP/Depend/Code/ASTExpression.php';
-
 /**
  * This node class represents a postfix-expression.
  *

@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-
 /**
  * An instance of this class represents an object allocation.
  *

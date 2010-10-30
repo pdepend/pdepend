@@ -46,14 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/VisitorI.php';
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/CodeAwareI.php';
-require_once 'PHP/Depend/Log/FileAwareI.php';
-require_once 'PHP/Depend/Log/NoLogOutputException.php';
-require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
  * from <a href="http://clarkware.com/software/JDepend.html">JDepend</a>.

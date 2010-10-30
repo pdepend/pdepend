@@ -46,13 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTFieldDeclaration.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
-require_once 'PHP/Depend/Code/AbstractClassOrInterface.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-
 /**
  * Represents a php class node.
  *
@@ -67,6 +60,13 @@ require_once 'PHP/Depend/Code/NodeIterator.php';
  */
 class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
 {
+    /**
+     * The type of this class.
+     *
+     * @since 0.10.0
+     */
+    const TYPE = __CLASS__;
+
     /**
      * List of associated properties.
      *
@@ -227,19 +227,20 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         $visitor->visitClass($this);
     }
 
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @return void
+     * @since 0.10.0
+     */
     public function  __wakeup()
     {
-        foreach ($this->methods as $method) {
-            $method->sourceFile = $this->sourceFile;
-            $method->setParent($this);
-        }
+        parent::__wakeup();
 
-        PHP_Depend_Builder_Registry::getDefault()
-            ->buildPackage($this->packageName)
-            ->addType($this);
-
-        PHP_Depend_Builder_Registry::getDefault()
-            ->restoreClass($this);
+        $this->context->registerClass($this);
     }
 
     /**

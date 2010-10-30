@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/FilterI.php';
-
 /**
  * Static composite filter for code nodes. This class is used for an overall
  * filtering.

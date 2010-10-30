@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Parser/Exception.php';
-
 /**
  * This type of exception is thrown when a parameter or property declaration
  * should contain a default value, but this value was not defined.

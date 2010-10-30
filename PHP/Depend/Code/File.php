@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/NodeI.php';
-
 /**
  * This class provides an interface to a single source file.
  *
@@ -62,6 +60,13 @@ require_once 'PHP/Depend/Code/NodeI.php';
  */
 class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
 {
+    /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const TYPE = __CLASS__;
+
     /**
      * The internal used cache instance.
      *
@@ -92,15 +97,28 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     protected $docComment = null;
 
     /**
-     * Names of all packages that were defined in this file.
+     * The files start line. This property must always have the value <em>1</em>.
      *
-     * @var array(string)
+     * @var integer
+     * @since 0.10.0
      */
-    protected $packageNames = array();
-
     protected $startLine = 0;
 
+    /**
+     * The files end line.
+     *
+     * @var integer
+     * @since 0.10.0
+     */
     protected $endLine = 0;
+
+    /**
+     * List of classes, interfaces and functions that parsed from this file.
+     *
+     * @var array(PHP_Depend_Code_AbstractItem)
+     * @since 0.10.0
+     */
+    protected $childNodes = array();
 
     /**
      * Normalized code in this file.
@@ -164,6 +182,14 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         $this->uuid = $uuid;
     }
 
+    /**
+     * Setter method for the used parser and token cache.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache A cache driver instance.
+     *
+     * @return PHP_Depend_Code_File
+     * @since 0.10.0
+     */
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
         $this->cache = $cache;
@@ -229,13 +255,48 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         $this->docComment = $docComment;
     }
 
+    /**
+     * Adds a source item that was parsed from this source file.
+     *
+     * @param PHP_Depend_Code_AbstractItem $item Node parsed in this file.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function addChild(PHP_Depend_Code_AbstractItem $item)
+    {
+        $this->childNodes[$item->getUUID()] = $item;
+    }
+
+    /**
+     * Returns the start line number for this source file. For an existing file
+     * this value must always be <em>1</em>, while it can be <em>0</em> for a
+     * not existing dummy file.
+     *
+     * @return integer
+     * @since 0.10.0
+     */
     public function getStartLine()
     {
+        if ($this->startLine === 0) {
+            $this->readSource();
+        }
         return $this->startLine;
     }
 
+    /**
+     * Returns the start line number for this source file. For an existing file
+     * this value must always be greater <em>0</em>, while it can be <em>0</em>
+     * for a not existing dummy file.
+     *
+     * @return integer
+     * @since 0.10.0
+     */
     public function getEndLine()
     {
+        if ($this->endLine === 0) {
+            $this->readSource();
+        }
         return $this->endLine;
     }
 
@@ -252,56 +313,42 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
         $visitor->visitFile($this);
     }
 
-    protected $childNodes = array();
-
-    public function addChild(PHP_Depend_Code_AbstractItem $item)
-    {
-        $this->childNodes[$item->getUUID()] = $item;
-    }
-
-    public function addPackage(PHP_Depend_Code_Package $package)
-    {
-        $this->packageNames[] = $package->getName();
-    }
-
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before it serializes an instance of this class. This method returns an
+     * array with those property names that should be serialized.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function __sleep()
     {
         return array(
             'cache',
-            'uuid',
-            'fileName',
-            'startLine',
-            'endLine',
             'childNodes',
             'docComment',
-            'packageNames'
+            'endLine',
+            'fileName',
+            'startLine',
+            'uuid'
         );
     }
 
+    /**
+     * The magic wakeup method will is called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method restores the references between all parsed entities
+     * in this source file and this file instance.
+     *
+     * @return void
+     * @since 0.10.0
+     * @see PHP_Depend_Code_File::$childNodes
+     */
     public function __wakeup()
     {
         foreach ($this->childNodes as $childNode) {
             $childNode->setSourceFile($this);
         }
-
-        $builder = PHP_Depend_Builder_Registry::getDefault();
-        foreach ($this->packageNames as $packageName) {
-            $builder->buildPackage($packageName);
-        }
-    }
-
-    /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        // Nothing todo here
     }
 
     /**
@@ -321,7 +368,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     protected function readSource()
     {
-        if ($this->_source === null) {
+        if ($this->_source === null && file_exists($this->fileName)) {
             $source = file_get_contents($this->fileName);
 
             $this->_source = str_replace(array("\r\n", "\r"), "\n", $source);
@@ -330,4 +377,24 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
             $this->endLine   = substr_count($this->_source, "\n") + 1;
         }
     }
+    
+    // Deprecated methods
+    // @codeCoverageIgnoreStart
+
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     * @deprecated Since 0.10.0
+     */
+    public function free()
+    {
+        fwrite(STDERR, __METHOD__ . ' is deprecated since version 0.10.0' . PHP_EOL);
+    }
+
+    // @codeCoverageIgnoreEnd
 }

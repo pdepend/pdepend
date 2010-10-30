@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Util/Coverage/Report.php';
-
 /**
  * Coverage report implementation for clover formatted xml files.
  *

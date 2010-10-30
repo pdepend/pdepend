@@ -47,8 +47,6 @@
  * @since      0.9.10
  */
 
-require_once 'PHP/Depend/Metrics/AnalyzerClassLocator.php';
-
 /**
  * Locator that searches for PHP_Depend analyzers that follow the PHP_Depend
  * convention and are present the PHP_Depend source tree.

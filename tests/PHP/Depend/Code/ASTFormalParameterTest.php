@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTFormalParameter.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTFormalParameter} class.
  *
@@ -61,6 +59,10 @@ require_once 'PHP/Depend/Code/ASTFormalParameter.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTFormalParameter
  */
 class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -68,8 +70,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -89,8 +89,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -111,8 +109,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testIsPassedByReferenceReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -127,8 +123,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testIsPassedByReferenceCanBeSetToTrue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -145,9 +139,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testSimpleParameterIsFlaggedAsPassedByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -162,9 +153,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testParameterWithTypeHintIsFlaggedAsPassedByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -179,9 +167,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testParameterWithDefaultValueIsFlaggedAsPassedByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -193,12 +178,35 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testMagicSleepReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    {
+        $param = $this->createNodeInstance();
+        self::assertEquals(
+            array(
+                'passedByReference',
+                'image',
+                'comment',
+                'startLine',
+                'startColumn',
+                'endLine',
+                'endColumn',
+                'nodes'
+            ),
+            $param->__sleep()
+        );
+    }
+
+    /**
      * testFormalParameterHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -213,9 +221,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -230,9 +235,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest
@@ -247,9 +249,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFormalParameter
      * @group pdepend
      * @group pdepend::ast
      * @group unittest

@@ -47,8 +47,6 @@
  * @since      0.9.6
  */
 
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
 /**
  * This is a special reference container that is used whenever the keyword
  * <b>static</b> is used to reference a class or interface.
@@ -63,8 +61,7 @@ require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-final class PHP_Depend_Code_ASTStaticReference
-    extends PHP_Depend_Code_ASTClassOrInterfaceReference
+class PHP_Depend_Code_ASTStaticReference extends PHP_Depend_Code_ASTSelfReference
 {
     /**
      * The image type of this node.
@@ -76,21 +73,14 @@ final class PHP_Depend_Code_ASTStaticReference
      */
     const IMAGE = 'static';
 
-    protected $qualfiedName = null;
-
     /**
-     * Constructs a new type holder instance.
+     * The source image for this node instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $owner The type instance
-     *        that reference the concrete target of self.
+     * @var string
+     * @since 0.10.0
      */
-    public function __construct(
-        PHP_Depend_Code_AbstractClassOrInterface $owner
-    ) {
-        $this->image        = self::IMAGE;
-        $this->typeInstance = $owner;
-    }
-
+    protected $image = self::IMAGE;
+    
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
@@ -104,30 +94,5 @@ final class PHP_Depend_Code_ASTStaticReference
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitStaticReference($this, $data);
-    }
-
-    public function getType()
-    {
-        if ($this->typeInstance == null) {
-            return PHP_Depend_Builder_Registry::getDefault()
-                ->getClassOrInterface($this->qualfiedName);
-        }
-        return $this->typeInstance;
-    }
-
-    public function __sleep()
-    {
-        $this->qualfiedName = $this->typeInstance->getPackage()->getName() . '\\' . $this->typeInstance->getName();
-
-        return array(
-            'image',
-            'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
-            'nodes',
-            'qualfiedName'
-        );
     }
 }

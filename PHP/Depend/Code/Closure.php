@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/AbstractCallable.php';
-
 /**
  * This class represents a declared closure in the analyzed source code.
  *
