@@ -65,7 +65,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      * 
      * @since 0.10.0
      */
-    const TYPE = __CLASS__;
+    const CLAZZ = __CLASS__;
 
     /**
      * The internal used cache instance.

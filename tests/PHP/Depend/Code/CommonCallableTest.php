@@ -214,7 +214,7 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
     protected function getCallableMock()
     {
         return $this->getMockForAbstractClass(
-            PHP_Depend_Code_AbstractCallable::TYPE,
+            PHP_Depend_Code_AbstractCallable::CLAZZ,
             array(__CLASS__)
         );
     }

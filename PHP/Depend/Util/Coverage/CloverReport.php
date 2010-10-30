@@ -64,7 +64,7 @@ class PHP_Depend_Util_Coverage_CloverReport
     /**
      * The type of this class.
      */
-    const TYPE = __CLASS__;
+    const CLAZZ = __CLASS__;
 
     /**
      * Holds the line coverage for all files found in the coverage report.

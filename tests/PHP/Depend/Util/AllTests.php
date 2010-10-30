@@ -80,9 +80,9 @@ class PHP_Depend_Util_AllTests
         $suite->addTest(PHP_Depend_Util_Cache_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_Coverage_AllTests::suite());
 
-        $suite->addTest(new PHP_Depend_Util_FileUtilTest());
         $suite->addTest(new PHP_Depend_Util_MathUtilTest());
 
+        $suite->addTestSuite('PHP_Depend_Util_FileUtilTest');
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
         $suite->addTestSuite('PHP_Depend_Util_TypeTest');
         $suite->addTestSuite('PHP_Depend_Util_UuidBuilderTest');

@@ -68,7 +68,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * 
      * @since 0.10.0
      */
-    const TYPE = __CLASS__;
+    const CLAZZ = __CLASS__;
 
     /**
      * The internal used cache instance.

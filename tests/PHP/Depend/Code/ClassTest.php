@@ -1239,7 +1239,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $context = $this->getMock('PHP_Depend_Builder_Context');
         $context->expects($this->once())
             ->method('registerClass')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Class::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_Class::CLAZZ));
 
         $class->setContext($context)->__wakeup();
     }

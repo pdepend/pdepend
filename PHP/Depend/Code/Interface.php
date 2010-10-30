@@ -65,7 +65,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
      * 
      * @since 0.10.0
      */
-    const TYPE = __CLASS__;
+    const CLAZZ = __CLASS__;
 
     /**
      * The modifiers for this interface instance, by default an interface is

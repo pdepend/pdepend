@@ -828,7 +828,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $context = $this->getMock('PHP_Depend_Builder_Context');
         $context->expects($this->once())
             ->method('registerInterface')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
 
         $class->setContext($context)->__wakeup();
     }
@@ -846,7 +846,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $visitor = $this->getMock('PHP_Depend_VisitorI');
         $visitor->expects($this->once())
             ->method('visitInterface')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
 
         $interface = new PHP_Depend_Code_Interface(__CLASS__);
         $interface->accept($visitor);

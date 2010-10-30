@@ -76,7 +76,7 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
         $builder = $this->getMock('PHP_Depend_BuilderI');
         $builder->expects($this->once())
             ->method('restoreClass')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Class::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_Class::CLAZZ));
 
         $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
         $context->registerClass(new PHP_Depend_Code_Class(__CLASS__));
@@ -96,7 +96,7 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
         $builder = $this->getMock('PHP_Depend_BuilderI');
         $builder->expects($this->once())
             ->method('restoreInterface')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
 
         $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
         $context->registerInterface(new PHP_Depend_Code_Interface(__CLASS__));
@@ -116,7 +116,7 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
         $builder = $this->getMock('PHP_Depend_BuilderI');
         $builder->expects($this->once())
             ->method('restoreFunction')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Function::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_Function::CLAZZ));
 
         $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
         $context->registerFunction(new PHP_Depend_Code_Function(__CLASS__));
