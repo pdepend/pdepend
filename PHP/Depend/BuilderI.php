@@ -59,7 +59,25 @@
 interface PHP_Depend_BuilderI
     extends PHP_Depend_ConstantsI, IteratorAggregate
 {
+    /**
+     * Setter method for the currently used token cache.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache Used token cache instance.
+     *
+     * @return PHP_Depend_Builder_Default
+     * @since 0.10.0
+     */
     function setCache(PHP_Depend_Util_Cache_Driver $cache);
+
+    /**
+     * Restores a function within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Function $function A function instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    function restoreFunction(PHP_Depend_Code_Function $function);
 
     /**
      * This method will try to find an already existing instance for the given

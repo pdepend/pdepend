@@ -1859,6 +1859,20 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Restores a function within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Function $function A function instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function restoreFunction(PHP_Depend_Code_Function $function)
+    {
+        $this->buildPackage($function->getPackageName())
+            ->addFunction($function);
+    }
+
+    /**
      * Restores a class within the internal type scope.
      *
      * @param PHP_Depend_Code_Class $class A class instance.

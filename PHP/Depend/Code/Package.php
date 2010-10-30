@@ -61,6 +61,13 @@
 class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The package name.
      *
      * @var string $name

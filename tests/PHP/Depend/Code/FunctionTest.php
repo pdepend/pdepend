@@ -258,6 +258,44 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $function->setPackage(null);
         $this->assertNull($function->getPackage());
     }
+
+    /**
+     * testSetPackageWithNullWillResetPackageNameProperty
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testSetPackageWithNullWillResetPackageNameProperty()
+    {
+        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
+        $function->setPackage(null);
+        $this->assertNull($function->getPackage());
+    }
+
+    /**
+     * testSetPackageNotEstablishesBackReference
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testSetPackageNotEstablishesBackReference()
+    {
+        $package = $this->getMock(
+            PHP_Depend_Code_Package::CLAZZ, 
+            array(),
+            array(__FUNCTION__)
+        );
+        $package->expects($this->never())
+            ->method('addFunction');
+
+        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function->setPackage($package);
+    }
     
     /**
      * Tests that the {@link PHP_Depend_Code_Function::getPackage()} returns as
@@ -275,6 +313,36 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         
         $function->setPackage($package);
         $this->assertSame($package, $function->getPackage());
+    }
+
+    /**
+     * testGetPackageNameReturnsNullByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetPackageNameReturnsNullByDefault()
+    {
+        $function = $this->createItem();
+        self::assertNull($function->getPackageName());
+    }
+
+    /**
+     * testGetPackageNameReturnsNameOfInjectedPackage
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetPackageNameReturnsNameOfInjectedPackage()
+    {
+        $function = $this->createItem();
+        $function->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
+
+        self::assertEquals(__FUNCTION__, $function->getPackageName());
     }
 
     /**

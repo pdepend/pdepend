@@ -92,8 +92,7 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      */
     public function registerFunction(PHP_Depend_Code_Function $function)
     {
-        self::$builder->buildPackage($function->getPackageName())
-            ->addFunction($function);
+        self::$builder->restoreFunction($function);
     }
 
     /**

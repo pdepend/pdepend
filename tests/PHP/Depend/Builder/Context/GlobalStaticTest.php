@@ -103,6 +103,26 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
     }
 
     /**
+     * testRegisterFunctionCallsRestoreFunctionOnBuilder
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::builder
+     * @group pdepend::builder::context
+     * @group unittest
+     */
+    public function testRegisterFunctionCallsRestoreFunctionOnBuilder()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('restoreFunction')
+            ->with(self::isInstanceOf(PHP_Depend_Code_Function::TYPE));
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context->registerFunction(new PHP_Depend_Code_Function(__CLASS__));
+    }
+
+    /**
      * testGetClassDelegatesCallToWrappedBuilder
      *
      * @return void

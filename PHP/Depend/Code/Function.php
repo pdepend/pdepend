@@ -61,6 +61,13 @@
 class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The parent package for this function.
      *
      * @var PHP_Depend_Code_Package
