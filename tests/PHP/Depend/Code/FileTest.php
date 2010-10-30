@@ -217,7 +217,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
         $visitor = $this->getMock('PHP_Depend_VisitorI');
         $visitor->expects($this->once())
             ->method('visitFile')
-            ->with(self::isInstanceOf(PHP_Depend_Code_File::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_File::CLAZZ));
 
         $file = new PHP_Depend_Code_File(null);
         $file->accept($visitor);
@@ -287,13 +287,13 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes()
     {
         $node = $this->getMock(
-            PHP_Depend_Code_Class::TYPE,
+            PHP_Depend_Code_Class::CLAZZ,
             array('setSourceFile'),
             array(__CLASS__)
         );
         $node->expects($this->once())
             ->method('setSourceFile')
-            ->with(self::isInstanceOf(PHP_Depend_Code_File::TYPE));
+            ->with(self::isInstanceOf(PHP_Depend_Code_File::CLAZZ));
 
         $file = new PHP_Depend_Code_File(__FILE__);
         $file->addChild($node);

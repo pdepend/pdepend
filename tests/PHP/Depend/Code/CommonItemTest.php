@@ -176,7 +176,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
     protected function getItemMock()
     {
         return $this->getMockForAbstractClass(
-            PHP_Depend_Code_AbstractItem::TYPE,
+            PHP_Depend_Code_AbstractItem::CLAZZ,
             array(__CLASS__)
         );
     }

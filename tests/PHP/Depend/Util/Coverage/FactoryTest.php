@@ -79,7 +79,7 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHPUnit_Framework_TestCase
         $factory = new PHP_Depend_Util_Coverage_Factory();
         $report  = $factory->create(dirname(__FILE__) . '/_files/clover.xml');
 
-        $this->assertType(PHP_Depend_Util_Coverage_CloverReport::TYPE, $report);
+        $this->assertType(PHP_Depend_Util_Coverage_CloverReport::CLAZZ, $report);
     }
 
     /**
