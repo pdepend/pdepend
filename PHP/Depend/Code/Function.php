@@ -64,8 +64,17 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      * The parent package for this function.
      *
      * @var PHP_Depend_Code_Package
+     * @since 0.10.0
      */
     private $_package = null;
+
+    /**
+     * The currently used builder context.
+     *
+     * @var PHP_Depend_Builder_Context
+     * @since 0.10.0
+     */
+    protected $context = null;
 
     /**
      * The name of the parent package for this function. We use this property
@@ -74,6 +83,20 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      * @var string
      */
     protected $packageName = null;
+
+    /**
+     * Sets the currently active builder context.
+     *
+     * @param PHP_Depend_Builder_Context $context Current builder context.
+     *
+     * @return PHP_Depend_Code_Function
+     * @since 0.10.0
+     */
+    public function setContext(PHP_Depend_Builder_Context $context)
+    {
+        $this->context = $context;
+        return $this;
+    }
 
     /**
      * Returns the parent package for this function.
@@ -101,6 +124,18 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
             $this->packageName = $package->getName();
             $this->_package    = $package;
         }
+    }
+
+    /**
+     * Returns the name of the parent namespace/package or <b>NULL</b> when this
+     * function does not belong to a package.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    public function getPackageName()
+    {
+        return $this->packageName;
     }
 
     /**
@@ -143,27 +178,30 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
         $this->_package = null;
     }
 
+    /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for all function instances.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function  __sleep()
     {
-        return array(
-            'cache',
-            'nodes',
-            'uuid',
-            'name',
-            'startLine',
-            'endLine',
-            'docComment',
-            'returnsReference',
-            'returnClassReference',
-            'exceptionClassReferences',
-            'packageName'
-        );
+        return array_merge(array('context', 'packageName'), parent::__sleep());
     }
 
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global function
+     * context.
+     *
+     * @return void
+     * @since 0.10.0
+     */
     public function  __wakeup()
     {
-        PHP_Depend_Builder_Registry::getDefault()
-            ->buildPackage($this->packageName)
-            ->addFunction($this);
+        $this->context->registerFunction($this);
     }
 }

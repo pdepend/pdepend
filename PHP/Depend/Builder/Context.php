@@ -65,6 +65,16 @@
 interface PHP_Depend_Builder_Context
 {
     /**
+     * This method can be used to register an existing function in the current
+     * application context.
+     * 
+     * @param PHP_Depend_Code_Function $function The function instance.
+     *
+     * @return void
+     */
+    function registerFunction(PHP_Depend_Code_Function $function);
+
+    /**
      * This method can be used to register an existing class in the current
      * class context.
      * 

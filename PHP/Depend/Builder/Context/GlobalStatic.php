@@ -83,6 +83,20 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
     }
 
     /**
+     * This method can be used to register an existing function in the current
+     * application context.
+     *
+     * @param PHP_Depend_Code_Function $function The function instance.
+     *
+     * @return void
+     */
+    public function registerFunction(PHP_Depend_Code_Function $function)
+    {
+        self::$builder->buildPackage($function->getPackageName())
+            ->addFunction($function);
+    }
+
+    /**
      * This method can be used to register an existing class in the current
      * class context.
      *

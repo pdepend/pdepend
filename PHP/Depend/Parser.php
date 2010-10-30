@@ -263,9 +263,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->_useSymbolTable = new PHP_Depend_Parser_SymbolTable();
 
-        include_once 'PHP/Depend/Builder/Registry.php';
-        PHP_Depend_Builder_Registry::setDefault($builder);
-
         $this->_builder->setCache($this->cache);
     }
 

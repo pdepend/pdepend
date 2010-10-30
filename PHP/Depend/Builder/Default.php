@@ -444,6 +444,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         // Create new function
         $function = new PHP_Depend_Code_Function($name);
         $function->setCache($this->cache)
+            ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
  
         return $function;
