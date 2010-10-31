@@ -45,6 +45,8 @@
  * @link      http://pdepend.org/
  */
 
+// @codeCoverageIgnoreStart
+
 /**
  * This listener can be used to get informations about the current pdepend process.
  *
@@ -124,3 +126,5 @@ interface PHP_Depend_ProcessListenerI
      */
     function endLogProcess();
 }
+
+// @codeCoverageIgnoreEnd
