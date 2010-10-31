@@ -63,6 +63,13 @@ class PHP_Depend_Code_Property
     implements PHP_Depend_Code_NodeI
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+    
+    /**
      * The unique identifier for this function.
      *
      * @var string $_uuid

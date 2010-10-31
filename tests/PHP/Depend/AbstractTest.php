@@ -98,6 +98,19 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a mocked class instance without calling the constructor.
+     *
+     * @param string $className Name of the class to mock.
+     *
+     * @return stdClass
+     * @since 0.10.0
+     */
+    protected function getMockWithoutConstructor($className)
+    {
+        return $this->getMock($className, array('__construct'), array(), '', false);
+    }
+
+    /**
      * Clears all temporary resources.
      *
      * @param string $dir The root directory.
