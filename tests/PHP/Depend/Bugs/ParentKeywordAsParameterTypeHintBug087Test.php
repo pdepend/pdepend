@@ -61,6 +61,8 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
 class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -69,23 +71,21 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
      * Tests that the parser handles the parent type hint as expected.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserSetsExpectedParentTypeHintReference()
     {
-        $parameter = self::parseTestCaseSource(__METHOD__)
+        $parameters = self::parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertSame('Bar', $parameter->getClass()->getName());
+        $this->assertSame('Bar', $parameters[0]->getClass()->getName());
     }
 
     /**
@@ -93,7 +93,6 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
      * within a function signature.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
@@ -113,7 +112,6 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
      * testParserThrowsExpectedExceptionForParentTypeHintClassWithoutParent
      * 
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest

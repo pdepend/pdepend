@@ -110,16 +110,14 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
      */
     public function testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
+        $parameters = self::parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
-            ->current();
-
-        $typeHint = $class->getMethods()
             ->current()
-            ->getParameters()
+            ->getMethods()
             ->current()
-            ->getClass();
+            ->getParameters();
+        $parameters[0]->getClass();
     }
 
     /**

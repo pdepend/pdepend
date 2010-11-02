@@ -330,20 +330,12 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      */
     protected static function parseParameter($fileName)
     {
-        $packages   = self::parseSource($fileName);
-        $parameters = $packages->current()
-                               ->getFunctions()
-                               ->current()
-                               ->getParameters();
+        $parameters = self::parseSource($fileName)
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters();
 
-        $parameter = null;
-        while ($parameters->valid()) {
-            $parameter = $parameters->current();
-            $parameters->next();
-            if ($parameters->valid() === false) {
-                return $parameter;
-            }
-        }
-        return $parameter;
+        return end($parameters);
     }
 }

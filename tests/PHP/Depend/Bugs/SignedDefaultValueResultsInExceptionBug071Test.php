@@ -46,10 +46,10 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Test case for the signed default value bug no. 70.
+ * Test case for the signed default value bug no. 71.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,69 +59,63 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
-class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug71Test extends PHP_Depend_AbstractTest
+class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug071Test
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserHandlesSimpleSignedDefaultValue()
     {
-        $packages = self::parseSource('bugs/071-001-signed-default-value.php');
-
-        $parameter = $packages->current()
-                              ->getFunctions()
-                              ->current()
-                              ->getParameters()
-                              ->current();
-        $this->assertSame(-42, $parameter->getDefaultValue());
+        $parameters = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters();
+        $this->assertSame(-42, $parameters[0]->getDefaultValue());
     }
 
     /**
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserHandlesMultipleSignedDefaultValue()
     {
-        $packages = self::parseSource('bugs/071-002-signed-default-value.php');
-
-        $parameter = $packages->current()
-                              ->getFunctions()
-                              ->current()
-                              ->getParameters()
-                              ->current();
-        $this->assertSame(42, $parameter->getDefaultValue());
+        $parameters = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters();
+        $this->assertSame(42, $parameters[0]->getDefaultValue());
     }
 
     /**
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserHandlesComplexSignedDefaultValue()
     {
-        $packages = self::parseSource('bugs/071-003-signed-default-value.php');
-
-        $parameter = $packages->current()
-                              ->getFunctions()
-                              ->current()
-                              ->getParameters()
-                              ->current();
-        $this->assertSame(-42, $parameter->getDefaultValue());
+        $parameters = self::parseTestCaseSource(__METHOD__)
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getParameters();
+        $this->assertSame(-42, $parameters[0]->getDefaultValue());
     }
 }

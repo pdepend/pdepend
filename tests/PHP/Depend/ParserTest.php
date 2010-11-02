@@ -1392,13 +1392,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParentKeywordInFunctionParameterDefaultValue()
     {
-        $parameter = self::parseCodeResourceForTest()->current()
+        $parameters = self::parseCodeResourceForTest()->current()
             ->getFunctions()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertTrue($parameter->isDefaultValueAvailable());
+        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -1413,15 +1412,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParentKeywordInMethodParameterDefaultValue()
     {
-        $parameter = self::parseCodeResourceForTest()->current()
+        $parameters = self::parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertTrue($parameter->isDefaultValueAvailable());
+        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -1435,15 +1433,14 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesSelfKeywordAsParameterTypeHint()
     {
-        $parameter = self::parseCodeResourceForTest()->current()
+        $parameters = self::parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertNotNull($parameter);
+        $this->assertNotNull($parameters[0]);
     }
 
     /**
@@ -1464,13 +1461,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $classes->next();
         $class2 = $classes->current();
 
-        $parameter = $class2->getMethods()
+        $parameters = $class2->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertSame($class1, $parameter->getClass());
-        $this->assertNotSame($class2, $parameter->getClass());
+        $this->assertSame($class1, $parameters[0]->getClass());
+        $this->assertNotSame($class2, $parameters[0]->getClass());
     }
 
     /**
@@ -1485,16 +1481,16 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsTheReallySameParameterHintInstanceForKeywordSelf()
     {
-        $class = self::parseCodeResourceForTest()->current()
+        $class = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current();
 
-        $parameter = $class->getMethods()
+        $parameters = $class->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertSame($class, $parameter->getClass());
+        $this->assertSame($class, $parameters[0]->getClass());
     }
 
     /**

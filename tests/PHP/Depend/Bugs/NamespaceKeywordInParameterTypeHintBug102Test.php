@@ -62,6 +62,8 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
 class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -70,21 +72,19 @@ class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
      * testParserHandlesNamespaceKeywordInFunctionParameterTypeHint
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserHandlesNamespaceKeywordInFunctionParameterTypeHint()
     {
-        $packages  = self::parseTestCaseSource(__METHOD__);
-        $parameter = $packages->current()
+        $parameters = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertEquals('foo\bar', $parameter->getClass()->getPackage()->getName());
+        $this->assertEquals('foo\bar', $parameters[0]->getClass()->getPackage()->getName());
     }
 
     /**
@@ -98,15 +98,14 @@ class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
      */
     public function testParserHandlesNamespaceKeywordInMethodParameterTypeHint()
     {
-        $packages  = self::parseTestCaseSource(__METHOD__);
-        $parameter = $packages->current()
+        $parameters = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertEquals('foo\bar', $parameter->getClass()->getPackage()->getName());
+        $this->assertEquals('foo\bar', $parameters[0]->getClass()->getPackage()->getName());
     }
 }

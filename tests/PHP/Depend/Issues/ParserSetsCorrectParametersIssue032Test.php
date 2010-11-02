@@ -48,12 +48,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/TextUI/Command.php';
-require_once 'PHP/Depend/TextUI/Runner.php';
-
 /**
  * Test case for parameter related ticker #32.
  *
@@ -65,6 +59,8 @@ require_once 'PHP/Depend/TextUI/Runner.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
  */
 class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     extends PHP_Depend_Issues_AbstractTest
@@ -73,7 +69,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedNumberOfFunctionParameters
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -81,14 +76,13 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     public function testParserSetsExpectedNumberOfFunctionParameters()
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertEquals(3, $parameters->count());
+        $this->assertEquals(3, count($parameters));
     }
 
     /**
      * testParserSetsExpectedPositionOfFunctionParameters
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -106,7 +100,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsFunctionParametersInExpectedOrder
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -124,7 +117,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedTypeHintsForFunctionParameters
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -142,7 +134,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedNumberOfMethodParameters
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -150,14 +141,13 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     public function testParserSetsExpectedNumberOfMethodParameters()
     {
         $parameters = $this->_getParametersOfFirstMethod();
-        $this->assertEquals(3, $parameters->count());
+        $this->assertEquals(3, count($parameters));
     }
 
     /**
      * testParserSetsExpectedPositionOfMethodParameters
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -175,7 +165,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsMethodParametersInExpectedOrder
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -193,7 +182,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedTypeHintsForMethodParameters
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @group pdepend
      * @group pdepend::issues
      * @group unittest
@@ -210,7 +198,7 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     /**
      * Returns the parameters of the first method in the test case file.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return array(PHP_Depend_Code_Parameter)
      */
     private function _getParametersOfFirstMethod()
     {

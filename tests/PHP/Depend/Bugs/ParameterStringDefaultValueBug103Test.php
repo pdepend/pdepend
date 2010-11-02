@@ -78,12 +78,12 @@ class PHP_Depend_Bugs_ParameterStringDefaultValueBug103Test
      */
     public function testParserHandlesStringDefaultValueWithEmbeddedExpression()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
+        $parameters = self::parseTestCaseSource(__METHOD__)
+            ->current()
             ->getFunctions()
             ->current()
-            ->getParameters()
-            ->current()
-            ->getDefaultValue();
+            ->getParameters();
+
+        $parameters[0]->getDefaultValue();
     }
 }

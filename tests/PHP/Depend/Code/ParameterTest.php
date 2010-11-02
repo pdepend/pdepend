@@ -67,56 +67,53 @@ require_once 'PHP/Depend/Code/Value.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Code_Parameter
  */
 class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
 {
-
     /**
      * testFreeResetsDeclaringFunctionToNull
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testFreeResetsDeclaringFunctionToNull()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
+        $parameters = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $parameter->free();
+        $parameters[0]->free();
 
-        $this->assertNull($parameter->getDeclaringFunction());
+        self::assertNull($parameters[0]->getDeclaringFunction());
     }
 
     /**
      * Tests that the allows null method returns <b>true</b> for a simple parameter.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterAllowsNullForSimpleVariableIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
+        $parameters = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertTrue($parameter->allowsNull());
+        self::assertTrue($parameters[0]->allowsNull());
     }
 
     /**
@@ -124,23 +121,21 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter passed by reference.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
+        $parameters = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertTrue($parameter->allowsNull());
+        self::assertTrue($parameters[0]->allowsNull());
     }
 
     /**
@@ -148,23 +143,21 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter without explicit <b>null</b> default value.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
+        $parameters = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertFalse($parameter->allowsNull());
+        self::assertFalse($parameters[0]->allowsNull());
     }
 
     /**
@@ -172,23 +165,21 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter with explicit <b>null</b> default value.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
+        $parameters = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertTrue($parameter->allowsNull());
+        self::assertTrue($parameters[0]->allowsNull());
     }
 
     /**
@@ -196,23 +187,21 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter without explicit <b>null</b> default value.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
+        $parameters = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertFalse($parameter->allowsNull());
+        self::assertFalse($parameters[0]->allowsNull());
     }
 
     /**
@@ -220,7 +209,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter with explicit <b>null</b> default value.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -233,10 +221,9 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertTrue($parameter->allowsNull());
+        self::assertTrue($parameter[0]->allowsNull());
     }
 
     /**
@@ -244,7 +231,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -255,10 +241,9 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
         $parameter = $packages->current()
             ->getFunctions()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertNull($parameter->getDeclaringClass());
+        self::assertNull($parameter[0]->getDeclaringClass());
     }
 
     /**
@@ -266,128 +251,111 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * of a parent function/method.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-
-        $class = $packages->current()
+        $class = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current();
 
-        $parameter = $class->getMethods()
+        $parameters = $class->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertSame($class, $parameter->getDeclaringClass());
+        self::assertSame($class, $parameters[0]->getDeclaringClass());
     }
 
     /**
      * Tests that the parameter class handles a type holder as expected.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterReturnsExpectedTypeFromASTClassOrInterfaceReference()
     {
-        $packages  = self::parseCodeResourceForTest();
-
-        $class = $packages->current()
+        $class = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current();
 
-        $parameter = $class->getMethods()
+        $parameters = $class->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        $this->assertSame($class, $parameter->getClass());
+        self::assertSame($class, $parameters[0]->getClass());
     }
 
     /**
      * Tests that a parameter returns <b>null</b> when no type holder was set.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
+        $parameters = self::parseCodeResourceForTest()
+            ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
             
-        $this->assertNull($parameter->getClass());
+        self::assertNull($parameters[0]->getClass());
     }
 
     /**
      * Tests that a parameter returns the expected function instance.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterReturnsExpectedDeclaringFunction()
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
-
-        $function = $package->getFunctions()
+        $function = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
             ->current();
 
-        $parameter = $function->getParameters()
-            ->current();
-
-        $this->assertSame($function, $parameter->getDeclaringFunction());
+        $parameters = $function->getParameters();
+        self::assertSame($function, $parameters[0]->getDeclaringFunction());
     }
 
     /**
      * Tests that a parameter returns the expected method instance.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterReturnsExpectedDeclaringMethod()
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
-
-        $method = $package->getClasses()
+        $method = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
             ->current()
             ->getMethods()
             ->current();
 
-        $parameter = $method->getParameters()
-            ->current();
-
-        $this->assertSame($method, $parameter->getDeclaringFunction());
+        $parameters = $method->getParameters();
+        self::assertSame($method, $parameters[0]->getDeclaringFunction());
     }
 
     /**
      * testAcceptInvokesVisitParameterOnSuppliedVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
@@ -408,14 +376,13 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterExportThrowsReflectionExceptionForUnknownFunction()
     {
-        $this->assertFalse(function_exists(__FUNCTION__));
+        self::assertFalse(function_exists(__FUNCTION__));
 
         $this->setExpectedException(
             'ReflectionException',
@@ -430,18 +397,17 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function parameter.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
     public function testParameterExportsExistingFunction()
     {
-        $this->assertFalse(function_exists(__FUNCTION__));
+        self::assertFalse(function_exists(__FUNCTION__));
 
         function testParameterExportsExistingFunction($foo) {}
 
-        $this->assertSame(
+        self::assertSame(
             'Parameter #0 [ <required> $foo ]',
             PHP_Depend_Code_Parameter::export(__FUNCTION__, 'foo', true)
         );

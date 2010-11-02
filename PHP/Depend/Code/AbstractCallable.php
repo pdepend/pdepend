@@ -82,7 +82,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var PHP_Depend_Code_ASTClassOrInterfaceReference $_returnClassReference
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.5
      */
     protected $returnClassReference = null;
@@ -98,14 +98,14 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Does this callable return a value by reference?
      *
-     * @var boolean $_returnsReference
+     * @var boolean
      */
     protected $returnsReference = false;
 
     /**
      * List of all parsed child nodes.
      *
-     * @var array(PHP_Depend_Code_ASTNodeI) $_nodes
+     * @var array(PHP_Depend_Code_ASTNodeI)
      * @since 0.9.6
      */
     protected $nodes = array();
@@ -129,7 +129,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * List of method/function parameters.
      *
-     * @var PHP_Depend_Code_NodeIterator $_parameters
+     * @var array(PHP_Depend_Code_Parameter)
      */
     private $_parameters = null;
 
@@ -337,21 +337,15 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
 
     /**
-     * Returns an iterator with all method/function parameters.
+     * Returns an array with all method/function parameters.
      *
-     * <b>NOTE:</b> All node iterators return an alphabetic ordered list of
-     * nodes. Use the {@link PHP_Depend_Code_Parameter::getPosition()} for the
-     * correct parameter position.
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return array(PHP_Depend_Code_Parameter)
      */
     public function getParameters()
     {
         if ($this->_parameters === null) {
             $this->_initParameters();
         }
-        $this->_parameters->rewind();
-        
         return $this->_parameters;
     }
 
@@ -446,7 +440,7 @@ abstract class PHP_Depend_Code_AbstractCallable
             $parameter->setOptional($optional);
         }
 
-        $this->_parameters = new PHP_Depend_Code_NodeIterator($parameters);
+        $this->_parameters = $parameters;
     }
 
     /**
@@ -496,7 +490,9 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     private function _removeReferencesToParameters()
     {
-        $this->getParameters()->free();
+        foreach ($this->getParameters() as $parameter) {
+            $parameter->free();
+        }
         $this->_parameters = array();
     }
 

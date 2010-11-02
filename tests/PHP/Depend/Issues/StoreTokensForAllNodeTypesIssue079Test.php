@@ -77,14 +77,13 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      */
     public function testParameterContainsStartLineOfFirstToken()
     {
-        $parameter = self::parseTestCaseSource(__METHOD__)
+        $parameters = self::parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        self::assertEquals(4, $parameter->getStartLine());
+        self::assertEquals(4, $parameters[0]->getStartLine());
     }
 
     /**
@@ -99,14 +98,13 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      */
     public function testParameterContainsEndLineOfLastToken()
     {
-        $parameter = self::parseTestCaseSource(__METHOD__)
+        $parameters = self::parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current()
-            ->getParameters()
-            ->current();
+            ->getParameters();
 
-        self::assertEquals(11, $parameter->getEndLine());
+        self::assertEquals(11, $parameters[0]->getEndLine());
     }
 
     /**
