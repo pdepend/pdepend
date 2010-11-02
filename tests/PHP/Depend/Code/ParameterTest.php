@@ -73,29 +73,6 @@ require_once 'PHP/Depend/Code/Value.php';
 class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
 {
     /**
-     * testFreeResetsDeclaringFunctionToNull
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
-     */
-    public function testFreeResetsDeclaringFunctionToNull()
-    {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
-        $parameters[0]->free();
-
-        self::assertNull($parameters[0]->getDeclaringFunction());
-    }
-
-    /**
      * Tests that the allows null method returns <b>true</b> for a simple parameter.
      *
      * @return void

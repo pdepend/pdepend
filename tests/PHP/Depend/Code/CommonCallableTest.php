@@ -63,6 +63,118 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetParametersReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersReturnsEmptyArrayByDefault()
+    {
+        $callable = $this->getFirstCallableForTest();
+        self::assertEquals(array(), $callable->getParameters());
+    }
+
+    /**
+     * testGetParametersReturnsArrayWithOneElement
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersReturnsArrayWithOneElement()
+    {
+        $callable = $this->getFirstCallableForTest();
+        self::assertEquals(1, count($callable->getParameters()));
+    }
+
+    /**
+     * testGetParametersReturnsArrayWithThreeElements
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersReturnsArrayWithThreeElements()
+    {
+        $callable = $this->getFirstCallableForTest();
+        self::assertEquals(3, count($callable->getParameters()));
+    }
+
+    /**
+     * testGetParametersReturnsArrayWithObjectsOfTypeParameter
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersReturnsArrayWithObjectsOfTypeParameter()
+    {
+        $parameters = $this->getFirstCallableForTest()->getParameters();
+        self::assertType(PHP_Depend_Code_Parameter::CLAZZ, $parameters[0]);
+    }
+
+    /**
+     * testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue()
+    {
+        $parameters = $this->getFirstCallableForTest()->getParameters();
+        self::assertFalse($parameters[0]->isOptional());
+    }
+
+    /**
+     * testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue()
+    {
+        $parameters = $this->getFirstCallableForTest()->getParameters();
+        self::assertFalse($parameters[0]->isOptional());
+    }
+
+    /**
+     * testGetParametersSetsOptionalOnParameterWithDefaultValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersSetsOptionalOnParameterWithDefaultValue()
+    {
+        $parameters = $this->getFirstCallableForTest()->getParameters();
+        self::assertTrue($parameters[0]->isOptional());
+    }
+
+    /**
+     * testGetParametersSetsOptionalOnLastParameterWithDefaultValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testGetParametersSetsOptionalOnLastParameterWithDefaultValue()
+    {
+        $parameters = $this->getFirstCallableForTest()->getParameters();
+        self::assertTrue($parameters[2]->isOptional());
+    }
+
+    /**
      * testGetTokensDelegatesCallToCacheRestore
      *
      * @return void
@@ -204,6 +316,21 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
     {
         $callable = $this->getCallableMock();
         self::assertNull($callable->getReturnClass());
+    }
+
+    /**
+     * Returns the first callable found in the test file for the calling test
+     * method.
+     *
+     * @return PHP_Depend_Code_AbstractCallable
+     * @since 0.10.0
+     */
+    protected function getFirstCallableForTest()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current();
     }
 
     /**

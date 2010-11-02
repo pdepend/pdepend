@@ -76,6 +76,13 @@ class PHP_Depend_Code_Parameter
     implements PHP_Depend_Code_NodeI
 {
     /**
+     * The type of this class.
+     * 
+     * @since 0.10.0
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * The unique identifier for this function.
      *
      * @var string
@@ -377,44 +384,6 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        $this->_removeReferenceToDeclaringFunction();
-        $this->_removeReferencesToNodes();
-    }
-
-    /**
-     * Removes the reference to the declaring function of this parameter instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToDeclaringFunction()
-    {
-        $this->_declaringFunction = null;
-    }
-
-    /**
-     * Removes all references to ast nodes associated with parameter instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToNodes()
-    {
-        $this->_formalParameter    = null;
-        $this->_variableDeclarator = null;
-    }
-
-    /**
      * This method returns a string representation of this parameter.
      *
      * @return string
@@ -479,4 +448,22 @@ class PHP_Depend_Code_Parameter
         }
         return parent::export($function, $parameter, $return);
     }
+    
+    // @codeCoverageIgnoreStart
+
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     * @deprecated Since 0.10.0
+     */
+    public function free()
+    {
+    }
+
+    // @codeCoverageIgnoreEnd
 }

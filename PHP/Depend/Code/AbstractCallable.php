@@ -478,22 +478,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function free()
     {
-        $this->_removeReferencesToParameters();
         $this->_removeReferencesToNodes();
-    }
-
-    /**
-     * Free memory consumed by parameters associated with this callable instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToParameters()
-    {
-        foreach ($this->getParameters() as $parameter) {
-            $parameter->free();
-        }
-        $this->_parameters = array();
     }
 
     /**
