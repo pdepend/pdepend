@@ -156,6 +156,23 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     protected $packageName = null;
 
+    /**
+     * Was this class or interface instance restored from the cache?
+     *
+     * @var boolean
+     * @since 0.10.0
+     */
+    protected $cached = false;
+
+    /**
+     * Setter method for the currently used token cache, where this class or
+     * interface instance can store the associated tokens.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache The currently used cache instance.
+     *
+     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @since 0.10.0
+     */
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
         $this->cache = $cache;
@@ -299,7 +316,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         if ($collection->accept($parentClass) === false) {
             return null;
         }
-        
+
         return $parentClass;
     }
 
@@ -586,6 +603,19 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * This method will return <b>true</b> when this class or interface instance
+     * was restored from the cache and not currently parsed. Otherwise this
+     * method will return <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    public function isCached()
+    {
+        return $this->cached;
+    }
+
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
@@ -650,6 +680,15 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
     }
 
+    /**
+     * The magic sleep method is called by the PHP runtime environment before an
+     * instance of this class gets serialized. It returns an array with the
+     * names of all those properties that should be cached for this class or
+     * interface instance.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function __sleep()
     {
         return array(
@@ -671,8 +710,20 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         );
     }
 
+    /**
+     * The magic wakeup method is called by the PHP runtime environment when a
+     * serialized instance of this class gets unserialized and all properties
+     * are restored. This implementation of the <b>__wakeup()</b> method sets
+     * a flag that this object was restored from the cache and it restores the
+     * dependency between this class or interface and it's child methods.
+     *
+     * @return void
+     * @since 0.10.0
+     */
     public function __wakeup()
     {
+        $this->cached = true;
+
         foreach ($this->methods as $method) {
             $method->sourceFile = $this->sourceFile;
             $method->setParent($this);

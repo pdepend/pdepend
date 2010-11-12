@@ -182,7 +182,9 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $interface->addChild($node1);
         $interface->addChild($node2);
 
-        $child = $interface->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
+        $child = $interface->getFirstChildOfType(
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
         $this->assertNull($child);
     }
 
@@ -294,7 +296,14 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            array('A' => true, 'B' => false, 'C' => false, 'D' => false, 'E' => false, 'F' => true)
+            array(
+                'A' => true,
+                'B' => false,
+                'C' => false,
+                'D' => false,
+                'E' => false,
+                'F' => true
+            )
         );
     }
 
@@ -309,7 +318,14 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy1()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            array('A' => true, 'B' => true, 'C' => true, 'D' => true, 'E' => true, 'F' => true)
+            array(
+                'A' => true,
+                'B' => true,
+                'C' => true,
+                'D' => true,
+                'E' => true,
+                'F' => true
+            )
         );
     }
 
@@ -324,7 +340,14 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy2()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            array('B' => false, 'C' => false, 'A' => true, 'D' => true, 'E' => true, 'F' => false)
+            array(
+                'B' => false,
+                'C' => false,
+                'A' => true,
+                'D' => true,
+                'E' => true,
+                'F' => false
+            )
         );
     }
 
@@ -339,10 +362,27 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     public function testIsSubtypeOnInheritanceHierarchy3()
     {
         $this->_testIsSubtypeOnInheritanceHierarchy(
-            array('B' => false, 'C' => false, 'D' => false, 'A' => true, 'E' => false, 'F' => false)
+            array(
+                'B' => false,
+                'C' => false,
+                'D' => false,
+                'A' => true,
+                'E' => false,
+                'F' => false
+            )
         );
     }
 
+    /**
+     * _testIsSubtypeOnInheritanceHierarchy
+     *
+     * @param array(string=>boolean) $expected Expected result.
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
     private function _testIsSubtypeOnInheritanceHierarchy(array $expected)
     {
         $packages = self::parseCodeResourceForTest();
@@ -376,8 +416,10 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->getInterfaces()
             ->current();
 
-        $parameter = $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
-        $this->assertType(PHP_Depend_Code_ASTFormalParameter::CLAZZ, $parameter);
+        $this->assertType(
+            PHP_Depend_Code_ASTFormalParameter::CLAZZ,
+            $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ)
+        );
     }
 
     /**
@@ -395,7 +437,9 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->getInterfaces()
             ->current();
 
-        $parameters = $class->findChildrenOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        $parameters = $class->findChildrenOfType(
+            PHP_Depend_Code_ASTFormalParameter::CLAZZ
+        );
         $this->assertEquals(4, count($parameters));
     }
 
@@ -413,7 +457,13 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     {
         $interface = new PHP_Depend_Code_Interface('IFooBar');
         $interface->setParentClassReference(
-            $this->getMock('PHP_Depend_Code_ASTClassReference', array(), array(), '', false)
+            $this->getMock(
+                'PHP_Depend_Code_ASTClassReference',
+                array(),
+                array(),
+                '',
+                false
+            )
         );
     }
 
@@ -736,6 +786,36 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testIsCachedReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsFalseByDefault()
+    {
+        $interface = $this->createItem();
+        self::assertFalse($interface->isCached());
+    }
+
+    /**
+     * testIsCachedReturnsTrueAfterCallToWakeup
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsTrueAfterCallToWakeup()
+    {
+        $interface = $this->createItem();
+        $interface = unserialize(serialize($interface));
+
+        self::assertTrue($interface->isCached());
+    }
+
+    /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
      *
      * @return void
@@ -823,14 +903,14 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testMagicWakeupCallsRegisterInterfaceOnBuilderContext()
     {
-        $class = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = new PHP_Depend_Code_Interface(__CLASS__);
 
         $context = $this->getMock('PHP_Depend_Builder_Context');
         $context->expects($this->once())
             ->method('registerInterface')
             ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
 
-        $class->setContext($context)->__wakeup();
+        $interface->setContext($context)->__wakeup();
     }
 
     /**
@@ -873,6 +953,9 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     protected function createItem()
     {
-        return new PHP_Depend_Code_Interface('interfs');
+        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface->setContext($this->getMock('PHP_Depend_Builder_Context'));
+
+        return $interface;
     }
 }

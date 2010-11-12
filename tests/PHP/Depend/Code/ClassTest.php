@@ -269,7 +269,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class->addChild($node1);
         $class->addChild($node2);
 
-        $child = $class->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
+        $child = $class->getFirstChildOfType(
+            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+        );
         $this->assertNull($child);
     }
 
@@ -284,7 +286,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
     {
         $class  = $this->getFirstClassForTestCase();
-        $params = $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        $params = $class->getFirstChildOfType(
+            PHP_Depend_Code_ASTFormalParameter::CLAZZ
+        );
 
         self::assertType(PHP_Depend_Code_ASTFormalParameter::CLAZZ, $params);
     }
@@ -300,7 +304,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
     {
         $class  = $this->getFirstClassForTestCase();
-        $params = $class->findChildrenOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+        $params = $class->findChildrenOfType(
+            PHP_Depend_Code_ASTFormalParameter::CLAZZ
+        );
         
         self::assertEquals(4, count($params));
     }
@@ -316,7 +322,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems()
     {
         $class  = $this->getFirstClassForTestCase();
-        $params = $class->findChildrenOfType(PHP_Depend_Code_ASTVariableDeclarator::CLAZZ);
+        $params = $class->findChildrenOfType(
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
+        );
         
         self::assertEquals(2, count($params));
     }
@@ -555,8 +563,10 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifier()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setModifiers(PHP_Depend_ConstantsI::IS_ABSTRACT
-                           | PHP_Depend_ConstantsI::IS_FINAL);
+        $class->setModifiers(
+            PHP_Depend_ConstantsI::IS_ABSTRACT |
+            PHP_Depend_ConstantsI::IS_FINAL
+        );
     }
     
     /**
@@ -744,8 +754,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class = $types->current();
 
         $actual = array();
-        foreach ($types as $classOrInterface) {
-            $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
+        foreach ($types as $type) {
+            $actual[$type->getName()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
@@ -778,8 +788,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class = $types->current();
 
         $actual = array();
-        foreach ($types as $classOrInterface) {
-            $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
+        foreach ($types as $type) {
+            $actual[$type->getName()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
@@ -812,8 +822,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class = $types->current();
 
         $actual = array();
-        foreach ($types as $classOrInterface) {
-            $actual[$classOrInterface->getName()] = $class->isSubtypeOf($classOrInterface);
+        foreach ($types as $type) {
+            $actual[$type->getName()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
@@ -1139,10 +1149,40 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsUserDefinedReturnsTrueAfterSetUserDefinedCall()
     {
-        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class = $this->createItem();
         $class->setUserDefined();
 
         self::assertTrue($class->isUserDefined());
+    }
+
+    /**
+     * testIsCachedReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsFalseByDefault()
+    {
+        $class = $this->createItem();
+        self::assertFalse($class->isCached());
+    }
+
+    /**
+     * testIsCachedReturnsTrueAfterCallToWakeup
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsTrueAfterCallToWakeup()
+    {
+        $class = $this->createItem();
+        $class = unserialize(serialize($class));
+
+        self::assertTrue($class->isCached());
     }
 
     /**
@@ -1265,6 +1305,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     protected function createItem()
     {
-        return new PHP_Depend_Code_Class(__CLASS__);
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setContext($this->getMock('PHP_Depend_Builder_Context'));
+
+        return $class;
     }
 }
