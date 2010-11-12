@@ -121,6 +121,14 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     protected $childNodes = array();
 
     /**
+     * Was this file instance restored from the cache?
+     *
+     * @var boolean
+     * @since 0.10.0
+     */
+    protected $cached = false;
+
+    /**
      * Normalized code in this file.
      *
      * @var string $_source
@@ -301,6 +309,19 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * This method will return <b>true</b> when this file instance was restored
+     * from the cache and not currently parsed. Otherwise this method will return
+     * <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    public function isCached()
+    {
+        return $this->cached;
+    }
+
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_VisitorI $visitor The context visitor
@@ -346,6 +367,8 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function __wakeup()
     {
+        $this->cached = true;
+
         foreach ($this->childNodes as $childNode) {
             $childNode->setSourceFile($this);
         }

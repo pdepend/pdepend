@@ -301,6 +301,36 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testIsCachedReturnsFalseByDefault
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsFalseByDefault()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        self::assertFalse($file->isCached());
+    }
+
+    /**
+     * testIsCachedReturnsTrueAfterCallToWakeup
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsTrueAfterCallToWakeup()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        $file = unserialize(serialize($file));
+
+        self::assertTrue($file->isCached());
+    }
+
+    /**
      * testGetStartLineReturnsZeroWhenSourceFileNotExists
      *
      * @return void
@@ -353,7 +383,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        self::assertEquals(391, $file->getEndLine());
+        self::assertEquals(420, $file->getEndLine());
     }
 
     /**
