@@ -309,8 +309,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     public function parse()
     {
-        $this->setUpEnvironment();
-
         // Get currently parsed source file
         $this->_sourceFile = $this->tokenizer->getSourceFile();
         $this->_sourceFile
@@ -320,8 +318,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $hash = md5_file($this->_sourceFile->getFileName());
 
         if ($this->cache->restore($this->_sourceFile->getUUID(), $hash)) {
-            return $this->tearDownEnvironment();
+            return;
         }
+        $this->cache->remove($this->_sourceFile->getUUID());
+
+        $this->setUpEnvironment();
 
         $this->_tokenStack->push();
         
