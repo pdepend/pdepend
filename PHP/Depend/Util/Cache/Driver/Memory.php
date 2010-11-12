@@ -143,6 +143,25 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
     }
 
     /**
+     * This method will remove an existing cache entry for the given identifier.
+     * It will delete all cache entries where the cache key start with the given
+     * <b>$pattern</b>. If no matching entry exists, this method simply does
+     * nothing.
+     *
+     * @param string $pattern The cache key pattern.
+     *
+     * @return void
+     */
+    public function remove($pattern)
+    {
+        foreach ($this->cache as $key => $value) {
+            if (0 === strpos($key, $pattern)) {
+                unset($this->cache[$key]);
+            }
+        }
+    }
+
+    /**
      * Creates a prepared cache entry identifier, based on the given <em>$key</em>
      * and the <em>$type</em> property. Note that this method resets the cache
      * type, so that it is only valid for a single call.

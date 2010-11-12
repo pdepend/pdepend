@@ -106,6 +106,18 @@ interface PHP_Depend_Util_Cache_Driver
      * @return mixed
      */
     function restore($key, $hash = null);
+
+    /**
+     * This method will remove an existing cache entry for the given identifier.
+     * It will delete all cache entries where the cache key start with the given
+     * <b>$pattern</b>. If no matching entry exists, this method simply does
+     * nothing.
+     *
+     * @param string $pattern The cache key pattern.
+     *
+     * @return void
+     */
+    function remove($pattern);
 }
 
 // @codeCoverageIgnoreEnd

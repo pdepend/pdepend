@@ -214,6 +214,24 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
     }
 
     /**
+     * This method will remove an existing cache entry for the given identifier.
+     * It will delete all cache entries where the cache key start with the given
+     * <b>$pattern</b>. If no matching entry exists, this method simply does
+     * nothing.
+     *
+     * @param string $pattern The cache key pattern.
+     *
+     * @return void
+     */
+    public function remove($pattern)
+    {
+        $file = $this->getCacheFileWithoutExtension($pattern);
+        foreach (glob("{$file}*.*") as $f) {
+            unlink($f);
+        }
+    }
+
+    /**
      * This method creates the full qualified file name for a cache entry. This
      * file name is a combination of the given <em>$key</em>, the cache root
      * directory and the current entry type.
@@ -224,15 +242,28 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      */
     protected function getCacheFile($key)
     {
+        $cacheFile  = $this->getCacheFileWithoutExtension($key) . ".{$this->type}";
+        $this->type = self::ENTRY_TYPE;
+
+        return $cacheFile;
+    }
+
+    /**
+     * This method creates the full qualified file name for a cache entry. This
+     * file name is a combination of the given <em>$key</em>, the cache root
+     * directory and the current entry type, but without the used cache file
+     * extension.
+     *
+     * @param string $key The cache key for the given data.
+     * 
+     * @return string
+     */
+    protected function getCacheFileWithoutExtension($key)
+    {
         $path = $this->cacheDir . '/' . substr($key, 0, 2);
         if (false === file_exists($path)) {
             mkdir($path, 0775, true);
         }
-
-        $file = "{$path}/{$key}.{$this->type}";
-
-        $this->type = self::ENTRY_TYPE;
-
-        return $file;
+        return "{$path}/{$key}";
     }
 }

@@ -181,6 +181,90 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
     }
 
     /**
+     * testRemoveDeletesExistingCacheEntry
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testRemoveDeletesExistingCacheEntry()
+    {
+        $key  = __FUNCTION__ . '.tokens';
+        $data = __METHOD__;
+
+        $driver = $this->createDriver();
+        $driver->store($key, $data);
+        $driver->remove($key);
+
+        self::assertNull($driver->restore($key));
+    }
+
+    /**
+     * testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix()
+    {
+        $key  = __FUNCTION__ . '.tokens';
+        $data = __METHOD__;
+
+        $driver = $this->createDriver();
+        $driver->store($key, $data);
+        $driver->remove(__FUNCTION__);
+
+        self::assertNull($driver->restore($key));
+    }
+
+    /**
+     * testRemoveDeletesExistingCacheEntryOfDifferentType
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testRemoveDeletesExistingCacheEntryOfDifferentType()
+    {
+        $key  = __FUNCTION__ . '.tokens';
+        $data = __METHOD__;
+
+        $driver = $this->createDriver();
+        $driver->type('foo')->store($key, $data);
+        $driver->remove($key);
+
+        self::assertNull($driver->type('foo')->restore($key));
+    }
+
+    /**
+     * testRemoveSilentlyIgnoresPatternsWithoutMatch
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::cache
+     * @group unittest
+     */
+    public function testRemoveSilentlyIgnoresPatternsWithoutMatch()
+    {
+        $key  = __FUNCTION__;
+        $data = __METHOD__;
+
+        $driver = $this->createDriver();
+        $driver->store($key, $data);
+        $driver->remove($key . '.no-match');
+
+        self::assertSame($data, $driver->restore($key));
+    }
+
+    /**
      * Creates a test fixture.
      *
      * @return PHP_Depend_Util_Cache_Driver
