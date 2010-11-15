@@ -133,6 +133,23 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     private $_parameters = null;
 
+    /**
+     * Was this callable instance restored from the cache?
+     *
+     * @var boolean
+     * @since 0.10.0
+     */
+    protected $cached = false;
+
+    /**
+     * Setter method for the currently used token cache, where this callable
+     * instance can store the associated tokens.
+     *
+     * @param PHP_Depend_Util_Cache_Driver $cache The currently used cache instance.
+     *
+     * @return PHP_Depend_Code_AbstractCallable
+     * @since 0.10.0
+     */
     public function setCache(PHP_Depend_Util_Cache_Driver $cache)
     {
         $this->cache = $cache;
@@ -405,6 +422,19 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
 
     /**
+     * This method will return <b>true</b> when this callable instance was
+     * restored from the cache and not currently parsed. Otherwise this method
+     * will return <b>false</b>.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    public function isCached()
+    {
+        return $this->cached;
+    }
+
+    /**
      * This method will initialize the <b>$_parameters</b> property.
      *
      * @return void
@@ -442,7 +472,7 @@ abstract class PHP_Depend_Code_AbstractCallable
 
         $this->_parameters = $parameters;
     }
-
+    
     /**
      * The magic sleep method will be called by the PHP engine when this class
      * gets serialized. It returns an array with those properties that should be
@@ -453,8 +483,11 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function __sleep()
     {
+        $this->cached = true;
+
         return array(
             'cache',
+            'cached',
             'nodes',
             'uuid',
             'name',
