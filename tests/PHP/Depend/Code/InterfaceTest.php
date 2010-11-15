@@ -800,6 +800,22 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testIsCachedReturnsFalseWhenObjectGetsSerialized
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
+    {
+        $interface = $this->createItem();
+        serialize($interface);
+
+        self::assertFalse($interface->isCached());
+    }
+
+    /**
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void

@@ -483,11 +483,8 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function __sleep()
     {
-        $this->cached = true;
-
         return array(
             'cache',
-            'cached',
             'nodes',
             'uuid',
             'name',
@@ -498,6 +495,20 @@ abstract class PHP_Depend_Code_AbstractCallable
             'returnClassReference',
             'exceptionClassReferences'
         );
+    }
+
+    /**
+     * The magic wakeup method is called by the PHP runtime environment when a
+     * serialized instance of this class gets unserialized and all properties
+     * are restored. This implementation of the <b>__wakeup()</b> method sets
+     * a flag that this object was restored from the cache.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function __wakeup()
+    {
+        $this->cached = true;
     }
 
     /**

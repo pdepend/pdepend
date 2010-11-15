@@ -80,6 +80,22 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testIsCachedReturnsFalseWhenObjectGetsSerialized
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
+    {
+        $method = $this->createItem();
+        serialize($method);
+
+        self::assertFalse($method->isCached());
+    }
+
+    /**
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void
@@ -110,7 +126,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             array(
                 'modifiers',
                 'cache',
-                'cached',
                 'nodes',
                 'uuid',
                 'name',

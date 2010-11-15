@@ -209,6 +209,8 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      */
     public function  __wakeup()
     {
+        parent::__wakeup();
+
         $this->context->registerFunction($this);
     }
 }

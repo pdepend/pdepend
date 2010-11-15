@@ -1170,6 +1170,22 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testIsCachedReturnsFalseWhenObjectGetsSerialized
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
+    {
+        $class = $this->createItem();
+        serialize($class);
+
+        self::assertFalse($class->isCached());
+    }
+
+    /**
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void

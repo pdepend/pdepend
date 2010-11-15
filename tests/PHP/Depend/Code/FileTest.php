@@ -315,6 +315,22 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testIsCachedReturnsFalseWhenObjectGetsSerialized
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::code
+     * @group unittest
+     */
+    public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
+    {
+        $file = new PHP_Depend_Code_File(null);
+        serialize($file);
+
+        self::assertFalse($file->isCached());
+    }
+
+    /**
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void
@@ -383,7 +399,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        self::assertEquals(420, $file->getEndLine());
+        self::assertEquals(436, $file->getEndLine());
     }
 
     /**
