@@ -514,7 +514,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
 
         $builder->restoreInterface($interface);
 
-        self::assertSame($interface, $builder->getInterface('php_Depend_tokenizeri'));
+        self::assertSame(
+            $interface,
+            $builder->getInterface('php_Depend_tokenizeri')
+        );
     }
 
     /**
@@ -733,6 +736,22 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         );
 
         $builder->buildFunction('prop');
+    }
+
+    /**
+     * testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::builder
+     * @group unittest
+     */
+    public function testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType()
+    {
+        $builder  = $this->createBuilder();
+        $instance = $builder->buildASTPrimitiveType(__FUNCTION__);
+
+        self::assertType(PHP_Depend_Code_ASTPrimitiveType::CLAZZ, $instance);
     }
 
     /**
