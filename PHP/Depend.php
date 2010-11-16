@@ -717,10 +717,3 @@ class PHP_Depend
         return $this->_initAnalyseListeners($loader);
     }
 }
-
-function __autoload($className)
-{
-    if (0 === strpos($className, 'PHP_Depend_')) {
-        include __DIR__ . '/../' . strtr($className, '_', '/') . '.php';
-    }
-}

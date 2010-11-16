@@ -49,6 +49,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
+require_once dirname(__FILE__) . '/AutoloadTest.php';
 require_once dirname(__FILE__) . '/DependTest.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/ParserRegressionTest.php';
@@ -98,6 +99,7 @@ class PHP_Depend_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend - AllTests');
         $suite->addTestSuite('PHP_Depend_TokenTest');
+        $suite->addTestSuite('PHP_Depend_AutoloadTest');
 
         $suite->addTest(PHP_Depend_Bugs_AllTests::suite());
         $suite->addTest(PHP_Depend_Builder_AllTests::suite());

@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * This file is part of PHP_Depend.
@@ -44,24 +43,45 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
+ * @since     0.10.0
  */
 
-// PEAR/svn workaround
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__));
+/**
+ * Class that implements autoloading for PHP_Depend.
+ *
+ * @category  QualityAssurance
+ * @package   PHP_Depend
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2008-2010 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://pdepend.org/
+ * @since     0.10.0
+ */
+class PHP_Depend_Autoload
+{
+    /**
+     * Registers this autoload instance at the spl autoloader stack.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        spl_autoload_register(array($this, 'autoload'));
+    }
+
+    /**
+     * Callback method that will be called by the PHP runtime environment when
+     * a class with the given name does not exist.
+     *
+     * @param string $className Name of the missing class.
+     *
+     * @return void
+     */
+    public function autoload($className)
+    {
+        if (strpos($className, 'PHP_Depend') === 0) {
+            include strtr($className, '_', DIRECTORY_SEPARATOR) . '.php';
+        }
+    }
 }
-
-require_once 'PHP/Depend/Autoload.php';
-
-// Allow as much memory as possible by default
-ini_set('memory_limit', -1);
-
-// Disable E_STRICT for all PHP versions < 5.3.x
-if (version_compare(phpversion(), '5.3.0')) {
-    error_reporting(error_reporting() & ~E_STRICT);
-}
-
-$autoload = new PHP_Depend_Autoload();
-$autoload->register();
-
-exit(PHP_Depend_TextUI_Command::main());
