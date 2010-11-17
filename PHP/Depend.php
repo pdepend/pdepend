@@ -128,13 +128,6 @@ class PHP_Depend
     private $_withoutAnnotations = false;
 
     /**
-     * Should PHP_Depend treat <b>+global</b> as a regular project package?
-     *
-     * @var boolean $_supportBadDocumentation
-     */
-    private $_supportBadDocumentation = false;
-
-    /**
      * List or registered listeners.
      *
      * @var array(PHP_Depend_ProcessListenerI) $_listeners
