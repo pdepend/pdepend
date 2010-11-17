@@ -46,7 +46,6 @@
  */
 
 require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 require_once dirname(__FILE__) . '/AutoloadTest.php';
@@ -58,6 +57,7 @@ require_once dirname(__FILE__) . '/Bugs/AllTests.php';
 require_once dirname(__FILE__) . '/Builder/AllTests.php';
 require_once dirname(__FILE__) . '/Code/AllTests.php';
 require_once dirname(__FILE__) . '/Input/AllTests.php';
+require_once dirname(__FILE__) . '/Integration/AllTests.php';
 require_once dirname(__FILE__) . '/Issues/AllTests.php';
 require_once dirname(__FILE__) . '/Log/AllTests.php';
 require_once dirname(__FILE__) . '/Metrics/AllTests.php';
@@ -81,16 +81,6 @@ require_once dirname(__FILE__) . '/Visitor/AllTests.php';
 class PHP_Depend_AllTests
 {
     /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-
-    /**
      * Creates the phpunit test suite for this package.
      *
      * @return PHPUnit_Framework_TestSuite
@@ -107,6 +97,7 @@ class PHP_Depend_AllTests
         $suite->addTest(PHP_Depend_Issues_AllTests::suite());
         $suite->addTest(PHP_Depend_Log_AllTests::suite());
         $suite->addTest(PHP_Depend_Input_AllTests::suite());
+        $suite->addTest(PHP_Depend_Integration_AllTests::suite());
         $suite->addTest(PHP_Depend_Metrics_AllTests::suite());
         $suite->addTest(PHP_Depend_Parser_AllTests::suite());
         $suite->addTest(PHP_Depend_TextUI_AllTests::suite());
