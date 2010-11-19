@@ -104,7 +104,6 @@
                        --log-junit       ${basedir}/build/tmp/php-5.3.0.xml
                        --coverage-clover ${basedir}/build/logs/phpunit.coverage.xml
                        --coverage-html   ${basedir}/build/coverage
-                       --configuration   ${basedir}/phpunit.xml
                        PHP_Depend_AllTests tests/PHP/Depend/AllTests.php"/>
         </exec>
     </target>
@@ -112,7 +111,6 @@
     <target name="phpunit-5.2.6" depends="clean">
         <exec executable="/usr/local/bin/php526" dir="${basedir}" failonerror="false">
             <arg line="${bin.phpunit}
-                       --configuration ${basedir}/phpunit.xml
                        --log-junit     ${basedir}/build/tmp/php-5.2.6.xml
                        PHP_Depend_AllTests tests/PHP/Depend/AllTests.php"/>
         </exec>
@@ -121,7 +119,6 @@
     <target name="phpunit-5.2.3" depends="clean">
         <exec executable="/usr/local/bin/php523" dir="${basedir}" failonerror="false">
             <arg line="${bin.phpunit}
-                       --configuration ${basedir}/phpunit.xml
                        --log-junit     ${basedir}/build/tmp/php-5.2.3.xml
                        PHP_Depend_AllTests tests/PHP/Depend/AllTests.php"/>
         </exec>
