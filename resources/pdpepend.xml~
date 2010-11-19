@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://pdepend.org/schema/configuration"
+               xsi:schemaLocation="http://pdepend.org/schema/configuration config-1.0.xsd">
+    <cache>
+        <driver />
+    </cache>
+    <Name>
+        <Title>Mr.</Title>
+        <FirstName>Michael</FirstName>
+        <LastName>Jackson</LastName>
+    </Name>
+</configuration>

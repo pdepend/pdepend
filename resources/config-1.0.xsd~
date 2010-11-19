@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://pdepend.org/schema/configuration"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://pdepend.org/schema/configuration">
+               
+    <xsd:element name="Title" type="xsd:string"/>
+    <xsd:element name="FirstName" type="xsd:string"/>
+    <xsd:element name="LastName" type="xsd:string"/>
+
+    <xsd:element name="Name">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="Title"/>
+                <xsd:element ref="FirstName"/>
+                <xsd:element ref="LastName"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="configuration">
+        <xsd:complexType>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+                <xsd:element ref="Name" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="cache" minOccurs="0" maxOccurs="1" />
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="cache">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="driver">
+                    <xsd:complexType>
+                        <xsd:attribute name="type" type="xsd:string" use="required" />
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
