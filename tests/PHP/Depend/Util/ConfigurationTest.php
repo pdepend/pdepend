@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
@@ -44,11 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
+ * @since      0.10.0
  */
 
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
 /**
- * Simple container class that holds settings for PHP_Depend and all its sub
- * systems.
+ * Test case for the {@link PHP_Depend_Util_Configuration} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -58,85 +60,101 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * @since      0.10.0
+ *
+ * @covers PHP_Depend_Util_Configuration
  */
-class PHP_Depend_Util_Configuration
+class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Simple object tree holding the concrete configuration values.
-     *
-     * @var stdClass
-     * @since 0.10.0
-     */
-    protected $settings = null;
-
-    /**
-     * Constructs a new configuration instance with the given settings tree.
-     *
-     * @param stdClass $settings The concrete configuration values.
-     * 
-     * @since 0.10.0
-     */
-    public function __construct(stdClass $settings)
-    {
-        $this->settings = $settings;
-    }
-
-    /**
-     * Magic get method that is called by PHP's runtime engine whenever an
-     * undeclared object property is accessed through a read operation. This
-     * implementation of the magic get method checks if a configuration value
-     * for the given <b>$name</b> exists and returns the configuration value if
-     * a matching entry exists. Otherwise this method will throw an exception.
-     *
-     * @param string $name Name of the requested configuration value.
-     *
-     * @return mixed
-     * @throws OutOfRangeException If no matching configuration value exists.
-     * @since 0.10.0
-     */
-    public function __get($name)
-    {
-        if (isset($this->settings->{$name})) {
-            return $this->settings->{$name};
-        }
-        throw new OutOfRangeException(
-            sprintf("A configuration option '%s' not exists.", $name)
-        );
-    }
-
-    /**
-     * Magic setter method that will be called by PHP's runtime engine when a
-     * write operation is performed on an undeclared object property. This
-     * implementation of the magic set method always throws an exception, because
-     * configuration settings are inmutable.
-     *
-     * @param string $name  Name of the write property.
-     * @param mixed  $value The new property value.
+     * testPropertyAccessForExistingValue
      *
      * @return void
-     * @throws OutOfRangeException Whenever this method is called.
-     * @since 0.10.0
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::configuration
+     * @group unittest
      */
-    public function __set($name, $value)
+    public function testPropertyAccessForExistingValue()
     {
-        throw new OutOfRangeException(
-            sprintf("A configuration option '%s' not exists.", $name)
-        );
+        $settings      = new stdClass();
+        $settings->foo = 42;
+
+        $configuration = new PHP_Depend_Util_Configuration($settings);
+
+        self::assertEquals(42, $configuration->foo);
     }
 
     /**
-     * Magic isset method that will be called by PHP's runtime engine when the
-     * <em>isset()</em> operator is called on an undefined object property. This
-     * implementation of the magic isset method tests if a configuration value
-     * for the given <b>$name</b> exists.
+     * testPropertyAccessForNotExistingValueThrowsExpectedException
      *
-     * @param string $name Name of the requested property.
-     *
-     * @return boolean
-     * @since 0.10.0
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::configuration
+     * @group unittest
+     * @expectedException OutOfRangeException
      */
-    public function __isset($name)
+    public function testPropertyAccessForNotExistingValueThrowsExpectedException()
     {
-        return isset($this->settings->{$name});
+        $settings      = new stdClass();
+        $settings->foo = 42;
+
+        $configuration = new PHP_Depend_Util_Configuration($settings);
+        echo $configuration->bar;
+    }
+
+    /**
+     * testPropertiesAreNotWritableAndExpectedExceptionIsThrown
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::configuration
+     * @group unittest
+     * @expectedException OutOfRangeException
+     */
+    public function testPropertiesAreNotWritableAndExpectedExceptionIsThrown()
+    {
+        $configuration      = new PHP_Depend_Util_Configuration(new stdClass());
+        $configuration->foo = 42;
+    }
+
+    /**
+     * testIssetReturnsTrueForExistingValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::configuration
+     * @group unittest
+     */
+    public function testIssetReturnsTrueForExistingValue()
+    {
+        $settings      = new stdClass();
+        $settings->foo = 42;
+
+        $configuration = new PHP_Depend_Util_Configuration($settings);
+
+        self::assertTrue(isset($configuration->foo));
+    }
+
+    /**
+     * testIssetReturnsFalseForNotExistingValue
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::configuration
+     * @group unittest
+     */
+    public function testIssetReturnsFalseForNotExistingValue()
+    {
+        $settings      = new stdClass();
+        $settings->foo = 42;
+
+        $configuration = new PHP_Depend_Util_Configuration($settings);
+
+        self::assertFalse(isset($configuration->bar));
     }
 }
