@@ -63,52 +63,37 @@ require_once 'PHP/Depend/Util/ImageConvert.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_ImageConvert
  */
 class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
 {
     /**
-     * The temporary output file.
-     *
-     * @var string
-     */
-    private $_out = null;
-
-    /**
-     * Removes temporary output files.
-     *
-     * @return void
-     */
-    protected function tearDown()
-    {
-        if (file_exists($this->_out)) {
-            unlink($this->_out);
-        }
-
-        parent::tearDown();
-    }
-
-    /**
      * Tests the copy behaviour for same mime types.
      *
      * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::imagick
+     * @group unittest
      */
     public function testConvertMakesCopyForSameMimeType()
     {
-        $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = self::createRunResourceURI('pdepend.out.svg');
+        $input  = self::createInputSvg();
+        $output = self::createRunResourceURI('pdepend.out.svg');
 
-        $this->assertFileNotExists($this->_out);
-
-        PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
-
-        $this->assertFileExists($this->_out);
-        $this->assertFileEquals($input, $this->_out);
+        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        self::assertFileEquals($input, $output);
     }
 
     /**
      * Tests the image convert behaviour of the image magick execution path.
      *
      * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::imagick
+     * @group unittest
      */
     public function testConvertWithImageMagickExtension()
     {
@@ -116,18 +101,21 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('No pecl/imagick extension.');
         }
 
-        $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = self::createRunResourceURI('pdepend.out.png');
+        $input  = self::createInputSvg();
+        $output = self::createRunResourceURI('pdepend.out.png');
 
-        $this->assertFileNotExists($this->_out);
-        PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
-        $this->assertFileExists($this->_out);
+        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        self::assertFileExists($output);
     }
 
     /**
      * Tests that the image convert util appends the default extension as fallback.
      *
      * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::imagick
+     * @group unittest
      */
     public function testConvertAppendDefaultFileExtensionAsFallback()
     {
@@ -135,16 +123,26 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('No pecl/imagick extension.');
         }
 
-        $input      = dirname(__FILE__) . '/_input/pyramid.svg';
-        $this->_out = self::createRunResourceURI('pdepend');
+        $input  = self::createInputSvg();
+        $output = self::createRunResourceURI('pdepend');
 
-        $this->assertFileNotExists($this->_out);
-        PHP_Depend_Util_ImageConvert::convert($input, $this->_out);
-        $this->assertFileNotExists($this->_out);
+        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        self::assertFileExists("{$output}.svg");
+    }
 
-        $this->_out .= '.svg';
-
-        $this->assertFileExists($this->_out);
+    /**
+     * testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::imagick
+     * @group unittest
+     */
+    public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions()
+    {
+        $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
+        self::assertEquals(25, substr_count($svg, 'font-family:Arial'));
     }
 
     /**
@@ -152,39 +150,42 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * for the font-family:
      *
      * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::imagick
+     * @group unittest
      */
     public function testConvertRecognizesFontFamilyInConfiguration()
     {
-        $config = new PHP_Depend_Util_Configuration('<?xml version="1.0"?>
-        <configuration>
-          <imageConvert>
-            <fontFamily>Verdana</fontFamily>
-          </imageConvert>
-        </configuration>
-        ');
+        $settings                           = new stdClass();
+        $settings->imageConvert             = new stdClass();
+        $settings->imageConvert->fontFamily = 'Verdana';
+
+        $config = new PHP_Depend_Util_Configuration($settings);
         PHP_Depend_Util_ConfigurationInstance::set($config);
 
-        $this->_out = self::createRunResourceURI('pdepend.svg');
-        copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
+        $input  = self::createInputSvg();
+        $output = self::createRunResourceURI('pdepend.svg');
 
-        $svg = file_get_contents($this->_out);
-        preg_match_all('/font-family:\s*Arial/', $svg, $matches);
-        $expectedArial = count($matches[0]);
-        preg_match_all('/font-family:\s*Verdana/', $svg, $matches);
-        $expectedVerdana = count($matches[0]);
+        PHP_Depend_Util_ImageConvert::convert($input, $output);
 
-        $this->assertEquals(0, $expectedVerdana);
+        $svg = file_get_contents($output);
+        self::assertEquals(25, substr_count($svg, 'font-family:Verdana'));
+    }
 
-        PHP_Depend_Util_ImageConvert::convert($this->_out, $this->_out);
-
-        $svg = file_get_contents($this->_out);
-        preg_match_all('/font-family:\s*Arial/', $svg, $matches);
-        $actualArial = count($matches[0]);
-        preg_match_all('/font-family:\s*Verdana/', $svg, $matches);
-        $actualVerdana = count($matches[0]);
-
-        $this->assertEquals(0, $actualArial);
-        $this->assertEquals($expectedArial, $actualVerdana);
+    /**
+     * testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::imagick
+     * @group unittest
+     */
+    public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions()
+    {
+        $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
+        self::assertEquals(25, substr_count($svg, 'font-size:11px'));
     }
 
     /**
@@ -192,40 +193,39 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * for the font-size:
      *
      * @return void
+     * @group pdepend
+     * @group pdepend::util
+     * @group pdepend::util::imagick
+     * @group unittest
      */
     public function testConvertRecognizesFontSizeInConfiguration()
     {
-        $config = new PHP_Depend_Util_Configuration('<?xml version="1.0"?>
-        <configuration>
-          <imageConvert>
-            <fontSize>14</fontSize>
-          </imageConvert>
-        </configuration>
-        ');
+        $settings                         = new stdClass();
+        $settings->imageConvert           = new stdClass();
+        $settings->imageConvert->fontSize = 14;
+
+        $config = new PHP_Depend_Util_Configuration($settings);
         PHP_Depend_Util_ConfigurationInstance::set($config);
 
-        $this->_out = self::createRunResourceURI('pdepend.svg');
-        copy(dirname(__FILE__) . '/_input/pyramid.svg', $this->_out);
+        $input  = self::createInputSvg();
+        $output = self::createRunResourceURI('pdepend.svg');
 
-        $svg = file_get_contents($this->_out);
-        preg_match_all('/font-size:\s*11px/', $svg, $matches);
-        $expected11 = count($matches[0]);
-        preg_match_all('/font-size:\s*14px/', $svg, $matches);
-        $expected14 = count($matches[0]);
+        PHP_Depend_Util_ImageConvert::convert($input, $output);
 
+        $svg = file_get_contents($output);
+        self::assertEquals(25, substr_count($svg, 'font-size:14px'));
+    }
 
-        $this->assertEquals(25, $expected11);
-        $this->assertEquals(0, $expected14);
+    /**
+     * Returns a temporary input svg fixture.
+     *
+     * @return string
+     */
+    protected static function createInputSvg()
+    {
+        $input = self::createRunResourceURI(uniqid('input_')) . '.svg';
+        copy(dirname(__FILE__) . '/_input/pyramid.svg', $input);
 
-        PHP_Depend_Util_ImageConvert::convert($this->_out, $this->_out);
-
-        $svg = file_get_contents($this->_out);
-        preg_match_all('/font-size:\s*11px/', $svg, $matches);
-        $actual11 = count($matches[0]);
-        preg_match_all('/font-size:\s*14px/', $svg, $matches);
-        $actual14 = count($matches[0]);
-
-        $this->assertEquals(0, $actual11);
-        $this->assertEquals(25, $actual14);
+        return $input;
     }
 }
