@@ -1125,9 +1125,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSubpackageSupport()
     {
-        $package = self::parseSource(dirname(__FILE__) . '/_code/package_subpackage_support.php')->current();
-
-        $this->assertEquals('PHP\Depend', $package->getName());
+        $package = self::parseCodeResourceForTest()->current();
+        self::assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
@@ -1141,7 +1140,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsFileLevelFunctionPackage()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/package_file_level.php');
+        $packages = self::parseCodeResourceForTest();
 
         $package0   = $packages->current();
         $functions0 = $package0->getFunctions();
