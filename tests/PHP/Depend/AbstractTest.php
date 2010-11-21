@@ -184,6 +184,14 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         array_shift($parts);
         array_shift($parts);
 
+        if (preg_match('(\D(\d+Test)$)', end($parts), $match)) {
+            array_pop($parts);
+            array_push($parts, $match[1]);
+
+            // TODO: Fix this workaround for the existing lower case directories
+            array_unshift($parts, strtolower(array_shift($parts)));
+        }
+
         $fileName = substr(join('/', $parts), 0, -4) . "/{$method}";
         try {
             return self::createCodeResourceURI($fileName);
