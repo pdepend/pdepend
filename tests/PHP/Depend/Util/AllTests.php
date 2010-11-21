@@ -49,6 +49,8 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 
 require_once dirname(__FILE__) . '/Cache/AllTests.php';
 require_once dirname(__FILE__) . '/Coverage/AllTests.php';
+require_once dirname(__FILE__) . '/Configuration/AllTests.php';
+require_once dirname(__FILE__) . '/ConfigurationTest.php';
 require_once dirname(__FILE__) . '/FileUtilTest.php';
 require_once dirname(__FILE__) . '/ImageConvertTest.php';
 require_once dirname(__FILE__) . '/MathUtilTest.php';
@@ -79,9 +81,11 @@ class PHP_Depend_Util_AllTests
 
         $suite->addTest(PHP_Depend_Util_Cache_AllTests::suite());
         $suite->addTest(PHP_Depend_Util_Coverage_AllTests::suite());
+        $suite->addTest(PHP_Depend_Util_Configuration_AllTests::suite());
 
         $suite->addTest(new PHP_Depend_Util_MathUtilTest());
 
+        $suite->addTestSuite('PHP_Depend_Util_ConfigurationTest');
         $suite->addTestSuite('PHP_Depend_Util_FileUtilTest');
         $suite->addTestSuite('PHP_Depend_Util_ImageConvertTest');
         $suite->addTestSuite('PHP_Depend_Util_TypeTest');
