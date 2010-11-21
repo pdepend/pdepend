@@ -487,7 +487,9 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             $configFile,
             '<?xml version="1.0"?>
              <configuration>
-               <test />
+               <cache>
+                 <driver>memory</driver>
+               </cache>
              </configuration>'
         );
 
@@ -502,8 +504,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $test = isset(PHP_Depend_Util_ConfigurationInstance::get()->test);
-        $this->assertTrue($test);
+        $config = PHP_Depend_Util_ConfigurationInstance::get();
+        self::assertEquals('memory', $config->cache->driver);
     }
 
     /**

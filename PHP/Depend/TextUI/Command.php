@@ -111,10 +111,18 @@ class PHP_Depend_TextUI_Command
         $this->_runner = new PHP_Depend_TextUI_Runner();
         $this->_runner->addProcessListener(new PHP_Depend_TextUI_ResultPrinter());
 
-        if ($this->handleArguments() === false) {
+        try {
+            if ($this->handleArguments() === false) {
+                $this->printHelp();
+                return self::CLI_ERROR;
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage(), PHP_EOL, PHP_EOL;
+            
             $this->printHelp();
             return self::CLI_ERROR;
         }
+
         if (isset($this->_options['--help'])) {
             $this->printHelp();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
@@ -316,24 +324,20 @@ class PHP_Depend_TextUI_Command
             unset($this->_options['--bad-documentation']);
         }
 
+        $configurationFactory = new PHP_Depend_Util_Configuration_Factory();
+
         // Check for configuration option
         if (isset($this->_options['--configuration'])) {
             // Get config file
             $configFile = $this->_options['--configuration'];
             // Remove option from array
             unset($this->_options['--configuration']);
-
-            // First check config file
-            if (file_exists($configFile) === false) {
-                // Print error message
-                echo 'The configuration file "', $configFile,
-                     '" doesn\'t exist.', PHP_EOL, PHP_EOL;
-                // Return error
-                return false;
-            }
-
-            // Load configuration file
-            $config = new PHP_Depend_Util_Configuration($configFile, null, true);
+            
+            $config = $configurationFactory->create($configFile);
+            // Store in config registry
+            PHP_Depend_Util_ConfigurationInstance::set($config);
+        } else {
+            $config = $configurationFactory->createDefault();
             // Store in config registry
             PHP_Depend_Util_ConfigurationInstance::set($config);
         }
