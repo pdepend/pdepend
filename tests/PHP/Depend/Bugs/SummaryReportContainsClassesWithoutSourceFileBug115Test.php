@@ -62,6 +62,8 @@ require_once 'PHP/Depend/Metrics/NodeAwareI.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
 class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -70,74 +72,41 @@ class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
      * testSummaryReportFiltersClassesNotFlaggedUserDefined
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testSummaryReportFiltersClassesNotFlaggedUserDefined()
     {
-        $resultFile = self::createRunResourceURI(__METHOD__);
-
-        $logger = new PHP_Depend_Log_Summary_Xml();
-        $logger->setLogFile($resultFile);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addLogger($logger);
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->analyze();
-
-        $sxml = simplexml_load_file($resultFile);
-        $this->assertSame(array(), $sxml->xpath('//class[@name="FooBar"]'));
+        $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
+        self::assertSame(array(), $sxml->xpath('//class[@name="FooBar"]'));
     }
 
     /**
      * testSummaryReportFiltersInternalClasses
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testSummaryReportFiltersInternalClasses()
     {
-        $resultFile = self::createRunResourceURI(__METHOD__);
-
-        $logger = new PHP_Depend_Log_Summary_Xml();
-        $logger->setLogFile($resultFile);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addLogger($logger);
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->analyze();
-
-        $sxml = simplexml_load_file($resultFile);
-        $this->assertSame(array(), $sxml->xpath('//class[@name="RuntimeException"]'));
+        $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
+        self::assertSame(array(), $sxml->xpath('//class[@name="RuntimeException"]'));
     }
 
     /**
      * testSummaryReportDoesNotContainEmptyPackages
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testSummaryReportDoesNotContainEmptyPackages()
     {
-        $resultFile = self::createRunResourceURI(__METHOD__);
-
-        $logger = new PHP_Depend_Log_Summary_Xml();
-        $logger->setLogFile($resultFile);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addLogger($logger);
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
-        $pdepend->analyze();
-
-        $sxml = simplexml_load_file($resultFile);
-        $this->assertSame(array(), $sxml->xpath('//package[@name="+global"]'));
+        $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
+        self::assertSame(array(), $sxml->xpath('//package[@name="+global"]'));
     }
 }

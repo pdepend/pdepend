@@ -333,14 +333,14 @@ class PHP_Depend_TextUI_Command
             // Remove option from array
             unset($this->_options['--configuration']);
             
-            $config = $configurationFactory->create($configFile);
-            // Store in config registry
-            PHP_Depend_Util_ConfigurationInstance::set($config);
+            $configuration = $configurationFactory->create($configFile);
         } else {
-            $config = $configurationFactory->createDefault();
-            // Store in config registry
-            PHP_Depend_Util_ConfigurationInstance::set($config);
+            $configuration = $configurationFactory->createDefault();
         }
+        // Store in config registry
+        PHP_Depend_Util_ConfigurationInstance::set($configuration);
+
+        $this->_runner->setConfiguration($configuration);
 
         if (isset($this->_options['--debug'])) {
             // Remove option from array

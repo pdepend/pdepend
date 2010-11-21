@@ -71,6 +71,14 @@ class PHP_Depend_TextUI_Runner
     const EXCEPTION_EXIT = 2;
 
     /**
+     * The system configuration.
+     *
+     * @var PHP_Depend_Util_Configuration
+     * @since 0.10.0
+     */
+    protected $configuration = null;
+
+    /**
      * List of allowed file extensions. Default file extensions are <b>php</b>
      * and <p>php5</b>.
      *
@@ -135,6 +143,19 @@ class PHP_Depend_TextUI_Runner
      * @var array(string) $_parseErrors
      */
     private $_parseErrors = array();
+
+    /**
+     * Sets the system configuration.
+     *
+     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function setConfiguration(PHP_Depend_Util_Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
 
     /**
      * Sets a list of allowed file extensions.
@@ -247,7 +268,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function run()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = new PHP_Depend($this->configuration);
         $pdepend->setOptions($this->_options);
 
         if (count($this->_extensions) > 0) {

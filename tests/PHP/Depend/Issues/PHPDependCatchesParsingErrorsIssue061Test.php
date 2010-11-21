@@ -46,13 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/TextUI/Command.php';
-require_once 'PHP/Depend/TextUI/Runner.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
  * Test case for the catch error ticket #61.
@@ -67,34 +61,8 @@ require_once 'PHP/Depend/TextUI/Runner.php';
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
-    extends PHP_Depend_AbstractTest
+    extends PHP_Depend_Issues_AbstractTest
 {
-    /**
-     * List of expected parsing exceptions.
-     *
-     * @var array(string) $expectedExceptions
-     */
-    protected $expectedExceptions = array();
-
-    /**
-     * Initializes a list of expected exception messages.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->expectedExceptions = array(
-            sprintf(
-                'Unexpected token: function, line: 7, col: 41, file: %s.',
-                self::createCodeResourceURI(
-                    'issues/061/UnexpectedTokenInParameterDefaultValue.php'
-                )
-            )
-        );
-    }
-
     /**
      * Tests that the {@link PHP_Depend::getExceptions()} Returns a list with
      * the expected exceptions.
@@ -107,30 +75,17 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      */
     public function testPHPDependReturnsExpectedExceptionInstances()
     {
-        $logger = $this->getMock('PHP_Depend_Log_LoggerI');
-        $logger->expects($this->atLeastOnce())
-            ->method('getAcceptedAnalyzers')
-            ->will($this->returnValue(array()));
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(self::createCodeResourceURI('issues/061'));
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
-        $pdepend->addLogger($logger);
-        
+        $pdepend->addLogger(new PHP_Depend_Log_Dummy_Logger());
         $pdepend->analyze();
 
         $exceptions = $pdepend->getExceptions();
-        $this->assertEquals(count($this->expectedExceptions), count($exceptions));
-
-        foreach ($exceptions as $exception) {
-            $this->assertTrue(
-                in_array(
-                    $exception->getMessage(),
-                    $this->expectedExceptions
-                ),
-                "Unexpected exception with message: " . $exception->getMessage()
-            );
-        }
+        self::assertStringStartsWith(
+            'Unexpected token: function, line: 7, col: 41, file:',
+            $exceptions[0]->getMessage()
+        );
     }
 
     /**
@@ -147,15 +102,12 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
     {
         $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setConfiguration($this->createConfigurationFixture());
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.log'));
-        $runner->setSourceArguments(
-            array(
-                self::createCodeResourceURI('issues/061/ValidFileUnderTest.php')
-            )
-        );
+        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
-        $this->assertFalse($runner->hasParseErrors());
+        self::assertFalse($runner->hasParseErrors());
     }
 
     /**
@@ -172,15 +124,12 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
     {
         $runner = new PHP_Depend_TextUI_Runner();
+        $runner->setConfiguration($this->createConfigurationFixture());
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.log'));
-        $runner->setSourceArguments(
-            array(
-                self::createCodeResourceURI('issues/061')
-            )
-        );
+        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
-        $this->assertTrue($runner->hasParseErrors());
+        self::assertTrue($runner->hasParseErrors());
     }
 
     /**
@@ -199,18 +148,17 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         $this->prepareArgv(
             array(
                 '--dummy-logger=' . self::createRunResourceURI('pdepend.log'),
-                self::createCodeResourceURI('issues/061/ValidFileUnderTest.php')
+                self::createCodeResourceUriForTest()
             )
         );
 
         list($exitCode, $output) = $this->runTextUICommand();
 
-        $this->assertNotContains('Following errors occured:', $output);
+        self::assertNotContains('Following errors occured:', $output);
     }
 
     /**
-     * Tests that the output of {@link PHP_Depend_TextUI_Command} contains the
-     * expected exception messages.
+     * testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess
      *
      * @return void
      * @covers PHP_Depend_TextUI_Command
@@ -219,21 +167,17 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * @group pdepend::textui
      * @group unittest
      */
-    public function testCommandPrintsExpectedOutputWhenAnErrorOccuredDuringTheParsingProcess()
+    public function testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess()
     {
         $this->prepareArgv(
             array(
                 '--dummy-logger=' . self::createRunResourceURI('pdepend.log'),
-                self::createCodeResourceURI('issues/061')
+                self::createCodeResourceUriForTest()
             )
         );
-        
         list($exitCode, $output) = $this->runTextUICommand();
 
-        $this->assertContains('Following errors occured:', $output);
-        foreach ($this->expectedExceptions as $expectedException) {
-            $this->assertContains($expectedException, $output);
-        }
+        self::assertContains('Unexpected token: function, line: 7, col: 41, file:', $output);
     }
 
     /**

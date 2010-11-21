@@ -10,7 +10,6 @@
     
     <cache>
         <driver>file</driver>
-        <location>/home/manuel/.pdepend</location>
     </cache>
 
 </configuration>

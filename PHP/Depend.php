@@ -72,6 +72,14 @@ class PHP_Depend
     const PARSER_STORAGE = 2;
 
     /**
+     * The system configuration.
+     *
+     * @var PHP_Depend_Util_Configuration
+     * @since 0.10.0
+     */
+    protected $configuration = null;
+
+    /**
      * List of source directories.
      *
      * @var array(string) $_directories
@@ -151,8 +159,10 @@ class PHP_Depend
 
     /**
      * Constructs a new php depend facade.
+     *
+     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
      */
-    public function __construct()
+    public function __construct(PHP_Depend_Util_Configuration $configuration)
     {
         $this->_codeFilter = new PHP_Depend_Code_Filter_Null();
         $this->_fileFilter = new PHP_Depend_Input_CompositeFilter();

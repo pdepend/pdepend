@@ -59,6 +59,8 @@ require_once 'PHPUnit/Extensions/PhptTestSuite.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_MathUtil
  */
 class PHP_Depend_Util_MathUtilTest extends PHPUnit_Extensions_PhptTestSuite
 {

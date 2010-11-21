@@ -74,15 +74,14 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserHandlesSimpleUseDeclaration()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $package = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getParentClass()
+            ->getPackage();
 
-        $class = $packages->current()
-                          ->getClasses()
-                          ->current();
-
-        $parentClass = $class->getParentClass();
-        self::assertEquals('Bar', $parentClass->getName());
-        self::assertEquals('foo', $parentClass->getPackage()->getName());
+        self::assertEquals('foo', $package->getName());
     }
 
     /**
@@ -330,7 +329,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
         $package = $packages->current();
         $types   = $package->getTypes();
         self::assertEquals('bar', $package->getName());
-        self::assertEquals(1, $types->count());
         self::assertEquals('BarFoo', $types->current()->getName());
 
         $packages->next();
@@ -338,7 +336,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
         $package = $packages->current();
         $types   = $package->getTypes();
         self::assertEquals('foo', $package->getName());
-        self::assertEquals(1, $types->count());
         self::assertEquals('FooBar', $types->current()->getName());
 
         $packages->next();
@@ -346,7 +343,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
         $package = $packages->current();
         $types   = $package->getTypes();
         self::assertEquals('baz', $package->getName());
-        self::assertEquals(1, $types->count());
         self::assertEquals('FooBaz', $types->current()->getName());
     }
 
@@ -369,7 +365,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
         $package = $packages->current();
         $types   = $package->getTypes();
         self::assertEquals('bar', $package->getName());
-        self::assertEquals(1, $types->count());
         self::assertEquals('BarFoo', $types->current()->getName());
 
         $packages->next();
@@ -377,7 +372,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
         $package = $packages->current();
         $types   = $package->getTypes();
         self::assertEquals('foo', $package->getName());
-        self::assertEquals(1, $types->count());
         self::assertEquals('FooBar', $types->current()->getName());
 
         $packages->next();
@@ -385,7 +379,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
         $package = $packages->current();
         $types   = $package->getTypes();
         self::assertEquals('baz', $package->getName());
-        self::assertEquals(1, $types->count());
         self::assertEquals('FooBaz', $types->current()->getName());
     }
 
@@ -426,12 +419,13 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserResolvesQualifiedTypeNameInTypeSignature($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-        $type     = $packages->current()
-                             ->getTypes()
-                             ->current();
-
-        $dependency = $type->getDependencies()->current();
+        $dependency = self::parseSource($fileName)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getDependencies()
+            ->current();
+        
         self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
@@ -461,8 +455,10 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
                                ->current();
 
         self::assertEquals($namespaceName, $dependency->getPackage()->getName());
-        $this->assertContains($function->getPackage()->getName(),
-                              $dependency->getPackage()->getName());
+        $this->assertContains(
+            $function->getPackage()->getName(),
+            $dependency->getPackage()->getName()
+        );
     }
 
     /**
@@ -482,12 +478,13 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserKeepsQualifiedTypeNameInTypeSignature($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-        $type     = $packages->current()
-                             ->getTypes()
-                             ->current();
-
-        $dependency = $type->getDependencies()->current();
+        $dependency = self::parseSource($fileName)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getDependencies()
+            ->current();
+        
         self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
@@ -535,12 +532,13 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-        $type     = $packages->current()
-                             ->getTypes()
-                             ->current();
+        $dependency = self::parseSource($fileName)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getDependencies()
+            ->current();
 
-        $dependency = $type->getDependencies()->current();
         self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
@@ -561,13 +559,12 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-        $function = $packages->current()
-                             ->getFunctions()
-                             ->current();
-
-        $dependency = $function->getDependencies()
-                               ->current();
+        $dependency = self::parseSource($fileName)
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getDependencies()
+            ->current();
 
         self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
@@ -589,12 +586,13 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-        $type     = $packages->current()
-                             ->getTypes()
-                             ->current();
-
-        $dependency = $type->getDependencies()->current();
+        $dependency = self::parseSource($fileName)
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getDependencies()
+            ->current();
+        
         self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }
 
@@ -615,13 +613,12 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-        $function = $packages->current()
-                             ->getFunctions()
-                             ->current();
-
-        $dependency = $function->getDependencies()
-                               ->current();
+        $dependency = self::parseSource($fileName)
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getDependencies()
+            ->current();
 
         self::assertEquals($namespaceName, $dependency->getPackage()->getName());
     }

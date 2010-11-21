@@ -63,6 +63,28 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 abstract class PHP_Depend_Bugs_AbstractTest extends PHP_Depend_AbstractTest
 {
     /**
+     * Creates the PDepend summary report for the source associated with the
+     * calling test case.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    protected function createSummaryXmlForCallingTest()
+    {
+        $file = self::createRunResourceURI('summary.xml');
+
+        $log = new PHP_Depend_Log_Summary_Xml();
+        $log->setLogFile($file);
+
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addFile(self::createCodeResourceUriForTest());
+        $pdepend->addLogger($log);
+        $pdepend->analyze();
+
+        return $file;
+    }
+
+    /**
      * Parses the source of a test case file.
      *
      * @param string  $testCase          Full test case name.

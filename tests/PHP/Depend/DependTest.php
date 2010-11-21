@@ -76,7 +76,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         
         $this->setExpectedException('InvalidArgumentException', $msg);
         
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory($dir);
     }
     /**
@@ -90,7 +90,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAddDirectory()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
     }
     
@@ -104,7 +104,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyze()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
         
@@ -137,7 +137,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $this->setExpectedException('RuntimeException', 'No source directory and file set.');
         $pdepend->analyze();
     }
@@ -152,7 +152,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzerReturnsEmptyIteratorWhenNoPackageExists()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array(__METHOD__)));
        
@@ -170,7 +170,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzeSetsWithoutAnnotations()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code');
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('inc')));
         $pdepend->setWithoutAnnotations();
@@ -197,7 +197,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testCountClasses()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
         $pdepend->analyze();
@@ -221,7 +221,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'countClasses() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->countClasses();
     }
@@ -237,7 +237,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testCountPackages()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
@@ -260,7 +260,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'countPackages() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->countPackages();
     }
@@ -276,7 +276,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testGetPackage()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         
@@ -309,7 +309,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'getPackage() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackage('package1');
     }
@@ -330,7 +330,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'Unknown package "package0".'
         );
         
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->analyze();
         $pdepend->getPackage('package0');
@@ -348,7 +348,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testGetPackages()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         
         $package1 = $pdepend->analyze();
@@ -376,7 +376,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'getPackages() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
         $pdepend->getPackages();
     }
@@ -391,7 +391,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testSupportForSingleFileIssue90()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addFile(dirname(__FILE__) . '/_code/issues/090.php');
         $pdepend->analyze();
 
@@ -415,7 +415,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      */
     public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()
     {
-        $pdepend = new PHP_Depend();
+        $pdepend = $this->createPDependFixture();
         $pdepend->addFile(self::createRunResourceURI('pdepend_'));
     }
 }

@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend/Log/Summary/Xml.php';
-
 /**
  * Test case for bug 73 that results in an inconsistent object graph and fatal
  * errors.
@@ -62,6 +60,8 @@ require_once 'PHP/Depend/Log/Summary/Xml.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
 class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -75,14 +75,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(2, $package->getTypes()->count());
@@ -104,14 +103,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(3, $package->getTypes()->count());
@@ -129,14 +127,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(2, $package->getTypes()->count());
@@ -159,14 +156,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(3, $package->getTypes()->count());
@@ -184,14 +180,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(2, $package->getTypes()->count());
@@ -213,14 +208,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(2, $package->getTypes()->count());
@@ -246,14 +240,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(2, $package->getTypes()->count());
@@ -279,14 +272,13 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
         self::assertEquals(2, $package->getTypes()->count());
@@ -303,91 +295,51 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithPackage()
     {
-        $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
-
-        $log = new PHP_Depend_Log_Summary_Xml();
-        $log->setLogFile($logFile);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile($fileName);
-        $pdepend->addLogger($log);
-        $pdepend->analyze();
+        $this->createSummaryXmlForCallingTest();
     }
 
     /**
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithoutPackage()
     {
-        $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
-
-        $log = new PHP_Depend_Log_Summary_Xml();
-        $log->setLogFile($logFile);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile($fileName);
-        $pdepend->addLogger($log);
-        $pdepend->analyze();
+        $this->createSummaryXmlForCallingTest();
     }
 
     /**
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithPackage()
     {
-        $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
-
-        $log = new PHP_Depend_Log_Summary_Xml();
-        $log->setLogFile($logFile);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile($fileName);
-        $pdepend->addLogger($log);
-        $pdepend->analyze();
+        $this->createSummaryXmlForCallingTest();
     }
 
     /**
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithoutPackage()
     {
-        $logFile  = self::createRunResourceURI('summary.xml');
-        $fileName = self::createCodeResourceURI('bugs/073/' . __FUNCTION__ . '.php');
-
-        $log = new PHP_Depend_Log_Summary_Xml();
-        $log->setLogFile($logFile);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile($fileName);
-        $pdepend->addLogger($log);
-        $pdepend->analyze();
+        $this->createSummaryXmlForCallingTest();
     }
 }

@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Log/Summary/Xml.php';
-require_once 'PHP/Depend/Util/Type.php';
-
 /**
  * Test case for ticket #106, where internal classes appear in the metrics log
  * file.
@@ -64,6 +60,8 @@ require_once 'PHP/Depend/Util/Type.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
 class PHP_Depend_Bugs_DefaultNamespaceBug106Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -71,56 +69,27 @@ class PHP_Depend_Bugs_DefaultNamespaceBug106Test extends PHP_Depend_Bugs_Abstrac
      * testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
     {
-        $this->_runForTestCase(__METHOD__);
+        $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
+        self::assertEquals(0, count($sxml->xpath('//class[@name="RuntimeException"]')));
     }
 
     /**
      * testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
     {
-        $this->_runForTestCase(__METHOD__);
-    }
-
-    /**
-     * Runs PHP_Depend with the summary logger, against a source file associated
-     * with the given test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return void
-     */
-    private function _runForTestCase($testCase)
-    {
-        $uri = $this->createRunResourceURI(__FUNCTION__);
-
-        $logger = new PHP_Depend_Log_Summary_Xml();
-        $logger->setLogFile($uri);
-
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile(self::getSourceFileForTestCase($testCase));
-        $pdepend->addLogger($logger);
-        $pdepend->analyze();
-
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->load($uri);
-
-        $xpath = new DOMXPath($dom);
-        $result = $xpath->query('//class[@name="RuntimeException"]');
-
-        $this->assertEquals(0, $result->length);
+        $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
+        self::assertEquals(0, count($sxml->xpath('//class[@name="RuntimeException"]')));
     }
 }

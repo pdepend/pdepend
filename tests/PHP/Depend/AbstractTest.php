@@ -138,6 +138,32 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a test configuration instance.
+     *
+     * @return PHP_Depend_Util_Configuration
+     * @since 0.10.0
+     */
+    protected function createConfigurationFixture()
+    {
+        $factory = new PHP_Depend_Util_Configuration_Factory();
+        $config  = $factory->createDefault();
+
+        return $config;
+    }
+
+    /**
+     * Creates a PHP_Depend instance configured with the code resource associated
+     * with the calling test case.
+     *
+     * @return PHP_Depend
+     * @since 0.10.0
+     */
+    protected function createPDependFixture()
+    {
+        return new PHP_Depend($this->createConfigurationFixture());
+    }
+
+    /**
      * Creates a temporary resource for the given file name.
      *
      * @param string $fileName The temporary file name.

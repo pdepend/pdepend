@@ -147,6 +147,8 @@ class PHP_Depend_Log_Dummy_Logger
      */
     public function close()
     {
-        file_put_contents($this->_logFile, serialize($this->_input));
+        if ($this->_logFile) {
+            file_put_contents($this->_logFile, serialize($this->_input));
+        }
     }
 }

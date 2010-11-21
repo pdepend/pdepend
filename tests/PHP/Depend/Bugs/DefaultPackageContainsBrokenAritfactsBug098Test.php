@@ -61,6 +61,8 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
 class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -69,65 +71,62 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
      * Tests that the result does not contain a function with a broken signature.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainFunctionWithBrokenSignature()
     {
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->analyze();
 
         $functions = $pdepend->getPackages()
             ->current()
             ->getFunctions();
 
-        $this->assertSame(1, $functions->count());
+        self::assertEquals(1, count($functions));
     }
 
     /**
      * Tests that the result does not contain a class with a broken method.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainClassWithBrokenMethod()
     {
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->analyze();
 
         $classes = $pdepend->getPackages()
             ->current()
             ->getClasses();
 
-        $this->assertSame(1, $classes->count());
+        self::assertEquals(1, count($classes));
     }
 
     /**
      * Tests that the result does not contain an interface with a broken body.
      *
      * @return void
-     * @covers stdClass
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody()
     {
-        $pdepend = new PHP_Depend();
-        $pdepend->addFile(self::getSourceFileForTestCase(__METHOD__));
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->analyze();
 
         $interfaces = $pdepend->getPackages()
             ->current()
             ->getInterfaces();
 
-        $this->assertSame(1, $interfaces->count());
+        self::assertEquals(1, count($interfaces));
     }
 }
