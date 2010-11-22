@@ -61,6 +61,14 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * The current working directory.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $workingDirectory = null;
+
+    /**
      * Removes temporary test contents.
      *
      * @return void
@@ -93,8 +101,41 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         PHP_Depend_Code_Filter_Collection::getInstance()->setFilter();
 
         $this->_clearRunResources();
+        $this->resetWorkingDirectory();
 
         parent::tearDown();
+    }
+
+    /**
+     * Changes the current working directory to an directory associated with the
+     * calling test case.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    protected function changeWorkingDirectory()
+    {
+        $resource = self::createCodeResourceUriForTest();
+        if (is_file($resource)) {
+            $resource = dirname($resource);
+        }
+
+        $this->workingDirectory = getcwd();
+        chdir($resource);
+    }
+
+    /**
+     * Resets a previous changed working directory.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    protected function resetWorkingDirectory()
+    {
+        if ($this->workingDirectory) {
+            chdir($this->workingDirectory);
+        }
+        $this->workingDirectory = null;
     }
 
     /**

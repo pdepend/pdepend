@@ -67,6 +67,11 @@
 class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
 {
     /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * Default cache entry type.
      */
     const ENTRY_TYPE = 'cache';

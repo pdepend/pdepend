@@ -63,11 +63,28 @@
 class PHP_Depend_Util_Cache_Factory
 {
     /**
+     * The system configuration.
+     *
+     * @var PHP_Depend_Util_Configuration
+     */
+    protected $configuration = null;
+
+    /**
      * Singleton property that holds existing cache instances.
      *
      * @var array(string=>PHP_Depend_Util_Cache_Driver)
      */
     protected $caches = array();
+
+    /**
+     * Constructs a new cache factory instance for the given configuration.
+     *
+     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
+     */
+    public function __construct(PHP_Depend_Util_Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
 
     /**
      * Creates a new instance or returns an existing cache for the given cache
@@ -80,21 +97,51 @@ class PHP_Depend_Util_Cache_Factory
     public function create($cacheKey = 'default')
     {
         if (false === isset($this->caches[$cacheKey])) {
-            $this->caches[$cacheKey] = $this->createFileCache();
+            $this->caches[$cacheKey] = $this->createCache();
         }
         return $this->caches[$cacheKey];
     }
 
     /**
+     * Creates a cache instance based on the supplied configuration.
+     *
+     * @return PHP_Depend_Util_Cache_Driver
+     * @throws InvalidArgumentException If the configured cache driver is unknown.
+     */
+    protected function createCache()
+    {
+        switch ($this->configuration->cache->driver) {
+
+        case 'file':
+            return $this->createFileCache($this->configuration->cache->location);
+
+        case 'memory':
+            return $this->createMemoryCache();
+        }
+        throw new InvalidArgumentException(
+            "Unknown cache driver '{$this->configuration->cache->driver}' given."
+        );
+    }
+
+    /**
      * Creates a new file system based cache instance.
+     *
+     * @param string $location Cache root directory.
      *
      * @return PHP_Depend_Util_Cache_Driver_File
      */
-    protected function createFileCache()
+    protected function createFileCache($location)
     {
-        return new PHP_Depend_Util_Cache_Driver_File(
-            PHP_Depend_Util_FileUtil::getUserHomeDirOrSysTempDir() .
-            '/.pdepend/cache'
-        );
+        return new PHP_Depend_Util_Cache_Driver_File($location);
+    }
+
+    /**
+     * Creates an in memory cache instance.
+     *
+     * @return PHP_Depend_Util_Cache_Driver_Memory
+     */
+    protected function createMemoryCache()
+    {
+        return new PHP_Depend_Util_Cache_Driver_Memory();
     }
 }

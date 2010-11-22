@@ -164,6 +164,8 @@ class PHP_Depend
      */
     public function __construct(PHP_Depend_Util_Configuration $configuration)
     {
+        $this->configuration = $configuration;
+
         $this->_codeFilter = new PHP_Depend_Code_Filter_Null();
         $this->_fileFilter = new PHP_Depend_Input_CompositeFilter();
     }
@@ -546,7 +548,7 @@ class PHP_Depend
         $this->_parseExceptions = array();
 
         // Create a cache instance
-        $cacheFactory = new PHP_Depend_Util_Cache_Factory();
+        $cacheFactory = new PHP_Depend_Util_Cache_Factory($this->configuration);
         $cache = $cacheFactory->create();
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
