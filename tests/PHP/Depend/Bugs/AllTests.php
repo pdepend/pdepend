@@ -89,6 +89,7 @@ require_once dirname(__FILE__) . '/StringWithDollarStringLiteralBug162Test.php';
 require_once dirname(__FILE__) . '/AlternativeSyntaxClosingTagBug163Test.php';
 require_once dirname(__FILE__) . '/ClassAndInterfaceNamesBug169Test.php';
 require_once dirname(__FILE__) . '/UnexpectedTokenAsciiChar39Bug181Test.php';
+require_once dirname(__FILE__) . '/CloneIsValidNameInOlderPhpVersionsBug182Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -159,6 +160,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bug_AlternativeSyntaxClosingTagBug163Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClassAndInterfaceNamesBug169Test');
         $suite->addTestSuite('PHP_Depend_Bugs_UnexpectedTokenAsciiChar39Bug181Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test');
 
         return $suite;
     }

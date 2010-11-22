@@ -82,6 +82,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         case self::T_USE:
         case self::T_NULL:
         case self::T_TRUE:
+        case self::T_CLONE:
         case self::T_FALSE:
         case self::T_STRING:
         case self::T_NAMESPACE:
@@ -113,6 +114,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         $type = $this->tokenizer->peek();
         switch ($type) {
 
+        case PHP_Depend_TokenizerI::T_CLONE:
         case PHP_Depend_TokenizerI::T_STRING:
         case PHP_Depend_TokenizerI::T_USE:
         case PHP_Depend_TokenizerI::T_GOTO:

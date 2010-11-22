@@ -43,17 +43,13 @@
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
- * @since      0.10.0
+ * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/182
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Test case for bug 181, where an unexpected token in a chinese translation
- * file forces PHP_Depend to quit.
- *
- * http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
+ * Test case for ticket #182.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,23 +58,61 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
- * @since      0.10.0
+ * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/182
  *
  * @covers stdClass
  */
-class PHP_Depend_Bugs_UnexpectedTokenAsciiChar39Bug181Test
+class PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test
     extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * testUnexpectedTokenDoesNotQuitPDepend
+     * testParserAcceptsCloneAsFunctionName
      *
      * @return void
      * @group pdepend
      * @group pdepend::bugs
      * @group regressiontest
      */
-    public function testUnexpectedTokenDoesNotQuitPDepend()
+    public function testParserAcceptsCloneAsFunctionName()
+    {
+        self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserAcceptsCloneAsMethodName
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserAcceptsCloneAsMethodName()
+    {
+        self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserAcceptsCloneAsClassName
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserAcceptsCloneAsClassName()
+    {
+        self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserAcceptsCloneAsInterfaceName
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
+     */
+    public function testParserAcceptsCloneAsInterfaceName()
     {
         self::parseCodeResourceForTest();
     }
