@@ -26,6 +26,8 @@ PHP_Depend 0.10.0
   Implemented with git commit #00ed8ec.
 - Fixed #181: No log generated when parsing Typo3 extension "t3extplorer"
   (Unexpected token ASCII 39). Indirectly fixed in this release.
+- Fixed #182: Clone is a valid function, method and type name in older 
+  php versions. Fixed with git commit #b18bf37.
 
 PHP_depend 0.9.20
 -----------------
