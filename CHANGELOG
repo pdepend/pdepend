@@ -22,7 +22,10 @@ PHP_Depend 0.10.0
   FunctionNameParserAllVersions. Task scope changed and complete refactoring
   done. Parser moved into a version specific parser class. Done in subversion
   revision #.
-
+- Implemented #178: Provide configuration option for the cache directory.
+  Implemented with git commit #00ed8ec.
+- Fixed #181: No log generated when parsing Typo3 extension "t3extplorer"
+  (Unexpected token ASCII 39). Indirectly fixed in this release.
 
 PHP_depend 0.9.20
 -----------------
