@@ -259,14 +259,14 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         // Increment Weighted Methods Per Class(WMC) value
         $this->_nodeMetrics[$uuid][self::M_WEIGHTED_METHODS] += $ccn;
         // Increment Class Size(CSZ) value
-        $this->_nodeMetrics[$uuid][self::M_CLASS_SIZE] += $ccn;
+        ++$this->_nodeMetrics[$uuid][self::M_CLASS_SIZE];
 
         // Increment Non Private values
         if ($method->isPublic()) {
             // Increment Non Private WMC value
             $this->_nodeMetrics[$uuid][self::M_WEIGHTED_METHODS_NON_PRIVATE] += $ccn;
             // Increment Class Interface Size(CIS) value
-            $this->_nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE] += $ccn;
+            ++$this->_nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE];
         }
 
         $this->fireEndMethod($method);
