@@ -79,16 +79,15 @@ class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
     }
 
     /**
-     * Returns <b>true</b> if the extension of the given <b>$fileInfo</b> instance
-     * is in the list of allowed extensions.
+     * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param SplFileInfo $fileInfo The context file object.
+     * @param string $localPath The local/relative path to the specified root.
      *
      * @return boolean
      */
-    public function accept(SplFileInfo $fileInfo)
+    public function accept($localPath)
     {
-        $extension = pathinfo($fileInfo, PATHINFO_EXTENSION);
+        $extension = pathinfo($localPath, PATHINFO_EXTENSION);
 
         return in_array($extension, $this->extensions);
     }

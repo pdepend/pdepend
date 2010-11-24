@@ -36,9 +36,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Input
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,51 +46,43 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/CompositeFilterTest.php';
-require_once dirname(__FILE__) . '/ExcludePathFilterTest.php';
-require_once dirname(__FILE__) . '/ExtensionFilterTest.php';
-require_once dirname(__FILE__) . '/IteratorTest.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Main test suite for the PHP_Depend_Input package.
+ * Test case for bug #164.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Input
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/164
+ *
+ * @covers stdClass
  */
-class PHP_Depend_Input_AllTests
+class PHP_Depend_Bugs_InputIteratorShouldOnlyFilterOnLocalPathBug164Test
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * Test suite main method.
+     * testIteratorOnlyPassesLocalPathToFilter
      *
      * @return void
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
-    public static function main()
+    public function testIteratorOnlyPassesLocalPathToFilter()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
+        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter->expects($this->once())
+            ->method('accept')
+            ->with(self::equalTo('/baz'));
 
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Input - AllTests');
-        $suite->addTestSuite('PHP_Depend_Input_CompositeFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_ExcludePathFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_ExtensionFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_IteratorTest');
-
-        return $suite;
+        $iterator = new PHP_Depend_Input_Iterator(
+            new ArrayIterator(array('/foo/bar/baz')), $filter, '/foo/bar'
+        );
+        $iterator->accept();
     }
 }

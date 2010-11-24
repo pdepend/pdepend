@@ -87,13 +87,13 @@ class PHP_Depend_Input_DummyFilter implements PHP_Depend_Input_FilterI
     }
 
     /**
-     * Returns <b>true</b> if this filter accepts the file instance.
+     * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param SplFileInfo $fileInfo The context file instance.
+     * @param string $localPath The local/relative path to the specified root.
      *
      * @return boolean
      */
-    public function accept(SplFileInfo $fileInfo)
+    public function accept($localPath)
     {
         $this->invoked = true;
 

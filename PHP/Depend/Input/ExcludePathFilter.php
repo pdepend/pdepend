@@ -82,15 +82,14 @@ class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
     }
 
     /**
-     * Returns <b>true</b> while the file path doesn't match against any of the
-     * given patterns.
+     * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param SplFileInfo $fileInfo The context file object.
+     * @param string $localPath The local/relative path to the specified root.
      *
      * @return boolean
      */
-    public function accept(SplFileInfo $fileInfo)
+    public function accept($localPath)
     {
-        return (preg_match($this->regexp, $fileInfo->getPathname()) === 0);
+        return (preg_match($this->regexp, $localPath) === 0);
     }
 }

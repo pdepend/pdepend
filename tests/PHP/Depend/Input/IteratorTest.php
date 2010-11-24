@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-require_once 'PHP/Depend/Input/Iterator.php';
-
 /**
  * Test case for the php file filter iterator.
  *
@@ -62,6 +59,8 @@ require_once 'PHP/Depend/Input/Iterator.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Input_Iterator
  */
 class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
 {
@@ -69,17 +68,13 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorWithOneFileExtension
      *
      * @return void
-     * @covers PHP_Depend_Input_Iterator
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testIteratorWithOneFileExtension()
     {
-        $includes  = array('php4');
-        $directory = self::createCodeResourceURI('input/Iterator/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($includes, $directory);
+        $actual   = $this->createFilteredFileList(array('php4'));
         $expected = array('file4.php4');
 
         self::assertEquals($expected, $actual);
@@ -89,35 +84,93 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorWithMultipleFileExtensions
      *
      * @return void
-     * @covers PHP_Depend_Input_Iterator
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testIteratorWithMultipleFileExtensions()
     {
-        $includes  = array('inc', 'php');
-        $directory = self::createCodeResourceURI('input/Iterator/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($includes, $directory);
+        $actual   = $this->createFilteredFileList(array('inc', 'php'));
         $expected = array('file1.inc', 'file2.php');
 
         self::assertEquals($expected, $actual);
     }
 
     /**
+     * testIteratorPassesLocalPathToFilterWhenRootIsPresent
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
+    {
+        $files = new ArrayIterator(array('/foo/bar/baz'));
+
+        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter->expects($this->once())
+            ->method('accept')
+            ->with(self::equalTo('/bar/baz'));
+        
+        $iterator = new PHP_Depend_Input_Iterator($files, $filter, '/foo');
+        $iterator->accept();
+    }
+
+    /**
+     * testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent()
+    {
+        $files = new ArrayIterator(array('/foo/bar/baz'));
+
+        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter->expects($this->once())
+            ->method('accept')
+            ->with(self::equalTo('/foo/bar/baz'));
+
+        $iterator = new PHP_Depend_Input_Iterator($files, $filter);
+        $iterator->accept();
+    }
+
+    /**
+     * testIteratorPassesAbsolutePathToFilterWhenRootNotMatches
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches()
+    {
+        $files = new ArrayIterator(array('/foo/bar/baz'));
+
+        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter->expects($this->once())
+            ->method('accept')
+            ->with(self::equalTo('/foo/bar/baz'));
+
+        $iterator = new PHP_Depend_Input_Iterator($files, $filter, 'c:\foo');
+        $iterator->accept();
+    }
+
+    /**
      * Creates an array of file names that were returned by the input iterator.
      *
-     * @param array(string) $includes  The accepted file extension.
-     * @param string        $directory The source directory
+     * @param array(string) $extensions The accepted file extension.
      *
      * @return array(string)
      */
-    protected function createFilteredFileList(array $includes, $directory)
+    protected function createFilteredFileList(array $extensions)
     {
-        $filter = new PHP_Depend_Input_ExtensionFilter($includes);
         $files  = new PHP_Depend_Input_Iterator(
-            new DirectoryIterator($directory), $filter
+            new DirectoryIterator(self::createCodeResourceUriForTest()),
+            new PHP_Depend_Input_ExtensionFilter($extensions)
         );
 
         $actual = array();

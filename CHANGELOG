@@ -22,6 +22,8 @@ PHP_Depend 0.10.0
   FunctionNameParserAllVersions. Task scope changed and complete refactoring
   done. Parser moved into a version specific parser class. Done in subversion
   revision #.
+- Fixed #176: Calculation of CIS metric is incorrect. Fixed with commit
+  #1193f4a.
 - Implemented #178: Provide configuration option for the cache directory.
   Implemented with git commit #00ed8ec.
 - Fixed #181: No log generated when parsing Typo3 extension "t3extplorer"

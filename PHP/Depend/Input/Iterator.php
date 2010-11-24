@@ -68,16 +68,29 @@ class PHP_Depend_Input_Iterator extends FilterIterator
     protected $filter = null;
 
     /**
+     * Optional root path for the files.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $rootPath = null;
+
+    /**
      * Constructs a new file filter iterator.
      *
-     * @param Iterator                 $it     The inner iterator.
-     * @param PHP_Depend_Input_FilterI $filter The filter object.
+     * @param Iterator                 $it       The inner iterator.
+     * @param PHP_Depend_Input_FilterI $filter   The filter object.
+     * @param string                   $rootPath Optional root path for the files.
      */
-    public function __construct(Iterator $it, PHP_Depend_Input_FilterI $filter)
-    {
+    public function __construct(
+        Iterator $it,
+        PHP_Depend_Input_FilterI $filter,
+        $rootPath = null
+    ) {
         parent::__construct($it);
 
-        $this->filter = $filter;
+        $this->filter   = $filter;
+        $this->rootPath = $rootPath;
     }
 
     /**
@@ -87,6 +100,22 @@ class PHP_Depend_Input_Iterator extends FilterIterator
      */
     public function accept()
     {
-        return $this->filter->accept($this->getInnerIterator()->current());
+        return $this->filter->accept($this->getLocalPath());
+    }
+
+    /**
+     * Returns the local path of the current file, if the root path property was
+     * set. If not, this method returns the absolute file path.
+     *
+     * @return string
+     * @since 0.10.0
+     */
+    protected function getLocalPath()
+    {
+        $localPath = $this->getInnerIterator()->current();
+        if ($this->rootPath && 0 === strpos($localPath, $this->rootPath)) {
+            $localPath = substr($localPath, strlen($this->rootPath));
+        }
+        return $localPath;
     }
 }

@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-
 /**
  * Test case for the file extension filter.
  *
@@ -61,6 +59,8 @@ require_once 'PHP/Depend/Input/ExtensionFilter.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Input_ExtensionFilter
  */
 class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
 {
@@ -68,17 +68,13 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      * testExtensionFilterAcceptsOneFileExtension
      *
      * @return void
-     * @covers PHP_Depend_Input_ExtensionFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testExtensionFilterAcceptsOneFileExtension()
     {
-        $includes  = array('php4');
-        $directory = self::createCodeResourceURI('input/ExtensionFilter/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($includes, $directory);
+        $actual   = $this->createFilteredFileList(array('php4'));
         $expected = array('file4.php4');
 
         self::assertEquals($expected, $actual);
@@ -88,17 +84,13 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      * testExtensionFilterAcceptsMultipleFileExtensions
      *
      * @return void
-     * @covers PHP_Depend_Input_ExtensionFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testExtensionFilterAcceptsMultipleFileExtensions()
     {
-        $includes  = array('inc', 'php');
-        $directory = self::createCodeResourceURI('input/ExtensionFilter/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($includes, $directory);
+        $actual   = $this->createFilteredFileList(array('inc', 'php'));
         $expected = array('file1.inc', 'file2.php');
 
         self::assertEquals($expected, $actual);
@@ -108,17 +100,18 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      * Creates an array with those files that were acceptable for the extension
      * filter.
      *
-     * @param array(string) $includes  The file extensions
-     * @param string        $directory The input directory
+     * @param array(string) $includes The file extensions
      *
      * @return array(string)
      */
-    protected function createFilteredFileList(array $includes, $directory)
+    protected function createFilteredFileList(array $includes)
     {
         $filter = new PHP_Depend_Input_ExtensionFilter($includes);
 
         $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directory)
+            new RecursiveDirectoryIterator(
+                self::createCodeResourceUriForTest()
+            )
         );
 
         $actual = array();

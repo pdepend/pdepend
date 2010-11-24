@@ -61,11 +61,11 @@
 interface PHP_Depend_Input_FilterI
 {
     /**
-     * Should return <b>true</b> if the given file should be part of the analyzation.
+     * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param SplFileInfo $fileInfo The context file object.
+     * @param string $localPath The local/relative path to the specified root.
      *
      * @return boolean
      */
-    function accept(SplFileInfo $fileInfo);
+    function accept($localPath);
 }

@@ -43,7 +43,7 @@
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/182
+ * @link       http://pdepend.org/
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';

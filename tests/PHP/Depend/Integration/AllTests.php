@@ -49,6 +49,7 @@
 require_once 'PHPUnit/Framework/TestSuite.php';
 
 require_once dirname(__FILE__) . '/BuilderParserCacheTest.php';
+require_once dirname(__FILE__) . '/DependExcludePathFilterTest.php';
 
 /**
  * Test suite for the PHP_Depend component integration tests.
@@ -72,6 +73,7 @@ class PHP_Depend_Integration_AllTests extends PHPUnit_Framework_TestSuite
         parent::__construct();
 
         $this->addTestSuite('PHP_Depend_Integration_BuilderParserCacheTest');
+        $this->addTestSuite('PHP_Depend_Integration_DependExcludePathFilterTest');
     }
 
     /**

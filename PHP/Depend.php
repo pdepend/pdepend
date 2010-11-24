@@ -668,7 +668,8 @@ class PHP_Depend
                     new RecursiveIteratorIterator(
                         new RecursiveDirectoryIterator($directory . '/')
                     ),
-                    $this->_fileFilter
+                    $this->_fileFilter,
+                    $directory
                 )
             );
         }

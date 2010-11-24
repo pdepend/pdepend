@@ -36,61 +36,54 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Input
+ * @subpackage Issues
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://pdepend.org/
+ * @link       http://www.pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/CompositeFilterTest.php';
-require_once dirname(__FILE__) . '/ExcludePathFilterTest.php';
-require_once dirname(__FILE__) . '/ExtensionFilterTest.php';
-require_once dirname(__FILE__) . '/IteratorTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Main test suite for the PHP_Depend_Input package.
+ * Tests the integration of the {@link PHP_Depend} class and the input filter
+ * class {@link PHP_Depend_Input_ExcludePathFilter}.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Input
+ * @subpackage Issues
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
  */
-class PHP_Depend_Input_AllTests
+class PHP_Depend_Integration_DependExcludePathFilterTest
+    extends PHP_Depend_AbstractTest
 {
     /**
-     * Test suite main method.
+     * testPhpDependOnlyFiltersLocalPath
      *
      * @return void
+     * @group pdepend
+     * @group pdepend::integration
+     * @group integrationtest
      */
-    public static function main()
+    public function testPhpDependOnlyFiltersLocalPath()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
+        $this->changeWorkingDirectory();
 
-    /**
-     * Creates the phpunit test suite for this package.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Input - AllTests');
-        $suite->addTestSuite('PHP_Depend_Input_CompositeFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_ExcludePathFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_ExtensionFilterTest');
-        $suite->addTestSuite('PHP_Depend_Input_IteratorTest');
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
+        $pdepend->addFileFilter(
+            new PHP_Depend_Input_ExcludePathFilter(array('Integration'))
+        );
 
-        return $suite;
+        self::assertEquals(1, count($pdepend->analyze()));
     }
 }

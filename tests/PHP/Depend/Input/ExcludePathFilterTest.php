@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Input/ExcludePathFilter.php';
-
 /**
  * Test case for the exclude path filter.
  *
@@ -61,6 +59,8 @@ require_once 'PHP/Depend/Input/ExcludePathFilter.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Input_ExcludePathFilter
  */
 class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
 {
@@ -68,17 +68,13 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsFile
      *
      * @return void
-     * @covers PHP_Depend_Input_ExcludePathFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testExcludePathFilterRejectsFile()
     {
-        $excludes  = array('/package2.php');
-        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $actual   = $this->createFilteredFileList(array('/package2.php'));
         $expected = array('package1.php', 'package3.php');
 
         self::assertEquals($expected, $actual);
@@ -88,17 +84,13 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsFiles
      *
      * @return void
-     * @covers PHP_Depend_Input_ExcludePathFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testExcludePathFilterRejectsFiles()
     {
-        $excludes  = array('/package2.php', 'package1.php');
-        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $actual   = $this->createFilteredFileList(array('/package2.php', '*1.php'));
         $expected = array('package3.php');
 
         self::assertEquals($expected, $actual);
@@ -108,17 +100,13 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsDirectory
      *
      * @return void
-     * @covers PHP_Depend_Input_ExcludePathFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testExcludePathFilterRejectsDirectory()
     {
-        $excludes  = array('/package1');
-        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $actual   = $this->createFilteredFileList(array('/package1'));
         $expected = array('file2.php', 'file3.php');
 
         self::assertEquals($expected, $actual);
@@ -128,17 +116,13 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsDirectories
      *
      * @return void
-     * @covers PHP_Depend_Input_ExcludePathFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testExcludePathFilterRejectsDirectories()
     {
-        $excludes  = array('/package1', 'package3');
-        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $actual   = $this->createFilteredFileList(array('/package1', 'package3'));
         $expected = array('file2.php');
 
         self::assertEquals($expected, $actual);
@@ -148,17 +132,13 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsFilesAndDirectories
      *
      * @return void
-     * @covers PHP_Depend_Input_ExcludePathFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
     public function testExcludePathFilterRejectsFilesAndDirectories()
     {
-        $excludes  = array('/package1', 'package3/file3.php');
-        $directory = self::createCodeResourceURI('input/ExcludePathFilter/' . __FUNCTION__);
-
-        $actual   = $this->createFilteredFileList($excludes, $directory);
+        $actual   = $this->createFilteredFileList(array('/package1', '/file3.php'));
         $expected = array('file2.php');
 
         self::assertEquals($expected, $actual);
@@ -168,17 +148,18 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * Creates an array with those files that were acceptable for the exclude
      * path filter.
      *
-     * @param array(string) $excludes  The filtered patterns
-     * @param string        $directory The input directory
+     * @param array(string) $excludes The filtered patterns
      *
      * @return array(string)
      */
-    protected function createFilteredFileList(array $excludes, $directory)
+    protected function createFilteredFileList(array $excludes)
     {
         $filter = new PHP_Depend_Input_ExcludePathFilter($excludes);
 
         $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directory)
+            new RecursiveDirectoryIterator(
+                self::createCodeResourceUriForTest()
+            )
         );
 
         $actual = array();

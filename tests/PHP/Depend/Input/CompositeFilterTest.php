@@ -49,8 +49,6 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DummyFilter.php';
 
-require_once 'PHP/Depend/Input/CompositeFilter.php';
-
 /**
  * Test case for the composite filter.
  *
@@ -62,40 +60,40 @@ require_once 'PHP/Depend/Input/CompositeFilter.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Input_CompositeFilter
  */
 class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
 {
     /**
-     * testCompositeFilterInvokesFirstFilterInstance
+     * testCompositeInvokesFirstAcceptInFilterChain
      *
      * @return void
-     * @covers PHP_Depend_Input_CompositeFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
-    public function testCompositeFilterInvokesFirstFilterInstance()
+    public function testCompositeInvokesFirstAcceptInFilterChain()
     {
         $filter0 = new PHP_Depend_Input_DummyFilter(true);
 
         $composite = new PHP_Depend_Input_CompositeFilter();
         $composite->append($filter0);
 
-        $composite->accept(new SplFileInfo(dirname(__FILE__)));
+        $composite->accept(dirname(__FILE__));
 
         $this->assertTrue($filter0->invoked);
     }
 
     /**
-     * testCompositeFilterInvokesFollowingFilterWhenPreviousAcceptReturnsTrue
+     * testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue
      *
      * @return void
-     * @covers PHP_Depend_Input_CompositeFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
-    public function testCompositeFilterInvokesFollowingFilterWhenPreviousAcceptReturnsTrue()
+    public function testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue()
     {
         $filter0 = new PHP_Depend_Input_DummyFilter(true);
         $filter1 = new PHP_Depend_Input_DummyFilter(true);
@@ -104,21 +102,20 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
         $composite->append($filter0);
         $composite->append($filter1);
 
-        $composite->accept(new SplFileInfo(dirname(__FILE__)));
+        $composite->accept(dirname(__FILE__));
 
         $this->assertTrue($filter1->invoked);
     }
 
     /**
-     * testCompositeFilterInvokesFollowingFilterWhenPreviousAcceptReturnsTrue
+     * testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue
      *
      * @return void
-     * @covers PHP_Depend_Input_CompositeFilter
      * @group pdepend
      * @group pdepend::input
      * @group unittest
      */
-    public function testCompositeFilterNotInvokesFollowingFilterWhenPreviousAcceptReturnsFalse()
+    public function testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue()
     {
         $filter0 = new PHP_Depend_Input_DummyFilter(false);
         $filter1 = new PHP_Depend_Input_DummyFilter(true);
@@ -127,7 +124,7 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
         $composite->append($filter0);
         $composite->append($filter1);
 
-        $composite->accept(new SplFileInfo(dirname(__FILE__)));
+        $composite->accept(dirname(__FILE__));
 
         $this->assertFalse($filter1->invoked);
     }
