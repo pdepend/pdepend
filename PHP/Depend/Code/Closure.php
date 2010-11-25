@@ -68,6 +68,14 @@ class PHP_Depend_Code_Closure extends PHP_Depend_Code_AbstractCallable
         parent::__construct('#closure');
     }
 
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before it serializes an instance of this class. This method returns an
+     * array with those property names that should be serialized.
+     *
+     * @return array(string)
+     * @since 0.10.0
+     */
     public function __sleep()
     {
         return  array(
