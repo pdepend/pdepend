@@ -38,7 +38,7 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache_Driver
+ * @subpackage Util_Cache_Driver_File
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -48,23 +48,21 @@
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 
-require_once dirname(__FILE__) . '/File/AllTests.php';
-require_once dirname(__FILE__) . '/FileTest.php';
-require_once dirname(__FILE__) . '/MemoryTest.php';
+require_once dirname(__FILE__) . '/DirectoryTest.php';
 
 /**
- * Main test suite for the PHP_Depend_Util_Cache_Driver package.
+ * Main test suite for the PHP_Depend_Util_Cache_Driver_File package.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache_Driver
+ * @subpackage Util_Cache_Driver_File
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Util_Cache_Driver_AllTests
+class PHP_Depend_Util_Cache_Driver_File_AllTests
 {
     /**
      * Creates a test suite for this package.
@@ -73,10 +71,8 @@ class PHP_Depend_Util_Cache_Driver_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util_Cache_Driver - AllTests');
-        $suite->addTest(PHP_Depend_Util_Cache_Driver_File_AllTests::suite());
-        $suite->addTestSuite('PHP_Depend_Util_Cache_Driver_FileTest');
-        $suite->addTestSuite('PHP_Depend_Util_Cache_Driver_MemoryTest');
+        $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Util_Cache_Driver_File - AllTests');
+        $suite->addTestSuite('PHP_Depend_Util_Cache_Driver_File_DirectoryTest');
 
         return $suite;
     }

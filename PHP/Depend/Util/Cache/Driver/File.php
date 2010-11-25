@@ -77,11 +77,11 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
     const ENTRY_TYPE = 'cache';
 
     /**
-     * The cache root directory.
+     * The cache directory handler
      *
-     * @var string
+     * @var PHP_Depend_Util_Cache_Driver_File_Directory
      */
-    protected $cacheDir = null;
+    protected $directory = null;
 
     /**
      * The current cache entry type.
@@ -94,14 +94,11 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      * This method constructs a new file cache instance for the given root
      * directory.
      *
-     * @param string $cacheDir The cache root directory.
+     * @param string $root The cache root directory.
      */
-    public function __construct($cacheDir)
+    public function __construct($root)
     {
-        if (false === file_exists($cacheDir)) {
-            mkdir($cacheDir, 0775, true);
-        }
-        $this->cacheDir = $cacheDir;
+        $this->directory = new PHP_Depend_Util_Cache_Driver_File_Directory($root);
     }
 
     /**
@@ -265,10 +262,8 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      */
     protected function getCacheFileWithoutExtension($key)
     {
-        $path = $this->cacheDir . '/' . substr($key, 0, 2);
-        if (false === file_exists($path)) {
-            mkdir($path, 0775, true);
-        }
+        $path = $this->directory->createCacheDirectory($key);
         return "{$path}/{$key}";
     }
 }
+

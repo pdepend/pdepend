@@ -18,6 +18,9 @@ PHP_Depend 0.10.0
   revision #1283.
 - Fixed #163: Alternative syntax end tokens can terminate with closing
   PHP-tag. Fixed in svn revision #1527.
+- Fixed #164: Faulty implementation of the --ignore path filter fixed.
+  Now this filter only works on the local part of a file or directory
+  name and not on the complete path. Fixed with commit #f75275e.
 - Implemented #170: Rename FunctionNameParserImpl into
   FunctionNameParserAllVersions. Task scope changed and complete refactoring
   done. Parser moved into a version specific parser class. Done in subversion
