@@ -12,9 +12,9 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2010-09-12</date>
+  <date>2010-11-25</date>
   <version>
-    <release>0.9.19</release>
+    <release>0.10.0RC1</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -23,8 +23,38 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Fixed #162: Parser does not recognize $ string literal in string.
-  Fixed in subversion revision #1379.
+- Implemented #130: Simplify PHP_Depend's ASTCompoundVariable and skip
+  nested ASTCompoundExpression node instance. Implemented in svn revision
+  number #1344.
+- Implemented #131: Add new method isThis() to PHP_Depend's ASTVariable
+  class. Implemented in svn revision #1291.
+- Implemented #132: Housekeeping: Cleanup the PHP_Depend_Input package test
+  code. Done in svn revision #1366.
+- Implemented #139: Implement Post-/Pre- Increment/Decrement. Implemented
+  in svn revision #1317.
+- Implemented #143: Support PHP's alternative control structure syntax.
+  Done in svn revision #1375.
+- Implemented #146: Implement PHP's declare-statement. Done in subversion
+  revision #1375.
+- Implemented #148: Implement cast expressions. Implemented in svn
+  revision #1283.
+- Fixed #163: Alternative syntax end tokens can terminate with closing
+  PHP-tag. Fixed in svn revision #1527.
+- Fixed #164: Faulty implementation of the --ignore path filter fixed.
+  Now this filter only works on the local part of a file or directory
+  name and not on the complete path. Fixed with commit #f75275e.
+- Implemented #170: Rename FunctionNameParserImpl into
+  FunctionNameParserAllVersions. Task scope changed and complete refactoring
+  done. Parser moved into a version specific parser class. Done in subversion
+  revision #.
+- Fixed #176: Calculation of CIS metric is incorrect. Fixed with commit
+  #1193f4a.
+- Implemented #178: Provide configuration option for the cache directory.
+  Implemented with git commit #00ed8ec.
+- Fixed #181: No log generated when parsing Typo3 extension "t3extplorer"
+  (Unexpected token ASCII 39). Indirectly fixed in this release.
+- Fixed #182: Clone is a valid function, method and type name in older
+  php versions. Fixed with git commit #b18bf37.
   </notes>
   <contents>
     <dir name="/">
@@ -40,8 +70,43 @@ and the NDepend metric tool.
       </file>
       <dir name="PHP">
         <dir name="Depend">
-          <dir name="DbusUI">
+          <dir name="TextUI">
             <file name="ResultPrinter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Command.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Runner.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Parser">
+            <file name="TokenStack.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Exception.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="VersionAllParser.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="InvalidStateException.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="TokenException.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="SymbolTable.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="TokenStreamEndException.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="MissingValueException.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="UnexpectedTokenException.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -57,6 +122,14 @@ and the NDepend metric tool.
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
               </file>
             </dir>
+            <dir name="Exceptions">
+              <file name="AbstractException.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="SourceNotFoundException.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
             <file name="ASTStringIndexExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
@@ -66,16 +139,13 @@ and the NDepend metric tool.
             <file name="Package.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTMethodPostfix.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="ASTScopeStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTForStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTHeredoc.php" role="php">
+            <file name="ASTAssignmentExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTParentReference.php" role="php">
@@ -87,19 +157,22 @@ and the NDepend metric tool.
             <file name="ASTCompoundExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTAssignmentExpression.php" role="php">
+            <file name="ASTMethodPostfix.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTFormalParameter.php" role="php">
+            <file name="ASTHeredoc.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTCompoundVariable.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTLogicalAndExpression.php" role="php">
+            <file name="ASTStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="Method.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTSwitchStatement.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTLogicalAndExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTLogicalXorExpression.php" role="php">
@@ -108,16 +181,16 @@ and the NDepend metric tool.
             <file name="ASTClassOrInterfaceReference.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTVariable.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTSwitchStatement.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="Value.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
+            <file name="ASTConstantDefinition.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="ASTFieldDeclaration.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTCompoundVariable.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTCastExpression.php" role="php">
@@ -126,10 +199,7 @@ and the NDepend metric tool.
             <file name="ASTForUpdate.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTConstantDefinition.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTStatement.php" role="php">
+            <file name="ASTFormalParameter.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTThrowStatement.php" role="php">
@@ -207,7 +277,7 @@ and the NDepend metric tool.
             <file name="ASTClosure.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTElseIfStatement.php" role="php">
+            <file name="ASTVariable.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTConditionalExpression.php" role="php">
@@ -234,10 +304,10 @@ and the NDepend metric tool.
             <file name="ASTIssetExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="Interface.php" role="php">
+            <file name="ASTTryStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTInterfaceReference.php" role="php">
+            <file name="Interface.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTDoWhileStatement.php" role="php">
@@ -285,16 +355,19 @@ and the NDepend metric tool.
             <file name="ASTStaticVariableDeclaration.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTTryStatement.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="ASTSwitchLabel.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTCatchStatement.php" role="php">
+            <file name="ASTVariableDeclarator.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ClassOrInterfaceReferenceIterator.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTLiteral.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTCatchStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="Property.php" role="php">
@@ -303,13 +376,13 @@ and the NDepend metric tool.
             <file name="ASTVisitorI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTConstantDeclarator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTLiteral.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="AbstractItem.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Function.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTConstantPostfix.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTBooleanOrExpression.php" role="php">
@@ -321,13 +394,16 @@ and the NDepend metric tool.
             <file name="ASTBooleanAndExpression.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="Function.php" role="php">
+            <file name="ASTConstantDeclarator.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTSelfReference.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTContinueStatement.php" role="php">
+            <file name="ASTDeclareStatement.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTInvocation.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTIdentifier.php" role="php">
@@ -339,13 +415,13 @@ and the NDepend metric tool.
             <file name="ASTMemberPrimaryPrefix.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTVariableDeclarator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTInvocation.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="ASTArrayType.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Parameter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ASTContinueStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="ASTUnsetStatement.php" role="php">
@@ -357,137 +433,20 @@ and the NDepend metric tool.
             <file name="ASTForeachStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="Parameter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ASTConstantPostfix.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="TextUI">
-            <file name="ResultPrinter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Command.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Runner.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Util">
-            <dir name="Coverage">
-              <file name="Factory.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="CloverReport.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-              <file name="Report.php" role="php">
-                <tasks:replace from="@package_version@" to="version" type="package-info"/>
-              </file>
-            </dir>
-            <file name="Log.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Configuration.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Type.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="UuidBuilder.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ImageConvert.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="FileUtil.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="MathUtil.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ConfigurationInstance.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Parser">
-            <file name="TokenException.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="InvalidStateException.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="TokenStack.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Exception.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="FunctionNameParserImpl.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="MissingValueException.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="SymbolTable.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="FunctionNameParser.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="TokenStreamEndException.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="UnexpectedTokenException.php" role="php">
+            <file name="ASTElseIfStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
           <dir name="Builder">
+            <dir name="Context">
+              <file name="GlobalStatic.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="Context.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
             <file name="Default.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Visitor">
-            <file name="AbstractListener.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ListenerI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AbstractVisitor.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Input">
-            <file name="Iterator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ExcludePathFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="CompositeFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="ExtensionFilter.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="FilterI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-          </dir>
-          <dir name="Storage">
-            <file name="MemoryEngine.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="AbstractEngine.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="EngineI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="FileEngine.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
@@ -602,6 +561,91 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
+          <dir name="Visitor">
+            <file name="AbstractListener.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ListenerI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="AbstractVisitor.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Tokenizer">
+            <file name="PHP52Helper.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Internal.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <dir name="Util">
+            <dir name="Configuration">
+              <file name="Factory.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Parser.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Coverage">
+              <file name="Factory.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="CloverReport.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Report.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <dir name="Cache">
+              <dir name="Driver">
+                <dir name="File">
+                  <file name="Directory.php" role="php">
+                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                  </file>
+                </dir>
+                <file name="File.php" role="php">
+                  <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
+                <file name="Memory.php" role="php">
+                  <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
+              </dir>
+              <file name="Factory.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+              <file name="Driver.php" role="php">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+              </file>
+            </dir>
+            <file name="Configuration.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Log.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="Type.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ImageConvert.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="FileUtil.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="MathUtil.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="UuidBuilder.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ConfigurationInstance.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
           <dir name="Log">
             <dir name="Overview">
               <file name="pyramid.svg" role="php">
@@ -663,39 +707,50 @@ and the NDepend metric tool.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="Tokenizer">
-            <file name="PHP52Helper.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="CacheDecorator.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
-            <file name="Internal.php" role="php">
+          <dir name="DbusUI">
+            <file name="ResultPrinter.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <file name="TokenizerI.php" role="php">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="BuilderI.php" role="php">
+          <dir name="Input">
+            <file name="Iterator.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ExcludePathFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="CompositeFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="ExtensionFilter.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+            <file name="FilterI.php" role="php">
+              <tasks:replace from="@package_version@" to="version" type="package-info"/>
+            </file>
+          </dir>
+          <file name="Autoload.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="ProcessListenerI.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
+          <file name="BuilderI.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
           <file name="ConstantsI.php" role="php">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="Token.php" role="php">
-            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-          </file>
-          <file name="Parser.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="VisitorI.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="StorageRegistry.php" role="php">
+          <file name="Parser.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="Token.php" role="php">
+            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+          </file>
+          <file name="TokenizerI.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -1289,7 +1344,6 @@ and the NDepend metric tool.
   Fixed in svn revision #1296.
       </notes>
     </release>
-
     <release>
       <date>2010-06-19</date>
       <time>20:08:44</time>
@@ -1309,7 +1363,6 @@ and the NDepend metric tool.
   Implemented in svn revision #1331.
       </notes>
     </release>
-
     <release>
       <date>2010-07-29</date>
       <time>20:08:44</time>
@@ -1344,6 +1397,21 @@ and the NDepend metric tool.
   subversion revision #1347.
       </notes>
     </release>
-
+    <release>
+      <date>2010-09-12</date>
+      <version>
+        <release>0.9.19</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Fixed #162: Parser does not recognize $ string literal in string.
+  Fixed in subversion revision #1379.
+  </notes>
+    </release>
   </changelog>
 </package>
