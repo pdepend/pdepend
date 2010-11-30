@@ -46,12 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Bugs_AllTests::main');
-}
-
 require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/InvalidResultWhenFunctionReturnsByReferenceBug004Test.php';
 require_once dirname(__FILE__) . '/InstanceOfExpressionReferenceHandlingBug062Test.php';

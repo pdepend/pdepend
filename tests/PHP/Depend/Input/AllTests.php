@@ -47,7 +47,6 @@
  */
 
 require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/CompositeFilterTest.php';
 require_once dirname(__FILE__) . '/ExcludePathFilterTest.php';
@@ -68,16 +67,6 @@ require_once dirname(__FILE__) . '/IteratorTest.php';
  */
 class PHP_Depend_Input_AllTests
 {
-    /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-
     /**
      * Creates the phpunit test suite for this package.
      *

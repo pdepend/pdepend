@@ -46,7 +46,6 @@
  */
 
 require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/ASTAllocationExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTArgumentsTest.php';
@@ -163,16 +162,6 @@ require_once dirname(__FILE__) . '/Filter/AllTests.php';
  */
 class PHP_Depend_Code_AllTests
 {
-    /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-
     /**
      * Creates the phpunit test suite for this package.
      *

@@ -46,12 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Log_AllTests::main');
-}
-
 require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
 require_once dirname(__FILE__) . '/Jdepend/ChartTest.php';
@@ -75,16 +70,6 @@ require_once dirname(__FILE__) . '/Summary/XmlTest.php';
 class PHP_Depend_Log_AllTests
 {
     /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-    
-    /**
      * Creates the phpunit test suite for this package.
      *
      * @return PHPUnit_Framework_TestSuite
@@ -101,8 +86,4 @@ class PHP_Depend_Log_AllTests
         
         return $suite;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Log_AllTests::main') {
-    PHP_Depend_Log_AllTests::main();
 }

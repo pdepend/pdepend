@@ -170,11 +170,16 @@ class PHP_Depend_PharBuilder
             )
         );
 
-        shell_exec(
-            sprintf(
-                'cp %s %s',
-                escapeshellarg($this->getSourceDirectory()) . '/pdepend.php',
-                escapeshellarg($this->tempName)
+        file_put_contents(
+            sprintf('%s/pdepend.php', $this->tempName),
+            trim(
+                str_replace(
+                    '#!/usr/bin/env php',
+                    '',
+                    file_get_contents(
+                        sprintf('%s/pdepend.php', $this->getSourceDirectory())
+                    )
+                )
             )
         );
 

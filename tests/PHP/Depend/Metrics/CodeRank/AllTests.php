@@ -46,12 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_Depend_Metrics_CodeRank_AllTests::main');
-}
-
 require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/MethodStrategyTest.php';
@@ -73,16 +68,6 @@ require_once dirname(__FILE__) . '/StrategyFactoryTest.php';
 class PHP_Depend_Metrics_CodeRank_AllTests
 {
     /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-    
-    /**
      * Creates the phpunit test suite for this package.
      *
      * @return PHPUnit_Framework_TestSuite
@@ -97,8 +82,4 @@ class PHP_Depend_Metrics_CodeRank_AllTests
         
         return $suite;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_Depend_Metrics_CodeRank_AllTests::main') {
-    PHP_Depend_Metrics_CodeRank_AllTests::main();
 }
