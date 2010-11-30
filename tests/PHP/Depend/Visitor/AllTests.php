@@ -45,8 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/DefaultListenerTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorTest.php';
 

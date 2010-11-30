@@ -45,8 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/AnalyzerLoaderTest.php';
 require_once dirname(__FILE__) . '/AnalyzerIteratorTest.php';
 require_once dirname(__FILE__) . '/ClassLevel/AnalyzerTest.php';

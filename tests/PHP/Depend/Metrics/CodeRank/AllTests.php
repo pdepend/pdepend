@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/AnalyzerTest.php';
 require_once dirname(__FILE__) . '/MethodStrategyTest.php';
 require_once dirname(__FILE__) . '/PropertyStrategyTest.php';

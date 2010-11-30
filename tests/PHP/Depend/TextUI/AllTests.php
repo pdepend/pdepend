@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/CommandTest.php';
 require_once dirname(__FILE__) . '/ResultPrinterTest.php';
 require_once dirname(__FILE__) . '/RunnerTest.php';

@@ -45,8 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/AbstractTest.php';
 require_once dirname(__FILE__) . '/AutoloadTest.php';
 require_once dirname(__FILE__) . '/DependTest.php';

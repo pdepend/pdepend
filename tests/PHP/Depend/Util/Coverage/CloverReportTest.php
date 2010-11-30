@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 require_once 'PHP/Depend/Code/File.php';
 require_once 'PHP/Depend/Code/Method.php';
@@ -64,7 +64,7 @@ require_once 'PHP/Depend/Util/Coverage/CloverReport.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Util_Coverage_CloverReportTest extends PHPUnit_Framework_TestCase
+class PHP_Depend_Util_Coverage_CloverReportTest extends PHP_Depend_AbstractTest
 {
     /**
      * testReportReturnsExpected0PercentCoverage

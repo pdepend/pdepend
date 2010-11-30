@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
 require_once dirname(__FILE__) . '/Jdepend/ChartTest.php';
 require_once dirname(__FILE__) . '/Jdepend/XmlTest.php';

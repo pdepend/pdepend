@@ -46,7 +46,7 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 require_once 'PHP/Depend/Util/Coverage/Factory.php';
 
@@ -62,7 +62,7 @@ require_once 'PHP/Depend/Util/Coverage/Factory.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Util_Coverage_FactoryTest extends PHPUnit_Framework_TestCase
+class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
 {
     /**
      * testCreateReturnsCloverReportInstanceForCloverInputFile

@@ -45,8 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
-
 /**
  * Abstract test case implementation for the PHP_Depend package.
  *

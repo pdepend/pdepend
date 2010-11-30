@@ -47,8 +47,6 @@
  * @since      0.10.0
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/FactoryTest.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 

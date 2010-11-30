@@ -46,8 +46,6 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
 require_once dirname(__FILE__) . '/BuilderParserCacheTest.php';
 require_once dirname(__FILE__) . '/DependExcludePathFilterTest.php';
 
