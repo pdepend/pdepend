@@ -12,9 +12,9 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2010-11-25</date>
+  <date>2010-12-16</date>
   <version>
-    <release>0.10.0RC1</release>
+    <release>0.10.0RC2</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -23,6 +23,8 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
+- Fixed #113: PHP fatal error when an unserialized object graph
+  none NodeI instances. Fixed with commit #c0f4384.
 - Implemented #130: Simplify PHP_Depend's ASTCompoundVariable and skip
   nested ASTCompoundExpression node instance. Implemented in svn revision
   number #1344.
@@ -1412,6 +1414,52 @@ and the NDepend metric tool.
 - Fixed #162: Parser does not recognize $ string literal in string.
   Fixed in subversion revision #1379.
   </notes>
+    </release>
+    <release>
+      <date>2010-11-25</date>
+      <version>
+        <release>0.10.0RC1</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>beta</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Implemented #130: Simplify PHP_Depend's ASTCompoundVariable and skip
+  nested ASTCompoundExpression node instance. Implemented in svn revision
+  number #1344.
+- Implemented #131: Add new method isThis() to PHP_Depend's ASTVariable
+  class. Implemented in svn revision #1291.
+- Implemented #132: Housekeeping: Cleanup the PHP_Depend_Input package test
+  code. Done in svn revision #1366.
+- Implemented #139: Implement Post-/Pre- Increment/Decrement. Implemented
+  in svn revision #1317.
+- Implemented #143: Support PHP's alternative control structure syntax.
+  Done in svn revision #1375.
+- Implemented #146: Implement PHP's declare-statement. Done in subversion
+  revision #1375.
+- Implemented #148: Implement cast expressions. Implemented in svn
+  revision #1283.
+- Fixed #163: Alternative syntax end tokens can terminate with closing
+  PHP-tag. Fixed in svn revision #1527.
+- Fixed #164: Faulty implementation of the --ignore path filter fixed.
+  Now this filter only works on the local part of a file or directory
+  name and not on the complete path. Fixed with commit #f75275e.
+- Implemented #170: Rename FunctionNameParserImpl into
+  FunctionNameParserAllVersions. Task scope changed and complete refactoring
+  done. Parser moved into a version specific parser class. Done in subversion
+  revision #.
+- Fixed #176: Calculation of CIS metric is incorrect. Fixed with commit
+  #1193f4a.
+- Implemented #178: Provide configuration option for the cache directory.
+  Implemented with git commit #00ed8ec.
+- Fixed #181: No log generated when parsing Typo3 extension "t3extplorer"
+  (Unexpected token ASCII 39). Indirectly fixed in this release.
+- Fixed #182: Clone is a valid function, method and type name in older
+  php versions. Fixed with git commit #b18bf37.
+      </notes>
     </release>
   </changelog>
 </package>

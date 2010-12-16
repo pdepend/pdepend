@@ -1,6 +1,8 @@
 PHP_Depend 0.10.0
 -----------------
- 
+
+- Fixed #113: PHP fatal error when an unserialized object graph
+  none NodeI instances. Fixed with commit #c0f4384.
 - Implemented #130: Simplify PHP_Depend's ASTCompoundVariable and skip
   nested ASTCompoundExpression node instance. Implemented in svn revision
   number #1344.
