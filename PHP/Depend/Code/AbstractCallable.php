@@ -483,9 +483,10 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function __sleep()
     {
+        $this->___temp___ = serialize($this->nodes);
+
         return array(
             'cache',
-            'nodes',
             'uuid',
             'name',
             'startLine',
@@ -493,7 +494,8 @@ abstract class PHP_Depend_Code_AbstractCallable
             'docComment',
             'returnsReference',
             'returnClassReference',
-            'exceptionClassReferences'
+            'exceptionClassReferences',
+            '___temp___'
         );
     }
 
@@ -508,6 +510,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function __wakeup()
     {
+        $this->nodes  = unserialize($this->___temp___);
         $this->cached = true;
     }
 

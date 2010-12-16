@@ -126,7 +126,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             array(
                 'modifiers',
                 'cache',
-                'nodes',
                 'uuid',
                 'name',
                 'startLine',
@@ -134,7 +133,8 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
                 'docComment',
                 'returnsReference',
                 'returnClassReference',
-                'exceptionClassReferences'
+                'exceptionClassReferences',
+                '___temp___'
             ),
             $method->__sleep()
         );

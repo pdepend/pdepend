@@ -388,7 +388,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
                 'context',
                 'packageName',
                 'cache',
-                'nodes',
                 'uuid',
                 'name',
                 'startLine',
@@ -396,7 +395,8 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
                 'docComment',
                 'returnsReference',
                 'returnClassReference',
-                'exceptionClassReferences'
+                'exceptionClassReferences',
+                '___temp___'
             ),
             $function->__sleep()
         );
