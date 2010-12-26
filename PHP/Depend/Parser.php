@@ -2173,6 +2173,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseVariableOrConstantOrPrimaryPrefix();
                 break;
 
+            case self::T_NULL:
             case self::T_TRUE:
             case self::T_FALSE:
             case self::T_LNUMBER:
@@ -4181,6 +4182,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         switch ($tokenType) {
 
+        case self::T_NULL:
         case self::T_TRUE:
         case self::T_FALSE:
         case self::T_LNUMBER:
