@@ -65,6 +65,118 @@ require_once 'PHP/Depend/Code/ASTLiteral.php';
 class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testLiteralWithBooleanTrueExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testLiteralWithBooleanTrueExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        self::assertEquals('True', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithBooleanFalseExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testLiteralWithBooleanFalseExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        self::assertEquals('False', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithIntegerExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testLiteralWithIntegerExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        self::assertEquals('42', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithSignedIntegerExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testLiteralWithSignedIntegerExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        self::assertEquals('42', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithFloatExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testLiteralWithFloatExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        self::assertEquals('42.23', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithSignedFloatExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testLiteralWithSignedFloatExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        self::assertEquals('42.23', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithNullExpression
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTLiteral
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testLiteralWithNullExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        self::assertEquals('NULL', $literal->getImage());
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
@@ -131,5 +243,18 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTLiteral("'" . __METHOD__ . "'");
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     */
+    private function _getFirstLiteralInFunction()
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            self::getCallingTestMethod(),
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
     }
 }
