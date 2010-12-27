@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTAssignmentExpression.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTAssignmentExpression} class.
  *
@@ -64,6 +62,81 @@ require_once 'PHP/Depend/Code/ASTAssignmentExpression.php';
  */
 class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
+    /**
+     * testAssignmentExpressionFromMethodInvocation
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTAssignmentExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAssignmentExpressionFromMethodInvocation()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testAssignmentExpressionFromPropertyAccess
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTAssignmentExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAssignmentExpressionFromPropertyAccess()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testAssignmentExpressionFromFunctionReturnValue
+     *
+     * @return void
+     * @covers PHP_Depend_Code_ASTNode
+     * @covers PHP_Depend_Code_ASTAssignmentExpression
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testAssignmentExpressionFromFunctionReturnValue()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ
+            )
+        );
+    }
+
     /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
@@ -120,9 +193,13 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAssignmentExpressionGraphForIntegerLiteral()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $expr->getChild(0));
-        $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $expr->getChild(1));
+        $this->assertGraphEquals(
+            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
     }
 
     /**
@@ -138,9 +215,13 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      */
     public function testAssignmentExpressionGraphForFloatLiteral()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $expr->getChild(0));
-        $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $expr->getChild(1));
+        $this->assertGraphEquals(
+            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
     }
 
     /**
