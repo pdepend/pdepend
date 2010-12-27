@@ -3472,10 +3472,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         // Strip optional comments
         $this->consumeComments();
 
-        // Get next token type
-        $tokenType = $this->tokenizer->peek();
-
-        switch ($tokenType) {
+        switch ($this->tokenizer->peek()) {
 
         case self::T_PARENTHESIS_OPEN:
             $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
