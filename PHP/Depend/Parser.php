@@ -3475,18 +3475,40 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         switch ($this->tokenizer->peek()) {
 
         case self::T_PARENTHESIS_OPEN:
-            $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
-            $postfix->addChild($node);
-            $postfix->addChild($this->_parseArguments());
-
-            return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+            $postfix = $this->_parseMethodPostfix($node);
+            break;
 
         default:
             $postfix = $this->_builder->buildASTPropertyPostfix($node->getImage());
             $postfix->addChild($node);
-
-            return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+            break;
         }
+        return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+    }
+
+    /**
+     * Parses a method postfix node instance.
+     *
+     * @param PHP_Depend_Code_ASTNode $node Node that represents the image of
+     *        the method postfix node.
+     *
+     * @return PHP_Depend_Code_ASTMethodPostfix
+     * @since 0.11.0
+     */
+    private function _parseMethodPostfix(PHP_Depend_Code_ASTNode $node)
+    {
+        $args = $this->_parseArguments();
+
+        $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
+        $postfix->addChild($node);
+        $postfix->addChild($args);
+
+        $postfix->setEndLine($args->getEndLine());
+        $postfix->setEndColumn($args->getEndColumn());
+        $postfix->setStartLine($node->getStartLine());
+        $postfix->setStartColumn($node->getStartColumn());
+
+        return $postfix;
     }
 
     /**

@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTMethodPostfix.php';
-require_once 'PHP/Depend/ConstantsI.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTMethodPostfix} class.
  *
@@ -65,6 +62,142 @@ require_once 'PHP/Depend/ConstantsI.php';
  */
 class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
+    /**
+     * testObjectMethodPostfixHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testObjectMethodPostfixHasExpectedStartLine()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(6, $postfix->getStartLine());
+    }
+
+    /**
+     * testObjectMethodPostfixHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testObjectMethodPostfixHasExpectedStartColumn()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(13, $postfix->getStartColumn());
+    }
+
+    /**
+     * testObjectMethodPostfixHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testObjectMethodPostfixHasExpectedEndLine()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(7, $postfix->getEndLine());
+    }
+
+    /**
+     * testObjectMethodPostfixHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testObjectMethodPostfixHasExpectedEndColumn()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(17, $postfix->getEndColumn());
+    }
+
+    /**
+     * testClassMethodPostfixHasExpectedStartLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testClassMethodPostfixHasExpectedStartLine()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(6, $postfix->getStartLine());
+    }
+
+    /**
+     * testClassMethodPostfixHasExpectedStartColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testClassMethodPostfixHasExpectedStartColumn()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(13, $postfix->getStartColumn());
+    }
+
+    /**
+     * testClassMethodPostfixHasExpectedEndLine
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testClassMethodPostfixHasExpectedEndLine()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(7, $postfix->getEndLine());
+    }
+
+    /**
+     * testClassMethodPostfixHasExpectedEndColumn
+     *
+     * @return void
+     * @covers PHP_Depend_Parser
+     * @covers PHP_Depend_Builder_Default
+     * @covers PHP_Depend_Code_ASTMethodPostfix
+     * @group pdepend
+     * @group pdepend::ast
+     * @group unittest
+     */
+    public function testClassMethodPostfixHasExpectedEndColumn()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        self::assertEquals(17, $postfix->getEndColumn());
+    }
+    
     /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
@@ -129,7 +262,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -153,7 +286,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -178,7 +311,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -203,7 +336,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -227,7 +360,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -251,7 +384,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -276,7 +409,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -301,7 +434,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -328,7 +461,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -356,7 +489,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -380,7 +513,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -404,7 +537,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -428,7 +561,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -452,7 +585,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -482,7 +615,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -512,7 +645,20 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ,
         );
 
-        $this->assertGraphEquals($prefix, $expected);
+        self::assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @return PHP_Depend_Code_ASTMethodPostfix
+     */
+    private function _getFirstMethodPostfixInFunction()
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            self::getCallingTestMethod(),
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ
+        );
     }
 
     /**
