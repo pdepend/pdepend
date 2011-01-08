@@ -1,7 +1,7 @@
 @echo off
 REM This file is part of PHP_Depend.
 REM
-REM Copyright (c) 2008-2010, Manuel Pichler <mapi@pdepend.org>.
+REM Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
 REM All rights reserved.
 REM
 REM Redistribution and use in source and binary forms, with or without
