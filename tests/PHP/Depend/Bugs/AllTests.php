@@ -85,6 +85,7 @@ require_once dirname(__FILE__) . '/ClassAndInterfaceNamesBug169Test.php';
 require_once dirname(__FILE__) . '/ClassInterfaceSizeShouldNotSumComplexityBug176Test.php';
 require_once dirname(__FILE__) . '/UnexpectedTokenAsciiChar39Bug181Test.php';
 require_once dirname(__FILE__) . '/CloneIsValidNameInOlderPhpVersionsBug182Test.php';
+require_once dirname(__FILE__) . '/ExcludePathFilterShouldFilterByAbsolutePathBug191Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -148,6 +149,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test');
         $suite->addTestSuite('PHP_Depend_Bugs_UnexpectedTokenAsciiChar39Bug181Test');
         $suite->addTestSuite('PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test');
+        $suite->addTestSuite('PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test');
 
         return $suite;
     }

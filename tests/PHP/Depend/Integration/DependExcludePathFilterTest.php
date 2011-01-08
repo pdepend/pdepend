@@ -67,23 +67,74 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
     extends PHP_Depend_AbstractTest
 {
     /**
-     * testPhpDependOnlyFiltersLocalPath
+     * testPDependFiltersByRelativePath
      *
      * @return void
      * @group pdepend
      * @group pdepend::integration
      * @group integrationtest
      */
-    public function testPhpDependOnlyFiltersLocalPath()
+    public function testPDependFiltersByRelativePath()
     {
         $this->changeWorkingDirectory();
 
+        $directory = self::createCodeResourceUriForTest();
+        $pattern   = DIRECTORY_SEPARATOR . 'Integration';
+
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
+        $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new PHP_Depend_Input_ExcludePathFilter(array('Integration'))
+            new PHP_Depend_Input_ExcludePathFilter(array($pattern))
         );
 
         self::assertEquals(1, count($pdepend->analyze()));
+    }
+
+    /**
+     * testPDependFiltersByAbsolutePath
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::integration
+     * @group integrationtest
+     */
+    public function testPDependFiltersByAbsolutePath()
+    {
+        $this->changeWorkingDirectory();
+
+        $directory = self::createCodeResourceUriForTest();
+        $pattern   = $directory . DIRECTORY_SEPARATOR . 'Integration';
+
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addDirectory($directory);
+        $pdepend->addFileFilter(
+            new PHP_Depend_Input_ExcludePathFilter(array($pattern))
+        );
+
+        self::assertEquals(1, count($pdepend->analyze()));
+    }
+
+    /**
+     * testPDependNotFiltersByOverlappingPathMatch
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::integration
+     * @group integrationtest
+     */
+    public function  testPDependNotFiltersByOverlappingPathMatch()
+    {
+        $this->changeWorkingDirectory();
+
+        $directory = self::createCodeResourceUriForTest();
+        $pattern   = __FUNCTION__ . DIRECTORY_SEPARATOR . 'Integration';
+
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addDirectory($directory);
+        $pdepend->addFileFilter(
+            new PHP_Depend_Input_ExcludePathFilter(array($pattern))
+        );
+
+        self::assertEquals(2, count($pdepend->analyze()));
     }
 }

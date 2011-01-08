@@ -80,7 +80,7 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
         $composite = new PHP_Depend_Input_CompositeFilter();
         $composite->append($filter0);
 
-        $composite->accept(dirname(__FILE__));
+        $composite->accept(dirname(__FILE__), dirname(__FILE__));
 
         $this->assertTrue($filter0->invoked);
     }
@@ -102,7 +102,7 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
         $composite->append($filter0);
         $composite->append($filter1);
 
-        $composite->accept(dirname(__FILE__));
+        $composite->accept(dirname(__FILE__), dirname(__FILE__));
 
         $this->assertTrue($filter1->invoked);
     }
@@ -124,7 +124,7 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
         $composite->append($filter0);
         $composite->append($filter1);
 
-        $composite->accept(dirname(__FILE__));
+        $composite->accept(dirname(__FILE__), dirname(__FILE__));
 
         $this->assertFalse($filter1->invoked);
     }

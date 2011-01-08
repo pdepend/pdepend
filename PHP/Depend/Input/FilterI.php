@@ -61,11 +61,12 @@
 interface PHP_Depend_Input_FilterI
 {
     /**
-     * Returns <b>true</b> if this filter accepts the given path.
+     * Returns <b>true</b> if this filter accepts the given paths.
      *
-     * @param string $localPath The local/relative path to the specified root.
+     * @param string $relative The relative path to the specified root.
+     * @param string $absolute The absolute path to a source file.
      *
      * @return boolean
      */
-    function accept($localPath);
+    function accept($relative, $absolute);
 }

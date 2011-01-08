@@ -65,6 +65,98 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testAbsoluteUnixPathAsFilterPatternMatches
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testAbsoluteUnixPathAsFilterPatternMatches()
+    {
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array('/foo/bar'));
+        self::assertFalse($filter->accept('/baz', '/foo/bar/baz'));
+    }
+
+    /**
+     * testAbsoluteUnixPathAsFilterPatternNotMatches
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testAbsoluteUnixPathAsFilterPatternNotMatches()
+    {
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array('/foo/bar'));
+        self::assertTrue($filter->accept('/foo/baz/bar', '/foo/baz/bar'));
+    }
+
+    /**
+     * testUnixPathAsFilterPatternNotMatchesPartial
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testUnixPathAsFilterPatternNotMatchesPartial()
+    {
+        $pattern  = 'PHP_Depend-git/PHP';
+        $absolute = '/home/manuel/workspace/PHP_Depend-git/PHP/Depend.php';
+        $relative = '/PHP/Depend.php';
+
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array($pattern));
+        self::assertTrue($filter->accept($relative, $absolute));
+    }
+
+    /**
+     * testAbsoluteWindowsPathAsFilterPatternMatches
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testAbsoluteWindowsPathAsFilterPatternMatches()
+    {
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array('c:\workspace\bar'));
+        self::assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));
+    }
+
+    /**
+     * testAbsoluteWindowsPathAsFilterPatternNotMatches
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testAbsoluteWindowsPathAsFilterPatternNotMatches()
+    {
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array('c:\workspace\\'));
+        self::assertTrue($filter->accept('c:\workspac\bar', 'c:\workspac\bar'));
+    }
+
+    /**
+     * testWindowsPathAsFilterPatternNotMatchesPartial
+     *
+     * @return void
+     * @group pdepend
+     * @group pdepend::input
+     * @group unittest
+     */
+    public function testWindowsPathAsFilterPatternNotMatchesPartial()
+    {
+        $pattern  = 'PHP_Depend-git\PHP';
+        $absolute = 'c:\workspace\PHP_Depend-git\PHP\Depend.php';
+        $relative = '\PHP\Depend.php';
+
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array($pattern));
+        self::assertTrue($filter->accept($relative, $absolute));
+    }
+
+    /**
      * testExcludePathFilterRejectsFile
      *
      * @return void
@@ -164,7 +256,7 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
 
         $actual = array();
         foreach ($files as $file) {
-            if ($filter->accept($file) 
+            if ($filter->accept($file, $file)
                 && $file->isFile() 
                 && false === stripos($file->getPathname(), '.svn')
             ) {

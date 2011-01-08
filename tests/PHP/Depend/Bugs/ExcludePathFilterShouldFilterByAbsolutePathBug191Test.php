@@ -36,9 +36,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Input
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,58 +46,50 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Input/FilterI.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Dummy filter.
+ * Test case for bug #191.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Input
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/191
+ *
+ * @covers stdClass
  */
-class PHP_Depend_Input_DummyFilter implements PHP_Depend_Input_FilterI
+class PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test
+    extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * The return value for this filter.
+     * testAbsoluteUnixPathAsFilterPattern
      *
-     * @var boolean $returnValue
+     * @return void
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
-    public $returnValue = false;
-
-    /**
-     * Was this filter invoked?
-     *
-     * @var boolean $invoked
-     */
-    public $invoked = false;
-
-    /**
-     * Constructs a new dummy filter
-     *
-     * @param boolean $returnValue The pre defined return value for this filter.
-     */
-    public function __construct($returnValue)
+    public function testAbsoluteUnixPathAsFilterPattern()
     {
-        $this->returnValue = $returnValue;
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array('/foo/bar'));
+        self::assertFalse($filter->accept('/baz', '/foo/bar/baz'));
     }
 
     /**
-     * Returns <b>true</b> if this filter accepts the given paths.
+     * testAbsoluteWindowsPathAsFilterPattern
      *
-     * @param string $relative The relative path to the specified root.
-     * @param string $absolute The absolute path to a source file.
-     *
-     * @return boolean
+     * @return void
+     * @group pdepend
+     * @group pdepend::bugs
+     * @group regressiontest
      */
-    public function accept($relative, $absolute)
+    public function testAbsoluteWindowsPathAsFilterPattern()
     {
-        $this->invoked = true;
-
-        return $this->returnValue;
+        $filter = new PHP_Depend_Input_ExcludePathFilter(array('c:\workspace\bar'));
+        self::assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));
     }
 }

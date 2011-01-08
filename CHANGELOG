@@ -1,9 +1,3 @@
-PHP_Depend 0.11.0
------------------
-
-- Fixed #189: Invalid Start/End Line/Column for object method
-  invocation. Fixed in commit #c6cc9dd.
-
 PHP_Depend 0.10.0
 -----------------
 
@@ -41,6 +35,8 @@ PHP_Depend 0.10.0
   (Unexpected token ASCII 39). Indirectly fixed in this release.
 - Fixed #182: Clone is a valid function, method and type name in older 
   php versions. Fixed with git commit #b18bf37.
+- Fixed #189: Invalid Start/End Line/Column for object method
+  invocation. Fixed in commit #c6cc9dd.
 
 PHP_depend 0.9.20
 -----------------

@@ -78,10 +78,12 @@ class PHP_Depend_Bugs_InputIteratorShouldOnlyFilterOnLocalPathBug164Test
         $filter = $this->getMock('PHP_Depend_Input_FilterI');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo('/baz'));
+            ->with(self::equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
 
         $iterator = new PHP_Depend_Input_Iterator(
-            new ArrayIterator(array('/foo/bar/baz')), $filter, '/foo/bar'
+            new ArrayIterator(array(new SplFileInfo(__FILE__))),
+            $filter,
+            dirname(__FILE__)
         );
         $iterator->accept();
     }

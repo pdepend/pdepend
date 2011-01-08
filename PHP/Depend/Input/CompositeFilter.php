@@ -84,14 +84,15 @@ class PHP_Depend_Input_CompositeFilter implements PHP_Depend_Input_FilterI
      * Delegates the given <b>$localPath</b> object to all aggregated filters.
      * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param string $localPath The local/relative path to the specified root.
+     * @param string $relative The relative path to the specified root.
+     * @param string $absolute The absolute path to a source file.
      *
      * @return boolean
      */
-    public function accept($localPath)
+    public function accept($relative, $absolute)
     {
         foreach ($this->filters as $filter) {
-            if (false === $filter->accept($localPath)) {
+            if (false === $filter->accept($relative, $absolute)) {
                 return false;
             }
         }

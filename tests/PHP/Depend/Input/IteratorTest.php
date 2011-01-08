@@ -106,14 +106,16 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
     {
-        $files = new ArrayIterator(array('/foo/bar/baz'));
-
         $filter = $this->getMock('PHP_Depend_Input_FilterI');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo('/bar/baz'));
+            ->with(self::equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
         
-        $iterator = new PHP_Depend_Input_Iterator($files, $filter, '/foo');
+        $iterator = new PHP_Depend_Input_Iterator(
+            new ArrayIterator(array(new SplFileInfo(__FILE__))),
+            $filter,
+            dirname(__FILE__)
+        );
         $iterator->accept();
     }
 
@@ -127,12 +129,12 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent()
     {
-        $files = new ArrayIterator(array('/foo/bar/baz'));
+        $files = new ArrayIterator(array(new SplFileInfo(__FILE__)));
 
         $filter = $this->getMock('PHP_Depend_Input_FilterI');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo('/foo/bar/baz'));
+            ->with(self::equalTo(__FILE__), self::equalTo(__FILE__));
 
         $iterator = new PHP_Depend_Input_Iterator($files, $filter);
         $iterator->accept();
@@ -148,12 +150,12 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches()
     {
-        $files = new ArrayIterator(array('/foo/bar/baz'));
+        $files = new ArrayIterator(array(new SplFileInfo(__FILE__)));
 
         $filter = $this->getMock('PHP_Depend_Input_FilterI');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo('/foo/bar/baz'));
+            ->with(self::equalTo(__FILE__), self::equalTo(__FILE__));
 
         $iterator = new PHP_Depend_Input_Iterator($files, $filter, 'c:\foo');
         $iterator->accept();

@@ -61,11 +61,20 @@
 class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
 {
     /**
-     * Regular expression that should not match against the file path.
+     * Regular expression that should not match against the relative file paths.
      *
-     * @var string $regexp
+     * @var string
+     * @since 0.10.0
      */
-    protected $regexp = '';
+    protected $relative = '';
+
+    /**
+     * Regular expression that should not match against the absolute file paths.
+     *
+     * @var string
+     * @since 0.10.0
+     */
+    protected $absolute = '';
 
     /**
      * Constructs a new exclude path filter instance and accepts an array of
@@ -75,21 +84,50 @@ class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
      */
     public function __construct(array $patterns)
     {
-        $regexp = join('|', array_map('preg_quote', $patterns));
-        $regexp = str_replace(array('\*'), array('.*'), $regexp);
+        $quoted = array_map('preg_quote', $patterns);
 
-        $this->regexp = "({$regexp})i";
+        $this->relative = '(' . str_replace('\*', '.*', join('|', $quoted)) . ')i';
+        $this->absolute = '(^' . str_replace('\*', '.*', join('|^', $quoted)) . ')i';
     }
 
     /**
      * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param string $localPath The local/relative path to the specified root.
+     * @param string $relative The relative path to the specified root.
+     * @param string $absolute The absolute path to a source file.
      *
      * @return boolean
      */
-    public function accept($localPath)
+    public function accept($relative, $absolute)
     {
-        return (preg_match($this->regexp, $localPath) === 0);
+        return ($this->notRelative($relative) && $this->notAbsolute($absolute));
+    }
+
+    /**
+     * This method checks if the given <b>$path</b> does not match against the
+     * exclude patterns as an absolute path.
+     *
+     * @param string $path The absolute path to a source file.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    protected function notAbsolute($path)
+    {
+        return (preg_match($this->absolute, $path) === 0);
+    }
+
+    /**
+     * This method checks if the given <b>$path</b> does not match against the
+     * exclude patterns as an relative path.
+     *
+     * @param string $path The relative path to a source file.
+     *
+     * @return boolean
+     * @since 0.10.0
+     */
+    protected function notRelative($path)
+    {
+        return (preg_match($this->relative, $path) === 0);
     }
 }
