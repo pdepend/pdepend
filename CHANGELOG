@@ -37,6 +37,8 @@ PHP_Depend 0.10.0
   php versions. Fixed with git commit #b18bf37.
 - Fixed #189: Invalid Start/End Line/Column for object method
   invocation. Fixed in commit #c6cc9dd.
+- Fixed #191: New implementation of --ignore only accepts relative paths.
+  Fixed in commit #38e6b52.
 
 PHP_depend 0.9.20
 -----------------

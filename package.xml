@@ -12,9 +12,9 @@ and the NDepend metric tool.
     <email>mapi@pdepend.org</email>
     <active>yes</active>
   </lead>
-  <date>2010-12-16</date>
+  <date>2011-01-08</date>
   <version>
-    <release>0.10.0RC2</release>
+    <release>0.10.0RC3</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -57,6 +57,10 @@ and the NDepend metric tool.
   (Unexpected token ASCII 39). Indirectly fixed in this release.
 - Fixed #182: Clone is a valid function, method and type name in older
   php versions. Fixed with git commit #b18bf37.
+- Fixed #189: Invalid Start/End Line/Column for object method
+  invocation. Fixed in commit #c6cc9dd.
+- Fixed #191: New implementation of --ignore only accepts relative paths.
+  Fixed in commit #38e6b52.
   </notes>
   <contents>
     <dir name="/">
