@@ -121,7 +121,8 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     {
         $result = array();
 
-        $paths = explode(PATH_SEPARATOR, get_include_path());
+        preg_match_all('(:?(([a-z]+://)?[^:]+):?)i', get_include_path(), $matches);
+        $paths = $matches[1];
 
         foreach ($paths as $path) {
             $dir = $path.'/PHP/Depend/Metrics/';
