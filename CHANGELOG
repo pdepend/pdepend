@@ -39,6 +39,8 @@ PHP_Depend 0.10.0
   invocation. Fixed in commit #c6cc9dd.
 - Fixed #191: New implementation of --ignore only accepts relative paths.
   Fixed in commit #38e6b52.
+- Fixed #9623949: Also find analyzers in phar archives in the current
+  include_path. Fixed in commit #f53dca9.
 
 PHP_depend 0.9.20
 -----------------
