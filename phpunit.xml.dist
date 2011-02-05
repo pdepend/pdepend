@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <phpunit>
+    <testsuites>
+        <testsuite name="PHP_Depend_AllTests">
+            <file>tests/PHP/Depend/AllTests.php</file>
+        </testsuite>
+    </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">PHP</directory>
