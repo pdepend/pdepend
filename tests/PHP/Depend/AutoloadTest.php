@@ -117,8 +117,10 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
         $autoloader->register();
 
         set_include_path(self::createCodeResourceUriForTest());
+        $exists = class_exists($className, true);
+        set_include_path($this->includePath);
 
-        self::assertTrue(class_exists($className, true));
+        self::assertTrue($exists);
     }
 
     /**
@@ -137,7 +139,9 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
         $autoloader->register();
 
         set_include_path(self::createCodeResourceUriForTest());
+        $exists = class_exists($className, true);
+        set_include_path($this->includePath);
 
-        self::assertFalse(class_exists($className, true));
+        self::assertFalse($exists);
     }
 }
