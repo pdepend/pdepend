@@ -1,3 +1,9 @@
+PHP_Depend 0.10.2
+-----------------
+
+- Fixed #8927377: Invalid Start/End Line/Column for object property access.
+  Fixed with commit #fc57264.
+
 PHP_Depend 0.10.1
 -----------------
 
