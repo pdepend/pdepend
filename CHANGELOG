@@ -1,3 +1,9 @@
+PHP_Depend 0.10.1
+-----------------
+
+- Fixed #9634613: Notice: Undefined property $___temp___. Fixed with
+  commit #5fb6900.
+
 PHP_Depend 0.10.0
 -----------------
 
