@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PHP Depend" default="build" basedir=".">
+
+    <!--
+        Include local project properties.
+    -->
+    <property file="build.properties" />
+
+    <!--
+        Import common build targets
+    -->
+    <import file="${basedir}/setup/build-commons.xml" />
+
+    <!--
+        Main build
+    -->
+    <target name="build" depends="test" description="Primary build: PHP Depend" />
+
+    <!--
+        We use the pear archive after hook to validate that a clean PHP_Depend
+        PEAR installation works as expected.
+    -->
+    <target name="~pack-pear-archive-after"
+            depends="-common-pear-prepare,
+                     -pack-pear-archive-after-install,
+                     -pack-pear-archive-after-execute" />
+
+    <!--
+        Installs the newly created PEAR archive of PHP_Depend.
+    -->
+    <target name="-pack-pear-archive-after-install">
+        <antcall target="common-pear-channel-discover">
+            <param name="pear-channel-uri" value="${pear.channel.uri}" />
+        </antcall>
+
+        <antcall target="common-pear-install-local">
+            <param name="pear-package-pattern" value="PHP_Depend" />
+        </antcall>
+    </target>
+
+    <!--
+        Executes the newly created and installed PEAR version of PHP_Depend.
+    -->
+    <target name="-pack-pear-archive-after-execute">
+
+        <echo message="Executing:" level="verbose" />
+        <echo message="  pdepend --summary-xml... ${common-pear-root-dir}/PHP/Depend" level="verbose" />
+
+        <exec executable="php" failonerror="true">
+            <arg value="-d" />
+            <arg value="include_path='${common-pear-root-dir}'" />
+            <arg value="${common-pear-bin-dir}/pdepend" />
+            <arg value="--summary-xml=${tmpdir}/summary.xml" />
+            <arg value="--phpunit-xml=${tmpdir}/phpunit.xml" />
+            <arg value="--jdepend-xml=${tmpdir}/jdepend.xml" />
+            <arg value="--jdepend-chart=${tmpdir}/jdepend.svg" />
+            <arg value="--overview-pyramid=${tmpdir}/pyramid.svg" />
+            <arg value="--coderank-mode=inheritance,property,method" />
+            <arg value="${common-pear-root-dir}/PHP/Depend" />
+        </exec>
+    </target>
+
+</project>

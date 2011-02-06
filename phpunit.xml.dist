@@ -2,12 +2,12 @@
 <phpunit>
     <testsuites>
         <testsuite name="PHP_Depend_AllTests">
-            <file>tests/PHP/Depend/AllTests.php</file>
+            <file>src/test/php/PHP/Depend/AllTests.php</file>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">PHP</directory>
+            <directory suffix=".php">src/main/php/PHP</directory>
         </whitelist>
     </filter>
 </phpunit>
