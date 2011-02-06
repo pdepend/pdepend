@@ -61,6 +61,13 @@ require_once 'PHP/Depend/Code/ASTPropertyPostfix.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTPropertyPostfix
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,9 +77,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @covers PHP_Depend_Code_ASTNode
      * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -91,9 +95,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * @return void
      * @covers PHP_Depend_Code_ASTNode
      * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -111,12 +112,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForSimpleIdentifierAccess()
     {
@@ -134,12 +129,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForVariableAccess()
     {
@@ -157,12 +146,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForVariableVariableAccess()
     {
@@ -181,12 +164,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForCompoundVariableAccess()
     {
@@ -207,12 +184,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForCompoundExpressionAccess()
     {
@@ -231,12 +202,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForStaticVariableAccess()
     {
@@ -254,12 +219,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForStaticAccessOnVariable()
     {
@@ -275,12 +234,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForSelfVariableAccess()
     {
@@ -298,12 +251,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixStructureForParentVariableAccess()
     {
@@ -325,12 +272,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixGraphForObjectPropertyArrayIndexExpression()
     {
@@ -354,12 +295,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPropertyPostfixGraphForStaticPropertyArrayIndexExpression()
     {
@@ -379,12 +314,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_InvalidStateException
      */
     public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
@@ -396,12 +325,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_InvalidStateException
      */
     public function testPropertyPostfixParentVariableInFunctionThrowsExpectedException()
@@ -413,17 +336,55 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_InvalidStateException
      */
     public function testPropertyPostfixParentVariableInClassWithoutParentThrowsExpectedException()
     {
         self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testPropertyPostfixHasExpectedStartLine
+     *
+     * @return void
+     */
+    public function testPropertyPostfixHasExpectedStartLine()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction(__METHOD__);
+        self::assertEquals(4, $postfix->getStartLine());
+    }
+
+    /**
+     * testPropertyPostfixHasExpectedStartColumn
+     *
+     * @return void
+     */
+    public function testPropertyPostfixHasExpectedStartColumn()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction(__METHOD__);
+        self::assertEquals(21, $postfix->getStartColumn());
+    }
+
+    /**
+     * testPropertyPostfixHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testPropertyPostfixHasExpectedEndLine()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction(__METHOD__);
+        self::assertEquals(4, $postfix->getEndLine());
+    }
+
+    /**
+     * testPropertyPostfixHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testPropertyPostfixHasExpectedEndColumn()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction(__METHOD__);
+        self::assertEquals(23, $postfix->getEndColumn());
     }
 
     /**
@@ -434,6 +395,20 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTPropertyPostfix(__CLASS__);
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_ASTPropertyPostfix
+     */
+    private function _getFirstPropertyPostfixInFunction($testCase)
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $testCase, PHP_Depend_Code_ASTPropertyPostfix::CLAZZ
+        );
     }
 
     /**

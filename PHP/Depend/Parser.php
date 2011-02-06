@@ -3479,11 +3479,32 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
 
         default:
-            $postfix = $this->_builder->buildASTPropertyPostfix($node->getImage());
-            $postfix->addChild($node);
+            $postfix = $this->_parsePropertyPostfix($node);
             break;
         }
         return $this->_parseOptionalMemberPrimaryPrefix($postfix);
+    }
+
+    /**
+     * Parses/Creates a property postfix node instance.
+     * 
+     * @param PHP_Depend_Code_ASTNode $node Node that represents the image of
+     *        the property postfix node.
+     *
+     * @return PHP_Depend_Code_ASTPropertyPostfix
+     * @since 0.10.2
+     */
+    private function _parsePropertyPostfix(PHP_Depend_Code_ASTNode $node)
+    {
+        $postfix = $this->_builder->buildASTPropertyPostfix($node->getImage());
+        $postfix->addChild($node);
+
+        $postfix->setEndLine($node->getEndLine());
+        $postfix->setEndColumn($node->getEndColumn());
+        $postfix->setStartLine($node->getStartLine());
+        $postfix->setStartColumn($node->getStartColumn());
+
+        return $postfix;
     }
 
     /**
