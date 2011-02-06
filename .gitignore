@@ -1,8 +1,3 @@
-build
-build/*
-scripts/*.phar
-catalog.xml
-nbproject
 .idea
 .project
 build_number_*.build
