@@ -38,45 +38,44 @@
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
+ * @link       https://www.pivotaltracker.com/story/show/9634613
  */
 
+require_once dirname(__FILE__) . '/AbstractTest.php';
+
 /**
- * This class represents a declared closure in the analyzed source code.
+ * Test case related to bug 9634613.
  *
  * @category   PHP
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
+ * @link       https://www.pivotaltracker.com/story/show/9634613
+ *
+ * @ticket 9634613
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
-class PHP_Depend_Code_Closure extends PHP_Depend_Code_AbstractCallable
+class PHP_Depend_Bugs_ClosureBug9634613Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * Constructs a new closure instance.
-     */
-    public function  __construct()
-    {
-        parent::__construct('#closure');
-    }
-
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
-     *
+     * testClosureWakeupTriggersNotice
+     * 
      * @return void
      */
-    public function accept(PHP_Depend_VisitorI $visitor)
+    public function testClosureWakeupTriggersNotice()
     {
-        // DEPRECATED
+        $closure = new PHP_Depend_Code_Closure(__FUNCTION__);
+        unserialize(serialize($closure));
     }
 }
