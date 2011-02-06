@@ -158,8 +158,12 @@ class PHP_Depend_TextUI_Command
                 if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
                     echo 'Option ', $option, ' requires a value.', PHP_EOL;
                     return self::INPUT_ERROR;
-                } else if ($analyzerOptions[$option]['value'] === 'file' && file_exists($value) === false) {
-                    echo 'Specifie file ', $option, '=', $value, ' not exists.', PHP_EOL;
+                } else if ($analyzerOptions[$option]['value'] === 'file'
+                    && file_exists($value) === false
+                ) {
+                    echo 'Specified file ', $option, '=', $value,
+                         ' not exists.', PHP_EOL;
+
                     return self::INPUT_ERROR;
                 } else if ($analyzerOptions[$option]['value'] === '*') {
                     $value = array_map('trim', explode(',', $value));

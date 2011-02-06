@@ -1946,7 +1946,8 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         if (!isset($this->_interfaces[$interfaceName][$packageName])) {
             $this->_interfaces[$interfaceName][$packageName] = array();
         }
-        $this->_interfaces[$interfaceName][$packageName][$interface->getUUID()] = $interface;
+        $this->_interfaces[$interfaceName][$packageName][$interface->getUUID()]
+            = $interface;
 
         $package = $this->buildPackage($packageName);
         $package->addType($interface);
