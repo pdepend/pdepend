@@ -99,7 +99,7 @@ class PHP_Depend_CacheVersionUpdater
      */
     public function __construct()
     {
-        $this->_rootDirectory = realpath(dirname(__FILE__) . '/../PHP/Depend');
+        $this->_rootDirectory = realpath(dirname(__FILE__) . '/../src/main/php/PHP/Depend');
     }
 
     /**
