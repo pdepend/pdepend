@@ -360,7 +360,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         while ($parent !== null) {
             // Count all methods
             foreach ($parent->getMethods() as $m) {
-                if (!$m->isPrivate() && !isset($methods[$m->getName()])) {
+                if (!$m->isPrivate() && !isset($ccn[$m->getName()])) {
                     $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
                 }
             }
