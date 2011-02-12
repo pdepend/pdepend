@@ -48,17 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Property.php';
-require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
-require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
-require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
-
 /**
  * Test case for the class level analyzer.
  *
