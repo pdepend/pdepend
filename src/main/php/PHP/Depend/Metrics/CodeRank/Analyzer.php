@@ -228,7 +228,6 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     {
         $d = self::DAMPING_FACTOR;
 
-        $nodes = $this->_nodes;
         $ranks = array();
 
         foreach (array_keys($this->_nodes) as $name) {

@@ -452,9 +452,6 @@ class PHP_Depend_TextUI_Command
             }
         }
 
-        // Calculate the max message length
-        $messageLength = 77 - $maxLength;
-
         ksort($options);
 
         $last = null;

@@ -769,7 +769,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     private function _removeReferencesToNodes()
     {
-        foreach ($this->nodes as $i => $node) {
+        foreach ($this->nodes as $node) {
             $node->free();
         }
         $this->nodes = array();
