@@ -47,6 +47,7 @@
  */
 
 require_once dirname(__FILE__) . '/InvalidResultWhenFunctionReturnsByReferenceBug004Test.php';
+require_once dirname(__FILE__) . '/CouplingAnalyzerBug014Test.php';
 require_once dirname(__FILE__) . '/InstanceOfExpressionReferenceHandlingBug062Test.php';
 require_once dirname(__FILE__) . '/ClassDeclarationWithoutBodyBug065Test.php';
 require_once dirname(__FILE__) . '/IncorrectPropertyEndlineBug068Test.php';
@@ -114,6 +115,7 @@ class PHP_Depend_Bugs_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Bugs - AllTests');
 
         $suite->addTestSuite('PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_CouplingAnalyzerBug014Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test');
         $suite->addTestSuite('PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test');

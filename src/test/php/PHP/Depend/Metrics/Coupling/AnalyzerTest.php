@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Token.php';
-require_once 'PHP/Depend/ConstantsI.php';
-require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
-
 /**
  * Test case for the coupling analyzer.
  *
@@ -63,37 +59,47 @@ require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_Coupling_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::coupling
+ * @group unittest
  */
 class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
+    /**
+     * testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys
+     *
+     * @return void
+     */
+    public function testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys()
+    {
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+
+        $metrics = array_keys($analyzer->getProjectMetrics());
+        sort($metrics);
+
+        self::assertEquals(array('calls', 'fanout'), $metrics);
+    }
+
     /**
      * Tests that the analyzer calculates correct fanout and call metrics for
      * functions.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Coupling_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coupling
-     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectFunctionCoupling()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-        
-        $this->assertEquals(2, $package->getFunctions()->count());
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('fanout', $project);
-        $this->assertEquals(7, $project['fanout']);
-
-        $this->assertArrayHasKey('calls', $project);
-        $this->assertEquals(10, $project['calls']);
+        self::assertEquals(array('calls' => 10, 'fanout' => 7), $project);
     }
 
     /**
@@ -101,30 +107,15 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * methods.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Coupling_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coupling
-     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectMethodCoupling()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-        
-        $this->assertEquals(1, $package->getClasses()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
-
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('fanout', $project);
-        $this->assertEquals(9, $project['fanout']);
-
-        $this->assertArrayHasKey('calls', $project);
-        $this->assertEquals(10, $project['calls']);
+        self::assertEquals(array('calls' => 10, 'fanout' => 9), $project);
     }
 
     /**
@@ -132,30 +123,15 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * properties.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Coupling_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coupling
-     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectPropertyCoupling()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-        
-        $this->assertSame('default\package', $package->getName());
-        $this->assertSame(1, $package->getClasses()->count());
-
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('fanout', $project);
-        $this->assertEquals(3, $project['fanout']);
-
-        $this->assertArrayHasKey('calls', $project);
-        $this->assertEquals(0, $project['calls']);
+        self::assertEquals(array('calls' => 0, 'fanout' => 3), $project);
     }
 
     /**
@@ -163,30 +139,15 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * properties.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Coupling_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coupling
-     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectClassCoupling()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
-
-        $this->assertEquals(1, $package->getClasses()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
-
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('fanout', $project);
-        $this->assertEquals(12, $project['fanout']);
-
-        $this->assertArrayHasKey('calls', $project);
-        $this->assertEquals(10, $project['calls']);
+        self::assertEquals(array('calls' => 10, 'fanout' => 12), $project);
     }
 
     /**
@@ -194,31 +155,15 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * complete source.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Coupling_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coupling
-     * @group unittest
      */
     public function testAnalyzerCalculatesCorrectCoupling()
     {
-        $packages = self::parseSource('metrics/Coupling/Project');
-        $package = $packages->current();
-
-        $this->assertEquals(3, $package->getClasses()->count());
-        $this->assertEquals(2, $package->getInterfaces()->count());
-        $this->assertEquals(2, $package->getFunctions()->count());
-
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze(self::parseSource('metrics/Coupling/Project'));
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('fanout', $project);
-        $this->assertEquals(31, $project['fanout']);
-
-        $this->assertArrayHasKey('calls', $project);
-        $this->assertEquals(30, $project['calls']);
+        self::assertEquals(array('calls' => 30, 'fanout' => 31), $project);
     }
 
     /**
@@ -226,53 +171,19 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      *
      * @param string  $fileName File with test source.
      * @param integer $calls    Number of expected calls.
+     * @param integer $fanout   Expected fanout value.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Coupling_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coupling
-     * @group unittest
      * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
-    public function testAnalyzerCalculatesExpectedCallCount($fileName, $calls)
+    public function testAnalyzerCalculatesExpectedCallCount($fileName, $calls, $fanout)
     {
-        $packages = self::parseTestCaseSource($fileName);
-
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
-
-        $project = $analyzer->getProjectMetrics();
-        $this->assertSame($calls, $project['calls']);
-    }
-
-    /**
-     * Test case for the execution chain bug 14.
-     *
-     * http://bugs.xplib.de/index.php?do=details&task_id=14&project=3
-     *
-     * @return void
-     * @covers PHP_Depend_Metrics_Coupling_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coupling
-     * @group unittest
-     */
-    public function testAnalyzerExecutionChainBug14()
-    {
-        $source   = dirname(__FILE__) . '/../../_code/bugs/014.php';
-        $packages = self::parseSource($source);
-
-        $this->assertEquals(1, $packages->count());
-        $this->assertEquals(1, $packages->current()->getFunctions()->count());
-
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze(self::parseTestCaseSource($fileName));
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertArrayHasKey('calls', $project);
-        $this->assertEquals(3, $project['calls']);
+        self::assertEquals(array('calls' => $calls, 'fanout' => $fanout), $project);
     }
 
     /**
@@ -283,26 +194,26 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public static function dataProviderAnalyzerCalculatesExpectedCallCount()
     {
-        return array(array(__METHOD__ . '#19', 1));
         return array(
-            array(__METHOD__ . '#01', 0),
-            array(__METHOD__ . '#02', 0),
-            array(__METHOD__ . '#03', 0),
-            array(__METHOD__ . '#04', 1),
-            array(__METHOD__ . '#05', 1),
-            array(__METHOD__ . '#06', 2),
-            array(__METHOD__ . '#07', 1),
-            array(__METHOD__ . '#08', 1),
-            array(__METHOD__ . '#09', 1),
-            array(__METHOD__ . '#10', 2),
-            array(__METHOD__ . '#11', 2),
-            array(__METHOD__ . '#12', 1),
-            array(__METHOD__ . '#13', 0),
-            array(__METHOD__ . '#14', 0),
-            array(__METHOD__ . '#15', 1),
-            array(__METHOD__ . '#16', 2),
-            array(__METHOD__ . '#17', 4),
-            array(__METHOD__ . '#18', 1),
+            array(__METHOD__ . '#01', 0, 0),
+            array(__METHOD__ . '#02', 0, 0),
+            array(__METHOD__ . '#03', 0, 0),
+            array(__METHOD__ . '#04', 1, 0),
+            array(__METHOD__ . '#05', 1, 0),
+            array(__METHOD__ . '#06', 2, 0),
+            array(__METHOD__ . '#07', 1, 0),
+            array(__METHOD__ . '#08', 1, 0),
+            array(__METHOD__ . '#09', 1, 0),
+            array(__METHOD__ . '#10', 2, 0),
+            array(__METHOD__ . '#11', 2, 0),
+            array(__METHOD__ . '#12', 1, 1),
+            array(__METHOD__ . '#13', 0, 1),
+            array(__METHOD__ . '#14', 0, 1),
+            array(__METHOD__ . '#15', 1, 1),
+            array(__METHOD__ . '#16', 2, 1),
+            array(__METHOD__ . '#17', 4, 2),
+            array(__METHOD__ . '#18', 1, 0),
+            array(__METHOD__ . '#19', 1, 1),
         );
     }
 }
