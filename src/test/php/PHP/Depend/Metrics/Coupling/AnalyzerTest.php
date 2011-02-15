@@ -69,6 +69,41 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
+     * testGetNodeMetricsReturnsAnEmptyArrayByDefault
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsAnEmptyArrayByDefault()
+    {
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $node     = $this->getMock('PHP_Depend_Code_NodeI');
+
+        self::assertEquals(array(), $analyzer->getNodeMetrics($node));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsArrayWithExpectedKeys
+     * 
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsArrayWithExpectedKeys()
+    {
+        $packages = self::parseTestCaseSource(__METHOD__);
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = array_keys($analyzer->getNodeMetrics($class));
+        sort($metrics);
+
+        self::assertEquals(array('cbo', 'ce'), $metrics);
+    }
+
+    /**
      * testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys
      *
      * @return void

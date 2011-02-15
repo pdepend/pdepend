@@ -110,16 +110,16 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $expected = array(
             'pdepend.test'  =>  array(
-                'functions'   =>  1,
-                'classes'     =>  1,
-                'interfaces'  =>  0,
-                'exceptions'  =>  0
+                'functions'   =>  array('foo'),
+                'classes'     =>  array('MyException'),
+                'interfaces'  =>  array(),
+                'exceptions'  =>  array()
             ),
             'pdepend.test2'  =>  array(
-                'functions'   =>  0,
-                'classes'     =>  1,
-                'interfaces'  =>  0,
-                'exceptions'  =>  0
+                'functions'   =>  array(),
+                'classes'     =>  array('YourException'),
+                'interfaces'  =>  array(),
+                'exceptions'  =>  array()
             )
         );
 
@@ -148,16 +148,16 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $expected = array(
             'pdepend.test'  =>  array(
-                'functions'   =>  1,
-                'classes'     =>  1,
-                'interfaces'  =>  0,
-                'exceptions'  =>  0
+                'functions'   =>  array('foo'),
+                'classes'     =>  array('MyException'),
+                'interfaces'  =>  array(),
+                'exceptions'  =>  array()
             ),
             'pdepend.test2'  =>  array(
-                'functions'   =>  0,
-                'classes'     =>  1,
-                'interfaces'  =>  0,
-                'exceptions'  =>  0
+                'functions'   =>  array(),
+                'classes'     =>  array('YourException'),
+                'interfaces'  =>  array(),
+                'exceptions'  =>  array()
             )
         );
 
@@ -183,10 +183,23 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     {
         $expected = array(
             '+global'  =>  array(
-                'functions'   =>  1,
-                'classes'     =>  7,
-                'interfaces'  =>  3,
-                'exceptions'  =>  0
+                'functions'   =>  array('pkg3_foo'),
+                'classes'     =>  array(
+                    'Bar',
+                    'pkg1Bar',
+                    'pkg1Barfoo',
+                    'pkg1Foo',
+                    'pkg1Foobar',
+                    'pkg2Bar',
+                    'pkg2Barfoo',
+                    'pkg2Foobar',
+                ),
+                'interfaces'  =>  array(
+                    'pkg1FooI',
+                    'pkg2FooI',
+                    'pkg3FooI'
+                ),
+                'exceptions'  =>  array()
             )
         );
         
@@ -309,17 +322,33 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 
         $actual = array();
         foreach ($code as $package) {
-            $exceptions = 0;
+            $statistics = array(
+                'functions'   =>  array(),
+                'classes'     =>  array(),
+                'interfaces'  =>  array(),
+                'exceptions'  =>  array()
+            );
             foreach ($package->getFunctions() as $function) {
-                $exceptions += $function->getExceptionClasses()->count();
+                $statistics['functions'][] = $function->getName();
+                foreach ($function->getExceptionClasses() as $exception) {
+                    $statistics['exceptions'][] = $exception->getName();
+                }
             }
 
-            $actual[$package->getName()] = array(
-                'functions'   =>  $package->getFunctions()->count(),
-                'classes'     =>  $package->getClasses()->count(),
-                'interfaces'  =>  $package->getInterfaces()->count(),
-                'exceptions'  =>  $exceptions
-            );
+            foreach ($package->getClasses() as $class) {
+                $statistics['classes'][] = $class->getName();
+            }
+
+            foreach ($package->getInterfaces() as $interface) {
+                $statistics['interfaces'][] = $interface->getName();
+            }
+
+            sort($statistics['functions']);
+            sort($statistics['classes']);
+            sort($statistics['interfaces']);
+            sort($statistics['exceptions']);
+
+            $actual[$package->getName()] = $statistics;
         }
         ksort($actual);
 

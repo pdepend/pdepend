@@ -78,7 +78,7 @@
  */
 class PHP_Depend_Metrics_Coupling_Analyzer
        extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI,
+    implements PHP_Depend_Metrics_NodeAwareI,
                PHP_Depend_Metrics_ProjectAwareI
 {
     /**
@@ -102,9 +102,17 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Number of fanouts.
      *
-     * @var integer $_fanout
+     * @var integer
      */
     private $_fanout = -1;
+
+    /**
+     * This array holds a mapping between node identifiers and an array with
+     * the node's metrics.
+     *
+     * @var array(string=>array)
+     */
+    private $_nodeMetrics = array();
 
     /**
      * Provides the project summary as an <b>array</b>.
@@ -124,6 +132,31 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             self::M_CALLS   =>  $this->_calls,
             self::M_FANOUT  =>  $this->_fanout
         );
+    }
+
+    /**
+     * This method will return an <b>array</b> with all generated metric values
+     * for the given node instance. If there are no metrics for the given node
+     * this method will return an empty <b>array</b>.
+     *
+     * <code>
+     * array(
+     *     'loc'    =>  42,
+     *     'ncloc'  =>  17,
+     *     'cc'     =>  12
+     * )
+     * </code>
+     *
+     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     *
+     * @return array(string=>mixed)
+     */
+    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    {
+        if (isset($this->_nodeMetrics[$node->getUUID()])) {
+            return $this->_nodeMetrics[$node->getUUID()];
+        }
+        return array();
     }
 
     /**
@@ -159,7 +192,6 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -188,12 +220,42 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     }
 
     /**
+     * @param PHP_Depend_Code_Class $class
+     *
+     * @return void
+     */
+    public function visitClass(PHP_Depend_Code_Class $class)
+    {
+        if (false === isset($this->_nodeMetrics[$class->getUUID()])) {
+            $this->_processed[$class->getUUID()]   = array();
+            $this->_nodeMetrics[$class->getUUID()] = array(
+                'cbo' => 0,
+                'ce'  => 0
+            );
+        }
+
+        return parent::visitClass($class);
+    }
+
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        if (false === isset($this->_nodeMetrics[$interface->getUUID()])) {
+            $this->_processed[$interface->getUUID()]   = array();
+            $this->_nodeMetrics[$interface->getUUID()] = array(
+                'cbo' => 0,
+                'ce'  => 0
+            );
+        }
+
+        return parent::visitInterface($interface);
+    }
+
+    /**
      * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -201,30 +263,13 @@ class PHP_Depend_Metrics_Coupling_Analyzer
 
         $parent = $method->getParent();
 
-        $fanouts = array();
-        if (($type = $method->getReturnClass()) !== null) {
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
-            }
-        }
+        $this->_calculateCoupling($parent, $method->getReturnClass());
+
         foreach ($method->getExceptionClasses() as $type) {
-            if (in_array($type, $fanouts, true)) {
-                continue;
-            }
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
-            }
+            $this->_calculateCoupling($parent, $type);
         }
         foreach ($method->getDependencies() as $type) {
-            if (in_array($type, $fanouts, true)) {
-                continue;
-            }
-            if (!$type->isSubtypeOf($parent) && !$parent->isSubtypeOf($type)) {
-                $fanouts[] = $type;
-                ++$this->_fanout;
-            }
+            $this->_calculateCoupling($parent, $type);
         }
 
         $this->_countCalls($method);
@@ -238,25 +283,38 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @param PHP_Depend_Code_Property $property The property class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->fireStartProperty($property);
 
-        // Check for not null
-        if (($type = $property->getClass()) !== null) {
-            $declaringClass = $property->getDeclaringClass();
-
-            // Only increment if these types are not part of the same hierarchy
-            if (!$type->isSubtypeOf($declaringClass)
-                && !$declaringClass->isSubtypeOf($type)
-            ) {
-                ++$this->_fanout;
-            }
-        }
+        $this->_calculateCoupling($property->getDeclaringClass(), $property->getClass());
 
         $this->fireEndProperty($property);
+    }
+
+    private $_processed = array();
+
+    private function _calculateCoupling(
+        PHP_Depend_Code_AbstractClassOrInterface $classA,
+        PHP_Depend_Code_AbstractClassOrInterface $classB = null
+    ) {
+        if (null === $classB) {
+            return;
+        }
+        if ($classB->isSubtypeOf($classA) || $classA->isSubtypeOf($classB)) {
+            return;
+        }
+        if (isset($this->_processed[$classA->getUUID()][$classB->getUUID()])) {
+            return;
+        }
+        
+        $this->_processed[$classA->getUUID()][$classB->getUUID()] = true;
+
+        ++$this->_nodeMetrics[$classA->getUUID()]['cbo'];
+        ++$this->_nodeMetrics[$classA->getUUID()]['ce'];
+
+        ++$this->_fanout;
     }
 
     /**

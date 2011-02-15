@@ -80,7 +80,7 @@ class MyCouplingClass
      * FANOUT := 3
      * CALLS  := 3
      *
-     * @param ArrayAccess $items The input items.
+     * @param ArrayObject $items The input items.
      * @param integer     $index The requested index.
      *
      * @return void
@@ -107,21 +107,21 @@ class MyCouplingClass
      * @param integer     $index The requested index.
      *
      * @return MyObjectItem
-     * @throws OutOfRangeException For invalid index values.
-     * @throws InvalidArgumentException For invalid index values.
+     * @throws OutOfBoundsException For invalid index values.
+     * @throws DomainException For invalid index values.
      */
     public function getItemAt(ArrayAccess $items, $index)
     {
         if (is_int($index) === false) {
-            throw new InvalidArgumentException('Error');
+            throw new DomainException('Error');
         }
         if (!$items->offsetExists($index)) {
-            throw new OutOfRangeException('Error...');
+            throw new OutOfBoundsException('Error...');
         }
         $data = $items->offsetGet($index);
         if (is_array($data)) {
             return new MyObjectItem(array_keys($data), array_values($data));
         }
-        return MyObjectItem::getDefault();
+        return MyObjectItemCollection::getDefault();
     }
 }

@@ -27,8 +27,8 @@ class MyMethodCouplingClass
      * @param ArrayAccess $items The input items.
      * @param integer     $index The requested index.
      *
-     * @return OutOfRangeException
-     * @throws OutOfRangeException For invalid index values.
+     * @return MyObject
+     * @throws OutOfBoundsException For invalid index values.
      * @throws InvalidArgumentException For invalid index values.
      */
     public function getItemAt(ArrayAccess $items, $index)
@@ -37,7 +37,7 @@ class MyMethodCouplingClass
             throw new InvalidArgumentException('Error');
         }
         if (!$items->offsetExists($index)) {
-            throw new OutOfRangeException('Error...');
+            throw new OutOfBoundsException('Error...');
         }
         $data = $items->offsetGet($index);
         if (is_array($data)) {
