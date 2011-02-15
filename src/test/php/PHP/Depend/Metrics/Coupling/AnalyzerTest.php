@@ -104,6 +104,227 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     }
 
     /**
+     * testGetNodeMetricsReturnsExpectedCboWithoutDependencies
+     * 
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboWithoutDependencies()
+    {
+        self::assertEquals(0, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboWithObjectInstantiation
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboWithObjectInstantiation()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboWithStaticReference
+     * 
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboWithStaticReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboWithReturnReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboWithReturnReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboWithExceptionReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboWithExceptionReference()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboWithPropertyReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboWithPropertyReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboWithoutDuplicateCount
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboWithoutDuplicateCount()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboForParameterTypes
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboForParameterTypes()
+    {
+        self::assertEquals(3, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboForParentTypeReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboForParentTypeReference()
+    {
+        self::assertEquals(0, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboForChildTypeReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboForChildTypeReference()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeWithoutDependencies
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeWithoutDependencies()
+    {
+        self::assertEquals(0, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeWithObjectInstantiation
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeWithObjectInstantiation()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeWithStaticReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeWithStaticReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeWithReturnReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeWithReturnReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeWithExceptionReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeWithExceptionReference()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeWithPropertyReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeWithPropertyReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeWithoutDuplicateCount
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeWithoutDuplicateCount()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeForParameterTypes
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeForParameterTypes()
+    {
+        self::assertEquals(3, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeForParentTypeReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeForParentTypeReference()
+    {
+        self::assertEquals(0, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeForChildTypeReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeForChildTypeReference()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('ce'));
+    }
+
+    /**
+     * Returns the specified node metric for the first type found in the
+     * analyzed test source.
+     *
+     * @return mixed
+     */
+    private function _getNodeMetricForType($name)
+    {
+        $packages = self::parseTestCaseSource(self::getCallingTestMethod());
+
+        $node = $packages->current()
+            ->getTypes()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($node);
+        return $metrics[$name];
+    }
+
+    /**
      * testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys
      *
      * @return void
