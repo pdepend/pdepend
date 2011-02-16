@@ -47,6 +47,7 @@
  */
 
 require_once dirname(__FILE__) . '/InvalidResultWhenFunctionReturnsByReferenceBug004Test.php';
+require_once dirname(__FILE__) . '/ParserBug006Test.php';
 require_once dirname(__FILE__) . '/CouplingAnalyzerBug014Test.php';
 require_once dirname(__FILE__) . '/InstanceOfExpressionReferenceHandlingBug062Test.php';
 require_once dirname(__FILE__) . '/ClassDeclarationWithoutBodyBug065Test.php';
@@ -115,6 +116,7 @@ class PHP_Depend_Bugs_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Bugs - AllTests');
 
         $suite->addTestSuite('PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_ParserBug006Test');
         $suite->addTestSuite('PHP_Depend_Bugs_CouplingAnalyzerBug014Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test');

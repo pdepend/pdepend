@@ -350,7 +350,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDoesntReuseTypeComment()
     {
-        $packages = self::parseSource('comments/constant.php');
+        $packages = self::parseCodeResourceForTest();
         $this->assertEquals(1, $packages->count()); // +global
 
         $package = $packages->current();
@@ -374,7 +374,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserDoesntReuseFunctionComment()
     {
-        $packages = self::parseSource('comments/function.php');
+        $packages = self::parseCodeResourceForTest();
         $this->assertEquals(1, $packages->count()); // +global
 
         $package = $packages->current();
@@ -657,7 +657,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectFunctionDocComment()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/function.php');
+        $packages = self::parseCodeResourceForTest();
 
         $nodes = $packages->current()->getFunctions();
         $this->doTestParserSetsCorrectDocComment($nodes, 0);
@@ -674,7 +674,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectFunctionReturnType()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/function1.php');
+        $packages = self::parseCodeResourceForTest();
 
         $nodes = $packages->current()->getFunctions();
         $this->assertEquals(3, $nodes->count());
@@ -869,7 +869,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectPropertyDocComment()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/property.php');
+        $packages = self::parseCodeResourceForTest();
         $nodes    = $packages->current()
                              ->getTypes()
                              ->current()
@@ -889,7 +889,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectPropertyVisibility()
     {
-        $packages = self::parseSource(dirname(__FILE__) . '/_code/comments/property.php');
+        $packages = self::parseCodeResourceForTest();
 
         $nodes = $packages->current()
                           ->getTypes()
@@ -1829,29 +1829,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
         self::parseCodeResourceForTest();
-    }
-
-    /**
-     * Tests that the parser ignores variable class instantiation.
-     *
-     * http://bugs.xplib.de/index.php?do=details&task_id=10&project=3
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
-     */
-    public function testVariableClassNameBug10()
-    {
-        $package = self::parseSource(dirname(__FILE__) . '/_code/bugs/006.php')->current();
-        $class   = $package->getClasses()->current();
-        $method  = $class->getMethods()->current();
-
-        $this->assertEquals('package10', $package->getName());
-        $this->assertEquals('VariableClassNamesBug10', $class->getName());
-        $this->assertEquals('foo10', $method->getName());
-        $this->assertEquals(0, count($method->getDependencies()));
     }
 
     /**
