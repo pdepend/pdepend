@@ -96,6 +96,20 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer(new PHP_Depend_Metrics_CodeRank_Analyzer());
     }
+
+    /**
+     * testGetRequiredAnalyzersReturnsExpectedClassNames
+     *
+     * @return void
+     */
+    public function testGetRequiredAnalyzersReturnsExpectedClassNames()
+    {
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        self::assertEquals(
+            array(PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ),
+            $analyzer->getRequiredAnalyzers()
+        );
+    }
     
     /**
      * Tests that the analyzer calculates the correct IMPL values.
