@@ -322,7 +322,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testAnalyzerCalculatesCorrectProjectMetrics()
     {
-        $packages = self::parseSource('metrics/NodeLoc/' . __FUNCTION__);
+        $packages = self::parseTestCaseSource(__METHOD__);
 
         $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
         $analyzer->analyze($packages);

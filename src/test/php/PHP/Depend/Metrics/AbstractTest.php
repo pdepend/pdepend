@@ -77,9 +77,21 @@ abstract class PHP_Depend_Metrics_AbstractTest extends PHP_Depend_AbstractTest
 
         $parts = explode('_', $class);
 
+        try {
+            return parent::parseSource(
+                sprintf(
+                    'Metrics/%s/%s.php',
+                    $parts[count($parts) - 2],
+                    $method
+                ),
+                $ignoreAnnotations
+            );
+        } catch (Exception $e) {
+        }
+        
         return parent::parseSource(
             sprintf(
-                'metrics/%s/%s.php',
+                'Metrics/%s/%s',
                 $parts[count($parts) - 2],
                 $method
             ),

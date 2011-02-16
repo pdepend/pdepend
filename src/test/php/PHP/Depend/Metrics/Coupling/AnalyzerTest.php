@@ -66,7 +66,8 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @group pdepend::metrics::coupling
  * @group unittest
  */
-class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
+class PHP_Depend_Metrics_Coupling_AnalyzerTest
+    extends PHP_Depend_Metrics_AbstractTest
 {
     /**
      * testGetNodeMetricsReturnsAnEmptyArrayByDefault
@@ -493,13 +494,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys()
     {
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $expected = array('calls', 'fanout');
+        $actual   = array_keys($this->_calculateProjectMetrics());
 
-        $metrics = array_keys($analyzer->getProjectMetrics());
-        sort($metrics);
-
-        self::assertEquals(array('calls', 'fanout'), $metrics);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -510,14 +508,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testAnalyzerCalculatesCorrectFunctionCoupling()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $expected = array('calls' => 10, 'fanout' => 7);
+        $actual   = $this->_calculateProjectMetrics();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
-
-        $project = $analyzer->getProjectMetrics();
-
-        self::assertEquals(array('calls' => 10, 'fanout' => 7), $project);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -528,12 +522,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testAnalyzerCalculatesCorrectMethodCoupling()
     {
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $expected = array('calls' => 10, 'fanout' => 9);
+        $actual   = $this->_calculateProjectMetrics();
 
-        $project = $analyzer->getProjectMetrics();
-
-        self::assertEquals(array('calls' => 10, 'fanout' => 9), $project);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -544,12 +536,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testAnalyzerCalculatesCorrectPropertyCoupling()
     {
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $expected = array('calls' => 0, 'fanout' => 3);
+        $actual   = $this->_calculateProjectMetrics();
 
-        $project = $analyzer->getProjectMetrics();
-
-        self::assertEquals(array('calls' => 0, 'fanout' => 3), $project);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -560,12 +550,10 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testAnalyzerCalculatesCorrectClassCoupling()
     {
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $expected = array('calls' => 10, 'fanout' => 12);
+        $actual   = $this->_calculateProjectMetrics();
 
-        $project = $analyzer->getProjectMetrics();
-
-        self::assertEquals(array('calls' => 10, 'fanout' => 12), $project);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -576,32 +564,50 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testAnalyzerCalculatesCorrectCoupling()
     {
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze(self::parseSource('metrics/Coupling/Project'));
+        $expected = array('calls' => 30, 'fanout' => 31);
+        $actual   = $this->_calculateProjectMetrics();
 
-        $project = $analyzer->getProjectMetrics();
-
-        self::assertEquals(array('calls' => 30, 'fanout' => 31), $project);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * Tests that the analyzer calculates the expected call count.
      *
-     * @param string  $fileName File with test source.
+     * @param string  $testCase File with test source.
      * @param integer $calls    Number of expected calls.
      * @param integer $fanout   Expected fanout value.
      *
      * @return void
      * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
-    public function testAnalyzerCalculatesExpectedCallCount($fileName, $calls, $fanout)
+    public function testAnalyzerCalculatesExpectedCallCount(
+        $testCase,
+        $calls,
+        $fanout
+    ) {
+        $expected = array('calls' => $calls, 'fanout' => $fanout);
+        $actual   = $this->_calculateProjectMetrics($testCase);
+        
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * Parses the source code for the currently calling test method and returns
+     * the calculated project metrics.
+     *
+     * @param string $testCase Optional name of the calling test case.
+     *
+     * @return array(string=>mixed)
+     * @since 0.10.2
+     */
+    private function _calculateProjectMetrics($testCase = null)
     {
+        $testCase = ($testCase ? $testCase : self::getCallingTestMethod());
+
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze(self::parseTestCaseSource($fileName));
+        $analyzer->analyze(self::parseTestCaseSource($testCase));
 
-        $project = $analyzer->getProjectMetrics();
-
-        self::assertEquals(array('calls' => $calls, 'fanout' => $fanout), $project);
+        return $analyzer->getProjectMetrics();
     }
 
     /**
