@@ -78,6 +78,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     const M_IMPLEMENTED_INTERFACES       = 'impl',
           M_CLASS_INTERFACE_SIZE         = 'cis',
           M_CLASS_SIZE                   = 'csz',
+          M_NUMBER_OF_PUBLIC_METHODS     = 'npm',
           M_PROPERTIES                   = 'vars',
           M_PROPERTIES_INHERIT           = 'varsi',
           M_PROPERTIES_NON_PRIVATE       = 'varsnp',
@@ -103,14 +104,14 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * )
      * </code>
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
     private $_nodeMetrics = null;
 
     /**
      * The internal used cyclomatic complexity analyzer.
      *
-     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticAnalyzer
+     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     private $_cyclomaticAnalyzer = null;
 
@@ -208,6 +209,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             self::M_IMPLEMENTED_INTERFACES       => $class->getInterfaces()->count(),
             self::M_CLASS_INTERFACE_SIZE         => 0,
             self::M_CLASS_SIZE                   => 0,
+            self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
             self::M_PROPERTIES                   => 0,
             self::M_PROPERTIES_INHERIT           => $this->_calculateVARSi($class),
             self::M_PROPERTIES_NON_PRIVATE       => 0,
@@ -263,6 +265,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
 
         // Increment Non Private values
         if ($method->isPublic()) {
+            ++$this->_nodeMetrics[$uuid][self::M_NUMBER_OF_PUBLIC_METHODS];
             // Increment Non Private WMC value
             $this->_nodeMetrics[$uuid][self::M_WEIGHTED_METHODS_NON_PRIVATE] += $ccn;
             // Increment Class Interface Size(CIS) value

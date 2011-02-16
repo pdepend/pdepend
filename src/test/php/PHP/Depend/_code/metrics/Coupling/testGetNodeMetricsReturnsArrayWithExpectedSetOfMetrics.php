@@ -1,5 +1,5 @@
 <?php
-class testGetNodeMetricsReturnsArrayWithExpectedKeys
+class testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics
 {
     public function testFooBarBaz()
     {

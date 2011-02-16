@@ -82,11 +82,11 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     }
 
     /**
-     * testGetNodeMetricsReturnsArrayWithExpectedKeys
+     * testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics
      * 
      * @return void
      */
-    public function testGetNodeMetricsReturnsArrayWithExpectedKeys()
+    public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
 
