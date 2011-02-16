@@ -397,6 +397,7 @@ class PHP_Depend_Code_Property
      *
      * @return mixed
      * @since 0.9.6
+     * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
     public function getValue($object = null)
     {
@@ -413,6 +414,7 @@ class PHP_Depend_Code_Property
      *
      * @return void
      * @since 0.9.6
+     * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
     public function setValue($object, $value = null)
     {
@@ -429,6 +431,7 @@ class PHP_Depend_Code_Property
      *
      * @return void
      * @since 0.9.6
+     * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
     public function setAccessible($value)
     {

@@ -471,14 +471,28 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        // Consume interface keyword
-        $startLine = $this->consumeToken(self::T_INTERFACE)->startLine;
+        $interface = $this->_parseInterfaceSignature();
+        $interface = $this->_parseClassOrInterfaceBody($interface);
+        $interface->setTokens($this->_tokenStack->pop());
 
-        // Remove leading comments and get interface name
+        $this->reset();
+
+        return $interface;
+    }
+
+    /**
+     * Parses the signature of an interface and finally returns a configured
+     * interface instance.
+     *
+     * @return PHP_Depend_Code_Interface
+     * @since 0.10.2
+     */
+    private function _parseInterfaceSignature()
+    {
+        $this->consumeToken(self::T_INTERFACE);
         $this->consumeComments();
-        $localName = $this->parseClassName();
 
-        $qualifiedName = $this->_createQualifiedTypeName($localName);
+        $qualifiedName = $this->_createQualifiedTypeName($this->parseClassName());
 
         $interface = $this->_builder->buildInterface($qualifiedName);
         $interface->setSourceFile($this->_sourceFile);
@@ -486,23 +500,26 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $interface->setUUID($this->_uuidBuilder->forClassOrInterface($interface));
         $interface->setUserDefined();
 
-        // Strip comments and fetch next token type
+        return $this->_parseOptionalExtendsList($interface);
+    }
+
+    /**
+     * Parses an optional interface list of an interface declaration.
+     *
+     * @param PHP_Depend_Code_Interface $interface The declaring interface.
+     *
+     * @return PHP_Depend_Code_Interface
+     * @since 0.10.2
+     */
+    private function _parseOptionalExtendsList(PHP_Depend_Code_Interface $interface)
+    {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
 
-        // Check for extended interfaces
         if ($tokenType === self::T_EXTENDS) {
             $this->consumeToken(self::T_EXTENDS);
             $this->_parseInterfaceList($interface);
         }
-        // Handle interface body
-        $this->_parseClassOrInterfaceBody($interface);
-
-        $interface->setTokens($this->_tokenStack->pop());
-
-        // Reset parser settings
-        $this->reset();
-
         return $interface;
     }
 
@@ -516,15 +533,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
 
         // Parse optional class modifiers
-        $startLine = $this->_parseClassModifiers();
+        $this->_parseClassModifiers();
 
         // Consume class keyword and read class start line
-        $token = $this->consumeToken(self::T_CLASS);
-
-        // Check for previous read start line
-        if ($startLine === -1) {
-            $startLine = $token->startLine;
-        }
+        $this->consumeToken(self::T_CLASS);
 
         // Remove leading comments and get class name
         $this->consumeComments();
@@ -571,37 +583,24 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
     /**
      * This method parses an optional class modifier. Valid class modifiers are
-     * <b>final</b> or <b>abstract</b>. The return value of this method is the
-     * start line number of a detected modifier. If no modifier was found, this
-     * method will return <b>-1</b>.
+     * <b>final</b> or <b>abstract</b>.
      *
-     * @return integer
+     * @return void
      */
     private function _parseClassModifiers()
     {
-        // Strip optional comments
         $this->consumeComments();
-
-        // Get next token type and check for abstract
         $tokenType = $this->tokenizer->peek();
+        
         if ($tokenType === self::T_ABSTRACT) {
-            // Consume abstract keyword and get line number
-            $line = $this->consumeToken(self::T_ABSTRACT)->startLine;
-            // Add explicit abstract modifier
+            $this->consumeToken(self::T_ABSTRACT);
             $this->_modifiers |= self::IS_EXPLICIT_ABSTRACT;
         } else if ($tokenType === self::T_FINAL) {
-            // Consume final keyword and get line number
-            $line = $this->consumeToken(self::T_FINAL)->startLine;
-            // Add final modifier
+            $this->consumeToken(self::T_FINAL);
             $this->_modifiers |= self::IS_FINAL;
-        } else {
-            $line = -1;
         }
 
-        // Strip optional comments
         $this->consumeComments();
-
-        return $line;
     }
 
     /**
@@ -641,7 +640,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_AbstractClassOrInterface $type The context class
      *        or interface instance.
      *
-     * @return void
+     * @return PHP_Depend_Code_AbstractClassOrInterface
      */
     private function _parseClassOrInterfaceBody(
         PHP_Depend_Code_AbstractClassOrInterface $type
@@ -699,7 +698,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_classOrInterface = null;
 
                 // Stop processing
-                return;
+                return $type;
 
             case self::T_COMMENT:
                 $token = $this->consumeToken(self::T_COMMENT);
