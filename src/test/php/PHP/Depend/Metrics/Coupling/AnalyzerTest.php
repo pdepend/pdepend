@@ -110,7 +110,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaWithoutDependencies()
     {
-        self::assertEquals(0, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(0, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -120,7 +120,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaWithObjectInstantiation()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -130,7 +130,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaWithStaticReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -140,7 +140,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaWithReturnReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -150,7 +150,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaWithExceptionReference()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(2, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -160,7 +160,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaWithPropertyReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -170,7 +170,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaWithoutDuplicateCount()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(2, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -180,7 +180,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForParameterTypes()
     {
-        self::assertEquals(3, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(3, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -190,7 +190,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForParentTypeReference()
     {
-        self::assertEquals(0, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(0, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -200,7 +200,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForChildTypeReference()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(2, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -210,7 +210,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -220,7 +220,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionException()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -230,7 +230,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionReturnType()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -240,7 +240,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionParameter()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -250,7 +250,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctions()
     {
-        self::assertEquals(3, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(3, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -260,7 +260,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionCountsTypeOnce()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
+        self::assertEquals(2, $this->_calculateTypeMetric('ca'));
     }
 
     /**
@@ -270,7 +270,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboWithoutDependencies()
     {
-        self::assertEquals(0, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(0, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -280,7 +280,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboWithObjectInstantiation()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(1, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -290,7 +290,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboWithStaticReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(1, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -300,7 +300,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboWithReturnReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(1, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -310,7 +310,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboWithExceptionReference()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(2, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -320,7 +320,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboWithPropertyReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(1, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -330,7 +330,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboWithoutDuplicateCount()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(2, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -340,7 +340,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboForParameterTypes()
     {
-        self::assertEquals(3, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(3, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -350,7 +350,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboForParentTypeReference()
     {
-        self::assertEquals(0, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(0, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -360,7 +360,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCboForChildTypeReference()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('cbo'));
+        self::assertEquals(2, $this->_calculateTypeMetric('cbo'));
     }
 
     /**
@@ -370,7 +370,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeWithoutDependencies()
     {
-        self::assertEquals(0, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(0, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -380,7 +380,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeWithObjectInstantiation()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -390,7 +390,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeWithStaticReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -400,7 +400,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeWithReturnReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -410,7 +410,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeWithExceptionReference()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(2, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -420,7 +420,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeWithPropertyReference()
     {
-        self::assertEquals(1, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(1, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -430,7 +430,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeWithoutDuplicateCount()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(2, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -440,7 +440,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeForParameterTypes()
     {
-        self::assertEquals(3, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(3, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -450,7 +450,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeForParentTypeReference()
     {
-        self::assertEquals(0, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(0, $this->_calculateTypeMetric('ce'));
     }
 
     /**
@@ -460,16 +460,18 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsReturnsExpectedCeForChildTypeReference()
     {
-        self::assertEquals(2, $this->_getNodeMetricForType('ce'));
+        self::assertEquals(2, $this->_calculateTypeMetric('ce'));
     }
 
     /**
      * Returns the specified node metric for the first type found in the
-     * analyzed test source.
+     * analyzed test source and returns the metric value for the given <b>$name</b>.
+     *
+     * @param string $name Name of the requested software metric.
      *
      * @return mixed
      */
-    private function _getNodeMetricForType($name)
+    private function _calculateTypeMetric($name)
     {
         $packages = self::parseTestCaseSource(self::getCallingTestMethod());
 

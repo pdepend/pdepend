@@ -440,16 +440,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForReturnStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(1, $metrics['lloc']);
+        self::assertEquals(1, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -459,16 +450,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForIfAndElseIfStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(5, $metrics['lloc']);
+        self::assertEquals(5, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -478,16 +460,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForForStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(3, $metrics['lloc']);
+        self::assertEquals(3, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -497,16 +470,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForSwitchStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(7, $metrics['lloc']);
+        self::assertEquals(7, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -516,16 +480,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForTryCatchStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(8, $metrics['lloc']);
+        self::assertEquals(8, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -535,16 +490,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForForeachStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(2, $metrics['lloc']);
+        self::assertEquals(2, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -554,16 +500,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForWhileStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(2, $metrics['lloc']);
+        self::assertEquals(2, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -573,16 +510,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testCalculatesExpectedLLocForDoWhileStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
-
-        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($function);
-        self::assertEquals(3, $metrics['lloc']);
+        self::assertEquals(3, $this->_calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -600,5 +528,28 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
 
         $metrics = $analyzer->getNodeMetrics($file);
         self::assertEquals(array(), $metrics);
+    }
+
+    /**
+     * Calculates the metrics of the code under test that is associated with
+     * the calling test case and returns the metric value for <b>$name</b>.
+     *  
+     * @param string $name The name of the requested metric.
+     *
+     * @return mixed
+     * @since 0.10.2
+     */
+    private function _calculateFunctionMetric($name)
+    {
+        $packages = self::parseTestCaseSource(self::getCallingTestMethod());
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = new PHP_Depend_Metrics_NodeLoc_Analyzer();
+        $analyzer->analyze($packages);
+
+        $metrics = $analyzer->getNodeMetrics($function);
+        return $metrics[$name];
     }
 }

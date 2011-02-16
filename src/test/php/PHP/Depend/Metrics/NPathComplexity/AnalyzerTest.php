@@ -76,8 +76,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForNestedIfStatementsWithScope()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(4, $npath);
+        self::assertEquals(4, $this->_calculateMethodMetric());
     }
 
     /**
@@ -88,8 +87,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForNestedIfStatementsWithoutScope()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(4, $npath);
+        self::assertEquals(4, $this->_calculateMethodMetric());
     }
 
     /**
@@ -100,8 +98,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSiblingConditionalExpressions()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        self::assertEquals(25, $npath);
+        self::assertEquals(25, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -114,8 +111,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSiblingExpressions()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        self::assertEquals(15, $npath);
+        self::assertEquals(15, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -126,8 +122,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForTwoSiblingIfStatetements()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        self::assertEquals(4, $npath);
+        self::assertEquals(4, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -138,8 +133,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForForeachStatementWithNestedIfStatetements()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        self::assertEquals(3, $npath);
+        self::assertEquals(3, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -150,8 +144,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSiblingIfStatementsAndForeachStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        self::assertEquals(12, $npath);
+        self::assertEquals(12, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -162,8 +155,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForComplexFunction()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        self::assertEquals(60, $npath);
+        self::assertEquals(60, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -174,8 +166,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForComplexNestedControlStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        self::assertEquals(63, $npath);
+        self::assertEquals(63, $this->_calculateFunctionMetric());
     }
     
     /**
@@ -187,9 +178,8 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForConditionalsInArrayDeclaration()
     {
-        $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        //self::assertEquals(625, $npath);
-        self::assertEquals(17, $npath);
+        //self::assertEquals(625, $this->_calculateFunctionMetric());
+        self::assertEquals(17, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -199,8 +189,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityIsZeroForEmptyMethod()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(1, $npath);
+        self::assertEquals(1, $this->_calculateMethodMetric());
     }
 
     /**
@@ -210,8 +199,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForMethodWithSimpleIfStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(2, $npath);
+        self::assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -221,8 +209,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForIfStatementWithNestedDynamicIdentifier()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(2, $npath);
+        self::assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -232,8 +219,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForConsecutiveIfStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(80, $npath);
+        self::assertEquals(80, $this->_calculateMethodMetric());
     }
 
     /**
@@ -243,8 +229,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForConsecutiveIfElseIfStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(4, $npath);
+        self::assertEquals(4, $this->_calculateMethodMetric());
     }
 
     /**
@@ -254,8 +239,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForConsecutiveIfElsifStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(4, $npath);
+        self::assertEquals(4, $this->_calculateMethodMetric());
     }
 
     /**
@@ -265,8 +249,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForEmptyWhileStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(3, $npath);
+        self::assertEquals(3, $this->_calculateMethodMetric());
     }
 
     /**
@@ -276,8 +259,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForNestedWhileStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(5, $npath);
+        self::assertEquals(5, $this->_calculateMethodMetric());
     }
 
     /**
@@ -287,8 +269,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSimpleDoWhileStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(3, $npath);
+        self::assertEquals(3, $this->_calculateMethodMetric());
     }
 
     /**
@@ -298,8 +279,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSimpleForStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(2, $npath);
+        self::assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -309,8 +289,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForComplexForStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(4, $npath);
+        self::assertEquals(4, $this->_calculateMethodMetric());
     }
 
     /**
@@ -320,8 +299,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSimpleForeachStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(2, $npath);
+        self::assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -331,8 +309,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSimpleReturnStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(1, $npath);
+        self::assertEquals(1, $this->_calculateMethodMetric());
     }
 
     /**
@@ -342,8 +319,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForReturnStatementWithBooleanExpressions()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(2, $npath);
+        self::assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -353,8 +329,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForReturnStatementWithConditionalStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(5, $npath);
+        self::assertEquals(5, $this->_calculateMethodMetric());
     }
 
     /**
@@ -365,8 +340,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSimpleSwitchStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(1, $npath);
+        self::assertEquals(1, $this->_calculateMethodMetric());
     }
 
     /**
@@ -377,8 +351,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSwitchStatementWithMultipleCaseStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(5, $npath);
+        self::assertEquals(5, $this->_calculateMethodMetric());
     }
 
     /**
@@ -389,8 +362,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSwitchStatementWithComplexCaseStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(8, $npath);
+        self::assertEquals(8, $this->_calculateMethodMetric());
     }
 
     /**
@@ -400,8 +372,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSimpleTryCatchStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(2, $npath);
+        self::assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -411,8 +382,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForTryStatementWithMutlipleCatchStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(5, $npath);
+        self::assertEquals(5, $this->_calculateMethodMetric());
     }
 
     /**
@@ -422,8 +392,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForTryCatchStatementWithNestedIfStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(5, $npath);
+        self::assertEquals(5, $this->_calculateMethodMetric());
     }
 
     /**
@@ -433,8 +402,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForSimpleConditionalStatement()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(5, $npath);
+        self::assertEquals(5, $this->_calculateMethodMetric());
     }
 
     /**
@@ -444,8 +412,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForTwoNestedConditionalStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(9, $npath);
+        self::assertEquals(9, $this->_calculateMethodMetric());
     }
 
     /**
@@ -455,8 +422,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForThreeNestedConditionalStatements()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(13, $npath);
+        self::assertEquals(13, $this->_calculateMethodMetric());
     }
 
     /**
@@ -467,8 +433,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForConditionalStatementWithLogicalExpressions()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        self::assertEquals(6, $npath);
+        self::assertEquals(6, $this->_calculateMethodMetric());
     }
 
     /**
@@ -479,7 +444,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     public function testNPathComplexityForReturnStatementWithConditional()
     {
-        $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
+        $npath = $this->_calculateMethodMetric();
         self::assertEquals(6, $npath);
     }
 
@@ -487,15 +452,13 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * Returns the NPath Complexity of the first function found in source file
      * associated with the calling test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return integer
      * @since 0.9.12
      */
-    private function _getNPathComplexityForFirstFunctionInTestSource($testCase)
+    private function _calculateFunctionMetric()
     {
         return $this->_calculateNPathComplexity(
-            $this->_getFirstFunctionForTestCase($testCase)
+            $this->_getFirstFunctionForTestCase()
         );
     }
 
@@ -503,14 +466,12 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * Parses the source code associated with the calling test case and returns
      * the first function found in the test case source file.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_Function
      * @since 0.9.12
      */
-    private function _getFirstFunctionForTestCase($testCase)
+    private function _getFirstFunctionForTestCase()
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseTestCaseSource(self::getCallingTestMethod())
             ->current()
             ->getFunctions()
             ->current();
@@ -520,15 +481,13 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * Returns the NPath Complexity of the first method found in source file
      * associated with the calling test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return integer
      * @since 0.9.12
      */
-    private function _getNPathComplexityForFirstMethodInTestSource($testCase)
+    private function _calculateMethodMetric()
     {
         return $this->_calculateNPathComplexity(
-            $this->_getFirstMethodForTestCase($testCase)
+            $this->_getFirstMethodForTestCase()
         );
     }
 
@@ -536,14 +495,12 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * Parses the source code associated with the calling test case and returns
      * the first method found in the test case source file.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_Method
      * @since 0.9.12
      */
-    private function _getFirstMethodForTestCase($testCase)
+    private function _getFirstMethodForTestCase()
     {
-        return self::parseTestCaseSource($testCase)
+        return self::parseTestCaseSource(self::getCallingTestMethod())
             ->current()
             ->getClasses()
             ->current()
