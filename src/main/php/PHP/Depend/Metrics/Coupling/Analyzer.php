@@ -91,6 +91,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     const M_CALLS  = 'calls',
           M_FANOUT = 'fanout',
+          M_CA     = 'ca',
           M_CBO    = 'cbo',
           M_CE     = 'ce';
 
@@ -241,10 +242,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     private function _postProcessTemporaryCouplingMap()
     {
         foreach ($this->_temporaryCouplingMap as $uuid => $metrics) {
-
+            $afferentCoupling = count($metrics['ca']);
             $efferentCoupling = count($metrics['ce']);
 
             $this->_nodeMetrics[$uuid] = array(
+                self::M_CA   =>  $afferentCoupling,
                 self::M_CBO  =>  $efferentCoupling,
                 self::M_CE   =>  $efferentCoupling
             );
@@ -287,57 +289,10 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $this->fireEndFunction($function);
     }
 
-    /**
-     * Visitor method that will be called by PHP_Depend while the object tree
-     * gets traversed.
-     *
-     * @param PHP_Depend_Code_Class $class The context class instance.
-     *
-     * @return void
-     * @since 0.10.2
-     */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->_initClassOrInterfaceDependencyMap($class);
         return parent::visitClass($class);
-    }
-
-    /**
-     * Visitor method that will be called by PHP_Depend while the object tree
-     * gets traversed.
-     *
-     * @param PHP_Depend_Code_Interface $interface The context interface instance.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
-    {
-        $this->_initClassOrInterfaceDependencyMap($interface);
-        return parent::visitInterface($interface);
-    }
-
-    /**
-     * This method will initialize a temporary coupling container for the given
-     * given class or interface instance.
-     *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $classOrInterface The
-     *        currently visited/traversed class or interface instance.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    private function _initClassOrInterfaceDependencyMap(
-        PHP_Depend_Code_AbstractClassOrInterface $classOrInterface
-    ) {
-        if (isset($this->_temporaryCouplingMap[$classOrInterface->getUUID()])) {
-            return;
-        }
-        
-        $this->_temporaryCouplingMap[$classOrInterface->getUUID()] = array(
-            'ce' => array(),
-            'ca' => array()
-        );
     }
 
     /**
@@ -404,6 +359,8 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         PHP_Depend_Code_AbstractClassOrInterface $declaringClass,
         PHP_Depend_Code_AbstractClassOrInterface $coupledClass = null
     ) {
+        $this->_initClassOrInterfaceDependencyMap($declaringClass);
+
         if (null === $coupledClass) {
             return;
         }
@@ -413,11 +370,42 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             return;
         }
 
+        $this->_initClassOrInterfaceDependencyMap($coupledClass);
+
         $this->_temporaryCouplingMap[
             $declaringClass->getUUID()
         ]['ce'][
             $coupledClass->getUUID()
         ] = true;
+
+        $this->_temporaryCouplingMap[
+            $coupledClass->getUUID()
+        ]['ca'][
+            $declaringClass->getUUID()
+        ] = true;
+    }
+
+    /**
+     * This method will initialize a temporary coupling container for the given
+     * given class or interface instance.
+     *
+     * @param PHP_Depend_Code_AbstractClassOrInterface $classOrInterface The
+     *        currently visited/traversed class or interface instance.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    private function _initClassOrInterfaceDependencyMap(
+        PHP_Depend_Code_AbstractClassOrInterface $classOrInterface
+    ) {
+        if (isset($this->_temporaryCouplingMap[$classOrInterface->getUUID()])) {
+            return;
+        }
+
+        $this->_temporaryCouplingMap[$classOrInterface->getUUID()] = array(
+            'ce' => array(),
+            'ca' => array()
+        );
     }
 
     /**

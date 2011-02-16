@@ -100,7 +100,107 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $metrics = array_keys($analyzer->getNodeMetrics($class));
         sort($metrics);
 
-        self::assertEquals(array('cbo', 'ce'), $metrics);
+        self::assertEquals(array('ca', 'cbo', 'ce'), $metrics);
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaWithoutDependencies
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaWithoutDependencies()
+    {
+        self::assertEquals(0, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaWithObjectInstantiation
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaWithObjectInstantiation()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaWithStaticReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaWithStaticReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaWithReturnReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaWithReturnReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaWithExceptionReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaWithExceptionReference()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaWithPropertyReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaWithPropertyReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaWithoutDuplicateCount
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaWithoutDuplicateCount()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForParameterTypes
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForParameterTypes()
+    {
+        self::assertEquals(3, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForParentTypeReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForParentTypeReference()
+    {
+        self::assertEquals(0, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForChildTypeReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForChildTypeReference()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
     }
 
     /**
