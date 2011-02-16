@@ -7,6 +7,8 @@ PHP_Depend 0.10.2
   Fixed with commit #fc57264.
 - Implemented #9069871: Implement efferent- and afferent-coupling for
   classes. Implemented with commit #07537c2.
+- Implemented #9997915: Implement Number of Public Methods metric.
+  Implemented with commit #.
 
 PHP_Depend 0.10.1
 -----------------
