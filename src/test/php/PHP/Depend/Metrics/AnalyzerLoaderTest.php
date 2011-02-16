@@ -48,11 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/AnalyzerLoader.php';
-require_once 'PHP/Depend/Metrics/AnalyzerClassLocator.php';
-require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
-
 /**
  * Test case for the analyzer loader.
  *
@@ -64,6 +59,11 @@ require_once 'PHP/Depend/Metrics/AnalyzerClassFileSystemLocator.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_AnalyzerLoader
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group unittest
  */
 class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 {
@@ -71,10 +71,6 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
      * Tests that the analyzer loader loads the correct analyzer instances.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
      */
     public function testLoadKnownAnalyzersByInstance()
     {
@@ -92,17 +88,13 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
         }
         sort($actual);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * testLoaderOnlyReturnsEnabledAnalyzerInstances
      *
      * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
      */
     public function testLoaderOnlyReturnsEnabledAnalyzerInstances()
     {
@@ -123,7 +115,7 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
         $loader->setClassLocator($locator);
-        $this->assertEquals(1, iterator_count($loader->getIterator()));
+        self::assertEquals(1, iterator_count($loader->getIterator()));
     }
 
 
@@ -131,10 +123,6 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
      * testLoaderNotReturnsDisabledAnalyzerInstances
      *
      * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerLoader
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
      */
     public function testLoaderNotReturnsDisabledAnalyzerInstances()
     {
@@ -155,6 +143,6 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
         $loader->setClassLocator($locator);
-        $this->assertEquals(0, iterator_count($loader->getIterator()));
+        self::assertEquals(0, iterator_count($loader->getIterator()));
     }
 }

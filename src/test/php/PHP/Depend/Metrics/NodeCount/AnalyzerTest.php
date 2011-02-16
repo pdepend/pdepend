@@ -48,13 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
-
 /**
  * Test case for the node count analyzer.
  *
@@ -66,6 +59,12 @@ require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::nodecount
+ * @group unittest
  */
 class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
@@ -73,11 +72,6 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testVisitClassIgnoresClassesThatAreNotUserDefined
      * 
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testVisitClassIgnoresClassesThatAreNotUserDefined()
     {
@@ -90,18 +84,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        $this->assertEquals(0, $metrics['noc']);
+        self::assertEquals(0, $metrics['noc']);
     }
 
     /**
      * testVisitClassCountsClassesThatAreNotUserDefined
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testVisitClassCountsClassesThatAreNotUserDefined()
     {
@@ -116,18 +105,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        $this->assertEquals(1, $metrics['noc']);
+        self::assertEquals(1, $metrics['noc']);
     }
 
     /**
      * testVisitClassIgnoresInterfacesThatAreNotUserDefined
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testVisitClassIgnoresInterfacesThatAreNotUserDefined()
     {
@@ -140,22 +124,16 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        $this->assertEquals(0, $metrics['noi']);
+        self::assertEquals(0, $metrics['noi']);
     }
 
     /**
      * testVisitClassCountsInterfacesThatAreNotUserDefined
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testVisitClassCountsInterfacesThatAreNotUserDefined()
     {
-
         $userDefined = new PHP_Depend_Code_Interface('Manuel');
         $userDefined->setUserDefined();
 
@@ -166,18 +144,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        $this->assertEquals(1, $metrics['noi']);
+        self::assertEquals(1, $metrics['noi']);
     }
 
     /**
      * Tests that the analyzer calculates the correct number of packages value.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfPackages()
     {
@@ -186,18 +159,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(3, $metrics['nop']);
+        self::assertEquals(3, $metrics['nop']);
     }
     
     /**
      * testCalculatesExpectedNumberOfClassesInProject
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfClassesInProject()
     {
@@ -206,18 +174,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(6, $metrics['noc']);
+        self::assertEquals(6, $metrics['noc']);
     }
 
     /**
      * testCalculatesExpectedNumberOfClassesInPackages
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfClassesInPackages()
     {
@@ -230,7 +193,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 'A' => array('noc' => 3, 'noi' => 0, 'nom' => 0, 'nof' => 0),
                 'B' => array('noc' => 2, 'noi' => 0, 'nom' => 0, 'nof' => 0),
@@ -244,11 +207,6 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testCalculatesExpectedNumberOfInterfacesInProject
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfInterfacesInProject()
     {
@@ -257,18 +215,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(9, $metrics['noi']);
+        self::assertEquals(9, $metrics['noi']);
     }
 
     /**
      * testCalculatesExpectedNumberOfInterfacesInPackages
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfInterfacesInPackages()
     {
@@ -281,7 +234,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 'A' => array('noc' => 0, 'noi' => 1, 'nom' => 0, 'nof' => 0),
                 'B' => array('noc' => 0, 'noi' => 2, 'nom' => 0, 'nof' => 0),
@@ -295,11 +248,6 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testCalculatesExpectedNumberOfMethodsInProject
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfMethodsInProject()
     {
@@ -308,18 +256,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(9, $metrics['nom']);
+        self::assertEquals(9, $metrics['nom']);
     }
 
     /**
      * testCalculatesExpectedNumberOfMethodsInPackages
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfMethodsInPackages()
     {
@@ -332,7 +275,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 'A' => array('noc' => 2, 'noi' => 1, 'nom' => 4, 'nof' => 0),
                 'B' => array('noc' => 0, 'noi' => 2, 'nom' => 3, 'nof' => 0),
@@ -346,11 +289,6 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testCalculatesExpectedNumberOfFunctionsInProject
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfFunctionsInProject()
     {
@@ -359,18 +297,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(6, $metrics['nof']);
+        self::assertEquals(6, $metrics['nof']);
     }
 
     /**
      * testCalculatesExpectedNumberOfFunctionsInPackages
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NodeCount_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodecount
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfFunctionsInPackages()
     {
@@ -383,7 +316,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 'A' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 3),
                 'B' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 2),

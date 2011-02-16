@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeI.php';
-require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
-
 /**
  * Test case for the cyclomatic analyzer.
  *
@@ -62,6 +59,12 @@ require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::cyclomaticcomplexity
+ * @group unittest
  */
 class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest 
     extends PHP_Depend_Metrics_AbstractTest
@@ -70,43 +73,28 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * testGetCCNReturnsZeroForUnknownNode
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testGetCCNReturnsZeroForUnknownNode()
     {
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $this->assertEquals(0, $analyzer->getCCN($this->getMock('PHP_Depend_Code_NodeI')));
+        self::assertEquals(0, $analyzer->getCCN($this->getMock('PHP_Depend_Code_NodeI')));
     }
 
     /**
      * testGetCCN2ReturnsZeroForUnknownNode
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testGetCCN2ReturnsZeroForUnknownNode()
     {
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $this->assertEquals(0, $analyzer->getCCN2($this->getMock('PHP_Depend_Code_NodeI')));
+        self::assertEquals(0, $analyzer->getCCN2($this->getMock('PHP_Depend_Code_NodeI')));
     }
 
     /**
      * Tests that the analyzer calculates the correct function cc numbers.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateFunctionCCNAndCNN2()
     {
@@ -129,18 +117,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * testCalculateFunctionCCNAndCNN2ProjectMetrics
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateFunctionCCNAndCNN2ProjectMetrics()
     {
@@ -150,18 +133,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 12, 'ccn2' => 16);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
     
     /**
      * Tests that the analyzer calculates the correct method cc numbers.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateMethodCCNAndCNN2()
     {
@@ -187,7 +165,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -195,11 +173,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      * compound expression.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateCCNWithConditionalExprInCompoundExpr()
     {
@@ -209,18 +182,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 2, 'ccn2' => 2);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * testCalculateExpectedCCNForDoWhileStatement
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateExpectedCCNForDoWhileStatement()
     {
@@ -232,18 +200,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
 
-        $this->assertEquals(3, $analyzer->getCCN($function));
+        self::assertEquals(3, $analyzer->getCCN($function));
     }
 
     /**
      * testCalculateExpectedCCN2ForDoWhileStatement
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateExpectedCCN2ForDoWhileStatement()
     {
@@ -255,18 +218,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $analyzer->analyze($packages);
 
-        $this->assertEquals(3, $analyzer->getCCN2($function));
+        self::assertEquals(3, $analyzer->getCCN2($function));
     }
 
     /**
      * Tests that the analyzer ignores the default label in a switch statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateCCNIgnoresDefaultLabelInSwitchStatement()
     {
@@ -276,18 +234,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 3, 'ccn2' => 3);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * Tests that the analyzer counts all case labels in a switch statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateCCNCountsAllCaseLabelsInSwitchStatement()
     {
@@ -297,18 +250,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 4, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * Tests that the analyzer detects expressions in a for loop.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateCCNDetectsExpressionsInAForLoop()
     {
@@ -318,18 +266,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 2, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * Tests that the analyzer detects expressions in a while loop.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateCCNDetectsExpressionsInAWhileLoop()
     {
@@ -339,18 +282,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 2, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
     
     /**
      * Tests that the analyzer aggregates the correct project metrics.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testCalculateProjectMetrics()
     {
@@ -360,18 +298,13 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 24, 'ccn2' => 32);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
     
     /**
      * testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::cyclomaticcomplexity
-     * @group unittest
      */
     public function testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod()
     {
@@ -381,6 +314,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 3, 'ccn2' => 3);
         $actual   = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

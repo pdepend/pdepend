@@ -47,9 +47,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
-
 /**
  * Test case for the hierarchy analyzer.
  *
@@ -60,6 +57,12 @@ require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::hierarchy
+ * @group unittest
  */
 class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
@@ -67,11 +70,6 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * testCalculatesExpectedNumberOfLeafClasses
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::hierarchy
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfLeafClasses()
     {
@@ -79,18 +77,13 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(2, $metrics['leafs']);
+        self::assertEquals(2, $metrics['leafs']);
     }
 
     /**
      * testCalculatesExpectedNumberOfAbstractClasses
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::hierarchy
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfAbstractClasses()
     {
@@ -98,18 +91,13 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(1, $metrics['clsa']);
+        self::assertEquals(1, $metrics['clsa']);
     }
 
     /**
      * testCalculatesExpectedNumberOfConcreteClasses
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::hierarchy
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfConcreteClasses()
     {
@@ -117,18 +105,13 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(2, $metrics['clsc']);
+        self::assertEquals(2, $metrics['clsc']);
     }
 
     /**
      * testCalculatesExpectedNumberOfRootClasses
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::hierarchy
-     * @group unittest
      */
     public function testCalculatesExpectedNumberOfRootClasses()
     {
@@ -136,18 +119,13 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(1, $metrics['roots']);
+        self::assertEquals(1, $metrics['roots']);
     }
 
     /**
      * testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::hierarchy
-     * @group unittest
      */
     public function testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses()
     {
@@ -155,18 +133,13 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(0, $metrics['leafs']);
+        self::assertEquals(0, $metrics['leafs']);
     }
 
     /**
      * testAnalyzerIgnoresClassesThatAreNotUserDefined
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::nodeloc
-     * @group unittest
      */
     public function testAnalyzerIgnoresClassesThatAreNotUserDefined()
     {
@@ -176,7 +149,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(array(), $metrics);
+        self::assertEquals(array(), $metrics);
     }
 
     /**
@@ -184,17 +157,12 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      * returns an empty <b>array</b> for an unknown node uuid.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::hierarchy
-     * @group unittest
      */
     public function testGetNodeMetricsForUnknownUUID()
     {
         $class    = new PHP_Depend_Code_Class('PDepend');
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
 
-        $this->assertSame(array(), $analyzer->getNodeMetrics($class));
+        self::assertSame(array(), $analyzer->getNodeMetrics($class));
     }
 }

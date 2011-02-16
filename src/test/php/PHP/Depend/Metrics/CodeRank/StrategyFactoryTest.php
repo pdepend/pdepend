@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Metrics/CodeRank/StrategyFactory.php';
-
 /**
  * Test case for the code rank property strategy.
  *

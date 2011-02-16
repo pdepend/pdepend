@@ -47,8 +47,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-
 /**
  * Tests the for the package metrics visitor.
  *
@@ -59,20 +57,26 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_Dependency_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::dependency
+ * @group unittest
  */
 class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
 {
     /**
      * The used node builder.
      *
-     * @var PHP_Depend_Builder_Default $builder
+     * @var PHP_Depend_Builder_Default
      */
     protected $builder = null;
 
     /**
      * Input test data.
      *
-     * @var array(string=>array) $_input
+     * @var array(string=>array)
      */
     private $_input = array(
         'pkg1'  =>  array(
@@ -98,7 +102,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * Expected test data.
      *
-     * @var array(string=>array) $_expected
+     * @var array(string=>array)
      */
     private $_expected = array();
 
@@ -123,11 +127,6 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
      * Tests the generated package metrics.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_Dependency_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::dependency
-     * @group unittest
      */
     public function testGenerateMetrics()
     {
@@ -149,14 +148,14 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             $expected = $this->_expected[$uuid];
             $actual   = $visitor->getStats($package);
 
-            $this->assertEquals($expected['abstractness'], $actual['a']);
-            $this->assertEquals($expected['instability'], $actual['i']);
-            $this->assertEquals($expected['efferent'], $actual['ce']);
-            $this->assertEquals($expected['afferent'], $actual['ca']);
+            self::assertEquals($expected['abstractness'], $actual['a']);
+            self::assertEquals($expected['instability'], $actual['i']);
+            self::assertEquals($expected['efferent'], $actual['ce']);
+            self::assertEquals($expected['afferent'], $actual['ca']);
 
             unset($this->_expected[$uuid]);
         }
 
-        $this->assertEquals(0, count($this->_expected));
+        self::assertEquals(0, count($this->_expected));
     }
 }

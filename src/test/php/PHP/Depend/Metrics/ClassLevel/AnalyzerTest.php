@@ -61,6 +61,10 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::classlevel
+ * @group unittest
  */
 class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
@@ -69,10 +73,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * method fails with an exception if no cc analyzer was set.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
@@ -89,10 +89,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * fails for an invalid child analyzer.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      * @expectedException InvalidArgumentException
      */
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
@@ -105,10 +101,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateIMPLMetric()
     {
@@ -119,10 +111,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateIMPLMetric1()
     {
@@ -133,10 +121,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateIMPLMetric2()
     {
@@ -147,10 +131,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * testCalculateIMPLMetricContainsUnknownImplementedInterface
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateIMPLMetricContainsUnknownImplementedInterface()
     {
@@ -161,10 +141,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface()
     {
@@ -175,10 +151,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * testCalculateIMPLMetricContainsInternalImplementedInterface
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateIMPLMetricContainsInternalImplementedInterface()
     {
@@ -189,10 +161,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateCISMetricZeroInheritance()
     {
@@ -203,10 +171,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateCISMetricOneLevelInheritance()
     {
@@ -217,10 +181,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateCISMetricTwoLevelInheritance()
     {
@@ -231,10 +191,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * testCalculateCISMetricOnlyCountsMethodsAndNotSumsComplexity
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateCISMetricOnlyCountsMethodsAndNotSumsComplexity()
     {
@@ -245,10 +201,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateCSZMetricZeroInheritance()
     {
@@ -259,10 +211,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateCSZMetricOneLevelInheritance()
     {
@@ -273,10 +221,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * testCalculateCSZMetricOnlyCountsMethodsAndNotSumsComplexity
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateCSZMetricOnlyCountsMethodsAndNotSumsComplexity()
     {
@@ -287,10 +231,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct VARS metric
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateVARSMetricZeroInheritance()
     {
@@ -301,10 +241,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct VARS metric
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateVARSMetricOneLevelInheritance()
     {
@@ -315,10 +251,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct VARSi metric
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateVARSiMetric()
     {
@@ -329,10 +261,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct VARSi metric
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateVARSiMetricWithInheritance()
     {
@@ -343,10 +271,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct VARSnp metric
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateVARSnpMetric()
     {
@@ -357,10 +281,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct VARSnp metric
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateVARSnpMetricWithInheritance()
     {
@@ -371,10 +291,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMC metric. 
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCMetric()
     {
@@ -385,10 +301,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMC metric.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCMetricOneLevelInheritance()
     {
@@ -399,10 +311,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMC metric.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCMetricTwoLevelInheritance()
     {
@@ -413,10 +321,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMCi metric. 
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */    
     public function testCalculateWMCiMetric()
     {
@@ -427,10 +331,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMCi metric.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCiMetricOneLevelInheritance()
     {
@@ -441,10 +341,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMCi metric.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCiMetricTwoLevelInheritance()
     {
@@ -455,10 +351,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMCnp metric. 
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCnpMetric()
     {
@@ -469,10 +361,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMCnp metric.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCnpMetricOneLevelInheritance()
     {
@@ -483,10 +371,6 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      * Tests that the analyzer calculates the correct WMCnp metric.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::classlevel
-     * @group unittest
      */
     public function testCalculateWMCnpMetricTwoLevelInheritance()
     {

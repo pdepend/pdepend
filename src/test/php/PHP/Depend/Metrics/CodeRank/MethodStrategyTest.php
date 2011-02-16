@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/Metrics/CodeRank/MethodStrategy.php';
-
 /**
  * Test case for the method strategy.
  *
@@ -91,7 +88,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
         
         foreach ($packages as $package) {
             foreach ($package->getClasses() as $class) {
-                $this->assertArrayHasKey($class->getName(), $uuidMap);
+                self::assertArrayHasKey($class->getName(), $uuidMap);
                 $uuidMap[$class->getName()] = $class->getUUID();
             }
             if (array_key_exists($package->getName(), $uuidMap)) {
@@ -167,6 +164,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
 
         $actual = $strategy->getCollectedNodes();
         
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

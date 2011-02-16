@@ -48,11 +48,8 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Metrics/NPathComplexity/Analyzer.php';
-
 /**
- * Test case for the npath complexity analyzer.
+ * Test case for the NPath complexity analyzer.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -62,69 +59,55 @@ require_once 'PHP/Depend/Metrics/NPathComplexity/Analyzer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * 
+ * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::npathcomplexity
+ * @group unittest
  */
 class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
      * testNPathComplexityForNestedIfStatementsWithScope
      *
-     * @return unknown_type
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
+     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForNestedIfStatementsWithScope()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(4, $npath);
+        self::assertEquals(4, $npath);
     }
 
     /**
      * testNPathComplexityForNestedIfStatementsWithoutScope
      *
-     * @return unknown_type
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
+     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForNestedIfStatementsWithoutScope()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(4, $npath);
+        self::assertEquals(4, $npath);
     }
 
     /**
      * testNPathComplexityForSiblingConditionalExpressions
      *
-     * @return unknown_type
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
+     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForSiblingConditionalExpressions()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        $this->assertEquals(25, $npath);
+        self::assertEquals(25, $npath);
     }
 
     /**
      * testNPathComplexityForSiblingExpressions
      *
-     * @return unknown_type
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
+     * @return void
      * @since 0.9.12
      * @todo What happens with boolean/logical expressions within the body of
      *       any other statement/expression?
@@ -132,351 +115,246 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
     public function testNPathComplexityForSiblingExpressions()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        $this->assertEquals(15, $npath);
+        self::assertEquals(15, $npath);
     }
 
     /**
      * testNPathComplexityForTwoSiblingIfStatetements
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      * @since 0.9.12
      */
     public function testNPathComplexityForTwoSiblingIfStatetements()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        $this->assertEquals(4, $npath);
+        self::assertEquals(4, $npath);
     }
 
     /**
      * testNPathComplexityForForeachStatementWithNestedIfStatetements
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      * @since 0.9.12
      */
     public function testNPathComplexityForForeachStatementWithNestedIfStatetements()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        $this->assertEquals(3, $npath);
+        self::assertEquals(3, $npath);
     }
 
     /**
      * testNPathComplexityForSiblingIfStatementsAndForeachStatement
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      * @since 0.9.12
      */
     public function testNPathComplexityForSiblingIfStatementsAndForeachStatement()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        $this->assertEquals(12, $npath);
+        self::assertEquals(12, $npath);
     }
 
     /**
      * testNPathComplexityForComplexFunction
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      * @since 0.9.12
      */
     public function testNPathComplexityForComplexFunction()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        $this->assertEquals(60, $npath);
+        self::assertEquals(60, $npath);
     }
 
     /**
      * testNPathComplexityForConditionalsInArrayDeclaration
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      * @since 0.9.12
      */
     public function testNPathComplexityForComplexNestedControlStatements()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        $this->assertEquals(63, $npath);
+        self::assertEquals(63, $npath);
     }
     
     /**
      * testNPathComplexityForConditionalsInArrayDeclaration
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      * @since 0.9.12
      * @todo Fix this, once the AST is complete
      */
     public function testNPathComplexityForConditionalsInArrayDeclaration()
     {
         $npath = $this->_getNPathComplexityForFirstFunctionInTestSource(__METHOD__);
-        //$this->assertEquals(625, $npath);
-        $this->assertEquals(17, $npath);
+        //self::assertEquals(625, $npath);
+        self::assertEquals(17, $npath);
     }
 
     /**
      * testNPathComplexityIsZeroForEmptyMethod
      *
-     * @return unknown_type
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
+     * @return void
      */
     public function testNPathComplexityIsZeroForEmptyMethod()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(1, $npath);
+        self::assertEquals(1, $npath);
     }
 
     /**
      * Tests a method body with a simple if statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForMethodWithSimpleIfStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(2, $npath);
+        self::assertEquals(2, $npath);
     }
 
     /**
      * Tests a method body with a simple if statement with dynamic identifier.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForIfStatementWithNestedDynamicIdentifier()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(2, $npath);
+        self::assertEquals(2, $npath);
     }
 
     /**
      * Tests the analyzer implementation against consecutive if-statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForConsecutiveIfStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(80, $npath);
+        self::assertEquals(80, $npath);
     }
 
     /**
      * Tests the analyzer implementation against multiple if-else-if statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForConsecutiveIfElseIfStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(4, $npath);
+        self::assertEquals(4, $npath);
     }
 
     /**
      * Tests the analyzer implementation against multiple if-elseif statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForConsecutiveIfElsifStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(4, $npath);
+        self::assertEquals(4, $npath);
     }
 
     /**
      * Tests the analyzer implementation against an empty while statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForEmptyWhileStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(3, $npath);
+        self::assertEquals(3, $npath);
     }
 
     /**
      * Tests the anaylzer with nested while statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForNestedWhileStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(5, $npath);
+        self::assertEquals(5, $npath);
     }
 
     /**
      * Tests the npath algorithm with a simple do-while statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSimpleDoWhileStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(3, $npath);
+        self::assertEquals(3, $npath);
     }
 
     /**
      * Tests the analyzer with a simple for statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSimpleForStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(2, $npath);
+        self::assertEquals(2, $npath);
     }
 
     /**
      * Tests the analyzer with a complex for statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForComplexForStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(4, $npath);
+        self::assertEquals(4, $npath);
     }
 
     /**
      * Tests the analyzer implementation with a simple foreach statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSimpleForeachStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(2, $npath);
+        self::assertEquals(2, $npath);
     }
 
     /**
      * Tests the algorithm with a simple return statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSimpleReturnStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(1, $npath);
+        self::assertEquals(1, $npath);
     }
 
     /**
      * Tests the algorithm with a return statement that contains boolean expressions.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForReturnStatementWithBooleanExpressions()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(2, $npath);
+        self::assertEquals(2, $npath);
     }
 
     /**
      * Tests the algorithm with a return statement that contains a conditional.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForReturnStatementWithConditionalStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(5, $npath);
+        self::assertEquals(5, $npath);
     }
 
     /**
@@ -484,16 +362,11 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * child.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSimpleSwitchStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(1, $npath);
+        self::assertEquals(1, $npath);
     }
 
     /**
@@ -501,16 +374,11 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSwitchStatementWithMultipleCaseStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(5, $npath);
+        self::assertEquals(5, $npath);
     }
 
     /**
@@ -518,112 +386,77 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSwitchStatementWithComplexCaseStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(8, $npath);
+        self::assertEquals(8, $npath);
     }
 
     /**
      * Tests the algorithm with a simple try statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSimpleTryCatchStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(2, $npath);
+        self::assertEquals(2, $npath);
     }
 
     /**
      * Tests the algorithm with a try statement with multiple catch statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForTryStatementWithMutlipleCatchStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(5, $npath);
+        self::assertEquals(5, $npath);
     }
 
     /**
      * Tests the algorithm with a try statement with nested if statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForTryCatchStatementWithNestedIfStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(5, $npath);
+        self::assertEquals(5, $npath);
     }
 
     /**
      * Tests the algorithm with a conditional statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForSimpleConditionalStatement()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(5, $npath);
+        self::assertEquals(5, $npath);
     }
 
     /**
      * Tests the algorithm with nested conditional statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForTwoNestedConditionalStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(9, $npath);
+        self::assertEquals(9, $npath);
     }
 
     /**
      * Tests the algorithm with nested conditional statements.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForThreeNestedConditionalStatements()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(13, $npath);
+        self::assertEquals(13, $npath);
     }
 
     /**
@@ -631,16 +464,11 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * expressions.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForConditionalStatementWithLogicalExpressions()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(6, $npath);
+        self::assertEquals(6, $npath);
     }
 
     /**
@@ -648,16 +476,11 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * combination of return, conditional and if statement.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::npathcomplexity
-     * @group unittest
      */
     public function testNPathComplexityForReturnStatementWithConditional()
     {
         $npath = $this->_getNPathComplexityForFirstMethodInTestSource(__METHOD__);
-        $this->assertEquals(6, $npath);
+        self::assertEquals(6, $npath);
     }
 
     /**

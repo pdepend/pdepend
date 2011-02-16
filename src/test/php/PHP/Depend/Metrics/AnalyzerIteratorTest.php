@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-
-require_once 'PHP/Depend/Metrics/AnalyzerI.php';
-require_once 'PHP/Depend/Metrics/AnalyzerIterator.php';
-
 /**
  * Test case for the {@link PHP_Depend_Metrics_AnalyzerIterator} class.
  *
@@ -63,6 +59,11 @@ require_once 'PHP/Depend/Metrics/AnalyzerIterator.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_AnalyzerIterator
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group unittest
  */
 class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
 {
@@ -70,10 +71,6 @@ class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
      * testIteratorReturnsEnabledAnalyzerInstances
      *
      * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerIterator
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
      */
     public function testIteratorReturnsEnabledAnalyzerInstances()
     {
@@ -83,17 +80,13 @@ class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
             ->will($this->returnValue(true));
 
         $iterator = new PHP_Depend_Metrics_AnalyzerIterator(array($analyzer, $analyzer));
-        $this->assertEquals(2, iterator_count($iterator));
+        self::assertEquals(2, iterator_count($iterator));
     }
 
     /**
      * testIteratorDoesNotReturnDisabledAnalyzerInstances
      *
      * @return void
-     * @covers PHP_Depend_Metrics_AnalyzerIterator
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group unittest
      */
     public function testIteratorDoesNotReturnDisabledAnalyzerInstances()
     {
@@ -106,6 +99,6 @@ class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
             ->will($this->returnValue(false));
 
         $iterator = new PHP_Depend_Metrics_AnalyzerIterator(array($analyzer, $analyzer));
-        $this->assertEquals(1, iterator_count($iterator));
+        self::assertEquals(1, iterator_count($iterator));
     }
 }

@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/BuilderI.php';
-require_once 'PHP/Depend/Metrics/CodeRank/PropertyStrategy.php';
-
 /**
  * Test case for the code rank property strategy.
  *
@@ -92,7 +89,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
         
         foreach ($packages as $package) {
             foreach ($package->getClasses() as $class) {
-                $this->assertArrayHasKey($class->getName(), $uuidMap);
+                self::assertArrayHasKey($class->getName(), $uuidMap);
                 $uuidMap[$class->getName()] = $class->getUUID();
             }
             if (array_key_exists($package->getName(), $uuidMap)) {
@@ -168,6 +165,6 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
 
         $actual = $strategy->getCollectedNodes();
         
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }
