@@ -137,6 +137,42 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Helper method to allow PHPUnit versions < 3.5.x
+     *
+     * @param string $expected The expected class or interface.
+     * @param mixed  $actual   The actual variable/value.
+     * @param string $message  Optional error/fail message.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public static function assertInstanceOf($expected, $actual, $message = '')
+    {
+        if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
+            return parent::assertInstanceOf($expected, $actual, $message);
+        }
+        return parent::assertType($expected, $actual, $message);
+    }
+
+    /**
+     * Helper method to allow PHPUnit versions < 3.5.x
+     *
+     * @param string $expected The expected internal type.
+     * @param mixed  $actual   The actual variable/value.
+     * @param string $message  Optional error/fail message.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public static function assertInternalType($expected, $actual, $message = '')
+    {
+        if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
+            return parent::assertInternalType($expected, $actual, $message);
+        }
+        return parent::assertType($expected, $actual, $message);
+    }
+
+    /**
      * Creates a mocked class instance without calling the constructor.
      *
      * @param string $className Name of the class to mock.
