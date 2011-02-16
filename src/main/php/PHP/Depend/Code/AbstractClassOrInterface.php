@@ -80,7 +80,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * The parent for this class node.
      *
-     * @var PHP_Depend_Code_ASTClassReference $_parentClassReference
+     * @var PHP_Depend_Code_ASTClassReference
      * @since 0.9.5
      */
     protected $parentClassReference = null;
@@ -88,28 +88,28 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * List of all interfaces implemented/extended by the this type.
      *
-     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference) $_interfaceReferences
+     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
      */
     protected $interfaceReferences = array();
 
     /**
      * The parent package for this class.
      *
-     * @var PHP_Depend_Code_Package $_package
+     * @var PHP_Depend_Code_Package
      */
     private $_package = null;
 
     /**
      * List of {@link PHP_Depend_Code_Method} objects in this class.
      *
-     * @var array(PHP_Depend_Code_Method) $_methods
+     * @var array(PHP_Depend_Code_Method)
      */
     protected $methods = array();
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var array(string=>mixed) $_constants
+     * @var array(string=>mixed)
      */
     protected $constants = null;
 
@@ -118,7 +118,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * The parser marks all classes and interfaces as user defined that have a
      * source file and were part of parsing process.
      *
-     * @var boolean $_userDefined
+     * @var boolean
      * @since 0.9.5
      */
     protected $userDefined = false;
@@ -126,7 +126,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * List of all parsed child nodes.
      *
-     * @var array(PHP_Depend_Code_ASTNodeI) $_nodes
+     * @var array(PHP_Depend_Code_ASTNodeI)
      * @since 0.9.6
      */
     protected $nodes = array();
