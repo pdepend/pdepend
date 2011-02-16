@@ -106,7 +106,7 @@ class MyCouplingClass
      * @param ArrayAccess $items The input items.
      * @param integer     $index The requested index.
      *
-     * @return MyObjectItem
+     * @return MyCouplingInterface
      * @throws OutOfRangeException For invalid index values.
      * @throws InvalidArgumentException For invalid index values.
      */

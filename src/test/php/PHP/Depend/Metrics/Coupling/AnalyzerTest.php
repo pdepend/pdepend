@@ -204,6 +204,66 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     }
 
     /**
+     * testGetNodeMetricsReturnsExpectedCaForFunctionReference
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForFunctionReference()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForFunctionException
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForFunctionException()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForFunctionReturnType
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForFunctionReturnType()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForFunctionParameter
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForFunctionParameter()
+    {
+        self::assertEquals(1, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForFunctions
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForFunctions()
+    {
+        self::assertEquals(3, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCaForFunctionCountsTypeOnce
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCaForFunctionCountsTypeOnce()
+    {
+        self::assertEquals(2, $this->_getNodeMetricForType('ca'));
+    }
+
+    /**
      * testGetNodeMetricsReturnsExpectedCboWithoutDependencies
      * 
      * @return void

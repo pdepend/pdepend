@@ -253,6 +253,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
 
             $this->_fanout += $efferentCoupling;
         }
+        
         $this->_temporaryCouplingMap = array();
     }
 
@@ -280,8 +281,19 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         }
         foreach ($function->getDependencies() as $type) {
             if (in_array($type, $fanouts, true) === false) {
+                $fanouts[] = $type;
                 ++$this->_fanout;
             }
+        }
+
+        foreach ($fanouts as $fanout) {
+            $this->_initClassOrInterfaceDependencyMap($fanout);
+
+            $this->_temporaryCouplingMap[
+                $fanout->getUUID()
+            ]['ca'][
+                $function->getUUID()
+            ] = true;
         }
 
         $this->_countCalls($function);
@@ -289,10 +301,34 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         $this->fireEndFunction($function);
     }
 
+    /**
+     * Visit method for classes that will be called by PHP_Depend during the
+     * analysis phase with the current context class.
+     *
+     * @param PHP_Depend_Code_Class $class The currently analyzed class.
+     *
+     * @return void
+     * @since 0.10.2
+     */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
         $this->_initClassOrInterfaceDependencyMap($class);
         return parent::visitClass($class);
+    }
+
+    /**
+     * Visit method for interfaces that will be called by PHP_Depend during the
+     * analysis phase with the current context interface.
+     *
+     * @param PHP_Depend_Code_Interface $interface The currently analyzed interface.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    {
+        $this->_initClassOrInterfaceDependencyMap($interface);
+        return parent::visitInterface($interface);
     }
 
     /**

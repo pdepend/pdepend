@@ -27,7 +27,7 @@ class MyMethodCouplingClass
      * @param ArrayAccess $items The input items.
      * @param integer     $index The requested index.
      *
-     * @return OutOfRangeException
+     * @return MyMethodCouplingInterface
      * @throws OutOfRangeException For invalid index values.
      * @throws InvalidArgumentException For invalid index values.
      */

@@ -1,5 +1,5 @@
 <?php
-class testGetNodeMetricsReturnsExpectedCboWithObjectInstantiation
+class testGetNodeMetricsReturnsExpectedCaWithObjectInstantiation
 {
 
 }
