@@ -3772,7 +3772,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             throw new PHP_Depend_Parser_InvalidStateException(
                 $token->startLine,
                 (string) $this->_sourceFile,
-                'The keyword "parent" was used outside of a class/method scope.'
+                'The keyword "parent" was used as type hint but the parameter ' .
+                'declaration is not in a class scope.'
             );
         }
 
@@ -3782,7 +3783,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $token->startLine,
                 (string) $this->_sourceFile,
                 sprintf(
-                    'The keyword "parent" was used but the ' .
+                    'The keyword "parent" was used as type hint but the ' .
                     'class "%s" does not declare a parent.',
                     $this->_classOrInterface->getName()
                 )
@@ -4611,38 +4612,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $token = $this->consumeToken(self::T_PARENT);
 
-        if ($this->_classOrInterface === null) {
-            throw new PHP_Depend_Parser_InvalidStateException(
-                $token->startLine,
-                (string) $this->_sourceFile,
-                'The keyword "parent" was used as type hint but the parameter ' .
-                'declaration is not in a class scope.'
-            );
-        }
-
-        $classReference = $this->_classOrInterface->getParentClassReference();
-        if ($classReference === null) {
-            throw new PHP_Depend_Parser_InvalidStateException(
-                $token->startLine,
-                (string) $this->_sourceFile,
-                sprintf(
-                    'The keyword "parent" was used as type hint but the parent ' .
-                    'class "%s" does not declare a parent.',
-                    $this->_classOrInterface->getName()
-                )
-            );
-        }
-
-        $classReference = clone $classReference;
-        $classReference->configureLinesAndColumns(
-            $token->startLine,
-            $token->endLine,
-            $token->startColumn,
-            $token->endColumn
-        );
-
+        $reference = $this->_parseParentReference($token);
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->addChild($classReference);
+        $parameter->prependChild($reference);
 
         return $parameter;
     }

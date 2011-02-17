@@ -47,7 +47,7 @@
  * @since      0.9.20
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
  * Abstract test case class for this sub package.
@@ -64,19 +64,5 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  */
 abstract class PHP_Depend_Parser_AbstractTest extends PHP_Depend_AbstractTest
 {
-    /**
-     * Parses test code for the calling test case.
-     *
-     * @param string  $testCase          Name of the calling test case.
-     * @param boolean $ignoreAnnotations Should the parser ignore annotations?
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
-    {
-        list($className, $methodName) = explode('::', $testCase);
 
-        $directory = substr($className, 18, -4);
-        return parent::parseSource("parser/{$directory}/{$methodName}.php", $ignoreAnnotations);
-    }
 }

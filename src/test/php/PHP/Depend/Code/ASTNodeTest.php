@@ -62,17 +62,35 @@ require_once 'PHP/Depend/Code/ASTVisitorI.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Code_ASTNode
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testPrependChildAddsChildAtFirstPosition
+     *
+     * @return void
+     */
+    public function testPrependChildAddsChildAtFirstPosition()
+    {
+        $child1 = $this->getMock(PHP_Depend_Code_ASTNode::CLAZZ);
+        $child2 = $this->getMock(PHP_Depend_Code_ASTNode::CLAZZ);
+
+        $parent = $this->createNodeInstance();
+        $parent->prependChild($child2);
+        $parent->prependChild($child1);
+
+        self::assertSame($child2, $parent->getChild(1));
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -91,10 +109,6 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * testFreeSetsParentReferenceToNull
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFreeSetsParentReferenceToNull()
     {
@@ -102,17 +116,13 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $node->setParent(clone $node);
         $node->free();
 
-        $this->assertNull($node->getParent());
+        self::assertNull($node->getParent());
     }
 
     /**
      * testFreeSetsChildReferencesToNull
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFreeSetsChildReferencesToNull()
     {
@@ -121,17 +131,13 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $node->addChild(clone $node);
         $node->free();
 
-        $this->assertEquals(array(), $node->getChildren());
+        self::assertEquals(array(), $node->getChildren());
     }
 
     /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -149,17 +155,13 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $node->addChild($node2);
 
         $child = $node->getFirstChildOfType(get_class($node2));
-        $this->assertSame($node2, $child);
+        self::assertSame($node2, $child);
     }
 
     /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -186,25 +188,23 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $node->addChild($node3);
 
         $child = $node->getFirstChildOfType(get_class($node1));
-        $this->assertSame($node1, $child);
+        self::assertSame($node1, $child);
     }
 
     /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
+        $name = 'PHP_Depend_Code_ASTNodeI_' . md5(microtime());
+        
         $node2 = $this->getMock(
             'PHP_Depend_Code_ASTNodeI',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            $name
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
@@ -213,26 +213,23 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $node = $this->createNodeInstance();
         $node->addChild($node2);
 
-        $child = $node->getFirstChildOfType('PHP_Depend_Code_ASTNodeI_' . md5(microtime()));
-        $this->assertNull($child);
+        self::assertNull($node->getFirstChildOfType($name . '_'));
     }
 
     /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::findChildrenOfType()}.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
+        $name = 'PHP_Depend_Code_ASTNodeI_' . md5(microtime());
+
         $node2 = $this->getMock(
             'PHP_Depend_Code_ASTNodeI',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            $name
         );
         $node2->expects($this->once())
             ->method('findChildrenOfType')
@@ -241,8 +238,8 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
         $node = $this->createNodeInstance();
         $node->addChild($node2);
 
-        $children = $node->findChildrenOfType(get_class($node2));
-        $this->assertSame(array($node2), $children);
+        $children = $node->findChildrenOfType($name);
+        self::assertSame(array($node2), $children);
     }
 
     /**
@@ -250,10 +247,6 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * an exception for an undefined node offset.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException OutOfBoundsException
      */
     public function testGetChildThrowsExpectedExceptionForUndefinedOffset()
@@ -292,7 +285,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     protected function assertGraphEquals(PHP_Depend_Code_ASTNode $node, $expected)
     {
         $actual = $this->collectChildNodes($node);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -303,8 +296,10 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      *
      * @return array(string)
      */
-    protected function collectChildNodes(PHP_Depend_Code_ASTNode $node, array $actual = array())
-    {
+    protected function collectChildNodes(
+        PHP_Depend_Code_ASTNode $node,
+        array $actual = array()
+    ) {
         foreach ($node->getChildren() as $child) {
             $actual[] = get_class($child);
             $actual   = $this->collectChildNodes($child, $actual);

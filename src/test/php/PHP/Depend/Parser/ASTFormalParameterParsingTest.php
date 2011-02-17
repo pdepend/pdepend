@@ -36,88 +36,86 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Bugs
+ * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
+ * @link       http://pdepend.org/
+ * @since      0.10.2
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Test case for the parent keyword type hint bug no #87.
+ * Test case for the {@link PHP_Depend_Parser} class.
  *
- * http://tracker.pdepend.org/pdepend/issue_tracker/issue/87
- *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Bugs
+ * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
+ * @link       http://pdepend.org/
+ * @since      0.10.2
  *
- * @covers stdClass
+ * @covers PHP_Depend_Parser
  * @group pdepend
- * @group pdepend::bugs
- * @group regressiontest
+ * @group pdepend::parser
+ * @group unittest
  */
-class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
-    extends PHP_Depend_Bugs_AbstractTest
+class PHP_Depend_Parser_ASTFormalParameterParsingTest
+    extends PHP_Depend_Parser_AbstractTest
 {
     /**
-     * Tests that the parser handles the parent type hint as expected.
-     *
-     * @return void
-     */
-    public function testParserSetsExpectedParentTypeHintReference()
-    {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
-        $this->assertSame('Bar', $parameters[0]->getClass()->getName());
-    }
-
-    /**
-     * Tests that the parser throws an exception when the parent keyword is used
-     * within a function signature.
-     *
-     * @return void
-     */
-    public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
-    {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
-            'The keyword "parent" was used as type hint but the parameter ' .
-            'declaration is not in a class scope.'
-        );
-
-        self::parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForParentTypeHintWithRootClass
+     * testWithParentTypeHint
      * 
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass()
+    public function testWithParentTypeHint()
     {
-        $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
-            'The keyword "parent" was used as type hint but the ' .
-            'class "Baz" does not declare a parent.'
-        );
+        $typeHint = self::getFirstMethodFormalParameter()->getChild(0);
+        self::assertInstanceOf(PHP_Depend_Code_ASTParentReference::CLAZZ, $typeHint);
+    }
 
+    /**
+     * testWithParentTypeHintInFunctionThrowsExpectedException
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_InvalidStateException
+     */
+    public function testWithParentTypeHintInFunctionThrowsExpectedException()
+    {
         self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testWithParentTypeHintInRootClassThrowsExpectedException
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_InvalidStateException
+     */
+    public function testWithParentTypeHintInRootClassThrowsExpectedException()
+    {
+        self::parseCodeResourceForTest();
+    }
+
+    /**
+     * Returns the first formal parameter found in the associated test file.
+     * 
+     * @return PHP_Depend_Code_ASTFormalParameter
+     */
+    private static function getFirstMethodFormalParameter()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
     }
 }

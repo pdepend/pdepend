@@ -339,6 +339,20 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     }
 
     /**
+     * This method adds a new child node at the first position of the children.
+     *
+     * @param PHP_Depend_Code_ASTNodeI $node The new child node.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public function prependChild(PHP_Depend_Code_ASTNodeI $node)
+    {
+        array_unshift($this->nodes, $node);
+        $node->setParent($this);
+    }
+
+    /**
      * This method adds a new child node to this node instance.
      *
      * @param PHP_Depend_Code_ASTNodeI $node The new child node.
@@ -347,10 +361,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function addChild(PHP_Depend_Code_ASTNodeI $node)
     {
-        // Store child node
         $this->nodes[] = $node;
-
-        // Set this as parent
         $node->setParent($this);
     }
 
