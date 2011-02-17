@@ -63,6 +63,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @since      0.10.0
  *
  * @covers PHP_Depend_Parser_TokenStack
+ * @group pdepend
+ * @group pdepend::parser
+ * @group unittest
  */
 class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
 {
@@ -70,9 +73,6 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      * testAddReturnsGivenTokenInstance
      * 
      * @return void
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testAddReturnsGivenTokenInstance()
     {
@@ -86,9 +86,6 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      * testPopReturnsExpectedTokenArray
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testPopReturnsExpectedTokenArray()
     {
@@ -108,9 +105,6 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      * testPopOnlyReturnsExpectedTokenArrayInCurrentScope
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testPopOnlyReturnsExpectedTokenArrayInCurrentScope()
     {
@@ -132,9 +126,6 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      * testPopOnRootReturnsExpectedTokenArrayWithAllTokens
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testPopOnRootReturnsExpectedTokenArrayWithAllTokens()
     {
