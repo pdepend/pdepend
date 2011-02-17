@@ -67,7 +67,7 @@ interface PHP_Depend_Util_Cache_Driver
     /**
      * The current cache version.
      */
-    const VERSION = '@version:db3c963923ae3d3cd0349ed43990faf7:@';
+    const VERSION = '@version:df35924c7cd6d7712be8805e62ff3d20:@';
 
     /**
      * Sets the type for the next <em>store()</em> or <em>restore()</em> method
