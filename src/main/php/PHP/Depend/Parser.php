@@ -3886,44 +3886,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Parses a variable node, optionally prefixed by an unary expression that
-     * represents php's by reference operator.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     * @since 0.9.11
-     */
-    private function _parseVariableOptionalByReference()
-    {
-        $this->consumeComments();
-        if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
-            return $this->_parseVariableByReference();
-        }
-        return $this->_parseCompoundVariableOrVariableVariableOrVariable();
-    }
-
-    /**
-     * Parses a unary expression which represents php's by reference operator,
-     * that is followed by a variable node.
-     *
-     * @return PHP_Depend_Code_ASTUnaryExpression
-     * @since 0.9.11
-     */
-    private function _parseVariableByReference()
-    {
-        $this->_tokenStack->push();
-
-        $token = $this->consumeToken(self::T_BITWISE_AND);
-        $this->consumeComments();
-
-        $variable = $this->_parseCompoundVariableOrVariableVariableOrVariable();
-
-        $expression = $this->_builder->buildASTUnaryExpression($token->image);
-        $expression->addChild($variable);
-
-        return $this->_setNodePositionsAndReturn($expression);
-    }
-
-    /**
      * This method parses a simple PHP variable.
      *
      * @return PHP_Depend_Code_ASTVariable
