@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend.php';
-
 /**
  * Handles the command line stuff and starts the text ui runner.
  *
