@@ -17,6 +17,29 @@
     <target name="build" depends="test" description="Primary build: PHP Depend" />
 
     <!--
+        We use the phar archive after hook to validate that a newly created
+        phar archive works as expected.
+
+        Parameters:
+            ${phar.archive.filename}  Name of the created phar file.
+    -->
+    <target name="~pack-phar-archive-after">
+
+        <echo message="Executing:" level="verbose" />
+        <echo message="  ${phar.archive.filename} --summary-xml=${tmpdir}/phar-test.xml PHP/Depend/Code" 
+              level="verbose" />
+
+        <exec dir="${php.basedir.src}" executable="php" failonerror="true">
+            <arg value="-d" />
+            <arg value="include_path=." />
+            <arg value="${phar.archive.filename}" />
+            <arg value="--summary-xml=${tmpdir}/phar-test.xml" />
+            <arg value="PHP/Depend/Code" />
+        </exec>
+    </target>
+
+
+    <!--
         We use the pear archive after hook to validate that a clean PHP_Depend
         PEAR installation works as expected.
     -->
