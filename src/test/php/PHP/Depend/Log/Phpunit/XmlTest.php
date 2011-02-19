@@ -48,18 +48,8 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Log/Phpunit/Xml.php';
-require_once 'PHP/Depend/Metrics/ClassLevel/Analyzer.php';
-require_once 'PHP/Depend/Metrics/CodeRank/Analyzer.php';
-require_once 'PHP/Depend/Metrics/Coupling/Analyzer.php';
-require_once 'PHP/Depend/Metrics/CyclomaticComplexity/Analyzer.php';
-require_once 'PHP/Depend/Metrics/Hierarchy/Analyzer.php';
-require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
-require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
-require_once 'PHP/Depend/Metrics/NodeLoc/Analyzer.php';
-
 /**
- * Test case for the phpunit logger.
+ * Test case for the Phpunit logger.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -69,6 +59,12 @@ require_once 'PHP/Depend/Metrics/NodeLoc/Analyzer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Log_Phpunit_Xml
+ * @group pdepend
+ * @group pdepend::logs
+ * @group pdepend::logs::summary
+ * @group unittest
  */
 class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
 {
@@ -111,11 +107,6 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
-     * @covers PHP_Depend_Log_Phpunit_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::phpunit
-     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -134,11 +125,6 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
-     * @covers PHP_Depend_Log_Phpunit_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::phpunit
-     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -152,18 +138,13 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests the result of the phpunit logger with some real analyzers.
+     * Tests the result of the Phpunit logger with some real analyzers.
      *
      * @return void
-     * @covers PHP_Depend_Log_Phpunit_Xml
-     * @group pdepend
-     * @group pdepend::logs
-     * @group pdepend::logs::summary
-     * @group unittest
      */
     public function testPHPUnitLoggerResult()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $logger = new PHP_Depend_Log_Phpunit_Xml();
         $logger->setLogFile($this->_tempFile);
@@ -215,17 +196,12 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      * testPHPUnitLogNotContainsNotUserDefinedClasses
      *
      * @return void
-     * @covers PHP_Depend_Log_Phpunit_Xml
-     * @group pdepend
-     * @group pdepend::logs
-     * @group pdepend::logs::phpunit
-     * @group unittest
      */
     public function testPHPUnitLogNotContainsNotUserDefinedClasses()
     {
         $logger = new PHP_Depend_Log_Phpunit_Xml();
         $logger->setLogFile($this->_tempFile);
-        $logger->setCode(self::parseTestCaseSource(__METHOD__));
+        $logger->setCode(self::parseCodeResourceForTest());
         $logger->close();
 
         $sxml = simplexml_load_file($this->_tempFile);
@@ -241,20 +217,12 @@ class PHP_Depend_Log_Phpunit_XmlTest extends PHP_Depend_AbstractTest
      */
     private function _loadExpected($file)
     {
-        $path = realpath(dirname(__FILE__) . '/../../_code');
+        $path = self::createCodeResourceUriForTest();
 
-        $dom = new DOMDocument('1.0', 'UTF-8');
-
-        $dom->formatOutput       = true;
-        $dom->preserveWhiteSpace = false;
-
-        $dom->load(dirname(__FILE__) . "/_expected/{$file}");
-        foreach ($dom->getElementsByTagName('file') as $fileXml) {
-            $name = $fileXml->getAttribute('name');
-            $name = substr($name, strrpos($name, '_code') + 5);
-
-            $fileXml->setAttribute('name', realpath("{$path}{$name}"));
-        }
-        return $dom->saveXML();
+        return preg_replace(
+            '(file name="[^"]+/([^/"]+)")',
+            'file name="' . $path . '/\\1"',
+             file_get_contents(dirname(__FILE__) . "/_expected/{$file}")
+        );
     }
 }

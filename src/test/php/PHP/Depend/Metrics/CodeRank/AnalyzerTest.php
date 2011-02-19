@@ -90,44 +90,11 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     );
 
     /**
-     * The expected test data.
-     *
-     * @var array(string=>array)
-     */
-    private $_expected = array();
-
-    /**
      * The code rank analyzer.
      *
      * @var PHP_Depend_Metrics_CodeRank_Analyzer
      */
     private $_analyzer = null;
-
-    /**
-     * Creates the expected metrics array.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/code-5.2.x');
-
-        $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
-        $this->_analyzer->analyze($packages);
-
-        $this->_expected = array();
-        foreach ($packages as $package) {
-            if ($package->getTypes()->count() === 0) {
-                continue;
-            }
-            $this->_expected[] = array($package, $this->_input[$package->getName()]);
-            foreach ($package->getTypes() as $type) {
-                $this->_expected[] = array($type, $this->_input[$type->getName()]);
-            }
-        }
-    }
 
     /**
      * testCodeRankOfSimpleInheritanceExample
@@ -450,15 +417,31 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetrics()
     {
-        foreach ($this->_expected as $key => $info) {
+        $packages = self::parseCodeResourceForTest();
+        
+        $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $this->_analyzer->analyze($packages);
+
+        $expected = array();
+        foreach ($packages as $package) {
+            if ($package->getTypes()->count() === 0) {
+                continue;
+            }
+            $expected[] = array($package, $this->_input[$package->getName()]);
+            foreach ($package->getTypes() as $type) {
+                $expected[] = array($type, $this->_input[$type->getName()]);
+            }
+        }
+
+        foreach ($expected as $key => $info) {
             $metrics = $this->_analyzer->getNodeMetrics($info[0]);
 
             self::assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
             self::assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
 
-            unset($this->_expected[$key]);
+            unset($expected[$key]);
         }
-        self::assertEquals(0, count($this->_expected));
+        self::assertEquals(0, count($expected));
     }
 
     /**
@@ -472,6 +455,11 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      */
     public function testGetNodeMetricsInvalidIdentifier()
     {
+        $packages = self::parseCodeResourceForTest();
+
+        $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $this->_analyzer->analyze($packages);
+        
         $class   = new PHP_Depend_Code_Class('PDepend');
         $metrics = $this->_analyzer->getNodeMetrics($class);
 

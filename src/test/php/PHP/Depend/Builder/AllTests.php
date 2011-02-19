@@ -64,7 +64,7 @@ require_once dirname(__FILE__) . '/Context/AllTests.php';
 class PHP_Depend_Builder_AllTests
 {
     /**
-     * Creates the phpunit test suite for this package.
+     * Creates the Phpunit test suite for this package.
      *
      * @return PHPUnit_Framework_TestSuite
      */

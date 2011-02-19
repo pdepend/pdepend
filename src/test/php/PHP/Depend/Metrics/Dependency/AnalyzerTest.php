@@ -79,49 +79,47 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
      * @var array(string=>array)
      */
     private $_input = array(
+        '+global'  =>  array(
+            'tc'  =>  0,
+            'cc'  =>  0,
+            'ac'  =>  0,
+            'ca'  =>  1,
+            'ce'  =>  0,
+            'a'   =>  0,
+            'i'   =>  0,
+            'd'   =>  1
+        ),
         'pkg1'  =>  array(
-            'abstractness'  =>  0,
-            'instability'   =>  1,
-            'efferent'      =>  2,
-            'afferent'      =>  0
+            'tc'  =>  1,
+            'cc'  =>  1,
+            'ac'  =>  0,
+            'ca'  =>  0,
+            'ce'  =>  2,
+            'a'   =>  0,
+            'i'   =>  1,
+            'd'   =>  0
         ),
         'pkg2'  =>  array(
-            'abstractness'  =>  1,
-            'instability'   =>  0,
-            'efferent'      =>  0,
-            'afferent'      =>  1
+            'tc'  =>  1,
+            'cc'  =>  0,
+            'ac'  =>  1,
+            'ca'  =>  1,
+            'ce'  =>  0,
+            'a'   =>  1,
+            'i'   =>  0,
+            'd'   =>  0
         ),
         'pkg3'  =>  array(
-            'abstractness'  =>  1,
-            'instability'   =>  0.5,
-            'efferent'      =>  1,
-            'afferent'      =>  1
+            'tc'  =>  1,
+            'cc'  =>  0,
+            'ac'  =>  1,
+            'ca'  =>  1,
+            'ce'  =>  1,
+            'a'   =>  1,
+            'i'   =>  0.5,
+            'd'   =>  0.5,
         ),
     );
-
-    /**
-     * Expected test data.
-     *
-     * @var array(string=>array)
-     */
-    private $_expected = array();
-
-    /**
-     * Sets up the code builder.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php');
-        foreach ($packages as $pkg) {
-            if (isset($this->_input[$pkg->getUUID()])) {
-                $this->_expected[$pkg->getUUID()] = $this->_input[$pkg->getName()];
-            }
-        }
-    }
 
     /**
      * Tests the generated package metrics.
@@ -132,30 +130,14 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     {
         $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
 
-        $packages = self::parseSource(dirname(__FILE__) . '/../../_code/mixed_code.php');
+        $packages = self::parseCodeResourceForTest();
+        $visitor->analyze($packages);
+
+        $actual = array();
         foreach ($packages as $package) {
-            $package->accept($visitor);
+            $actual[$package->getName()] = $visitor->getStats($package);
         }
 
-        foreach ($packages as $package) {
-
-            $uuid = $package->getUUID();
-
-            if (!isset($this->_expected[$uuid])) {
-                continue;
-            }
-
-            $expected = $this->_expected[$uuid];
-            $actual   = $visitor->getStats($package);
-
-            self::assertEquals($expected['abstractness'], $actual['a']);
-            self::assertEquals($expected['instability'], $actual['i']);
-            self::assertEquals($expected['efferent'], $actual['ce']);
-            self::assertEquals($expected['afferent'], $actual['ca']);
-
-            unset($this->_expected[$uuid]);
-        }
-
-        self::assertEquals(0, count($this->_expected));
+        self::assertEquals($this->_input, $actual);
     }
 }

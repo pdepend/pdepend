@@ -51,10 +51,6 @@ require_once dirname(__FILE__) . '/AnalyzerNodeAwareDummy.php';
 require_once dirname(__FILE__) . '/AnalyzerProjectAwareDummy.php';
 require_once dirname(__FILE__) . '/AnalyzerNodeAndProjectAwareDummy.php';
 
-require_once 'PHP/Depend/Log/Summary/Xml.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-require_once 'PHP/Depend/Metrics/ProjectAwareI.php';
-
 /**
  * Test case for the xml summary log.
  *
@@ -77,13 +73,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     protected $packages = null;
 
     /**
-     * The test file name.
-     *
-     * @var string $testFile
-     */
-    protected $testFileName = null;
-
-    /**
      * The temporary file name for the logger result.
      *
      * @var string $resultFile
@@ -99,10 +88,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
-        $this->testFileName = dirname(__FILE__) . '/../../_code/mixed_code.php';
-        $this->testFileName = realpath($this->testFileName);
-
-        $this->packages   = self::parseSource($this->testFileName);
         $this->resultFile = self::createRunResourceURI('log-summary.xml');
     }
 
@@ -212,6 +197,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
+        $this->packages = self::parseCodeResourceForTest();
+
         $log = new PHP_Depend_Log_Summary_Xml();
         $log->setLogFile($this->resultFile);
         $log->setCode($this->packages);
@@ -270,6 +257,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected()
     {
+        $this->packages = self::parseCodeResourceForTest();
+
         $analyzer = new PHP_Depend_Log_Summary_AnalyzerNodeAndProjectAwareDummy(
             array('foo' => 42, 'bar' => 23),
             array('baz' => 23, 'foobar' => 42)
@@ -301,6 +290,8 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      */
     public function testNodeAwareAnalyzer()
     {
+        $this->packages = self::parseCodeResourceForTest();
+
         $input = array(
             array('loc'  =>  42),  array('ncloc'  =>  23),
             array('loc'  =>  9),   array('ncloc'  =>  7),
@@ -354,16 +345,10 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
 
     protected function getNormalizedPathXml($fileName)
     {
-        $dom                     = new DOMDocument('1.0', 'UTF-8');
-        $dom->preserveWhiteSpace = false;
-        $dom->load($fileName);
-
-        // Adjust file path
-        foreach ($dom->getElementsByTagName('file') as $file) {
-            $file->setAttribute('name', $this->testFileName);
-        }
-        $dom->documentElement->setAttribute('generated', '2010-02-22T08:26:51');
-
-        return $dom->saveXML();
+        return preg_replace(
+            array('(file\s+name="[^"]+")', '(generated="[^"]*")'),
+            array('file name="' . __FILE__ . '"', 'generated=""'),
+             file_get_contents($fileName)
+        );
     }
 }

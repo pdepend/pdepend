@@ -65,7 +65,7 @@ require_once dirname(__FILE__) . '/RunnerTest.php';
 class PHP_Depend_TextUI_AllTests
 {
     /**
-     * Creates the phpunit test suite for this package.
+     * Creates the Phpunit test suite for this package.
      *
      * @return PHPUnit_Framework_TestSuite
      */
