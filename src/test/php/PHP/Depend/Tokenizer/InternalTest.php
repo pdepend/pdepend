@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Token.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
-
 /**
  * Test case for the {@link PHP_Depend_Tokenizer_Internal} class.
  *
@@ -62,6 +59,11 @@ require_once 'PHP/Depend/Tokenizer/Internal.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Tokenizer_Internal
+ * @group pdepend
+ * @group pdepend::tokenizer
+ * @group unittest
  */
 class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
 {
@@ -69,16 +71,11 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * Tests the tokenizer with a source file that contains only classes.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testInternalWithClasses()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/classes.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -122,7 +119,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $actual[] = $token->type;
         }
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -130,16 +127,11 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * classes and functions.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testInternalWithMixedContent()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
@@ -175,7 +167,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $actual[] = array($token->type, $token->startLine);
         }
         
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -183,34 +175,24 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * token.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testInternalReturnsBOFTokenForPrevCall()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_class.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
-        $this->assertEquals(PHP_Depend_TokenizerI::T_BOF, $tokenizer->prev());
+        self::assertEquals(PHP_Depend_TokenizerI::T_BOF, $tokenizer->prev());
     }
 
     /**
      * Tests the tokenizer with a combination of procedural code and functions.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testInternalWithProceduralCodeAndFunction()
     {
-        $sourceFile = realpath(dirname(__FILE__) . '/../_code/func_code.php');
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -253,23 +235,18 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $actual[] = $token->type;
         }
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * Test case for undetected static method call added.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testInternalStaticCallBug01()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/bugs/001.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -298,7 +275,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $actual[] = $token->type;
         }
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -315,16 +292,11 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * http://bugs.xplib.de/index.php?do=details&task_id=9&project=3
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testInternalDollarSyntaxBug09()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/bugs/005.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
@@ -355,23 +327,18 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $actual[] = $token->type;
         }
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * Test case for the inline html bug.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testTokenizerWithInlineHtmlBug24()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/bugs/024.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
@@ -416,7 +383,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $actual[] = array($token->type, $token->startLine);
         }
 
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
@@ -424,10 +391,6 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * this bug only occures for PHP versions < 5.3.0alpha3.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testTokenizerHandlesBackslashInStringCorrectBug84()
     {
@@ -435,9 +398,8 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Only relevant for php versions < 5.3.0alpha3');
         }
 
-        $sourceFile = dirname(__FILE__) . '/../_code/bugs/054-namespace-separator.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             array(PHP_Depend_TokenizerI::T_OPEN_TAG, 1),
@@ -453,23 +415,18 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             $actual[] = array($token->type, $token->startLine);
         }
 
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
-     * Tests the tokenizers column calculation implementation.
+     * Tests the tokenizer's column calculation implementation.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/issues/088-1.phtml';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             array(PHP_Depend_ConstantsI::T_NO_PHP, '<html>
@@ -504,23 +461,18 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             );
         }
 
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
-     * Tests the tokenizers column calculation implementation.
+     * Tests the tokenizer's column calculation implementation.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88()
     {
-        $sourceFile = dirname(__FILE__) . '/../_code/issues/088-2.php';
         $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile($sourceFile);
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $expected = array(
             array(PHP_Depend_ConstantsI::T_NO_PHP, 'Hello', 1, 1, 1, 5),
@@ -553,24 +505,18 @@ Manuel', 3, 5, 61, 6),
             );
         }
 
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
      * testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens()
     {
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(
-            self::createCodeResourceURI('tokenizer/' . __FUNCTION__ . '.php')
-        );
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $actual = array();
         while (is_object($token = $tokenizer->next())) {
@@ -588,24 +534,18 @@ Manuel', 3, 5, 61, 6),
             array(PHP_Depend_ConstantsI::T_SEMICOLON, 15, 15),
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression()
     {
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(
-            self::createCodeResourceURI('tokenizer/' . __FUNCTION__ . '.php')
-        );
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $actual = array();
         while (is_object($token = $tokenizer->next())) {
@@ -622,24 +562,18 @@ Manuel', 3, 5, 61, 6),
             array(PHP_Depend_ConstantsI::T_SEMICOLON),
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_Internal
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString()
     {
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(
-            self::createCodeResourceURI('tokenizer/' . __FUNCTION__ . '.php')
-        );
+        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
         $actual = array();
         while (is_object($token = $tokenizer->next())) {
@@ -656,6 +590,6 @@ Manuel', 3, 5, 61, 6),
             array(PHP_Depend_ConstantsI::T_SEMICOLON),
         );
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

@@ -75,7 +75,6 @@ class PHP_Depend_Bugs_CouplingAnalyzerBug014Test extends PHP_Depend_Bugs_Abstrac
      */
     public function testAnalyzerExecutionChain()
     {
-        $source   = dirname(__FILE__) . '/../../_code/bugs/014.php';
         $packages = self::parseCodeResourceForTest();
 
         self::assertEquals(1, $packages->count());

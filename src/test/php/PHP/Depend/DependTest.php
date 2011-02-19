@@ -91,7 +91,24 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAddDirectory()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
+    }
+
+    /**
+     * testAnalyzeMethodReturnsAnIterator
+     *
+     * @return void
+     * @covers PHP_Depend
+     * @group pdepend
+     * @group unittest
+     */
+    public function testAnalyzeMethodReturnsAnIterator()
+    {
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
+        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
+
+        self::assertInstanceOf('Iterator', $pdepend->analyze());
     }
     
     /**
@@ -105,21 +122,18 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAnalyze()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
         
         $metrics = $pdepend->analyze();
         
         $expected = array(
-            'package1'                                     =>  true,
-            'package2'                                     =>  true,
-            'package3'                                     =>  true
+            'package1'  =>  true,
+            'package2'  =>  true,
+            'package3'  =>  true
         );
         
-        $this->assertType('Iterator', $metrics);
         foreach ($metrics as $metric) {
-            $this->assertType('PHP_Depend_Code_Package', $metric);
-            
             unset($expected[$metric->getName()]);
         }
         
@@ -143,17 +157,17 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * testAnalyzerReturnsEmptyIteratorWhenNoPackageExists
+     * testAnalyzeReturnsEmptyIteratorWhenNoPackageExists
      *
      * @return void
      * @covers PHP_Depend
      * @group pdepend
      * @group unittest
      */
-    public function testAnalyzerReturnsEmptyIteratorWhenNoPackageExists()
+    public function testAnalyzeReturnsEmptyIteratorWhenNoPackageExists()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-without-comments');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array(__METHOD__)));
        
         $this->assertEquals(0, $pdepend->analyze()->count()); 
@@ -171,7 +185,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testAnalyzeSetsWithoutAnnotations()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('inc')));
         $pdepend->setWithoutAnnotations();
         $packages = $pdepend->analyze();
@@ -198,7 +212,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testCountClasses()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
         $pdepend->analyze();
         
@@ -222,7 +236,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->countClasses();
     }
     
@@ -238,7 +252,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testCountPackages()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->analyze();
         
         $this->assertEquals(4, $pdepend->countPackages());
@@ -261,7 +275,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->countPackages();
     }
     
@@ -277,7 +291,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testGetPackage()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->analyze();
         
         $packages = array(
@@ -310,7 +324,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->getPackage('package1');
     }
     
@@ -331,7 +345,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->analyze();
         $pdepend->getPackage('package0');
     }
@@ -349,7 +363,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testGetPackages()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         
         $package1 = $pdepend->analyze();
         $package2 = $pdepend->getPackages();
@@ -377,7 +391,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         );
         
         $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(dirname(__FILE__) . '/_code/code-5.2.x');
+        $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->getPackages();
     }
 
@@ -392,7 +406,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     public function testSupportForSingleFileIssue90()
     {
         $pdepend = $this->createPDependFixture();
-        $pdepend->addFile(dirname(__FILE__) . '/_code/issues/090.php');
+        $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->analyze();
 
         $packages = $pdepend->getPackages();

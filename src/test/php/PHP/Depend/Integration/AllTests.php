@@ -75,7 +75,7 @@ class PHP_Depend_Integration_AllTests extends PHPUnit_Framework_TestSuite
     }
 
     /**
-     * Creates the phpunit test suite for this package.
+     * Creates the Phpunit test suite for this package.
      *
      * @return PHPUnit_Framework_TestSuite
      */

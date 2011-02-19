@@ -263,7 +263,9 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected static function createCodeResourceURI($fileName)
     {
-        $uri = dirname(__FILE__) . '/_code/' . $fileName;
+        $uri = dirname(__FILE__) . '/../../../resources/files/' . $fileName;
+        $uri = realpath($uri);
+
         if (file_exists($uri) === false) {
             throw new ErrorException("File '{$fileName}' does not exists.");
         }
@@ -431,13 +433,6 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
-        include_once 'PHP/Depend/Parser/VersionAllParser.php';
-        include_once 'PHP/Depend/Builder/Default.php';
-        include_once 'PHP/Depend/Code/Filter/Collection.php';
-        include_once 'PHP/Depend/Tokenizer/Internal.php';
-        include_once 'PHP/Depend/Input/ExcludePathFilter.php';
-        include_once 'PHP/Depend/Input/Iterator.php';
-
         if (file_exists($fileOrDirectory) === false) {
             $fileOrDirectory = self::createCodeResourceURI($fileOrDirectory);
         }

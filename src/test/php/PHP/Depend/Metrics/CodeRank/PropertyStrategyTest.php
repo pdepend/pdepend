@@ -76,8 +76,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
      */
     public function testStrategyCountsCorrectTypes()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coderank/property.php';
-        $packages = self::parseSource($source);
+        $packages = self::parseCodeResourceForTest();
         
         $uuidMap = array(
             'PDepend::CodeRankA'       =>  null,

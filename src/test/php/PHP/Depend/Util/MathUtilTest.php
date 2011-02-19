@@ -70,7 +70,7 @@ class PHP_Depend_Util_MathUtilTest extends PHPUnit_Extensions_PhptTestSuite
     public function __construct()
     {
         parent::__construct(
-            realpath(dirname(__FILE__) . '/../_code/Util/MathUtil/')
+            realpath(dirname(__FILE__) . '/../../../../resources/files/Util/MathUtil/')
         );
     }
 }

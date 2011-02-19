@@ -63,6 +63,12 @@ require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Log_Jdepend_Xml
+ * @group pdepend
+ * @group pdepend::log
+ * @group pdepend::log::jdepend
+ * @group unittest
  */
 class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
 {
@@ -96,11 +102,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     {
         parent::setUp();
 
-        $this->packages = self::parseSource(dirname(__FILE__) . '/../../_code/code-5.2.x');
-
-        $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
-        $this->analyzer->analyze($this->packages);
-
         $this->resultFile = self::createRunResourceURI('pdepend-log.xml');
     }
 
@@ -120,11 +121,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -140,11 +136,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -163,14 +154,14 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * metrics.
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testXmlLogWithoutMetrics()
     {
+        $this->packages = self::parseCodeResourceForTest();
+
+        $this->analyzer = new PHP_Depend_Metrics_Dependency_Analyzer();
+        $this->analyzer->analyze($this->packages);
+
         $log = new PHP_Depend_Log_Jdepend_Xml();
         $log->setLogFile($this->resultFile);
         $log->setCode($this->packages);
@@ -188,11 +179,6 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      * testXmlLogAcceptsOnlyTheCorrectAnalyzer
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testXmlLogAcceptsOnlyTheCorrectAnalyzer()
     {
@@ -211,7 +197,7 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
      */
     protected function getNormalizedPathXml($fileName)
     {
-        $path = realpath(dirname(__FILE__) . '/../../_code/code-5.2.x');
+        $path = self::createCodeResourceUriForTest();
 
         return preg_replace(
             '(sourceFile="[^"]+/([^/"]+)")',

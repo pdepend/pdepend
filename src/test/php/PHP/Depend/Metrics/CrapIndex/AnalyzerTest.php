@@ -204,7 +204,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     private function _calculateCrapIndex($testCase, $ccn)
     {
-        $packages = self::parseTestCaseSource($testCase);
+        $packages = self::parseCodeResourceForTest();
 
         $options  = array('coverage-report' => $this->_createCloverReportFile());
         $analyzer = new PHP_Depend_Metrics_CrapIndex_Analyzer($options);
@@ -239,7 +239,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $pathName = self::createRunResourceURI('clover.xml');
 
         $content = file_get_contents(dirname(__FILE__) . '/_files/clover.xml');
-        $content = str_replace('${pathName}/', self::createCodeResourceURI(''), $content);
+        $content = str_replace('${pathName}', dirname(self::createCodeResourceUriForTest()), $content);
         file_put_contents($pathName, $content);
 
         return $pathName;

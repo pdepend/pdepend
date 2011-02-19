@@ -75,8 +75,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
      */
     public function testStrategyCountsCorrectTypes()
     {
-        $source   = dirname(__FILE__) . '/../../_code/coderank/method.php';
-        $packages = self::parseSource($source);
+        $packages = self::parseCodeResourceForTest();
         
         $uuidMap = array(
             'PDepend::CodeRankA'       =>  null,
