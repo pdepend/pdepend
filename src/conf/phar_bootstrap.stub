@@ -52,6 +52,9 @@ Phar::mapPhar('${archive.alias}');
 // Configure include path to use this phar
 set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . get_include_path());
 
+// Set memory limit to max allowed
+ini_set('memory_limit', -1);
+
 // Load command line utility
 include_once 'phar://${archive.alias}/PHP/Depend/Autoload.php';
 
