@@ -14,28 +14,20 @@
     <!--
         Main build
     -->
-    <target name="build" depends="test" description="Primary build: PHP Depend" />
+    <target name="build" depends="test" description="-> Primary build: PHP Depend" />
 
     <!--
         We use the phar archive after hook to validate that a newly created
         phar archive works as expected.
 
         Parameters:
-            ${phar.archive.filename}  Name of the created phar file.
+            ${-package:phar:filename}  Name of the created phar file.
     -->
-    <target name="~pack-phar-archive-after">
-
-        <echo message="Executing:" level="verbose" />
-        <echo message="  ${phar.archive.filename} --summary-xml=${tmpdir}/phar-test.xml PHP/Depend/Code" 
-              level="verbose" />
-
-        <exec dir="${php.basedir.src}" executable="php" failonerror="true">
-            <arg value="-d" />
-            <arg value="include_path=." />
-            <arg value="${phar.archive.filename}" />
-            <arg value="--summary-xml=${tmpdir}/phar-test.xml" />
-            <arg value="PHP/Depend/Code" />
-        </exec>
+    <target name="-package:phar:after~hook">
+        <antcall target="-package-execute">
+            <param name="-package.includepath" value="${tmpdir}"/>
+            <param name="-package.executable" value="${-package:phar:filename}" />
+        </antcall>
     </target>
 
 
@@ -43,7 +35,7 @@
         We use the pear archive after hook to validate that a clean PHP_Depend
         PEAR installation works as expected.
     -->
-    <target name="~pack-pear-archive-after"
+    <target name="-package:pear:after~hook"
             depends="-common-pear-prepare,
                      -pack-pear-archive-after-install,
                      -pack-pear-archive-after-execute" />
@@ -65,21 +57,34 @@
         Executes the newly created and installed PEAR version of PHP_Depend.
     -->
     <target name="-pack-pear-archive-after-execute">
+        <antcall target="-package-execute">
+            <param name="-package.includepath" value="${common-pear-root-dir}"/>
+            <param name="-package.executable" value="${common-pear-bin-dir}/pdepend" />
+        </antcall>
+    </target>
 
+    <!--
+        Will execute the code contained in one of the package files.
+
+        Parameters
+            ${-package.includepath} The used include path.
+            ${-package.executable}  The projects executable
+    -->
+    <target name="-package-execute">
         <echo message="Executing:" level="verbose" />
-        <echo message="  pdepend --summary-xml... ${common-pear-root-dir}/PHP/Depend" level="verbose" />
+        <echo message="  ${-package.executable} --summary-xml... PHP/Depend/Code" level="verbose" />
 
-        <exec executable="php" failonerror="true">
+        <exec dir="${php.basedir.src}" executable="php" failonerror="true">
             <arg value="-d" />
-            <arg value="include_path='${common-pear-root-dir}'" />
-            <arg value="${common-pear-bin-dir}/pdepend" />
+            <arg value="include_path=${-package.includepath}" />
+            <arg value="${-package.executable}" />
             <arg value="--summary-xml=${tmpdir}/summary.xml" />
             <arg value="--phpunit-xml=${tmpdir}/phpunit.xml" />
             <arg value="--jdepend-xml=${tmpdir}/jdepend.xml" />
             <arg value="--jdepend-chart=${tmpdir}/jdepend.svg" />
             <arg value="--overview-pyramid=${tmpdir}/pyramid.svg" />
             <arg value="--coderank-mode=inheritance,property,method" />
-            <arg value="${common-pear-root-dir}/PHP/Depend" />
+            <arg value="PHP/Depend/Code" />
         </exec>
     </target>
 
