@@ -681,6 +681,22 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTArgumentsReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTArgumentsReturnsExpectedType()
+    {
+        $object = $this->createBuilder()
+            ->buildASTArguments();
+
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTArguments::CLAZZ,
+            $object
+        );
+    }
+
+    /**
      * Creates a clean builder test instance.
      *
      * @return PHP_Depend_Builder_Default

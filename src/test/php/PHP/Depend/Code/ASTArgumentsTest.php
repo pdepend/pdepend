@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Code_ASTArguments
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -66,11 +72,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -87,11 +88,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -110,24 +106,19 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * 
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsContainsStaticMethodPostfixExpression()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-
-        $prefix = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
-
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
+        self::assertGraphEquals(
+            $this->_getFirstArgumentsOfFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
     }
 
     /**
@@ -135,24 +126,19 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsContainsMethodPostfixExpression()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-
-        $prefix = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
-
-        $variable = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
+        self::assertGraphEquals(
+            $this->_getFirstArgumentsOfFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
     }
 
     /**
@@ -160,24 +146,18 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsContainsConstantsPostfixExpression()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-
-        $prefix = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
-
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTConstantPostfix::CLAZZ, $postfix);
+        self::assertGraphEquals(
+            $this->_getFirstArgumentsOfFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTConstantPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ
+            )
+        );
     }
 
     /**
@@ -185,24 +165,18 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsContainsPropertyPostfixExpression()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
-
-        $prefix = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
-
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $reference);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
+        self::assertGraphEquals(
+            $this->_getFirstArgumentsOfFunction(__METHOD__),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
     }
 
     /**
@@ -210,11 +184,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsContainsSelfPropertyPostfixExpression()
     {
@@ -229,14 +198,16 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
-        $prefix = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
 
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTSelfReference::CLAZZ, $reference);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ, $postfix);
+        self::assertGraphEquals(
+            $arguments,
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTSelfReference::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
     }
 
     /**
@@ -244,11 +215,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsContainsParentMethodPostfixExpression()
     {
@@ -262,15 +228,17 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
         $arguments = $method->getFirstChildOfType(
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
-
-        $prefix = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $prefix);
-
-        $reference = $prefix->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTParentReference::CLAZZ, $reference);
-
-        $postfix = $prefix->getChild(1);
-        $this->assertType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ, $postfix);
+        
+        self::assertGraphEquals(
+            $arguments,
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTParentReference::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
     }
 
     /**
@@ -278,18 +246,13 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsContainsAllocationExpression()
     {
         $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $allocation = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTAllocationExpression::CLAZZ, $allocation);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTAllocationExpression::CLAZZ, $allocation);
     }
 
     /**
@@ -297,11 +260,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsWithSeveralParameters()
     {
@@ -310,7 +268,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
         $postfix = $arguments->getFirstChildOfType(
             PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
         );
-        $this->assertType(PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $postfix);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $postfix);
     }
 
     /**
@@ -318,18 +276,13 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsWithInlineComments()
     {
         $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
 
         $child = $arguments->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $child);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $child);
     }
 
     /**
@@ -337,11 +290,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsWithInlineConcatExpression()
     {
@@ -359,11 +307,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException()
@@ -375,12 +318,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value of an arguments instance.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsHasExpectedStartLine()
     {
@@ -392,12 +329,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value of an arguments instance.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsHasExpectedStartColumn()
     {
@@ -409,12 +340,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value of an arguments instance.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsHasExpectedEndLine()
     {
@@ -426,12 +351,6 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value of an arguments instance.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArguments
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArgumentsHasExpectedEndColumn()
     {

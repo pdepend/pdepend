@@ -271,40 +271,6 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests that the given node and its children represent the expected ast
-     * object graph.
-     *
-     * @param PHP_Depend_Code_ASTNode $node     The root node.
-     * @param array(string)           $expected Expected class structure.
-     *
-     * @return void
-     */
-    protected function assertGraphEquals(PHP_Depend_Code_ASTNode $node, $expected)
-    {
-        $actual = $this->collectChildNodes($node);
-        self::assertEquals($expected, $actual);
-    }
-
-    /**
-     * Collects all children from a given node.
-     *
-     * @param PHP_Depend_Code_ASTNode $node   The current root node.
-     * @param array                   $actual Previous filled list.
-     *
-     * @return array(string)
-     */
-    protected function collectChildNodes(
-        PHP_Depend_Code_ASTNode $node,
-        array $actual = array()
-    ) {
-        foreach ($node->getChildren() as $child) {
-            $actual[] = get_class($child);
-            $actual   = $this->collectChildNodes($child, $actual);
-        }
-        return $actual;
-    }
-
-    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
