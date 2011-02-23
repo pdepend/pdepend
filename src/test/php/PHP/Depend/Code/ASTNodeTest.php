@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-require_once 'PHP/Depend/Code/ASTVisitorI.php';
-
 /**
  * Abstract test case for classes derived {@link PHP_Depend_Code_ASTNode}ö
  *

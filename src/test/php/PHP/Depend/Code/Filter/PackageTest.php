@@ -48,12 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Code/Package.php';
-require_once 'PHP/Depend/Code/Filter/Package.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_Filter_Package} class.
  *

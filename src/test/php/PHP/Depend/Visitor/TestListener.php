@@ -45,8 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/AbstractListener.php';
-
 /**
  * Simple test node visitor implementation.
  *

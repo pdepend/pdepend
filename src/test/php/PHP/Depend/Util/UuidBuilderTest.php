@@ -49,12 +49,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Util/UuidBuilder.php';
-
 /**
  * Test case for the {@link PHP_Depend_Util_UuidBuilder} class.
  *

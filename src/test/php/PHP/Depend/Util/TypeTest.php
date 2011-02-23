@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Util/Type.php';
-
 /**
  * Test case for type utility class.
  *

@@ -47,10 +47,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend/Parser/VersionAllParser.php';
-require_once 'PHP/Depend/Builder/Default.php';
-require_once 'PHP/Depend/Tokenizer/Internal.php';
-
 /**
  * Test case implementation for the PHP_Depend code parser.
  *

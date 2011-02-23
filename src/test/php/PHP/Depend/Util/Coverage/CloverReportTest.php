@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Util/Coverage/CloverReport.php';
-
 /**
  * Test case for the {@link PHP_Depend_Util_Coverage_CloverReport} class.
  *

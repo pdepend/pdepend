@@ -48,14 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-require_once 'PHP/Depend/Code/ASTFormalParameter.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/Parameter.php';
-require_once 'PHP/Depend/Code/Value.php';
-
 /**
  * Test case for the code parameter class.
  *

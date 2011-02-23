@@ -54,8 +54,6 @@ require_once dirname(__FILE__) . '/InheritanceAnalyzer.php';
 require_once dirname(__FILE__) . '/NodeCountAnalyzer.php';
 require_once dirname(__FILE__) . '/NodeLocAnalyzer.php';
 
-require_once 'PHP/Depend/Log/Overview/Pyramid.php';
-
 /**
  * Test case for the overview pyramid logger.
  *

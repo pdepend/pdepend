@@ -47,8 +47,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/File.php';
-
 /**
  * Test case for the code file class.
  *
@@ -399,7 +397,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        self::assertEquals(436, $file->getEndLine());
+        self::assertEquals(435, $file->getEndLine());
     }
 
     /**

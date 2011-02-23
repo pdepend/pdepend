@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Log/LoggerFactory.php';
-
 /**
  * Test case for the logger factory.
  *

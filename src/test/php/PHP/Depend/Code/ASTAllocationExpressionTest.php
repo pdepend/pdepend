@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTAllocationExpression.php';
-require_once 'PHP/Depend/Code/ASTArguments.php';
-require_once 'PHP/Depend/Code/ASTClassReference.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTAllocationExpression} class.
  *

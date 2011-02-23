@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTParentReference.php';
-require_once 'PHP/Depend/Code/ASTClassOrInterfaceReference.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTParentReference} class.
  *

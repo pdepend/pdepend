@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/NodeCount/Analyzer.php';
-
 /**
  * Dummy node count analyzer.
  *

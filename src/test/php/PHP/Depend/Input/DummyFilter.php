@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Input/FilterI.php';
-
 /**
  * Dummy filter.
  *

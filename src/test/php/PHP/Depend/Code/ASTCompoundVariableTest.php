@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTString.php';
-require_once 'PHP/Depend/Code/ASTLiteral.php';
-require_once 'PHP/Depend/Code/ASTCompoundVariable.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTCompoundVariable} class.
  *

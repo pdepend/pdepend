@@ -47,12 +47,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/NodeIterator.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Code/Package.php';
-
 /**
  * Test case the node iterator.
  *

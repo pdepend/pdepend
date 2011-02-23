@@ -50,8 +50,6 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 require_once dirname(__FILE__) . '/TestListener.php';
 
-require_once 'PHP/Depend/Code/Parameter.php';
-
 /**
  * Test case for the default visit listener implementation.
  *

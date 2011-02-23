@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/NodeLoc/Analyzer.php';
-
 /**
  * Dummy node loc analyzer.
  *

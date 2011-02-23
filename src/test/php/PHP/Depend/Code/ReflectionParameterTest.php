@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/Parameter.php';
-
 /**
  * Test case for the api compatiblity between PHP's native reflection api and
  * this userland implementation.

@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
-
 /**
  * Test case for the {@link PHP_Depend_Tokenizer_PHP52Helper} class.
  *

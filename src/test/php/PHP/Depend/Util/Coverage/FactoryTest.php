@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Util/Coverage/Factory.php';
-
 /**
  * Test case for the {@link PHP_Depend_Util_Coverage_Factory} class.
  *

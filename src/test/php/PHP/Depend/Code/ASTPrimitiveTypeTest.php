@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
-require_once 'PHP/Depend/Code/ASTPrimitiveType.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTPrimitiveType} class.
  *
