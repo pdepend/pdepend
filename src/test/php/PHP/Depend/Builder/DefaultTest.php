@@ -665,6 +665,22 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTAllocationExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTAllocationExpressionReturnsExpectedType()
+    {
+        $object = $this->createBuilder()
+            ->buildASTAllocationExpression(__FUNCTION__);
+
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTAllocationExpression::CLAZZ,
+            $object
+        );
+    }
+
+    /**
      * Creates a clean builder test instance.
      *
      * @return PHP_Depend_Builder_Default
