@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -68,17 +73,15 @@ class PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test
      * correct.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesInvalidFunctionWhenReturnsByReference()
     {
-        $package = self::parseTestCaseSource(__METHOD__)->current();
+        $function = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current();
 
-        $function = $package->getFunctions()->current();
-        $this->assertEquals('barBug08', $function->getName());
+        self::assertEquals('barBug08', $function->getName());
     }
 
     /**
@@ -86,19 +89,16 @@ class PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test
      * correct.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesInvalidMethodWhenReturnsByReference()
     {
-        $package = self::parseTestCaseSource(__METHOD__)->current();
+        $method = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods()
+            ->current();
 
-        $method = $package->getTypes()
-                          ->current()
-                          ->getMethods()
-                          ->current();
-        $this->assertEquals('fooBug08', $method->getName());
+        self::assertEquals('fooBug08', $method->getName());
     }
 }

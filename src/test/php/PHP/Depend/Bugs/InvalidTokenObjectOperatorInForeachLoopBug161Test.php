@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_InvalidTokenObjectOperatorInForeachLoopBug161Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -66,83 +71,59 @@ class PHP_Depend_Bugs_InvalidTokenObjectOperatorInForeachLoopBug161Test extends 
      * testParserHandlesObjectPropertyAsForeachLoopKey
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesObjectPropertyAsForeachLoopKey()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesObjectPropertyAsForeachLoopValue
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesObjectPropertyAsForeachLoopValue()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesObjectPropertyAsForeachLoopKeyAndValue
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesObjectPropertyAsForeachLoopKeyAndValue()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesClassPropertyAsForeachLoopKey
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesClassPropertyAsForeachLoopKey()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesClassPropertyAsForeachLoopValue
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesClassPropertyAsForeachLoopValue()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesClassPropertyAsForeachLoopKeyAndValue
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesClassPropertyAsForeachLoopKeyAndValue()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 }

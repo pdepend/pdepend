@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::issues
+ * @group pdepend::parser
+ * @group unittest
  */
 class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
     extends PHP_Depend_Issues_AbstractTest
@@ -75,11 +81,6 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseCommentWithOptionalInlineClassOrInterfaceReference
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithWhitespace()
     {
@@ -102,11 +103,6 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseCommentWithOptionalInlineClassOrInterfaceReference
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithoutWhitespace()
     {
@@ -132,11 +128,6 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseCommentWithOptionalInlineClassOrInterfaceReference
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserIgnoresDependencyDefinedInMultilineComment()
     {
@@ -160,11 +151,6 @@ class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseCommentWithOptionalInlineClassOrInterfaceReference
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserIgnoresDependencyDefinedWithinAnotherComment()
     {

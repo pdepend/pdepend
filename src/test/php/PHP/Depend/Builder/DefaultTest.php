@@ -59,6 +59,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Builder_Default
+ * @group pdepend
+ * @group pdepend::builder
+ * @group unittest
  */
 class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
 {
@@ -66,9 +69,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuilderAddsMultiplePackagesForClassesToListOfPackages
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuilderAddsMultiplePackagesForClassesToListOfPackages()
     {
@@ -87,9 +87,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuilderAddsMultiplePackagesForFunctionsToListOfPackages
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuilderAddsMultiplePackagesForFunctionsToListOfPackages()
     {
@@ -108,9 +105,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuilderNotAddsNewPackagesOnceItHasReturnedTheListOfPackages
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuilderNotAddsNewPackagesOnceItHasReturnedTheListOfPackages()
     {
@@ -131,9 +125,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testRestoreFunctionAddsFunctionToPackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testRestoreFunctionAddsFunctionToPackage()
     {
@@ -151,9 +142,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testRestoreFunctionUsesGetPackageNameMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testRestoreFunctionUsesGetPackageNameMethod()
     {
@@ -171,9 +159,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests that the node builder creates a class for the same name only once.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassUnique()
     {
@@ -193,9 +178,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * different packages.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassCreatesTwoDifferentInstancesForDifferentPackages()
     {
@@ -213,9 +195,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * same named class in the default package.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassReusesExistingNonDefaultPackageInstanceForDefaultPackage()
     {
@@ -238,9 +217,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * same identifier.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildInterfaceUnique()
     {
@@ -261,9 +237,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * types with the same local or package internal name.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildInterfaceDoesntRemoveClassForSameNamedInterface()
     {
@@ -287,9 +260,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * different interface instances for different parent packages.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildInterfacesCreatesDifferentInstancesForDifferentPackages()
     {
@@ -307,9 +277,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * more specific version.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testCanCreateMultipleInterfaceInstancesWithIdenticalNames()
     {
@@ -331,9 +298,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * for a same named interface in the default package.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildInterfaceReusesExistingNonDefaultPackageInstanceForDefaultPackage()
     {
@@ -355,9 +319,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests the PHP_Depend_Code_Method build method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildMethod()
     {
@@ -369,9 +330,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests that the node builder creates a package for the same name only once.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildPackageUnique()
     {
@@ -386,9 +344,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests the implemented {@link IteratorAggregate}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testGetIteratorWithPackages()
     {
@@ -409,9 +364,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests the {@link PHP_Depend_Builder_Default::getPackages()} method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testGetPackages()
     {
@@ -433,9 +385,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * has alway overwritten previously created instances.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassDoesNotOverwritePreviousInstances()
     {
@@ -460,9 +409,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * has alway overwritten previously created instances.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildInterfaceDoesNotOverwritePreviousInstances()
     {
@@ -481,9 +427,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests that the node builder works case insensitive for class names.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassWorksCaseInsensitiveIssue26()
     {
@@ -501,9 +444,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests that the node builder works case insensitive for interface names.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildInterfaceWorksCaseInsensitiveIssue26()
     {
@@ -524,9 +464,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests that the node builder works case insensitive for interface names.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassOrInterfaceWorksCaseInsensitive1Issue26()
     {
@@ -547,9 +484,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * Tests that the node builder works case insensitive for interface names.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassOrInterfaceWorksCaseInsensitive2Issue26()
     {
@@ -568,9 +502,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildASTClassOrInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen()
     {
@@ -593,9 +524,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClassThrowsExpectedExceptionWhenStateIsFrozen()
     {
@@ -618,9 +546,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildASTClassReferenceThrowsExpectedExceptionWhenStateIsFrozen()
     {
@@ -643,9 +568,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildClosureThrowsExpectedExceptionWhenStateIsFrozen()
     {
@@ -668,9 +590,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildInterfaceThrowsExpectedExceptionWhenStateIsFrozen()
     {
@@ -693,9 +612,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildMethodThrowsExpectedExceptionWhenStateIsFrozen()
     {
@@ -718,9 +634,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * to build a new node, when the internal state flag is frozen.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildFunctionThrowsExpectedExceptionWhenStateIsFrozen()
     {
@@ -742,16 +655,13 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group unittest
      */
     public function testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType()
     {
         $builder  = $this->createBuilder();
         $instance = $builder->buildASTPrimitiveType(__FUNCTION__);
 
-        self::assertType(PHP_Depend_Code_ASTPrimitiveType::CLAZZ, $instance);
+        self::assertInstanceOf(PHP_Depend_Code_ASTPrimitiveType::CLAZZ, $instance);
     }
 
     /**

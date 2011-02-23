@@ -43,17 +43,13 @@
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
+ * @link       https://pdepend.org
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Test case for bug 090 where the coupling analyzer calculates wrong results
- * for functions calls and object allocations that use PHP 5.3's namespace
- * syntax.
- *
- * http://tracker.pdepend.org/pdepend/issue_tracker/issue/90/
+ * Test case for bug #69.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -62,93 +58,120 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
+ * @link       https://pdepend.org
  *
+ * @ticket 69
  * @covers stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test
-    extends PHP_Depend_Bugs_AbstractTest
+class PHP_Depend_Bugs_ParserBug069Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * Tests that the analyzer calculates the expected result.
+     * Tests that parser handles a php 5.3 static method call correct.
+     *
+     * <code>
+     * PHP\Depend\Parser::call();
+     * </code>
      *
      * @return void
      */
-    public function testAnalyzerIgnoresObjectAllocation()
+    public function testStaticMethodCallInFunctionBody()
     {
-        $packages = self::parseCodeResourceForTest();
+        $package = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getDependencies()
+            ->current()
+            ->getPackage();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
-
-        $project = $analyzer->getProjectMetrics();
-        self::assertEquals(0, $project['calls']);
+        self::assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
-     * Tests that the analyzer calculates the expected result.
+     * Tests that parser handles a php 5.3 static method call correct.
+     *
+     * <code>
+     * \PHP\Depend\Parser::call();
+     * </code>
      *
      * @return void
      */
-    public function testAnalyzerDetectsIdenticalFunctionCalls()
+    public function testStaticMethodLeadingBackslashCallInFunctionBody()
     {
-        $packages = self::parseCodeResourceForTest();
+        $package = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getDependencies()
+            ->current()
+            ->getPackage();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
-
-        $project = $analyzer->getProjectMetrics();
-        self::assertEquals(1, $project['calls']);
+        self::assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
-     * Tests that the analyzer calculates the expected result.
+     * Tests that parser does not handle a php 5.3 function call as dependency.
+     *
+     * <code>
+     * \PHP\Depend\Parser\call();
+     * </code>
      *
      * @return void
      */
-    public function testAnalyzerDetectsDifferentFunctionCalls()
+    public function testNotHandlesQualifiedFunctionCallAsDependencyInFunctionBody()
     {
-        $packages = self::parseCodeResourceForTest();
+        $function = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
-
-        $project = $analyzer->getProjectMetrics();
-        self::assertEquals(2, $project['calls']);
+        $this->assertSame(0, $function->getDependencies()->count());
     }
 
     /**
-     * Tests that the analyzer calculates the expected result.
+     * Tests that parser handles a php 5.3 property access as dependency.
+     *
+     * <code>
+     * \PHP\Depend\Parser::$prop;
+     * </code>
      *
      * @return void
      */
-    public function testAnalyzerDetectsIdenticalMethodCalls()
+    public function testQualifiedPropertyAccessAsDependencyInFunctionBody()
     {
-        $packages = self::parseCodeResourceForTest();
+        $package = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getDependencies()
+            ->current()
+            ->getPackage();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
-
-        $project = $analyzer->getProjectMetrics();
-        self::assertEquals(1, $project['calls']);
+        self::assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
-     * Tests that the analyzer calculates the expected result.
+     * Tests that parser handles a php 5.3 constant access as dependency.
+     *
+     * <code>
+     * \PHP\Depend\Parser::CONSTANT;
+     * </code>
      *
      * @return void
      */
-    public function testAnalyzerDetectsDifferentMethodCalls()
+    public function testQualifiedConstantAccessAsDependencyInFunctionBody()
     {
-        $packages = self::parseCodeResourceForTest();
+        $package = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getDependencies()
+            ->current()
+            ->getPackage();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
-        $analyzer->analyze($packages);
-
-        $project = $analyzer->getProjectMetrics();
-        self::assertEquals(2, $project['calls']);
+        self::assertEquals('PHP\Depend', $package->getName());
     }
 }

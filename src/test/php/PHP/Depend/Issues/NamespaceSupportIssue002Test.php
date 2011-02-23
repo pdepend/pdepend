@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::issues
+ * @group pdepend::parser
+ * @group unittest
  */
 class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_AbstractTest
 {
@@ -66,11 +72,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * Tests that the parser handles a simple use statement as expected.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesSimpleUseDeclaration()
     {
@@ -88,11 +89,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * Tests that the parser handles multiple, comma separated use declarations.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesMultipleUseDeclarations()
     {
@@ -115,11 +111,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * Tests that parser handles a use declaration case insensitive.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesUseDeclarationCaseInsensitive()
     {
@@ -138,11 +129,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * Tests that parser throws an expected exception.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash()
     {
@@ -159,11 +145,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * identifier and curly brace syntax.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax()
     {
@@ -175,11 +156,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * testParserDoesNotAddEmptyNamespaceToResultSet
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserDoesNotAddEmptyNamespaceToResultSet()
     {
@@ -192,11 +168,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * identifier and semicolon syntax.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax()
     {
@@ -209,11 +180,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * identifier and semicolon syntax.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesNamespaceDeclarationWithoutIdentifierAndCurlyBraceSyntax()
     {
@@ -227,11 +193,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * the semicolon syntax.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax()
     {
@@ -249,11 +210,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * identifier.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier()
     {
@@ -271,11 +227,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * a simply package annotation.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testNamespaceHasHigherPriorityThanPackageAnnotationSemicolonSyntax()
     {
@@ -293,11 +244,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * a simply package annotation.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testNamespaceHasHigherPriorityThanPackageAnnotationCurlyBraceSyntax()
     {
@@ -314,11 +260,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * Tests that the parser handles multiple namespaces in a single file correct.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesFileWithMultipleNamespacesCorrectSemicolonSyntax()
     {
@@ -350,11 +291,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * Tests that the parser handles multiple namespaces in a single file correct.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesFileWithMultipleNamespacesCorrectCurlyBraceSyntax()
     {
@@ -386,11 +322,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * Tests that the parser adds a function to a declared namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAddsFunctionToDeclaredNamespaceSemicolonSyntax()
     {
@@ -410,11 +341,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInTypeSignature
      */
     public function testParserResolvesQualifiedTypeNameInTypeSignature($fileName, $namespaceName)
@@ -437,11 +363,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInFunction
      */
     public function testParserResolvesQualifiedTypeNameInFunction($fileName, $namespaceName)
@@ -469,11 +390,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInTypeSignature
      */
     public function testParserKeepsQualifiedTypeNameInTypeSignature($fileName, $namespaceName)
@@ -496,11 +412,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInFunction
      */
     public function testParserKeepsQualifiedTypeNameInFunction($fileName, $namespaceName)
@@ -523,11 +434,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax($fileName, $namespaceName)
@@ -550,11 +456,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax
      */
     public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax($fileName, $namespaceName)
@@ -577,11 +478,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax($fileName, $namespaceName)
@@ -604,11 +500,6 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      * @param string $namespaceName Name of the expected namespace.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax
      */
     public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax($fileName, $namespaceName)

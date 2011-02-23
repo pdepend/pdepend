@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_ComplexStringParsingBug114Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -66,112 +71,80 @@ class PHP_Depend_Bugs_ComplexStringParsingBug114Test extends PHP_Depend_Bugs_Abs
      * testParserHandlesStringWithEmbeddedBacktickExpression
      * 
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesStringWithEmbeddedBacktickExpression()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesStringWithEmbeddedExpression
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesStringWithEmbeddedExpression()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesBacktickExpressionWithEmbeddedStringExpression
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesBacktickExpressionWithEmbeddedStringExpression()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesStringWithEscapedVariable
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesStringWithEscapedVariable()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesBacktickExpressionWithEscapedVariable
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesBacktickExpressionWithEscapedVariable()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesStringWithVariableAndAssignment
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesStringWithVariableAndAssignment()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesStringWithVariableNotAsFunctionCall
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesStringWithVariableNotAsFunctionCall()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesStringWithQuestionMarkNotAsTernaryOperator
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
         $method   = $packages->current()
             ->getClasses()
             ->current()

@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Visitor_AbstractVisitor
+ * @group pdepend
+ * @group pdepend::visitor
+ * @group unittest
  */
 class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
 {
@@ -69,9 +72,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * Tests the execution order of the default visitor implementation.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testDefaultVisitOrder()
     {
@@ -108,9 +108,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorVisitsFunctionParameter
      * 
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorVisitsFunctionParameter()
     {
@@ -127,9 +124,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorVisitsMethodParameter
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorVisitsMethodParameter()
     {
@@ -146,9 +140,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesStartVisitParameterOnListener
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorInvokesStartVisitParameterOnListener()
     {
@@ -168,9 +159,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesEndVisitParameterOnListener
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorInvokesEndVisitParameterOnListener()
     {
@@ -190,9 +178,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesStartVisitInterfaceOnListener
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorInvokesStartVisitInterfaceOnListener()
     {
@@ -212,9 +197,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesEndVisitInterfaceOnListener
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorInvokesEndVisitInterfaceOnListener()
     {
@@ -234,9 +216,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesStartVisitPropertyOnListener
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorInvokesStartVisitPropertyOnListener()
     {
@@ -256,10 +235,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesEndVisitPropertyOnListener
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractVisitor
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testVisitorInvokesEndVisitPropertyOnListener()
     {
@@ -279,9 +254,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testGetVisitListenersReturnsIterator
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testGetVisitListenersReturnsIterator()
     {
@@ -293,9 +265,6 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testGetVisitListenersContainsAddedListener
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testGetVisitListenersContainsAddedListener()
     {

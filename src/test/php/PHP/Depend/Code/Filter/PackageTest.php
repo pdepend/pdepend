@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Code_Filter_Package
+ * @group pdepend
+ * @group pdepend::code
+ * @group pdepend::code::filter
+ * @group unittest
  */
 class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
 {
@@ -66,11 +72,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the package filter accepts valid packages.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterAcceptsPackage()
     {
@@ -82,11 +83,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the package filter not accepts invalid packages.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterNotAcceptsPackage()
     {
@@ -98,11 +94,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the package filter accepts and rejects the expected package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterAcceptsAndNotAcceptsExpectedPackage()
     {
@@ -115,11 +106,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the filter accepts a class with a valid package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterAcceptsClass()
     {
@@ -134,11 +120,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the filter rejects a class with an invalid package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterNotAcceptsClass()
     {
@@ -153,11 +134,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the filter accepts an interface with a valid package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterAcceptsInterface()
     {
@@ -172,11 +148,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the filter not accepts an interface with an invalid package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterNotAcceptsInterface()
     {
@@ -191,11 +162,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the filter accepts a function with a valid package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterAcceptsFunction()
     {
@@ -210,11 +176,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the filter not accepts a function with an invalid package.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterNotAcceptsFunction()
     {
@@ -229,11 +190,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the package filter works with wild cards.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterAcceptsPackageWithWildcard()
     {
@@ -247,11 +203,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * Tests that the package filter rejects unmatching packages.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterNotAcceptsPackageWithWildcard()
     {
@@ -266,11 +217,6 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      * packages.
      *
      * @return void
-     * @covers PHP_Depend_Code_Filter_Package
-     * @group pdepend
-     * @group pdepend::code
-     * @group pdepend::code::filter
-     * @group unittest
      */
     public function testFilterAcceptsAndNotAcceptsPackageWithWildcard()
     {

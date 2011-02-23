@@ -43,13 +43,13 @@
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
+ * @link       https://pdepend.org
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Test case for ticket #162.
+ * Test case for bug #1.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -58,22 +58,31 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
+ * @link       https://pdepend.org
  *
+ * @ticket 1
  * @covers stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_StringWithDollarStringLiteralBug162Test extends PHP_Depend_Bugs_AbstractTest
+class PHP_Depend_Bugs_ParserBug001Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString
+     * Test case for parser bug 01 that doesn't add dependencies for static
+     * method calls.
      *
      * @return void
      */
-    public function testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString()
+    public function testParserStaticCall()
     {
-        self::parseCodeResourceForTest();
+        $method = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $this->assertEquals(1, $method->getDependencies()->count());
     }
 }

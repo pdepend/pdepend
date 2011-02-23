@@ -62,6 +62,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -70,17 +75,10 @@ class PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test extends PH
      * correct.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterface()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-
-        $package = $packages->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $package = self::parseCodeResourceForTest()->current();
 
         $this->assertSame(1, $package->getClasses()->count());
         $class = $package->getClasses()->current();
@@ -104,17 +102,10 @@ class PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test extends PH
      * correct.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithClass()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-
-        $package = $packages->current();
-        $this->assertType('PHP_Depend_Code_Package', $package);
+        $package = self::parseCodeResourceForTest()->current();
 
         $classes = $package->getClasses();
         $this->assertSame(2, $classes->count());

@@ -61,6 +61,12 @@ require_once dirname(__FILE__) . '/DependencyAnalyzer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Log_Jdepend_Chart
+ * @group pdepend
+ * @group pdepend::log
+ * @group pdepend::log::jdepend
+ * @group unittest
  */
 class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
 {
@@ -104,11 +110,6 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -116,7 +117,7 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array('PHP_Depend_Metrics_Dependency_Analyzer');
 
-        $this->assertEquals($exptected, $actual);
+        self::assertEquals($exptected, $actual);
     }
 
     /**
@@ -124,11 +125,6 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      * @expectedException PHP_Depend_Log_NoLogOutputException
      */
     public function testThrowsExceptionForInvalidLogTarget()
@@ -138,32 +134,31 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * testChartLogAcceptsOnlyTheCorrectAnalyzer
+     * testChartLogAcceptsValidAnalyzer
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
-    public function testChartLogAcceptsOnlyTheCorrectAnalyzer()
+    public function testChartLogAcceptsValidAnalyzer()
     {
         $logger = new PHP_Depend_Log_Jdepend_Chart();
+        self::assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
+    }
 
-        $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
-        $this->assertTrue($logger->log(new PHP_Depend_Metrics_Dependency_Analyzer()));
+    /**
+     * testChartLogRejectsInvalidAnalyzer
+     *
+     * @return void
+     */
+    public function testChartLogRejectsInvalidAnalyzer()
+    {
+        $logger = new PHP_Depend_Log_Jdepend_Chart();
+        self::assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
     }
 
     /**
      * Tests that the logger generates an image file.
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testGeneratesCorrectSVGImageFile()
     {
@@ -178,18 +173,13 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $logger->log($analyzer);
         $logger->close();
 
-        $this->assertFileExists($this->_outputFile);
+        self::assertFileExists($this->_outputFile);
     }
 
     /**
      * testGeneratedSvgImageContainsExpectedPackages
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testGeneratedSvgImageContainsExpectedPackages()
     {
@@ -218,11 +208,6 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      * testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages()
     {
@@ -250,11 +235,6 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      * testCalculateCorrectEllipseSize
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testCalculateCorrectEllipseSize()
     {
@@ -310,11 +290,6 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
      * Tests that the logger generates an image file.
      *
      * @return void
-     * @covers PHP_Depend_Log_Jdepend_Chart
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::jdepend
-     * @group unittest
      */
     public function testGeneratesImageFile()
     {
@@ -342,7 +317,6 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
         $this->assertFileExists($fileName);
 
         $info = getimagesize($fileName);
-        $this->assertType('array', $info);
         $this->assertEquals(390, $info[0]);
         $this->assertEquals(250, $info[1]);
         $this->assertEquals('image/png', $info['mime']);

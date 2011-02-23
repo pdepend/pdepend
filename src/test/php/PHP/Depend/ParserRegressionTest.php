@@ -58,6 +58,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::parser
+ * @group regressiontest
  */
 class PHP_Depend_ParserRegressionTest extends PHP_Depend_AbstractTest
 {
@@ -67,10 +72,6 @@ class PHP_Depend_ParserRegressionTest extends PHP_Depend_AbstractTest
      * @param string $pathName Name of the file to parse.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::parser
-     * @group regressiontest
      * @dataProvider dataProviderSourceFiles
      */
     public function testParserHandlesSourceFileWithoutException($pathName)

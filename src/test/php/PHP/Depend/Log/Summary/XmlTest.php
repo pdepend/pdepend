@@ -62,6 +62,12 @@ require_once dirname(__FILE__) . '/AnalyzerNodeAndProjectAwareDummy.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Log_Summary_Xml
+ * @group pdepend
+ * @group pdepend::log
+ * @group pdepend::log::summary
+ * @group unittest
  */
 class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
 {
@@ -107,11 +113,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::summary
-     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -130,11 +131,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::summary
-     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -151,11 +147,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::logs
-     * @group pdepend::logs::summary
-     * @group unittest
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware()
     {
@@ -169,11 +160,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::logs
-     * @group pdepend::logs::summary
-     * @group unittest
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware()
     {
@@ -189,11 +175,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * metrics.
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::summary
-     * @group unittest
      */
     public function testXmlLogWithoutMetrics()
     {
@@ -216,11 +197,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * empty source code structure.
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::summary
-     * @group unittest
      */
     public function testProjectAwareAnalyzerWithoutCode()
     {
@@ -249,11 +225,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * testAnalyzersThatImplementProjectAndNodeAwareAsExpected
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::summary
-     * @group unittest
      */
     public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected()
     {
@@ -282,11 +253,6 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
      * testNodeAwareAnalyzer
      *
      * @return void
-     * @covers PHP_Depend_Log_Summary_Xml
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::summary
-     * @group unittest
      */
     public function testNodeAwareAnalyzer()
     {

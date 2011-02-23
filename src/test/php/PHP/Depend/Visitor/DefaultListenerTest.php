@@ -61,6 +61,11 @@ require_once dirname(__FILE__) . '/TestListener.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Visitor_AbstractListener
+ * @group pdepend
+ * @group pdepend::visitor
+ * @group unittest
  */
 class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
 {
@@ -68,14 +73,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * testDefaultImplementationCallsListeners
      * 
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testDefaultImplementationCallsListeners()
     {
-        $codeUri  = self::createCodeResourceURI('visitor/' . __FUNCTION__ . '.php');
+        $codeUri  = self::createCodeResourceUriForTest();
         $packages = self::parseSource($codeUri);
 
         $listener = new PHP_Depend_Visitor_TestListener();
@@ -118,10 +119,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * to the startVisitNode() and endVisitNode() methods.
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForClass()
     {
@@ -165,10 +162,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * call to the startVisitNode() and endVisitNode() methods.
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForInterface()
     {
@@ -212,10 +205,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * call to the startVisitNode() and endVisitNode() methods.
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForFunction()
     {
@@ -262,10 +251,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * the startVisitNode() and endVisitNode() methods.
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testListenerCallsStartNodeEndNodeForMethod()
     {
@@ -304,10 +289,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * testListenerCallsStartVisitNodeForPassedParameterInstance
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testListenerCallsStartVisitNodeForPassedParameterInstance()
     {
@@ -323,10 +304,6 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * testListenerCallsEndVisitNodeForPassedParameterInstance
      *
      * @return void
-     * @covers PHP_Depend_Visitor_AbstractListener
-     * @group pdepend
-     * @group pdepend::visitor
-     * @group unittest
      */
     public function testListenerCallsEndVisitNodeForPassedParameterInstance()
     {

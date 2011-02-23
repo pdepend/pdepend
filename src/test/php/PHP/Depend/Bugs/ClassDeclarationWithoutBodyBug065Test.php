@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_AbstractTest
 {
@@ -67,19 +72,15 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * interface without a body.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesInterfaceDeclarationWithoutBody()
+    public function testInterfaceDeclarationWithoutBody()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected end of token stream in file: '
         );
 
-        self::parseSource('bugs/065-001-interface-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -87,19 +88,15 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * interface declaration with extend but without a body.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesInterfaceDeclarationWithExtendWithoutBody()
+    public function testInterfaceDeclarationWithExtendWithoutBody()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected end of token stream in file: '
         );
 
-        self::parseSource('bugs/065-002-interface-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -107,19 +104,15 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * interface declaration with extend with invalid end of interface list.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesInterfaceDeclarationWithInvalidInterfaceList()
+    public function testInterfaceDeclarationWithInvalidInterfaceList()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected token: {, line: 2, col: 28, file: '
         );
 
-        self::parseSource('bugs/065-003-interface-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
     
     /**
@@ -127,19 +120,15 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration without a body.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesClassDeclarationWithoutBody()
+    public function testClassDeclarationWithoutBody()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected end of token stream in file: '
         );
 
-        self::parseSource('bugs/065-004-class-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -147,19 +136,15 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with extend but without a parent class name and a body.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesClassDeclarationWithExtendsWithoutClassName()
+    public function testClassDeclarationWithExtendsWithoutClassName()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected end of token stream in file: '
         );
 
-        self::parseSource('bugs/065-005-class-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -167,19 +152,15 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with implements but without a interface name and a body.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesClassDeclarationWithExtendsWithoutInterfaceName()
+    public function testClassDeclarationWithExtendsWithoutInterfaceName()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected end of token stream in file: '
         );
 
-        self::parseSource('bugs/065-006-class-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -187,19 +168,15 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with parent interface but without a body.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesClassDeclarationWithParentInterfaceWithoutBody()
+    public function testClassDeclarationWithParentInterfaceWithoutBody()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected end of token stream in file: '
         );
 
-        self::parseSource('bugs/065-007-class-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -207,18 +184,14 @@ class PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test extends PHP_Depend_A
      * class declaration with an incomplete parent interface list and without a body.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
-    public function testParserHandlesClassDeclarationWithIncompleteParentInterfaceWithoutBody()
+    public function testClassDeclarationWithIncompleteParentInterfaceWithoutBody()
     {
         $this->setExpectedException(
             'RuntimeException',
             'Unexpected end of token stream in file: '
         );
 
-        self::parseSource('bugs/065-008-class-declaration-without-body.fail');
+        self::parseCodeResourceForTest();
     }
 }

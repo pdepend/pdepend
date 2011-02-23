@@ -62,6 +62,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -70,14 +75,10 @@ class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
      * Tests that the parser handles a comma separated constant definition.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesSimpleCommaSeparatedConstantDefinition()
     {
-        $constants = self::parseTestCaseSource(__METHOD__)
+        $constants = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -91,14 +92,10 @@ class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
      * inline comments.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments()
     {
-        $constants = self::parseTestCaseSource(__METHOD__)
+        $constants = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -112,14 +109,10 @@ class PHP_Depend_Bugs_SupportCommaSeparatedConstantDefinitionsBug082Test
      * definitions as expected.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesMultipleCommaSeparatedConstantDefinitions()
     {
-        $constants = self::parseTestCaseSource(__METHOD__)
+        $constants = self::parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current()

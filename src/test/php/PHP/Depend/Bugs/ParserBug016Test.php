@@ -106,10 +106,6 @@ class PHP_Depend_Bugs_ParserBug016Test extends PHP_Depend_Bugs_AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::parser
-     * @group regressiontest
      * @todo TODO: It would be a cool feature if PHP_Depend would replace such
      *             combinations (T_VARIABLE = T_CONSTANT_ENCAPSED_STRING with
      *             T_INSTANCEOF + T_VARIABLE).

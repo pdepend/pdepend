@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_Coverage_Factory
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::coverage
+ * @group unittest
  */
 class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
 {
@@ -66,11 +72,6 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsCloverReportInstanceForCloverInputFile
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_Factory
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testCreateReturnsCloverReportInstanceForCloverInputFile()
     {
@@ -84,11 +85,6 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateMethodThrowsExceptionWhenFileDoesNotExist
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_Factory
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testCreateMethodThrowsExceptionWhenFileDoesNotExist()
@@ -101,11 +97,6 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateMethodThrowsExceptionWhenFileIsNotValidXml
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_Factory
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testCreateMethodThrowsExceptionWhenFileIsNotValidXml()
@@ -118,11 +109,6 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateMethodThrowsExceptionForUnsupportedReportFormat
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_Factory
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testCreateMethodThrowsExceptionForUnsupportedReportFormat()

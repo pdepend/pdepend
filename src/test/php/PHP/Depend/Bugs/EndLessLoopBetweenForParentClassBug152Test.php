@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -67,14 +72,10 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass()
     {
-        self::parseTestCaseSource(__METHOD__)
+        self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -85,14 +86,10 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
      * testClassNotResultsInEndlessLoopWhileCallingGetInterfaces
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces()
     {
-        self::parseTestCaseSource(__METHOD__)
+        self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -103,14 +100,10 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
      * testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -124,15 +117,10 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
      * testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
-     * @group barbaz
      */
     public function testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage()
     {
-        $classes = self::parseTestCaseSource(__METHOD__)
+        $classes = self::parseCodeResourceForTest()
             ->current()
             ->getClasses();
 

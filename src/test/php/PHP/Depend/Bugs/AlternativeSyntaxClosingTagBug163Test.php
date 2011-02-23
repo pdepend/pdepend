@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/163
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bug_AlternativeSyntaxClosingTagBug163Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -67,10 +72,6 @@ class PHP_Depend_Bug_AlternativeSyntaxClosingTagBug163Test
      * testParserHandlesAlternativeSyntaxTerminatedByClosingTag
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesAlternativeSyntaxTerminatedByClosingTag()
     {

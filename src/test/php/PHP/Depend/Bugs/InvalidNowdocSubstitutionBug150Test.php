@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_InvalidNowdocSubstitutionBug150Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -66,15 +71,10 @@ class PHP_Depend_Bugs_InvalidNowdocSubstitutionBug150Test extends PHP_Depend_Bug
      * testTokenizerDoesNotDetectNowdocSyntaxInString
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testTokenizerDoesNotDetectNowdocSyntaxInString()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-
-        $this->assertEquals(1, $packages->current()->getFunctions()->count());
+        $packages = self::parseCodeResourceForTest();
+        self::assertEquals(1, $packages->current()->getFunctions()->count());
     }
 }

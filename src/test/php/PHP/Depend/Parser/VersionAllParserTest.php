@@ -61,6 +61,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  * @since      0.9.20
+ *
+ * @covers PHP_Depend_Parser_VersionAllParser
+ * @group pdepend
+ * @group pdepend::parser
+ * @group unittest
  */
 class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractTest
 {
@@ -68,10 +73,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsStringAsClassName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsStringAsClassName()
     {
@@ -83,10 +84,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsStringAsInterfaceName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsStringAsInterfaceName()
     {
@@ -98,10 +95,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNullAsClassName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsNullAsClassName()
     {
@@ -113,10 +106,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNullAsInterfaceName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsNullAsInterfaceName()
     {
@@ -128,10 +117,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTrueAsClassName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsTrueAsClassName()
     {
@@ -143,10 +128,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTrueAsInterfaceName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsTrueAsInterfaceName()
     {
@@ -158,10 +139,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsFalseAsClassName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsFalseAsClassName()
     {
@@ -173,10 +150,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsFalseAsInterfaceName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsFalseAsInterfaceName()
     {
@@ -188,10 +161,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsUseAsClassName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsUseAsClassName()
     {
@@ -203,10 +172,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsUseAsInterfaceName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsUseAsInterfaceName()
     {
@@ -218,10 +183,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceAsClassName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsNamespaceAsClassName()
     {
@@ -233,10 +194,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceAsInterfaceName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsNamespaceAsInterfaceName()
     {
@@ -248,11 +205,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionOnTokenStreamEnd
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
      * @covers PHP_Depend_Parser_TokenStreamEndException
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionOnTokenStreamEnd()
@@ -264,11 +217,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionForUnexpectedTokenType
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
      * @covers PHP_Depend_Parser_UnexpectedTokenException
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForUnexpectedTokenType()
@@ -280,10 +229,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsStringAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsStringAsMethodName()
     {
@@ -295,10 +240,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsUseKeywordAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsUseKeywordAsMethodName()
     {
@@ -310,10 +251,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsGotoKeywordAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsGotoKeywordAsMethodName()
     {
@@ -325,10 +262,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsSelfKeywordAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsSelfKeywordAsMethodName()
     {
@@ -340,10 +273,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNullAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsNullAsMethodName()
     {
@@ -355,10 +284,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTrueAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsTrueAsMethodName()
     {
@@ -370,10 +295,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsFalseAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsFalseAsMethodName()
     {
@@ -385,10 +306,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsDirConstantAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsDirConstantAsMethodName()
     {
@@ -400,10 +317,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceKeywordAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsNamespaceKeywordAsMethodName()
     {
@@ -415,10 +328,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceConstantAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsNamespaceConstantAsMethodName()
     {
@@ -430,10 +339,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsParentKeywordAsMethodName
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserAcceptsParentKeywordAsMethodName()
     {
@@ -445,10 +350,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionForInvalidToken
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInvalidToken()
@@ -460,10 +361,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionForTokenStreamEnd
      *
      * @return void
-     * @covers PHP_Depend_Parser_VersionAllParser
-     * @group pdepend
-     * @group pdepend::parser
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
