@@ -73,7 +73,7 @@ class PHP_Depend_ManifestUpdater
      */
     public function __construct()
     {
-        $this->_manifestFile = dirname(__FILE__) . '/../package.xml';
+        $this->_manifestFile = dirname(__FILE__) . '/../src/conf/package.xml';
 
         $manifest = $this->_createManifest();
         $struct   = $this->_createContentStruct();
@@ -161,7 +161,7 @@ class PHP_Depend_ManifestUpdater
         );
 
         foreach (array_keys($struct) as $name) {
-            $contents         = dirname(__FILE__) . "/../{$name}";
+            $contents         = dirname(__FILE__) . "/../src/main/php/{$name}";
             $struct[$name][1] = $this->_readContent($contents);
         }
         return $struct;

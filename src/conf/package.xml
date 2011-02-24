@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package xmlns="http://pear.php.net/dtd/package-2.0"
-         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         packagerversion="1.9.0"
-         version="2.0"
-         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd                         http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.0" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd                         http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
   <name>PHP_Depend</name>
   <channel>pear.pdepend.org</channel>
   <summary>PHP_Depend design quality metrics for PHP packages</summary>
@@ -19,7 +14,7 @@ and the NDepend metric tool.
   </lead>
   <date>2011-02-06</date>
   <version>
-    <release>0.10.1</release>
+    <release>0.10.2</release>
     <api>1.0.0</api>
   </version>
   <stability>
@@ -28,8 +23,28 @@ and the NDepend metric tool.
   </stability>
   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
   <notes>
-- Fixed #9634613: Notice: Undefined property $___temp___. Fixed with
-  commit #5fb6900.
+This release of PHP_Depend closes two bugs. One related to the start and
+end line properties of object property nodes in the syntax tree. The
+second fix closes a bug in PHP_Depend's implementation of the WMCi metric.
+Beside these two fixes this release implements three minor features, one
+design issue in the syntax tree api and the other two other features are
+related to the new metrics CE, CA, CBO and NPM.
+
+Additionally we have restructured PHP_Depend's directory structure from a
+custom, freestyle format to a directory layout that is similar to maven's
+convention. With this change we have fixed several issues and workarounds
+in PHP_Depend's build process.
+
+- Fixed #9936901: WMCi calculation is incorrect for overwritten methods.
+  Fixed with commit #69d079a.
+- Fixed #8927377: Invalid Start/End Line/Column for object property access.
+  Fixed with commit #fc57264.
+- Implemented #9069393: Replace optional NULL argument of setPackage()
+  with separate method. Implemented with commit #1282cdb.
+- Implemented #9069871: Implement efferent- and afferent-coupling for
+  classes. Implemented with commit #07537c2.
+- Implemented #9997915: Implement Number of Public Methods metric.
+  Implemented with commit #2dd3ebf.
   </notes>
   <contents>
     <dir name="/">
@@ -1538,6 +1553,22 @@ and the NDepend metric tool.
   Fixed in commit #38e6b52.
 - Fixed #9623949: Also find analyzers in phar archives in the current
   include_path. Fixed in commit #f53dca9.
+  </notes>
+    </release>
+    <release>
+      <date>2011-02-06</date>
+      <version>
+        <release>0.10.1</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+      <notes>
+- Fixed #9634613: Notice: Undefined property $___temp___. Fixed with
+  commit #5fb6900.
   </notes>
     </release>
   </changelog>

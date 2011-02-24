@@ -1,10 +1,24 @@
 PHP_Depend 0.10.2
 -----------------
 
+This release of PHP_Depend closes two bugs. One related to the start and 
+end line properties of object property nodes in the syntax tree. The 
+second fix closes a bug in PHP_Depend's implementation of the WMCi metric.
+Beside these two fixes this release implements three minor features, one
+design issue in the syntax tree api and the other two other features are
+related to the new metrics CE, CA, CBO and NPM.
+
+Additionally we have restructured PHP_Depend's directory structure from a
+custom, freestyle format to a directory layout that is similar to maven's
+convention. With this change we have fixed several issues and workarounds
+in PHP_Depend's build process.
+
 - Fixed #9936901: WMCi calculation is incorrect for overwritten methods.
   Fixed with commit #69d079a.
 - Fixed #8927377: Invalid Start/End Line/Column for object property access.
   Fixed with commit #fc57264.
+- Implemented #9069393: Replace optional NULL argument of setPackage()
+  with separate method. Implemented with commit #1282cdb.
 - Implemented #9069871: Implement efferent- and afferent-coupling for
   classes. Implemented with commit #07537c2.
 - Implemented #9997915: Implement Number of Public Methods metric.
