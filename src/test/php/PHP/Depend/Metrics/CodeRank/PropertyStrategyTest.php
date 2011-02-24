@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * 
+ * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::coderank
+ * @group unittest
  */
 class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
     extends PHP_Depend_AbstractTest
@@ -67,12 +73,6 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
      * testStrategyCountsCorrectTypes
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_Analyzer
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
-     * @group pdepend
-     * @group pdepend::metrics
-     * @group pdepend::metrics::coderank
-     * @group unittest
      */
     public function testStrategyCountsCorrectTypes()
     {

@@ -48,8 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
-
 /**
  * Test case for the {@link PHP_Depend_Tokenizer_PHP52Helper} class.
  *
@@ -61,6 +59,11 @@ require_once 'PHP/Depend/Tokenizer/PHP52Helper.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Tokenizer_PHP52Helper
+ * @group pdepend
+ * @group pdepend::tokenizer
+ * @group unittest
  */
 class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
 {
@@ -69,10 +72,6 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
      * namespace separators.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP52Helper
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithBackslash()
     {
@@ -105,10 +104,6 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
      * namespace separators.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP52Helper
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithNamespacedAllocation()
     {
@@ -140,10 +135,6 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
      * namespace separators.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP52Helper
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testHelperCreatesExpectedTokenArrayWithNamespacedQualifiedName()
     {
@@ -172,10 +163,6 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
      * Tests that the helper ignores backslashes used as escape character.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP52Helper
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testHelperIgnoresBackslashAsDoubleQuoteEscapeCharacter()
     {
@@ -199,10 +186,6 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
      * Tests that the helper ignores backslashes used as escape character.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP52Helper
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testHelperIgnoresBackslashAsSignleQuoteEscapeCharacter()
     {
@@ -226,10 +209,6 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
      * Tests that the helper ignores a class name in a string.
      *
      * @return void
-     * @covers PHP_Depend_Tokenizer_PHP52Helper
-     * @group pdepend
-     * @group pdepend::tokenizer
-     * @group unittest
      */
     public function testHelperIgnoresQualifiedClassNameInDoubleQuotedString()
     {
@@ -253,7 +232,7 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
 
     /**
      * This method will append the third token array element, which contains the
-     * line number of a token. This feature was introdcued with PHP version
+     * line number of a token. This feature was introduced with PHP version
      * 5.2.2.
      *
      * @param array(mixed) $tokens The input token array.

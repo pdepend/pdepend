@@ -62,6 +62,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -70,13 +75,9 @@ class PHP_Depend_Bugs_ClassConstantAsArrayDefaultValueResultsInExceptionBug091Te
      * Tests that the parser does not throw an exception.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 }

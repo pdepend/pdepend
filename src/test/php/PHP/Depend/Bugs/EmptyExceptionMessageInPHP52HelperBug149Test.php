@@ -59,45 +59,48 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test
     extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * testHelperThrowsExceptionForInvalidToken
+     * Will skip this test for PHP versions >= 5.3
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
-     * @expectedException PHP_Depend_Parser_TokenException
      */
-    public function testHelperThrowsExceptionForInvalidToken()
+    protected function setUp()
     {
         if (version_compare(phpversion(), '5.3.0') >= 0) {
             $this->markTestSkipped('This test is related to php versions < 5.3.0');
         }
-        self::parseTestCaseSource(__METHOD__);
+        parent::setUp();
+    }
+
+    /**
+     * testHelperThrowsExceptionForInvalidToken
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_TokenException
+     */
+    public function testHelperThrowsExceptionForInvalidToken()
+    {
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testHelperThrowsExceptionWithExpectedExceptionMessage
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testHelperThrowsExceptionWithExpectedExceptionMessage()
     {
-        if (version_compare(phpversion(), '5.3.0') >= 0) {
-            $this->markTestSkipped('This test is related to php versions < 5.3.0');
-        }
-
         $this->setExpectedException('Exception', "Unexpected character in input:  '\' (ASCII=92) state=1");
 
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 }

@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Util/Configuration.php';
-require_once 'PHP/Depend/Util/ConfigurationInstance.php';
-require_once 'PHP/Depend/Util/ImageConvert.php';
-
 /**
  * Test case for the image convert utility class.
  *

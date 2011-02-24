@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_ClassAndInterfaceNamesBug169Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -66,83 +71,59 @@ class PHP_Depend_Bugs_ClassAndInterfaceNamesBug169Test extends PHP_Depend_Bugs_A
      * testParserAcceptsNullAsClassName
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsNullAsClassName()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserAcceptsNullAsInterfaceName
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsNullAsInterfaceName()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserAcceptsTrueAsClassName
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsTrueAsClassName()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserAcceptsTrueAsInterfaceName
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsTrueAsInterfaceName()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserAcceptsFalseAsClassName
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsFalseAsClassName()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserAcceptsFalseAsInterfaceName
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsFalseAsInterfaceName()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 }

@@ -62,6 +62,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -70,14 +75,10 @@ class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
      * Tests that the analyzer calculates the expected result.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAnalyzerDetectsIdenticalMethodCallWithFunctionComment()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
@@ -90,14 +91,10 @@ class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
      * Tests that the analyzer calculates the expected result.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAnalyzerDetectsFunctionCallWithCommentBetweenParenthesisAndIdentifier()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
@@ -110,14 +107,10 @@ class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
      * Tests that the analyzer calculates the expected result.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAnalyzerDetectsObjectAllocation()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $packages = self::parseCodeResourceForTest();
 
         $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);

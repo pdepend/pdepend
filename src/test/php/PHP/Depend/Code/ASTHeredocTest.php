@@ -46,9 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
-require_once 'PHP/Depend/Code/ASTNodeTest.php';
-
-require_once 'PHP/Depend/Code/ASTHeredoc.php';
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTHeredoc} class.

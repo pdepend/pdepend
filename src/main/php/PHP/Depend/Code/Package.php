@@ -254,7 +254,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
             // Remove class from internal list
             unset($this->types[$i]);
             // Remove this as parent
-            $type->setPackage(null);
+            $type->unsetPackage();
         }
     }
 
@@ -302,7 +302,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
             // Remove function from internal list
             unset($this->functions[$i]);
             // Remove this as parent
-            $function->setPackage(null);
+            $function->unsetPackage();
         }
     }
 

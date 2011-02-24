@@ -62,6 +62,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -70,14 +75,10 @@ class PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test
      * Tests that the parser handles a comma separated property declaration.
      * 
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration()
     {
-        $properties = self::parseTestCaseSource(__METHOD__)
+        $properties = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -90,49 +91,52 @@ class PHP_Depend_Bugs_SupportCommaSeparatedPropertyDeclarationsBug081Test
      * Tests that the parser handles a comma separated property declaration.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserSetsSameVisibilityForAllPropertyDeclarations()
     {
-        $properties = self::parseTestCaseSource(__METHOD__)
+        $properties = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
             ->getProperties();
 
-        $this->assertTrue($properties->current()->isPublic());
-        $properties->next();
-        $this->assertTrue($properties->current()->isPublic());
-        $properties->next();
+        $actual = array();
+        foreach ($properties as $property) {
+            $actual[] = array(
+                'private'  =>  $property->isPrivate(),
+                'public'   =>  $property->isPublic()
+            );
+        }
 
-        $this->assertTrue($properties->current()->isPrivate());
-        $properties->next();
-        $this->assertTrue($properties->current()->isPrivate());
-        $properties->next();
+        self::assertEquals(
+            array(
+                array('private' => false, 'public' => true),
+                array('private' => false, 'public' => true),
+                array('private' => true, 'public' => false),
+                array('private' => true, 'public' => false),
+            ),
+            $actual
+        );
     }
 
     /**
      * Tests that the parser handles a comma separated property declaration.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations()
     {
-        $properties = self::parseTestCaseSource(__METHOD__)
+        $properties = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
             ->getProperties();
 
-        $this->assertTrue($properties->current()->isStatic());
-        $properties->next();
-        $this->assertTrue($properties->current()->isStatic());
+        $actual = array();
+        foreach ($properties as $property) {
+            $actual[] = $property->isStatic();
+        }
+
+        self::assertEquals(array(true, true), $actual);
     }
 }

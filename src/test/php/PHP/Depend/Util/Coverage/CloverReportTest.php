@@ -48,10 +48,6 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Method.php';
-require_once 'PHP/Depend/Util/Coverage/CloverReport.php';
-
 /**
  * Test case for the {@link PHP_Depend_Util_Coverage_CloverReport} class.
  *
@@ -63,6 +59,12 @@ require_once 'PHP/Depend/Util/Coverage/CloverReport.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Util_Coverage_CloverReport
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::coverage
+ * @group unittest
  */
 class PHP_Depend_Util_Coverage_CloverReportTest extends PHP_Depend_AbstractTest
 {
@@ -70,126 +72,91 @@ class PHP_Depend_Util_Coverage_CloverReportTest extends PHP_Depend_AbstractTest
      * testReportReturnsExpected0PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_CloverReport
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testReportReturnsExpected0PercentCoverage()
     {
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(0, $coverage);
+        self::assertEquals(0, $coverage);
     }
 
     /**
      * testReportReturnsExpected50PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_CloverReport
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testReportReturnsExpected50PercentCoverage()
     {
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(50, $coverage);
+        self::assertEquals(50, $coverage);
     }
 
     /**
      * testReportReturnsExpected100PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_CloverReport
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testReportReturnsExpected100PercentCoverage()
     {
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(100, $coverage);
+        self::assertEquals(100, $coverage);
     }
 
     /**
      * testNamespacedReportReturnsExpected0PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_CloverReport
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testNamespacedReportReturnsExpected0PercentCoverage()
     {
         $report   = $this->_createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(0, $coverage);
+        self::assertEquals(0, $coverage);
     }
 
     /**
      * testNamespacedReportReturnsExpected50PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_CloverReport
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testNamespacedReportReturnsExpected50PercentCoverage()
     {
         $report   = $this->_createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(50, $coverage);
+        self::assertEquals(50, $coverage);
     }
 
     /**
      * testNamespacedReportReturnsExpected100PercentCoverage
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_CloverReport
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testNamespacedReportReturnsExpected100PercentCoverage()
     {
         $report   = $this->_createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(100, $coverage);
+        self::assertEquals(100, $coverage);
     }
 
     /**
      * testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists
      *
      * @return void
-     * @covers PHP_Depend_Util_Coverage_CloverReport
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::coverage
-     * @group unittest
      */
     public function testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists()
     {
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(0, $coverage);
+        self::assertEquals(0, $coverage);
     }
 
     /**

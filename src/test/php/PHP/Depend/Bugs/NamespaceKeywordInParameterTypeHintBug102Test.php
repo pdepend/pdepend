@@ -64,6 +64,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -72,13 +75,10 @@ class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
      * testParserHandlesNamespaceKeywordInFunctionParameterTypeHint
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesNamespaceKeywordInFunctionParameterTypeHint()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = self::parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
@@ -91,14 +91,10 @@ class PHP_Depend_Bugs_NamespaceKeywordInParameterTypeHintBug102Test
      * testParserHandlesNamespaceKeywordInMethodParameterTypeHint
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesNamespaceKeywordInMethodParameterTypeHint()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()

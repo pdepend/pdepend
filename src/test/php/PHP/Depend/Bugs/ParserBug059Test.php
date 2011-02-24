@@ -91,10 +91,6 @@ class PHP_Depend_Bugs_ParserBug059Test extends PHP_Depend_Bugs_AbstractTest
      * Tests that the parser sets the source file of a class method.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::parser
-     * @group regressiontest
      */
     public function testParserSetsSourceFileForClassMethod()
     {

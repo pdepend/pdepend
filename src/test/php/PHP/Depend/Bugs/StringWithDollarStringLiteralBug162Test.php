@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_StringWithDollarStringLiteralBug162Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -66,13 +71,9 @@ class PHP_Depend_Bugs_StringWithDollarStringLiteralBug162Test extends PHP_Depend
      * testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 }

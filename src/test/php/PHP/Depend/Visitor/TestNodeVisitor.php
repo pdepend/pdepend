@@ -45,8 +45,6 @@
  * @link      http://pdepend.org/
  */
 
-require_once 'PHP/Depend/VisitorI.php';
-
 /**
  * Simple test node visitor implementation.
  *

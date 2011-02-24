@@ -49,12 +49,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/File.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Function.php';
-require_once 'PHP/Depend/Code/Interface.php';
-require_once 'PHP/Depend/Util/UuidBuilder.php';
-
 /**
  * Test case for the {@link PHP_Depend_Util_UuidBuilder} class.
  *
@@ -67,6 +61,11 @@ require_once 'PHP/Depend/Util/UuidBuilder.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  * @since      0.9.12
+ *
+ * @covers PHP_Depend_Util_UuidBuilder
+ * @group pdepend
+ * @group pdepend::util
+ * @group unittest
  */
 class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
 {
@@ -74,10 +73,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForFile
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForFile()
     {
@@ -91,10 +86,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesCaseSensitiveFileIdentifiers
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesCaseSensitiveFileIdentifiers()
     {
@@ -110,10 +101,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForClass
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForClass()
     {
@@ -132,10 +119,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForSecondIdenticalClass
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalClass()
     {
@@ -155,10 +138,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForSecondClass
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondClass()
     {
@@ -181,10 +160,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesCaseInSensitiveClassIdentifiers
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesCaseInSensitiveClassIdentifiers()
     {
@@ -210,10 +185,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesCaseInSensitiveInterfaceIdentifiers
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers()
     {
@@ -239,10 +210,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForFunction
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForFunction()
     {
@@ -261,10 +228,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesCaseInSensitiveFunctionIdentifiers
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers()
     {
@@ -290,10 +253,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForMethod
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForMethod()
     {
@@ -312,10 +271,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction()
     {
@@ -335,10 +290,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesExpectedIdentifierForSecondFunction
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondFunction()
     {
@@ -361,10 +312,6 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
      * testBuilderCreatesCaseInSensitiveMethodIdentifiers
      *
      * @return void
-     * @covers PHP_Depend_Util_UuidBuilder
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testBuilderCreatesCaseInSensitiveMethodIdentifiers()
     {

@@ -61,6 +61,11 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_AbstractTest
 {
@@ -72,10 +77,6 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
      * @param array(integer) $tokenTypes List of all expected token types.
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      * @dataProvider dataProviderTokenizerKeywordSubstitutionInOperatorChain
      */
     public function testTokenizerKeywordSubstitutionInOperatorChain($sourceFile, array $tokenTypes)
@@ -83,9 +84,12 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($this->createCodeResourceURI($sourceFile));
 
-        foreach ($tokenTypes as $tokenType) {
-            $this->assertSame($tokenType, $tokenizer->next()->type);
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = $token->type;
         }
+
+        self::assertEquals($tokenTypes, $actual);
     }
 
     /**

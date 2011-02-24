@@ -2,7 +2,7 @@
 /**
  * @package package0
  */
-class clazz0
+class testParserStaticCall
 {
     public function __construct()
     {

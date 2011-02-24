@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/Depend/Code/ASTNode.php';
-require_once 'PHP/Depend/Code/ASTVisitorI.php';
-
 /**
  * Abstract test case for classes derived {@link PHP_Depend_Code_ASTNode}ö
  *
@@ -271,100 +268,6 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
             return $this->getMockForAbstractClass($class, array(__METHOD__));
         }
         return $reflection->newInstanceArgs(array(__METHOD__));
-    }
-
-    /**
-     * Tests that the given node and its children represent the expected ast
-     * object graph.
-     *
-     * @param PHP_Depend_Code_ASTNode $node     The root node.
-     * @param array(string)           $expected Expected class structure.
-     *
-     * @return void
-     */
-    protected function assertGraphEquals(PHP_Depend_Code_ASTNode $node, $expected)
-    {
-        $actual = $this->collectChildNodes($node);
-        self::assertEquals($expected, $actual);
-    }
-
-    /**
-     * Collects all children from a given node.
-     *
-     * @param PHP_Depend_Code_ASTNode $node   The current root node.
-     * @param array                   $actual Previous filled list.
-     *
-     * @return array(string)
-     */
-    protected function collectChildNodes(
-        PHP_Depend_Code_ASTNode $node,
-        array $actual = array()
-    ) {
-        foreach ($node->getChildren() as $child) {
-            $actual[] = get_class($child);
-            $actual   = $this->collectChildNodes($child, $actual);
-        }
-        return $actual;
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     * @param string $nodeType The searched node class.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     */
-    protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
-    {
-        return $this->getFirstFunctionForTestCase($testCase)
-            ->getFirstChildOfType($nodeType);
-    }
-
-    /**
-     * Returns the first function found in a test file associated with the
-     * given test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_Function
-     */
-    protected function getFirstFunctionForTestCase($testCase)
-    {
-        return self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current();
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     * @param string $nodeType The searched node class.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     */
-    protected function getFirstNodeOfTypeInClass($testCase, $nodeType)
-    {
-        return $this->getFirstClassForTestCase($testCase)
-            ->getFirstChildOfType($nodeType);
-    }
-
-    /**
-     * Returns the first class found in a test file associated with the given
-     * test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_Class
-     */
-    protected function getFirstClassForTestCase($testCase)
-    {
-        return self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current();
     }
 
     /**

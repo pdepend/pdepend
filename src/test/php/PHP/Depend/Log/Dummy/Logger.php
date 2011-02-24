@@ -46,10 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/CodeAwareI.php';
-require_once 'PHP/Depend/Log/FileAwareI.php';
-
 /**
  * Dummy logger for testing
  *

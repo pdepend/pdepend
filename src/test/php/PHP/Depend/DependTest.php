@@ -57,6 +57,10 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend
+ * @group pdepend
+ * @group unittest
  */
 class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
 {
@@ -65,9 +69,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * exception for an invalid directory.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testAddInvalidDirectoryFail()
     {
@@ -84,9 +85,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * directory.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testAddDirectory()
     {
@@ -98,9 +96,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * testAnalyzeMethodReturnsAnIterator
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testAnalyzeMethodReturnsAnIterator()
     {
@@ -115,9 +110,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * Tests the {@link PHP_Depend::analyze()} method and the return value. 
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testAnalyze()
     {
@@ -145,9 +137,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * directory was set.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
     {
@@ -160,9 +149,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * testAnalyzeReturnsEmptyIteratorWhenNoPackageExists
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testAnalyzeReturnsEmptyIteratorWhenNoPackageExists()
     {
@@ -178,9 +164,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * option correct.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testAnalyzeSetsWithoutAnnotations()
     {
@@ -205,9 +188,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * expected number of classes.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testCountClasses()
     {
@@ -224,9 +204,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * exception if the code was not analyzed before.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testCountClassesWithoutAnalyzeFail()
     {
@@ -245,9 +222,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * expected number of packages.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testCountPackages()
     {
@@ -263,9 +237,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * exception if the code was not analyzed before.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testCountPackagesWithoutAnalyzeFail()
     {
@@ -284,9 +255,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * expected {@link PHP_Depend_Code_Package} objects.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testGetPackage()
     {
@@ -312,9 +280,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * exception if the code was not analyzed before.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testGetPackageWithoutAnalyzeFail()
     {
@@ -333,9 +298,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * exception if you request an invalid package.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testGetPackageWithUnknownPackageFail()
     {
@@ -356,9 +318,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * {@link PHP_Depend::analyze()}.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testGetPackages()
     {
@@ -379,9 +338,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * exception if the code was not analyzed before.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testGetPackagesWithoutAnalyzeFail()
     {
@@ -399,9 +355,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * Tests the newly added support for single file handling.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      */
     public function testSupportForSingleFileIssue90()
     {
@@ -422,9 +375,6 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
      * added file does not exist.
      *
      * @return void
-     * @covers PHP_Depend
-     * @group pdepend
-     * @group unittest
      * @expectedException InvalidArgumentException
      */
     public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()

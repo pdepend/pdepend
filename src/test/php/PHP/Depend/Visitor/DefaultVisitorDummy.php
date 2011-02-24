@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
-
 /**
  * Dummy implementation of the default visitor.
  *

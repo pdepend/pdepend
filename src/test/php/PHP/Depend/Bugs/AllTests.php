@@ -46,6 +46,7 @@
  * @link       http://www.pdepend.org/
  */
 
+require_once dirname(__FILE__) . '/ParserBug001Test.php';
 require_once dirname(__FILE__) . '/InvalidResultWhenFunctionReturnsByReferenceBug004Test.php';
 require_once dirname(__FILE__) . '/ParserBug006Test.php';
 require_once dirname(__FILE__) . '/ParserBug007Test.php';
@@ -53,11 +54,14 @@ require_once dirname(__FILE__) . '/ParserBug008Test.php';
 require_once dirname(__FILE__) . '/CouplingAnalyzerBug014Test.php';
 require_once dirname(__FILE__) . '/ParserBug015Test.php';
 require_once dirname(__FILE__) . '/ParserBug016Test.php';
+require_once dirname(__FILE__) . '/ParserBug017Test.php';
+require_once dirname(__FILE__) . '/ParserBug030Test.php';
 require_once dirname(__FILE__) . '/ParserBug033Test.php';
 require_once dirname(__FILE__) . '/ParserBug059Test.php';
 require_once dirname(__FILE__) . '/InstanceOfExpressionReferenceHandlingBug062Test.php';
 require_once dirname(__FILE__) . '/ClassDeclarationWithoutBodyBug065Test.php';
 require_once dirname(__FILE__) . '/IncorrectPropertyEndlineBug068Test.php';
+require_once dirname(__FILE__) . '/ParserBug069Test.php';
 require_once dirname(__FILE__) . '/ClosureResultsInExceptionBug070Test.php';
 require_once dirname(__FILE__) . '/SignedDefaultValueResultsInExceptionBug071Test.php';
 require_once dirname(__FILE__) . '/InconsistentObjectGraphBug073Test.php';
@@ -121,6 +125,7 @@ class PHP_Depend_Bugs_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Depend_Bugs - AllTests');
 
+        $suite->addTestSuite('PHP_Depend_Bugs_ParserBug001Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug006Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug007Test');
@@ -128,11 +133,14 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_CouplingAnalyzerBug014Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug015Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug016Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_ParserBug017Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_ParserBug030Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug033Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug059Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClassDeclarationWithoutBodyBug065Test');
         $suite->addTestSuite('PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_ParserBug069Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClosureResultsInExceptionBug070Test');
         $suite->addTestSuite('PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug071Test');
         $suite->addTestSuite('PHP_Depend_Bugs_InconsistentObjectGraphBug073Test');

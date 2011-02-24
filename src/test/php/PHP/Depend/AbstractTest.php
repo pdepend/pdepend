@@ -137,6 +137,102 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     * @param string $nodeType The searched node class.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     */
+    protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
+    {
+        return $this->getFirstFunctionForTestCase($testCase)
+            ->getFirstChildOfType($nodeType);
+    }
+
+    /**
+     * Returns the first function found in a test file associated with the
+     * given test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Function
+     */
+    protected function getFirstFunctionForTestCase($testCase)
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current();
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     * @param string $nodeType The searched node class.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     */
+    protected function getFirstNodeOfTypeInClass($testCase, $nodeType)
+    {
+        return $this->getFirstClassForTestCase($testCase)
+            ->getFirstChildOfType($nodeType);
+    }
+
+    /**
+     * Returns the first class found in a test file associated with the given
+     * test case.
+     *
+     * @param string $testCase Name of the calling test case.
+     *
+     * @return PHP_Depend_Code_Class
+     */
+    protected function getFirstClassForTestCase()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+    }
+
+    /**
+     * Collects all children from a given node.
+     *
+     * @param PHP_Depend_Code_ASTNode $node   The current root node.
+     * @param array                   $actual Previous filled list.
+     *
+     * @return array(string)
+     */
+    protected static function collectChildNodes(
+        PHP_Depend_Code_ASTNode $node,
+        array $actual = array()
+    ) {
+        foreach ($node->getChildren() as $child) {
+            $actual[] = get_class($child);
+            $actual   = self::collectChildNodes($child, $actual);
+        }
+        return $actual;
+    }
+
+    /**
+     * Tests that the given node and its children represent the expected ast
+     * object graph.
+     *
+     * @param PHP_Depend_Code_ASTNode $node     The root node.
+     * @param array(string)           $expected Expected class structure.
+     *
+     * @return void
+     */
+    protected static function assertGraphEquals(
+        PHP_Depend_Code_ASTNode $node,
+        array $expected
+    ) {
+        $actual = self::collectChildNodes($node);
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
      * Helper method to allow PHPUnit versions < 3.5.x
      *
      * @param string $expected The expected class or interface.

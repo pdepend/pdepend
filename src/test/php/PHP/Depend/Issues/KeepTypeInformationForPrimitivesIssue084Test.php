@@ -60,6 +60,12 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::issues
+ * @group pdepend::parser
+ * @group unittest
  */
 class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
     extends PHP_Depend_Issues_AbstractTest
@@ -71,11 +77,6 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
      * @param string $expected The expected primitive type image.
      * 
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @dataProvider dataProviderParserSetsExpectedPrimitivePropertyType
      */
     public function testParserSetsExpectedPrimitivePropertyType($actual, $expected)
@@ -95,11 +96,6 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
      * Tests that the parser sets the expected array type information.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsExpectedArrayPropertyType()
     {
@@ -118,11 +114,6 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
      * Tests that the parser sets the expected array type information.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsExpectedArrayWithParenthesisPropertyType()
     {

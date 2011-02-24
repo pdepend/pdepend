@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_KeywordFunctionNameResultsInExceptionBug116Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -67,69 +72,49 @@ class PHP_Depend_Bugs_KeywordFunctionNameResultsInExceptionBug116Test
      * testParserNotThrowsAnExceptionForKeywordUse
      * 
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserNotThrowsAnExceptionForKeywordUse()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserNotThrowsAnExceptionForKeywordGoto
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserNotThrowsAnExceptionForKeywordGoto()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserNotThrowsAnExceptionForKeywordNamespace
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserNotThrowsAnExceptionForKeywordNamespace()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserNotThrowsAnExceptionForMagicNamespaceConstant
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserNotThrowsAnExceptionForMagicNamespaceConstant()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 
     /**
      * testParserNotThrowsAnExceptionForKeywordParent
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserNotThrowsAnExceptionForKeywordParent()
     {
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 }

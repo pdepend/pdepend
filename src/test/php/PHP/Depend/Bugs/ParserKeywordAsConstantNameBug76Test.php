@@ -61,6 +61,11 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_ParserKeywordAsConstantNameBug76Test extends PHP_Depend_AbstractTest
 {
@@ -72,10 +77,6 @@ class PHP_Depend_Bugs_ParserKeywordAsConstantNameBug76Test extends PHP_Depend_Ab
      * @param array(integer) $constantName Name of the expected constant
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      * @dataProvider dataProviderReservedKeywordAsTypeConstantName
      */
     public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName)

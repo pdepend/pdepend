@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::issues
+ * @group pdepend::parser
+ * @group unittest
  */
 class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     extends PHP_Depend_Issues_AbstractTest
@@ -67,11 +73,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsFunctionParameterByReference()
     {
@@ -83,11 +84,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsMultipleFunctionParameterByReference()
     {
@@ -105,11 +101,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsFunctionParameterByReferenceWithTypeHint()
     {
@@ -123,11 +114,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the parameter flag by reference.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsMultipleFunctionParameterByReferenceWithTypeHint()
     {
@@ -144,11 +130,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * the array type hint.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsParameterArrayFlag()
     {
@@ -161,11 +142,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * scalar without type hint.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserDoesNotSetParameterArrayFlagForScalar()
     {
@@ -178,11 +154,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * a class type hint.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserDoesNotSetParameterArrayFlagForType()
     {
@@ -194,11 +165,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the boolean flag has default value is <b>false</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterWithoutDefaultValue()
     {
@@ -211,11 +177,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is <b>null</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueNull()
     {
@@ -244,11 +205,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is <b>false</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueBooleanFalse()
     {
@@ -277,11 +233,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is also <b>true</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueBooleanTrue()
     {
@@ -310,11 +261,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is a <b>float</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueFloat()
     {
@@ -343,11 +289,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is an <b>integer</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueInteger()
     {
@@ -376,11 +317,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is a <b>string</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueString()
     {
@@ -409,11 +345,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is an <b>array</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueArray()
     {
@@ -442,11 +373,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is an <b>array</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesDefaultParameterValueNestedArray()
     {
@@ -475,11 +401,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is <b>null</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueConstant()
     {
@@ -508,11 +429,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * default value is <b>null</b>.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserHandlesParameterDefaultValueClassConstant()
     {
@@ -657,11 +573,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the user-defined flag for an analyzed class.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsUserDefinedFlagForClass()
     {
@@ -674,11 +585,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * class.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserNotSetsUserDefinedFlagForUnknownClass()
     {
@@ -692,11 +598,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser sets the user-defined flag for an analyzed interface.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsUserDefinedFlagForInterface()
     {
@@ -708,11 +609,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * interface.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserNotSetsUserDefinedFlagForUnknownInterface()
     {
@@ -725,11 +621,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * declaraction contains an amphersand.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserFlagsFunctionWithReturnsReference()
     {
@@ -741,11 +632,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * function declaration does not contain an amphersand.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserDoesNotFlagFunctionWithReturnsReference()
     {
@@ -757,11 +643,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * declaration contains an amphersand.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserFlagsClassMethodWithReturnsReferences()
     {
@@ -774,11 +655,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * method declaration does not contain an amphersand.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserDoesNotFlagClassMethodWithReturnsReferences()
     {
@@ -791,11 +667,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * result.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsFunctionStaticVariableSingleUninitialized()
     {
@@ -810,11 +681,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * result.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsFunctionStaticVariableSingleInitialized()
     {
@@ -829,11 +695,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * result.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsFunctionStaticVariablesInSingleDeclaration()
     {
@@ -848,11 +709,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * result.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserSetsFunctionStaticVariablesInMultipleDeclarations()
     {
@@ -866,11 +722,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser handles a static invoke as expected.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserStaticVariablesDoNotConflictWithStaticInvoke()
     {
@@ -884,11 +735,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * Tests that the parser handles a static object allocation as expected.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      */
     public function testParserStaticVariablesDoNotConflictWithStaticAllocation()
     {
@@ -921,12 +767,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * end of file while it parses a parameter default value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Parser_TokenStreamEndException
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue()
@@ -939,12 +779,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * an invalid token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Parser_UnexpectedTokenException
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionWhenDefaultValueContainsInvalidToken()

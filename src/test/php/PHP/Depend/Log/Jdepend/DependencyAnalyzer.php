@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-
 /**
  * A dummy dependency analyzer.
  *

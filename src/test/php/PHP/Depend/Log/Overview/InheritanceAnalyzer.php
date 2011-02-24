@@ -46,8 +46,6 @@
  * @link       http://pdepend.org/
  */
 
-require_once 'PHP/Depend/Metrics/Inheritance/Analyzer.php';
-
 /**
  * Dummy inheritance analyzer.
  *

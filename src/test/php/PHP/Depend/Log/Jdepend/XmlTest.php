@@ -49,9 +49,6 @@
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
 
-require_once 'PHP/Depend/Log/Jdepend/Xml.php';
-require_once 'PHP/Depend/Metrics/Dependency/Analyzer.php';
-
 /**
  * Test case for the jdepend xml logger.
  *

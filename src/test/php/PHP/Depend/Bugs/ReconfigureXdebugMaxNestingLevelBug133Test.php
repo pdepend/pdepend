@@ -59,6 +59,11 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_ReconfigureXdebugMaxNestingLevelBug133Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -67,17 +72,13 @@ class PHP_Depend_Bugs_ReconfigureXdebugMaxNestingLevelBug133Test
      * testParserResetsReconfiguredXdebugMaxNestingLevel
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserResetsReconfiguredXdebugMaxNestingLevel()
     {
         ini_restore('xdebug.max_nesting_level');
         $level = ini_get('xdebug.max_nesting_level');
 
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
 
         $this->assertEquals($level, ini_get('xdebug.max_nesting_level'));
     }
@@ -86,10 +87,6 @@ class PHP_Depend_Bugs_ReconfigureXdebugMaxNestingLevelBug133Test
      * testParserReconfiguresXdebugMaxNestingLevel
      *
      * @return void
-     * @covers stdClass
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserReconfiguresXdebugMaxNestingLevel()
     {
@@ -99,6 +96,6 @@ class PHP_Depend_Bugs_ReconfigureXdebugMaxNestingLevelBug133Test
 
         ini_set('xdebug.max_nesting_level', '100');
 
-        self::parseTestCaseSource(__METHOD__);
+        self::parseCodeResourceForTest();
     }
 }

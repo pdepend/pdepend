@@ -54,8 +54,6 @@ require_once dirname(__FILE__) . '/InheritanceAnalyzer.php';
 require_once dirname(__FILE__) . '/NodeCountAnalyzer.php';
 require_once dirname(__FILE__) . '/NodeLocAnalyzer.php';
 
-require_once 'PHP/Depend/Log/Overview/Pyramid.php';
-
 /**
  * Test case for the overview pyramid logger.
  *
@@ -67,6 +65,12 @@ require_once 'PHP/Depend/Log/Overview/Pyramid.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Log_Overview_Pyramid
+ * @group pdepend
+ * @group pdepend::log
+ * @group pdepend::log::overview
+ * @group unittest
  */
 class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
 {
@@ -74,11 +78,6 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger returns the expected set of analyzers.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testReturnsExceptedAnalyzers()
     {
@@ -92,7 +91,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Metrics_NodeLoc_Analyzer'
         );
 
-        $this->assertEquals($exptected, $actual);
+        self::assertEquals($exptected, $actual);
     }
 
     /**
@@ -100,11 +99,6 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * configured.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
@@ -121,27 +115,17 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the log method returns <b>false</b> for an invalid logger.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testPyramidDoesntAcceptInvalidAnalyzer()
     {
         $logger = new PHP_Depend_Log_Overview_Pyramid();
-        $this->assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
+        self::assertFalse($logger->log(new PHP_Depend_Log_DummyAnalyzer()));
     }
 
     /**
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoCouplingAnalyzerWasSet()
     {
@@ -163,11 +147,6 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoCyclomaticComplexityAnalyzerWasSet()
     {
@@ -189,11 +168,6 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoInheritanceAnalyzerWasSet()
     {
@@ -215,11 +189,6 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoNodeCountAnalyzerWasSet()
     {
@@ -241,11 +210,6 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * Tests that the logger checks for the required analyzer.
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testCloseThrowsAnExceptionIfNoNodeLOCAnalyzerWasSet()
     {
@@ -267,11 +231,6 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
      * testCollectedAndComputedValuesInOutputSVG
      *
      * @return void
-     * @covers PHP_Depend_Log_Overview_Pyramid
-     * @group pdepend
-     * @group pdepend::log
-     * @group pdepend::log::overview
-     * @group unittest
      */
     public function testCollectedAndComputedValuesInOutputSVG()
     {
@@ -289,7 +248,7 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         $log->log(new PHP_Depend_Log_Overview_NodeLocAnalyzer());
         $log->close();
 
-        $this->assertFileExists($output);
+        self::assertFileExists($output);
 
         $expected = array(
             'cyclo'         =>  5579,
@@ -312,11 +271,11 @@ class PHP_Depend_Log_Overview_PyramidTest extends PHP_Depend_AbstractTest
         $svg = new DOMDocument();
         $svg->load($output);
 
+        // TODO: Replace this loop assertion
         foreach ($expected as $name => $value) {
             $elem = $svg->getElementById("pdepend.{$name}");
-            $this->assertType('DOMElement', $elem);
-
-            $this->assertEquals($value, $elem->nodeValue, null, 0.01);
+            self::assertInstanceOf('DOMElement', $elem);
+            self::assertEquals($value, $elem->nodeValue, null, 0.01);
         }
 
         unlink($output);

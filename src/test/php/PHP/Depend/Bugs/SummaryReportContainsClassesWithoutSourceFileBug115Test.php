@@ -48,9 +48,6 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHP/Depend/Log/Summary/Xml.php';
-require_once 'PHP/Depend/Metrics/NodeAwareI.php';
-
 /**
  * Test case for bug #115
  *
