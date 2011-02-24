@@ -47,6 +47,7 @@
  */
 
 require_once dirname(__FILE__) . '/ASTAllocationExpressionParsingTest.php';
+require_once dirname(__FILE__) . '/ASTArgumentsParsingTest.php';
 require_once dirname(__FILE__) . '/ASTFormalParameterParsingTest.php';
 require_once dirname(__FILE__) . '/TokenStackTest.php';
 require_once dirname(__FILE__) . '/VersionAllParserTest.php';
@@ -73,6 +74,7 @@ class PHP_Depend_Parser_AllTests extends PHPUnit_Framework_TestSuite
         $this->setName('PHP::Depend::Parser::AllTests');
 
         $this->addTestSuite('PHP_Depend_Parser_ASTAllocationExpressionParsingTest');
+        $this->addTestSuite('PHP_Depend_Parser_ASTArgumentsParsingTest');
         $this->addTestSuite('PHP_Depend_Parser_ASTFormalParameterParsingTest');
         $this->addTestSuite('PHP_Depend_Parser_TokenStackTest');
         $this->addTestSuite('PHP_Depend_Parser_VersionAllParserTest');

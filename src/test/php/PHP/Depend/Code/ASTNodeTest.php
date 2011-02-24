@@ -271,66 +271,6 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     * @param string $nodeType The searched node class.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     */
-    protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
-    {
-        return $this->getFirstFunctionForTestCase($testCase)
-            ->getFirstChildOfType($nodeType);
-    }
-
-    /**
-     * Returns the first function found in a test file associated with the
-     * given test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_Function
-     */
-    protected function getFirstFunctionForTestCase($testCase)
-    {
-        return self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current();
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     * @param string $nodeType The searched node class.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     */
-    protected function getFirstNodeOfTypeInClass($testCase, $nodeType)
-    {
-        return $this->getFirstClassForTestCase($testCase)
-            ->getFirstChildOfType($nodeType);
-    }
-
-    /**
-     * Returns the first class found in a test file associated with the given
-     * test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_Class
-     */
-    protected function getFirstClassForTestCase($testCase)
-    {
-        return self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current();
-    }
-
-    /**
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
