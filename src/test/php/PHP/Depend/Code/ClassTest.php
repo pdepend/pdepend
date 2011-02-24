@@ -681,17 +681,34 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * testSetPackageAcceptsNullAndResetsPackageReference
+     * testUnsetPackageResetsPackageReference
      *
      * @return void
      */
-    public function testSetPackageAcceptsNullAndResetsPackageReference()
+    public function testUnsetPackageResetsPackageReference()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
 
         $class->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
-        $class->setPackage(null);
+        $class->unsetPackage();
+
         self::assertNull($class->getPackage());
+    }
+
+    /**
+     * testUnsetPackageResetsPackageNameProperty
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public function testUnsetPackageResetsPackageNameProperty()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+
+        $class->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
+        $class->unsetPackage();
+
+        self::assertNull($class->getPackageName());
     }
     
     /**

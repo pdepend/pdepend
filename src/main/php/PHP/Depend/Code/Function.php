@@ -125,12 +125,23 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     public function setPackage(PHP_Depend_Code_Package $package = null)
     {
         if ($package === null) {
-            $this->packageName = null;
-            $this->_package    = null;
+            $this->unsetPackage();
         } else {
             $this->packageName = $package->getName();
             $this->_package    = $package;
         }
+    }
+
+    /**
+     * Resets the package associated with this function node.
+     *
+     * @return void
+     * @since 0.10.2
+     */
+    public function unsetPackage()
+    {
+        $this->packageName = null;
+        $this->_package    = null;
     }
 
     /**

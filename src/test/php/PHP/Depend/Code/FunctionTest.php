@@ -223,37 +223,39 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     }
     
     /**
-     * testGetStaticVariablesReturnsMergeOfAllStaticVariables
+     * testUnsetPackageWithNullWillResetPreviousPackage
      *
      * @return void
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
-    public function testSetPackageWithNullWillResetPreviousPackage()
+    public function testUnsetPackageWithNullWillResetPreviousPackage()
     {
         $package  = new PHP_Depend_Code_Package('package');
         $function = new PHP_Depend_Code_Function('func');
         
         $function->setPackage($package);
-        $function->setPackage(null);
+        $function->unsetPackage();
+
         self::assertNull($function->getPackage());
     }
 
     /**
-     * testSetPackageWithNullWillResetPackageNameProperty
+     * testUnsetPackageWithNullWillResetPackageNameProperty
      *
      * @return void
      * @group pdepend
      * @group pdepend::code
      * @group unittest
      */
-    public function testSetPackageWithNullWillResetPackageNameProperty()
+    public function testUnsetPackageWithNullWillResetPackageNameProperty()
     {
         $function = new PHP_Depend_Code_Function(__FUNCTION__);
         $function->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
-        $function->setPackage(null);
-        self::assertNull($function->getPackage());
+        $function->unsetPackage();
+
+        self::assertNull($function->getPackageName());
     }
 
     /**
