@@ -231,6 +231,23 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testHelperThrowsExpectedExceptionWhenTokenGetAllFails
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_TokenException
+     */
+    public function testHelperThrowsExpectedExceptionWhenTokenGetAllFails()
+    {
+        PHP_Depend_Tokenizer_PHP52Helper::tokenize(
+            '<?php
+            class MyClass {
+            /*
+            }
+            ?>'
+        );
+    }
+
+    /**
      * This method will append the third token array element, which contains the
      * line number of a token. This feature was introduced with PHP version
      * 5.2.2.
