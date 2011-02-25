@@ -59,6 +59,8 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Token
+ * @group pdepend
+ * @group unittest
  */
 class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
 {
@@ -66,8 +68,6 @@ class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
      * testConstructorSetsTypeProperty
      *
      * @return void
-     * @group pdepend
-     * @group unittest
      */
     public function testConstructorSetsTypeProperty()
     {
@@ -79,8 +79,6 @@ class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
      * testConstructorSetsImageProperty
      *
      * @return void
-     * @group pdepend
-     * @group unittest
      */
     public function testConstructorSetsImageProperty()
     {
@@ -92,8 +90,6 @@ class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
      * testConstructorSetsStartLineProperty
      *
      * @return void
-     * @group pdepend
-     * @group unittest
      */
     public function testConstructorSetsStartLineProperty()
     {
@@ -105,8 +101,6 @@ class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
      * testConstructorSetsEndLineProperty
      *
      * @return void
-     * @group pdepend
-     * @group unittest
      */
     public function testConstructorSetsEndLineProperty()
     {
@@ -118,8 +112,6 @@ class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
      * testConstructorSetsStartColumnProperty
      *
      * @return void
-     * @group pdepend
-     * @group unittest
      */
     public function testConstructorSetsStartColumnProperty()
     {
@@ -131,8 +123,6 @@ class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
      * testConstructorSetsEndColumnProperty
      *
      * @return void
-     * @group pdepend
-     * @group unittest
      */
     public function testConstructorSetsEndColumnProperty()
     {
