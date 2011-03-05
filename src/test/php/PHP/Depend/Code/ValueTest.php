@@ -43,12 +43,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
+ * @since     0.10.2
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
- 
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
 /**
- * Test case for the {@link PHP_Depend_Token} class.
+ * Test case for the {@link PHP_Depend_Code_Value} class.
  *
  * @category  QualityAssurance
  * @package   PHP_Depend
@@ -57,76 +58,87 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ * @since     0.10.2
  *
- * @covers PHP_Depend_Token
+ * @covers PHP_Depend_Code_Value
  * @group pdepend
+ * @group pdepend::code
  * @group unittest
  */
-class PHP_Depend_TokenTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_ValueTest extends PHP_Depend_AbstractTest
 {
     /**
-     * testConstructorSetsTypeProperty
+     * testIsValueAvailableReturnsFalseByDefault
      *
      * @return void
      */
-    public function testConstructorSetsTypeProperty()
+    public function testIsValueAvailableReturnsFalseByDefault()
     {
-        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(1, $token->type);
+        $value = new PHP_Depend_Code_Value();
+        self::assertFalse($value->isValueAvailable());
     }
 
     /**
-     * testConstructorSetsImageProperty
+     * testIsValueAvailableReturnsTrueWhenValueWasSet
      *
      * @return void
      */
-    public function testConstructorSetsImageProperty()
+    public function testIsValueAvailableReturnsTrueWhenValueWasSet()
     {
-        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(2, $token->image);
+        $value = new PHP_Depend_Code_Value();
+        $value->setValue(42);
+
+        self::assertTrue($value->isValueAvailable());
     }
 
     /**
-     * testConstructorSetsStartLineProperty
+     * testIsValueAvailableReturnsTrueForNullValue
      *
      * @return void
      */
-    public function testConstructorSetsStartLineProperty()
+    public function testIsValueAvailableReturnsTrueForNullValue()
     {
-        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(4, $token->startLine);
+        $value = new PHP_Depend_Code_Value();
+        $value->setValue(null);
+
+        self::assertTrue($value->isValueAvailable());
     }
 
     /**
-     * testConstructorSetsEndLineProperty
-     *
+     * testGetValueReturnsNullByDefault
+     * 
      * @return void
      */
-    public function testConstructorSetsEndLineProperty()
+    public function testGetValueReturnsNullByDefault()
     {
-        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(8, $token->endLine);
+        $value = new PHP_Depend_Code_Value();
+        self::assertNull($value->getValue());
     }
 
     /**
-     * testConstructorSetsStartColumnProperty
+     * testGetValueReturnsPreviouslySetValue
      *
      * @return void
      */
-    public function testConstructorSetsStartColumnProperty()
+    public function testGetValueReturnsPreviouslySetValue()
     {
-        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(16, $token->startColumn);
+        $value = new PHP_Depend_Code_Value();
+        $value->setValue(42);
+
+        self::assertEquals(42, $value->getValue());
     }
 
     /**
-     * testConstructorSetsEndColumnProperty
+     * testSetValueMutatesInternalStateOnlyOnce
      *
      * @return void
      */
-    public function testConstructorSetsEndColumnProperty()
+    public function testSetValueMutatesInternalStateOnlyOnce()
     {
-        $token = new PHP_Depend_Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(32, $token->endColumn);
+        $value = new PHP_Depend_Code_Value();
+        $value->setValue(42);
+        $value->setValue(23);
+
+        self::assertEquals(42, $value->getValue());
     }
 }

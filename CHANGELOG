@@ -1,3 +1,13 @@
+PHP_Depend 0.10.3
+-----------------
+
+This release closes a critial bug in PHP_Depend's analyzer locator code
+that prevents PHP_Depend from running on windows. This release was
+published on March the 02th 2011.
+
+- Fixed #10659085: Analyzer locator code does not work on windows. Fixed
+  with commit #0101798.
+
 PHP_Depend 0.10.2
 -----------------
 

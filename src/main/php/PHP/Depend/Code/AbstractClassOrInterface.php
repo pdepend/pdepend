@@ -594,12 +594,8 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function setPackage(PHP_Depend_Code_Package $package)
     {
-        if (is_object($package)) {
-            $this->_package    = $package;
-            $this->packageName = $package->getName();
-        } else {
-            $this->unsetPackage();
-        }
+        $this->_package    = $package;
+        $this->packageName = $package->getName();
     }
 
     /**
