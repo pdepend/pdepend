@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PHP Depend" default="build" basedir=".">
+<project name="PHP Depend" basedir=".">
 
     <!--
         Include local project properties.
@@ -9,12 +9,7 @@
     <!--
         Import common build targets
     -->
-    <import file="${basedir}/setup/build-commons.xml" />
-
-    <!--
-        Main build
-    -->
-    <target name="build" depends="test" description="-> Primary build: PHP Depend" />
+    <import file="${basedir}/setup/src/main/xml/base.xml" />
 
     <!--
         We use the phar archive after hook to validate that a newly created
