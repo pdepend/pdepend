@@ -52,18 +52,19 @@ Phar::mapPhar('${archive.alias}');
 // Configure include path to use this phar
 set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . get_include_path());
 
-// Set memory limit to max allowed
-ini_set('memory_limit', -1);
-
-// Load command line utility
-include_once 'phar://${archive.alias}/PHP/Depend/Autoload.php';
-
-// Initialize PHP_Depend's autoloader
-$autoload = new PHP_Depend_Autoload();
-$autoload->register();
-
 // Run command line interface if this is the called file
 if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
+
+   // Set memory limit to max allowed
+   ini_set('memory_limit', -1);
+
+   // Load command line utility
+   include_once 'phar://${archive.alias}/PHP/Depend/Autoload.php';
+
+    // Initialize PHP_Depend's autoloader
+    $autoload = new PHP_Depend_Autoload();
+    $autoload->register();
+
     exit(PHP_Depend_TextUI_Command::main($argv));
 }
 __HALT_COMPILER();
