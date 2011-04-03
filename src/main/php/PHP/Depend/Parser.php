@@ -4692,7 +4692,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $scope = $this->_builder->buildASTScope();
 
         $this->_tokenStack->push();
-        $this->_useSymbolTable->createScope();
 
         $this->consumeComments();
         $this->consumeToken(self::T_CURLY_BRACE_OPEN);
@@ -4707,8 +4706,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->consumeComments();
         $this->consumeToken(self::T_CURLY_BRACE_CLOSE);
-
-        $this->_useSymbolTable->destroyScope();
 
         return $this->_setNodePositionsAndReturn($scope);
     }
@@ -4947,7 +4944,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
-            return join('', $fragments);
+            return ltrim(join('', $fragments), '\\');
         }
 
         // Search for an use alias
@@ -4962,7 +4959,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Prepend current namespace
             array_unshift($fragments, $this->_namespaceName, '\\');
         }
-        return join('', $fragments);
+        return ltrim(join('', $fragments), '\\');
     }
 
     /**
@@ -5047,7 +5044,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_namespaceName = null;
 
             // Read qualified namespace identifier
-            $qualifiedName = $this->_parseQualifiedName();
+            $fragments = $this->_parseQualifiedNameRaw();
+            $qualifiedName = implode('', $fragments);
+            $qualifiedName = trim($qualifiedName, '\\');
 
             // Consume optional comments an check for namespace scope
             $this->consumeComments();
@@ -5062,6 +5061,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Create a package for this namespace
             $this->_namespaceName = $qualifiedName;
+
+            $this->_useSymbolTable->resetScope();
+
         } else if ($tokenType === self::T_BACKSLASH) {
             // Same namespace reference, something like:
             //   new namespace\Foo();
@@ -5076,6 +5078,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Create a package for this namespace
             $this->_namespaceName = '';
+
+            $this->_useSymbolTable->resetScope();
         }
 
         $this->reset();
@@ -5121,12 +5125,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $fragments = $this->_parseQualifiedNameRaw();
         $this->consumeComments();
-
-        // Add leading backslash, because aliases must be full qualified
-        // http://php.net/manual/en/language.namespaces.importing.php
-        if ($fragments[0] !== '\\') {
-            array_unshift($fragments, '\\');
-        }
 
         if ($this->tokenizer->peek() === self::T_AS) {
             $this->consumeToken(self::T_AS);
