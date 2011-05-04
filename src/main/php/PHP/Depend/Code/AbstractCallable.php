@@ -65,7 +65,7 @@ abstract class PHP_Depend_Code_AbstractCallable
 {
     /**
      * The type of this class.
-     * 
+     *
      * @since 0.10.0
      */
     const CLAZZ = __CLASS__;
@@ -472,7 +472,7 @@ abstract class PHP_Depend_Code_AbstractCallable
 
         $this->_parameters = $parameters;
     }
-    
+
     /**
      * The magic sleep method will be called by the PHP engine when this class
      * gets serialized. It returns an array with those properties that should be
@@ -512,6 +512,8 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         $this->nodes  = unserialize($this->___temp___);
         $this->cached = true;
+
+        unset($this->___temp___);
     }
 
     /**
