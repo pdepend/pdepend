@@ -149,12 +149,8 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
         self::assertEquals(
             array(
                 'values',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $stmt->__sleep()

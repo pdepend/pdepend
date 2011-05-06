@@ -86,12 +86,24 @@ final class PHP_Depend_Code_ASTParentReference
      *
      * @param PHP_Depend_Code_ASTClassOrInterfaceReference $reference The type
      *        instance that reference the concrete target of self.
+     * 
+     * @todo Call parent constructor, otherwise this could cause bad side effects.
      */
     public function __construct(
         PHP_Depend_Code_ASTClassOrInterfaceReference $reference
     ) {
-        $this->image     = self::IMAGE;
         $this->reference = $reference;
+    }
+
+    /**
+     * Returns the visual representation for this node type.
+     *
+     * @return string
+     * @since 0.10.4
+     */
+    public function getImage()
+    {
+        return self::IMAGE;
     }
 
     /**

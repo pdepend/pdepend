@@ -61,8 +61,10 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTVariableDeclarator
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,9 +72,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -89,9 +88,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,9 +105,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testGetValueReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetValueReturnsNullByDefault()
     {
@@ -123,9 +116,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testGetValueReturnsInjectedValueInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetValueReturnsInjectedValueInstance()
     {
@@ -139,9 +129,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
@@ -149,12 +136,8 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
         self::assertEquals(
             array(
                 'value',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $declarator->__sleep()
@@ -165,9 +148,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testVariableDeclaratorHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedStartLine()
     {
@@ -179,9 +159,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testVariableDeclaratorHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedStartColumn()
     {
@@ -193,9 +170,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testVariableDeclaratorHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedEndLine()
     {
@@ -207,9 +181,6 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testVariableDeclaratorHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableDeclaratorHasExpectedEndColumn()
     {

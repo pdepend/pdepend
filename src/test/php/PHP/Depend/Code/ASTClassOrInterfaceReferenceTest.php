@@ -82,12 +82,8 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
         self::assertEquals(
             array(
                 'context',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $reference->__sleep()
@@ -140,7 +136,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
 
     /**
      * testGetTypeDelegatesToBuilderContextGetClassOrInterface
-     * 
+     *
      * @return void
      * @group pdepend
      * @group pdepend::ast
@@ -163,7 +159,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest extends PHP_Depend_Code_A
 
     /**
      * testGetTypeCachesReturnValueOfBuilderContextGetClassOrInterface
-     * 
+     *
      * @return void
      * @group pdepend
      * @group pdepend::ast

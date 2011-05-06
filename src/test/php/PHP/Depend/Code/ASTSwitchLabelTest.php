@@ -61,8 +61,10 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTSwitchLabel
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,9 +72,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -89,9 +88,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,9 +105,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
@@ -119,12 +112,8 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
         self::assertEquals(
             array(
                 'default',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $label->__sleep()
@@ -134,11 +123,8 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Tests that the default flag is set to <b>true</b> on the default switch
      * label.
-     * 
+     *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDefaultFlagIsSetOnDefaultLabel()
     {
@@ -151,23 +137,17 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * label.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDefaultFlagIsNotSetOnCaseLabel()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
         $this->assertFalse($label->isDefault());
     }
-    
+
     /**
      * Tests the start line value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelHasExpectedStartLine()
     {
@@ -179,9 +159,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelHasExpectedStartColumn()
     {
@@ -193,9 +170,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelHasExpectedEndLine()
     {
@@ -207,9 +181,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelHasExpectedEndColumn()
     {
@@ -221,9 +192,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testSwitchLabelCanBeTerminatedWithSemicolon
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelCanBeTerminatedWithSemicolon()
     {
@@ -234,9 +202,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testSwitchLabelWithNestedSwitchStatementHasExpectedChildren
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelWithNestedSwitchStatementHasExpectedChildren()
     {
@@ -260,9 +225,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedStartLine()
     {
@@ -274,9 +236,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedStartColumn()
     {
@@ -288,9 +247,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedEndLine()
     {
@@ -302,9 +258,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelDefaultHasExpectedEndColumn()
     {
@@ -316,9 +269,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testSwitchDefaultLabelCanBeTerminatedWithSemicolon
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchDefaultLabelCanBeTerminatedWithSemicolon()
     {
@@ -329,14 +279,11 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren()
     {
         $label = $this->_getFirstSwitchLabelInFunction(__METHOD__);
-        
+
         $actual = array();
         foreach ($label->getChildren() as $child) {
             $actual[] = get_class($child);
@@ -349,14 +296,11 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * testParserHandlesSwitchLabelWithNestedScopeStatement
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserHandlesSwitchLabelWithNestedScopeStatement()
     {
@@ -367,9 +311,6 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testParserThrowsExceptionForUnclosedSwitchLabelBody
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testParserThrowsExceptionForUnclosedSwitchLabelBody()

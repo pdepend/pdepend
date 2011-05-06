@@ -114,7 +114,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $package->addFunction($builder->buildFunction(__FUNCTION__));
 
         $builder->getPackages();
-        
+
         $package = $builder->buildPackage(__CLASS__);
         $package->addType($builder->buildClass(__CLASS__));
 
@@ -168,7 +168,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $class->setPackage($builder->buildPackage(__FUNCTION__));
 
         $builder->restoreClass($class);
-        
+
         self::assertSame($class, $builder->getClass(__FUNCTION__));
     }
 
@@ -182,7 +182,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     public function testBuildClassCreatesTwoDifferentInstancesForDifferentPackages()
     {
         $builder = $this->createBuilder();
-        
+
         $class1 = $builder->buildClass('php\depend1\Parser');
         $class2 = $builder->buildClass('php\depend2\Parser');
 
@@ -221,7 +221,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     public function testBuildInterfaceUnique()
     {
         $builder = $this->createBuilder();
-        
+
         $interface = $builder->buildInterface(__FUNCTION__);
         $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
@@ -652,6 +652,21 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTStaticReferenceReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTStaticReferenceReturnsExpectedType()
+    {
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTStaticReference::CLAZZ,
+            $this->createBuilder()->buildASTStaticReference(
+                $this->createBuilder()->buildClass(__CLASS__)
+            )
+        );
+    }
+
+    /**
      * testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType
      *
      * @return void
@@ -687,12 +702,35 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTArgumentsReturnsExpectedType()
     {
-        $object = $this->createBuilder()
-            ->buildASTArguments();
-
         self::assertInstanceOf(
             PHP_Depend_Code_ASTArguments::CLAZZ,
-            $object
+            $this->createBuilder()->buildASTArguments()
+        );
+    }
+
+    /**
+     * testBuildASTSwitchLabel
+     *
+     * @return void
+     */
+    public function testBuildASTSwitchLabel()
+    {
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTSwitchLabel::CLAZZ,
+            $this->createBuilder()->buildASTSwitchLabel('m')
+        );
+    }
+
+    /**
+     * testBuildASTVariableDeclaratorReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTVariableDeclaratorReturnsExpectedType()
+    {
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ,
+            $this->createBuilder()->buildASTVariableDeclarator('foo')
         );
     }
 

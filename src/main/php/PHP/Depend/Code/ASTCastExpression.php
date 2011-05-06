@@ -114,7 +114,7 @@ class PHP_Depend_Code_ASTCastExpression extends PHP_Depend_Code_ASTUnaryExpressi
      */
     public function isArray()
     {
-        return ($this->image === '(array)');
+        return ($this->getImage() === '(array)');
     }
 
     /**
@@ -124,7 +124,7 @@ class PHP_Depend_Code_ASTCastExpression extends PHP_Depend_Code_ASTUnaryExpressi
      */
     public function isObject()
     {
-        return ($this->image === '(object)');
+        return ($this->getImage() === '(object)');
     }
 
     /**
@@ -134,7 +134,7 @@ class PHP_Depend_Code_ASTCastExpression extends PHP_Depend_Code_ASTUnaryExpressi
      */
     public function isBoolean()
     {
-        return ($this->image === '(bool)' || $this->image === '(boolean)');
+        return ($this->getImage() === '(bool)' || $this->getImage() === '(boolean)');
     }
 
     /**
@@ -144,7 +144,7 @@ class PHP_Depend_Code_ASTCastExpression extends PHP_Depend_Code_ASTUnaryExpressi
      */
     public function isInteger()
     {
-        return ($this->image === '(int)' || $this->image === '(integer)');
+        return ($this->getImage() === '(int)' || $this->getImage() === '(integer)');
     }
 
     /**
@@ -154,9 +154,9 @@ class PHP_Depend_Code_ASTCastExpression extends PHP_Depend_Code_ASTUnaryExpressi
      */
     public function isFloat()
     {
-        return ($this->image === '(real)'
-            || $this->image === '(float)'
-            || $this->image === '(double)'
+        return ($this->getImage() === '(real)'
+            || $this->getImage() === '(float)'
+            || $this->getImage() === '(double)'
         );
     }
 
@@ -167,7 +167,7 @@ class PHP_Depend_Code_ASTCastExpression extends PHP_Depend_Code_ASTUnaryExpressi
      */
     public function isString()
     {
-        return (strcmp('(string)', $this->image) === 0);
+        return (strcmp('(string)', $this->getImage()) === 0);
     }
 
     /**
@@ -177,7 +177,7 @@ class PHP_Depend_Code_ASTCastExpression extends PHP_Depend_Code_ASTUnaryExpressi
      */
     public function isUnset()
     {
-        return ($this->image === '(unset)');
+        return ($this->getImage() === '(unset)');
     }
 
     /**

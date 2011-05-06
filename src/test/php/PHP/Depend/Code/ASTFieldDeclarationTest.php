@@ -107,7 +107,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
 
     /**
      * Tests that a field declaration contains the expected class reference.
-     * 
+     *
      * @return void
      * @group pdepend
      * @group pdepend::ast
@@ -216,7 +216,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        
+
         self::assertTrue($declaration->isPublic());
     }
 
@@ -323,13 +323,9 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
         $declaration = $this->createNodeInstance();
         self::assertEquals(
             array(
-                'modifiers',
-                'image',
+//                'modifiers',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $declaration->__sleep()

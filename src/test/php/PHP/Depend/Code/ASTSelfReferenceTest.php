@@ -188,12 +188,8 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
             array(
                 'qualifiedName',
                 'context',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $reference->__sleep()

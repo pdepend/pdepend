@@ -63,6 +63,9 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_ASTNode
  * @covers PHP_Depend_Code_ASTStaticReference
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,9 +73,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testGetTypeReturnsInjectedConstructorTargetArgument
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetTypeReturnsInjectedConstructorTargetArgument()
     {
@@ -87,9 +87,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull()
     {
@@ -110,9 +107,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -129,9 +123,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -149,9 +140,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid static results in the expected exception.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
@@ -167,9 +155,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid static results in the expected exception.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
@@ -185,9 +170,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testMagicSelfReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMagicSelfReturnsExpectedSetOfPropertyNames()
     {
@@ -196,12 +178,8 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
             array(
                 'qualifiedName',
                 'context',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $reference->__sleep()
@@ -212,9 +190,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testStaticReferenceHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticReferenceHasExpectedStartLine()
     {
@@ -226,9 +201,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testStaticReferenceHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticReferenceHasExpectedStartColumn()
     {
@@ -240,9 +212,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testStaticReferenceHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticReferenceHasExpectedEndLine()
     {
@@ -254,9 +223,6 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testStaticReferenceHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticReferenceHasExpectedEndColumn()
     {
