@@ -35,7 +35,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
@@ -85,7 +85,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                                  @var\s+
                                    \$[a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff]*\s+
                                    (.*?)
-                                \s*\*/\s*$)ix'; 
+                                \s*\*/\s*$)ix';
 
     /**
      * Regular expression for types defined in <b>throws</b> annotations of
@@ -325,7 +325,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->setUpEnvironment();
 
         $this->_tokenStack->push();
-        
+
         // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->_sourceFile);
 
@@ -595,7 +595,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
-        
+
         if ($tokenType === self::T_ABSTRACT) {
             $this->consumeToken(self::T_ABSTRACT);
             $this->_modifiers |= self::IS_EXPLICIT_ABSTRACT;
@@ -3039,14 +3039,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         return $this->_setNodePositionsAndReturn($stmt);
     }
-   
+
     /**
      * This method parses a list of declare values. A declare list value always
      * consists of a string token and a static scalar.
      *
      * @param PHP_Depend_Code_ASTDeclareStatement $stmt The declare statement that
-     *        is the owner of this list. 
-     * 
+     *        is the owner of this list.
+     *
      * @return PHP_Depend_Code_ASTDeclareStatement
      * @since 0.10.0
      */
@@ -3074,7 +3074,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
             break;
         }
-        
+
         $this->consumeToken(self::T_PARENTHESIS_CLOSE);
         return $stmt;
     }
@@ -3494,7 +3494,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
     /**
      * Parses/Creates a property postfix node instance.
-     * 
+     *
      * @param PHP_Depend_Code_ASTNode $node Node that represents the image of
      *        the property postfix node.
      *
@@ -3722,7 +3722,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 'The keyword "self" was used outside of a class/method scope.'
             );
         }
-        
+
         $ref = $this->_builder->buildASTSelfReference($this->_classOrInterface);
         $ref->configureLinesAndColumns(
             $token->startLine,
@@ -3797,7 +3797,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 )
             );
         }
-        
+
         $ref = $this->_builder->buildASTParentReference($classReference);
         $ref->configureLinesAndColumns(
             $token->startLine,
@@ -4952,7 +4952,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
-            return ltrim(join('', $fragments), '\\');
+            return join('', $fragments);
         }
 
         // Search for an use alias
@@ -4967,7 +4967,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Prepend current namespace
             array_unshift($fragments, $this->_namespaceName, '\\');
         }
-        return ltrim(join('', $fragments), '\\');
+        return join('', $fragments);
     }
 
     /**
@@ -5043,7 +5043,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeToken(self::T_NAMESPACE);
         $this->consumeComments();
 
-        // Lookup next token type
         $tokenType = $this->tokenizer->peek();
 
         // Search for a namespace identifier
@@ -5051,19 +5050,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Reset namespace property
             $this->_namespaceName = null;
 
-            // Read qualified namespace identifier
-            $fragments = $this->_parseQualifiedNameRaw();
-            $qualifiedName = implode('', $fragments);
-            $qualifiedName = trim($qualifiedName, '\\');
+            $qualifiedName = $this->_parseQualifiedName();
 
-            // Consume optional comments an check for namespace scope
             $this->consumeComments();
-
             if ($this->tokenizer->peek() === self::T_CURLY_BRACE_OPEN) {
-                // Consume opening curly brace
                 $this->consumeToken(self::T_CURLY_BRACE_OPEN);
             } else {
-                // Consume closing semicolon token
                 $this->consumeToken(self::T_SEMICOLON);
             }
 
@@ -5133,6 +5125,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $fragments = $this->_parseQualifiedNameRaw();
         $this->consumeComments();
+
+        // Add leading backslash, because aliases must be full qualified
+        // http://php.net/manual/en/language.namespaces.importing.php
+        if ($fragments[0] !== '\\') {
+            array_unshift($fragments, '\\');
+        }
 
         if ($this->tokenizer->peek() === self::T_AS) {
             $this->consumeToken(self::T_AS);

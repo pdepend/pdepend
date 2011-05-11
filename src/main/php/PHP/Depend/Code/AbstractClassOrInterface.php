@@ -365,7 +365,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
 
         while (($top = array_pop($stack)) !== null) {
 
-            foreach($top->interfaceReferences as $interfaceReference) {
+            foreach ($top->interfaceReferences as $interfaceReference) {
                 $interface = $interfaceReference->getType();
                 if (in_array($interface, $interfaces, true) === true) {
                     continue;
