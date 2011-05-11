@@ -340,6 +340,35 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests that the parser sets the correct positions for parent classes and interfaces
+     *
+     * @return void
+     */
+    public function testParserSetsCorrectParentClassReferencesPositions()
+    {
+        $class = $this->getClassForTest();
+
+        $parent = $class->getParentClassReference();
+
+        $this->assertEquals(30, $parent->getStartLine());
+        $this->assertEquals(30, $parent->getEndLine());
+        $this->assertEquals(22, $parent->getStartColumn());
+        $this->assertEquals(24, $parent->getEndColumn());
+
+        $interfaces = $class->getInterfaceReferences();
+
+        $this->assertEquals(31, $interfaces[0]->getStartLine());
+        $this->assertEquals(31, $interfaces[0]->getEndLine());
+        $this->assertEquals(16, $interfaces[0]->getStartColumn());
+        $this->assertEquals(22, $interfaces[0]->getEndColumn());
+
+        $this->assertEquals(31, $interfaces[1]->getStartLine());
+        $this->assertEquals(31, $interfaces[1]->getEndLine());
+        $this->assertEquals(29, $interfaces[1]->getStartColumn());
+        $this->assertEquals(32, $interfaces[1]->getEndColumn());
+    }
+
+    /**
      * Tests that the parser sets the correct start line number for class methods.
      *
      * @return void
@@ -1245,6 +1274,19 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals('foo\bar\baz', $package->getName());
     }
 
+    public function testParserStripsLeadingSlashFromQualifiedClassName()
+    {
+        $children = self::parseCodeResourceForTest()->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getChildren();
+        $this->assertEquals('bar\baz\Foo', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('bar\baz\Foo', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('bar\baz\Foo', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
+    }
+
     /**
      * testParserStripsLeadingSlashFromInheritNamespacedClassName
      *
@@ -1479,6 +1521,62 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
         self::parseCodeResourceForTest();
+    }
+
+    public function testNamespacesAreCorrectlyLookedUp()
+    {
+        $packages = self::parseCodeResourceForTest();
+        $methods = $packages->current()->getClasses()->current()->getMethods();
+        $methods->next();
+        $children = $methods->current()->getChildren();
+        $scope = $children[1];
+
+        $this->assertEquals('Foo\Bar\Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Bar\Baz', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Something', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Test', $children[1]->getChild(3)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Foo\Bar\Other', $children[1]->getChild(4)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Baz\Foo\Bar', $children[1]->getChild(5)->getChild(0)->getChild(0)->getImage());
+    }
+
+    public function testNamespacesAreCorrectlyLookedUpWithMultipleNamespaces()
+    {
+        $packages = self::parseCodeResourceForTest();
+        $methods = $packages->current()->getClasses()->current()->getMethods();
+        $methods->next();
+        $children = $methods->current()->getChildren();
+        $scope = $children[1];
+
+        $this->assertEquals('Foo\Bar\Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Bar\Baz', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Something', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Test', $children[1]->getChild(3)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Foo\Bar\Other', $children[1]->getChild(4)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Baz\Foo\Bar', $children[1]->getChild(5)->getChild(0)->getChild(0)->getImage());
+
+        $packages->next();
+        $methods = $packages->current()->getClasses()->current()->getMethods();
+        $methods->next();
+        $children = $methods->current()->getChildren();
+        $scope = $children[1];
+
+        $this->assertEquals('Bar\Baz\Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Bar\Baz\Baz', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Bar\Baz\Something', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Bar\Baz\T', $children[1]->getChild(3)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Bar\Baz\Other', $children[1]->getChild(4)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Bar\Baz\Foo\Bar', $children[1]->getChild(5)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Foo\Bar\Abc', $children[1]->getChild(6)->getChild(0)->getChild(0)->getImage());
+
+        $packages->next();
+        $methods = $packages->current()->getClasses()->current()->getMethods();
+        $methods->next();
+        $children = $methods->current()->getChildren();
+        $scope = $children[1];
+
+        $this->assertEquals('Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Foo\Bar', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
+        $this->assertEquals('Foo\Bar\Xyz', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
     }
 
     /**
