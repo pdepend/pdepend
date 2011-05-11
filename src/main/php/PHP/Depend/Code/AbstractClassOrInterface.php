@@ -387,6 +387,17 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * Returns an array of references onto the interfaces of this class node.
+     *
+     * @return array
+     * @since 0.10.4
+     */
+    public function getInterfaceReferences()
+    {
+        return $this->interfaceReferences;
+    }
+
+    /**
      * Adds a interface reference node.
      *
      * @param PHP_Depend_Code_ASTClassOrInterfaceReference $interfaceReference The

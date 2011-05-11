@@ -557,9 +557,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($tokenType === self::T_EXTENDS) {
             $this->consumeToken(self::T_EXTENDS);
 
+            $this->_tokenStack->push();
+
             $class->setParentClassReference(
-                $this->_builder->buildASTClassReference(
-                    $this->_parseQualifiedName()
+                $this->_setNodePositionsAndReturn(
+                    $this->_builder->buildASTClassReference(
+                        $this->_parseQualifiedName()
+                    )
                 )
             );
 
@@ -618,9 +622,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     ) {
         while (true) {
 
+            $this->_tokenStack->push();
+
             $abstractType->addInterfaceReference(
-                $this->_builder->buildASTClassOrInterfaceReference(
-                    $this->_parseQualifiedName()
+                $this->_setNodePositionsAndReturn(
+                    $this->_builder->buildASTClassOrInterfaceReference(
+                        $this->_parseQualifiedName()
+                    )
                 )
             );
 
