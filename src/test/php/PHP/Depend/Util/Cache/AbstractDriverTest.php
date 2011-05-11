@@ -60,6 +60,11 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ *
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::cache
+ * @group unittest
  */
 abstract class PHP_Depend_Util_Cache_AbstractDriverTest
     extends PHP_Depend_AbstractTest
@@ -68,10 +73,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testTypeMethodReturnsSameObjectInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testTypeMethodReturnsSameObjectInstance()
     {
@@ -83,10 +84,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testRestoreMethodReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testRestoreMethodReturnsNullByDefault()
     {
@@ -98,10 +95,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testStoreMethodPersistsGivenData
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testStoreMethodPersistsGivenData()
     {
@@ -115,10 +108,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testStoreMethodPersistsGivenDataWithHash
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testStoreMethodPersistsGivenDataWithHash()
     {
@@ -132,10 +121,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testRestoreMethodWithDifferentHashReturnsNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testRestoreMethodWithDifferentHashReturnsNull()
     {
@@ -149,10 +134,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testStoreAndRestoreMethodsWithSpecialType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testStoreAndRestoreMethodsWithSpecialType()
     {
@@ -166,10 +147,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testStoreMethodWithSpecialTypeNotOverwriteRecordInDefaultType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testStoreMethodWithSpecialTypeNotOverwriteRecordInDefaultType()
     {
@@ -184,10 +161,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testRemoveDeletesExistingCacheEntry
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testRemoveDeletesExistingCacheEntry()
     {
@@ -205,10 +178,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix()
     {
@@ -226,10 +195,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testRemoveDeletesExistingCacheEntryOfDifferentType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testRemoveDeletesExistingCacheEntryOfDifferentType()
     {
@@ -247,10 +212,6 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
      * testRemoveSilentlyIgnoresPatternsWithoutMatch
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testRemoveSilentlyIgnoresPatternsWithoutMatch()
     {
