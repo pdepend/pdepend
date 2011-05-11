@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
@@ -59,6 +59,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Code_Property
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
 {
@@ -66,9 +69,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetClassForPropertyWithNamespacedInternalType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetClassForPropertyWithNamespacedRootType()
     {
@@ -80,9 +80,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetClassForPropertyWithNamespacedType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetClassForPropertyWithNamespacedType()
     {
@@ -94,9 +91,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetClassForPropertyWithNamespacedArrayRootType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetClassForPropertyWithNamespacedArrayRootType()
     {
@@ -108,9 +102,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetClassForPropertyWithNamespacedArrayType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetClassForPropertyWithNamespacedArrayType()
     {
@@ -122,9 +113,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetClassReturnsNullForPropertyWithScalarType
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetClassReturnsNullForPropertyWithScalarType()
     {
@@ -136,9 +124,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetClassReturnsNullForPropertyWithoutTypeHint
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetClassReturnsNullForPropertyWithoutTypeHint()
     {
@@ -150,9 +135,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetClassReturnsNullForPropertyWithoutDocComment
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetClassReturnsNullForPropertyWithoutDocComment()
     {
@@ -164,9 +146,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetSourceFileReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceFileReturnsNullByDefault()
     {
@@ -178,9 +157,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetSourceFileReturnsInjectedFileInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceFileReturnsInjectedFileInstance()
     {
@@ -196,9 +172,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsNullByDefault()
     {
@@ -210,9 +183,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsExpectedPropertyComment
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsExpectedPropertyComment()
     {
@@ -225,15 +195,11 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * expected result.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyIsDefaultValueAvailableReturnsFalseWhenNoValueExists()
     {
         $property = $this->_getFirstPropertyInClass();
         self::assertFalse($property->isDefaultValueAvailable());
-        self::assertNull($property->getDefaultValue());
     }
 
     /**
@@ -241,14 +207,43 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * expected result.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyIsDefaultValueAvailableReturnsTrueWhenValueExists()
     {
         $property = $this->_getFirstPropertyInClass();
         self::assertTrue($property->isDefaultValueAvailable());
+    }
+
+    /**
+     * testIsDefaultValueAvailableReturnsExpectedTrueForNullValue
+     *
+     * @return void
+     */
+    public function testIsDefaultValueAvailableReturnsExpectedTrueForNullValue()
+    {
+        $property = $this->_getFirstPropertyInClass();
+        self::assertTrue($property->isDefaultValueAvailable());
+    }
+
+    /**
+     * testGetDefaultValueReturnsByDefaultExpectedNull
+     *
+     * @return void
+     */
+    public function testGetDefaultValueReturnsByDefaultExpectedNull()
+    {
+        $property = $this->_getFirstPropertyInClass();
+        self::assertNull($property->getDefaultValue());
+    }
+
+    /**
+     * testGetDefaultValueReturnsExpectedNullForNullDefaultValue
+     *
+     * @return void
+     */
+    public function testGetDefaultValueReturnsExpectedNullForNullDefaultValue()
+    {
+        $property = $this->_getFirstPropertyInClass();
         self::assertNull($property->getDefaultValue());
     }
 
@@ -256,9 +251,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyContainsExpectDefaultValueBooleanTrue()
     {
@@ -270,9 +262,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyContainsExpectDefaultValueBooleanFalse()
     {
@@ -284,9 +273,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyContainsExpectDefaultValueArray()
     {
@@ -298,9 +284,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that the property default value matches the expected PHP type.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyContainsExpectedDefaultValueFloat()
     {
@@ -313,9 +296,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * <b>true</b> for an as array annotated property.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsArrayReturnsExpectedValueTrueForVarAnnotationWithArray()
     {
@@ -328,9 +308,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * <b>false</b> for an as class/interface annotated property.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsArrayReturnsExpectedValueFalseForVarAnnotationWithClassType()
     {
@@ -343,9 +320,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * <b>false</b> for an property without var annotation.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsArrayReturnsExpectedValueFalseForPropertyWithoutVarAnnotation()
     {
@@ -358,9 +332,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * returns <b>true</b> for an as integer annotated property.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPrimitiveReturnsExpectedValueTrueForVarAnnotationWithIntegerTypeHint()
     {
@@ -373,9 +344,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * returns <b>false</b> for an as class/interface annotated property.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPrimitiveReturnsExpectedValueFalseForVarAnnotationWithClassType()
     {
@@ -388,9 +356,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * returns <b>false</b> for an property without var annotation.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPrimitiveReturnsExpectedValueFalseForPropertyWithoutVarAnnotation()
     {
@@ -402,9 +367,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsPublicReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPublicReturnsFalseByDefault()
     {
@@ -416,9 +378,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsPublicReturnsTrueForPublicProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPublicReturnsTrueForPublicProperty()
     {
@@ -430,9 +389,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsProtectedReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsProtectedReturnsFalseByDefault()
     {
@@ -444,9 +400,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsProtectedReturnsTrueForProtectedProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsProtectedReturnsTrueForProtectedProperty()
     {
@@ -458,9 +411,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsPrivateReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPrivateReturnsFalseByDefault()
     {
@@ -472,9 +422,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsPrivateReturnsTrueForPrivateProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPrivateReturnsTrueForPrivateProperty()
     {
@@ -486,9 +433,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsStaticReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsStaticReturnsFalseByDefault()
     {
@@ -500,9 +444,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testIsStaticReturnsTrueForStaticProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsStaticReturnsTrueForStaticProperty()
     {
@@ -514,9 +455,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testAcceptCallsVisitorMethodVisitProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testAcceptCallsVisitorMethodVisitProperty()
     {
@@ -532,9 +470,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that a property node has the expected start line.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyHasExpectedStartLine()
     {
@@ -546,9 +481,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that a property node has the expected start column.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyHasExpectedStartColumn()
     {
@@ -560,9 +492,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that a property node has the expected end line.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyHasExpectedEndLine()
     {
@@ -574,9 +503,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * Tests that a property node has the expected end column.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testPropertyHasExpectedEndColumn()
     {
@@ -588,9 +514,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      * testFreeResetsDeclaringClassToNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFreeResetsDeclaringClassToNull()
     {

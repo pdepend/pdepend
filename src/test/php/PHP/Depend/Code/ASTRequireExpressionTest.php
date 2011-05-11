@@ -149,12 +149,8 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
         self::assertEquals(
             array(
                 'once',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $expr->__sleep()

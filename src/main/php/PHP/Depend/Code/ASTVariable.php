@@ -82,7 +82,7 @@ class PHP_Depend_Code_ASTVariable extends PHP_Depend_Code_ASTNode
      */
     public function isThis()
     {
-        return ($this->image === '$this');
+        return ($this->getImage() === '$this');
     }
 
     /**

@@ -74,13 +74,16 @@ class PHP_Depend_Code_ASTStaticReference extends PHP_Depend_Code_ASTSelfReferenc
     const IMAGE = 'static';
 
     /**
-     * The source image for this node instance.
+     * Returns the visual representation for this node type.
      *
-     * @var string
-     * @since 0.10.0
+     * @return string
+     * @since 0.10.4
      */
-    protected $image = self::IMAGE;
-    
+    public function getImage()
+    {
+        return self::IMAGE;
+    }
+
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.

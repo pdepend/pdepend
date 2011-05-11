@@ -75,14 +75,6 @@ class PHP_Depend_Code_ASTSelfReference
     const IMAGE = 'self';
 
     /**
-     * The source image for this node instance.
-     *
-     * @var string
-     * @since 0.10.0
-     */
-    protected $image = self::IMAGE;
-
-    /**
      * The currently used builder context.
      *
      * @var PHP_Depend_Builder_Context
@@ -95,6 +87,7 @@ class PHP_Depend_Code_ASTSelfReference
      *
      * @var string
      * @since 0.10.0
+     * @todo To reduce memory usage, move property into new metadata string
      */
     protected $qualifiedName = null;
 
@@ -112,6 +105,17 @@ class PHP_Depend_Code_ASTSelfReference
     ) {
         $this->context      = $context;
         $this->typeInstance = $target;
+    }
+
+    /**
+     * Returns the visual representation for this node type.
+     *
+     * @return string
+     * @since 0.10.4
+     */
+    public function getImage()
+    {
+        return self::IMAGE;
     }
 
     /**

@@ -70,14 +70,6 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
      * The image type of this node.
      */
     const CLAZZ = __CLASS__;
-    
-    /**
-     * This property is set to <b>true</b> when the parameter is passed by
-     * reference.
-     *
-     * @var boolean $passedByReference
-     */
-    protected $passedByReference = false;
 
     /**
      * Constructs a new field declaration.
@@ -95,7 +87,7 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
      */
     public function isPassedByReference()
     {
-        return $this->passedByReference;
+        return $this->getMetadataBoolean(5);
     }
 
     /**
@@ -105,7 +97,7 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
      */
     public function setPassedByReference()
     {
-        $this->passedByReference = true;
+        return $this->setMetadataBoolean(5, true);
     }
 
     /**
@@ -124,15 +116,14 @@ class PHP_Depend_Code_ASTFormalParameter extends PHP_Depend_Code_ASTNode
     }
 
     /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
+     * Returns the total number of the used property bag.
      *
-     * @return array(string)
-     * @since 0.10.0
+     * @return integer
+     * @since 0.10.4
+     * @see PHP_Depend_Code_ASTNode#getMetadataSize()
      */
-    public function  __sleep()
+    protected function getMetadataSize()
     {
-        return array_merge(array('passedByReference'), parent::__sleep());
+        return 6;
     }
 }

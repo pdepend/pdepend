@@ -190,13 +190,8 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
         $param = $this->createNodeInstance();
         self::assertEquals(
             array(
-                'passedByReference',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $param->__sleep()

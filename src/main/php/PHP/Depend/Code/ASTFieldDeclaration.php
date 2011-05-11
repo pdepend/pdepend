@@ -91,7 +91,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      *
      * @var integer $modifiers
      */
-    protected $modifiers = 0;
+    //protected $modifiers = 0;
 
     /**
      * Constructs a new field declaration.
@@ -109,7 +109,8 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function getModifiers()
     {
-        return $this->modifiers;
+        return $this->getMetadataInteger(5);
+        //return $this->modifiers;
     }
 
     /**
@@ -139,7 +140,8 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
             );
         }
 
-        $this->modifiers = $modifiers;
+        $this->setMetadataInteger(5, $modifiers);
+        //$this->modifiers = $modifiers;
     }
 
     /**
@@ -150,7 +152,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isPublic()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
+        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_PUBLIC)
                                  === PHP_Depend_ConstantsI::IS_PUBLIC);
     }
 
@@ -162,7 +164,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isProtected()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
+        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_PROTECTED)
                                  === PHP_Depend_ConstantsI::IS_PROTECTED);
     }
 
@@ -174,7 +176,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isPrivate()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
+        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_PRIVATE)
                                  === PHP_Depend_ConstantsI::IS_PRIVATE);
     }
 
@@ -186,7 +188,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isStatic()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_STATIC)
+        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_STATIC)
                                  === PHP_Depend_ConstantsI::IS_STATIC);
     }
 
@@ -206,15 +208,14 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
     }
 
     /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
+     * Returns the total number of the used property bag.
      *
-     * @return array(string)
-     * @since 0.10.0
+     * @return integer
+     * @since 0.10.4
+     * @see PHP_Depend_Code_ASTNode#getMetadataSize()
      */
-    public function  __sleep()
+    protected function getMetadataSize()
     {
-        return array_merge(array('modifiers'), parent::__sleep());
+        return 6;
     }
 }

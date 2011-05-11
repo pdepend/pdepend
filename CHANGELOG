@@ -1,3 +1,12 @@
+PHP_Depend 0.10.4
+-----------------
+
+This release contains an improvement in PHP_Depend's memory consumption.
+We have optimized the internal data structures in such a way that the
+memory footprint was reduced by ~30%. These values were measured for
+currently popular frameworks with a medium to large sized code base. The
+tests were run under ubuntu with PHP 5.2.17 and PHP 5.3.6.
+
 PHP_Depend 0.10.3
 -----------------
 
@@ -11,8 +20,8 @@ published on March the 02th 2011.
 PHP_Depend 0.10.2
 -----------------
 
-This release of PHP_Depend closes two bugs. One related to the start and 
-end line properties of object property nodes in the syntax tree. The 
+This release of PHP_Depend closes two bugs. One related to the start and
+end line properties of object property nodes in the syntax tree. The
 second fix closes a bug in PHP_Depend's implementation of the WMCi metric.
 Beside these two fixes this release implements three minor features, one
 design issue in the syntax tree api and the other two other features are
@@ -57,7 +66,7 @@ PHP_Depend 0.10.0
 - Implemented #143: Support PHP's alternative control structure syntax.
   Done in svn revision #1375.
 - Implemented #146: Implement PHP's declare-statement. Done in subversion
-  revision #1375. 
+  revision #1375.
 - Implemented #148: Implement cast expressions. Implemented in svn
   revision #1283.
 - Fixed #163: Alternative syntax end tokens can terminate with closing
@@ -75,7 +84,7 @@ PHP_Depend 0.10.0
   Implemented with git commit #00ed8ec.
 - Fixed #181: No log generated when parsing Typo3 extension "t3extplorer"
   (Unexpected token ASCII 39). Indirectly fixed in this release.
-- Fixed #182: Clone is a valid function, method and type name in older 
+- Fixed #182: Clone is a valid function, method and type name in older
   php versions. Fixed with git commit #b18bf37.
 - Fixed #189: Invalid Start/End Line/Column for object method
   invocation. Fixed in commit #c6cc9dd.
@@ -101,7 +110,7 @@ PHP_Depend 0.9.19
 PHP_Depend 0.9.18
 -----------------
 
-- Fixed #161: Unexpected token: -> in foreach statement. Fixed in 
+- Fixed #161: Unexpected token: -> in foreach statement. Fixed in
   subversion revision #1347.
 
 PHP_Depend 0.9.17
@@ -133,7 +142,7 @@ PHP_Depend 0.9.14
 PHP_Depend 0.9.13
 -----------------
 
-- Fixed #145: Incorrect require_once statement in ASTSwitchStatement 
+- Fixed #145: Incorrect require_once statement in ASTSwitchStatement
   source file. Fixed in svn revision #1262.
 - Fixed #150: Invalid nowdoc substitution has produced broken code.
   Fixed in svn revision #1266.
@@ -167,9 +176,9 @@ PHP_Depend 0.9.11
 - Fixed #119: Three test cases fail for PHP lower 5.3. Fixed in svn
   revision #1114.
 - Critical issue in PHP_Depend's temporary data cache fixed. This bug
-  only occured when running several instances of PHP_Depend in 
+  only occured when running several instances of PHP_Depend in
   parallel. In this setup the used cache key spl_object_hash() has
-  caused a corrupted cache, because different php process instances 
+  caused a corrupted cache, because different php process instances
   have written different data to the same cache file.
 
 PHP_Depend 0.9.10
@@ -177,7 +186,7 @@ PHP_Depend 0.9.10
 
 - Implemented #72: Add NOAM, NOOM and NOCC metrics. Implemented in svn
   revision #1084.
-- Implemented #74: Make CRAP-index available. Implemented in svn revision 
+- Implemented #74: Make CRAP-index available. Implemented in svn revision
   #1063.
 - Implemented #105: Support for deep search implement. Implemented in svn
   revision #1078.
@@ -187,7 +196,7 @@ PHP_Depend 0.9.10
   revision #1032.
 - Fixed #111: Dynamic Strings are treated as literal strings. Fixed in svn
   revision #1037.
-- Fixed #114: Parsing error caused by complex string expressions fixed. 
+- Fixed #114: Parsing error caused by complex string expressions fixed.
   Fixed in svn revision #1068.
 - Fixed #115: Summary and PHPUnit Report lists unknown classes. Fixed in
   svn revision #1101.
@@ -212,7 +221,7 @@ PHP_Depend 0.9.8
   revision #992.
 - Fixed #94: Parser throws exception for closures that return by reference,
   fixed in svn revision #962.
-- Fixed #98: Functions with an invalid signature result in an inconsistent 
+- Fixed #98: Functions with an invalid signature result in an inconsistent
   object graph, fixed in svn revision #986.
 - Fixed #102: Namespace keyword in type-hint is broken, fixed in svn revision
   #1010.
@@ -298,7 +307,7 @@ PHP_Depend 0.9.3
 ----------------
 
 - #89 + Source file is never set for methods, properties and constants.
-- #83 + Storage layer for node tokens added, reduces memory consumption. 
+- #83 + Storage layer for node tokens added, reduces memory consumption.
 - #85 + TextUI displays the execution time and the memory usage(linux only).
 - #82 + Tokenizer cache added, reduces runtime up to 25%.
 - Code restructured, input filters and iterator moved to package "Input".
@@ -321,7 +330,7 @@ PHP_Depend 0.9.0
 ----------------
 
 - PHP_Depend works with PHP 5.2.0
-- #19 + Implement a phpunit compatible xml logger. 
+- #19 + Implement a phpunit compatible xml logger.
 - #20 + Add support for class constants.
 - #30 + Improve Lines Of Code.
 
@@ -344,7 +353,7 @@ PHP_Depend 0.8.0beta3
 - #25 + PHP_Depend should print an error if no @package information is available.
 - #26 + Handle class and interface names case insensitive.
 - #27 + Handle internal classes and interfaces.
-- #28 + Add option --bad-documentation. 
+- #28 + Add option --bad-documentation.
 
 PHP_Depend 0.8.0beta2
 ---------------------

@@ -119,12 +119,8 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
         self::assertEquals(
             array(
                 'context',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $this->createNodeInstance()->__sleep()

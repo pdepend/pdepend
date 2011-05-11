@@ -126,7 +126,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
         $this->referenceMock->expects($this->once())
             ->method('getType');
 
-        
+
         $reference->getType();
     }
 
@@ -145,12 +145,8 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
             array(
                 'reference',
                 'context',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $reference->__sleep()

@@ -66,7 +66,6 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  */
 class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
-
     /**
      * testReturnValueOfMagicSleepContainsValueProperty
      *
@@ -81,12 +80,8 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
         self::assertEquals(
             array(
                 'value',
-                'image',
                 'comment',
-                'startLine',
-                'startColumn',
-                'endLine',
-                'endColumn',
+                'metadata',
                 'nodes'
             ),
             $node->__sleep()

@@ -64,17 +64,10 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
 {
     /**
      * The type of this class.
-     * 
+     *
      * @since 0.10.0
      */
     const CLAZZ = __CLASS__;
-
-    /**
-     * The source image for this node instance.
-     *
-     * @var string
-     */
-    protected $image = null;
 
     /**
      * Parsed child nodes of this node.
@@ -99,32 +92,14 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     protected $comment = null;
 
     /**
-     * The start line for this node.
+     * Metadata for this node instance, serialized in a string. This string
+     * contains the start, end line, and the start, end column and the node
+     * image in a colon seperated string.
      *
-     * @var integer
+     * @var string
+     * @since 0.10.4
      */
-    protected $startLine = 0;
-
-    /**
-     * The end line for this node.
-     *
-     * @var integer
-     */
-    protected $endLine = 0;
-
-    /**
-     * The start column for this node.
-     *
-     * @var integer
-     */
-    protected $startColumn = 0;
-
-    /**
-     * The end column for this node.
-     *
-     * @var integer
-     */
-    protected $endColumn = 0;
+    protected $metadata = '::::';
 
     /**
      * Constructs a new ast node instance.
@@ -133,7 +108,22 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function __construct($image = null)
     {
-        $this->image = $image;
+        $this->metadata = str_repeat(':', $this->getMetadataSize() - 1);
+
+        $this->setImage($image);
+    }
+
+    /**
+     * Sets the image for this ast node.
+     *
+     * @param string $image The image for this node.
+     *
+     * @return void
+     * @since 0.10.4
+     */
+    public function setImage($image)
+    {
+        $this->setMetadata(4, $image);
     }
 
     /**
@@ -143,7 +133,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getImage()
     {
-        return $this->image;
+        return $this->getMetadata(4);
     }
 
     /**
@@ -156,7 +146,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartLine($startLine)
     {
-        $this->startLine = $startLine;
+        $this->setMetadataInteger(0, $startLine);
     }
 
     /**
@@ -166,7 +156,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartLine()
     {
-        return $this->startLine;
+        return $this->getMetadataInteger(0);
     }
 
     /**
@@ -179,7 +169,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setStartColumn($startColumn)
     {
-        $this->startColumn = $startColumn;
+        $this->setMetadataInteger(2, $startColumn);
     }
 
     /**
@@ -189,7 +179,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getStartColumn()
     {
-        return $this->startColumn;
+        return $this->getMetadataInteger(2);
     }
 
     /**
@@ -202,7 +192,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndLine($endLine)
     {
-        $this->endLine = $endLine;
+        $this->setMetadataInteger(1, $endLine);
     }
 
     /**
@@ -212,7 +202,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndLine()
     {
-        return $this->endLine;
+        return $this->getMetadataInteger(1);
     }
 
     /**
@@ -225,7 +215,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function setEndColumn($endColumn)
     {
-        $this->endColumn = $endColumn;
+        $this->setMetadataInteger(3, $endColumn);
     }
 
     /**
@@ -235,7 +225,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      */
     public function getEndColumn()
     {
-        return $this->endColumn;
+        return $this->getMetadataInteger(3);
     }
 
     /**
@@ -256,10 +246,109 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         $startColumn,
         $endColumn
     ) {
-        $this->startLine   = $startLine;
-        $this->startColumn = $startColumn;
-        $this->endLine     = $endLine;
-        $this->endColumn   = $endColumn;
+        $this->setMetadataInteger(0, $startLine);
+        $this->setMetadataInteger(1, $endLine);
+        $this->setMetadataInteger(2, $startColumn);
+        $this->setMetadataInteger(3, $endColumn);
+    }
+
+    /**
+     * Returns an integer value that was stored under the given index.
+     *
+     * @param integer $index The property instance.
+     *
+     * @return integer
+     * @since 0.10.4
+     */
+    protected function getMetadataInteger($index)
+    {
+        return (int) $this->getMetadata($index);
+    }
+
+    /**
+     * Stores an integer value under the given index in the internally used data
+     * string.
+     *
+     * @param integer $index The property instance.
+     * @param integer $value The property value.
+     *
+     * @return void
+     * @since 0.10.4
+     */
+    protected function setMetadataInteger($index, $value)
+    {
+        $this->setMetadata($index, $value);
+    }
+
+    /**
+     * Returns a boolean value that was stored under the given index.
+     *
+     * @param integer $index The property instance.
+     *
+     * @return boolean
+     * @since 0.10.4
+     */
+    protected function getMetadataBoolean($index)
+    {
+        return (bool) $this->getMetadata($index);
+    }
+
+    /**
+     * Stores a boolean value under the given index in the internally used data
+     * string.
+     *
+     * @param integer $index The property instance.
+     * @param boolean $value The property value.
+     *
+     * @return void
+     * @since 0.10.4
+     */
+    protected function setMetadataBoolean($index, $value)
+    {
+        $this->setMetadata($index, $value ? 1 : 0);
+    }
+
+    /**
+     * Returns the value that was stored under the given index.
+     *
+     * @param integer $index The property instance.
+     *
+     * @return mixed
+     * @since 0.10.4
+     */
+    protected function getMetadata($index)
+    {
+        $metadata = explode(':', $this->metadata, $this->getMetadataSize());
+        return $metadata[$index];
+    }
+
+    /**
+     * Stores the given value under the given index in an internal storage
+     * container.
+     *
+     * @param integer $index The property index.
+     * @param mixed   $value The property value.
+     *
+     * @return void
+     * @since 0.10.4
+     */
+    protected function setMetadata($index, $value)
+    {
+        $metadata         = explode(':', $this->metadata, $this->getMetadataSize());
+        $metadata[$index] = $value;
+
+        $this->metadata = join(':', $metadata);
+    }
+
+    /**
+     * Returns the total number of the used property bag.
+     *
+     * @return integer
+     * @since 0.10.4
+     */
+    protected function getMetadataSize()
+    {
+        return 5;
     }
 
     /**
@@ -459,12 +548,8 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     public function  __sleep()
     {
         return array(
-            'image',
             'comment',
-            'startLine',
-            'startColumn',
-            'endLine',
-            'endColumn',
+            'metadata',
             'nodes'
         );
     }

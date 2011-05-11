@@ -78,64 +78,6 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     const M_NPATH_COMPLEXITY = 'npath';
 
     /**
-     * List of valid token types that are relevant for the npath complexity
-     * calculation.
-     *
-     * @var array(integer=>boolean) $_validTokens
-     */
-    private static $_validTokens = array(
-        PHP_Depend_ConstantsI::T_CLOSE_TAG         => true,
-        PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN  => true,
-        PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE => true,
-        PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN  => true,
-        PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE => true,
-        PHP_Depend_ConstantsI::T_COMMENT           => true,
-        PHP_Depend_ConstantsI::T_DOC_COMMENT       => true,
-        PHP_Depend_ConstantsI::T_SEMICOLON         => true,
-        PHP_Depend_ConstantsI::T_QUESTION_MARK     => true,
-        PHP_Depend_ConstantsI::T_COLON             => true,
-        PHP_Depend_ConstantsI::T_RETURN            => true,
-        PHP_Depend_ConstantsI::T_DO                => true,
-        PHP_Depend_ConstantsI::T_FOR               => true,
-        PHP_Depend_ConstantsI::T_IF                => true,
-        PHP_Depend_ConstantsI::T_ELSE              => true,
-        PHP_Depend_ConstantsI::T_ELSEIF            => true,
-        PHP_Depend_ConstantsI::T_FOREACH           => true,
-        PHP_Depend_ConstantsI::T_WHILE             => true,
-        PHP_Depend_ConstantsI::T_SWITCH            => true,
-        PHP_Depend_ConstantsI::T_CASE              => true,
-        PHP_Depend_ConstantsI::T_DEFAULT           => true,
-        PHP_Depend_ConstantsI::T_BOOLEAN_AND       => true,
-        PHP_Depend_ConstantsI::T_BOOLEAN_OR        => true,
-        PHP_Depend_ConstantsI::T_LOGICAL_AND       => true,
-        PHP_Depend_ConstantsI::T_LOGICAL_OR        => true,
-        PHP_Depend_ConstantsI::T_LOGICAL_XOR       => true,
-        PHP_Depend_ConstantsI::T_TRY               => true,
-        PHP_Depend_ConstantsI::T_CATCH             => true,
-    );
-
-    /**
-     * The current token array.
-     *
-     * @var array $_tokens
-     */
-    private $_tokens = array();
-
-    /**
-     * The current token array index position.
-     *
-     * @var integer $_index
-     */
-    private $_index = 0;
-
-    /**
-     * The length of the token array.
-     *
-     * @var integer $_length
-     */
-    private $_length = 0;
-
-    /**
      * This property will hold the calculated NPath Complexity values for the
      * analyzed functions and methods.
      *
@@ -650,7 +592,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $sum = '0';
         if ($node instanceof PHP_Depend_Code_ASTConditionalExpression) {
             $sum = PHP_Depend_Util_MathUtil::add($sum, $node->accept($this, 1));
-        } else if ($node instanceof PHP_Depend_Code_ASTBooleanAndExpression 
+        } else if ($node instanceof PHP_Depend_Code_ASTBooleanAndExpression
             || $node instanceof PHP_Depend_Code_ASTBooleanOrExpression
             || $node instanceof PHP_Depend_Code_ASTLogicalAndExpression
             || $node instanceof PHP_Depend_Code_ASTLogicalOrExpression
