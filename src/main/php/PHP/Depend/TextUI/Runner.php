@@ -320,7 +320,7 @@ class PHP_Depend_TextUI_Runner
                 $pdepend->addLogger($logger);
             }
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         foreach ($this->_processListeners as $processListener) {
@@ -334,7 +334,7 @@ class PHP_Depend_TextUI_Runner
                 $this->_parseErrors[] = $exception->getMessage();
             }
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         return self::SUCCESS_EXIT;
