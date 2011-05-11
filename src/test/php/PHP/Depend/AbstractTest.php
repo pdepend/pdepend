@@ -181,10 +181,22 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the first class found in a test file associated with the given
-     * test case.
+     * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
+     * @param string $nodeType The searched node class.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     */
+    protected function getFirstNodeOfTypeInInterface($testCase, $nodeType)
+    {
+        return $this->getFirstInterfaceForTestCase($testCase)
+            ->getFirstChildOfType($nodeType);
+    }
+
+    /**
+     * Returns the first class found in a test file associated with the given
+     * test case.
      *
      * @return PHP_Depend_Code_Class
      */
@@ -193,6 +205,20 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         return self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
+            ->current();
+    }
+
+    /**
+     * Returns the first interface that could be found in the source file
+     * associated with the calling test case.
+     *
+     * @return PHP_Depend_Code_Interface
+     */
+    protected function getFirstInterfaceForTestCase()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getInterfaces()
             ->current();
     }
 

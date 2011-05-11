@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
@@ -263,7 +263,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 
         $this->assertSame(5, $interface->getInterfaces()->count());
     }
-    
+
     /**
      * Tests that {@link PHP_Depend_Code_Interface::isSubtypeOf()} returns
      * <b>false</b> for an input class.
@@ -284,7 +284,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $interfaces->next();
         $this->assertFalse($interface->isSubtypeOf($interfaces->current()));
     }
-    
+
     /**
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
@@ -715,6 +715,39 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetParentClassReferenceReturnsNullByDefault
+     *
+     * @return void
+     */
+    public function testGetParentClassReferenceReturnsNullByDefault()
+    {
+        $class = new PHP_Depend_Code_Interface(__CLASS__);
+        self::assertNull($class->getParentClassReference());
+    }
+
+    /**
+     * testGetInterfaceReferencesReturnsEmptyArrayByDefault
+     *
+     * @return void
+     */
+    public function testGetInterfaceReferencesReturnsEmptyArrayByDefault()
+    {
+        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        self::assertSame(array(), $interface->getInterfaceReferences());
+    }
+
+    /**
+     * testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces
+     *
+     * @return void
+     */
+    public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces()
+    {
+        $interface = $this->getFirstInterfaceForTestCase();
+        self::assertEquals(3, count($interface->getInterfaceReferences()));
+    }
+
+    /**
      * testGetEndLineReturnsEndLineOfLastToken
      *
      * @return void
@@ -900,7 +933,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     {
         $interface = new PHP_Depend_Code_Interface(__CLASS__);
         $method    = new PHP_Depend_Code_Method(__FUNCTION__);
-        
+
         $interface->addMethod($method);
         $interface->setContext($this->getMock('PHP_Depend_Builder_Context'));
         $method->setParent(null);
@@ -948,20 +981,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $interface->accept($visitor);
     }
 
-    /**
-     * Returns the first interface that could be found in the source file
-     * associated with the calling test case.
-     *
-     * @return PHP_Depend_Code_Interface
-     */
-    protected function getFirstInterfaceForTestCase()
-    {
-        return self::parseCodeResourceForTest()
-            ->current()
-            ->getInterfaces()
-            ->current();
-    }
-    
     /**
      * Creates an abstract item instance.
      *

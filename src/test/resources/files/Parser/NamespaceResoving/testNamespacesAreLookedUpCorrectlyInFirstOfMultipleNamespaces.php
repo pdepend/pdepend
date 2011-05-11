@@ -8,10 +8,6 @@ namespace Foo\Bar {
 
     class Someclass
     {
-        function a()
-        {
-        }
-
         function b()
         {
             new Bar;
@@ -30,10 +26,6 @@ namespace Bar\Baz {
 
     class Someclass
     {
-        function a()
-        {
-        }
-
         function b()
         {
             new Bar;
@@ -53,10 +45,6 @@ namespace {
 
     class Someclass
     {
-        function a()
-        {
-        }
-
         function b()
         {
             new Bar;

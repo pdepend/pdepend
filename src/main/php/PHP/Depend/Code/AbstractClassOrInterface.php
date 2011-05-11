@@ -343,6 +343,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function setParentClassReference(
         PHP_Depend_Code_ASTClassReference $classReference
     ) {
+        $this->nodes[]              = $classReference;
         $this->parentClassReference = $classReference;
     }
 
@@ -409,6 +410,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function addInterfaceReference(
         PHP_Depend_Code_ASTClassOrInterfaceReference $interfaceReference
     ) {
+        $this->nodes[]               = $interfaceReference;
         $this->interfaceReferences[] = $interfaceReference;
     }
 
@@ -618,7 +620,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
 
     /**
      * Resets the associated package reference.
-     * 
+     *
      * @return void
      * @since 0.10.2
      */

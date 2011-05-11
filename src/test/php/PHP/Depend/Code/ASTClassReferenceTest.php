@@ -61,8 +61,10 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Code_ASTNode
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTClassReference
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,9 +72,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testGetTypeDelegatesToBuilderContextGetClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetTypeDelegatesToBuilderContextGetClass()
     {
@@ -90,9 +89,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testGetTypeCachesReturnValueOfBuilderContextGetClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetTypeCachesReturnValueOfBuilderContextGetClass()
     {
@@ -110,9 +106,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testReturnValueOfMagicSleepContainsContextProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testReturnValueOfMagicSleepContainsContextProperty()
     {
@@ -131,9 +124,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -150,9 +140,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -170,9 +157,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testClassReferenceHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClassReferenceHasExpectedStartLine()
     {
@@ -184,9 +168,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testClassReferenceHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClassReferenceHasExpectedStartColumn()
     {
@@ -198,9 +179,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testClassReferenceHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClassReferenceHasExpectedEndLine()
     {
@@ -212,9 +190,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testClassReferenceHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClassReferenceHasExpectedEndColumn()
     {
@@ -223,16 +198,78 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testReferenceInClassExtendsHasExpectedStartLine
+     *
+     * @return void
+     * @since 0.10.5
+     */
+    public function testReferenceInClassExtendsHasExpectedStartLine()
+    {
+        $reference = $this->_getFirstReferenceInClass();
+        self::assertEquals(2, $reference->getStartLine());
+    }
+
+    /**
+     * testReferenceInClassExtendsHasExpectedStartColumn
+     *
+     * @return void
+     * @since 0.10.5
+     */
+    public function testReferenceInClassExtendsHasExpectedStartColumn()
+    {
+        $reference = $this->_getFirstReferenceInClass();
+        self::assertEquals(65, $reference->getStartColumn());
+    }
+
+    /**
+     * testReferenceInClassExtendsHasExpectedEndLine
+     *
+     * @return void
+     * @since 0.10.5
+     */
+    public function testReferenceInClassExtendsHasExpectedEndLine()
+    {
+        $reference = $this->_getFirstReferenceInClass();
+        self::assertEquals(2, $reference->getEndLine());
+    }
+
+    /**
+     * testReferenceInClassExtendsHasExpectedEndColumn
+     *
+     * @return void
+     * @since 0.10.5
+     */
+    public function testReferenceInClassExtendsHasExpectedEndColumn()
+    {
+        $reference = $this->_getFirstReferenceInClass();
+        self::assertEquals(65, $reference->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @return PHP_Depend_Code_ASTClassReference
      */
     private function _getFirstReferenceInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase, PHP_Depend_Code_ASTClassReference::CLAZZ
+        );
+    }
+
+    /**
+     * Returns the first reference node for the currently executed test case.
+     *
+     * @return PHP_Depend_Code_ASTClassReference
+     * @since 0.10.5
+     */
+    private function _getFirstReferenceInClass()
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            self::getCallingTestMethod(),
+            PHP_Depend_Code_ASTClassReference::CLAZZ
         );
     }
 

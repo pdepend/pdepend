@@ -8,10 +8,6 @@ use Baz\Foo;
 
 class Someclass
 {
-    function a()
-    {
-    }
-
     function b()
     {
         new Bar;

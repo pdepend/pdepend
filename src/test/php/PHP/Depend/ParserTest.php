@@ -67,7 +67,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 {
     /**
      * testParserHandlesMaxNestingLevel
-     * 
+     *
      * @return void
      */
     public function testParserHandlesMaxNestingLevel()
@@ -75,7 +75,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         if (version_compare(phpversion(), '5.2.10') < 0) {
             $this->markTestSkipped();
         }
-        
+
         ini_set('xdebug.max_nesting_level', '100');
 
         $cache   = new PHP_Depend_Util_Cache_Driver_Memory();
@@ -245,7 +245,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $function = $packages->current()
             ->getFunctions()
             ->current();
-            
+
         $this->assertEquals($tokens, $function->getTokens());
     }
 
@@ -337,35 +337,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectClassEndLineNumber()
     {
         $this->assertEquals(49, $this->getClassForTest()->getEndLine());
-    }
-
-    /**
-     * Tests that the parser sets the correct positions for parent classes and interfaces
-     *
-     * @return void
-     */
-    public function testParserSetsCorrectParentClassReferencesPositions()
-    {
-        $class = $this->getClassForTest();
-
-        $parent = $class->getParentClassReference();
-
-        $this->assertEquals(30, $parent->getStartLine());
-        $this->assertEquals(30, $parent->getEndLine());
-        $this->assertEquals(22, $parent->getStartColumn());
-        $this->assertEquals(24, $parent->getEndColumn());
-
-        $interfaces = $class->getInterfaceReferences();
-
-        $this->assertEquals(31, $interfaces[0]->getStartLine());
-        $this->assertEquals(31, $interfaces[0]->getEndLine());
-        $this->assertEquals(16, $interfaces[0]->getStartColumn());
-        $this->assertEquals(22, $interfaces[0]->getEndColumn());
-
-        $this->assertEquals(31, $interfaces[1]->getStartLine());
-        $this->assertEquals(31, $interfaces[1]->getEndLine());
-        $this->assertEquals(29, $interfaces[1]->getStartColumn());
-        $this->assertEquals(32, $interfaces[1]->getEndColumn());
     }
 
     /**
@@ -492,10 +463,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $packages->next();
 
         $method = $packages->current()
-                           ->getTypes()
-                           ->current()
-                           ->getMethods()
-                           ->current();
+            ->getTypes()
+            ->current()
+            ->getMethods()
+            ->current();
 
         $this->assertEquals(17, $method->getStartLine());
     }
@@ -683,7 +654,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getTypes()
             ->current()
             ->getMethods();
-  
+
         $actual = array();
         foreach ($nodes as $method) {
             $actual[] = $method->getName();
@@ -734,11 +705,11 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectPropertyDocComment()
     {
-        $packages = self::parseCodeResourceForTest();
-        $nodes    = $packages->current()
-                             ->getTypes()
-                             ->current()
-                             ->getProperties();
+        $nodes    = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties();
 
         $this->doTestParserSetsCorrectDocComment($nodes);
     }
@@ -750,20 +721,30 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserSetsCorrectPropertyVisibility()
     {
-        $packages = self::parseCodeResourceForTest();
+        $nodes = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties();
 
-        $nodes = $packages->current()
-                          ->getTypes()
-                          ->current()
-                          ->getProperties();
-        // TODO: Refactor all these assertions
-        $this->assertTrue($nodes->current()->isPrivate());
-        $nodes->next();
-        $this->assertTrue($nodes->current()->isPublic());
-        $nodes->next();
-        $this->assertTrue($nodes->current()->isProtected());
-        $nodes->next();
-        $this->assertTrue($nodes->current()->isProtected());
+        $actual = array();
+        foreach ($nodes as $node) {
+            $actual[] = array(
+                'public'     =>  $node->isPublic(),
+                'protected'  =>  $node->isProtected(),
+                'private'    =>  $node->isPrivate(),
+            );
+        }
+
+        self::assertEquals(
+            array(
+                array('public' => false, 'protected' => false, 'private' => true),
+                array('public' => true,  'protected' => false, 'private' => false),
+                array('public' => false, 'protected' => true,  'private' => false),
+                array('public' => false, 'protected' => true,  'private' => false),
+            ),
+            $actual
+        );
     }
 
     /**
@@ -779,56 +760,58 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->current()
             ->getProperties();
 
-        $this->assertEquals('$property1', $nodes->current()->getName());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
-        $nodes->next();
-        $this->assertEquals('$property2', $nodes->current()->getName());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
-        $nodes->next();
-        $this->assertEquals('$property3', $nodes->current()->getName());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
-        $nodes->next();
-        $this->assertEquals('$property4', $nodes->current()->getName());
-        $this->assertEquals('MyPropertyClass2', $nodes->current()->getClass()->getName());
-        $nodes->next();
-        $this->assertEquals('$property5', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
-        $nodes->next();
-        $this->assertEquals('$property6', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getClass());
+        $actual = array();
+        foreach ($nodes as $node) {
+            $className = $node->getClass() ? $node->getClass()->getName() : null;
+            $actual[$node->getName()] = $className;
+        }
+
+        self::assertEquals(
+            array(
+                '$property1'  =>  'MyPropertyClass2',
+                '$property2'  =>  'MyPropertyClass2',
+                '$property3'  =>  'MyPropertyClass2',
+                '$property4'  =>  'MyPropertyClass2',
+                '$property5'  =>  null,
+                '$property6'  =>  null,
+            ),
+            $actual
+        );
     }
 
     /**
      * Tests that the parser recognizes the first type defined in a doc comment.
      *
      * <code>
-     *   @var false|null|Runtime
+     * (at)var false|null|Runtime
      *
-     *   // Results in
-     *   Runtime
+     * // Results in
+     * Runtime
      * </code>
      *
      * @return void
      */
     public function testParserSetsExpectedPropertyTypeForChainedComment()
     {
-        $packages = self::parseCodeResourceForTest();
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getProperties()
+            ->current()
+            ->getClass();
 
-        $class = $packages->current()->getTypes()->current();
-        self::assertEquals('Parser', $class->getName());
-
-        $property = $class->getProperties()->current();
-        self::assertEquals('Runtime', $property->getClass()->getName());
+        self::assertEquals('Runtime', $class->getName());
     }
 
     /**
      * Tests that the parser recognizes the first type defined in a doc comment.
      *
      * <code>
-     *   @var array(Session|Runtime)
+     * (at)var array(Session|Runtime)
      *
-     *   // Results in
-     *   Session
+     * // Results in
+     * Session
      * </code>
      *
      * @return void
@@ -850,24 +833,24 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser recognizes the first type defined in a doc comment.
      *
      * <code>
-     *   @return false|null|Runtime
+     * (at)return false|null|Runtime
      *
-     *   // Results in
-     *   Runtime
+     * // Results in
+     * Runtime
      * </code>
      *
      * @return void
      */
     public function testParserSetsExpectedReturnTypeForChainedComment()
     {
-        $packages = self::parseCodeResourceForTest();
+        $type = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getReturnClass();
 
-        $class = $packages->current()->getTypes()->current();
-        $this->assertSame('Parser', $class->getName());
-
-        $method = $class->getMethods()->current();
-
-        $type = $method->getReturnClass();
         $this->assertSame('Runtime', $type->getName());
     }
 
@@ -875,24 +858,24 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * Tests that the parser recognizes the first type defined in a doc comment.
      *
      * <code>
-     *   @return array(integer => null|Session|Runtime)
+     * (at)return array(integer => null|Session|Runtime)
      *
-     *   // Results in
-     *   Session
+     * // Results in
+     * Session
      * </code>
      *
      * @return void
      */
     public function testParserSetsExpectedReturnTypeForChainedCommentInArray()
     {
-        $packages = self::parseCodeResourceForTest();
+        $type = self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current()
+            ->getMethods()
+            ->current()
+            ->getReturnClass();
 
-        $class = $packages->current()->getTypes()->current();
-        $this->assertSame('Parser', $class->getName());
-
-        $method = $class->getMethods()->current();
-
-        $type = $method->getReturnClass();
         $this->assertSame('Session', $type->getName());
     }
 
@@ -1058,7 +1041,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
     /**
      * testParserStripsCommentsInParseExpressionUntilCorrect
-     * 
+     *
      * @return void
      */
     public function testParserStripsCommentsInParseExpressionUntilCorrect()
@@ -1508,62 +1491,6 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
         self::parseCodeResourceForTest();
-    }
-
-    public function testNamespacesAreCorrectlyLookedUp()
-    {
-        $packages = self::parseCodeResourceForTest();
-        $methods = $packages->current()->getClasses()->current()->getMethods();
-        $methods->next();
-        $children = $methods->current()->getChildren();
-        $scope = $children[1];
-
-        $this->assertEquals('Foo\Bar\Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Bar\Baz', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Something', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Test', $children[1]->getChild(3)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('Foo\Bar\Other', $children[1]->getChild(4)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Baz\Foo\Bar', $children[1]->getChild(5)->getChild(0)->getChild(0)->getImage());
-    }
-
-    public function testNamespacesAreCorrectlyLookedUpWithMultipleNamespaces()
-    {
-        $packages = self::parseCodeResourceForTest();
-        $methods = $packages->current()->getClasses()->current()->getMethods();
-        $methods->next();
-        $children = $methods->current()->getChildren();
-        $scope = $children[1];
-
-        $this->assertEquals('Foo\Bar\Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Bar\Baz', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Something', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Test', $children[1]->getChild(3)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('Foo\Bar\Other', $children[1]->getChild(4)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Baz\Foo\Bar', $children[1]->getChild(5)->getChild(0)->getChild(0)->getImage());
-
-        $packages->next();
-        $methods = $packages->current()->getClasses()->current()->getMethods();
-        $methods->next();
-        $children = $methods->current()->getChildren();
-        $scope = $children[1];
-
-        $this->assertEquals('Bar\Baz\Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('Bar\Baz\Baz', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('Bar\Baz\Something', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('Bar\Baz\T', $children[1]->getChild(3)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('Bar\Baz\Other', $children[1]->getChild(4)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('Bar\Baz\Foo\Bar', $children[1]->getChild(5)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Foo\Bar\Abc', $children[1]->getChild(6)->getChild(0)->getChild(0)->getImage());
-
-        $packages->next();
-        $methods = $packages->current()->getClasses()->current()->getMethods();
-        $methods->next();
-        $children = $methods->current()->getChildren();
-        $scope = $children[1];
-
-        $this->assertEquals('\Bar', $children[1]->getChild(0)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Foo\Bar', $children[1]->getChild(1)->getChild(0)->getChild(0)->getImage());
-        $this->assertEquals('\Foo\Bar\Xyz', $children[1]->getChild(2)->getChild(0)->getChild(0)->getImage());
     }
 
     /**

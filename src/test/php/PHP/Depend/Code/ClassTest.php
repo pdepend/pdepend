@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
@@ -238,7 +238,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * testHasConstantReturnsTrueForExistentConstant
-     * 
+     *
      * @return void
      */
     public function testHasConstantReturnsTrueForExistentConstant()
@@ -400,7 +400,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $params = $class->findChildrenOfType(
             PHP_Depend_Code_ASTFormalParameter::CLAZZ
         );
-        
+
         self::assertEquals(4, count($params));
     }
 
@@ -415,7 +415,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $params = $class->findChildrenOfType(
             PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
-        
+
         self::assertEquals(2, count($params));
     }
 
@@ -491,7 +491,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $method = $orig->getMethods()->current();
 
         $copy = unserialize(serialize($orig));
-        
+
         self::assertSame(
             $method->getReturnClass(),
             $copy
@@ -542,7 +542,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * Tests the ctor and the {@link PHP_Depend_Code_Class::getName()}.
-     * 
+     *
      * @return void
      */
     public function testCreateNewClassInstance()
@@ -561,7 +561,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class = new PHP_Depend_Code_Class(__CLASS__);
         self::assertFalse($class->isAbstract());
     }
-    
+
     /**
      * testMarkClassInstanceAsAbstract
      *
@@ -571,7 +571,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setModifiers(PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
-        
+
         self::assertTrue($class->isAbstract());
     }
 
@@ -614,7 +614,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             PHP_Depend_ConstantsI::IS_FINAL
         );
     }
-    
+
     /**
      * Tests that a new {@link PHP_Depend_Code_Class} object returns an empty
      * {@link PHP_Depend_Code_NodeIterator} instance for methods.
@@ -626,7 +626,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class = new PHP_Depend_Code_Class(__CLASS__);
         self::assertEquals(0, $class->getMethods()->count());
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Class::addMethod()} method adds a
      * method to the internal list and sets the context class as parent.
@@ -650,7 +650,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class  = new PHP_Depend_Code_Class(__CLASS__);
         $method = $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
-        
+
         self::assertSame($class, $method->getParent());
     }
 
@@ -664,7 +664,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class = new PHP_Depend_Code_Class(__CLASS__);
         self::assertNull($class->getPackage());
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Class::getPackage()} returns as
      * default value <b>null</b> and that the package could be set and unset.
@@ -675,7 +675,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $package = new PHP_Depend_Code_Package(__FUNCTION__);
         $class   = new PHP_Depend_Code_Class(__CLASS__);
-        
+
         $class->setPackage($package);
         self::assertSame($package, $class->getPackage());
     }
@@ -710,7 +710,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
         self::assertNull($class->getPackageName());
     }
-    
+
     /**
      * Tests that {@link PHP_Depend_Code_Class::getInterfaces()}
      * returns the expected result.
@@ -729,7 +729,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
         self::assertEquals(array('A', 'C', 'E', 'F'), $actual);
     }
-    
+
     /**
      * Tests that {@link PHP_Depend_Code_Class::getInterfaces()}
      * returns the expected result.
@@ -772,7 +772,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
         self::assertEquals(array('A', 'B'), $actual);
     }
-    
+
     /**
      * Checks the {@link PHP_Depend_Code_Class::isSubtypeOf()} method.
      *
@@ -783,7 +783,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $types = self::parseCodeResourceForTest()
             ->current()
             ->getTypes();
-        
+
         $class = $types->current();
 
         $actual = array();
@@ -965,7 +965,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
         self::assertSame(PHP_Depend_ConstantsI::IS_FINAL, $class->getModifiers());
     }
-    
+
     /**
      * Tests the visitor accept method.
      *
@@ -1105,6 +1105,28 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetInterfaceReferencesReturnsEmptyArrayByDefault
+     *
+     * @return void
+     */
+    public function testGetInterfaceReferencesReturnsEmptyArrayByDefault()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        self::assertSame(array(), $class->getInterfaceReferences());
+    }
+
+    /**
+     * testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces
+     *
+     * @return void
+     */
+    public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces()
+    {
+        $class = $this->getFirstClassForTestCase();
+        self::assertEquals(3, count($class->getInterfaceReferences()));
+    }
+
+    /**
      * testIsUserDefinedReturnsFalseByDefault
      *
      * @return void
@@ -1174,7 +1196,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
-        
+
         self::assertEquals(
             array(
                 'cache',
@@ -1252,20 +1274,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class->setContext($context)->__wakeup();
     }
 
-    /**
-     * Returns the first class that could be found in the source file associated
-     * with the calling test case.
-     *
-     * @return PHP_Depend_Code_Class
-     */
-    protected function getFirstClassForTestCase()
-    {
-        return self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current();
-    }
-    
     /**
      * Creates an abstract item instance.
      *

@@ -205,7 +205,6 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
 
         $builder->restoreClass($class1);
 
-        self::assertSame($class1, $builder->getClass('Parser'));
         self::assertSame(
             $class1->getPackage(),
             $builder->getClass('Parser')->getPackage()
@@ -663,6 +662,32 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
             $this->createBuilder()->buildASTStaticReference(
                 $this->createBuilder()->buildClass(__CLASS__)
             )
+        );
+    }
+
+    /**
+     * testBuildASTClassReferenceReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTClassOrInterfaceReferenceReturnsExpectedType()
+    {
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+            $this->createBuilder()->buildASTClassOrInterfaceReference(__CLASS__)
+        );
+    }
+
+    /**
+     * testBuildASTClassReferenceReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTClassReferenceReturnsExpectedType()
+    {
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTClassReference::CLAZZ,
+            $this->createBuilder()->buildASTClassReference(__CLASS__)
         );
     }
 
