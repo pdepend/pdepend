@@ -62,7 +62,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
 {
     /**
      * The type of this class.
-     * 
+     *
      * @since 0.10.0
      */
     const CLAZZ = __CLASS__;
@@ -250,9 +250,9 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function removeType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
-        if (($i = array_search($type, $this->types, true)) !== false) {
+        if (($index = array_search($type, $this->types, true)) !== false) {
             // Remove class from internal list
-            unset($this->types[$i]);
+            unset($this->types[$index]);
             // Remove this as parent
             $type->unsetPackage();
         }
@@ -298,9 +298,9 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function removeFunction(PHP_Depend_Code_Function $function)
     {
-        if (($i = array_search($function, $this->functions, true)) !== false) {
+        if (($index = array_search($function, $this->functions, true)) !== false) {
             // Remove function from internal list
-            unset($this->functions[$i]);
+            unset($this->functions[$index]);
             // Remove this as parent
             $function->unsetPackage();
         }

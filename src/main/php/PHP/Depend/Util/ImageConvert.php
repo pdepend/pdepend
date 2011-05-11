@@ -88,9 +88,9 @@ class PHP_Depend_Util_ImageConvert
         if ($inputType === $outputType) {
             file_put_contents($output, file_get_contents($input));
         } else if (extension_loaded('imagick') === true) {
-            $im = new Imagick($input);
-            $im->setImageFormat($outputType);
-            $im->writeImage($output);
+            $imagick = new Imagick($input);
+            $imagick->setImageFormat($outputType);
+            $imagick->writeImage($output);
 
             // The following code is not testable when imagick is installed
             // @codeCoverageIgnoreStart

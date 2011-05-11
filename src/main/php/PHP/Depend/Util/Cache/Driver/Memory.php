@@ -140,9 +140,9 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
      */
     public function restore($key, $hash = null)
     {
-        $id = $this->getCacheKey($key);
-        if (isset($this->cache[$id]) && $this->cache[$id][0] === $hash) {
-            return $this->cache[$id][1];
+        $cacheKey = $this->getCacheKey($key);
+        if (isset($this->cache[$cacheKey]) && $this->cache[$cacheKey][0] === $hash) {
+            return $this->cache[$cacheKey][1];
         }
         return null;
     }

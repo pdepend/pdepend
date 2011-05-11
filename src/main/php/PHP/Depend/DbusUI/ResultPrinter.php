@@ -163,20 +163,20 @@ class PHP_Depend_DbusUI_ResultPrinter
             return;
         }
 
-        $d = new Dbus(Dbus::BUS_SESSION);
-        $n = $d->createProxy(
+        $dbus  = new Dbus(Dbus::BUS_SESSION);
+        $proxy = $dbus->createProxy(
             "org.freedesktop.Notifications", // connection name
             "/org/freedesktop/Notifications", // object
             "org.freedesktop.Notifications" // interface
         );
-        $n->Notify(
-            'PDepend', 
+        $proxy->Notify(
+            'PDepend',
             new DBusUInt32(0),
-            'pdepend', 
-            'PHP_Depend', 
+            'pdepend',
+            'PHP_Depend',
             sprintf(
-                '%d files analyzed in %s minutes...', 
-                $this->_parsedFiles, 
+                '%d files analyzed in %s minutes...',
+                $this->_parsedFiles,
                 (date('i:s', time() - $this->_startTime))
             ),
             new DBusArray(DBus::STRING, array()),
