@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/../Log/Dummy/Logger.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_TextUI_Runner
+ * @group pdepend
+ * @group pdepend::textui
+ * @group unittest
  */
 class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
 {
@@ -70,9 +73,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * directory.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
@@ -86,9 +86,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * Tests that the runner stops processing if no logger is specified.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
@@ -102,9 +99,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * testRunnerUsesCorrectFileFilter
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerUsesCorrectFileFilter()
     {
@@ -140,9 +134,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * correct.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
     {
@@ -175,9 +166,6 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * testSupportBadDocumentation
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testSupportBadDocumentation()
     {
@@ -202,7 +190,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
                 'exceptions'  =>  array()
             )
         );
-        
+
         $runner = $this->createTextUiRunnerFixture();
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner, self::createCodeResourceUriForTest()
@@ -215,14 +203,11 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * testRunnerHasParseErrorsReturnsFalseForValidSource
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerHasParseErrorsReturnsFalseForValidSource()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->addLogger('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
@@ -233,14 +218,11 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * testRunnerHasParseErrorsReturnsTrueForInvalidSource
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->addLogger('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
@@ -251,36 +233,28 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.dummy'));
+        $runner->addLogger('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
         $errors = $runner->getParseErrors();
         self::assertContains('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
-
-        self::assertTrue($runner->hasParseErrors());
     }
 
     /**
      * testRunnerThrowsExceptionForUndefinedLoggerClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::textui
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testRunnerThrowsExceptionForUndefinedLoggerClass()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('FooBarLogger', self::createRunResourceURI('log.xml'));
+        $runner->addLogger('FooBarLogger', self::createRunResourceURI());
         $runner->run();
     }
 
@@ -308,7 +282,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      */
     private function _runRunnerAndReturnStatistics(PHP_Depend_TextUI_Runner $runner, $pathName)
     {
-        $logFile = self::createRunResourceURI('pdepend.dummy');
+        $logFile = self::createRunResourceURI();
 
         $runner->setSourceArguments(array($pathName));
         $runner->addLogger('dummy-logger', $logFile);
