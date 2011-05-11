@@ -389,14 +389,14 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Cannot alter ini setting "html_errors".');
         }
 
-        $argv = array(
-            '-d',
-            'html_errors',
-            '--dummy-logger=' . self::createRunResourceURI(),
-            __FILE__
+        $this->_executeCommand(
+            array(
+                '-d',
+                'html_errors',
+                '--dummy-logger=' . self::createRunResourceURI(),
+                __FILE__
+            )
         );
-
-        $this->_executeCommand($argv);
 
         self::assertEquals('on', ini_get('html_errors'));
 
@@ -415,14 +415,14 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             $this->markTestSkipped('Cannot alter ini setting "html_errors".');
         }
 
-        $argv = array(
-            '-d',
-            'html_errors=off',
-            '--dummy-logger=' . self::createRunResourceURI(),
-            __FILE__
+        $this->_executeCommand(
+            array(
+                '-d',
+                'html_errors=off',
+                '--dummy-logger=' . self::createRunResourceURI(),
+                __FILE__
+            )
         );
-
-        $this->_executeCommand($argv);
 
         self::assertEquals('off', ini_get('html_errors'));
 
