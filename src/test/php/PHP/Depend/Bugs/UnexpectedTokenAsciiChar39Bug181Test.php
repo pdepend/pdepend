@@ -66,6 +66,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @since      0.10.0
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_UnexpectedTokenAsciiChar39Bug181Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -74,9 +77,6 @@ class PHP_Depend_Bugs_UnexpectedTokenAsciiChar39Bug181Test
      * testUnexpectedTokenDoesNotQuitPDepend
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testUnexpectedTokenDoesNotQuitPDepend()
     {
