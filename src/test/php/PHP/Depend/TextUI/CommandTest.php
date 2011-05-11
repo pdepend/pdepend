@@ -396,9 +396,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             __FILE__
         );
 
-        list($exitCode, $actual) = $this->_executeCommand($argv);
+        $this->_executeCommand($argv);
 
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode, $actual);
         self::assertEquals('on', ini_get('html_errors'));
 
         ini_set('html_errors', $backup);
@@ -423,9 +422,8 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
             __FILE__
         );
 
-        list($exitCode, ) = $this->_executeCommand($argv);
+        $this->_executeCommand($argv);
 
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
         self::assertEquals('off', ini_get('html_errors'));
 
         ini_set('html_errors', $backup);
