@@ -200,7 +200,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
     {
         $property = $this->_getFirstPropertyInClass();
         self::assertFalse($property->isDefaultValueAvailable());
-        self::assertNull($property->getDefaultValue());
     }
 
     /**
@@ -213,6 +212,38 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
     {
         $property = $this->_getFirstPropertyInClass();
         self::assertTrue($property->isDefaultValueAvailable());
+    }
+
+    /**
+     * testIsDefaultValueAvailableReturnsExpectedTrueForNullValue
+     *
+     * @return void
+     */
+    public function testIsDefaultValueAvailableReturnsExpectedTrueForNullValue()
+    {
+        $property = $this->_getFirstPropertyInClass();
+        self::assertTrue($property->isDefaultValueAvailable());
+    }
+
+    /**
+     * testGetDefaultValueReturnsByDefaultExpectedNull
+     *
+     * @return void
+     */
+    public function testGetDefaultValueReturnsByDefaultExpectedNull()
+    {
+        $property = $this->_getFirstPropertyInClass();
+        self::assertNull($property->getDefaultValue());
+    }
+
+    /**
+     * testGetDefaultValueReturnsExpectedNullForNullDefaultValue
+     *
+     * @return void
+     */
+    public function testGetDefaultValueReturnsExpectedNullForNullDefaultValue()
+    {
+        $property = $this->_getFirstPropertyInClass();
         self::assertNull($property->getDefaultValue());
     }
 
