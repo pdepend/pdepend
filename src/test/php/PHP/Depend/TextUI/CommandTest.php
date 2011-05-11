@@ -199,7 +199,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandStartsProcessWithDummyLogger()
     {
-        $logFile  = self::createRunResourceURI('pdepend.dummy');
+        $logFile  = self::createRunResourceURI();
         $resource = self::createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
@@ -225,7 +225,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     public function testCommandReturnsExitCodeSuccessByDefault()
     {
-        $logFile  = self::createRunResourceURI('pdepend.dummy');
+        $logFile  = self::createRunResourceURI();
         $resource = self::createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
@@ -328,7 +328,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
      */
     private function _runCommandAndReturnStatistics(array $argv, $pathName)
     {
-        $logFile = self::createRunResourceURI('pdepend.dummy');
+        $logFile = self::createRunResourceURI();
 
         $argv[] = '--dummy-logger=' . $logFile;
         $argv[] = $pathName;
@@ -338,7 +338,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         }
 
         $this->_executeCommand($argv);
-        
+
         $data = unserialize(file_get_contents($logFile));
         $code = $data['code'];
 
@@ -392,7 +392,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '-d',
             'html_errors',
-            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI(),
             __FILE__
         );
 
@@ -419,7 +419,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array(
             '-d',
             'html_errors=off',
-            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI(),
             __FILE__
         );
 
@@ -454,7 +454,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         $argv = array(
             '--configuration=' . $configFile,
-            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI(),
             __FILE__
         );
 
@@ -487,7 +487,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     {
         $argv = array(
             '--coverage-report=' . self::createRunResourceURI('foobar'),
-            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI(),
             __FILE__,
         );
 
@@ -505,7 +505,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     {
         $argv = array(
             '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
-            '--dummy-logger=' . self::createRunResourceURI('pdepend.dummy'),
+            '--dummy-logger=' . self::createRunResourceURI(),
             __FILE__,
         );
 
