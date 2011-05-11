@@ -83,6 +83,20 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
     }
 
     /**
+     * testClassNotResultsInEndlessLoopWhileCallingGetParentClass2
+     *
+     * @return void
+     */
+    public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
+    {
+        self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getInterfaces();
+    }
+
+    /**
      * testClassNotResultsInEndlessLoopWhileCallingGetInterfaces
      *
      * @return void
@@ -90,6 +104,34 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces()
     {
         self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getInterfaces();
+    }
+
+    /**
+     * testClassNotResultsInEndlessLoopWhileCallingGetInterfaces2
+     *
+     * @return void
+     */
+    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces2()
+    {
+        self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getInterfaces();
+    }
+
+    /**
+     * testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3
+     *
+     * @return void
+     */
+    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3()
+    {
+        $interfaces = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()

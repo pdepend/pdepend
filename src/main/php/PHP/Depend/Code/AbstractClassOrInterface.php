@@ -354,28 +354,35 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getInterfaces()
     {
+        $stack = array($this);
+
+        if ($this->parentClassReference !== null) {
+            array_unshift($stack, $this->parentClassReference->getType());
+        }
+
+        $parents = array();
         $interfaces = array();
-        foreach ($this->interfaceReferences as $interfaceReference) {
-            $interface = $interfaceReference->getType();
-            if (in_array($interface, $interfaces, true) === true) {
-                continue;
+
+        while (($top = array_pop($stack)) !== null) {
+
+            foreach($top->interfaceReferences as $interfaceReference) {
+                $interface = $interfaceReference->getType();
+                if (in_array($interface, $interfaces, true) === true) {
+                    continue;
+                }
+                $interfaces[] = $interface;
+                $stack[] = $interface;
             }
-            $interfaces[] = $interface;
-            foreach ($interface->getInterfaces() as $parentInterface) {
-                if (in_array($parentInterface, $interfaces, true) === false) {
-                    $interfaces[] = $parentInterface;
+
+            if ($top->parentClassReference !== null) {
+                $class = $top->parentClassReference->getType();
+                if (!in_array($class, $parents, true)) {
+                    $stack[] = $class;
+                    $parents[] = $class;
                 }
             }
         }
 
-        if ($this->parentClassReference === null) {
-            return new PHP_Depend_Code_NodeIterator($interfaces);
-        }
-
-        $parentClass = $this->parentClassReference->getType();
-        foreach ($parentClass->getInterfaces() as $interface) {
-            $interfaces[] = $interface;
-        }
         return new PHP_Depend_Code_NodeIterator($interfaces);
     }
 
