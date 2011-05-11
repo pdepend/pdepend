@@ -116,6 +116,19 @@ class PHP_Depend_Parser_SymbolTable
     }
 
     /**
+     * Resets the current scope
+     *
+     * @return void
+     */
+    public function resetScope()
+    {
+        if (is_array($this->_scope) === false) {
+            throw new UnderflowException('No active scope.');
+        }
+        $this->_scope = array();
+    }
+
+    /**
      * This method will return the registered value for the given key, when it
      * exists in the current scope. The returned value will <b>null</b> if no
      * value exists for the given key.
