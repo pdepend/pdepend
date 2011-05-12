@@ -226,7 +226,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function computeCodeRank($id1, $id2)
     {
-        $d = self::DAMPING_FACTOR;
+        $dampingFactory = self::DAMPING_FACTOR;
 
         $ranks = array();
 
@@ -238,12 +238,12 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
             foreach ($this->_nodes as $name => $info) {
                 $rank = 0;
                 foreach ($info[$id1] as $ref) {
-                    $pr = $ranks[$ref];
-                    $c  = count($this->_nodes[$ref][$id2]);
+                    $previousRank = $ranks[$ref];
+                    $refCount     = count($this->_nodes[$ref][$id2]);
 
-                    $rank += ($pr / $c);
+                    $rank += ($previousRank / $refCount);
                 }
-                $ranks[$name] = ((1 - $d)) + $d * $rank;
+                $ranks[$name] = ((1 - $dampingFactory)) + $dampingFactory * $rank;
             }
         }
         return $ranks;

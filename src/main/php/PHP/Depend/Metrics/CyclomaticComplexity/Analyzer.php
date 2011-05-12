@@ -259,7 +259,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             self::M_CYCLOMATIC_COMPLEXITY_1 => 1,
             self::M_CYCLOMATIC_COMPLEXITY_2 => 1
         );
-        
+
         foreach ($callable->getChildren() as $child) {
             $data = $child->accept($this, $data);
         }
@@ -271,15 +271,15 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * Stores the complexity of a node and updates the corresponding project
      * values.
      *
-     * @param string                 $id         Identifier of the analyzed item.
+     * @param string                 $nodeId     Identifier of the analyzed item.
      * @param array(string=>integer) $complexity The node complexity values.
      *
      * @return void
      * @since 0.9.8
      */
-    private function _storeNodeComplexityAndUpdateProject($id, array $complexity)
+    private function _storeNodeComplexityAndUpdateProject($nodeId, array $complexity)
     {
-        $this->_nodeMetrics[$id] = $complexity;
+        $this->_nodeMetrics[$nodeId] = $complexity;
 
         $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
         $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];

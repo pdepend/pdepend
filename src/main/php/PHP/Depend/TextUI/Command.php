@@ -116,7 +116,7 @@ class PHP_Depend_TextUI_Command
             }
         } catch (Exception $e) {
             echo $e->getMessage(), PHP_EOL, PHP_EOL;
-            
+
             $this->printHelp();
             return self::CLI_ERROR;
         }
@@ -334,7 +334,7 @@ class PHP_Depend_TextUI_Command
             $configFile = $this->_options['--configuration'];
             // Remove option from array
             unset($this->_options['--configuration']);
-            
+
             $configuration = $configurationFactory->create($configFile);
         } else {
             $configuration = $configurationFactory->createDefault();
@@ -384,47 +384,47 @@ class PHP_Depend_TextUI_Command
     {
         $this->printUsage();
 
-        $l = $this->printLogOptions();
-        $l = $this->printAnalyzerOptions($l);
+        $length = $this->printLogOptions();
+        $length = $this->printAnalyzerOptions($length);
 
         $this->_printOption(
             '--configuration=<file>',
-            'Optional PHP_Depend configuration file.', 
-            $l
+            'Optional PHP_Depend configuration file.',
+            $length
         );
         echo PHP_EOL;
 
         $this->_printOption(
             '--suffix=<ext[,...]>',
-            'List of valid PHP file extensions.', 
-            $l
+            'List of valid PHP file extensions.',
+            $length
         );
         $this->_printOption(
             '--ignore=<dir[,...]>',
-            'List of exclude directories.', 
-            $l
+            'List of exclude directories.',
+            $length
         );
         $this->_printOption(
             '--exclude=<pkg[,...]>',
-            'List of exclude packages.', 
-            $l
+            'List of exclude packages.',
+            $length
         );
         echo PHP_EOL;
 
         $this->_printOption(
             '--without-annotations',
-            'Do not parse doc comment annotations.', 
-            $l
+            'Do not parse doc comment annotations.',
+            $length
         );
         echo PHP_EOL;
 
-        $this->_printOption('--debug', 'Prints debugging information.', $l);
-        $this->_printOption('--help', 'Print this help text.', $l);
-        $this->_printOption('--version', 'Print the current version.', $l);
+        $this->_printOption('--debug', 'Prints debugging information.', $length);
+        $this->_printOption('--help', 'Print this help text.', $length);
+        $this->_printOption('--version', 'Print the current version.', $length);
 
-        $this->_printDbusOption($l);
+        $this->_printDbusOption($length);
 
-        $this->_printOption('-d key[=value]', 'Sets a php.ini value.', $l);
+        $this->_printOption('-d key[=value]', 'Sets a php.ini value.', $length);
         echo PHP_EOL;
     }
 
@@ -641,7 +641,7 @@ class PHP_Depend_TextUI_Command
     }
 
     /**
-     * Optionally outputs the dbus option when the required extension 
+     * Optionally outputs the dbus option when the required extension
      * is loaded.
      *
      * @param integer $length Padding length for the option.
@@ -653,10 +653,10 @@ class PHP_Depend_TextUI_Command
         if (extension_loaded("dbus") === false) {
             return;
         }
- 
+
         $option  = '--notify-me';
         $message = 'Show a notification after analysis.';
-  
+
         $this->_printOption($option, $message, $length);
     }
 
