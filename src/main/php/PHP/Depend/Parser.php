@@ -4847,7 +4847,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break 2;
 
             default:
-                $token = $this->consumeToken($tokenType);
+                $this->consumeToken($tokenType);
                 break;
             }
         }

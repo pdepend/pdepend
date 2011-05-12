@@ -180,7 +180,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      */
     public function free()
     {
-        foreach ($this->_nodes as $i => $node) {
+        foreach ($this->_nodes as $node) {
             $node->free();
         }
         $this->_nodes = array();

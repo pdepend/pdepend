@@ -159,7 +159,7 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
      */
     public function remove($pattern)
     {
-        foreach ($this->cache as $key => $value) {
+        foreach (array_keys($this->cache) as $key) {
             if (0 === strpos($key, $pattern)) {
                 unset($this->cache[$key]);
             }
