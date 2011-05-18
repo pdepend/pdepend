@@ -191,7 +191,6 @@ class PHP_Depend_TextUI_Command
             $this->_runner->addProcessListener(
                 new PHP_Depend_DbusUI_ResultPrinter()
             );
-            // Remove that option
             unset($options['--notify-me']);
         }
 
@@ -252,7 +251,6 @@ class PHP_Depend_TextUI_Command
             return false;
         }
 
-        // Get cli arguments
         $argv = $_SERVER['argv'];
 
         // Remove the pdepend command line file
@@ -274,17 +272,15 @@ class PHP_Depend_TextUI_Command
                 if (strpos($argv[++$i], '=') === false) {
                     ini_set($argv[$i], 'on');
                 } else {
-                    // Split key=value
                     list($key, $value) = explode('=', $argv[$i]);
-                    // set ini option
+
                     ini_set($key, $value);
                 }
             } else if (strpos($argv[$i], '=') === false) {
                 $this->_options[$argv[$i]] = true;
             } else {
-                // Split key=value
                 list($key, $value) = explode('=', $argv[$i]);
-                // Set option
+
                 $this->_options[$key] = $value;
             }
         }
@@ -295,7 +291,7 @@ class PHP_Depend_TextUI_Command
             $extensions = explode(',', $this->_options['--suffix']);
             // Set allowed file extensions
             $this->_runner->setFileExtensions($extensions);
-            // Remove from options array
+
             unset($this->_options['--suffix']);
         }
 
@@ -305,7 +301,7 @@ class PHP_Depend_TextUI_Command
             $directories = explode(',', $this->_options['--ignore']);
             // Set exclude directories
             $this->_runner->setExcludeDirectories($directories);
-            // Remove from options array
+
             unset($this->_options['--ignore']);
         }
 
@@ -315,14 +311,14 @@ class PHP_Depend_TextUI_Command
             $packages = explode(',', $this->_options['--exclude']);
             // Set exclude packages
             $this->_runner->setExcludePackages($packages);
-            // Remove from options array
+
             unset($this->_options['--exclude']);
         }
 
         // Check for the bad documentation option
         if (isset($this->_options['--bad-documentation'])) {
             echo "Option --bad-documentation is ambiguous.", PHP_EOL;
-            // Remove from options array
+
             unset($this->_options['--bad-documentation']);
         }
 
@@ -332,7 +328,7 @@ class PHP_Depend_TextUI_Command
         if (isset($this->_options['--configuration'])) {
             // Get config file
             $configFile = $this->_options['--configuration'];
-            // Remove option from array
+
             unset($this->_options['--configuration']);
 
             $configuration = $configurationFactory->create($configFile);
@@ -345,9 +341,8 @@ class PHP_Depend_TextUI_Command
         $this->_runner->setConfiguration($configuration);
 
         if (isset($this->_options['--debug'])) {
-            // Remove option from array
             unset($this->_options['--debug']);
-            // Enable debug logging
+
             PHP_Depend_Util_Log::setSeverity(PHP_Depend_Util_Log::DEBUG);
         }
 

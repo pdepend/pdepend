@@ -388,7 +388,6 @@ class PHP_Depend_Log_Phpunit_Xml
             $method->accept($this);
         }
 
-        // Update file element @classes count
         $fileXml->setAttribute('classes', 1 + $fileXml->getAttribute('classes'));
 
         // Remove xml class element
@@ -412,17 +411,12 @@ class PHP_Depend_Log_Phpunit_Xml
         PHP_Depend_Code_NodeI $node,
         array $metrics = array()
     ) {
-        // Collect all node metrics
         foreach ($this->_nodeAwareAnalyzers as $analyzer) {
             $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
         }
-
-        // Apply Phpunit translation table
         $metrics = $this->_applyPHPUnitTranslationTable($metrics);
 
-        // Sort result
         ksort($metrics);
-
         foreach ($metrics as $name => $value) {
             $xml->setAttribute($name, $value);
         }
@@ -437,16 +431,12 @@ class PHP_Depend_Log_Phpunit_Xml
      */
     private function _applyPHPUnitTranslationTable(array $metrics)
     {
-        // Apply Phpunit translation table
         foreach ($this->_phpunitTranslationTable as $pdepend => $phpunit) {
-            // Skip unknown entries
             if (!isset($metrics[$pdepend])) {
                 continue;
             }
-
-            // Apply metric under Phpunit identifier
             $metrics[$phpunit] = $metrics[$pdepend];
-            // Remove metric with pdepend identifier
+
             unset($metrics[$pdepend]);
         }
         return $metrics;
