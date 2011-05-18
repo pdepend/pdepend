@@ -16,17 +16,6 @@
     -->
     <import file="${basedir}/setup/src/main/xml/base.xml" />
 
-    <target name="dump">
-        <echo message="${basedir}/.." />
-        <exec executable="ls"><arg value="-la" /><arg value="${basedir}/.." /></exec>
-        <echo message="${basedir}/../.pear" />
-        <exec executable="ls"><arg value="-la" /><arg value="${basedir}/../.pear" /></exec>
-        <echo message="${basedir}/../.pear/pear" />
-        <exec executable="ls"><arg value="-la" /><arg value="${basedir}/../.pear/pear" /></exec>
-        <echo message="${basedir}/../.pear/pear/php" />
-        <exec executable="ls"><arg value="-la" /><arg value="${basedir}/../.pear/pear/php" /></exec>
-    </target>
-
     <!--
         We use the phar archive after hook to validate that a newly created
         phar archive works as expected.
