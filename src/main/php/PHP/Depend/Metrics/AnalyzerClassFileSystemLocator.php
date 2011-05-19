@@ -79,13 +79,6 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     private $_analyzers = null;
 
     /**
-     * Regular expression that matches possible analyzer source files.
-     *
-     * @var string
-     */
-    private $_classRegexp = '(Metrics[/\\\\][a-zA-Z0-9_]+[/\\\\]Analyzer\.php$)';
-
-    /**
      * Constructs a new locator instance.
      *
      * @param string $classPath The root search directory.
@@ -156,7 +149,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
                 }
             }
         }
-        
+
         ksort($result);
         return array_values($result);
     }
