@@ -9,7 +9,7 @@ was published on May the 20th 2011.
 - Fixed #13255437: PHP 5.2 Compatibility Issues. Fixed with commit
   #8d4a095.
 - Fixed #13405179: PHP Depend report is not generated if all files do
-  not contain a class nor a function. Fixed with commit #.
+  not contain a class nor a function. Fixed with commit #554ade1.
 
 PHP_Depend 0.10.4
 -----------------
