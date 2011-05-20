@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
@@ -58,13 +58,13 @@
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-interface PHP_Depend_Log_FileAwareI
+interface PHP_Depend_Log_FileAwareI extends PHP_Depend_Log_LoggerI
 {
     /**
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     * 
+     *
      * @return void
      */
     function setLogFile($logFile);

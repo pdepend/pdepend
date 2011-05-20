@@ -299,10 +299,6 @@ class PHP_Depend
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
         $collection->setFilter($this->_codeFilter);
 
-        if ($this->_builder->getPackages()->count() === 0) {
-            return ($this->_packages = $this->_builder->getPackages());
-        }
-
         $collection->setFilter();
 
         $this->_performAnalyzeProcess();
@@ -643,7 +639,7 @@ class PHP_Depend
                 }
             }
         }
-        
+
         return $analyzerLoader;
     }
 

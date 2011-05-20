@@ -44,6 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
+ * @deprecated Since release 0.10.5, please use the summary logger
  */
 
 /**
@@ -59,11 +60,11 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * @deprecated Since release 0.10.5, please use the summary logger
  */
 class PHP_Depend_Log_Phpunit_Xml
        extends PHP_Depend_Visitor_AbstractVisitor
-    implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI,
+    implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
     /**

@@ -36,36 +36,75 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://pdepend.org/
+ * @link       https://www.pivotaltracker.com/story/show/13405179
  */
 
+require_once dirname(__FILE__) . '/AbstractTest.php';
+
 /**
- * A logger that implements this interface needs the analyzed code structure.
+ * Test case for bug #13405179.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Log
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @link       https://www.pivotaltracker.com/story/show/13405179
+ *
+ * @ticket 13405179
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
-interface PHP_Depend_Log_CodeAwareI extends PHP_Depend_Log_LoggerI
+class PHP_Depend_Bugs_PHPDependBug13405179Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * Sets the context code nodes.
+     * testLogFileIsCreatedForUnstructuredCode
      *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param string $className Class name of a logger implementation.
+     * @param string $extension Log file extension.
      *
      * @return void
+     * @dataProvider getLoggerClassNames
      */
-    function setCode(PHP_Depend_Code_NodeIterator $code);
+    public function testLogFileIsCreatedForUnstructuredCode($className, $extension)
+    {
+        $file = self::createRunResourceURI() . '.' . $extension;
+
+        $logger = new $className();
+        $logger->setLogFile($file);
+
+        $factory = new PHP_Depend_Util_Configuration_Factory();
+        $pdepend = new PHP_Depend($factory->createDefault());
+        $pdepend->addFile(self::createCodeResourceUriForTest());
+        $pdepend->addLogger($logger);
+        $pdepend->analyze();
+
+        self::assertFileExists($file);
+    }
+
+    /**
+     * Returns the class names of all file aware logger classes.
+     *
+     * @return array
+     */
+    public function getLoggerClassNames()
+    {
+        return array(
+            array(PHP_Depend_Log_Jdepend_Chart::CLAZZ, 'svg'),
+            array(PHP_Depend_Log_Jdepend_Xml::CLAZZ, 'xml'),
+            array(PHP_Depend_Log_Overview_Pyramid::CLAZZ, 'svg'),
+            array(PHP_Depend_Log_Summary_Xml::CLAZZ, 'xml'),
+        );
+    }
 }

@@ -61,10 +61,13 @@
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Log_Overview_Pyramid
-    implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_FileAwareI
+class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
 {
+    /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The output file name.
      *

@@ -60,10 +60,14 @@
  */
 class PHP_Depend_Log_Jdepend_Chart
        extends PHP_Depend_Visitor_AbstractVisitor
-    implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI,
+    implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
+    /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The output file name.
      *

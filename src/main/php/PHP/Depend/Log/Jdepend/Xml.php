@@ -61,10 +61,14 @@
  */
 class PHP_Depend_Log_Jdepend_Xml
        extends PHP_Depend_Visitor_AbstractVisitor
-    implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI,
+    implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
+    /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The output log file.
      *
@@ -351,7 +355,7 @@ class PHP_Depend_Log_Jdepend_Xml
             $type->accept($this);
         }
 
-        if ($this->concreteClasses->firstChild === null 
+        if ($this->concreteClasses->firstChild === null
             && $this->abstractClasses->firstChild === null
         ) {
             return;

@@ -61,10 +61,14 @@
  */
 class PHP_Depend_Log_Summary_Xml
        extends PHP_Depend_Visitor_AbstractVisitor
-    implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI,
+    implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
+    /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
+
     /**
      * The log output file.
      *
@@ -165,7 +169,7 @@ class PHP_Depend_Log_Summary_Xml
         }
         if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
             $this->_nodeAwareAnalyzers[] = $analyzer;
-            
+
             $accepted = true;
         }
         return $accepted;
