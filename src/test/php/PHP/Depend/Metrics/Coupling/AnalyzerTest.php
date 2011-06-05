@@ -365,6 +365,26 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
     }
 
     /**
+     * testGetNodeMetricsReturnsExpectedCboForUseInSameNamespace
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboForUseInSameNamespace()
+    {
+        self::assertEquals(1, $this->_calculateTypeMetric('cbo'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCboForUseInPartialSameNamespace
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCboForUseInPartialSameNamespace()
+    {
+        self::assertEquals(1, $this->_calculateTypeMetric('cbo'));
+    }
+
+    /**
      * testGetNodeMetricsReturnsExpectedCeWithoutDependencies
      *
      * @return void
@@ -462,6 +482,26 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
     public function testGetNodeMetricsReturnsExpectedCeForChildTypeReference()
     {
         self::assertEquals(2, $this->_calculateTypeMetric('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeForUseInSameNamespace
+     * 
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeForUseInSameNamespace()
+    {
+        self::assertEquals(1, $this->_calculateTypeMetric('ce'));
+    }
+
+    /**
+     * testGetNodeMetricsReturnsExpectedCeForUseInPartialSameNamespace
+     *
+     * @return void
+     */
+    public function testGetNodeMetricsReturnsExpectedCeForUseInPartialSameNamespace()
+    {
+        self::assertEquals(1, $this->_calculateTypeMetric('ce'));
     }
 
     /**
