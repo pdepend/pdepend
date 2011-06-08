@@ -38,91 +38,84 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
- * @since      0.10.0
+ * @since      0.11.0
  */
 
-// @codeCoverageIgnoreStart
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Base interface for a concrete cache driver.
+ * Tests for unstructured code handling in the {@link PHP_Depend_Parser} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
- * @since      0.10.0
+ * @since      0.11.0
+ *
+ * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::parser
+ * @group unittest
  */
-interface PHP_Depend_Util_Cache_Driver
+class PHP_Depend_Parser_UnstructuredCodeTest extends PHP_Depend_Parser_AbstractTest
 {
     /**
-     * The current cache version.
+     * testParserHandlesNonPhpCodeInFileProlog
+     * 
+     * @return void
      */
-    const VERSION = '@version:2047b09456dc8555aced0a75b979d786:@';
+    public function testParserHandlesNonPhpCodeInFileProlog()
+    {
+        self::assertNotNull(self::parseCodeResourceForTest());
+    }
 
     /**
-     * Sets the type for the next <em>store()</em> or <em>restore()</em> method
-     * call. A type is something like a namespace or group for cache entries.
-     *
-     * Note that the cache type will be reset after each storage method call, so
-     * you must invoke right before every call to <em>restore()</em> or
-     * <em>store()</em>.
-     *
-     * @param string $type The name or object type for the next storage method call.
-     *
-     * @return PHP_Depend_Util_Cache_Driver
+     * testParserHandlesConditionalClassDeclaration
+     * 
+     * @return void
      */
-    function type($type);
+    public function testParserHandlesConditionalClassDeclaration()
+    {
+        $class = self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        self::assertEquals(5, $class->getEndLine());
+    }
 
     /**
-     * This method will store the given <em>$data</em> under <em>$key</em>. This
-     * method can be called with a third parameter that will be used as a
-     * verification token, when the a cache entry gets restored. If the stored
-     * hash and the supplied hash are not identical, that cache entry will be
-     * removed and not returned.
-     *
-     * @param string $key  The cache key for the given data.
-     * @param mixed  $data Any data that should be cached.
-     * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return  void
-     */
-    function store($key, $data, $hash = null);
-
-    /**
-     * This method tries to restore an existing cache entry for the given
-     * <em>$key</em>. If a matching entry exists, this method verifies that the
-     * given <em>$hash</em> and the the value stored with cache entry are equal.
-     * Then it returns the cached entry. Otherwise this method will return
-     * <b>NULL</b>.
-     *
-     * @param string $key  The cache key for the given data.
-     * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return mixed
-     */
-    function restore($key, $hash = null);
-
-    /**
-     * This method will remove an existing cache entry for the given identifier.
-     * It will delete all cache entries where the cache key start with the given
-     * <b>$pattern</b>. If no matching entry exists, this method simply does
-     * nothing.
-     *
-     * @param string $pattern The cache key pattern.
+     * testParserHandlesConditionalInterfaceDeclaration
      *
      * @return void
      */
-    function remove($pattern);
-}
+    public function testParserHandlesConditionalInterfaceDeclaration()
+    {
+        $interface = self::parseCodeResourceForTest()
+            ->current()
+            ->getInterfaces()
+            ->current();
 
-// @codeCoverageIgnoreEnd
+        self::assertEquals(6, $interface->getEndLine());
+    }
+
+    /**
+     * Factory method that returns a test suite for this class.
+     * 
+     * @return PHPUnit_Framework_TestSuite
+     */
+    public static function suite()
+    {
+        return new PHPUnit_Framework_TestSuite(__CLASS__);
+    }
+}

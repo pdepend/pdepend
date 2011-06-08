@@ -1,5 +1,5 @@
 <?php
-interface PHP_Depend_TokenizerI {
+interface testParserSetsSourceFileForInterfaceMethod {
     function foo();
 }
 ?>

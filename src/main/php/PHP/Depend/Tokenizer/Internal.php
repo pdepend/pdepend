@@ -60,8 +60,7 @@
  * @link       http://pdepend.org/
  *
  */
-class PHP_Depend_Tokenizer_Internal
-    implements PHP_Depend_TokenizerI
+class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
 {
     /**
      * Mapping between php internal tokens and php depend tokens.

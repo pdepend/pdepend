@@ -178,7 +178,7 @@ $GLOBALS["messages"] = array(
 	"miscownerdesc"		=> "<strong>描述:</strong><br />使用者 (UID) /<br />群組 (GID)<br />目前權限:<br /><strong> %s ( %s ) </strong>/<br /><strong> %s ( %s )</strong>",
 
 	// sysinfo (new by mic)
-	"simamsysinfo"		=> 'eXtplorer 系統資訊",
+	"simamsysinfo"		=> 'eXtplorer 系統資訊',
 	"sisysteminfo"		=> "系統資訊",
 	"sibuilton"			=> "運行系統",
 	"sidbversion"		=> "資料庫版本 (MySQL)",

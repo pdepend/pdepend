@@ -130,87 +130,87 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Internal state flag, that will be set to <b>true</b> when the parser has
      * prefixed a qualified name with the actual namespace.
      *
-     * @var boolean $_namespacePrefixReplaced
+     * @var boolean
      */
     private $_namespacePrefixReplaced = false;
 
     /**
      * The name of the last detected namespace.
      *
-     * @var string $_namespaceName
+     * @var string
      */
-    private $_namespaceName = null;
+    private $_namespaceName;
 
     /**
      * Last parsed package tag.
      *
-     * @var string $_packageName
+     * @var string
      */
     private $_packageName = self::DEFAULT_PACKAGE;
 
     /**
      * The package defined in the file level comment.
      *
-     * @var string $_globalPackageName
+     * @var string
      */
     private $_globalPackageName = self::DEFAULT_PACKAGE;
 
     /**
      * The used data structure builder.
      *
-     * @var PHP_Depend_BuilderI $_builder
+     * @var PHP_Depend_BuilderI
      */
-    private $_builder = null;
+    private $_builder;
 
     /**
      * The currently parsed file instance.
      *
-     * @var PHP_Depend_Code_File $_sourceFile
+     * @var PHP_Depend_Code_File
      */
-    private $_sourceFile = null;
+    private $_sourceFile;
 
     /**
      * The symbol table used to handle PHP 5.3 use statements.
      *
      * @var PHP_Depend_Parser_SymbolTable $_useSymbolTable
      */
-    private $_useSymbolTable = null;
+    private $_useSymbolTable;
 
     /**
      * The last parsed doc comment or <b>null</b>.
      *
-     * @var string $_docComment
+     * @var string
      */
-    private $_docComment = null;
+    private $_docComment;
 
     /**
      * Bitfield of last parsed modifiers.
      *
-     * @var integer $_modifiers
+     * @var integer
      */
     private $_modifiers = 0;
 
     /**
      * The actually parsed class or interface instance.
      *
-     * @var PHP_Depend_Code_AbstractClassOrInterface $_classOrInterface
+     * @var PHP_Depend_Code_AbstractClassOrInterface
      */
-    private $_classOrInterface = null;
+    private $_classOrInterface;
 
     /**
      * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
      *
-     * @var boolean $_ignoreAnnotations
+     * @var boolean
      */
     private $_ignoreAnnotations = false;
 
     /**
      * Stack with all active token scopes.
      *
-     * @var PHP_Depend_Parser_TokenStack $_tokenStack
+     * @var PHP_Depend_Parser_TokenStack
      */
-    private $_tokenStack = null;
+    private $_tokenStack;
 
     /**
      * Used identifier builder instance.
@@ -233,14 +233,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @var PHP_Depend_Util_Cache_Driver
      * @since 0.10.0
      */
-    protected $cache = null;
+    protected $cache;
 
     /*
      * The used code tokenizer.
      *
-     * @var PHP_Depend_TokenizerI $_tokenizer
+     * @var PHP_Depend_TokenizerI
      */
-    protected $tokenizer = null;
+    protected $tokenizer;
 
     /**
      * Constructs a new source parser.
@@ -309,7 +309,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     public function parse()
     {
-        // Get currently parsed source file
         $this->_sourceFile = $this->tokenizer->getSourceFile();
         $this->_sourceFile
             ->setCache($this->cache)
@@ -326,7 +325,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->_tokenStack->push();
 
-        // Debug currently parsed source file.
         PHP_Depend_Util_Log::debug('Processing file ' . $this->_sourceFile);
 
         $tokenType = $this->tokenizer->peek();
@@ -346,9 +344,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_INTERFACE:
-                $package = $this->_builder->buildPackage(
-                    $this->_getNamespaceOrPackageName()
-                );
+                $package = $this->_getNamespaceOrPackage();
                 $package->addType($interface = $this->_parseInterfaceDeclaration());
 
                 $this->_builder->restoreInterface($interface);
@@ -358,9 +354,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_CLASS:
             case self::T_FINAL:
             case self::T_ABSTRACT:
-                $package = $this->_builder->buildPackage(
-                    $this->_getNamespaceOrPackageName()
-                );
+                $package = $this->_getNamespaceOrPackage();
                 $package->addType($class = $this->_parseClassDeclaration());
 
                 $this->_builder->restoreClass($class);
@@ -382,9 +376,23 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_parseNamespaceDeclaration();
                 break;
 
-            default:
-                // Consume whatever token
+            case self::T_NO_PHP:
+            case self::T_OPEN_TAG:
+            case self::T_OPEN_TAG_WITH_ECHO:
                 $this->consumeToken($tokenType);
+                $this->reset();
+                break;
+
+            case self::T_CLOSE_TAG:
+                $this->_parseNonePhpCode();
+                $this->reset();
+                break;
+
+            default:
+                if (null === $this->_parseOptionalStatement()) {
+                    // Consume whatever token
+                    $this->consumeToken($tokenType);
+                }
                 $this->reset();
                 break;
             }
@@ -532,17 +540,22 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        // Parse optional class modifiers
+        $class = $this->_parseClassSignature();
+        $class = $this->_parseClassOrInterfaceBody($class);
+        $class->setTokens($this->_tokenStack->pop());
+
+        $this->reset();
+
+        return $class;
+    }
+
+    private function _parseClassSignature()
+    {
         $this->_parseClassModifiers();
-
-        // Consume class keyword and read class start line
         $this->consumeToken(self::T_CLASS);
-
-        // Remove leading comments and get class name
         $this->consumeComments();
-        $localName = $this->parseClassName();
 
-        $qualifiedName = $this->_createQualifiedTypeName($localName);
+        $qualifiedName = $this->_createQualifiedTypeName($this->parseClassName());
 
         $class = $this->_builder->buildClass($qualifiedName);
         $class->setSourceFile($this->_sourceFile);
@@ -555,17 +568,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $tokenType = $this->tokenizer->peek();
 
         if ($tokenType === self::T_EXTENDS) {
-            $this->consumeToken(self::T_EXTENDS);
-
-            $this->_tokenStack->push();
-
-            $class->setParentClassReference(
-                $this->_setNodePositionsAndReturn(
-                    $this->_builder->buildASTClassReference(
-                        $this->_parseQualifiedName()
-                    )
-                )
-            );
+            $class = $this->_parseClassExtends($class);
 
             $this->consumeComments();
             $tokenType = $this->tokenizer->peek();
@@ -575,13 +578,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->consumeToken(self::T_IMPLEMENTS);
             $this->_parseInterfaceList($class);
         }
-
-        $this->_parseClassOrInterfaceBody($class);
-
-        $class->setTokens($this->_tokenStack->pop());
-
-        $this->reset();
-
+        
         return $class;
     }
 
@@ -605,6 +602,22 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $this->consumeComments();
+    }
+
+    private function _parseClassExtends(PHP_Depend_Code_Class $class)
+    {
+        $this->consumeToken(self::T_EXTENDS);
+        $this->_tokenStack->push();
+
+        $class->setParentClassReference(
+            $this->_setNodePositionsAndReturn(
+                $this->_builder->buildASTClassReference(
+                    $this->_parseQualifiedName()
+                )
+            )
+        );
+
+        return $class;
     }
 
     /**
@@ -1344,8 +1357,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * node this can be a {@link PHP_Depend_Code_ASTPostIncrementExpression} or
      * {@link PHP_Depend_Code_ASTPostfixExpression}.
      *
-     * @param array(PHP_Depend_Code_ASTExpression) $expressions List of previous
-     *        parsed expression nodes.
+     * @param array $expressions List of previous parsed expression nodes.
      *
      * @return PHP_Depend_Code_ASTExpression
      * @since 0.10.0
@@ -4809,6 +4821,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_CURLY_BRACE_CLOSE:
             return null;
 
+        case self::T_DECLARE:
+            return $this->_parseDeclareStatement();
+
         case self::T_CLOSE_TAG:
             if (($tokenType = $this->_parseNonePhpCode()) === self::T_EOF) {
                 return null;
@@ -4859,13 +4874,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses a comment and optionally an embedded class or interface type
      * annotation.
-     *
-     * <code>
-     * / * @var $foo FooBar * /
-     *
-     * - ASTComment
-     *   - ASTClassOrInterfaceReference
-     * </code>
      *
      * @return PHP_Depend_Code_ASTComment
      * @since 0.9.8
@@ -5656,6 +5664,15 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             return $this->_packageName;
         }
         return $this->_namespaceName;
+    }
+
+    /**
+     * @return PHP_Depend_Code_Package
+     * @since 0.11.0
+     */
+    private function _getNamespaceOrPackage()
+    {
+        return $this->_builder->buildPackage($this->_getNamespaceOrPackageName());
     }
 
     /**

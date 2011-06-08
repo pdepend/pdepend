@@ -747,6 +747,19 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTEchoStatetmentReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTEchoStatetmentReturnsExpectedType()
+    {
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTEchoStatement::CLAZZ,
+            $this->createBuilder()->buildASTEchoStatement('echo')
+        );
+    }
+
+    /**
      * testBuildASTVariableDeclaratorReturnsExpectedType
      *
      * @return void

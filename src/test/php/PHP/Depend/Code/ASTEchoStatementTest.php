@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Code_ASTEchoStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTEchoStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -66,11 +72,6 @@ class PHP_Depend_Code_ASTEchoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTEchoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -87,11 +88,6 @@ class PHP_Depend_Code_ASTEchoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTEchoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,12 +105,6 @@ class PHP_Depend_Code_ASTEchoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testEchoStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTEchoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testEchoStatementHasExpectedStartLine()
     {
@@ -126,12 +116,6 @@ class PHP_Depend_Code_ASTEchoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testEchoStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTEchoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testEchoStatementHasExpectedStartColumn()
     {
@@ -143,12 +127,6 @@ class PHP_Depend_Code_ASTEchoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testEchoStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTEchoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testEchoStatementHasExpectedEndLine()
     {
@@ -160,12 +138,6 @@ class PHP_Depend_Code_ASTEchoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testEchoStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTEchoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testEchoStatementHasExpectedEndColumn()
     {

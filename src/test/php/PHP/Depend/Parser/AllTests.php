@@ -51,6 +51,7 @@ require_once dirname(__FILE__) . '/ASTArgumentsParsingTest.php';
 require_once dirname(__FILE__) . '/ASTFormalParameterParsingTest.php';
 require_once dirname(__FILE__) . '/NamespaceResovingTest.php';
 require_once dirname(__FILE__) . '/TokenStackTest.php';
+require_once dirname(__FILE__) . '/UnstructuredCodeTest.php';
 require_once dirname(__FILE__) . '/VersionAllParserTest.php';
 
 /**
@@ -79,6 +80,7 @@ class PHP_Depend_Parser_AllTests extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('PHP_Depend_Parser_ASTFormalParameterParsingTest');
         $this->addTestSuite('PHP_Depend_Parser_NamespaceResovingTest');
         $this->addTestSuite('PHP_Depend_Parser_TokenStackTest');
+        $this->addTest(PHP_Depend_Parser_UnstructuredCodeTest::suite());
         $this->addTestSuite('PHP_Depend_Parser_VersionAllParserTest');
     }
 
