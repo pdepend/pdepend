@@ -110,6 +110,21 @@ class PHP_Depend_Parser_UnstructuredCodeTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserHandlesConditionalFunctionDeclaration
+     *
+     * @return void
+     */
+    public function testParserHandlesConditionalFunctionDeclaration()
+    {
+        $function = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current();
+
+        self::assertEquals(6, $function->getEndLine());
+    }
+
+    /**
      * Factory method that returns a test suite for this class.
      * 
      * @return PHPUnit_Framework_TestSuite
