@@ -155,8 +155,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
+     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
      *
      * @return void
      */
