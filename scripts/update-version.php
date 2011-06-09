@@ -95,7 +95,7 @@ class PHP_Depend_CacheVersionUpdater
     private $_targetRegexp = '(@version:[a-f0-9]{32}:@)';
 
     /**
-     * Construcs a new cache version updater instance.
+     * Constructs a new cache version updater instance.
      */
     public function __construct()
     {

@@ -47,7 +47,7 @@
  */
 
 /**
- * Prints current the PDepend status informations.
+ * Prints current the PDepend status information.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
