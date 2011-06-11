@@ -143,13 +143,6 @@ interface PHP_Depend_BuilderI
     function buildASTClassReference($qualifiedName);
 
     /**
-     * Builds a new closure instance.
-     *
-     * @return PHP_Depend_Code_Closure
-     */
-    function buildClosure();
-
-    /**
      * Builds a new new interface instance.
      *
      * @param string $qualifiedName The interface name.

@@ -304,24 +304,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
-     * Builds a new closure instance.
-     *
-     * @return PHP_Depend_Code_Closure
-     */
-    public function buildClosure()
-    {
-        $this->checkBuilderState();
-
-        // Debug type constant creation
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_Closure()');
-
-        $closure = new PHP_Depend_Code_Closure();
-        $closure->setCache($this->cache);
-
-        return $closure;
-    }
-
-    /**
      * Builds a new new interface instance.
      *
      * If there is an existing class instance for the given name, this method

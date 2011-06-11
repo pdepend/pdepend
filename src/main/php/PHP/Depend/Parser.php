@@ -889,9 +889,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         if ($this->_isNextTokenFormalParameterList()) {
             $callable = $this->_parseClosureDeclaration();
-            $callable->setSourceFile($this->_sourceFile);
+            return $this->_setNodePositionsAndReturn($callable);
         } else {
             $callable = $this->_parseFunctionDeclaration();
+            $this->_sourceFile->addChild($callable);
         }
 
         $callable->setDocComment($this->_docComment);
@@ -1034,12 +1035,20 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * This method parses a PHP 5.3 closure or lambda function.
      *
-     * @return PHP_Depend_Code_Closure
+     * @return PHP_Depend_Code_ASTClosure
      * @since 0.9.5
      */
     private function _parseClosureDeclaration()
     {
-        $closure = $this->_builder->buildClosure();
+        $this->_tokenStack->push();
+
+        if (self::T_FUNCTION === $this->tokenizer->peek()) {
+            $this->consumeToken(self::T_FUNCTION);
+        }
+
+        $this->_parseOptionalReturnbyReference();
+
+        $closure = $this->_builder->buildASTClosure();
         $closure->addChild($this->_parseFormalParameters());
 
         $this->consumeComments();
@@ -1048,25 +1057,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
         $closure->addChild($this->_parseScope());
 
-        return $closure;
-    }
-
-    /**
-     * Parses an ast closure node.
-     *
-     * @return PHP_Depend_Code_ASTClosure
-     * @since 0.9.12
-     */
-    private function _parseClosure()
-    {
-        $this->_tokenStack->push();
-        // TODO: Refactor this temporary closure solution.
-        $temp = $this->_parseFunctionOrClosureDeclaration();
-        $expr = $this->_builder->buildASTClosure();
-        foreach ($temp->getChildren() as $child) {
-            $expr->addChild($child);
-        }
-        return $this->_setNodePositionsAndReturn($expr);
+        return $this->_setNodePositionsAndReturn($closure);
     }
 
     /**
@@ -2229,7 +2220,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_FUNCTION:
-                $expressions[] = $this->_parseClosure();
+                $expressions[] = $this->_parseClosureDeclaration();
                 break;
 
             case self::T_PARENTHESIS_OPEN:
@@ -4824,11 +4815,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->_builder->restoreClass($class);
             $this->_sourceFile->addChild($class);
             return $class;
-
-        case self::T_FUNCTION:
-            $callable = $this->_parseFunctionOrClosureDeclaration();
-            $this->_sourceFile->addChild($callable);
-            return $callable;
         }
 
         $this->_tokenStack->push();
@@ -4901,14 +4887,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses a list of bound closure variables.
      *
-     * @param PHP_Depend_Code_Closure $closure The parent closure instance.
+     * @param PHP_Depend_Code_ASTClosure $closure The parent closure instance.
      *
      * @return void
      * @since 0.9.5
      */
-    private function _parseBoundVariables(
-        PHP_Depend_Code_Closure $closure
-    ) {
+    private function _parseBoundVariables(PHP_Depend_Code_ASTClosure $closure)
+    {
         // Consume use keyword
         $this->consumeComments();
         $this->consumeToken(self::T_USE);

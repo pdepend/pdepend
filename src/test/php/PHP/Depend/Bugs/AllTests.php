@@ -99,7 +99,6 @@ require_once dirname(__FILE__) . '/UnexpectedTokenAsciiChar39Bug181Test.php';
 require_once dirname(__FILE__) . '/CloneIsValidNameInOlderPhpVersionsBug182Test.php';
 require_once dirname(__FILE__) . '/ExcludePathFilterShouldFilterByAbsolutePathBug191Test.php';
 require_once dirname(__FILE__) . '/ParserBug8927377Test.php';
-require_once dirname(__FILE__) . '/ClosureBug9634613Test.php';
 require_once dirname(__FILE__) . '/ClassLevelAnalyzerBug09936901Test.php';
 require_once dirname(__FILE__) . '/PHPDependBug13405179Test.php';
 
@@ -179,7 +178,6 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test');
         $suite->addTestSuite('PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug8927377Test');
-        $suite->addTestSuite('PHP_Depend_Bugs_ClosureBug9634613Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClassLevelAnalyzerBug09936901Test');
         $suite->addTestSuite('PHP_Depend_Bugs_PHPDependBug13405179Test');
 
