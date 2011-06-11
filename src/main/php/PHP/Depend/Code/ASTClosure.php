@@ -67,7 +67,28 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
      */
     const CLAZZ = __CLASS__;
 
+    /**
+     * This method will return <b>true</b> when this closure returns by
+     * reference.
+     *
+     * @return boolean
+     */
+    public function returnsByReference()
+    {
+        return $this->getMetadataBoolean(5);
+    }
 
+    /**
+     * This method can be used to flag this closure as returns by reference.
+     *
+     * @param boolean $returnsReference Does this closure return by reference?
+     *
+     * @return void
+     */
+    public function setReturnsByReference($returnsReference)
+    {
+        $this->setMetadataBoolean(5, (boolean) $returnsReference);
+    }
 
     /**
      * Accept method of the visitor design pattern. This method will be called
@@ -82,5 +103,17 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitClosure($this, $data);
+    }
+
+    /**
+     * Returns the total number of the used property bag.
+     *
+     * @return integer
+     * @since 0.11.0
+     * @see PHP_Depend_Code_ASTNode#getMetadataSize()
+     */
+    protected function getMetadataSize()
+    {
+        return 6;
     }
 }

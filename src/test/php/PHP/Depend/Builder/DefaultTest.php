@@ -321,8 +321,10 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildMethod()
     {
-        $builder = $this->createBuilder();
-        self::assertType('PHP_Depend_Code_Method', $builder->buildMethod('method'));
+        self::assertInstanceOf(
+            'PHP_Depend_Code_Method',
+            $this->createBuilder()->buildMethod('method')
+        );
     }
 
     /**
@@ -626,6 +628,19 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         );
 
         $builder->buildFunction('prop');
+    }
+
+    /**
+     * testBuildASTClosureReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTClosureReturnsExpectedType()
+    {
+        self::assertInstanceOf(
+            PHP_Depend_Code_ASTClosure::CLAZZ,
+            $this->createBuilder()->buildASTClosure()
+        );
     }
 
     /**

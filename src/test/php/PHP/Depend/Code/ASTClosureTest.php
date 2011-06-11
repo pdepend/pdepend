@@ -59,18 +59,53 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Code_ASTClosure
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testReturnsByReferenceReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testReturnsByReferenceReturnsFalseByDefault()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        self::assertFalse($closure->returnsByReference());
+    }
+
+    /**
+     * testReturnsByReferenceReturnsTrueForClosure
+     *
+     * @return void
+     */
+    public function testReturnsByReferenceReturnsTrueForClosure()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        self::assertTrue($closure->returnsByReference());
+    }
+
+    /**
+     * testReturnsByReferenceReturnsTrueForAssignedClosure
+     *
+     * @return void
+     */
+    public function testReturnsByReferenceReturnsTrueForAssignedClosure()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        self::assertTrue($closure->returnsByReference());
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTClosure
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -87,11 +122,6 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTClosure
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,16 +139,10 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClosure
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClosureHasExpectedStartLine()
     {
-        $label = $this->_getFirstClosureInFunction(__METHOD__);
+        $label = $this->_getFirstClosureInFunction();
         $this->assertEquals(4, $label->getStartLine());
     }
 
@@ -126,16 +150,10 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClosure
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClosureHasExpectedStartColumn()
     {
-        $label = $this->_getFirstClosureInFunction(__METHOD__);
+        $label = $this->_getFirstClosureInFunction();
         $this->assertEquals(12, $label->getStartColumn());
     }
 
@@ -143,16 +161,10 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClosure
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClosureHasExpectedEndLine()
     {
-        $label = $this->_getFirstClosureInFunction(__METHOD__);
+        $label = $this->_getFirstClosureInFunction();
         $this->assertEquals(6, $label->getEndLine());
     }
 
@@ -160,16 +172,10 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClosure
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClosureHasExpectedEndColumn()
     {
-        $label = $this->_getFirstClosureInFunction(__METHOD__);
+        $label = $this->_getFirstClosureInFunction();
         $this->assertEquals(5, $label->getEndColumn());
     }
 
@@ -177,30 +183,23 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
      * testClosureContainsExpectedNumberChildNodes
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTClosure
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClosureContainsExpectedNumberChildNodes()
     {
-        $closure = $this->_getFirstClosureInFunction(__METHOD__);
+        $closure = $this->_getFirstClosureInFunction();
         $this->assertEquals(2, count($closure->getChildren()));
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTClosure
      */
-    private function _getFirstClosureInFunction($testCase)
+    private function _getFirstClosureInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTClosure::CLAZZ
+            self::getCallingTestMethod(),
+            PHP_Depend_Code_ASTClosure::CLAZZ
         );
     }
 }

@@ -1046,9 +1046,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->consumeToken(self::T_FUNCTION);
         }
 
-        $this->_parseOptionalReturnbyReference();
-
         $closure = $this->_builder->buildASTClosure();
+        $closure->setReturnsByReference($this->_parseOptionalReturnbyReference());
         $closure->addChild($this->_parseFormalParameters());
         $closure = $this->_parseOptionalBoundVariables($closure);
         $closure->addChild($this->_parseScope());
