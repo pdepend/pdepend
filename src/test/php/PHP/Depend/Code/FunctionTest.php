@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
  * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_Function
  * @covers PHP_Depend_Code_AbstractCallable
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
 {
@@ -69,9 +72,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testFreeResetsParentPackageToNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFreeResetsParentPackageToNull()
     {
@@ -85,9 +85,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testFreeResetsAllAssociatedASTNodes
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFreeResetsAllAssociatedASTNodes()
     {
@@ -101,9 +98,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testReturnsReferenceReturnsExpectedTrue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testReturnsReferenceReturnsExpectedTrue()
     {
@@ -115,9 +109,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testReturnsReferenceReturnsExpectedFalse
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testReturnsReferenceReturnsExpectedFalse()
     {
@@ -129,13 +120,10 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStaticVariablesReturnsEmptyArrayByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStaticVariablesReturnsEmptyArrayByDefault()
     {
-        $function = new PHP_Depend_Code_Function('func');
+        $function = $this->createItem();
         self::assertEquals(array(), $function->getStaticVariables());
     }
     
@@ -143,17 +131,12 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStaticVariablesReturnsFirstSetOfStaticVariables
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
     {
-        $function = $this->_getFirstFunctionForTestCase();
-
         self::assertEquals(
             array('a' => 42, 'b' => 23),
-            $function->getStaticVariables()
+            $this->_getFirstFunctionForTestCase()->getStaticVariables()
         );
     }
     
@@ -161,18 +144,23 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
     {
-        $function = $this->_getFirstFunctionForTestCase();
-                        
         self::assertEquals(
             array('a' => 42, 'b' => 23, 'c' => 17),
-            $function->getStaticVariables()
+            $this->_getFirstFunctionForTestCase()->getStaticVariables()
         );
+    }
+
+    /**
+     * testGetSourceFileReturnsNullByDefault
+     *
+     * @return void
+     */
+    public function testGetSourceFileReturnsNullByDefault()
+    {
+        self::assertNull($this->createItem()->getSourceFile());
     }
     
     /**
@@ -180,16 +168,12 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * values.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetSourceFileInformationForNullValue()
     {
-        $item = new PHP_Depend_Code_Function('func');
+        $item = $this->createItem();
         $file = new PHP_Depend_Code_File(__FILE__);
 
-        self::assertNull($item->getSourceFile());
         $item->setSourceFile($file);
         self::assertSame($file, $item->getSourceFile());
     }
@@ -198,27 +182,21 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the ctor and the {@link PHP_Depend_Code_Function::getName()} method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testCreateNewFunctionInstance()
     {
-        $function = new PHP_Depend_Code_Function('func');
-        self::assertEquals('func', $function->getName());
+        $function = $this->createItem();
+        self::assertEquals('createItem', $function->getName());
     }
     
     /**
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetPackageReturnsNullByDefault()
     {
-        $function = new PHP_Depend_Code_Function('func');
+        $function = $this->createItem();
         self::assertNull($function->getPackage());
     }
     
@@ -226,14 +204,11 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnsetPackageWithNullWillResetPreviousPackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnsetPackageWithNullWillResetPreviousPackage()
     {
         $package  = new PHP_Depend_Code_Package('package');
-        $function = new PHP_Depend_Code_Function('func');
+        $function = $this->createItem();
         
         $function->setPackage($package);
         $function->unsetPackage();
@@ -245,13 +220,10 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnsetPackageWithNullWillResetPackageNameProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnsetPackageWithNullWillResetPackageNameProperty()
     {
-        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function = $this->createItem();
         $function->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
         $function->unsetPackage();
 
@@ -262,9 +234,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testSetPackageNotEstablishesBackReference
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetPackageNotEstablishesBackReference()
     {
@@ -276,7 +245,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $package->expects($this->never())
             ->method('addFunction');
 
-        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function = $this->createItem();
         $function->setPackage($package);
     }
     
@@ -285,14 +254,11 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * default value <b>null</b> and that the package could be set and unset.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSetPackage()
     {
         $package  = new PHP_Depend_Code_Package('package');
-        $function = new PHP_Depend_Code_Function('func');
+        $function = $this->createItem();
         
         $function->setPackage($package);
         self::assertSame($package, $function->getPackage());
@@ -302,23 +268,16 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testGetPackageNameReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetPackageNameReturnsNullByDefault()
     {
-        $function = $this->createItem();
-        self::assertNull($function->getPackageName());
+        self::assertNull($this->createItem()->getPackageName());
     }
 
     /**
      * testGetPackageNameReturnsNameOfInjectedPackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetPackageNameReturnsNameOfInjectedPackage()
     {
@@ -332,9 +291,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseByDefault()
     {
@@ -346,9 +302,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
     {
@@ -362,9 +315,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsTrueAfterCallToWakeup()
     {
@@ -378,9 +328,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
@@ -408,9 +355,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testSetTokensDelegatesToCacheStoreMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetTokensDelegatesToCacheStoreMethod()
     {
@@ -424,7 +368,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->method('store')
             ->with(self::equalTo(null), self::equalTo($tokens));
 
-        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function = $this->createItem();
         $function->setCache($cache)
             ->setTokens($tokens);
     }
@@ -433,9 +377,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testGetTokensDelegatesToCacheRestoreMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetTokensDelegatesToCacheRestoreMethod()
     {
@@ -448,7 +389,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->with(self::equalTo(null))
             ->will(self::returnValue(array()));
 
-        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function = $this->createItem();
         $function->setCache($cache)
             ->getTokens();
     }
@@ -457,9 +398,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testGetTokensReturnsArrayEvenWhenCacheReturnsNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull()
     {
@@ -472,7 +410,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->with(self::equalTo(null))
             ->will(self::returnValue(null));
 
-        $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function = $this->createItem();
         $function->setCache($cache);
 
         self::assertSame(array(), $function->getTokens());
@@ -482,9 +420,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Function::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -508,7 +443,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $function = new PHP_Depend_Code_Function('Method');
+        $function = $this->createItem();
         $function->addChild($node1);
         $function->addChild($node2);
 
@@ -520,9 +455,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Function::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -555,7 +487,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue($node1));
 
-        $function = new PHP_Depend_Code_Function('Method');
+        $function = $this->createItem();
         $function->addChild($node2);
         $function->addChild($node3);
 
@@ -567,9 +499,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Function::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
@@ -593,7 +522,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $function = new PHP_Depend_Code_Function('Method');
+        $function = $this->createItem();
         $function->addChild($node1);
         $function->addChild($node2);
 
@@ -605,9 +534,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Function::findChildrenOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
@@ -631,7 +557,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->method('findChildrenOfType')
             ->will($this->returnValue(array()));
 
-        $function = new PHP_Depend_Code_Function('Method');
+        $function = $this->createItem();
         $function->addChild($node1);
         $function->addChild($node2);
 
@@ -643,9 +569,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionStillReferencesSameDependency
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionStillReferencesSameDependency()
     {
@@ -662,9 +585,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionStillReferencesSameReturnClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionStillReferencesSameReturnClass()
     {
@@ -681,9 +601,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionStillReferencesSameParameterClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionStillReferencesSameParameterClass()
     {
@@ -700,9 +617,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionStillReferencesSameExceptionClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionStillReferencesSameExceptionClass()
     {
@@ -719,9 +633,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionStillReferencesSameDependencyInterface
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionStillReferencesSameDependencyInterface()
     {
@@ -738,9 +649,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionStillReferencesSamePackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionStillReferencesSamePackage()
     {
@@ -754,9 +662,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionIsInSameNamespace
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionIsInSameNamespace()
     {
@@ -773,9 +678,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionNotAddsDublicateToPackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionNotAddsDublicateToPackage()
     {
@@ -789,9 +691,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedFunctionIsChildOfParentPackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedFunctionIsChildOfParentPackage()
     {
@@ -805,13 +704,10 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the visitor accept method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testVisitorAccept()
     {
-        $function = new PHP_Depend_Code_Function('func');
+        $function = $this->createItem();
         $visitor  = new PHP_Depend_Visitor_TestNodeVisitor();
 
         $function->accept($visitor);

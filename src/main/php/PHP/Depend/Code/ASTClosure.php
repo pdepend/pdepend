@@ -67,6 +67,8 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
      */
     const CLAZZ = __CLASS__;
 
+
+
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.

@@ -1050,11 +1050,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $closure = $this->_builder->buildASTClosure();
         $closure->addChild($this->_parseFormalParameters());
-
-        $this->consumeComments();
-        if ($this->tokenizer->peek() === self::T_USE) {
-            $this->_parseBoundVariables($closure);
-        }
+        $closure = $this->_parseOptionalBoundVariables($closure);
         $closure->addChild($this->_parseScope());
 
         return $this->_setNodePositionsAndReturn($closure);
@@ -4885,38 +4881,49 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses an optional set of bound closure variables.
+     *
+     * @param PHP_Depend_Code_ASTClosure $closure The context closure instance.
+     *
+     * @return PHP_Depend_Code_ASTClosure
+     * @since 0.11.0
+     */
+    private function _parseOptionalBoundVariables(
+        PHP_Depend_Code_ASTClosure $closure
+    ) {
+        $this->consumeComments();
+        if (self::T_USE === $this->tokenizer->peek()) {
+            return $this->_parseBoundVariables($closure);
+        }
+        return $closure;
+    }
+
+    /**
      * Parses a list of bound closure variables.
      *
      * @param PHP_Depend_Code_ASTClosure $closure The parent closure instance.
      *
-     * @return void
+     * @return PHP_Depend_Code_ASTClosure
      * @since 0.9.5
      */
     private function _parseBoundVariables(PHP_Depend_Code_ASTClosure $closure)
     {
-        // Consume use keyword
-        $this->consumeComments();
         $this->consumeToken(self::T_USE);
 
-        // Consume opening parenthesis
         $this->consumeComments();
         $this->consumeToken(self::T_PARENTHESIS_OPEN);
 
         while ($this->tokenizer->peek() !== self::T_EOF) {
-            // Consume leading comments
             $this->consumeComments();
 
-            // Check for by-ref operator
             if ($this->tokenizer->peek() === self::T_BITWISE_AND) {
                 $this->consumeToken(self::T_BITWISE_AND);
                 $this->consumeComments();
             }
 
-            // Read bound variable
             $this->consumeToken(self::T_VARIABLE);
             $this->consumeComments();
 
-            // Check for further bound variables
             if ($this->tokenizer->peek() === self::T_COMMA) {
                 $this->consumeToken(self::T_COMMA);
                 continue;
@@ -4924,9 +4931,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
         }
 
-        // Consume closing parenthesis
         $this->consumeComments();
         $this->consumeToken(self::T_PARENTHESIS_CLOSE);
+
+        return $closure;
     }
 
     /**
