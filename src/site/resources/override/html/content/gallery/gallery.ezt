@@ -1,0 +1,35 @@
+{use $title, $images, $path, $pages, $page}
+<h2>{$title}</h2>
+
+<ul class="gallery">
+{foreach $images as $image}
+	<li>
+		<h3>
+			<a href="{$image->path->relativeDir}full/{$image->path->file}.html" title="{$image->displayName}">
+				{$image->displayName}
+			</a>
+		</h3>
+		<h4>
+			by {$image->metadata->author}
+			at {date_format_timestamp( 'r', $image->metadata->mtime )}
+		</h4>
+
+		<a href="{$image->path->relativeDir}full/{$image->path->file}.html" title="{$image->displayName}">
+			<img src="{$image->path->relative}.png" />
+		</a>
+	</li>
+{/foreach}
+</ul>
+
+<span class="scroll">
+{foreach 1..$pages as $i}
+	<a href="{$path->relative}/{$i - 1}.html">
+	{if ( $i - 1 ) == $page}
+		<strong>{$i}</strong>
+	{else}
+		{$i}
+	{/if}
+	</a>
+	{delimiter} - {/delimiter}
+{/foreach}
+</span>

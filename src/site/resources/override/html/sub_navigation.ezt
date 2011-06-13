@@ -1,0 +1,2 @@
+{use $tree}
+{raw wcv_list_from_iterator( $tree, 0, false, 'html/navigation/sub_item.ezt' )}

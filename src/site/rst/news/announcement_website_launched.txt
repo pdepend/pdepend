@@ -1,0 +1,12 @@
+===================================
+PHP Depend project website launched
+===================================
+
+:Description:
+  Now PHP_Depend has its own project homepage. Here you will find all documents
+  related to PHP_Depend, Software Metrics, the development process and similar
+  things.
+
+Now PHP_Depend has its own project homepage. Here you will find all documents
+related to PHP_Depend, Software Metrics, the development process and similar
+things.

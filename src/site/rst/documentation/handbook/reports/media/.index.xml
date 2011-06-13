@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <media>
+        <path>report-a-i-chart.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-base-thumb.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-base.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-filled-thumb.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-filled.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-average-thumb.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-average.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-complete-thumb.png</path>
+    </media>
+    <media>
+        <path>report-overview-pyramid-complete.png</path>
+    </media>
+</index>
+

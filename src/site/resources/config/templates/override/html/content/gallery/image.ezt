@@ -1,0 +1,23 @@
+{use $path, $content, $info}
+
+<h2>Basic information</h2>
+<dl class="gallery">
+	<dt>Name</dt>
+		<dd>{$info['FileName']}</dd>
+{if is_set($info['DateTimeOriginal'])}
+	<dt>Date</dt>
+		<dd>{$info['DateTimeOriginal']}</dd>
+{/if}
+	<dt>Image size</dt>
+		<dd>{$info['ImageSize']} Pixel {if is_set($info['Quality'])} (Quality: {$info['Quality']}){/if}</dd>
+	<dt>File size</dt>
+		<dd>{$info['FileSize']}</dd>
+{if is_set($info['License'])}
+	<dt>License</dt>
+		<dd>{$info['License']} {if is_set($info['Owner'])}(by {$info['Owner']}){/if}
+{/if}
+</dl>
+
+<a href="{$path->relativeDir}original/{$path->file}.png" title="Full view">
+	<img class="full" src="{$path->relativeDir}full/{$path->file}.png" />
+</a>

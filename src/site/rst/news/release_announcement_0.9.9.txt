@@ -1,0 +1,27 @@
+=========================
+PHP_Depend-0.9.9 released
+=========================
+
+:Abstract:
+  I have just released the bug fix version 0.9.9 of PHP_Depend.
+
+I have just released the bug fix version 0.9.9 of PHP_Depend.
+
+* Fixed `#108`__: Parser doesn't set start/end line/column on
+  variables, fixed in svn revision `#1015`__.
+* Implemented `#104`__: Add isStatic() method on
+  ASTMemberPrimaryPrefix node, implemented in svn revision 
+  `#1013`__.
+
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/108
+__ http://tracker.pdepend.org/pdepend/browse_code/revision/1015
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/104
+__ http://tracker.pdepend.org/pdepend/browse_code/revision/1013
+
+You can get the latest PHP_Depend version from its PEAR channel: 
+`pear.pdepend.org`__: ::
+
+  mapi@arwen ~ $ pear channel-discover pear.pdepend.org
+  mapi@arwen ~ $ pear install pdepend/PHP_Depend-beta
+
+__ http://pear.pdepend.org

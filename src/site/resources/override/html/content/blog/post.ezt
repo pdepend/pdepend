@@ -1,0 +1,25 @@
+{use $rst, $comments, $trackbacks, $path, $content}
+
+
+{raw $rst}
+
+{if $trackbacks}
+<h3>Trackbacks</h3>
+<ul class="comments">
+	{foreach $trackbacks as $trackback}
+	<li>
+		<h4>
+			<a name="trackback_{$trackback->rowid}"></a>
+			<a href="{$trackback->homepage}" title="{$trackback->title}">
+                {$trackback->title}
+			</a>
+			on {date_format_timestamp( 'r', $trackback->date )} in 
+			<strong>{$trackback->author}</strong>
+		</h4>
+		<p>
+			{raw wcv_simple_markup( $trackback->comment )}
+		</p>
+	</li>
+	{/foreach}
+</ul>
+{/if}

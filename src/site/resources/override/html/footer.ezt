@@ -1,0 +1,61 @@
+{use $content}
+<div class="footer">
+    <div class="viewport">
+		<div class="formats">
+			{var $formats=array() }
+			{$formats['RDF'] = $content->path->relative . '.rdf'}
+
+			{* Check for other supported formats *}
+			{if wcv_content_has( $content, 'html' ) }
+				{$formats['HTML'] = $content->path->relative . '.html'}
+			{/if}
+			{if wcv_content_has( $content, 'text' ) }
+				{$formats['Text'] = $content->path->relative . '.txt'}
+			{/if}
+			{if wcv_content_has( $content, 'feed' ) }
+				{$formats['RSS'] = $content->path->relative . '.rss'}
+			{/if}
+
+			{foreach $formats as $name => $url}
+				<a href="{$url}">{$name}</a>
+				{delimiter} | {/delimiter}
+			{/foreach}
+		</div>
+        <div class="license">
+            {if wcv_metadata_has( $content, 'versioned' )}
+                Revision <div class="revision">
+                <strong>{array_count($content->metadata->log)}</strong>
+                <ul>
+                {foreach $content->metadata->log as $entry limit 10}
+                    <li>
+                        <p>
+                            Revision <strong>{$entry['revision']}</strong>
+                            by <strong>{$entry['author']}</strong>
+                            at {date_format_timestamp( 'r', $entry['date'] )}
+                        </p>
+                        <p class="message">
+                            {raw wcv_simple_markup($entry['message'])}
+                        </p>
+                    </li>
+                {/foreach}
+                </ul>
+                </div> by
+            {else}
+                By
+            {/if}
+            {if $content->metadata->mail}
+                <strong><a href="" onclick="{wcv_get_mail_code( $content->metadata->mail )}">{$content->metadata->author}</a></strong>
+            {else}
+                <strong>{$content->metadata->author}</strong>
+            {/if}
+            at <strong>{date_format_timestamp( 'r', $content->metadata->mtime )}</strong>
+            {if $content->metadata->license}
+                licensed under <strong>{$content->metadata->license}</strong>
+            {/if}
+            <br />
+            Displayed with <a href="http://web-content-viewer.org/" title="Web Content Viewer">WCV</a>
+            licensed under <a href="http://www.gnu.org/licenses/gpl.txt" title="GNU General Public License - Version 3">GPLv3</a>
+        </div>
+        <div class="clear" />
+    </div>
+</div>

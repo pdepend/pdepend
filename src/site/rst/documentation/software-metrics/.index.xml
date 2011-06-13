@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site index="true">
+        <name>Software Metrics</name>
+        <path>index.rst</path>
+    </site>
+    <site>
+        <name>Afferent Coupling</name>
+        <path>afferent-coupling.rst</path>
+    </site>
+    <site>
+        <name>Class Size</name>
+        <path>class-size.rst</path>
+    </site>
+    <site>
+        <name>Class Interface Size</name>
+        <path>class-interface-size.rst</path>
+    </site>
+    <site>
+        <name>Coupling Between Objects</name>
+        <path>coupling-between-objects.rst</path>
+    </site>
+    <site>
+        <name>Cyclomatic Complexity</name>
+        <path>cyclomatic-complexity.rst</path>
+    </site>
+<!--
+    <site>
+        <name>Depth of Inheritance</name>
+        <path>depth-of-inheritance.rst</path>
+    </site>
+-->
+    <site>
+        <name>Efferent Coupling</name>
+        <path>efferent-coupling.rst</path>
+    </site>
+    <site>
+        <name>Number of Public Methods</name>
+        <path>number-of-public-methods.rst</path>
+    </site>
+    <site>
+        <name>Weighted Method Count</name>
+        <path>weighted-method-count.rst</path>
+    </site>
+</index>
+

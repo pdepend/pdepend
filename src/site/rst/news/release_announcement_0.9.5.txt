@@ -1,0 +1,55 @@
+=========================
+PHP_Depend-0.9.5 released
+=========================
+
+:Abstract:
+  Today I released PHP_Depend 0.9.5, which contains many bug fixes and 
+  improvements. The main features of this release are PHP 5.3 namespace 
+  support and a more robust parser that ignores most kinds of syntax 
+  errors.
+
+Today I released PHP_Depend 0.9.5, which contains many bug fixes and 
+improvements. The main features of this release are PHP 5.3 namespace 
+support and a more robust parser that ignores most kinds of syntax errors.
+
+* Closed `#2`__: Support PHP 5.3 namespace syntax, implemented since svn 
+  revision #789.
+* Closed `#61`__: Catch parser errors and continue processing, implemented 
+  in svn revision #880.
+* Closed `#63`__: Make ResultPrinter a configurable option, implemented in 
+  svn revision #668.
+* Fixed `#64`__: The single cache directory causes permission denied on 
+  UNIX systems, fixed in svn revision #667.
+* Fixed `#65`__: Endless loop for class and interface declarations without 
+  body, fixed in svn revision #672.
+* Closed `#66`__: Dependency wiring should be done at the end of the 
+  parsing process, implemented in svn revision #855.
+* Fixed `#69`__: Parser does not handle PHP 5.3 class names in function 
+  and method bodies, fixed in svn revision #688.
+* Fixed `#70`__: Parser throws an unexpected token exception for closure, 
+  fixed in svn revision #726.
+* Fixed `#71`__: Parser throws an unexpected token exception for signed 
+  default values, fixed in svn revision #740.
+* Fixed `#73`__: Inconsistent state when an interface and a class with the 
+  same name exists, fixed in svn revision #776.
+* Fixed `#76`__: Tokenizer keyword detection is broken, fixed in svn 
+  revision #871.
+
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/2
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/61
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/63
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/64
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/65
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/66
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/69
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/70
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/71
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/73
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/76
+
+You can get the latest PHP_Depend version from its PEAR channel: 
+*pear.pdepend.org* ::
+
+  mapi@arwen ~ $ pear channel-discover pear.pdepend.org
+  mapi@arwen ~ $ pear install pdepend/PHP_Depend-beta
+

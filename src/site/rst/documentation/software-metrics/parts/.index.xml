@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site display="false">
+        <name>Afferent Coupling</name>
+        <path>afferent-coupling.rst</path>
+    </site>
+    <site display="false">
+        <name>Coupling Between Objects</name>
+        <path>coupling-between-objects.rst</path>
+    </site>
+    <site display="false">
+        <name>Class Interface Size</name>
+        <path>class-interface-size.rst</path>
+    </site>
+    <site display="false">
+        <name>Class Size</name>
+        <path>class-size.rst</path>
+    </site>
+    <site display="false">
+        <name>Cyclomatic Complexity</name>
+        <path>cyclomatic-complexity.rst</path>
+    </site>
+    <site display="false">
+        <name>Depth of Inheritance</name>
+        <path>depth-of-inheritance.rst</path>
+    </site>
+    <site display="false">
+        <name>Efferent Coupling</name>
+        <path>efferent-coupling.rst</path>
+    </site>
+    <site display="false">
+        <name>NPath Complexity</name>
+        <path>npath-complexity.rst</path>
+    </site>
+    <site display="false">
+        <name>Number of Public Methods</name>
+        <path>number-of-public-methods.rst</path>
+    </site>
+    <site display="false">
+        <name>Weighted Method Count</name>
+        <path>weighted-method-count.rst</path>
+    </site>
+</index>
+

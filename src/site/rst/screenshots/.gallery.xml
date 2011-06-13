@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gallery>
+	<general>
+		<title>Screenshots</title>
+
+		<!-- Images per page -->
+		<perPage>16</perPage>
+
+		<!--
+			This defines which method is used to create thumbnails of the given
+			images. Most thumbnailers require the pecl/imagick extension to be
+			installed. Aavilable thumbnailers are:
+
+			- crop (width, height)
+			- scale (width, height)
+			- scale_bg (width, height, background)
+			- polaroid (width, height, shadow, background)
+			- mirrored (width, height, background)
+		-->
+		<thumbnailer type="mirrored">
+			<width>240</width>
+			<height>300</height>
+            <!--
+			<shadow>#2e3436</shadow>
+            -->
+			<background>#ffffff</background>
+		</thumbnailer>
+
+		<!-- 
+			Size of the "full view" image. Normally this is the size of your
+			content area.
+
+			You may use the same definitions as for the thumbnail image, both
+			default to "scale" as the used algorithm.
+		-->
+		<fullView>
+			<width>600</width>
+			<height>400</height>
+		</fullView>
+	</general>
+
+	<images>
+	<!-- You may add single images, or patterns matching sets of images (see
+		 http://php.net/glob for reference)
+	-->
+        <path>*.png</path>
+	</images>
+</gallery>

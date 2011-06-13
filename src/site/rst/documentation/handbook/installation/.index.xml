@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site index="true">
+        <name>Installation</name>
+        <path>index.rst</path>
+    </site>
+    <site>
+        <name>The PEAR Installer</name>
+        <path>pear-installer.rst</path>
+    </site>
+    <site>
+        <name>The Phar Archive</name>
+        <path>phar-archive.rst</path>
+    </site>
+    <site>
+        <name>The GitHub Repository</name>
+        <path>github-repository.rst</path>
+    </site>
+</index>
+

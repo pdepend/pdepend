@@ -1,0 +1,9 @@
+===================
+What is PHP_Depend?
+===================
+
+Since there is much confusion about what PHP_Depend is or is not, this
+section will give a short description about the things PHP_Depend can
+do and how they can improve your development process.
+
+.. include:: handbook/introduction/parts/introduction.rst

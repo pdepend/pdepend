@@ -1,0 +1,129 @@
+{use $title, $posts, $path, $pages, $page, $teaser = null}
+<h2>{$title}</h2>
+
+{raw $teaser}
+
+<ul class="blog">
+{foreach $posts as $post}
+	<li>
+		<h3>
+			<a href="{$post->path->relative}.html" title="{$post->displayName}">
+				{$post->displayName}
+			</a>
+		</h3>
+		<h4>
+			by {$post->metadata->author}
+			on {date_format_timestamp( 'r', $post->metadata->mtime )}
+		</h4>
+
+                {if $post->content->abstract != $post->content->description}
+		<p>
+			{raw $post->content->abstract}
+		</p>
+                {else}
+                        {raw $post->content->htmlContent}
+                {/if}
+
+	{if $post->content->blogCommentCount}
+			<span class="comment">
+				{$post->content->blogCommentCount} comments
+			</span>
+	{/if}
+	</li>
+{/foreach}
+</ul>
+
+<span class="scroll">
+
+{var $startPage = ( $page - 2 )}
+{var $endPage = ( $page + 2 )}
+
+{if $startPage < 1}
+	{$endPage -= $startPage}
+	{$startPage = 1}
+{/if}
+
+{if $endPage > ( $pages - 2 )}
+	{$startPage -= ( $endPage - ( $pages - 1 ) )}
+	{$endPage = ( $pages - 2 )}
+{/if}
+
+{if $startPage < 1}
+	{$startPage = 1}
+{/if}
+
+{var $beforePages = array()}
+{var $afterPages = array()}
+
+{foreach 1..( $pages - 1 ) as $i}
+
+    {if ( ( $i < $startPage - 1 ) && ( $i % 10 == 0 ) )}
+        {$beforePages[] = $i - 1}
+	{/if}
+    {if ( ( $i > $endPage + 1 ) && ( $i % 10 == 0 ) ) }
+        {$afterPages[] = $i - 1}
+	{/if}
+
+{/foreach}
+
+
+{if $page == 0}
+	<strong>1</strong>
+{else}
+	<a href="{$path->relative}/0.html">
+	1
+	</a>
+{/if}
+
+{if $pages > 1}
+	-
+
+	{if $startPage <= $endPage}
+		{if $startPage > 1}
+			... -
+			{if array_count( $beforePages ) > 0}
+				{foreach $beforePages as $i}
+					<a href="{$path->relative}/{$i}.html" title="Jump to page {$i + 1}">
+					{$i + 1}
+					</a>
+					- ... -
+				{/foreach}
+			{/if}
+		{/if}
+
+		{foreach $startPage..$endPage as $i}
+			{if $i == $page}
+				<strong>{$i + 1}</strong>
+			{else}
+				<a href="{$path->relative}/{$i}.html" title="Jump to page {$i + 1}">
+				{$i + 1}
+				</a>
+			{/if}
+			{delimiter} - {/delimiter}
+		{/foreach}
+
+		{if $endPage < ( $pages - 2 )}
+		...
+			{if array_count( $afterPages ) > 0}
+				{foreach $afterPages as $i}
+					-
+					<a href="{$path->relative}/{$i}.html" title="Jump to page {$i + 1}">
+					{$i + 1}
+					</a>
+					- ...
+				{/foreach}
+			{/if}
+		{/if}
+		-
+	{/if}
+
+	{if $page == ( $pages - 1 )}
+		<strong>{$pages}</strong>
+	{else}
+		<a href="{$path->relative}/{$pages - 1}.html" title="Jump to page {$pages}">
+		{$pages}
+		</a>
+	{/if}
+{/if}
+
+</span>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site index="true">
+        <name>Reports</name>
+        <path>index.rst</path>
+    </site>
+    <site>
+        <name>Abstraction Instability Chart</name>
+        <path>abstraction-instability-chart.rst</path>
+    </site>
+    <site>
+        <name>Overview Pyramid</name>
+        <path>overview-pyramid.rst</path>
+    </site>
+    <directory>
+        <path>media/</path>
+    </directory>
+</index>
+

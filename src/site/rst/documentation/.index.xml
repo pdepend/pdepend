@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site index="true">
+        <name>Getting started</name>
+        <path>getting-started.rst</path>
+    </site>
+    <directory>
+        <name>Software Metrics</name>
+        <path>software-metrics/</path>
+    </directory>
+    <directory>
+        <name>Handbook</name>
+        <path>handbook/</path>
+    </directory>
+    <site>
+        <name>What is PHP Depend?</name>
+        <path>what-is-php-depend.txt</path>
+    </site>
+    <site display="false">
+        <name>Development Guidelines</name>
+        <path>development-guidelines.rst</path>
+    </site>
+    <site display="false">
+        <name>Overview Pyramid</name>
+        <path>using-the-overview-pyramid.rst</path>
+    </site>
+    <directory display="false">
+        <name>images</name>
+        <path>images/</path>
+    </directory>
+</index>
+

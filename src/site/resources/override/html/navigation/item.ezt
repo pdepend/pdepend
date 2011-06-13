@@ -1,0 +1,4 @@
+{use $item, $subtree, $depth}
+<li {if $item->requested}class="requested"{/if}>
+	<a href="{$item->path->relative}.html" title="{$item->displayName}">{$item->displayName}</a>
+</li>

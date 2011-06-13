@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <directory index="true">
+        <name>News</name>
+        <path>news/</path>
+    </directory>
+    <directory>
+        <name>Documentation</name>
+        <path>documentation/</path>
+    </directory>
+    <directory>
+        <name>Screenshots</name>
+        <path>screenshots/</path>
+    </directory>
+    <directory>
+        <name>Download</name>
+        <path>download/</path>
+    </directory>
+    <site>
+        <name>Support &amp; Contact</name>
+        <path>support.rst</path>
+    </site>
+
+    <directory display="false">
+        <name>schema</name>
+        <path>schema/</path>
+    </directory>
+    <directory display="false">
+        <name>static_reflection</name>
+        <path>static_reflection/</path>
+    </directory>
+
+    <media>
+        <path>robots.txt</path>
+    </media>
+</index>
+

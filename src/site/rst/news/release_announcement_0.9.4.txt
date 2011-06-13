@@ -1,0 +1,38 @@
+=========================
+PHP_Depend-0.9.4 released
+=========================
+
+:Abstract:
+  Today I released PHP_Depend 0.9.4, which contains many bug fixes and
+  improvements.
+
+Today I released PHP_Depend 0.9.4, which contains many bug fixes and
+improvements.
+
+* Fixed `#92`__: Handling of types within instanceof-operator fixed.
+* Closed `#90`__: Support for single file parsing/analyzing implemented.
+* Closed `#88`__: Tokens provide information about the start and end column.
+* Closed `#87`__: Support for type definitions within comments implemented.
+* Closed `#40`__: Cli debug flag added. PHP_Depend will print additional debug
+  information to STDERR when this cli switch is set.
+* The ProjectAwareI and NodeAwareI interfaces extend the AnalyzerI interface,
+  which makes analyzer mocking easier.
+* Switch from PHP_Depend specific constants for public, protected, private
+  methods & properties to modifiers compatible with PHP's reflection-extension.
+* Support for static modifier for properties&methods and final for methods
+  added.
+* Support for class final modifier added.
+* Support for chained types like "false|Iterator" or "array(false|Iterator)" in
+  doc comments added.
+
+__ http://bugs.pdepend.org/index.php?do=details&task_id=92
+__ http://bugs.pdepend.org/index.php?do=details&task_id=90
+__ http://bugs.pdepend.org/index.php?do=details&task_id=88
+__ http://bugs.pdepend.org/index.php?do=details&task_id=87
+__ http://bugs.pdepend.org/index.php?do=details&task_id=40
+
+You can get the latest PHP_Depend version from its PEAR channel:
+*pear.pdepend.org* ::
+
+  mapi@arwen ~ $ pear channel-discover pear.pdepend.org
+  mapi@arwen ~ $ pear install pdepend/PHP_Depend

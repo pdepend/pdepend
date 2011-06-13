@@ -1,0 +1,52 @@
+=========================
+PHP_Depend-0.9.8 released
+=========================
+
+:Abstract:
+  Today I released PHP_Depend 0.9.8, which contains many bug 
+  fixes and improvements. This release will be the base version 
+  for a new tool called PHPMD. PHPMD is a frontend that reports
+  critical and suspect software artifacts in a project, based
+  on the metrics measured with PHP_Depend. It aims to be a PHP
+  equivalent to the well known java tool PMD.
+
+Today I released PHP_Depend 0.9.8, which contains many bug fixes
+and improvements. This release will be the base version for a new
+tool called `PHPMD`__. PHPMD is a frontend that reports critical 
+and suspect software artifacts in a project, based on the metrics 
+measured with PHP_Depend. It aims to be a PHP equivalent to the 
+well known java tool `PMD`__.
+
+__ http://tracker.pdepend.org/php_mess_detector/browse_code
+__ http://pmd.sourceforge.net/
+
+
+* Closed `#93`__: Implement an assignment expression, Implemented in
+  svn revision `#992`__.
+* Fixed `#94`__: Parser throws exception for closures that return by
+  reference, fixed in svn revision `#962`__.
+* Fixed `#98`__: Functions with an invalid signature result in an
+  inconsistent object graph, fixed in svn revision `#986`__.
+* Fixed `#102`__: Namespace keyword in type-hint is broken, fixed in
+  svn revision `#1010`__.
+* Fixed `#103`__: The parser does not handle all strings as parameter
+  default value correct, fixed in svn revision `#1009`__.
+
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/93
+__ http://tracker.pdepend.org/pdepend/browse_code/revision/992
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/94
+__ http://tracker.pdepend.org/pdepend/browse_code/revision/962
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/98
+__ http://tracker.pdepend.org/pdepend/browse_code/revision/986
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/102
+__ http://tracker.pdepend.org/pdepend/browse_code/revision/1010
+__ http://tracker.pdepend.org/pdepend/issue_tracker/issue/103
+__ http://tracker.pdepend.org/pdepend/browse_code/revision/1009
+
+You can get the latest PHP_Depend version from its PEAR channel: 
+`pear.pdepend.org`__: ::
+
+  mapi@arwen ~ $ pear channel-discover pear.pdepend.org
+  mapi@arwen ~ $ pear install pdepend/PHP_Depend-beta
+
+__ http://pear.pdepend.org
