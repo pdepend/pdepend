@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+
+    <properties>
+        <title>PHP Depend</title>
+        <author email="mapi@pdepend.org">Manuel Pichler</author>
+    </properties>
+
+    <body>
+        <release version="0.10.5"
+                 date="2011/05/20"
+                 description="This release closes two minor bugs in PHP_Depend.
+                              One incompatibility with PHP 5.2.x versions and
+                              one bug related to PHP_Depend's log behavior when
+                              PHP_Depend analyzes unstructured source code. This
+                              release was published on May the 20th 2011.">
+            <action date="8d4a095" dev="mapi" issue="13255437" system="pivotaltracker" type="fix">
+                PHP 5.2 Compatibility Issues.
+            </action>
+            <action date="554ade1" dev="mapi" issue="13405179" system="pivotaltracker" type="fix">
+                PHP Depend report is not generated if all files do not contain a class nor a function.
+            </action>
+        </release>
+
+        <release version="0.10.4"
+                 date="2011/04/09"
+                 description="This release contains an improvement in PHP_Depend's memory consumption.
+                              We have optimized the internal data structures in such a way that the
+                              memory footprint was reduced by ~30%. These values were measured for
+                              currently popular frameworks with a medium to large sized code base. The
+                              tests were run under ubuntu with PHP 5.2.17 and PHP 5.3.6.">
+        </release>
+
+        <release version="0.10.3"
+                 date="2011/03/02"
+                 description="This release closes a critial bug in PHP_Depend's analyzer locator code
+                              that prevents PHP_Depend from running on windows. This release was
+                              published on March the 02th 2011.">
+            <action date="0101798" dev="mapi" issue="10659085" system="pivotaltracker" type="fix">
+                Analyzer locator code does not work on windows.
+            </action>
+        </release>
+
+        <release version="0.10.2"
+                 date="2011/02/28"
+                 description="This release of PHP_Depend closes two bugs. One related to the start and
+                              end line properties of object property nodes in the syntax tree. The
+                              second fix closes a bug in PHP_Depend's implementation of the WMCi metric.
+                              Beside these two fixes this release implements three minor features, one
+                              design issue in the syntax tree api and the other two other features are
+                              related to the new metrics CE, CA, CBO and NPM.
+
+                              Additionally we have restructured PHP_Depend's directory structure from a
+                              custom, freestyle format to a directory layout that is similar to maven's
+                              convention. With this change we have fixed several issues and workarounds
+                              in PHP_Depend's build process.">
+            <action date="69d079a" dev="mapi" issue="9936901" system="pivotaltracker" type="fix">
+                WMCi calculation is incorrect for overwritten methods.
+            </action>
+            <action date="fc57264" dev="mapi" issue="8927377" system="pivotaltracker" type="fix">
+                Invalid Start/End Line/Column for object property access.
+            </action>
+            <action date="1282cdb" dev="mapi" issue="9069393" system="pivotaltracker" type="update">
+                Replace optional NULL argument of setPackage() with separate method.
+            </action>
+            <action date="07537c2" dev="mapi" issue="9069871" system="pivotaltracker" type="add">
+                Implement efferent- and afferent-coupling for classes.
+            </action>
+            <action date="2dd3ebf" dev="mapi" issue="9997915" system="pivotaltracker" type="add">
+                Implement Number of Public Methods metric.
+            </action>
+        </release>
+
+        <release version="0.10.1"
+                 date="2011/02/06">
+            <action date="5fb6900" dev="mapi" issue="9634613" system="pivotaltracker" type="fix">
+                Notice: Undefined property $___temp___.
+            </action>
+        </release>
+
+        <release version="0.10.0"
+                 date="2011/02/05"
+                 description="This version only contains a small bugfix compared to the last release
+                              canditate. Version 0.10.0 of PHP_Depend was released on February the
+                              05th 2011. The key feature for this release is the overall performance
+                              of PHP_Depend. Therefore we have implemented a new caching layer that
+                              reuses already calculated analyzes-results much more efficient than
+                              older versions of PHP_Depend. With these modifications we have achieved
+                              a performance gain of 100% and more for consecutive analysis-runs.
+                              This final release only fixes a small bug in PHP_Depend's analyzer class
+                              locator that has caused some issues when PHP_Depend was executed as an
+                              external dependency that uses a \*.phar archive as distribution format.">
+            <action date="f53dca9" dev="mapi" issue="9623949" system="pivotaltracker" type="fix">
+                Also find analyzers in phar archives in the current include_path.
+            </action>
+            <action date="c0f4384" dev="mapi" issue="113" type="fix">
+                PHP fatal error when an unserialized object graph none NodeI instances.
+            </action>
+            <action date="f75275e" dev="mapi" issue="164" type="fix">
+                Faulty implementation of the --ignore path filter fixed. Now this filter only works on the local part of a file or directory name and not on the complete path.
+            </action>
+            <action date="1193f4a" dev="mapi" issue="176" type="fix">
+                Calculation of CIS metric is incorrect.
+            </action>
+            <action date="b18bf37" dev="mapi" issue="182" type="fix">
+                Clone is a valid function, method and type name in older php versions. Fixed with git commit
+            </action>
+            <action date="c6cc9dd" dev="mapi" issue="189" type="fix">
+                Invalid Start/End Line/Column for object method invocation.
+            </action>
+            <action date="38e6b52" dev="mapi" issue="191" type="fix">
+                New implementation of --ignore only accepts relative paths.
+            </action>
+            <action dev="mapi" issue="163" type="fix">
+                Alternative syntax end tokens can terminate with closing PHP-tag.
+            </action>
+            <action dev="mapi" issue="181" type="fix">
+                No log generated when parsing Typo3 extension "t3extplorer" (Unexpected token ASCII 39). Indirectly fixed in this release.
+            </action>
+            <action dev="mapi" issue="130" type="remove">
+                Simplify PHP_Depend's ASTCompoundVariable and skip nested ASTCompoundExpression node instance.
+            </action>
+            <action dev="mapi" issue="131" type="add">
+                Add new method isThis() to PHP_Depend's ASTVariable class.
+            </action>
+            <action dev="mapi" issue="132" type="update">
+                Housekeeping: Cleanup the PHP_Depend_Input package test code.
+            </action>
+            <action dev="mapi" issue="139" type="add">
+                Implement Post-/Pre- Increment/Decrement.
+            </action>
+            <action dev="mapi" issue="143" type="add">
+                Support PHP's alternative control structure syntax.
+            </action>
+            <action dev="mapi" issue="146" type="add">
+                Implement PHP's declare-statement.
+            </action>
+            <action dev="mapi" issue="148" type="add">
+                Implement cast expressions.
+            </action>
+            <action dev="mapi" issue="170" type="update">
+                Rename FunctionNameParserImpl into FunctionNameParserAllVersions. Task scope changed and complete refactoring done. Parser moved into a version specific parser class.
+            </action>
+            <action date="00ed8ec" dev="mapi" issue="178" type="add">
+                Provide configuration option for the cache directory.
+            </action>
+        </release>
+
+        <!--<release version="0.1.0" date="2009/12/20" description="Initial release" />-->
+    </body>
+</document>

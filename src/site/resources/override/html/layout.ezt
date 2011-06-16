@@ -45,7 +45,7 @@
 {/if}
 
 {var $urlWithoutExt = $content->path->url . str_remove( $content->content->path->relative, 0, 1 )}
-{if ( $content->content->isBlogPost )}
+{* {if ( $content->content->isBlogPost )}
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:dc="http://purl.org/dc/elements/1.1/"
          xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
@@ -55,30 +55,8 @@
     dc:title="{$content->displayName}"
     trackback:ping="{$urlWithoutExt . '.dyn'}" />
 </rdf:RDF>
-{/if}
-
-{*	<script type="text/ecmascript">
-{literal}
-// <![CDATA[
-/**
- * Return a mail link constructed from the parameters. The order of the
- * parameters is a bit unintuitive to not match any common patterns easily.
- * This is obviously no challenge for a specialized bot.
- *
- * @param string host
- * @param string tld
- * @param string user
- * @return string
- */
-function returnMailLink( element, host, tld, user )
-{
-	element.setAttribute( "href", "mailto:" + user + "@" + host + "." + tld );
-}
-// ]]>
-{/literal}
-	</script> *}
-
-        <title>{wcv_get_config_value( 'title' )}</title>
+{/if} *}
+        <title>{wcv_get_config_value( 'title' ) . ': ' . $content->displayName}</title>
     </head>
     <body>
         <h1 class="viewport">
@@ -94,6 +72,26 @@ function returnMailLink( element, host, tld, user )
 
         <div class="viewport content">
             {raw $content->content->html}
+{if ( $content->content->isBlogPost )}
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'pdepend'; // required: replace example with your forum shortname
+
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    var disqus_identifier = '{$content->content->path->relative}';
+    var disqus_url = '{$content->path->url . str_remove( $content->content->path->relative, 0, 1 ) . '.html'}';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() \{
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    \})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+{/if}
         </div>
 
     	{include wcv_get_template( 'html/footer.ezt' ) send $tree, $content}
