@@ -526,6 +526,16 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $class;
     }
 
+    /**
+     * Parses the signature of a class.
+     *
+     * The signature of a class consists of optional class modifiers like, final
+     * or abstract, the T_CLASS token, the class name, an optional parent class
+     * and an optional list of implemented interfaces.
+     *
+     * @return PHP_Depend_Code_Class
+     * @since 0.11.0
+     */
     private function _parseClassSignature()
     {
         $this->_parseClassModifiers();
@@ -555,7 +565,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->consumeToken(self::T_IMPLEMENTS);
             $this->_parseInterfaceList($class);
         }
-        
+
         return $class;
     }
 
@@ -581,6 +591,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeComments();
     }
 
+    /**
+     * Parses a parent class declaration for the given <b>$class</b>.
+     *
+     * @param PHP_Depend_Code_Class $class The context class instance.
+     *
+     * @return PHP_Depend_Code_Class
+     * @since 0.11.0
+     */
     private function _parseClassExtends(PHP_Depend_Code_Class $class)
     {
         $this->consumeToken(self::T_EXTENDS);
@@ -5659,6 +5677,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Returns the currently active package or namespace.
+     *
      * @return PHP_Depend_Code_Package
      * @since 0.11.0
      */
