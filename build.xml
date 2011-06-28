@@ -25,7 +25,7 @@
     -->
     <target name="-package:phar:after~hook">
         <antcall target="-package-execute">
-            <param name="-package.includepath" value="${tmpdir}"/>
+            <param name="-package.includepath" value="${commons:tmpdir}"/>
             <param name="-package.executable" value="${-package:phar:filename}" />
         </antcall>
     </target>
@@ -52,15 +52,18 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  ${-package.executable} --summary-xml... PHP/Depend/Code" level="verbose" />
 
-        <exec dir="${php.basedir.src}" executable="php" failonerror="true">
+        <exec dir="${commons.srcdir.php}" 
+              executable="${commons.executable.php}" 
+              failonerror="true">
+
             <arg value="-d" />
             <arg value="include_path=${-package.includepath}" />
             <arg value="${-package.executable}" />
-            <arg value="--summary-xml=${tmpdir}/summary.xml" />
-            <arg value="--phpunit-xml=${tmpdir}/phpunit.xml" />
-            <arg value="--jdepend-xml=${tmpdir}/jdepend.xml" />
-            <arg value="--jdepend-chart=${tmpdir}/jdepend.svg" />
-            <arg value="--overview-pyramid=${tmpdir}/pyramid.svg" />
+            <arg value="--summary-xml=${commons:tmpdir}/summary.xml" />
+            <arg value="--phpunit-xml=${commons:tmpdir}/phpunit.xml" />
+            <arg value="--jdepend-xml=${commons:tmpdir}/jdepend.xml" />
+            <arg value="--jdepend-chart=${commons:tmpdir}/jdepend.svg" />
+            <arg value="--overview-pyramid=${commons:tmpdir}/pyramid.svg" />
             <arg value="--coderank-mode=inheritance,property,method" />
             <arg value="PHP/Depend/Code" />
         </exec>
