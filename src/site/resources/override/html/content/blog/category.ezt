@@ -4,33 +4,26 @@
 {raw $teaser}
 
 <ul class="blog">
-{foreach $posts as $post}
-	<li>
-		<h3>
-			<a href="{$post->path->relative}.html" title="{$post->displayName}">
-				{$post->displayName}
-			</a>
-		</h3>
-		<h4>
-			by {$post->metadata->author}
-			on {date_format_timestamp( 'r', $post->metadata->mtime )}
-		</h4>
+    {foreach $posts as $post}
+	    <li>
+		    <h3>
+			    <a href="{$post->path->relative}.html" title="{$post->displayName}">{$post->displayName}</a>
+		    </h3>
+		    <h4>
+			    by {$post->metadata->author}
+			    on {date_format_timestamp( 'r', $post->metadata->mtime )}
+		    </h4>
+            {if $post->content->abstract != $post->content->description}
+                <p>{raw $post->content->abstract}</p>
+            {else}
+                {raw $post->content->htmlContent}
+            {/if}
 
-                {if $post->content->abstract != $post->content->description}
-		<p>
-			{raw $post->content->abstract}
-		</p>
-                {else}
-                        {raw $post->content->htmlContent}
-                {/if}
-
-	{if $post->content->blogCommentCount}
-			<span class="comment">
-				{$post->content->blogCommentCount} comments
-			</span>
-	{/if}
-	</li>
-{/foreach}
+            <span class="comment">
+                <a href="{$post->path->relative}.html#disqus_thread" title="Blog post comments for: {$post->displayName}">Comments</a>
+            </span>
+	    </li>
+    {/foreach}
 </ul>
 
 <span class="scroll">
@@ -125,5 +118,16 @@
 		</a>
 	{/if}
 {/if}
-
 </span>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'pdepend'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () \{
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    \}());
+</script>

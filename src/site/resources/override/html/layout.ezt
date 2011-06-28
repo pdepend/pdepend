@@ -17,45 +17,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="{$content->metadata->language}"
       lang="{$content->metadata->language}">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<meta name="description" content="{$description}" />
-	<meta name="keywords" content="{$keywords}" />
-	<meta name="author" content="{$content->metadata->author}" />
-	<meta name="language" content="{$content->metadata->language}" />
-	<meta name="date" content="{date_format_timestamp( 'r', $content->metadata->mtime)}" />
-	<meta name="robots" content="all" />
+        <meta name="description" content="{$description}" />
+        <meta name="keywords" content="{$keywords}" />
+        <meta name="author" content="{$content->metadata->author}" />
+        <meta name="language" content="{$content->metadata->language}" />
+        <meta name="date" content="{date_format_timestamp( 'r', $content->metadata->mtime)}" />
+        <meta name="robots" content="all" />
 
-	<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
-	<meta name="DC.title" content="{$content->displayName}" />
-	<meta name="DC.creator" content="{$content->metadata->author}" />
-	<meta name="DC.date" content="{date_format_timestamp( 'r', $content->metadata->mtime)}" />
-	<meta name="DC.rights" content="{$content->metadata->license}" />
+        <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+        <meta name="DC.title" content="{$content->displayName}" />
+        <meta name="DC.creator" content="{$content->metadata->author}" />
+        <meta name="DC.date" content="{date_format_timestamp( 'r', $content->metadata->mtime)}" />
+        <meta name="DC.rights" content="{$content->metadata->license}" />
 
         <link rel="canonical" href="{$content->path->relative . '.html'}" />
-	<link rel="meta" href="{$content->path->relative . '.rdf'}" />
-	<link rel="icon" href="/images/favicon.png" type="image/png" />
+        <link rel="meta" href="{$content->path->relative . '.rdf'}" />
+        <link rel="icon" href="/images/favicon.png" type="image/png" />
 
-	<link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
-	<link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+        <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+        <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
 
-{if wcv_content_has( $content, 'feed' ) }
-	<link rel="alternate" type="application/rss+xml" title="{$content->displayName}" href="{$content->path->relative}.rss" />
-{/if}
-
-{var $urlWithoutExt = $content->path->url . str_remove( $content->content->path->relative, 0, 1 )}
-{* {if ( $content->content->isBlogPost )}
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-<rdf:Description
-    rdf:about="{$urlWithoutExt . '.html'}"
-    dc:identifier="{$urlWithoutExt . '.html'}"
-    dc:title="{$content->displayName}"
-    trackback:ping="{$urlWithoutExt . '.dyn'}" />
-</rdf:RDF>
-{/if} *}
+        {if wcv_content_has( $content, 'feed' ) }
+            <link rel="alternate" type="application/rss+xml" title="{$content->displayName}" href="{$content->path->relative}.rss" />
+        {/if}
         <title>{wcv_get_config_value( 'title' ) . ': ' . $content->displayName}</title>
     </head>
     <body>
@@ -72,40 +59,11 @@
 
         <div class="viewport content">
             {raw $content->content->html}
-{if ( $content->content->isBlogPost )}
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'pdepend'; // required: replace example with your forum shortname
-
-    // The following are highly recommended additional parameters. Remove the slashes in front to use.
-    var disqus_identifier = '{$content->content->path->relative}';
-    var disqus_url = '{$content->path->url . str_remove( $content->content->path->relative, 0, 1 ) . '.html'}';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() \{
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    \})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-{/if}
         </div>
-
     	{include wcv_get_template( 'html/footer.ezt' ) send $tree, $content}
-{literal}
-<script type="text/javascript">
-var pkBaseURL = "//a.xplib.de/";
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 2);
-piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
-} catch( err ) {}
-</script><noscript><p><img src="//a.xplib.de/piwik.php?idsite=2" style="border:0" alt="" /></p></noscript>
-{/literal}
+        {include wcv_get_template( 'html/piwik.ezt' )}
+        {if ( $content->content->isBlogPost )}
+            {include wcv_get_template( 'html/content/blog/post_comments.ezt' ) send $content}
+        {/if}
     </body>
 </html>
