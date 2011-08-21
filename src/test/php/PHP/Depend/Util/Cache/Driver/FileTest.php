@@ -73,7 +73,7 @@ class PHP_Depend_Util_Cache_Driver_FileTest
     protected $cacheDir = null;
 
     /**
-     * Initializes a temporary workling directory.
+     * Initializes a temporary working directory.
      * 
      * @return void
      */
