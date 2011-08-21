@@ -81,7 +81,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      *
      * @var PHP_Depend_Util_Cache_Driver_File_Directory
      */
-    protected $directory = null;
+    protected $directory;
 
     /**
      * The current cache entry type.
@@ -89,6 +89,13 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      * @var string
      */
     protected $type = self::ENTRY_TYPE;
+
+    /**
+     * Major and minor version of the currently used PHP.
+     *
+     * @var string
+     */
+    protected $version;
 
     /**
      * This method constructs a new file cache instance for the given root
@@ -99,6 +106,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
     public function __construct($root)
     {
         $this->directory = new PHP_Depend_Util_Cache_Driver_File_Directory($root);
+        $this->version   = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
     }
 
     /**
@@ -244,7 +252,10 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      */
     protected function getCacheFile($key)
     {
-        $cacheFile  = $this->getCacheFileWithoutExtension($key) . ".{$this->type}";
+        $cacheFile = $this->getCacheFileWithoutExtension($key) .
+                     '.' . $this->version .
+                     '.' . $this->type;
+
         $this->type = self::ENTRY_TYPE;
 
         return $cacheFile;
@@ -266,4 +277,3 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
         return "{$path}/{$key}";
     }
 }
-
