@@ -1,3 +1,12 @@
+PHP_Depend 0.10.6
+-----------------
+
+This release closes a critical bug in PHP_Depend's parser that produced
+false positiv error messages for classes named like 'True', 'False' or 
+'Null'
+
+- Fixed #5ac3e55: Unexpected token: True, line: 348, col: 49, file:...
+
 PHP_Depend 0.10.5
 -----------------
 

@@ -8,7 +8,16 @@
         <author email="mapi@pdepend.org">Manuel Pichler</author>
     </properties>
 
-    <body>
+	<body>
+		<release version="0.10.6"
+                 date="2011/08/21"
+                 description="This release closes a critical bug in PHP_Depend's
+                              parser that produced false positiv error messages for
+                              classes named like 'True', 'False' or 'Null'">
+            <action date="5ac3e55" dev="mapi" issue="17264279" system="pivotaltracker" type="fix">
+                Unexpected token: True, line: 348, col: 49, file:...
+            </action>
+        </release>
         <release version="0.10.5"
                  date="2011/05/20"
                  description="This release closes two minor bugs in PHP_Depend.
