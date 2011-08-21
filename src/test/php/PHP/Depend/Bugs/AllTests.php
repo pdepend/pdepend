@@ -101,6 +101,7 @@ require_once dirname(__FILE__) . '/ExcludePathFilterShouldFilterByAbsolutePathBu
 require_once dirname(__FILE__) . '/ParserBug8927377Test.php';
 require_once dirname(__FILE__) . '/ClassLevelAnalyzerBug09936901Test.php';
 require_once dirname(__FILE__) . '/PHPDependBug13405179Test.php';
+require_once dirname(__FILE__) . '/ParserBug17264279Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -180,6 +181,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug8927377Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ClassLevelAnalyzerBug09936901Test');
         $suite->addTestSuite('PHP_Depend_Bugs_PHPDependBug13405179Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_ParserBug17264279Test');
 
         return $suite;
     }

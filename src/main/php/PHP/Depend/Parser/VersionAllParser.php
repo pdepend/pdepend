@@ -64,6 +64,32 @@
  */
 class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
 {
+
+    /**
+     * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
+     * name part.
+     *
+     * @param integer $tokenType The type of a parsed token.
+     *
+     * @return boolean
+     * @since 0.10.6
+     */
+    protected function isClassName($tokenType)
+    {
+        switch ($tokenType) {
+
+        case self::T_USE:
+        case self::T_NULL:
+        case self::T_TRUE:
+        case self::T_CLONE:
+        case self::T_FALSE:
+        case self::T_STRING:
+        case self::T_NAMESPACE:
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Parses a valid class or interface name and returns the image of the parsed
      * token.
@@ -77,21 +103,13 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     protected function parseClassName()
     {
         $type = $this->tokenizer->peek();
-        switch ($type) {
-
-        case self::T_USE:
-        case self::T_NULL:
-        case self::T_TRUE:
-        case self::T_CLONE:
-        case self::T_FALSE:
-        case self::T_STRING:
-        case self::T_NAMESPACE:
+        
+        if ($this->isClassName($type)) {
             return $this->consumeToken($type)->image;
-
-        case self::T_EOF:
+        } else if ($type === self::T_EOF) {
             throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
         }
-
+        
         throw new PHP_Depend_Parser_UnexpectedTokenException(
             $this->tokenizer->next(),
             $this->tokenizer->getSourceFile()

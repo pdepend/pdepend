@@ -430,6 +430,17 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
+     * name part.
+     *
+     * @param integer $tokenType The type of a parsed token.
+     *
+     * @return string
+     * @since 0.10.6
+     */
+    protected abstract function isClassName($tokenType);
+
+    /**
      * Parses a valid class or interface name for the currently configured php
      * version.
      *
@@ -5006,18 +5017,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $qualifiedName = array();
 
-        // Check for local name
-        if ($tokenType === self::T_STRING) {
-            $qualifiedName[] = $this->consumeToken(self::T_STRING)->image;
-
-            $this->consumeComments();
-            $tokenType = $this->tokenizer->peek();
-
-            // Stop here for simple identifier
-            if ($tokenType !== self::T_BACKSLASH) {
-                return $qualifiedName;
-            }
-        } else if ($tokenType === self::T_NAMESPACE) {
+        if ($tokenType === self::T_NAMESPACE) {
             // Consume namespace keyword
             $this->consumeToken(self::T_NAMESPACE);
             $this->consumeComments();
@@ -5027,6 +5027,16 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             // Set prefixed flag to true
             $this->_namespacePrefixReplaced = true;
+        } else if ($this->isClassName($tokenType)) {
+            $qualifiedName[] = $this->parseClassName();
+
+            $this->consumeComments();
+            $tokenType = $this->tokenizer->peek();
+
+            // Stop here for simple identifier
+            if ($tokenType !== self::T_BACKSLASH) {
+                return $qualifiedName;
+            }
         }
 
         do {
@@ -5034,13 +5044,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $this->consumeToken(self::T_BACKSLASH);
             $this->consumeComments();
 
-            // Next token must be a namespace identifier
-            $token = $this->consumeToken(self::T_STRING);
-            $this->consumeComments();
-
             // Append to qualified name
             $qualifiedName[] = '\\';
-            $qualifiedName[] = $token->image;
+            $qualifiedName[] = $this->parseClassName();
+            
+            $this->consumeComments();
 
             // Get next token type
             $tokenType = $this->tokenizer->peek();
