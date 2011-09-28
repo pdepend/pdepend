@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTPreDecrementExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,12 +107,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionOnStaticClassMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionOnStaticClassMember()
     {
@@ -134,12 +126,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionOnSelfClassMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionOnSelfClassMember()
     {
@@ -159,12 +145,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionOnParentClassMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionOnParentClassMember()
     {
@@ -184,12 +164,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionOnFunctionPostfix
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionOnFunctionPostfix()
     {
@@ -208,12 +182,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionOnStaticVariableMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionOnStaticVariableMember()
     {
@@ -233,12 +201,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionHasExpectedStartLine()
     {
@@ -250,12 +212,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionHasExpectedStartColumn()
     {
@@ -267,12 +223,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionHasExpectedEndLine()
     {
@@ -284,12 +234,6 @@ class PHP_Depend_Code_ASTPreDecrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreDecrementExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreDecrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreDecrementExpressionHasExpectedEndColumn()
     {

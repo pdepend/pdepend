@@ -766,6 +766,45 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTPostfixExpressionReturnsExpectedType
+     * 
+     * @return void
+     */
+    public function testBuildASTPostfixExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTPostfixExpression::CLAZZ,
+            $this->createBuilder()->buildASTPostfixExpression('++')
+        );
+    }
+
+    /**
+     * testBuildASTPreDecrementExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTPreDecrementExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTPreDecrementExpression::CLAZZ,
+            $this->createBuilder()->buildASTPreDecrementExpression()
+        );
+    }
+
+    /**
+     * testBuildASTPreIncrementExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTPreIncrementExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTPreIncrementExpression::CLAZZ,
+            $this->createBuilder()->buildASTPreIncrementExpression()
+        );
+    }
+
+    /**
      * Creates a clean builder test instance.
      *
      * @return PHP_Depend_Builder_Default

@@ -1349,12 +1349,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * node this can be a {@link PHP_Depend_Code_ASTPostIncrementExpression} or
      * {@link PHP_Depend_Code_ASTPostfixExpression}.
      *
-     * @param array $expressions List of previous parsed expression nodes.
+     * @param array &$expressions List of previous parsed expression nodes.
      *
      * @return PHP_Depend_Code_ASTExpression
      * @since 0.10.0
      */
-    private function _parseIncrementExpression(array $expressions)
+    private function _parseIncrementExpression(array &$expressions)
     {
         if ($this->_isReadWriteVariable(end($expressions))) {
             return $this->_parsePostIncrementExpression(array_pop($expressions));
@@ -1412,13 +1412,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * node this can be a {@link PHP_Depend_Code_ASTPostDecrementExpression} or
      * {@link PHP_Depend_Code_ASTPostfixExpression}.
      *
-     * @param array(PHP_Depend_Code_ASTExpression) $expressions List of previous
-     *        parsed expression nodes.
+     * @param array &$expressions List of previous parsed expression nodes.
      *
      * @return PHP_Depend_Code_ASTExpression
      * @since 0.10.0
      */
-    private function _parseDecrementExpression(array $expressions)
+    private function _parseDecrementExpression(array &$expressions)
     {
         if ($this->_isReadWriteVariable(end($expressions))) {
             return $this->_parsePostDecrementExpression(array_pop($expressions));
@@ -2322,6 +2321,25 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expressions[] = $this->_parseAssignmentExpression(
                     array_pop($expressions)
                 );
+                break;
+
+            // TODO: Make this a arithmetic expression
+            case self::T_PLUS:
+            case self::T_MINUS:
+            case self::T_MUL:
+            case self::T_DIV:
+            case self::T_MOD:
+                $token = $this->consumeToken($tokenType);
+
+                $expr = $this->_builder->buildASTExpression();
+                $expr->setImage($token->image);
+                $expr->setStartLine($token->startLine);
+                $expr->setStartColumn($token->startColumn);
+                $expr->setEndLine($token->endLine);
+                $expr->setEndColumn($token->endColumn);
+
+                $expressions[] = $expr;
+
                 break;
 
             default:

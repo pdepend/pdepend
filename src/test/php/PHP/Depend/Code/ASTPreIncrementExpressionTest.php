@@ -59,6 +59,13 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Builder_Default
+ * @covers PHP_Depend_Code_ASTPreIncrementExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +74,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +91,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,12 +108,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionOnStaticClassMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionOnStaticClassMember()
     {
@@ -134,12 +127,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionOnSelfClassMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionOnSelfClassMember()
     {
@@ -159,12 +146,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionOnParentClassMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionOnParentClassMember()
     {
@@ -184,12 +165,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionOnFunctionPostfix
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionOnFunctionPostfix()
     {
@@ -208,12 +183,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionOnStaticVariableMember
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionOnStaticVariableMember()
     {
@@ -230,15 +199,24 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
     }
 
     /**
+     * testPreIncrementExpressionsInArithmeticOperation
+     * 
+     * @return void
+     */
+    public function testPreIncrementExpressionsInArithmeticOperation()
+    {
+        $exprs = $this->getFirstClassForTestCase()
+            ->getMethods()
+            ->current()
+            ->findChildrenOfType(PHP_Depend_Code_ASTPreIncrementExpression::CLAZZ);
+
+        $this->assertEquals(2, count($exprs));
+    }
+
+    /**
      * testPreIncrementExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionHasExpectedStartLine()
     {
@@ -250,12 +228,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionHasExpectedStartColumn()
     {
@@ -267,12 +239,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionHasExpectedEndLine()
     {
@@ -284,12 +250,6 @@ class PHP_Depend_Code_ASTPreIncrementExpressionTest extends PHP_Depend_Code_ASTN
      * testPreIncrementExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTPreIncrementExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testPreIncrementExpressionHasExpectedEndColumn()
     {
