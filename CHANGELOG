@@ -1,3 +1,12 @@
+PHP_Depend 0.11.0
+-----------------
+
+This release closes a critical bug that let PHP_Depend die with a E_FATAL when
+the used PHP version was 5.4 or greater.
+
+- Fixed #18976391: PHP_Depend's file cache implementation does not work with
+  PHP 5.4. Fixed with commit #06ce51a.
+
 PHP_Depend 0.10.6
 -----------------
 
