@@ -128,13 +128,13 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
                 'cache',
                 'uuid',
                 'name',
+                'nodes',
                 'startLine',
                 'endLine',
                 'docComment',
                 'returnsReference',
                 'returnClassReference',
-                'exceptionClassReferences',
-                '___temp___'
+                'exceptionClassReferences'
             ),
             $method->__sleep()
         );

@@ -339,13 +339,13 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
                 'cache',
                 'uuid',
                 'name',
+                'nodes',
                 'startLine',
                 'endLine',
                 'docComment',
                 'returnsReference',
                 'returnClassReference',
-                'exceptionClassReferences',
-                '___temp___'
+                'exceptionClassReferences'
             ),
             $function->__sleep()
         );
