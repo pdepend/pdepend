@@ -64,30 +64,6 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that userland implementation redeclares all methods.
-     * 
-     * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
-     */
-    public function testAllReflectionApiMethodsAvailable()
-    {
-        $expectedClass = 'PHP_Depend_Code_Parameter';
-        $reflection    = new ReflectionClass($expectedClass);
-        
-        $methodNames = get_class_methods('ReflectionParameter');
-        foreach ($methodNames as $methodName) {
-            $method         = $reflection->getMethod($methodName);
-            $actualClass    = $method->getDeclaringClass()->getName();
-            $failureMessage = sprintf('Missing method %s::%s().', $expectedClass, $methodName);
-
-            $this->assertSame($expectedClass, $actualClass, $failureMessage);
-        }
-    }
-
-    /**
      * Tests that the output of __toString() is compatible with the native
      * reflection api.
      *
