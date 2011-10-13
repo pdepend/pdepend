@@ -1,8 +1,8 @@
+.abc
 .idea
 .project
 build.privates
 build_number_*.build
-cache.properties
 PHP_Depend-*.tgz
 .build
 .pear
