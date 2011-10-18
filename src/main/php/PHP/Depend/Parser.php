@@ -3279,6 +3279,19 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($node);
     }
 
+    /**
+     * This method will parse an optional function postfix.
+     *
+     * If the next available token is an opening parenthesis, this method will
+     * wrap the given <b>$node</b> with a {@link PHP_Depend_Code_ASTFunctionPostfix}
+     * node.
+     *
+     * @param PHP_Depend_Code_ASTNode $node The previously parsed node.
+     * 
+     * @return PHP_Depend_Code_ASTNode The original input node or this node
+     *         wrapped with a function postfix instance.
+     * @since 0.11.0
+     */
     private function _parseOptionalFunctionPostfix(PHP_Depend_Code_ASTNode $node)
     {
         $this->consumeComments();
@@ -3308,11 +3321,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseFunctionPostfix(PHP_Depend_Code_ASTNode $node)
     {
-        $function = $this->_builder->buildASTFunctionPostfix($node->getImage());
+        $image = $this->_extractPostfixImage($node);
+
+        $function = $this->_builder->buildASTFunctionPostfix($image);
         $function->addChild($node);
         $function->addChild($this->_parseArguments());
 
-        // Test for method or property access
         return $this->_parseOptionalMemberPrimaryPrefix($function);
     }
 

@@ -69,6 +69,38 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetImageForVariableFunction
+     *
+     * <code>
+     * $function(23);
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForVariableFunction()
+    {
+        $postfix = $this->_getFirstFunctionPostfixInFunction();
+        $this->assertEquals('$function', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForArrayIndexedVariableFunction
+     *
+     * <code>
+     * $function[42](23);
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForArrayIndexedVariableFunction()
+    {
+        $postfix = $this->_getFirstFunctionPostfixInFunction();
+        $this->assertEquals('$function', $postfix->getImage());
+    }
+    
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
