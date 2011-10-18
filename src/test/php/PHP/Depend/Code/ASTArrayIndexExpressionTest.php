@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTArrayIndexExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -113,22 +111,16 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayIndexExpressionGraphForVariable()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction(__METHOD__);
-        $expected   = array(
-            PHP_Depend_Code_ASTVariable::CLAZZ,
-            PHP_Depend_Code_ASTLiteral::CLAZZ
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
         );
-
-        $this->assertGraphEquals($expr, $expected);
     }
 
     /**
@@ -139,22 +131,16 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayIndexExpressionGraphForProperty()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction(__METHOD__);
-        $expected   = array(
-            PHP_Depend_Code_ASTIdentifier::CLAZZ,
-            PHP_Depend_Code_ASTLiteral::CLAZZ
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
         );
-
-        $this->assertGraphEquals($expr, $expected);
     }
 
     /**
@@ -165,42 +151,30 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayIndexExpressionGraphForChainedArrayAccess()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction(__METHOD__);
-        $expected   = array(
-            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
-            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
-            PHP_Depend_Code_ASTVariable::CLAZZ,
-            PHP_Depend_Code_ASTLiteral::CLAZZ,
-            PHP_Depend_Code_ASTLiteral::CLAZZ,
-            PHP_Depend_Code_ASTLiteral::CLAZZ
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+                PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
         );
-
-        $this->assertGraphEquals($expr, $expected);
     }
 
     /**
      * testArrayIndexExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayIndexExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -208,16 +182,10 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * testArrayIndexExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayIndexExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(10, $expr->getStartColumn());
     }
 
@@ -225,16 +193,10 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * testArrayIndexExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayIndexExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(6, $expr->getEndLine());
     }
 
@@ -242,30 +204,23 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * testArrayIndexExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayIndexExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayIndexExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(13, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTArrayIndexExpression
      */
-    private function _getFirstArrayIndexExpressionInFunction($testCase)
+    private function _getFirstArrayIndexExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ
+            $this->getCallingTestMethod(), 
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ
         );
     }
 }
