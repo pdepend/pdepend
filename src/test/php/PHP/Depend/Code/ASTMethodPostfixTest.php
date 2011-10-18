@@ -70,6 +70,70 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetImageForVariableMethod
+     *
+     * <code>
+     * $object->$method(23);
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForVariableMethod()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        $this->assertEquals('$method', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForVariableStaticMethod
+     *
+     * <code>
+     * Clazz::$method(23);
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForVariableStaticMethod()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        $this->assertEquals('$method', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForArrayIndexedVariableStaticMethod
+     *
+     * <code>
+     * Clazz::$method[42](23);
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForArrayIndexedVariableStaticMethod()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        $this->assertEquals('$method', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForMultiArrayIndexedVariableStaticMethod
+     *
+     * <code>
+     * Clazz::$method[42][17][23]();
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForMultiArrayIndexedVariableStaticMethod()
+    {
+        $postfix = $this->_getFirstMethodPostfixInFunction();
+        $this->assertEquals('$method', $postfix->getImage());
+    }
+
+    /**
      * testMethodPostfixGraphForVariable
      *
      * @return void

@@ -3393,6 +3393,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_STRING:
             $child = $this->_parseIdentifier();
             $child = $this->_parseOptionalIndexExpression($child);
+            // TODO: Move this in a separate method
             if ($child instanceof PHP_Depend_Code_ASTIndexExpression) {
                 $prefix->addChild($this->_parsePropertyPostfix($child));
                 return $this->_parseOptionalFunctionPostfix($prefix);
@@ -3575,6 +3576,18 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $postfix;
     }
 
+    /**
+     * This method will extract the image/name of the real property/variable
+     * that is wrapped by {@link PHP_Depend_Code_ASTIndexExpression} nodes. If
+     * the given node is now wrapped by index expressions, this method will
+     * return the image of the entire <b>$node</b>.
+     *
+     * @param PHP_Depend_Code_ASTNode $node The context node that may be wrapped
+     *        by multiple array or string index expressions.
+     *
+     * @return string
+     * @since 0.11.0
+     */
     private function _extractPostfixImage(PHP_Depend_Code_ASTNode $node)
     {
         while ($node instanceof PHP_Depend_Code_ASTIndexExpression) {
@@ -3594,9 +3607,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseMethodPostfix(PHP_Depend_Code_ASTNode $node)
     {
-        $args = $this->_parseArguments();
+        $args  = $this->_parseArguments();
+        $image = $this->_extractPostfixImage($node);
 
-        $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
+        $postfix = $this->_builder->buildASTMethodPostfix($image);
         $postfix->addChild($node);
         $postfix->addChild($args);
 
