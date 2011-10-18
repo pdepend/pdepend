@@ -69,6 +69,289 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant
+     *
+     * Source:
+     * <code>
+     * $class::X;
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable            ->  $class
+     *   - ASTConstantPostfix     ->  ::
+     *     - ASTIdentifier        ->  X
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTConstantPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphWithDynamicClassAndStaticProperty
+     *
+     * Source:
+     * <code>
+     * $class::$property;
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable            ->  $class
+     *   - ASTPropertyPostfix     ->  ::
+     *     - ASTVariable          ->  $property
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticProperty()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphWithDynamicClassAndStaticMethod
+     *
+     * Source:
+     * <code>
+     * $class::method(42);
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable            ->  $class
+     *   - ASTMethodPostfix       ->  ::
+     *     - ASTIdentifier        ->  method
+     *     - ASTArguments         ->  ( )
+     *       - ASTLiteral         ->  24
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticMethod()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphWithDynamicClassAndDynamicMethod
+     *
+     * Source:
+     * <code>
+     * $class::$method(23);
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable            ->  $class
+     *   - ASTMethodPostfix       ->  ::
+     *     - ASTVariable          ->  $method
+     *     - ASTArguments         ->  ( )
+     *       - ASTLiteral         ->  23
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndDynamicMethod()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphForObjectPropertyAccess
+     * 
+     * <code>
+     * $obj->foo = 42;
+     * </code>
+     * 
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphForObjectPropertyAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphForObjectWithVariablePropertyAccess
+     *
+     * Source:
+     * <code>
+     * $object->$property = 23;
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable            ->  $object
+     *   - ASTPropertyPostfix     ->  ->
+     *     - ASTVariable          ->  $property
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphForObjectWithVariablePropertyAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphForObjectMethodAccess
+     *
+     * <code>
+     * $obj->foo();
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphForObjectMethodAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphForObjectWithVariableMethodAccess
+     *
+     * Source:
+     * <code>
+     * $object->$method(23, 42);
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable            ->  $object
+     *   - ASTMethodPostfix       ->  ->
+     *     - ASTVariable          ->  $method
+     *     - ASTArguments         ->  ( )
+     *       - ASTExpression      ->  ...
+     *         - ASTLiteral         ->  23
+     *         - ASTLiteral         ->  42
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphForObjectWithVariableMethodAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTExpression::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphForChainedObjectMemberAccess
+     *
+     * <code>
+     * $obj->foo->bar()->baz();
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphForChainedObjectMemberAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraphEquals(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
@@ -104,88 +387,13 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
     }
 
     /**
-     * testMemberPrimaryPrefixGraphForObjectPropertyAccess
-     * 
-     * <code>
-     * $obj->foo = 42;
-     * </code>
-     * 
-     * @return void
-     */
-    public function testMemberPrimaryPrefixGraphForObjectPropertyAccess()
-    {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ
-            )
-        );
-    }
-
-    /**
-     * testMemberPrimaryPrefixGraphForObjectPropertyAccess
-     *
-     * <code>
-     * $obj->foo();
-     * </code>
-     *
-     * @return void
-     */
-    public function testMemberPrimaryPrefixGraphForObjectMethodAccess()
-    {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ
-            )
-        );
-    }
-
-    /**
-     * testMemberPrimaryPrefixGraphForChainedObjectMemberAccess
-     *
-     * <code>
-     * $obj->foo->bar()->baz();
-     * </code>
-     *
-     * @return void
-     */
-    public function testMemberPrimaryPrefixGraphForChainedObjectMemberAccess()
-    {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $this->assertGraphEquals(
-            $prefix,
-            array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ
-            )
-        );
-    }
-
-    /**
      * testObjectMemberPrimaryPrefixHasExpectedStartLine
      *
      * @return void
      */
     public function testObjectMemberPrimaryPrefixHasExpectedStartLine()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(4, $prefix->getStartLine());
     }
 
@@ -196,7 +404,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testObjectMemberPrimaryPrefixHasExpectedStartColumn()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(5, $prefix->getStartColumn());
     }
 
@@ -207,7 +415,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testObjectMemberPrimaryPrefixHasExpectedEndLine()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(6, $prefix->getEndLine());
     }
 
@@ -218,7 +426,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testObjectMemberPrimaryPrefixHasExpectedEndColumn()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(10, $prefix->getEndColumn());
     }
 
@@ -229,7 +437,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertFalse($prefix->isStatic());
     }
 
@@ -240,7 +448,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertFalse($prefix->isStatic());
     }
 
@@ -251,7 +459,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertTrue($prefix->isStatic());
     }
 
@@ -262,21 +470,20 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction(__METHOD__);
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertTrue($prefix->isStatic());
     }
 
     /**
      * Returns a test member primary prefix.
      *
-     * @param string $testCase The calling test case.
-     *
      * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
      */
-    private function _getFirstMemberPrimaryPrefixInFunction($testCase)
+    private function _getFirstMemberPrimaryPrefixInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
         );
     }
 }
