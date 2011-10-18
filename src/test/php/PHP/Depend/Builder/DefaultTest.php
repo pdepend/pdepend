@@ -321,7 +321,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildMethod()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             'PHP_Depend_Code_Method',
             $this->createBuilder()->buildMethod('method')
         );
@@ -631,13 +631,26 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTArrayIndexExpressionReturnsExpectedType
+     * 
+     * @return void
+     */
+    public function testBuildASTArrayIndexExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+            $this->createBuilder()->buildASTArrayIndexExpression()
+        );
+    }
+
+    /**
      * testBuildASTClosureReturnsExpectedType
      *
      * @return void
      */
     public function testBuildASTClosureReturnsExpectedType()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTClosure::CLAZZ,
             $this->createBuilder()->buildASTClosure()
         );
@@ -650,7 +663,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTStaticReferenceReturnsExpectedType()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTStaticReference::CLAZZ,
             $this->createBuilder()->buildASTStaticReference(
                 $this->createBuilder()->buildClass(__CLASS__)
@@ -665,7 +678,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTClassOrInterfaceReferenceReturnsExpectedType()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
             $this->createBuilder()->buildASTClassOrInterfaceReference(__CLASS__)
         );
@@ -678,7 +691,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTClassReferenceReturnsExpectedType()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTClassReference::CLAZZ,
             $this->createBuilder()->buildASTClassReference(__CLASS__)
         );
@@ -694,7 +707,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $builder  = $this->createBuilder();
         $instance = $builder->buildASTPrimitiveType(__FUNCTION__);
 
-        self::assertInstanceOf(PHP_Depend_Code_ASTPrimitiveType::CLAZZ, $instance);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTPrimitiveType::CLAZZ, $instance);
     }
 
     /**
@@ -707,7 +720,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $object = $this->createBuilder()
             ->buildASTAllocationExpression(__FUNCTION__);
 
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTAllocationExpression::CLAZZ,
             $object
         );
@@ -720,7 +733,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTArgumentsReturnsExpectedType()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTArguments::CLAZZ,
             $this->createBuilder()->buildASTArguments()
         );
@@ -733,7 +746,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTSwitchLabel()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTSwitchLabel::CLAZZ,
             $this->createBuilder()->buildASTSwitchLabel('m')
         );
@@ -746,7 +759,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTEchoStatetmentReturnsExpectedType()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTEchoStatement::CLAZZ,
             $this->createBuilder()->buildASTEchoStatement('echo')
         );
@@ -759,7 +772,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      */
     public function testBuildASTVariableDeclaratorReturnsExpectedType()
     {
-        self::assertInstanceOf(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTVariableDeclarator::CLAZZ,
             $this->createBuilder()->buildASTVariableDeclarator('foo')
         );
