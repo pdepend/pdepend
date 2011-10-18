@@ -66,7 +66,8 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.12
  */
-class PHP_Depend_Code_ASTStringIndexExpression extends PHP_Depend_Code_ASTExpression
+class PHP_Depend_Code_ASTStringIndexExpression
+    extends PHP_Depend_Code_ASTIndexExpression
 {
     /**
      * The type of this class.
