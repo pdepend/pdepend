@@ -36,55 +36,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
- * @since      0.9.12
+ * @link       http://pdepend.org/
  */
 
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
 /**
- * This node class represents a <b>string index</b>-expression.
+ * Test case for the cohesion analyzer.
  *
- * <code>
- * //          ---
- * $object->foo{2}
- * //          ---
- * </code>
- *
- * @category   PHP
+ * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
- * @since      0.9.12
+ * @link       http://pdepend.org/
+ *
+ * @covers PHP_Depend_Metrics_Cohesion_Analyzer
+ * @group pdepend
+ * @group pdepend::metrics
+ * @group pdepend::metrics::cohesion
+ * @group unittest
  */
-class PHP_Depend_Code_ASTStringIndexExpression
-    extends PHP_Depend_Code_ASTIndexExpression
+class PHP_Depend_Metrics_Cohesion_AnalyzerTest
+    extends PHP_Depend_Metrics_AbstractTest
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
 
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
-     * @return mixed
-     */
-    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
-    {
-        return $visitor->visitStringIndexExpression($this, $data);
-    }
 }

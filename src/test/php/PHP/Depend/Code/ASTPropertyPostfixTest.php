@@ -66,15 +66,60 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @group pdepend
  * @group pdepend::ast
  * @group unittest
+ *
+ * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Code_ASTPropertyPostfix
  */
 class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetImageForArrayIndexedRegularProperty
+     * 
+     * @return void
+     */
+    public function testGetImageForArrayIndexedRegularProperty()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction();
+        $this->assertEquals('property', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForMultiDimensionalArrayIndexedRegularProperty
+     *
+     * @return void
+     */
+    public function testGetImageForMultiDimensionalArrayIndexedRegularProperty()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction();
+        $this->assertEquals('property', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForVariableProperty
+     * 
+     * @return void
+     */
+    public function testGetImageForVariableProperty()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction();
+        $this->assertEquals('$property', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForArrayIndexedVariableProperty
+     * 
+     * @return void
+     */
+    public function testGetImageForArrayIndexedVariableProperty()
+    {
+        $postfix = $this->_getFirstPropertyPostfixInFunction();
+        $this->assertEquals('$property', $postfix->getImage());
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -104,6 +149,52 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
 
         $postfix = new PHP_Depend_Code_ASTPropertyPostfix();
         self::assertEquals(42, $postfix->accept($visitor));
+    }
+
+    /**
+     * testPropertyPostfixGraphForArrayElementInvocation
+     *
+     * <code>
+     * $this->$foo[0];
+     * </code>
+     *
+     * @return void
+     */
+    public function testPropertyPostfixGraphForArrayElementInvocation()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        self::assertGraphEquals($prefix, $expected);
+    }
+
+    /**
+     * testPropertyPostfixGraphForPropertyArrayElementInvocation
+     *
+     * <code>
+     * $this->foo[$bar]();
+     * </code>
+     *
+     * @return void
+     */
+    public function testPropertyPostfixGraphForPropertyArrayElementInvocation()
+    {
+        $prefix   = $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__);
+        $expected = array(
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ
+        );
+
+        self::assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -227,6 +318,8 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
             PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
             PHP_Depend_Code_ASTVariable::CLAZZ
         );
+
+        $this->assertGraphEquals($prefix, $expected);
     }
 
     /**
@@ -399,14 +492,13 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTPropertyPostfix
      */
-    private function _getFirstPropertyPostfixInFunction($testCase)
+    private function _getFirstPropertyPostfixInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTPropertyPostfix::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ
         );
     }
 

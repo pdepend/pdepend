@@ -59,18 +59,52 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTFunctionPostfix
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
+    /**
+     * testGetImageForVariableFunction
+     *
+     * <code>
+     * $function(23);
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForVariableFunction()
+    {
+        $postfix = $this->_getFirstFunctionPostfixInFunction();
+        $this->assertEquals('$function', $postfix->getImage());
+    }
+
+    /**
+     * testGetImageForArrayIndexedVariableFunction
+     *
+     * <code>
+     * $function[42](23);
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageForArrayIndexedVariableFunction()
+    {
+        $postfix = $this->_getFirstFunctionPostfixInFunction();
+        $this->assertEquals('$function', $postfix->getImage());
+    }
+    
     /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +122,6 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,16 +139,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
-    public function testFunctionPostfixStructureSimple()
+    public function testFunctionPostfixGraphForSimpleInvocation()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $postfix  = $this->_getFirstFunctionPostfixInFunction();
         $expected = array(
             PHP_Depend_Code_ASTIdentifier::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
@@ -132,16 +156,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
-    public function testFunctionPostfixStructureVariable()
+    public function testFunctionPostfixGraphForVariableInvocation()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $postfix  = $this->_getFirstFunctionPostfixInFunction();
         $expected = array(
             PHP_Depend_Code_ASTVariable::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ
@@ -154,16 +172,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
-    public function testFunctionPostfixStructureCompoundVariable()
+    public function testFunctionPostfixGraphForCompoundVariableInvocation()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $postfix  = $this->_getFirstFunctionPostfixInFunction();
         $expected = array(
             PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
             PHP_Depend_Code_ASTConstant::CLAZZ,
@@ -175,19 +187,33 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testFunctionPostfixGraphForArrayIndexedVariableInvocation
+     * 
+     * @return void
+     */
+    public function testFunctionPostfixGraphForArrayIndexedVariableInvocation()
+    {
+        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $expected = array(
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
+        );
+
+        $this->assertGraphEquals($postfix, $expected);
+    }
+
+    /**
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
-    public function testFunctionPostfixStructureWithMemberPrimaryPrefixMethod()
+    public function testFunctionPostfixGraphForInvocationWithMemberPrimaryPrefixMethod()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $postfix  = $this->_getFirstFunctionPostfixInFunction();
         $expected = array(
             PHP_Depend_Code_ASTIdentifier::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
@@ -201,20 +227,35 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed function postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
-    public function testFunctionPostfixStructureWithMemberPrimaryPrefixProperty()
+    public function testFunctionPostfixGraphForInvocationWithMemberPrimaryPrefixProperty()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $postfix  = $this->_getFirstFunctionPostfixInFunction();
         $expected = array(
             PHP_Depend_Code_ASTIdentifier::CLAZZ,
             PHP_Depend_Code_ASTArguments::CLAZZ,
             PHP_Depend_Code_ASTLiteral::CLAZZ
+        );
+
+        $this->assertGraphEquals($postfix, $expected);
+    }
+
+    /**
+     * testFunctionPostfixGraphForObjectProperty
+     *
+     * @return void
+     */
+    public function testFunctionPostfixGraphForObjectProperty()
+    {
+        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $expected = array(
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            PHP_Depend_Code_ASTVariable::CLAZZ,
+            PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+            PHP_Depend_Code_ASTIdentifier::CLAZZ,
+            PHP_Depend_Code_ASTLiteral::CLAZZ,
+            PHP_Depend_Code_ASTArguments::CLAZZ
         );
 
         $this->assertGraphEquals($postfix, $expected);
@@ -224,16 +265,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testFunctionPostfixHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFunctionPostfixHasExpectedStartLine()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $init = $this->_getFirstFunctionPostfixInFunction();
         $this->assertEquals(4, $init->getStartLine());
     }
 
@@ -241,16 +276,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testFunctionPostfixHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFunctionPostfixHasExpectedStartColumn()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $init = $this->_getFirstFunctionPostfixInFunction();
         $this->assertEquals(5, $init->getStartColumn());
     }
 
@@ -258,16 +287,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testFunctionPostfixHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFunctionPostfixHasExpectedEndLine()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $init = $this->_getFirstFunctionPostfixInFunction();
         $this->assertEquals(8, $init->getEndLine());
     }
 
@@ -275,16 +298,10 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testFunctionPostfixHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTFunctionPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFunctionPostfixHasExpectedEndColumn()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction(__METHOD__);
+        $init = $this->_getFirstFunctionPostfixInFunction();
         $this->assertEquals(13, $init->getEndColumn());
     }
 
@@ -301,14 +318,13 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTFunctionPostfix
      */
-    private function _getFirstFunctionPostfixInFunction($testCase)
+    private function _getFirstFunctionPostfixInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
+            $this->getCallingTestMethod(), 
+            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
         );
     }
 }

@@ -48,13 +48,7 @@
  */
 
 /**
- * This node class represents a <b>string index</b>-expression.
- *
- * <code>
- * //          ---
- * $object->foo{2}
- * //          ---
- * </code>
+ * This is an abstract base class for index nodes.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -66,25 +60,11 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.12
  */
-class PHP_Depend_Code_ASTStringIndexExpression
-    extends PHP_Depend_Code_ASTIndexExpression
+abstract class PHP_Depend_Code_ASTIndexExpression
+    extends PHP_Depend_Code_ASTExpression
 {
     /**
      * The type of this class.
      */
     const CLAZZ = __CLASS__;
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
-     * @return mixed
-     */
-    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
-    {
-        return $visitor->visitStringIndexExpression($this, $data);
-    }
 }

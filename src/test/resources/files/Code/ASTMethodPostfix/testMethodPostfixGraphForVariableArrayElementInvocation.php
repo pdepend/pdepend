@@ -1,7 +1,7 @@
 <?php
-class testMethodPostfixGraphForArrayElementInvocation
+class testMethodPostfixGraphForVariableArrayElementInvocation
 {
-    function testMethodPostfixGraphForArrayElementInvocation(array $foo)
+    function testMethodPostfixGraphForVariableArrayElementInvocation(array $foo)
     {
         $this->$foo[0]();
     }

@@ -805,6 +805,33 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTMemberPrimaryPrefixReturnsExpectedType
+     * 
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTMemberPrimaryPrefixReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            $this->createBuilder()->buildASTMemberPrimaryPrefix('::')
+        );
+    }
+
+    /**
+     * testBuildASTFunctionPostfixReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTFunctionPostfixReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
+            $this->createBuilder()->buildASTFunctionPostfix('foo')
+        );
+    }
+
+    /**
      * Creates a clean builder test instance.
      *
      * @return PHP_Depend_Builder_Default
