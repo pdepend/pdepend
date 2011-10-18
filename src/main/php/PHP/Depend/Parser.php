@@ -3327,7 +3327,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $function->addChild($node);
         $function->addChild($this->_parseArguments());
 
-        return $this->_parseOptionalMemberPrimaryPrefix($function);
+        return $this->_parseOptionalMemberPrimaryPrefix(
+            $this->_parseOptionalIndexExpression($function)
+        );
     }
 
     /**
@@ -3496,17 +3498,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->consumeComments();
         if ($this->tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
-            $postfix = $this->_builder->buildASTMethodPostfix($node->getImage());
+            $postfix = $this->_parseMethodPostfix($node);
+        } else {
+            $postfix = $this->_builder->buildASTConstantPostfix($node->getImage());
             $postfix->addChild($node);
-            $postfix->addChild($this->_parseArguments());
-
-            return $this->_setNodePositionsAndReturn(
-                $this->_parseOptionalMemberPrimaryPrefix($postfix)
-            );
         }
-
-        $postfix = $this->_builder->buildASTConstantPostfix($node->getImage());
-        $postfix->addChild($node);
 
         return $this->_setNodePositionsAndReturn($postfix);
     }
@@ -3609,7 +3605,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $postfix->setStartLine($node->getStartLine());
         $postfix->setStartColumn($node->getStartColumn());
 
-        return $postfix;
+        return $this->_parseOptionalMemberPrimaryPrefix($postfix);
     }
 
     /**
@@ -3646,21 +3642,29 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_DOLLAR:
         case self::T_VARIABLE:
-            return $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+            $node = $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+            break;
 
         case self::T_SELF:
-            return $this->_parseConstantOrSelfMemberPrimaryPrefix();
+            $node = $this->_parseConstantOrSelfMemberPrimaryPrefix();
+            break;
 
         case self::T_PARENT:
-            return $this->_parseConstantOrParentMemberPrimaryPrefix();
+            $node = $this->_parseConstantOrParentMemberPrimaryPrefix();
             break;
 
         case self::T_STATIC:
-            return $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+            $node = $this->_parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+            break;
+
+        case self::T_STRING:
+        case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
+            $node = $this->_parseMemberPrefixOrFunctionPostfix();
+            break;
         }
 
-        // T_NAMESPACE or T_BACKSLASH or T_STRING
-        return $this->_parseMemberPrefixOrFunctionPostfix();
+        return $node;
     }
 
     /**
