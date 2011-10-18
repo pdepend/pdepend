@@ -3419,16 +3419,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method decides language construct the currently parsed code
-     * represents. We
-     * @return void
-     */
-    private function _parseMethodOrPropertyOrFunctionPostfix()
-    {
-
-    }
-
-    /**
      * This method parses a static member primary expression. The given node
      * contains the used static class or interface identifier. A static member
      * primary prefix can represent the following code expressions:
